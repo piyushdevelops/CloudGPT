@@ -1,0 +1,72 @@
+{
+  "type": "june-footer",
+  "blocks": {
+    "links0": {
+      "type": "links",
+      "settings": {
+        "heading": "Explore",
+        "label_1": "Planners",
+        "url_1": "/collections/undated-yearly-planners",
+        "label_2": "Wedding & memory planners",
+        "url_2": "/collections/wedding-planners",
+        "label_3": "Home décor",
+        "url_3": "/collections/home-all",
+        "label_4": "Lighting",
+        "url_4": "/collections/lamps-lighting",
+        "label_5": "Kitchen & dining",
+        "url_5": "/collections/dining",
+        "label_6": "Mystery Box",
+        "url_6": "/products/mystery-box-limited-drop"
+      }
+    },
+    "links1": {
+      "type": "links",
+      "settings": {
+        "heading": "Here to help",
+        "label_1": "Contact us",
+        "url_1": "/pages/contact-us",
+        "label_2": "FAQs",
+        "url_2": "/pages/faqs",
+        "label_3": "Shipping",
+        "url_3": "/pages/shipping-delivery",
+        "label_4": "Returns",
+        "url_4": "/pages/return-and-refund-policy",
+        "label_5": "Track order",
+        "url_5": "https://thejuneshop.shiprocket.co/",
+        "label_6": "Email us",
+        "url_6": "mailto:help@thejuneshop.com"
+      }
+    },
+    "links2": {
+      "type": "links",
+      "settings": {
+        "heading": "About The June Shop",
+        "label_1": "Our story",
+        "url_1": "/pages/our-story",
+        "label_2": "Follow on Instagram",
+        "url_2": "https://instagram.com/thejuneshopindia/",
+        "label_3": "WhatsApp us",
+        "url_3": "https://wa.me/917003079822"
+      }
+    },
+    "typography": {
+      "type": "typography",
+      "settings": {}
+    },
+    "brand_type": {
+      "type": "brand_type",
+      "settings": {}
+    }
+  },
+  "block_order": [
+    "links0",
+    "links1",
+    "links2",
+    "typography",
+    "brand_type"
+  ],
+  "settings": {
+    "instagram": "https://instagram.com/thejuneshopindia/",
+    "accent": "#FFB790"
+  }
+}

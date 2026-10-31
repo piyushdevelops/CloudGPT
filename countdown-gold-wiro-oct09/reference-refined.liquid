@@ -1,0 +1,420 @@
+{% liquid
+  assign heading_font = section.settings.heading_font
+  assign heading_weight = section.settings.heading_weight
+  assign heading_variant = heading_font | font_modify: 'weight', heading_weight
+  assign numbers_font = section.settings.numbers_font
+  assign numbers_weight = section.settings.numbers_weight
+  assign numbers_variant = numbers_font | font_modify: 'weight', numbers_weight
+  assign copy_font = section.settings.copy_font
+  assign copy_weight = section.settings.copy_weight
+  assign copy_variant = copy_font | font_modify: 'weight', copy_weight
+%}
+<style>
+{{ heading_font | font_face: font_display: 'swap' }}{{ heading_variant | font_face: font_display: 'swap' }}
+{{ numbers_font | font_face: font_display: 'swap' }}{{ numbers_variant | font_face: font_display: 'swap' }}
+{{ copy_font | font_face: font_display: 'swap' }}{{ copy_variant | font_face: font_display: 'swap' }}
+#JuneCountdown-{{ section.id }} {
+ --count-bg:{{ section.settings.background }};--count-ink:{{ section.settings.ink }};--count-accent:{{ section.settings.accent }};
+ {% if section.settings.master_palette %}--count-bg:var(--june-bg,{{ section.settings.background }});--count-ink:var(--june-ink,{{ section.settings.ink }});--count-accent:var(--june-accent,{{ section.settings.accent }});{% endif %}
+ display:grid;align-content:center;gap:clamp(26px,5vw,70px);min-height:calc(100svh - 80px);max-width:1680px;margin:0 auto;padding:70px clamp(20px,5vw,90px);background:var(--count-bg);color:var(--count-ink);text-align:center;
+ font-family:{{ copy_font.family }},{{ copy_font.fallback_families }};font-weight:{{ copy_weight }};font-size:{{ section.settings.copy_size }}px;letter-spacing:{{ section.settings.copy_tracking }}px;line-height:{{ section.settings.copy_leading }};
+}
+#JuneCountdown-{{ section.id }} * {box-sizing:border-box;}
+#JuneCountdown-{{ section.id }} [hidden] {display:none!important;}
+#JuneCountdown-{{ section.id }} h1 {margin:0;color:inherit;font-family:{{ heading_font.family }},{{ heading_font.fallback_families }};font-weight:{{ heading_weight }};font-size:clamp(30px,5vw,{{ section.settings.heading_size }}px);letter-spacing:{{ section.settings.heading_tracking }}px;line-height:{{ section.settings.heading_leading }};}
+#JuneCountdown-{{ section.id }} p {margin:0;font:inherit;}
+#JuneCountdown-{{ section.id }} .june-count__intro {margin-top:14px;}
+#JuneCountdown-{{ section.id }} .june-count__grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+#JuneCountdown-{{ section.id }} .june-count__unit {display:grid;gap:16px;min-width:0;padding:12px 0 22px;border-bottom:2px solid var(--count-accent);}
+#JuneCountdown-{{ section.id }} .june-count__number {font-family:{{ numbers_font.family }},{{ numbers_font.fallback_families }};font-weight:{{ numbers_weight }};font-size:clamp(42px,11.5vw,{{ section.settings.numbers_size }}px);font-variant-numeric:tabular-nums;letter-spacing:{{ section.settings.numbers_tracking }}px;line-height:{{ section.settings.numbers_leading }};}
+#JuneCountdown-{{ section.id }} .june-count__label {font:inherit;text-transform:uppercase;}
+#JuneCountdown-{{ section.id }} .june-count__date {display:inline-block;max-width:100%;padding:12px 24px;border-radius:999px;background:color-mix(in srgb,var(--count-accent) 20%,var(--count-bg));}
+#JuneCountdown-{{ section.id }} .june-count__complete {font-size:clamp(28px,5vw,64px);font-weight:800;}
+#JuneCountdown-{{ section.id }} .june-count__cta {display:inline-flex;align-items:center;gap:18px;padding:10px 12px 10px 24px;min-height:52px;background:var(--count-accent);color:var(--count-ink);border-radius:999px;text-decoration:none;font:inherit;}
+#JuneCountdown-{{ section.id }} .june-count__cta span {display:grid;place-items:center;width:34px;height:34px;background:var(--june-dark,#171717);color:var(--june-on-dark,#fff);border-radius:50%;}
+#JuneCountdown-{{ section.id }} .june-count__cta svg {width:18px;height:18px;}
+#JuneCountdown-{{ section.id }} .june-count__status {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);}
+@media(max-width:749px){
+ #JuneCountdown-{{ section.id }} {padding:56px 20px;gap:36px;font-size:{{ section.settings.copy_size_mobile }}px;}
+ #JuneCountdown-{{ section.id }} h1 {font-size:{{ section.settings.heading_size_mobile }}px;}
+ #JuneCountdown-{{ section.id }} .june-count__grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px;}
+ #JuneCountdown-{{ section.id }} .june-count__number {font-size:min(22vw,{{ section.settings.numbers_size_mobile }}px);}
+ #JuneCountdown-{{ section.id }} .june-count__unit {gap:6px;padding-bottom:14px;}
+}
+
+/* Playful launch board — scoped to this section. */
+#JuneCountdown-{{ section.id }} {position:relative;isolation:isolate;overflow:hidden;gap:32px;padding-top:52px;padding-bottom:52px;background-image:radial-gradient(color-mix(in srgb,var(--count-accent) 35%,transparent) 1px,transparent 1px);background-size:22px 22px;}
+#JuneCountdown-{{ section.id }} .june-count__sticker {display:inline-block;margin-bottom:20px;padding:9px 19px;background:var(--count-accent);color:var(--count-ink);border:2px solid currentColor;box-shadow:4px 4px 0 var(--count-ink);transform:rotate(-4deg);font:inherit;}
+#JuneCountdown-{{ section.id }} .june-count__grid {gap:22px;padding:14px 4px;}
+#JuneCountdown-{{ section.id }} .june-count__unit {position:relative;background:var(--count-bg);border:2px solid var(--count-ink);border-radius:18px;box-shadow:6px 7px 0 color-mix(in srgb,var(--count-ink) 85%,transparent);padding:34px 8px 20px;gap:2px;transform:rotate(-2deg);}
+#JuneCountdown-{{ section.id }} .june-count__unit:nth-child(even) {transform:rotate(2deg);background:color-mix(in srgb,var(--count-accent) 32%,var(--count-bg));}
+#JuneCountdown-{{ section.id }} .june-count__unit:before,#JuneCountdown-{{ section.id }} .june-count__unit:after {content:"";position:absolute;top:-13px;width:12px;height:29px;background:var(--count-ink);border:3px solid var(--count-bg);border-radius:9px;left:22%;}
+#JuneCountdown-{{ section.id }} .june-count__unit:after {left:auto;right:22%;}
+#JuneCountdown-{{ section.id }} .june-count__number {display:block;}
+#JuneCountdown-{{ section.id }} .june-count__label {border-top:1px dashed color-mix(in srgb,var(--count-ink) 30%,transparent);padding-top:12px;}
+#JuneCountdown-{{ section.id }} .june-count__date {border:1px solid var(--count-ink);border-radius:6px;background:var(--count-bg);box-shadow:3px 3px 0 var(--count-accent);}
+#JuneCountdown-{{ section.id }} .june-count__play {display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:12px 22px;min-height:48px;border:2px solid var(--count-ink);border-radius:999px;background:var(--count-ink);color:var(--count-bg);font:inherit;cursor:pointer;}
+#JuneCountdown-{{ section.id }} .june-count__play:hover {background:var(--count-accent);color:var(--count-ink);}
+#JuneCountdown-{{ section.id }} .june-count__play:focus-visible {outline:3px solid var(--count-accent);outline-offset:5px;}
+#JuneCountdown-{{ section.id }} .june-count__spark {position:absolute;pointer-events:none;z-index:4;width:10px;height:18px;left:50%;top:64%;background:var(--count-accent);border:1px solid var(--count-ink);}
+@media(max-width:749px){
+ #JuneCountdown-{{ section.id }} {padding:40px 22px 48px;gap:25px;}
+ #JuneCountdown-{{ section.id }} .june-count__grid {gap:25px 17px;}
+ #JuneCountdown-{{ section.id }} .june-count__unit {padding:22px 4px 12px;border-radius:12px;box-shadow:4px 5px 0 var(--count-ink);}
+ #JuneCountdown-{{ section.id }} .june-count__number {font-size:min(20vw,{{ section.settings.numbers_size_mobile }}px);}
+}
+
+
+#JuneCountdown-{{ section.id }} .june-count__unit.has-peek {isolation:isolate;cursor:pointer;perspective:1000px;}
+#JuneCountdown-{{ section.id }} .june-count__peek {position:absolute;inset:8px;z-index:-1;transform:rotate(5deg) translate(4px,-12px);transition:transform .5s;overflow:hidden;border-radius:10px;background:var(--count-bg);border:1px solid var(--count-ink);}
+#JuneCountdown-{{ section.id }} .june-count__peek img {width:100%;height:100%;object-fit:contain;display:block;}
+#JuneCountdown-{{ section.id }} .june-count__face {position:absolute;inset:0;z-index:0;background:var(--count-bg);border-radius:15px;transition:transform .55s,opacity .35s;transform-origin:50% 0;pointer-events:none;}
+#JuneCountdown-{{ section.id }} .has-peek:nth-child(even) .june-count__face {background:color-mix(in srgb,var(--count-accent) 32%,var(--count-bg));}
+#JuneCountdown-{{ section.id }} .has-peek .june-count__number,#JuneCountdown-{{ section.id }} .has-peek .june-count__label {position:relative;z-index:1;pointer-events:none;transition:opacity .25s;}
+#JuneCountdown-{{ section.id }} .june-count__reveal {position:absolute;inset:0;z-index:3;border:0;border-radius:16px;background:transparent;cursor:pointer;color:inherit;}
+#JuneCountdown-{{ section.id }} .june-count__reveal:focus-visible {outline:4px solid var(--count-accent);outline-offset:7px;}
+#JuneCountdown-{{ section.id }} .june-count__hint {position:absolute;bottom:5px;right:12px;font:inherit;font-size:.65em;}
+#JuneCountdown-{{ section.id }} .has-peek.is-revealed .june-count__face {transform:rotateX(85deg);opacity:0;}
+#JuneCountdown-{{ section.id }} .has-peek.is-revealed .june-count__number,#JuneCountdown-{{ section.id }} .has-peek.is-revealed .june-count__label {opacity:0;}
+#JuneCountdown-{{ section.id }} .has-peek.is-revealed .june-count__peek {transform:none;z-index:2;}
+@media(hover:hover){#JuneCountdown-{{ section.id }} .has-peek:not(.is-revealed):hover .june-count__peek {transform:rotate(8deg) translate(9px,-22px);}}
+@media(prefers-reduced-motion:reduce){#JuneCountdown-{{ section.id }} .june-count__peek,#JuneCountdown-{{ section.id }} .june-count__face,#JuneCountdown-{{ section.id }} .june-count__number,#JuneCountdown-{{ section.id }} .june-count__label {transition:none;}}
+
+
+#JuneCountdown-{{ section.id }} .june-count__party {position:fixed;inset:0;z-index:9999;pointer-events:none;background:color-mix(in srgb,var(--count-ink) 68%,transparent);display:grid;place-items:center;}
+#JuneCountdown-{{ section.id }} .june-count__party-stage {display:flex;align-items:center;justify-content:center;gap:clamp(6px,3vw,40px);width:100%;padding:30px;}
+#JuneCountdown-{{ section.id }} .june-count__party-cover {display:block;width:min(32vw,270px);height:auto;max-height:65svh;object-fit:contain;transform:rotate(var(--fan));border:6px solid var(--count-bg);border-radius:8px;box-shadow:0 15px 45px #0005;position:relative;z-index:2;}
+#JuneCountdown-{{ section.id }} .june-count__party-bit {position:absolute;top:50%;left:50%;color:var(--bit-color);font-size:32px;line-height:1;}
+#JuneCountdown-{{ section.id }} .june-count__party-bit:empty {width:9px;height:22px;background:var(--bit-color);border-radius:3px;}
+
+/* Dimensional planner mockups; supplied cover artwork remains intact. */
+#JuneCountdown-{{ section.id }} .june-count__peek {display:flex;align-items:center;justify-content:center;padding:18px 18px 24px;overflow:visible;border:0;background:color-mix(in srgb,var(--count-accent) 14%,var(--count-bg));}
+#JuneCountdown-{{ section.id }} .june-count__planner {position:relative;height:100%;aspect-ratio:793/1000;max-width:88%;transform:rotate(-4deg);border-radius:3px 7px 7px 3px;background:#faf8f1;box-shadow:2px 2px 0 #e5e1d8,4px 4px 0 #fffdf7,6px 6px 0 #c9c5bb,8px 8px 0 #eeeae1,11px 15px 18px #0003;}
+#JuneCountdown-{{ section.id }} .june-count__planner img {position:relative;z-index:1;width:100%;height:100%;object-fit:contain;border-radius:3px 7px 7px 3px;display:block;box-shadow:inset 3px 0 6px #0003;}
+#JuneCountdown-{{ section.id }} .june-count__planner:before {content:"";position:absolute;z-index:3;left:-6.8%;top:4%;bottom:4%;width:12%;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%221000%22%20viewBox%3D%220%200%20100%201000%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22gold%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23b97d20%22%2F%3E%3Cstop%20offset%3D%22.32%22%20stop-color%3D%22%23f5d77e%22%2F%3E%3Cstop%20offset%3D%22.48%22%20stop-color%3D%22%23fff5ca%22%2F%3E%3Cstop%20offset%3D%22.7%22%20stop-color%3D%22%23d6a139%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23875517%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%2277%22%20y%3D%2217%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%2219%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%2221%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%2024C61%2018%207%2018%207%2024C7%2029%2058%2029%2091%2027M91%2037C61%2031%207%2031%207%2037C7%2042%2058%2042%2091%2040%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%2024C61%2018%207%2018%207%2024C7%2029%2058%2029%2091%2027M91%2037C61%2031%207%2031%207%2037C7%2042%2058%2042%2091%2040%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%2278%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%2280%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%2282%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%2085C61%2079%207%2079%207%2085C7%2090%2058%2090%2091%2088M91%2098C61%2092%207%2092%207%2098C7%20103%2058%20103%2091%20101%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%2085C61%2079%207%2079%207%2085C7%2090%2058%2090%2091%2088M91%2098C61%2092%207%2092%207%2098C7%20103%2058%20103%2091%20101%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22139%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22141%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22143%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20146C61%20140%207%20140%207%20146C7%20151%2058%20151%2091%20149M91%20159C61%20153%207%20153%207%20159C7%20164%2058%20164%2091%20162%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20146C61%20140%207%20140%207%20146C7%20151%2058%20151%2091%20149M91%20159C61%20153%207%20153%207%20159C7%20164%2058%20164%2091%20162%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22200%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22202%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22204%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20207C61%20201%207%20201%207%20207C7%20212%2058%20212%2091%20210M91%20220C61%20214%207%20214%207%20220C7%20225%2058%20225%2091%20223%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20207C61%20201%207%20201%207%20207C7%20212%2058%20212%2091%20210M91%20220C61%20214%207%20214%207%20220C7%20225%2058%20225%2091%20223%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22261%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22263%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22265%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20268C61%20262%207%20262%207%20268C7%20273%2058%20273%2091%20271M91%20281C61%20275%207%20275%207%20281C7%20286%2058%20286%2091%20284%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20268C61%20262%207%20262%207%20268C7%20273%2058%20273%2091%20271M91%20281C61%20275%207%20275%207%20281C7%20286%2058%20286%2091%20284%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22322%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22324%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22326%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20329C61%20323%207%20323%207%20329C7%20334%2058%20334%2091%20332M91%20342C61%20336%207%20336%207%20342C7%20347%2058%20347%2091%20345%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20329C61%20323%207%20323%207%20329C7%20334%2058%20334%2091%20332M91%20342C61%20336%207%20336%207%20342C7%20347%2058%20347%2091%20345%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22383%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22385%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22387%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20390C61%20384%207%20384%207%20390C7%20395%2058%20395%2091%20393M91%20403C61%20397%207%20397%207%20403C7%20408%2058%20408%2091%20406%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20390C61%20384%207%20384%207%20390C7%20395%2058%20395%2091%20393M91%20403C61%20397%207%20397%207%20403C7%20408%2058%20408%2091%20406%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22444%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22446%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22448%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20451C61%20445%207%20445%207%20451C7%20456%2058%20456%2091%20454M91%20464C61%20458%207%20458%207%20464C7%20469%2058%20469%2091%20467%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20451C61%20445%207%20445%207%20451C7%20456%2058%20456%2091%20454M91%20464C61%20458%207%20458%207%20464C7%20469%2058%20469%2091%20467%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22505%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22507%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22509%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20512C61%20506%207%20506%207%20512C7%20517%2058%20517%2091%20515M91%20525C61%20519%207%20519%207%20525C7%20530%2058%20530%2091%20528%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20512C61%20506%207%20506%207%20512C7%20517%2058%20517%2091%20515M91%20525C61%20519%207%20519%207%20525C7%20530%2058%20530%2091%20528%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22566%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22568%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22570%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20573C61%20567%207%20567%207%20573C7%20578%2058%20578%2091%20576M91%20586C61%20580%207%20580%207%20586C7%20591%2058%20591%2091%20589%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20573C61%20567%207%20567%207%20573C7%20578%2058%20578%2091%20576M91%20586C61%20580%207%20580%207%20586C7%20591%2058%20591%2091%20589%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22627%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22629%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22631%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20634C61%20628%207%20628%207%20634C7%20639%2058%20639%2091%20637M91%20647C61%20641%207%20641%207%20647C7%20652%2058%20652%2091%20650%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20634C61%20628%207%20628%207%20634C7%20639%2058%20639%2091%20637M91%20647C61%20641%207%20641%207%20647C7%20652%2058%20652%2091%20650%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22688%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22690%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22692%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20695C61%20689%207%20689%207%20695C7%20700%2058%20700%2091%20698M91%20708C61%20702%207%20702%207%20708C7%20713%2058%20713%2091%20711%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20695C61%20689%207%20689%207%20695C7%20700%2058%20700%2091%20698M91%20708C61%20702%207%20702%207%20708C7%20713%2058%20713%2091%20711%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22749%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22751%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22753%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20756C61%20750%207%20750%207%20756C7%20761%2058%20761%2091%20759M91%20769C61%20763%207%20763%207%20769C7%20774%2058%20774%2091%20772%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20756C61%20750%207%20750%207%20756C7%20761%2058%20761%2091%20759M91%20769C61%20763%207%20763%207%20769C7%20774%2058%20774%2091%20772%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22810%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22812%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22814%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20817C61%20811%207%20811%207%20817C7%20822%2058%20822%2091%20820M91%20830C61%20824%207%20824%207%20830C7%20835%2058%20835%2091%20833%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20817C61%20811%207%20811%207%20817C7%20822%2058%20822%2091%20820M91%20830C61%20824%207%20824%207%20830C7%20835%2058%20835%2091%20833%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22871%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22873%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22875%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20878C61%20872%207%20872%207%20878C7%20883%2058%20883%2091%20881M91%20891C61%20885%207%20885%207%20891C7%20896%2058%20896%2091%20894%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20878C61%20872%207%20872%207%20878C7%20883%2058%20883%2091%20881M91%20891C61%20885%207%20885%207%20891C7%20896%2058%20896%2091%20894%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Crect%20x%3D%2277%22%20y%3D%22932%22%20width%3D%2219%22%20height%3D%2224%22%20rx%3D%221%22%20fill%3D%22%235a452e%22%2F%3E%3Crect%20x%3D%2279%22%20y%3D%22934%22%20width%3D%2215%22%20height%3D%2220%22%20fill%3D%22%23b99c70%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22936%22%20width%3D%2213%22%20height%3D%2216%22%20fill%3D%22%23473523%22%2F%3E%3Cpath%20d%3D%22M91%20939C61%20933%207%20933%207%20939C7%20944%2058%20944%2091%20942M91%20952C61%20946%207%20946%207%20952C7%20957%2058%20957%2091%20955%22%20stroke%3D%22%23956019%22%20stroke-width%3D%223.4%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M91%20939C61%20933%207%20933%207%20939C7%20944%2058%20944%2091%20942M91%20952C61%20946%207%20946%207%20952C7%20957%2058%20957%2091%20955%22%20stroke%3D%22url(%23gold)%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E");background-repeat:no-repeat;background-size:100% 100%;filter:drop-shadow(.5px 1px .5px #0004);pointer-events:none;}
+#JuneCountdown-{{ section.id }} .june-count__planner:after {content:"";position:absolute;z-index:0;right:-4%;top:45%;width:5%;height:5%;border-radius:0 2px 2px 0;background:repeating-linear-gradient(90deg,#ae792b 0 1px,#d7b468 1px 2px,#c39743 2px 3px);box-shadow:1px 1px 2px #0003;pointer-events:none;}
+#JuneCountdown-{{ section.id }} .june-count__party-cover.june-count__planner {width:min(32vw,270px);height:auto;aspect-ratio:793/1000;max-height:65svh;padding:0;border:0;transform:rotate(var(--fan));}
+#JuneCountdown-{{ section.id }} .has-peek.is-revealed .june-count__hint {opacity:0;}
+@media(max-width:749px){#JuneCountdown-{{ section.id }} .june-count__peek {padding:14px 14px 22px;}#JuneCountdown-{{ section.id }} .june-count__planner:before {left:-6.8%;width:12%;background-size:100% 100%;}}
+#JuneCountdown-{{ section.id }} .june-count__planner,#JuneCountdown-{{ section.id }} .june-count__planner img {border-radius:1px;}
+</style>
+<june-launch-countdown id="JuneCountdown-{{ section.id }}" data-launch="{{ section.settings.launch_at | escape }}" data-motion="{{ section.settings.fun_motion }}" data-peek-duration="{{ section.settings.peek_duration }}">
+ <header><div class="june-count__sticker">{{ section.settings.sticker | escape }}</div><h1>{{ section.settings.title | escape }}</h1><p class="june-count__intro" data-intro>{{ section.settings.intro | escape }}</p></header>
+ <div class="june-count__grid" data-grid role="timer" aria-label="Time until preorders start" aria-live="off">
+  <div class="june-count__unit{% if section.settings.enable_peeks %} has-peek{% endif %}">{% if section.settings.enable_peeks %}<div class="june-count__peek" aria-hidden="true"><div class="june-count__planner">{% if section.settings.peek_cover_1 != blank %}{{ section.settings.peek_cover_1 | image_url: width: 800 | image_tag: loading: 'lazy', alt: '' }}{% else %}<img src="{{ 'june-preorder-peek-1.jpg' | asset_url }}" width="793" height="1000" alt="" loading="lazy">{% endif %}</div></div><span class="june-count__face" aria-hidden="true"></span><button type="button" class="june-count__reveal" data-peek aria-expanded="false" aria-label="Reveal a secret planner cover"><span class="june-count__hint" aria-hidden="true">Psst… tap me</span></button>{% endif %}<span class="june-count__number" data-unit="days">—</span><span class="june-count__label">Days</span></div>
+  <div class="june-count__unit"><span class="june-count__number" data-unit="hours">—</span><span class="june-count__label">Hours</span></div>
+  <div class="june-count__unit"><span class="june-count__number" data-unit="minutes">—</span><span class="june-count__label">Minutes</span></div>
+  <div class="june-count__unit{% if section.settings.enable_peeks %} has-peek{% endif %}">{% if section.settings.enable_peeks %}<div class="june-count__peek" aria-hidden="true"><div class="june-count__planner">{% if section.settings.peek_cover_2 != blank %}{{ section.settings.peek_cover_2 | image_url: width: 800 | image_tag: loading: 'lazy', alt: '' }}{% else %}<img src="{{ 'june-preorder-peek-2.jpg' | asset_url }}" width="793" height="1000" alt="" loading="lazy">{% endif %}</div></div><span class="june-count__face" aria-hidden="true"></span><button type="button" class="june-count__reveal" data-peek aria-expanded="false" aria-label="Reveal a secret planner cover"><span class="june-count__hint" aria-hidden="true">Psst… tap me</span></button>{% endif %}<span class="june-count__number" data-unit="seconds">—</span><span class="june-count__label">Seconds</span></div>
+ </div>
+ <div><time class="june-count__date" data-date datetime="{{ section.settings.launch_at | escape }}">{{ section.settings.launch_at | escape }}</time>{% if section.settings.show_confetti %}<div><button type="button" class="june-count__play" data-celebrate hidden><span aria-hidden="true">✳</span>{{ section.settings.confetti_label | escape }}</button></div>{% endif %}</div>
+ <div data-complete hidden><p class="june-count__complete">{{ section.settings.complete | escape }}</p>{% if section.settings.launch_link != blank %}<a class="june-count__cta" href="{{ section.settings.launch_link }}">{{ section.settings.cta | escape }}<span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8"/></svg></span></a>{% endif %}</div>
+ <span class="june-count__status" role="status" data-status></span>
+</june-launch-countdown>
+<script src="{{ 'june-2027-countdown.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "June · 2027 countdown",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page heading",
+      "default": "2027 Dated Planner"
+    },
+    {
+      "type": "text",
+      "id": "intro",
+      "label": "Countdown heading",
+      "default": "Preorders start in"
+    },
+    {
+      "type": "text",
+      "id": "launch_at",
+      "label": "Launch date and time",
+      "default": "2026-10-26T17:00:00+05:30",
+      "info": "ISO date with timezone. +05:30 is India time. Example: 2026-10-26T17:00:00+05:30"
+    },
+    {
+      "type": "text",
+      "id": "complete",
+      "label": "Message when countdown ends",
+      "default": "The preorder launch time has arrived."
+    },
+    {
+      "type": "text",
+      "id": "cta",
+      "label": "Optional launch button label",
+      "default": "Explore the 2027 planner"
+    },
+    {
+      "type": "url",
+      "id": "launch_link",
+      "label": "Button destination after countdown"
+    },
+    {
+      "type": "checkbox",
+      "id": "master_palette",
+      "label": "Use June master palette",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background fallback",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "ink",
+      "label": "Text fallback",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent fallback",
+      "default": "#F56A28"
+    },
+    {
+      "type": "header",
+      "content": "Playful details"
+    },
+    {
+      "type": "text",
+      "id": "sticker",
+      "label": "Launch sticker",
+      "default": "Good things take a little planning."
+    },
+    {
+      "type": "checkbox",
+      "id": "fun_motion",
+      "label": "Animate changing numbers",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_confetti",
+      "label": "Show cover surprise button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "confetti_label",
+      "label": "Cover surprise button label",
+      "default": "Give me a sneak peek"
+    },
+    {
+      "type": "header",
+      "content": "Heading typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Font family",
+      "default": "poppins_n9"
+    },
+    {
+      "type": "range",
+      "id": "heading_weight",
+      "label": "Font weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 900
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Desktop size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 54,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Mobile size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 34,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_tracking",
+      "label": "Letter spacing",
+      "min": -2,
+      "max": 4,
+      "step": 0.1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_leading",
+      "label": "Line spacing",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.4
+    },
+    {
+      "type": "header",
+      "content": "Countdown typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "numbers_font",
+      "label": "Font family",
+      "default": "poppins_n9"
+    },
+    {
+      "type": "range",
+      "id": "numbers_weight",
+      "label": "Font weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 900
+    },
+    {
+      "type": "range",
+      "id": "numbers_size",
+      "label": "Desktop size",
+      "min": 20,
+      "max": 240,
+      "step": 4,
+      "default": 180,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "numbers_size_mobile",
+      "label": "Mobile size",
+      "min": 20,
+      "max": 240,
+      "step": 4,
+      "default": 92,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "numbers_tracking",
+      "label": "Letter spacing",
+      "min": -2,
+      "max": 4,
+      "step": 0.1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "numbers_leading",
+      "label": "Line spacing",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.4
+    },
+    {
+      "type": "header",
+      "content": "Labels and supporting text"
+    },
+    {
+      "type": "font_picker",
+      "id": "copy_font",
+      "label": "Font family",
+      "default": "poppins_n5"
+    },
+    {
+      "type": "range",
+      "id": "copy_weight",
+      "label": "Font weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "copy_size",
+      "label": "Desktop size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "copy_size_mobile",
+      "label": "Mobile size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "copy_tracking",
+      "label": "Letter spacing",
+      "min": -2,
+      "max": 4,
+      "step": 0.1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "copy_leading",
+      "label": "Line spacing",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.4
+    },
+    {
+      "type": "header",
+      "content": "Hidden cover sneak peeks"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_peeks",
+      "label": "Enable hidden covers",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "peek_cover_1",
+      "label": "Cover behind days",
+      "info": "Defaults to Create Your Magic from the supplied PDF."
+    },
+    {
+      "type": "image_picker",
+      "id": "peek_cover_2",
+      "label": "Cover behind seconds",
+      "info": "Defaults to Romanticize Your Life from the supplied PDF."
+    },
+    {
+      "type": "range",
+      "id": "peek_duration",
+      "label": "Reveal duration",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "default": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "June · 2027 countdown"
+    }
+  ]
+}
+{% endschema %}

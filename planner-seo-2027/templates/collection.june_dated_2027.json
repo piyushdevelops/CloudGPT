@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "june_dated_collection": {
+      "type": "june-dated-collection",
+      "settings": {}
+    }
+  },
+  "order": ["june_dated_collection"]
+}

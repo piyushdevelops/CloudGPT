@@ -1,0 +1,95 @@
+{
+  "role": "UNPUBLISHED",
+  "checks": [
+    {
+      "filename": "config/settings_data.json",
+      "matches": true,
+      "checksumMd5": "dcd0d2c3a9548ba2ccc011cdeefab086"
+    },
+    {
+      "filename": "sections/footer-group.json",
+      "matches": true,
+      "checksumMd5": "159eadde44ae5229ca4922cbc639f049"
+    },
+    {
+      "filename": "sections/header-group.json",
+      "matches": true,
+      "checksumMd5": "863ac2eb7db2ef64aab4df5cdf814aa6"
+    },
+    {
+      "filename": "sections/june-a-little-curious.liquid",
+      "matches": true,
+      "checksumMd5": "ab2cba5405423be757f758434138de44"
+    },
+    {
+      "filename": "sections/june-find-your-glow.liquid",
+      "matches": true,
+      "checksumMd5": "182f999eece918b3710a6713b3bb347a"
+    },
+    {
+      "filename": "sections/june-footer.liquid",
+      "matches": true,
+      "checksumMd5": "fa3479b03409123a798abb53faeb52e7"
+    },
+    {
+      "filename": "sections/june-inside-discovery.liquid",
+      "matches": true,
+      "checksumMd5": "61dfd1b4153cb9a8750ff5aa64e3ea15"
+    },
+    {
+      "filename": "sections/june-layer-the-table.liquid",
+      "matches": true,
+      "checksumMd5": "234406abb8bc3bdd3f9a386657187f40"
+    },
+    {
+      "filename": "sections/june-make-room.liquid",
+      "matches": true,
+      "checksumMd5": "e58a6bd10dad7203a4b2bcc9141edae7"
+    },
+    {
+      "filename": "sections/june-next-chapter.liquid",
+      "matches": true,
+      "checksumMd5": "db7522ea863a6414caedc5b5a245ee64"
+    },
+    {
+      "filename": "sections/june-other-chapters.liquid",
+      "matches": true,
+      "checksumMd5": "e45d71ee34bfc62c0f65b1ec34c8f80c"
+    },
+    {
+      "filename": "sections/june-pick-your-pour.liquid",
+      "matches": true,
+      "checksumMd5": "0a4ec04b65befc2b613d8a1b7ee76366"
+    },
+    {
+      "filename": "sections/june-shop-the-corner.liquid",
+      "matches": true,
+      "checksumMd5": "73046ffbea982199ff065d2a48267ad2"
+    },
+    {
+      "filename": "sections/june-with-extras.liquid",
+      "matches": true,
+      "checksumMd5": "43e468fa6cbb45bdbb91b9caaab56240"
+    },
+    {
+      "filename": "sections/june-your-year.liquid",
+      "matches": true,
+      "checksumMd5": "d182c927a37b2dbca8725c94440fbf5a"
+    },
+    {
+      "filename": "sections/my-header.liquid",
+      "matches": true,
+      "checksumMd5": "0c0f380afb9c5845f6102bf090fc9187"
+    },
+    {
+      "filename": "snippets/june-photo-viewer.liquid",
+      "matches": true,
+      "checksumMd5": "e672ee2b6efa581de9c53dca574ec048"
+    },
+    {
+      "filename": "templates/index.json",
+      "matches": true,
+      "checksumMd5": "85f60b7b76ffef5fa20703329622c492"
+    }
+  ]
+}

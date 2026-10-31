@@ -1,0 +1,57 @@
+{% liquid
+  assign heading_font = section.settings.heading_font
+  assign heading_weight = section.settings.heading_weight
+  assign heading_variant = heading_font | font_modify: 'weight', heading_weight
+  assign numbers_font = section.settings.numbers_font
+  assign numbers_weight = section.settings.numbers_weight
+  assign numbers_variant = numbers_font | font_modify: 'weight', numbers_weight
+  assign copy_font = section.settings.copy_font
+  assign copy_weight = section.settings.copy_weight
+  assign copy_variant = copy_font | font_modify: 'weight', copy_weight
+%}
+<style>
+{{ heading_font | font_face: font_display: 'swap' }}{{ heading_variant | font_face: font_display: 'swap' }}
+{{ numbers_font | font_face: font_display: 'swap' }}{{ numbers_variant | font_face: font_display: 'swap' }}
+{{ copy_font | font_face: font_display: 'swap' }}{{ copy_variant | font_face: font_display: 'swap' }}
+#JuneCountdown-{{ section.id }} {
+ --count-bg:{{ section.settings.background }};--count-ink:{{ section.settings.ink }};--count-accent:{{ section.settings.accent }};
+ {% if section.settings.master_palette %}--count-bg:var(--june-bg,{{ section.settings.background }});--count-ink:var(--june-ink,{{ section.settings.ink }});--count-accent:var(--june-accent,{{ section.settings.accent }});{% endif %}
+ display:grid;align-content:center;gap:clamp(26px,5vw,70px);min-height:calc(100svh - 80px);max-width:1680px;margin:0 auto;padding:70px clamp(20px,5vw,90px);background:var(--count-bg);color:var(--count-ink);text-align:center;
+ font-family:{{ copy_font.family }},{{ copy_font.fallback_families }};font-weight:{{ copy_weight }};font-size:{{ section.settings.copy_size }}px;letter-spacing:{{ section.settings.copy_tracking }}px;line-height:{{ section.settings.copy_leading }};
+}
+#JuneCountdown-{{ section.id }} * {box-sizing:border-box;}
+#JuneCountdown-{{ section.id }} [hidden] {display:none!important;}
+#JuneCountdown-{{ section.id }} h1 {margin:0;color:inherit;font-family:{{ heading_font.family }},{{ heading_font.fallback_families }};font-weight:{{ heading_weight }};font-size:clamp(30px,5vw,{{ section.settings.heading_size }}px);letter-spacing:{{ section.settings.heading_tracking }}px;line-height:{{ section.settings.heading_leading }};}
+#JuneCountdown-{{ section.id }} p {margin:0;font:inherit;}
+#JuneCountdown-{{ section.id }} .june-count__intro {margin-top:14px;}
+#JuneCountdown-{{ section.id }} .june-count__grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+#JuneCountdown-{{ section.id }} .june-count__unit {display:grid;gap:16px;min-width:0;padding:12px 0 22px;border-bottom:2px solid var(--count-accent);}
+#JuneCountdown-{{ section.id }} .june-count__number {font-family:{{ numbers_font.family }},{{ numbers_font.fallback_families }};font-weight:{{ numbers_weight }};font-size:clamp(42px,11.5vw,{{ section.settings.numbers_size }}px);font-variant-numeric:tabular-nums;letter-spacing:{{ section.settings.numbers_tracking }}px;line-height:{{ section.settings.numbers_leading }};}
+#JuneCountdown-{{ section.id }} .june-count__label {font:inherit;text-transform:uppercase;}
+#JuneCountdown-{{ section.id }} .june-count__date {display:inline-block;max-width:100%;padding:12px 24px;border-radius:999px;background:color-mix(in srgb,var(--count-accent) 20%,var(--count-bg));}
+#JuneCountdown-{{ section.id }} .june-count__complete {font-size:clamp(28px,5vw,64px);font-weight:800;}
+#JuneCountdown-{{ section.id }} .june-count__cta {display:inline-flex;align-items:center;gap:18px;padding:10px 12px 10px 24px;min-height:52px;background:var(--count-accent);color:var(--count-ink);border-radius:999px;text-decoration:none;font:inherit;}
+#JuneCountdown-{{ section.id }} .june-count__cta span {display:grid;place-items:center;width:34px;height:34px;background:var(--june-dark,#171717);color:var(--june-on-dark,#fff);border-radius:50%;}
+#JuneCountdown-{{ section.id }} .june-count__cta svg {width:18px;height:18px;}
+#JuneCountdown-{{ section.id }} .june-count__status {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);}
+@media(max-width:749px){
+ #JuneCountdown-{{ section.id }} {padding:56px 20px;gap:36px;font-size:{{ section.settings.copy_size_mobile }}px;}
+ #JuneCountdown-{{ section.id }} h1 {font-size:{{ section.settings.heading_size_mobile }}px;}
+ #JuneCountdown-{{ section.id }} .june-count__grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px;}
+ #JuneCountdown-{{ section.id }} .june-count__number {font-size:min(22vw,{{ section.settings.numbers_size_mobile }}px);}
+ #JuneCountdown-{{ section.id }} .june-count__unit {gap:6px;padding-bottom:14px;}
+}
+</style>
+<june-launch-countdown id="JuneCountdown-{{ section.id }}" data-launch="{{ section.settings.launch_at | escape }}">
+ <header><h1>{{ section.settings.title | escape }}</h1><p class="june-count__intro" data-intro>{{ section.settings.intro | escape }}</p></header>
+ <div class="june-count__grid" data-grid role="timer" aria-label="Time until preorders start" aria-live="off">
+  <div class="june-count__unit"><span class="june-count__number" data-unit="days">—</span><span class="june-count__label">Days</span></div>
+  <div class="june-count__unit"><span class="june-count__number" data-unit="hours">—</span><span class="june-count__label">Hours</span></div>
+  <div class="june-count__unit"><span class="june-count__number" data-unit="minutes">—</span><span class="june-count__label">Minutes</span></div>
+  <div class="june-count__unit"><span class="june-count__number" data-unit="seconds">—</span><span class="june-count__label">Seconds</span></div>
+ </div>
+ <div><time class="june-count__date" data-date datetime="{{ section.settings.launch_at | escape }}">{{ section.settings.launch_at | escape }}</time></div>
+ <div data-complete hidden><p class="june-count__complete">{{ section.settings.complete | escape }}</p>{% if section.settings.launch_link != blank %}<a class="june-count__cta" href="{{ section.settings.launch_link }}">{{ section.settings.cta | escape }}<span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8"/></svg></span></a>{% endif %}</div>
+ <span class="june-count__status" role="status" data-status></span>
+</june-launch-countdown>
+<script src="{{ 'june-2027-countdown.js' | asset_url }}" defer></script>

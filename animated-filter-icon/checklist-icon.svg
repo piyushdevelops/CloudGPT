@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none" role="img" aria-labelledby="title">
+<title id="title">A planner checklist completing one task at a time</title>
+<style>
+:root{--ink:#000000;--accent:#bfaee9}
+.box,.rule{stroke:var(--ink);stroke-width:5;stroke-linecap:round}
+.check{stroke:var(--accent);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100;stroke-dashoffset:100;animation:first 8s cubic-bezier(.4,0,.2,1) infinite}
+.second{animation-name:second}.third{animation-name:third}
+.checks{animation:reset 8s ease-in-out infinite}
+@keyframes first{0%,10%{stroke-dashoffset:100;stroke:var(--accent)}15%{stroke-dashoffset:0;stroke:var(--accent)}23%,100%{stroke-dashoffset:0;stroke:var(--ink)}}
+@keyframes second{0%,18%{stroke-dashoffset:100;stroke:var(--accent)}23%{stroke-dashoffset:0;stroke:var(--accent)}31%,100%{stroke-dashoffset:0;stroke:var(--ink)}}
+@keyframes third{0%,26%{stroke-dashoffset:100;stroke:var(--accent)}31%{stroke-dashoffset:0;stroke:var(--accent)}39%,100%{stroke-dashoffset:0;stroke:var(--ink)}}
+@keyframes reset{0%,80%{opacity:1}88%,100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.checks,.check{animation:none;opacity:1}.check{stroke-dashoffset:0;stroke:var(--ink)}}
+</style>
+<g class="box"><rect x="18" y="20" width="22" height="22" rx="4"/><rect x="18" y="49" width="22" height="22" rx="4"/><rect x="18" y="78" width="22" height="22" rx="4"/></g>
+<g class="rule"><path d="M51 31H99M51 60H89M51 89H95"/></g>
+<g class="checks">
+<path class="check" pathLength="100" d="m24 31 3 3 7-7"/>
+<path class="check second" pathLength="100" d="m24 60 3 3 7-7"/>
+<path class="check third" pathLength="100" d="m24 89 3 3 7-7"/>
+</g>
+</svg>
+
+
+
+
+

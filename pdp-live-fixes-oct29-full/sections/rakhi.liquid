@@ -1,0 +1,1409 @@
+{% liquid
+  assign rakhi_collection = section.settings.collection
+  assign rendered_products = 0
+  assign first_image_is_critical = false
+  if section.index != blank and section.index <= 2
+    assign first_image_is_critical = true
+  endif
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --tjs-rakhi-bg: {{ section.settings.section_background }};
+    --tjs-rakhi-stage-bg: {{ section.settings.stage_background }};
+    --tjs-rakhi-text: {{ section.settings.text_color }};
+    --tjs-rakhi-muted: {{ section.settings.muted_text_color }};
+    --tjs-rakhi-accent: {{ section.settings.accent_color }};
+    --tjs-rakhi-card-bg: {{ section.settings.card_background }};
+    --tjs-rakhi-ring: {{ section.settings.ring_color }};
+    --tjs-rakhi-radius: {{ section.settings.corner_radius }}px;
+    --tjs-rakhi-center-size: {{ section.settings.center_size_desktop }}px;
+    --tjs-rakhi-center-size-mobile: {{ section.settings.center_size_mobile }}px;
+    --tjs-rakhi-product-scale: {{ section.settings.product_scale }}%;
+    --tjs-rakhi-image-fit: {{ section.settings.circle_image_fit }};
+    --tjs-rakhi-image-position-x: {{ section.settings.circle_image_position_x }}%;
+    --tjs-rakhi-image-position-y: {{ section.settings.circle_image_position_y }}%;
+    --tjs-rakhi-image-inset: {{ section.settings.circle_image_inset }}%;
+    --tjs-rakhi-image-zoom: {{ section.settings.circle_image_zoom | times: 0.01 }};
+    --tjs-rakhi-max-width: {{ section.settings.max_width }}px;
+    --tjs-rakhi-page-gutter: {{ section.settings.page_gutter }}px;
+    --tjs-rakhi-mobile-gutter: {{ section.settings.mobile_gutter }}px;
+    --tjs-rakhi-scroll-desktop: {{ section.settings.scroll_length_desktop }}vh;
+    --tjs-rakhi-scroll-mobile: {{ section.settings.scroll_length_mobile }}vh;
+    --tjs-rakhi-sticky-top: {{ section.settings.sticky_top }}px;
+    --tjs-rakhi-shadow-opacity: {{ section.settings.shadow_strength | times: 0.01 }};
+    --tjs-rakhi-info-gap-desktop: {{ section.settings.product_info_gap_desktop }}px;
+    --tjs-rakhi-info-gap-mobile: {{ section.settings.product_info_gap_mobile }}px;
+    --tjs-rakhi-mandala-color: {{ section.settings.mandala_color }};
+    --tjs-rakhi-mandala-opacity: {{ section.settings.mandala_opacity | times: 0.01 }};
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story,
+  #shopify-section-{{ section.id }} .tjs-rakhi-story * {
+    box-sizing: border-box;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story {
+    position: relative;
+    min-height: var(--tjs-rakhi-scroll-desktop);
+    background: var(--tjs-rakhi-bg);
+    color: var(--tjs-rakhi-text);
+    font-family: var(--font-body-family, Arial, sans-serif);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__sticky {
+    position: sticky;
+    top: var(--tjs-rakhi-sticky-top);
+    height: calc(100svh - var(--tjs-rakhi-sticky-top));
+    min-height: 620px;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+      radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--tjs-rakhi-accent) 15%, transparent) 0%, transparent 25%),
+      linear-gradient(145deg, color-mix(in srgb, var(--tjs-rakhi-stage-bg) 98%, white) 0%, var(--tjs-rakhi-stage-bg) 66%, color-mix(in srgb, var(--tjs-rakhi-stage-bg) 92%, var(--tjs-rakhi-accent)) 100%);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__sticky::before {
+    content: '';
+    position: absolute;
+    inset: 18px;
+    z-index: 20;
+    border: 1px solid color-mix(in srgb, var(--tjs-rakhi-text) 7%, transparent);
+    border-radius: var(--tjs-rakhi-radius);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__sticky::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 0;
+    width: min(68vw, 900px);
+    aspect-ratio: 1;
+    border: 1px solid color-mix(in srgb, var(--tjs-rakhi-ring) 24%, transparent);
+    border-radius: 50%;
+    opacity: .52;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__mandala-wrap {
+    position: absolute;
+    left: 50%;
+    top: 54%;
+    z-index: 1;
+    width: min(72vw, 1040px);
+    aspect-ratio: 1;
+    opacity: var(--tjs-rakhi-mandala-opacity);
+    transform: translate(-50%, -50%) scale(.88);
+    transform-origin: center center;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__mandala {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+    filter: drop-shadow(0 0 24px color-mix(in srgb, var(--tjs-rakhi-mandala-color) 10%, transparent));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__mandala-segment,
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__mandala-dot {
+    fill: none;
+    stroke: color-mix(in srgb, var(--tjs-rakhi-mandala-color) 82%, transparent);
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+    opacity: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__mandala-segment.is-soft {
+    stroke: color-mix(in srgb, var(--tjs-rakhi-mandala-color) 52%, transparent);
+    stroke-width: .8;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__mandala-segment.is-strong {
+    stroke-width: 1.15;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__mandala-dot {
+    fill: color-mix(in srgb, var(--tjs-rakhi-mandala-color) 72%, transparent);
+    stroke: none;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__inner {
+    position: relative;
+    z-index: 2;
+    width: min(100%, var(--tjs-rakhi-max-width));
+    height: 100%;
+    margin-inline: auto;
+    padding-inline: var(--tjs-rakhi-page-gutter);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__header {
+    position: absolute;
+    top: clamp(34px, 5vh, 68px);
+    left: 50%;
+    z-index: 14;
+    width: min(760px, calc(100% - 80px));
+    text-align: center;
+    transform: translateX(-50%);
+    transition: opacity .35s ease, transform .35s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+    color: var(--tjs-rakhi-accent);
+    font-size: 10px;
+    font-weight: 760;
+    line-height: 1;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__eyebrow::before,
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__eyebrow::after {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    opacity: .7;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__heading {
+    margin: 0;
+    color: var(--tjs-rakhi-text);
+    font-family: var(--font-heading-family, var(--font-body-family, Arial, sans-serif));
+    font-size: clamp(40px, 5.2vw, {{ section.settings.heading_size }}px);
+    font-weight: 500;
+    line-height: .95;
+    letter-spacing: -.046em;
+    text-wrap: balance;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__description {
+    max-width: 56ch;
+    margin: 14px auto 0;
+    color: var(--tjs-rakhi-muted);
+    font-size: 13px;
+    line-height: 1.58;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__description > * {
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__hands {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__hand {
+    position: absolute;
+    top: var(--hand-y-desktop, 50%);
+    z-index: var(--hand-z, 6);
+    width: var(--hand-width-desktop, 40vw);
+    max-width: min(70vw, 760px);
+    opacity: 0;
+    transform-origin: var(--hand-origin, 50% 50%);
+    will-change: transform, opacity;
+    filter: drop-shadow(0 24px 34px rgba(28, 21, 17, .16));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__hand[data-side='left'] {
+    left: 0;
+    transform-origin: left center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__hand[data-side='right'] {
+    right: 0;
+    transform-origin: right center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__hand-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__center {
+    position: absolute;
+    left: 50%;
+    top: 53%;
+    z-index: 12;
+    width: var(--tjs-rakhi-center-size);
+    height: var(--tjs-rakhi-center-size);
+    opacity: .18;
+    transform: translate(-50%, -50%) scale(.82);
+    will-change: transform, opacity;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__center::before {
+    content: '';
+    position: absolute;
+    inset: -18%;
+    z-index: 0;
+    border: 1px solid color-mix(in srgb, var(--tjs-rakhi-ring) 48%, transparent);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 12px color-mix(in srgb, var(--tjs-rakhi-ring) 5%, transparent),
+      0 28px 70px rgba(31, 24, 20, .14);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__center::after {
+    content: '';
+    position: absolute;
+    inset: -30%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--tjs-rakhi-accent) 16%, transparent) 0%, transparent 68%);
+    filter: blur(10px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__product-stage {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--tjs-rakhi-text) 9%, transparent);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 42% 32%, rgba(255,255,255,.95) 0%, color-mix(in srgb, var(--tjs-rakhi-card-bg) 94%, white) 46%, var(--tjs-rakhi-card-bg) 100%);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.8) inset,
+      0 24px 54px rgba(28, 21, 17, var(--tjs-rakhi-shadow-opacity));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__slide {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    opacity: 0;
+    transform: translate3d(18%, 0, 0) scale(.92) rotate(4deg);
+    transition:
+      opacity .42s cubic-bezier(.22, .8, .3, 1),
+      transform .54s cubic-bezier(.22, .8, .3, 1);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__slide.is-active {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__slide.is-leaving {
+    opacity: 0;
+    transform: translate3d(-18%, 0, 0) scale(.92) rotate(-4deg);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__product-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__media {
+    position: absolute;
+    inset: var(--tjs-rakhi-image-inset);
+    display: block;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__product-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: var(--tjs-rakhi-image-fit);
+    object-position: var(--tjs-rakhi-image-position-x) var(--tjs-rakhi-image-position-y);
+    transform: scale(var(--tjs-rakhi-image-zoom));
+    transform-origin: center center;
+    filter:
+      drop-shadow(0 2px 1px rgba(28, 20, 16, .10))
+      drop-shadow(0 18px 24px rgba(28, 20, 16, .16));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__empty {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    padding: 30px;
+    color: var(--tjs-rakhi-muted);
+    text-align: center;
+    font-size: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__product-info {
+    position: absolute;
+    left: 50%;
+    top: calc(53% + (var(--tjs-rakhi-center-size) / 2) + var(--tjs-rakhi-info-gap-desktop));
+    z-index: 14;
+    width: min(580px, calc(100% - 56px));
+    opacity: 0;
+    transform: translate(-50%, 18px);
+    will-change: transform, opacity;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__info-card {
+    position: relative;
+    display: none;
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 15px;
+    min-height: 98px;
+    padding: 12px 13px 12px 12px;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--tjs-rakhi-text) 12%, transparent);
+    border-radius: 20px;
+    background: color-mix(in srgb, var(--tjs-rakhi-card-bg) 98%, white);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, .88) inset,
+      0 20px 46px rgba(28, 21, 17, .14);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__info-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 18px;
+    right: 18px;
+    height: 2px;
+    border-radius: 0 0 999px 999px;
+    background: linear-gradient(90deg, transparent, var(--tjs-rakhi-accent), transparent);
+    opacity: .72;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__info-card.is-active {
+    display: grid;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__info-thumb {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--tjs-rakhi-text) 9%, transparent);
+    border-radius: 15px;
+    background: color-mix(in srgb, var(--tjs-rakhi-card-bg) 93%, var(--tjs-rakhi-stage-bg));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__info-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255, 255, 255, .52);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__info-thumb-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__info-copy {
+    min-width: 0;
+    display: grid;
+    gap: 6px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__info-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__info-kicker,
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__save-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 21px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 8px;
+    font-weight: 760;
+    line-height: 1;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__info-kicker {
+    color: var(--tjs-rakhi-accent);
+    background: color-mix(in srgb, var(--tjs-rakhi-accent) 10%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__save-badge {
+    color: var(--tjs-rakhi-text);
+    background: color-mix(in srgb, var(--tjs-rakhi-text) 7%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__product-title {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: var(--tjs-rakhi-text);
+    font-size: 15px;
+    font-weight: 680;
+    line-height: 1.23;
+    letter-spacing: -.012em;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 7px;
+    color: var(--tjs-rakhi-text);
+    font-size: 13px;
+    font-weight: 760;
+    line-height: 1.1;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__compare-price {
+    color: var(--tjs-rakhi-muted);
+    font-size: 10px;
+    font-weight: 520;
+    text-decoration: line-through;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 0 18px;
+    border: 1px solid var(--tjs-rakhi-text);
+    border-radius: 999px;
+    background: var(--tjs-rakhi-text);
+    color: var(--tjs-rakhi-card-bg);
+    font-size: 9px;
+    font-weight: 760;
+    line-height: 1;
+    letter-spacing: .11em;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__button svg {
+    width: 14px;
+    height: 14px;
+    transition: transform .25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__button:hover,
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__button:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(28, 21, 17, .16);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__button:hover svg,
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__button:focus-visible svg {
+    transform: translateX(2px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__progress {
+    position: absolute;
+    left: 50%;
+    bottom: 26px;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    transform: translateX(-50%);
+    transition: opacity .3s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__dot {
+    width: 22px;
+    height: 2px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--tjs-rakhi-text) 18%, transparent);
+    transition: width .32s ease, background-color .32s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__dot.is-active {
+    width: 40px;
+    background: var(--tjs-rakhi-accent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__scroll-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    z-index: 16;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--tjs-rakhi-muted);
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    transform: translateX(-50%);
+    transition: opacity .3s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-rakhi-story__scroll-hint::after {
+    content: '';
+    width: 34px;
+    height: 1px;
+    background: currentColor;
+    animation: tjs-rakhi-hint-{{ section.id }} 1.8s ease-in-out infinite;
+  }
+
+  @keyframes tjs-rakhi-hint-{{ section.id }} {
+    0%, 100% { transform: scaleX(.55); transform-origin: left center; }
+    50% { transform: scaleX(1); transform-origin: left center; }
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tjs-rakhi-story {
+      min-height: var(--tjs-rakhi-scroll-mobile);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__sticky {
+      height: clamp(620px, 82svh, 700px);
+      min-height: 0;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__sticky::before {
+      inset: 4px;
+      border-radius: min(var(--tjs-rakhi-radius), 18px);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__inner {
+      padding-inline: var(--tjs-rakhi-mobile-gutter);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__header {
+      top: 12px;
+      width: calc(100% - 28px);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__mandala-wrap {
+      width: min(98vw, 620px);
+      top: 44%;
+      opacity: calc(var(--tjs-rakhi-mandala-opacity) * .92);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__heading {
+      font-size: clamp(28px, 8.4vw, {{ section.settings.mobile_heading_size }}px);
+      line-height: .96;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__eyebrow {
+      margin-bottom: 7px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__description {
+      display: -webkit-box;
+      max-width: 34ch;
+      margin-top: 8px;
+      overflow: hidden;
+      font-size: 10.5px;
+      line-height: 1.4;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__hand {
+      top: calc(var(--hand-y-mobile, 52%) - 7%);
+      width: var(--hand-width-mobile, 74vw);
+      max-width: 110vw;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__hand[data-role='female_secondary'][data-hide-mobile='true'] {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__center {
+      top: 44%;
+      width: var(--tjs-rakhi-center-size-mobile);
+      height: var(--tjs-rakhi-center-size-mobile);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__product-info {
+      top: calc(44% + (var(--tjs-rakhi-center-size-mobile) / 2) + var(--tjs-rakhi-info-gap-mobile));
+      width: min(390px, calc(100% - 16px));
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__info-card {
+      grid-template-columns: 48px minmax(0, 1fr) auto;
+      min-height: 0;
+      padding: 9px;
+      border-radius: 15px;
+      gap: 9px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__info-thumb {
+      width: 48px;
+      height: 48px;
+      border-radius: 11px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__info-copy {
+      gap: 5px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__info-kicker,
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__save-badge {
+      min-height: 18px;
+      padding-inline: 6px;
+      font-size: 7px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__product-title {
+      font-size: 12.5px;
+      line-height: 1.22;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__price {
+      font-size: 11.5px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__button {
+      grid-column: auto;
+      width: auto;
+      min-width: 78px;
+      min-height: 36px;
+      padding-inline: 12px;
+      font-size: 7.5px;
+      align-self: center;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__progress {
+      bottom: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__scroll-hint {
+      bottom: 8px;
+    }
+
+  }
+
+  @media screen and (max-width: 359px) {
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__info-card {
+      grid-template-columns: 44px minmax(0, 1fr);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__button {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__scroll-hint::after,
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__slide,
+    #shopify-section-{{ section.id }} .tjs-rakhi-story__button {
+      animation: none !important;
+      transition-duration: .01ms !important;
+    }
+  }
+{% endstyle %}
+
+<section
+  class="tjs-rakhi-story"
+  data-tjs-rakhi-story="{{ section.id }}"
+  data-product-count="0"
+  data-show-progress="{{ section.settings.show_progress }}"
+  data-mandala-opacity="{{ section.settings.mandala_opacity | times: 0.01 }}"
+>
+  <div class="tjs-rakhi-story__sticky">
+    <div class="tjs-rakhi-story__mandala-wrap" aria-hidden="true" data-rakhi-mandala-wrap>
+      <svg class="tjs-rakhi-story__mandala" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg" data-rakhi-mandala>
+        <circle class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.000" cx="500" cy="500" r="420" />
+        <circle class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.025" cx="500" cy="500" r="348" />
+        <circle class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.050" cx="500" cy="500" r="265" />
+        <circle class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.075" cx="500" cy="500" r="178" />
+        <circle class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.100" cx="500" cy="500" r="104" />
+        <g transform="rotate(0 500 500)"><path class="tjs-rakhi-story__mandala-segment is-strong" data-mandala-delay="0.045" d="M500 262 C454 226 460 150 500 82 C540 150 546 226 500 262 Z" /></g>
+        <g transform="rotate(30 500 500)"><path class="tjs-rakhi-story__mandala-segment is-strong" data-mandala-delay="0.053" d="M500 262 C454 226 460 150 500 82 C540 150 546 226 500 262 Z" /></g>
+        <g transform="rotate(60 500 500)"><path class="tjs-rakhi-story__mandala-segment is-strong" data-mandala-delay="0.061" d="M500 262 C454 226 460 150 500 82 C540 150 546 226 500 262 Z" /></g>
+        <g transform="rotate(90 500 500)"><path class="tjs-rakhi-story__mandala-segment is-strong" data-mandala-delay="0.069" d="M500 262 C454 226 460 150 500 82 C540 150 546 226 500 262 Z" /></g>
+        <g transform="rotate(120 500 500)"><path class="tjs-rakhi-story__mandala-segment is-strong" data-mandala-delay="0.077" d="M500 262 C454 226 460 150 500 82 C540 150 546 226 500 262 Z" /></g>
+        <g transform="rotate(150 500 500)"><path class="tjs-rakhi-story__mandala-segment is-strong" data-mandala-delay="0.085" d="M500 262 C454 226 460 150 500 82 C540 150 546 226 500 262 Z" /></g>
+        <g transform="rotate(180 500 500)"><path class="tjs-rakhi-story__mandala-segment is-strong" data-mandala-delay="0.093" d="M500 262 C454 226 460 150 500 82 C540 150 546 226 500 262 Z" /></g>
+        <g transform="rotate(210 500 500)"><path class="tjs-rakhi-story__mandala-segment is-strong" data-mandala-delay="0.101" d="M500 262 C454 226 460 150 500 82 C540 150 546 226 500 262 Z" /></g>
+        <g transform="rotate(240 500 500)"><path class="tjs-rakhi-story__mandala-segment is-strong" data-mandala-delay="0.109" d="M500 262 C454 226 460 150 500 82 C540 150 546 226 500 262 Z" /></g>
+        <g transform="rotate(270 500 500)"><path class="tjs-rakhi-story__mandala-segment is-strong" data-mandala-delay="0.117" d="M500 262 C454 226 460 150 500 82 C540 150 546 226 500 262 Z" /></g>
+        <g transform="rotate(300 500 500)"><path class="tjs-rakhi-story__mandala-segment is-strong" data-mandala-delay="0.125" d="M500 262 C454 226 460 150 500 82 C540 150 546 226 500 262 Z" /></g>
+        <g transform="rotate(330 500 500)"><path class="tjs-rakhi-story__mandala-segment is-strong" data-mandala-delay="0.133" d="M500 262 C454 226 460 150 500 82 C540 150 546 226 500 262 Z" /></g>
+        <g transform="rotate(15 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.075" d="M500 350 C468 324 470 270 500 222 C530 270 532 324 500 350 Z" /></g>
+        <g transform="rotate(45 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.082" d="M500 350 C468 324 470 270 500 222 C530 270 532 324 500 350 Z" /></g>
+        <g transform="rotate(75 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.089" d="M500 350 C468 324 470 270 500 222 C530 270 532 324 500 350 Z" /></g>
+        <g transform="rotate(105 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.096" d="M500 350 C468 324 470 270 500 222 C530 270 532 324 500 350 Z" /></g>
+        <g transform="rotate(135 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.103" d="M500 350 C468 324 470 270 500 222 C530 270 532 324 500 350 Z" /></g>
+        <g transform="rotate(165 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.110" d="M500 350 C468 324 470 270 500 222 C530 270 532 324 500 350 Z" /></g>
+        <g transform="rotate(195 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.117" d="M500 350 C468 324 470 270 500 222 C530 270 532 324 500 350 Z" /></g>
+        <g transform="rotate(225 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.124" d="M500 350 C468 324 470 270 500 222 C530 270 532 324 500 350 Z" /></g>
+        <g transform="rotate(255 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.131" d="M500 350 C468 324 470 270 500 222 C530 270 532 324 500 350 Z" /></g>
+        <g transform="rotate(285 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.138" d="M500 350 C468 324 470 270 500 222 C530 270 532 324 500 350 Z" /></g>
+        <g transform="rotate(315 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.145" d="M500 350 C468 324 470 270 500 222 C530 270 532 324 500 350 Z" /></g>
+        <g transform="rotate(345 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.152" d="M500 350 C468 324 470 270 500 222 C530 270 532 324 500 350 Z" /></g>
+        <g transform="rotate(0 500 500)"><path class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.105" d="M500 442 C478 424 480 390 500 356 C520 390 522 424 500 442 Z" /></g>
+        <g transform="rotate(30 500 500)"><path class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.111" d="M500 442 C478 424 480 390 500 356 C520 390 522 424 500 442 Z" /></g>
+        <g transform="rotate(60 500 500)"><path class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.117" d="M500 442 C478 424 480 390 500 356 C520 390 522 424 500 442 Z" /></g>
+        <g transform="rotate(90 500 500)"><path class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.123" d="M500 442 C478 424 480 390 500 356 C520 390 522 424 500 442 Z" /></g>
+        <g transform="rotate(120 500 500)"><path class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.129" d="M500 442 C478 424 480 390 500 356 C520 390 522 424 500 442 Z" /></g>
+        <g transform="rotate(150 500 500)"><path class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.135" d="M500 442 C478 424 480 390 500 356 C520 390 522 424 500 442 Z" /></g>
+        <g transform="rotate(180 500 500)"><path class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.141" d="M500 442 C478 424 480 390 500 356 C520 390 522 424 500 442 Z" /></g>
+        <g transform="rotate(210 500 500)"><path class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.147" d="M500 442 C478 424 480 390 500 356 C520 390 522 424 500 442 Z" /></g>
+        <g transform="rotate(240 500 500)"><path class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.153" d="M500 442 C478 424 480 390 500 356 C520 390 522 424 500 442 Z" /></g>
+        <g transform="rotate(270 500 500)"><path class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.159" d="M500 442 C478 424 480 390 500 356 C520 390 522 424 500 442 Z" /></g>
+        <g transform="rotate(300 500 500)"><path class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.165" d="M500 442 C478 424 480 390 500 356 C520 390 522 424 500 442 Z" /></g>
+        <g transform="rotate(330 500 500)"><path class="tjs-rakhi-story__mandala-segment" data-mandala-delay="0.171" d="M500 442 C478 424 480 390 500 356 C520 390 522 424 500 442 Z" /></g>
+        <g transform="rotate(0 500 500)"><circle class="tjs-rakhi-story__mandala-dot" data-mandala-delay="0.130" cx="500" cy="108" r="3.2" /></g>
+        <g transform="rotate(30 500 500)"><circle class="tjs-rakhi-story__mandala-dot" data-mandala-delay="0.135" cx="500" cy="108" r="3.2" /></g>
+        <g transform="rotate(60 500 500)"><circle class="tjs-rakhi-story__mandala-dot" data-mandala-delay="0.140" cx="500" cy="108" r="3.2" /></g>
+        <g transform="rotate(90 500 500)"><circle class="tjs-rakhi-story__mandala-dot" data-mandala-delay="0.145" cx="500" cy="108" r="3.2" /></g>
+        <g transform="rotate(120 500 500)"><circle class="tjs-rakhi-story__mandala-dot" data-mandala-delay="0.150" cx="500" cy="108" r="3.2" /></g>
+        <g transform="rotate(150 500 500)"><circle class="tjs-rakhi-story__mandala-dot" data-mandala-delay="0.155" cx="500" cy="108" r="3.2" /></g>
+        <g transform="rotate(180 500 500)"><circle class="tjs-rakhi-story__mandala-dot" data-mandala-delay="0.160" cx="500" cy="108" r="3.2" /></g>
+        <g transform="rotate(210 500 500)"><circle class="tjs-rakhi-story__mandala-dot" data-mandala-delay="0.165" cx="500" cy="108" r="3.2" /></g>
+        <g transform="rotate(240 500 500)"><circle class="tjs-rakhi-story__mandala-dot" data-mandala-delay="0.170" cx="500" cy="108" r="3.2" /></g>
+        <g transform="rotate(270 500 500)"><circle class="tjs-rakhi-story__mandala-dot" data-mandala-delay="0.175" cx="500" cy="108" r="3.2" /></g>
+        <g transform="rotate(300 500 500)"><circle class="tjs-rakhi-story__mandala-dot" data-mandala-delay="0.180" cx="500" cy="108" r="3.2" /></g>
+        <g transform="rotate(330 500 500)"><circle class="tjs-rakhi-story__mandala-dot" data-mandala-delay="0.185" cx="500" cy="108" r="3.2" /></g>
+        <g transform="rotate(15 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.145" d="M500 484 C490 474 491 456 500 440 C509 456 510 474 500 484 Z" /></g>
+        <g transform="rotate(45 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.149" d="M500 484 C490 474 491 456 500 440 C509 456 510 474 500 484 Z" /></g>
+        <g transform="rotate(75 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.153" d="M500 484 C490 474 491 456 500 440 C509 456 510 474 500 484 Z" /></g>
+        <g transform="rotate(105 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.157" d="M500 484 C490 474 491 456 500 440 C509 456 510 474 500 484 Z" /></g>
+        <g transform="rotate(135 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.161" d="M500 484 C490 474 491 456 500 440 C509 456 510 474 500 484 Z" /></g>
+        <g transform="rotate(165 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.165" d="M500 484 C490 474 491 456 500 440 C509 456 510 474 500 484 Z" /></g>
+        <g transform="rotate(195 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.169" d="M500 484 C490 474 491 456 500 440 C509 456 510 474 500 484 Z" /></g>
+        <g transform="rotate(225 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.173" d="M500 484 C490 474 491 456 500 440 C509 456 510 474 500 484 Z" /></g>
+        <g transform="rotate(255 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.177" d="M500 484 C490 474 491 456 500 440 C509 456 510 474 500 484 Z" /></g>
+        <g transform="rotate(285 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.181" d="M500 484 C490 474 491 456 500 440 C509 456 510 474 500 484 Z" /></g>
+        <g transform="rotate(315 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.185" d="M500 484 C490 474 491 456 500 440 C509 456 510 474 500 484 Z" /></g>
+        <g transform="rotate(345 500 500)"><path class="tjs-rakhi-story__mandala-segment is-soft" data-mandala-delay="0.189" d="M500 484 C490 474 491 456 500 440 C509 456 510 474 500 484 Z" /></g>
+      </svg>
+    </div>
+    <div class="tjs-rakhi-story__inner">
+      <div class="tjs-rakhi-story__header" data-rakhi-header>
+        {% if section.settings.eyebrow != blank %}
+          <p class="tjs-rakhi-story__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h2 class="tjs-rakhi-story__heading">{{ section.settings.heading | escape }}</h2>
+        {% endif %}
+        {% if section.settings.description != blank %}
+          <div class="tjs-rakhi-story__description rte">{{ section.settings.description }}</div>
+        {% endif %}
+      </div>
+
+      <div class="tjs-rakhi-story__hands" aria-hidden="true">
+        {% for block in section.blocks %}
+          {% if block.type == 'hand' and block.settings.image != blank %}
+            {% liquid
+              assign hand_side = 'right'
+              assign hand_z = 7
+              if block.settings.role == 'male_left'
+                assign hand_side = 'left'
+                assign hand_z = 8
+              elsif block.settings.role == 'female_secondary'
+                assign hand_z = 6
+              endif
+            %}
+            <div
+              class="tjs-rakhi-story__hand"
+              data-rakhi-hand
+              data-role="{{ block.settings.role }}"
+              data-side="{{ hand_side }}"
+              data-hide-mobile="{{ block.settings.hide_on_mobile }}"
+              data-width-desktop="{{ block.settings.width_desktop }}"
+              data-width-mobile="{{ block.settings.width_mobile }}"
+              data-y-desktop="{{ block.settings.y_desktop }}"
+              data-y-mobile="{{ block.settings.y_mobile }}"
+              data-stop-x-desktop="{{ block.settings.stop_x_desktop }}"
+              data-stop-x-mobile="{{ block.settings.stop_x_mobile }}"
+              data-auto-stop-circle="{{ block.settings.auto_stop_circle }}"
+              data-circle-gap-desktop="{{ block.settings.circle_gap_desktop }}"
+              data-circle-gap-mobile="{{ block.settings.circle_gap_mobile }}"
+              data-edge-compensation-desktop="{{ block.settings.edge_compensation_desktop }}"
+              data-edge-compensation-mobile="{{ block.settings.edge_compensation_mobile }}"
+              data-rotation-desktop="{{ block.settings.rotation_desktop }}"
+              data-rotation-mobile="{{ block.settings.rotation_mobile }}"
+              style="
+                --hand-width-desktop: {{ block.settings.width_desktop }}vw;
+                --hand-width-mobile: {{ block.settings.width_mobile }}vw;
+                --hand-y-desktop: {{ block.settings.y_desktop }}%;
+                --hand-y-mobile: {{ block.settings.y_mobile }}%;
+                --hand-z: {{ hand_z }};
+              "
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.image
+                | image_url: width: 2200
+                | image_tag:
+                  class: 'tjs-rakhi-story__hand-image',
+                  loading: 'lazy',
+                  decoding: 'async',
+                  widths: '480, 640, 800, 1000, 1200, 1500, 1800, 2200',
+                  sizes: '(max-width: 749px) 90vw, 48vw',
+                  alt: block.settings.alt_text
+              }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="tjs-rakhi-story__center" data-rakhi-center>
+        <div class="tjs-rakhi-story__product-stage">
+          {% if rakhi_collection != blank %}
+            {% for product in rakhi_collection.products limit: 50 %}
+              {% if section.settings.hide_sold_out and product.available == false %}
+                {% continue %}
+              {% endif %}
+              {% if rendered_products >= section.settings.product_limit %}
+                {% break %}
+              {% endif %}
+
+              {% liquid
+                assign product_image = product.featured_image
+                assign custom_circle_image = blank
+                if section.settings.enable_circle_image_metafield and section.settings.circle_image_metafield_namespace != blank and section.settings.circle_image_metafield_key != blank
+                  assign circle_metafield = product.metafields[section.settings.circle_image_metafield_namespace][section.settings.circle_image_metafield_key]
+                  if circle_metafield != blank
+                    assign custom_circle_image = circle_metafield.value
+                  endif
+                endif
+                if custom_circle_image != blank
+                  assign product_image = custom_circle_image
+                elsif section.settings.custom_circle_image != blank
+                  assign product_image = section.settings.custom_circle_image
+                endif
+                assign image_alt = product.title
+                if product_image != blank and product_image.alt != blank
+                  assign image_alt = product_image.alt
+                endif
+                assign image_loading = 'lazy'
+                assign image_priority = 'low'
+                if rendered_products == 0 and first_image_is_critical
+                  assign image_loading = 'eager'
+                  assign image_priority = 'high'
+                endif
+              %}
+
+              <div class="tjs-rakhi-story__slide{% if rendered_products == 0 %} is-active{% endif %}" data-rakhi-slide="{{ rendered_products }}" aria-hidden="{% if rendered_products == 0 %}false{% else %}true{% endif %}">
+                <a class="tjs-rakhi-story__product-link" href="{{ product.url }}" aria-label="View {{ product.title | escape }}">
+                  {% if product_image != blank %}
+                    <span class="tjs-rakhi-story__media">
+                      {{ product_image
+                        | image_url: width: 1400
+                        | image_tag:
+                          class: 'tjs-rakhi-story__product-image',
+                          loading: image_loading,
+                          fetchpriority: image_priority,
+                          decoding: 'async',
+                          widths: '280, 420, 560, 720, 900, 1100, 1400',
+                          sizes: '(max-width: 749px) 54vw, 320px',
+                          alt: image_alt
+                      }}
+                    </span>
+                  {% else %}
+                    <span class="tjs-rakhi-story__empty">Add a featured image or custom circle image for this product.</span>
+                  {% endif %}
+                </a>
+              </div>
+
+              {% assign rendered_products = rendered_products | plus: 1 %}
+            {% endfor %}
+          {% endif %}
+
+          {% if rendered_products == 0 %}
+            <div class="tjs-rakhi-story__empty">Select a Rakhi collection with product images.</div>
+          {% endif %}
+        </div>
+      </div>
+
+      {% if rendered_products > 0 and section.settings.show_product_info %}
+        <div class="tjs-rakhi-story__product-info" data-rakhi-info>
+          {% assign info_index = 0 %}
+          {% for product in rakhi_collection.products limit: 50 %}
+            {% if section.settings.hide_sold_out and product.available == false %}
+              {% continue %}
+            {% endif %}
+            {% if info_index >= section.settings.product_limit %}
+              {% break %}
+            {% endif %}
+            {% liquid
+              assign on_sale = false
+              assign savings_percentage = 0
+              assign info_image = product.featured_image
+              assign info_image_alt = product.title
+              if info_image != blank and info_image.alt != blank
+                assign info_image_alt = info_image.alt
+              endif
+              if product.compare_at_price_max > product.price
+                assign on_sale = true
+                assign savings_amount = product.compare_at_price_max | minus: product.price
+                assign savings_percentage = savings_amount | times: 100.0 | divided_by: product.compare_at_price_max | round
+              endif
+            %}
+            <div class="tjs-rakhi-story__info-card{% if info_index == 0 %} is-active{% endif %}" data-rakhi-info-card="{{ info_index }}">
+              <div class="tjs-rakhi-story__info-thumb" aria-hidden="true">
+                {% if info_image != blank %}
+                  {{ info_image
+                    | image_url: width: 240
+                    | image_tag:
+                      class: 'tjs-rakhi-story__info-thumb-image',
+                      loading: 'lazy',
+                      decoding: 'async',
+                      widths: '96, 144, 192, 240',
+                      sizes: '(max-width: 749px) 54px, 72px',
+                      alt: info_image_alt
+                  }}
+                {% endif %}
+              </div>
+
+              <div class="tjs-rakhi-story__info-copy">
+                <div class="tjs-rakhi-story__info-meta">
+                  <span class="tjs-rakhi-story__info-kicker">Rakhi {{ info_index | plus: 1 }} of {{ rendered_products }}</span>
+                  {% if on_sale and savings_percentage > 0 %}
+                    <span class="tjs-rakhi-story__save-badge">Save {{ savings_percentage }}%</span>
+                  {% endif %}
+                </div>
+                <p class="tjs-rakhi-story__product-title">{{ product.title | escape }}</p>
+                {% if section.settings.show_price %}
+                  <div class="tjs-rakhi-story__price">
+                    <span>{{ product.price | money }}</span>
+                    {% if on_sale %}
+                      <span class="tjs-rakhi-story__compare-price">{{ product.compare_at_price_max | money }}</span>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+
+              {% if section.settings.show_product_button %}
+                <a class="tjs-rakhi-story__button" href="{{ product.url }}">
+                  <span>{{ section.settings.product_button_label | escape }}</span>
+                  <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                    <path d="M3 8h9M9 4.5 12.5 8 9 11.5" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              {% endif %}
+            </div>
+            {% assign info_index = info_index | plus: 1 %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if rendered_products > 1 and section.settings.show_progress %}
+        <div class="tjs-rakhi-story__progress" data-rakhi-progress aria-hidden="true">
+          {% for i in (1..rendered_products) %}
+            <span class="tjs-rakhi-story__dot{% if i == 1 %} is-active{% endif %}" data-rakhi-dot="{{ i | minus: 1 }}"></span>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.show_scroll_hint %}
+        <div class="tjs-rakhi-story__scroll-hint" data-rakhi-hint>{{ section.settings.scroll_hint_text | escape }}</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const selector = '[data-tjs-rakhi-story="{{ section.id }}"]';
+
+    const initialise = (root) => {
+      if (!root || root.dataset.initialised === 'true') return;
+      root.dataset.initialised = 'true';
+
+      const hands = Array.from(root.querySelectorAll('[data-rakhi-hand]'));
+      const slides = Array.from(root.querySelectorAll('[data-rakhi-slide]'));
+      const infoCards = Array.from(root.querySelectorAll('[data-rakhi-info-card]'));
+      const dots = Array.from(root.querySelectorAll('[data-rakhi-dot]'));
+      const center = root.querySelector('[data-rakhi-center]');
+      const info = root.querySelector('[data-rakhi-info]');
+      const header = root.querySelector('[data-rakhi-header]');
+      const progress = root.querySelector('[data-rakhi-progress]');
+      const hint = root.querySelector('[data-rakhi-hint]');
+      const mandalaWrap = root.querySelector('[data-rakhi-mandala-wrap]');
+      const mandala = root.querySelector('[data-rakhi-mandala]');
+      const mandalaSegments = mandala ? Array.from(mandala.querySelectorAll('[data-mandala-delay]')) : [];
+      const mandalaMaxOpacity = Number(root.dataset.mandalaOpacity) || 0.15;
+      const mobileQuery = window.matchMedia('(max-width: 749px)');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      let activeIndex = 0;
+      let raf = 0;
+      let destroyed = false;
+
+      const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+      const easeOutCubic = (value) => 1 - Math.pow(1 - value, 3);
+      const easeInOutCubic = (value) => value < .5
+        ? 4 * value * value * value
+        : 1 - Math.pow(-2 * value + 2, 3) / 2;
+
+      mandalaSegments.forEach((segment) => {
+        const delay = Number(segment.dataset.mandalaDelay || 0);
+        segment._mandalaDelay = delay;
+
+        if (segment.classList.contains('tjs-rakhi-story__mandala-dot')) {
+          segment.style.opacity = '0';
+          segment.style.transform = 'scale(0.2)';
+          return;
+        }
+
+        const length = typeof segment.getTotalLength === 'function' ? segment.getTotalLength() : 0;
+        segment._mandalaLength = length;
+        if (length > 0) {
+          segment.style.strokeDasharray = String(length);
+          segment.style.strokeDashoffset = String(length);
+        }
+      });
+
+      const setActiveProduct = (nextIndex) => {
+        if (!slides.length) return;
+        const next = Math.max(0, Math.min(slides.length - 1, nextIndex));
+        if (next === activeIndex && slides[next]?.classList.contains('is-active')) return;
+
+        slides.forEach((slide, index) => {
+          const active = index === next;
+          slide.classList.toggle('is-active', active);
+          slide.classList.toggle('is-leaving', index === activeIndex && index !== next);
+          slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+          const link = slide.querySelector('a');
+          if (link) link.tabIndex = active ? 0 : -1;
+        });
+
+        infoCards.forEach((card, index) => card.classList.toggle('is-active', index === next));
+        dots.forEach((dot, index) => dot.classList.toggle('is-active', index === next));
+        activeIndex = next;
+      };
+
+      const setMandalaState = (progressValue) => {
+        if (!mandalaWrap) return;
+
+        // Complete the full mandala within the first 24% of the pinned story.
+        const draw = clamp((progressValue - 0.005) / 0.205);
+        const settle = clamp((progressValue - 0.19) / 0.10);
+        const isComplete = draw >= 0.985;
+        const rotate = -2 + draw * 2 + settle * 1;
+        const scale = 0.96 + draw * 0.04 + settle * 0.015;
+        const visibility = 0.12 + draw * 0.88;
+        const responsiveOpacity = mobileQuery.matches ? 0.92 : 1;
+
+        mandalaWrap.style.opacity = String(mandalaMaxOpacity * visibility * responsiveOpacity);
+        mandalaWrap.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotate}deg)`;
+
+        mandalaSegments.forEach((segment) => {
+          const delay = segment._mandalaDelay || 0;
+          const local = isComplete ? 1 : clamp((draw - (delay * 0.46)) / 0.10);
+
+          if (segment.classList.contains('tjs-rakhi-story__mandala-dot')) {
+            segment.style.opacity = String(local);
+            segment.style.transform = `scale(${0.25 + local * 0.75})`;
+          } else if (segment._mandalaLength) {
+            segment.style.opacity = String(local);
+            segment.style.strokeDashoffset = isComplete ? '0' : String(segment._mandalaLength * (1 - local));
+          }
+        });
+      };
+
+      const updateHands = (enter, exit) => {
+        const isMobile = mobileQuery.matches;
+        const motion = reducedMotion.matches ? 1 : enter * (1 - exit);
+        const visibility = reducedMotion.matches ? 1 : clamp(enter * 1.3) * (1 - exit);
+        const inner = root.querySelector('.tjs-rakhi-story__inner');
+
+        hands.forEach((hand, index) => {
+          if (isMobile && hand.dataset.hideMobile === 'true') return;
+
+          const side = hand.dataset.side || 'right';
+          const width = Number(isMobile ? hand.dataset.widthMobile : hand.dataset.widthDesktop) || 50;
+          const fineNudgePercent = Number(isMobile ? hand.dataset.stopXMobile : hand.dataset.stopXDesktop) || 0;
+          const circleGap = Number(isMobile ? hand.dataset.circleGapMobile : hand.dataset.circleGapDesktop) || 0;
+          const edgeCompensationPercent = Number(isMobile ? hand.dataset.edgeCompensationMobile : hand.dataset.edgeCompensationDesktop) || 0;
+          const autoStopCircle = hand.dataset.autoStopCircle !== 'false';
+          const rotation = Number(isMobile ? hand.dataset.rotationMobile : hand.dataset.rotationDesktop) || 0;
+
+          hand.style.width = `${width}vw`;
+
+          const handWidth = hand.offsetWidth || 1;
+          const fineNudge = handWidth * (fineNudgePercent / 100);
+          const edgeCompensation = handWidth * (edgeCompensationPercent / 100);
+          let stopX;
+
+          if (autoStopCircle && center && inner) {
+            const centerLeft = center.offsetLeft - center.offsetWidth / 2;
+            const centerRight = center.offsetLeft + center.offsetWidth / 2;
+            const handBaseLeft = side === 'left' ? 0 : inner.clientWidth - handWidth;
+
+            if (side === 'left') {
+              // Place the hand's right edge before the circle's left edge.
+              stopX = centerLeft - circleGap - handWidth - handBaseLeft + fineNudge;
+            } else {
+              // Right-side PNGs commonly contain transparent canvas before the fingertips.
+              // Pull that invisible padding toward the circle while keeping the visible hand outside it.
+              // Mirror the male-hand stop logic: keep the female PNG outside
+              // the circle. Positive compensation now moves it farther right.
+              const mirroredOutwardBias = handWidth * 0.07;
+              stopX = centerRight + circleGap - handBaseLeft + fineNudge + edgeCompensation + mirroredOutwardBias;
+            }
+          } else {
+            // Legacy manual mode: the existing offset remains a percentage of hand width.
+            stopX = fineNudge;
+          }
+
+          const startX = side === 'left' ? -handWidth * 1.18 : handWidth * 1.18;
+          const exitX = side === 'left' ? -handWidth * 1.26 : handWidth * 1.26;
+          const currentX = startX + (stopX - startX) * motion + (exitX - stopX) * exit;
+          const settle = reducedMotion.matches ? 0 : Math.sin((enter + index * .16) * Math.PI) * (1 - exit) * 2.2;
+          const rotate = rotation * motion + (side === 'left' ? -4 : 4) * exit;
+          const scale = .94 + motion * .06;
+
+          hand.style.opacity = String(visibility);
+          hand.style.transform = `translate3d(${currentX}px, calc(-50% + ${settle}px), 0) rotate(${rotate}deg) scale(${scale})`;
+        });
+      };
+
+      const update = () => {
+        raf = 0;
+        if (destroyed) return;
+
+        const rect = root.getBoundingClientRect();
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        const scrollableDistance = Math.max(1, rect.height - viewportHeight);
+        const rawProgress = clamp(-rect.top / scrollableDistance);
+
+        const enterStart = .04;
+        const enterEnd = .24;
+        const storyStart = .24;
+        const storyEnd = .82;
+        const exitStart = .82;
+        const exitEnd = .98;
+
+        const enterProgress = easeOutCubic(clamp((rawProgress - enterStart) / (enterEnd - enterStart)));
+        const storyProgress = clamp((rawProgress - storyStart) / (storyEnd - storyStart));
+        const exitProgress = easeInOutCubic(clamp((rawProgress - exitStart) / (exitEnd - exitStart)));
+
+        setMandalaState(rawProgress);
+        updateHands(enterProgress, exitProgress);
+
+        const centerVisibility = reducedMotion.matches ? 1 : clamp(enterProgress * 1.2) * (1 - exitProgress);
+        const centerScale = reducedMotion.matches ? 1 : .82 + enterProgress * .18 - exitProgress * .12;
+        if (center) {
+          center.style.opacity = String(.18 + centerVisibility * .82);
+          center.style.transform = `translate(-50%, -50%) scale(${centerScale})`;
+        }
+
+        if (header) {
+          const headerFade = reducedMotion.matches ? 1 : 1 - clamp((rawProgress - .12) / .22) * .52;
+          header.style.opacity = String(headerFade);
+          header.style.transform = `translateX(-50%) translateY(${(1 - headerFade) * -10}px)`;
+        }
+
+        const infoVisibility = reducedMotion.matches ? 1 : clamp((rawProgress - storyStart + .035) / .08) * (1 - exitProgress);
+        if (info) {
+          info.style.opacity = String(infoVisibility);
+          info.style.transform = `translate(-50%, ${18 - infoVisibility * 18}px)`;
+        }
+        if (progress) progress.style.opacity = String(infoVisibility);
+        if (hint) hint.style.opacity = String(clamp(1 - rawProgress * 7));
+
+        if (slides.length) {
+          const index = Math.min(slides.length - 1, Math.floor(storyProgress * slides.length));
+          setActiveProduct(index);
+        }
+      };
+
+      const requestUpdate = () => {
+        if (!raf) raf = window.requestAnimationFrame(update);
+      };
+
+      window.addEventListener('scroll', requestUpdate, { passive: true });
+      window.addEventListener('resize', requestUpdate, { passive: true });
+      mobileQuery.addEventListener?.('change', requestUpdate);
+      reducedMotion.addEventListener?.('change', requestUpdate);
+
+      root.tjsRakhiDestroy = () => {
+        destroyed = true;
+        window.removeEventListener('scroll', requestUpdate);
+        window.removeEventListener('resize', requestUpdate);
+        mobileQuery.removeEventListener?.('change', requestUpdate);
+        reducedMotion.removeEventListener?.('change', requestUpdate);
+        if (raf) window.cancelAnimationFrame(raf);
+      };
+
+      root.dataset.productCount = String(slides.length);
+      update();
+    };
+
+    initialise(document.querySelector(selector));
+
+    document.addEventListener('shopify:section:load', (event) => {
+      initialise(event.target.querySelector(selector));
+    });
+
+    document.addEventListener('shopify:section:unload', (event) => {
+      const root = event.target.querySelector(selector);
+      if (root && typeof root.tjsRakhiDestroy === 'function') root.tjsRakhiDestroy();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TJS Rakhi scroll story",
+  "tag": "section",
+  "class": "section-tjs-rakhi-scroll-story",
+  "max_blocks": 3,
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Rakhi Edit" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A thread that ties us together" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Scroll through meaningful rakhis selected for the bonds that matter most.</p>" },
+    { "type": "range", "id": "heading_size", "min": 42, "max": 86, "step": 1, "unit": "px", "label": "Desktop heading size", "default": 64 },
+    { "type": "range", "id": "mobile_heading_size", "min": 30, "max": 52, "step": 1, "unit": "px", "label": "Mobile heading size", "default": 38 },
+
+    { "type": "header", "content": "Rakhi collection" },
+    { "type": "collection", "id": "collection", "label": "Rakhi collection" },
+    { "type": "range", "id": "product_limit", "min": 6, "max": 10, "step": 1, "label": "Number of rakhis", "default": 8 },
+    { "type": "checkbox", "id": "hide_sold_out", "label": "Hide sold-out products", "default": true },
+    { "type": "checkbox", "id": "show_product_info", "label": "Show product information", "default": true },
+    { "type": "checkbox", "id": "show_price", "label": "Show prices", "default": true },
+    { "type": "checkbox", "id": "show_product_button", "label": "Show product button", "default": true },
+    { "type": "text", "id": "product_button_label", "label": "Product button label", "default": "View Rakhi" },
+    { "type": "range", "id": "product_info_gap_desktop", "min": 16, "max": 100, "step": 2, "unit": "px", "label": "Desktop details gap below circle", "default": 46 },
+    { "type": "range", "id": "product_info_gap_mobile", "min": 8, "max": 64, "step": 2, "unit": "px", "label": "Mobile details gap below circle", "default": 30 },
+
+    { "type": "header", "content": "Circle image controls" },
+    { "type": "select", "id": "circle_image_fit", "label": "Image fit inside circle", "default": "cover", "options": [
+      { "value": "cover", "label": "Cover" },
+      { "value": "contain", "label": "Contain" }
+    ] },
+    { "type": "range", "id": "circle_image_zoom", "min": 80, "max": 140, "step": 1, "unit": "%", "label": "Image zoom", "default": 100 },
+    { "type": "range", "id": "circle_image_inset", "min": 0, "max": 20, "step": 1, "unit": "%", "label": "Image inset inside circle", "default": 0 },
+    { "type": "range", "id": "circle_image_position_x", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "Image horizontal position", "default": 50 },
+    { "type": "range", "id": "circle_image_position_y", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "Image vertical position", "default": 50 },
+    { "type": "image_picker", "id": "custom_circle_image", "label": "Fallback custom circle image" },
+    { "type": "checkbox", "id": "enable_circle_image_metafield", "label": "Use product custom circle image metafield when available", "default": true },
+    { "type": "text", "id": "circle_image_metafield_namespace", "label": "Custom circle image metafield namespace", "default": "custom" },
+    { "type": "text", "id": "circle_image_metafield_key", "label": "Custom circle image metafield key", "default": "circle_image" },
+
+    { "type": "header", "content": "Scroll behaviour" },
+    { "type": "range", "id": "scroll_length_desktop", "min": 240, "max": 480, "step": 10, "unit": "vh", "label": "Desktop scroll length", "default": 360 },
+    { "type": "range", "id": "scroll_length_mobile", "min": 200, "max": 380, "step": 10, "unit": "vh", "label": "Mobile scroll length", "default": 280 },
+    { "type": "range", "id": "sticky_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Sticky top offset", "default": 0 },
+    { "type": "checkbox", "id": "show_progress", "label": "Show Rakhi progress", "default": true },
+    { "type": "checkbox", "id": "show_scroll_hint", "label": "Show scroll hint", "default": true },
+    { "type": "text", "id": "scroll_hint_text", "label": "Scroll hint text", "default": "Scroll to explore" },
+
+    { "type": "header", "content": "Centre Rakhi stage" },
+    { "type": "range", "id": "center_size_desktop", "min": 240, "max": 420, "step": 10, "unit": "px", "label": "Desktop centre size", "default": 320 },
+    { "type": "range", "id": "center_size_mobile", "min": 170, "max": 290, "step": 10, "unit": "px", "label": "Mobile centre size", "default": 220 },
+    { "type": "range", "id": "product_scale", "min": 55, "max": 110, "step": 1, "unit": "%", "label": "Product image scale", "default": 88 },
+    { "type": "range", "id": "corner_radius", "min": 0, "max": 36, "step": 2, "unit": "px", "label": "Stage corner radius", "default": 22 },
+    { "type": "range", "id": "shadow_strength", "min": 0, "max": 30, "step": 1, "unit": "%", "label": "Centre shadow strength", "default": 12 },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "section_background", "label": "Section background", "default": "#F7F1EA" },
+    { "type": "color", "id": "stage_background", "label": "Pinned stage background", "default": "#F2E8DD" },
+    { "type": "color", "id": "card_background", "label": "Rakhi and info background", "default": "#FFFDFC" },
+    { "type": "color", "id": "text_color", "label": "Primary text", "default": "#1B1714" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#746A62" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#A44E47" },
+    { "type": "color", "id": "ring_color", "label": "Centre ring", "default": "#C98B65" },
+
+    { "type": "header", "content": "Mandala backdrop" },
+    { "type": "color", "id": "mandala_color", "label": "Mandala line colour", "default": "#C98B65" },
+    { "type": "range", "id": "mandala_opacity", "min": 4, "max": 30, "step": 1, "unit": "%", "label": "Mandala opacity", "default": 7 },
+
+    { "type": "header", "content": "Section width" },
+    { "type": "range", "id": "max_width", "min": 980, "max": 1800, "step": 20, "unit": "px", "label": "Maximum content width", "default": 1480 },
+    { "type": "range", "id": "page_gutter", "min": 0, "max": 64, "step": 4, "unit": "px", "label": "Desktop side spacing", "default": 24 },
+    { "type": "range", "id": "mobile_gutter", "min": 0, "max": 28, "step": 2, "unit": "px", "label": "Mobile side spacing", "default": 10 }
+  ],
+  "blocks": [
+    {
+      "type": "hand",
+      "name": "Hand image",
+      "settings": [
+        {
+          "type": "select",
+          "id": "role",
+          "label": "Hand role",
+          "default": "male_left",
+          "options": [
+            { "value": "male_left", "label": "Male hand — enters from left" },
+            { "value": "female_primary", "label": "Female hand — primary from right" },
+            { "value": "female_secondary", "label": "Female hand — secondary from right" }
+          ]
+        },
+        { "type": "image_picker", "id": "image", "label": "Transparent hand PNG" },
+        { "type": "text", "id": "alt_text", "label": "Image alt text", "default": "Rakhi tying hand" },
+        { "type": "checkbox", "id": "hide_on_mobile", "label": "Hide this hand on mobile", "default": false },
+
+        { "type": "header", "content": "Circle stop behaviour" },
+        { "type": "checkbox", "id": "auto_stop_circle", "label": "Automatically stop before centre circle", "default": true },
+        { "type": "range", "id": "circle_gap_desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "label": "Desktop gap before circle", "default": 28 },
+        { "type": "range", "id": "circle_gap_mobile", "min": 0, "max": 140, "step": 2, "unit": "px", "label": "Mobile gap before circle", "default": 16 },
+        { "type": "range", "id": "edge_compensation_desktop", "min": 0, "max": 30, "step": 1, "unit": "%", "label": "Desktop female outward compensation", "info": "Moves right-side female hands farther right, away from the circle. Use this after circle gap if the PNG still feels too close.", "default": 7 },
+        { "type": "range", "id": "edge_compensation_mobile", "min": 0, "max": 30, "step": 1, "unit": "%", "label": "Mobile female outward compensation", "info": "Moves right-side female hands farther right, away from the circle. Use this after circle gap if the PNG still feels too close.", "default": 5 },
+
+        { "type": "header", "content": "Desktop fitting" },
+        { "type": "range", "id": "width_desktop", "min": 20, "max": 72, "step": 1, "unit": "vw", "label": "Desktop hand width", "default": 42 },
+        { "type": "range", "id": "y_desktop", "min": 20, "max": 82, "step": 1, "unit": "%", "label": "Desktop vertical position", "default": 52 },
+        { "type": "range", "id": "stop_x_desktop", "min": -35, "max": 35, "step": 1, "unit": "%", "label": "Desktop fine horizontal nudge", "info": "Use after the automatic circle gap. Negative moves left; positive moves right.", "default": 0 },
+        { "type": "range", "id": "rotation_desktop", "min": -20, "max": 20, "step": 1, "unit": "deg", "label": "Desktop rotation", "default": 0 },
+
+        { "type": "header", "content": "Mobile fitting" },
+        { "type": "range", "id": "width_mobile", "min": 38, "max": 110, "step": 2, "unit": "vw", "label": "Mobile hand width", "default": 74 },
+        { "type": "range", "id": "y_mobile", "min": 20, "max": 82, "step": 1, "unit": "%", "label": "Mobile vertical position", "default": 53 },
+        { "type": "range", "id": "stop_x_mobile", "min": -60, "max": 60, "step": 2, "unit": "%", "label": "Mobile fine horizontal nudge", "info": "Use after the automatic circle gap. Negative moves left; positive moves right.", "default": 0 },
+        { "type": "range", "id": "rotation_mobile", "min": -20, "max": 20, "step": 1, "unit": "deg", "label": "Mobile rotation", "default": 0 }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS Rakhi scroll story",
+      "blocks": [
+        { "type": "hand", "settings": { "role": "male_left", "width_desktop": 44, "y_desktop": 53, "auto_stop_circle": true, "circle_gap_desktop": 32, "stop_x_desktop": 0, "width_mobile": 82, "y_mobile": 54, "circle_gap_mobile": 18, "stop_x_mobile": 0 } },
+        { "type": "hand", "settings": { "role": "female_primary", "width_desktop": 42, "y_desktop": 50, "auto_stop_circle": true, "circle_gap_desktop": 28, "edge_compensation_desktop": 0, "stop_x_desktop": 0, "rotation_desktop": -2, "width_mobile": 78, "y_mobile": 51, "circle_gap_mobile": 16, "edge_compensation_mobile": 0, "stop_x_mobile": 0, "rotation_mobile": -2 } },
+        { "type": "hand", "settings": { "role": "female_secondary", "width_desktop": 34, "y_desktop": 61, "stop_x_desktop": 14, "rotation_desktop": 5, "width_mobile": 64, "y_mobile": 63, "stop_x_mobile": 18, "rotation_mobile": 5, "hide_on_mobile": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

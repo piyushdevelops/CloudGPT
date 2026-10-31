@@ -1,0 +1,995 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
+ * ------------------------------------------------------------
+ * 重要提示：此文件内容是自动生成的。
+ *
+ * 此文件可能会被Shopify管理后台的语言编辑器
+ * 或相关系统更新。请谨慎操作，因为对此文件
+ * 所做的任何更改都可能被覆盖。
+ * ------------------------------------------------------------
+ */
+{
+  "default": "默认",
+  "none": "无",
+  "settings_schema": {
+    "theme_active": {
+      "name": "主题激活",
+      "settings": {
+        "intro": {
+          "content": "与 Ecomus 一起开启您的商业旅程"
+        },
+        "purchase_code": {
+          "label": "购买代码"
+        },
+        "purchase_code_help": {
+          "content": "[我的购买代码在哪里](https://support.the4.co/articles/where-is-my-purchase-code#how-to-find-your-purchase-code)"
+        },
+        "import_demo_help": {
+          "content": "[如何一键导入演示](https://support.the4.co/articles/import-demo#1-one-click-demo-import-with-ecomrise)"
+        },
+        "buy_license": {
+          "content": "[购买新许可证](https://bit.ly/3lST9WX)"
+        },
+        "ecomposer": {
+          "content": "[免费获取 EComposer Page Builder（仅限 The4 用户）](https://ecomposer.app/referral?ref=The4)"
+        },
+        "update_help": {
+          "content": "[如何在 3 分钟内更新](https://support.the4.co/articles/update-the-theme)"
+        },
+        "workflow_info": {
+          "content": "使用 Ecomus，探索您开始、运营和发展业务所需的所有工具和服务。我们知道 Ecomus 将通过改进您的工作流程使您的生活更轻松。借助 Ecomus 为您提供的工具，您将实现真正的设计潜力，而无需任何编码知识。如果您能帮助我们改进主题、安装过程或文档，我们将不胜感激。"
+        }
+      }
+    },
+    "dear_customers": {
+      "name": "尊敬的客户！",
+      "settings": {
+        "intro": {
+          "content": "[The4 Studio](https://the4.co/) 经验丰富的团队设计令人印象深刻的 Shopify 主题，易于安装和定制。通过我们专门的支持，快速启动您的网站。"
+        },
+        "documentation": {
+          "content": "如需安装帮助，请查看我们的 [文档](https://support.the4.co/collections/kalles-5) 或提交 [支持工单](https://support.the4.co/login)。我们喜欢改进主题，因此请分享任何技术问题或建议。感谢您的惠顾！"
+        },
+        "offers": {
+          "content": "享受我们不断壮大的合作伙伴网络的独家优惠！在此处查看 [优惠列表](https://support.the4.co/user/earnings)（需要登录我们的支持系统）。"
+        },
+        "contact": {
+          "content": "以实惠的价格获得专家定制开发，[联系 The4](https://the4.co/pages/contact-us)。"
+        }
+      }
+    },
+    "recommend_apps": {
+      "name": "推荐应用",
+      "settings": {
+        "page_builder_header": {
+          "content": "页面构建器"
+        },
+        "ecomposer": {
+          "content": "[EComposer - The4 用户可免费使用 6 个月 ](https://apps.shopify.com/ecomposer?utm_source=the4-customize&utm_medium=recommend)[(了解更多)](https://ecomposer.io/pages/theme-partners )"
+        },
+        "seo_header": {
+          "content": "SEO"
+        },
+        "seo_apps": {
+          "content": "[AVADA SEO](https://apps.shopify.com/avada-seo-suite?utm_source=The4&utm_medium=inapp&utm_campaign=partnership)，[SearchPie](https://partners.secomapp.com/apps/searchpie/EcomElite)，[SEO Ant](https://share.channelwill.com/app/1165e92fbeba994PdM)，[TinyIMG](https://tiny-img.com/?ref=henry)"
+        },
+        "reviews_header": {
+          "content": "产品评论"
+        },
+        "reviews_apps": {
+          "content": "[Ryviu](https://www.ryviu.com/?rel=3in5hrqs)，[Loox](https://loox.io/app/The4)，[Growave](https://www.growave.io/r?ref=henry_pham)，[LAI](https://partners.smartifyapps.com/apps/lai_reviews/the4)，[Stamped.io](https://get.stamped.io/m8cdram862h3)，[Trustoo](https://share.channelwill.com/app/2165e92fbebcb27Ava)，[Fera](https://www.fera.ai?r=ecomelite)"
+        },
+        "marketing_header": {
+          "content": "营销与追加销售"
+        },
+        "marketing_apps": {
+          "content": "[EcomRise](https://apps.shopify.com/ecomrise?utm_source=the4-ecomus&utm_medium=intheme&utm_content=recommend-apps)，[Vitals](https://vitals.co/shopify/10250920)，[Selleasy](https://platform.shoffi.app/r/rl_51tG2Zjt)，[Candy Rack](https://app.partnerjam.com/install?key=04a19cd7-9ab0-4637-adf0-8bd14e743c80)，[Kaching Bundles ](https://apps.shopify.com/bundle-deals?utm_medium=theme-setting&utm_source=the4-intheme&utm_content=recommend-app)"
+        },
+        "ux_header": {
+          "content": "用户体验、用户界面"
+        },
+        "ux_apps": {
+          "content": "[Boost Commerce](https://boostcommerce.net?utm_source=henry64)，[SoBooster](https://usf.sobooster.com/affiliate?refcode=48865bfb-10b0-46cc-9239-6af710fb69a7&targeturl=https%3a%2f%2fapps.shopify.com%2fultimate-search-and-filter-1)，[Weglot](https://weglot.com/?fp_ref=khang-25)，[HeyCarson](https://heycarson.com/ambassadors/?ref=the4studio)"
+        },
+        "orders_header": {
+          "content": "管理订单"
+        },
+        "orders_apps": {
+          "content": "[Parcel Pannel](https://parcelpanel.com?ref=79QXxUbs)，[Dropshipman](https://api-affiliate.dropshipman.com/?ref=dc45f331)，[Track123 ](https://platform.shoffi.app/r/rl_97IoZnVP)，[Appstle Subscription](https://subscription-admin.appstle.com/affiliates?fpr=henry46)"
+        },
+        "affiliate_header": {
+          "content": "联盟与忠诚度"
+        },
+        "affiliate_apps": {
+          "content": "[UpPromote](https://partners.secomapp.com/apps/affiliate/EcomElite)，[Referral candy](https://my.referralcandy.com/signup?utm_source=first_promoter&utm_medium=first_promoter&utm_campaign=affiliate_program&ref=henry84)，[BON Loyalty](https://partners.smartifyapps.com/apps/bon_loyalty/the4)，[Growave](https://www.growave.io/r?ref=henry_pham)"
+        },
+        "currency_header": {
+          "content": "货币与翻译"
+        },
+        "currency_apps": {
+          "content": "[Transcy：本地化方案](https://bit.ly/4ilgzmw)，[Langwill：语言翻译](https://partner.channelwill.com/oou3vu)"
+        }
+      }
+    },
+    "colors": {
+      "name": "颜色设置",
+      "secondary": "辅助",
+      "tertiary": "次要",
+      "accent": "强调",
+      "settings": {
+        "typography": {
+          "label": "排版"
+        },
+        "text": {
+          "text": "文本",
+          "secondary_text": "辅助文本"
+        },
+        "background": {
+          "header": "背景",
+          "label": "背景",
+          "gradient": "背景渐变",
+          "gradient_info": "渐变背景将尽可能替换主背景。",
+          "secondary_background": "辅助背景",
+          "secondary_background_info": "选择与主背景相近的颜色。"
+        },
+        "button": {
+          "header": "按钮",
+          "button_background": "实心按钮背景",
+          "button_label": "实心按钮文字",
+          "button_border": "实心按钮边框",
+          "secondary_button_label": "轮廓按钮"
+        },
+        "additional": {
+          "header": "附加",
+          "accent_color": "强调颜色",
+          "line_border": "线条边框",
+          "overlay": "覆盖"
+        },
+        "product": {
+          "header": "产品",
+          "pr_text": "产品文本",
+          "price": "产品价格",
+          "sale_price": "产品特价"
+        },
+        "input": {
+          "header": "输入",
+          "input_primary": "主要输入框",
+          "input_secondary": "辅助输入框"
+        },
+        "general": {
+          "header": "通用",
+          "color_scheme": "配色方案",
+          "background_image": "背景图片",
+          "background_image_info": "建议尺寸：1920x1500像素",
+          "color_focus": "键盘焦点"
+        },
+        "modal": {
+          "header": "模态框/抽屉/浮层",
+          "color_scheme_dialog": "配色方案",
+          "color_scheme_dialog_info": "选择模态框/抽屉/浮层的配色方案。"
+        },
+        "general_product": {
+          "header": "产品",
+          "badge_sale": "促销徽章",
+          "badge_new": "新品徽章",
+          "badge_soldout": "售罄徽章",
+          "badge_preorder": "预购徽章",
+          "badge_custom": "自定义徽章"
+        },
+        "general_notice": {
+          "header": "通知",
+          "color_success": "成功",
+          "color_warning": "警告",
+          "color_error": "错误"
+        },
+        "tooltip": {
+          "header": "提示框",
+          "tooltip_bg": "背景",
+          "tooltip_text": "文本"
+        }
+      }
+    },
+    "typography": {
+      "name": "排版",
+      "settings": {
+        "font_library": "字体库",
+        "font_family": {
+          "label": "字体家族",
+          "default": "默认",
+          "font_family_1": "字体家族 #1",
+          "font_family_2": "字体家族 #2",
+          "font_family_3": "字体家族 #3",
+          "font_family_4": "字体家族 #4 (自定义)",
+          "font_family_5": "字体家族 #5 (自定义)"
+        },
+        "font_size": {
+          "label": "字体大小",
+          "mobile_font_size": "移动端字体大小",
+          "default": "默认",
+          "xs": "小",
+          "sm": "中",
+          "base": "大",
+          "lg": "超大",
+          "xl": "超大",
+          "2xl": "2 超大",
+          "4xl": "4 超大",
+          "custom": "自定义"
+        },
+        "font_weight": {
+          "label": "字体粗细",
+          "default": "默认",
+          "light": "轻",
+          "normal": "常规",
+          "medium": "中等",
+          "semibold": "半粗体",
+          "bold": "粗体",
+          "extrabold": "特粗体",
+          "black": "极粗体"
+        },
+        "line_height": {
+          "label": "行高",
+          "default": "默认",
+          "hdt-lh-1-2": "小",
+          "hdt-lh-1": "适配"
+        },
+        "letter_spacing": "字间距",
+        "italic": "斜体",
+        "uppercase": "大写",
+        "google_font": {
+          "find_font": "[查找字体](https:\/\/fonts.google.com\/)",
+          "embed": "嵌入字体 (<link>)",
+          "rules": "指定字体家族的 CSS 规则",
+          "default": "font-family: \"Karla\", sans-serif;\nfont-family: \"Karla\", sans-serif;\nfont-family: \"Lora\", serif;",
+          "info": "示例: font-family: \"Poppins\", sans-serif;"
+        },
+        "headings": {
+          "header": "标题",
+          "font_family": "标题字体家族",
+          "font_weight": "标题字体粗细",
+          "font_size_scale": "字体大小比例"
+        },
+        "sub_heading": {
+          "header": "副标题字体家族"
+        },
+        "body": {
+          "header": "正文字体家族",
+          "base_size": "基础大小(平板/桌面)",
+          "base_size_mobile": "基础大小(移动端)"
+        },
+        "type_header_font": {
+          "label": "标题字体",
+          "info": "选择不同字体会影响商店速度。 [了解系统字体。](https:\/\/help.shopify.com\/manual\/online-store\/os\/store-speed\/improving-speed#fonts)"
+        }
+      }
+    },
+    "heading": {
+      "name": "标题",
+      "settings": {
+        "label": "标题大小",
+        "base_size": "基础大小",
+        "h0_size": "H0 大小",
+        "h0_size_mb": "H0 大小(移动端)",
+        "h1_size": "H1 大小",
+        "h1_size_mb": "H1 大小(移动端)",
+        "h2_size": "H2 大小",
+        "h2_size_mb": "H2 大小(移动端)",
+        "h3_size": "H3 大小",
+        "h3_size_mb": "H3 大小(移动端)",
+        "h4_size": "H4 大小",
+        "h4_size_mb": "H4 大小(移动端)",
+        "h5_size": "H5 大小",
+        "h5_size_mb": "H5 大小(移动端)",
+        "h6_size": "H6 大小",
+        "h6_size_mb": "H6 大小(移动端)"
+      }
+    },
+    "button": {
+      "name": "按钮",
+      "settings": {
+        "custom_size_default": "自定义默认大小",
+        "thickness_btn": "边框粗细",
+        "thickness_btn_info": "不适用于链接样式按钮",
+        "padding": "按钮内边距 1",
+        "min_width_dt": "最小宽度(桌面)",
+        "min_width": "最小宽度",
+        "min_height": "最小高度"
+      }
+    },
+    "layout": {
+      "name": "布局",
+      "settings": {
+        "right_to_left": {
+          "label": "从右到左",
+          "enable": "启用",
+          "disable": "禁用"
+        },
+        "page_width": {
+          "label": "页面宽度"
+        },
+        "spacing_sections": {
+          "label": "模板部分间距"
+        },
+        "grid": {
+          "header": "网格",
+          "content": "影响多列或多行区域。",
+          "spacing_grid_horizontal": "水平间距",
+          "spacing_grid_vertical": "垂直间距"
+        },
+        "rounding": {
+          "header": "圆角",
+          "button_radius": "按钮圆角半径",
+          "input_radius": "输入框圆角半径",
+          "block_radius": "块圆角半径",
+          "pr_card_radius": "产品卡圆角半径",
+          "pr_media_radius": "产品媒体圆角半径",
+          "collection_card_radius": "收藏卡圆角半径",
+          "blog_card_radius": "博客卡圆角半径"
+        }
+      }
+    },
+    "animations": {
+      "name": "动画",
+      "settings": {
+        "animations_reveal_on_scroll": {
+          "label": "滚动时显示部分"
+        },
+        "animations_hover_elements": {
+          "options__1": {
+            "label": "无"
+          },
+          "options__2": {
+            "label": "默认"
+          },
+          "options__3": {
+            "label": "轻微倾斜"
+          },
+          "label": "主按钮悬停效果",
+          "info": "轻微倾斜会影响实心按钮。"
+        }
+      }
+    },
+    "products": {
+      "name": "产品",
+      "settings": {
+        "price_varies_style": {
+          "label": "价格变化样式",
+          "options__1": "39.00 - 59.00 美元",
+          "options__2": "从 39.00 美元起"
+        },
+        "scroll_badge": {
+          "header": "滚动徽章",
+          "enable_scroll_badge": {
+            "label": "启用滚动徽章"
+          },
+          "scroll_badge_sale_text": {
+            "label": "显示促销文本"
+          },
+          "scroll_badge_sale_percentage": {
+            "label": "显示促销百分比"
+          },
+          "scroll_badge_icon": {
+            "label": "图标 SVG",
+            "info": "如果想要下载 SVG [Remixicon](https:\/\/remixicon.com\/)"
+          },
+          "scroll_badge_text": {
+            "label": "文本"
+          }
+        },
+        "badges": {
+          "header": "徽章",
+          "badge_shape": {
+            "label": "徽章形状",
+            "circle": "圆形",
+            "round": "圆角"
+          },
+          "onsale_badge": {
+            "label": "使用促销徽章",
+            "style": {
+              "label": "促销标签样式",
+              "text": "文本",
+              "percentage": "百分比"
+            }
+          },
+          "new_badge": {
+            "label": "使用新品徽章",
+            "day_added": "新品徽章自动显示天数",
+            "info": "设置产品创建后标记为“新品”的天数"
+          },
+          "soldout_badge": {
+            "label": "使用售罄徽章",
+            "info": "产品缺货时显示售罄徽章"
+          },
+          "preorder_badge": {
+            "label": "使用预购徽章",
+            "info": "产品预购时显示预购徽章"
+          },
+          "custom_badge": {
+            "label": "使用自定义徽章",
+            "info": "产品自定义时显示自定义徽章"
+          }
+        },
+        "wishlist": {
+          "header": "心愿单",
+          "wishlist_mode": {
+            "label": "心愿单模式",
+            "options__1": "禁用",
+            "options__2": "启用本地心愿单",
+            "options__3": "启用账户心愿单 [免费安装 EcomRise](https:\/\/apps.shopify.com\/ecomrise?utm_source=ecomus-intheme&utm_medium=wishlist&compare)"
+          },
+          "wis_atc_added": {
+            "label": "点击添加心愿单后的操作：",
+            "options__1": "转到心愿单页面",
+            "options__2": "从心愿单移除"
+          }
+        },
+        "compare": {
+          "header": "比较",
+          "compare_mode": {
+            "label": "比较模式",
+            "info": "最大比较产品数：6",
+            "options__1": "禁用",
+            "options__2": "启用本地比较",
+            "options__3": "启用账户比较 [免费安装 EcomRise](https:\/\/apps.shopify.com\/ecomrise?utm_source=ecomus-intheme&utm_medium=compare&compare)"
+          },
+          "enable_compare_popup": {
+            "label": "启用比较弹窗",
+            "info": "点击添加比较或点击添加比较按钮后会显示弹窗。（不适用于 EcomRise）"
+          }
+        },
+        "miscellaneous": {
+          "header": "杂项",
+          "placeholder_img": {
+            "label": "无图产品占位符"
+          },
+          "use_url_collection_vendor": {
+            "label": "供应商使用收藏链接",
+            "info": "将供应商链接替换为收藏链接。需要存在一个与产品供应商同名的收藏。 [了解更多](https://support.the4.co/articles/how-to-use-the-collection-link-on-vendortype)"
+          },
+          "use_url_collection_type": {
+            "label": "类型使用收藏链接",
+            "info": "将类型链接替换为收藏链接。需要存在一个与产品类型同名的收藏。 [了解更多](https://support.the4.co/articles/how-to-use-the-collection-link-on-vendortype)"
+          }
+        }
+      }
+    },
+    "product_card": {
+      "name": "产品卡片",
+      "settings": {
+        "product_image": {
+          "label": "产品图片",
+          "show_secondary_image": {
+            "label": "悬停时显示次要图片"
+          },
+          "effect_secondary_image": {
+            "label": "次要图片效果",
+            "info": "悬停时显示次要图片效果",
+            "options": {
+              "none": "无",
+              "opacity": "不透明度",
+              "zoom": "缩放",
+              "move_bottom": "从上到下移动",
+              "flip": "翻转",
+              "rotate": "旋转"
+            }
+          },
+          "custom_ratio": "产品图片自定义比例"
+        },
+        "product_buttons": {
+          "label": "产品按钮",
+          "show_quick_view": {
+            "label": "显示快速查看"
+          },
+          "show_ultra_btn": {
+            "label": "显示超级按钮",
+            "info": "超级按钮：快速添加、选择选项、添加到购物车、查看产品"
+          },
+          "show_quick_add": {
+            "label": "显示快速添加",
+            "info": "需要显示超级按钮"
+          },
+          "show_qty": {
+            "label": "显示数量选择器",
+            "info": "需要显示超级按钮并仅在有添加到购物车按钮时显示。数量选择器按钮与产品设计 2,3,4,6,7,10,11,12 一起显示"
+          }
+        },
+        "product_info": {
+          "label": "产品信息",
+          "pr_card_alignment": {
+            "label": "文本对齐"
+          },
+          "show_rating": {
+            "label": "显示评分",
+            "info": "要显示评分，请添加产品评分应用。"
+          },
+          "uppercase_title": {
+            "label": "启用大写标题"
+          },
+          "pr_title_size": {
+            "label": "标题字体大小",
+            "base": {
+              "label": "基本"
+            },
+            "normal": {
+              "label": "普通"
+            },
+            "large": {
+              "label": "大"
+            }
+          },
+          "pr_title_weight": {
+            "label": "标题字重",
+            "regular": {
+              "label": "常规"
+            },
+            "medium": {
+              "label": "中等"
+            },
+            "semibold": {
+              "label": "半粗"
+            },
+            "bold": {
+              "label": "粗"
+            },
+            "extrabold": {
+              "label": "特粗"
+            },
+            "black": {
+              "label": "极粗"
+            }
+          }
+        },
+        "product_color": {
+          "label": "颜色列表",
+          "color_mode": {
+            "label": "颜色显示模式",
+            "options": {
+              "hide": "隐藏",
+              "count": "计数",
+              "color_list": "颜色列表"
+            }
+          },
+          "color_type": {
+            "label": "显示颜色类型",
+            "options": {
+              "all": "所有颜色",
+              "only_available": "仅可用颜色"
+            }
+          },
+          "config_color": {
+            "label": "以下配置，需要颜色显示模式为颜色列表。"
+          },
+          "color_shape": {
+            "label": "颜色形状",
+            "options": {
+              "square": "方形",
+              "cricle": "圆形"
+            }
+          },
+          "image_source": {
+            "label": "颜色图片来源",
+            "options": {
+              "variant_img": "变体图片",
+              "custom_img": "自定义图片"
+            }
+          },
+          "color_style": {
+            "label": "颜色列表样式",
+            "options": {
+              "option1": "样式 1",
+              "option2": "样式 2"
+            }
+          },
+          "color_event": {
+            "label": "点击样本时更改产品图片",
+            "info": "触摸设备强制点击模式。",
+            "options": {
+              "hover": "悬停",
+              "click": "点击"
+            }
+          },
+          "enable_color_limit": {
+            "label": "启用颜色限制"
+          },
+          "color_maximum": {
+            "label": "最大显示颜色数",
+            "info": "0 为自动响应数量。需要启用颜色限制。"
+          },
+          "color_action": {
+            "label": "点击“查看更多颜色”后的操作",
+            "info": "需要启用颜色限制。",
+            "options": {
+              "all": "展开所有颜色",
+              "go": "前往产品页面"
+            }
+          }
+        },
+        "product_size": {
+          "label": "尺寸列表",
+          "size_mode": {
+            "label": "尺寸显示模式",
+            "options": {
+              "hide": "隐藏",
+              "count": "计数",
+              "size_list": "尺寸列表"
+            }
+          },
+          "size_type": {
+            "label": "显示尺寸类型",
+            "options": {
+              "all": "所有尺寸",
+              "only_available": "仅可用尺寸"
+            }
+          },
+          "size_maximum": {
+            "label": "最大显示尺寸数",
+            "info": "0 为自动响应数量。需要启用颜色限制。"
+          },
+          "enable_size_limit": {
+            "label": "启用尺寸限制"
+          }
+        },
+        "miscellaneous": {
+          "label": "杂项",
+          "remove_collection_url": {
+            "label": "移除集合网址",
+            "info": "从产品网址中移除集合部分以优化 SEO"
+          }
+        },
+        "products_mobile": {
+          "label": "手机产品选项",
+          "minimal": {
+            "label": "启用最小产品信息",
+            "info": "隐藏倒计时产品，尺寸列表..."
+          },
+          "hidden_badges": {
+            "label": "手机上隐藏徽章"
+          },
+          "hidden_color_list": {
+            "label": "手机上隐藏颜色列表"
+          },
+          "group_buttons": {
+            "label": "分组产品按钮。仅在手机上有效",
+            "hidden_atc": "手机上隐藏添加到购物车",
+            "hidden_wishlist": "手机上隐藏心愿单",
+            "hidden_compare": "手机上隐藏比较",
+            "hidden_quickview": "手机上隐藏快速查看"
+          }
+        }
+      }
+    },
+    "product_single": {
+      "name": "单品",
+      "settings": {
+        "pick_mode": {
+          "label": "选择模式",
+          "options__1": "不选择",
+          "options__2": "选择第一个变体",
+          "options__3": "选择第一个可用变体"
+        },
+        "enable_historystate": {
+          "label": "启用历史状态",
+          "info": "更新产品深层链接 Shopify 的历史状态。可以通过在产品页面 URL 中添加查询字符串来直接创建指向特定变体的深层链接。您可以通过将 ?variant= 查询参数以及变体的 ID 附加到产品 URL 来实现此目的。当产品变体为“不选择”时无效。"
+        },
+        "hide_sold_out": {
+          "label": "隐藏已售罄变体",
+          "info": "不适用于已售罄产品。"
+        }
+      }
+    },
+    "cart": {
+      "name": "购物车",
+      "settings": {
+        "cart_type": {
+          "label": "添加后操作",
+          "info": "商品成功添加到购物车后的操作。在购物车页面无效。",
+          "no_action": {
+            "label": "无操作。停留在当前页面"
+          },
+          "open_cart_drawer": {
+            "label": "打开购物车抽屉"
+          },
+          "go_cart_page": {
+            "label": "前往购物车页面"
+          },
+          "go_checkout_page": {
+            "label": "前往结账页面"
+          }
+        },
+        "empty_cart_link": {
+          "label": "空按钮链接",
+          "info": "购物车为空时可见。"
+        },
+        "header_shipping_bar": {
+          "content": "免费送货条"
+        },
+        "paragraph_shipping_bar": {
+          "content": "免费送货条"
+        },
+        "free_ship_pr": {
+          "label": "产品",
+          "info": "选择产品以获取免费送货最低金额。"
+        },
+        "header_gift": {
+          "content": "礼品包装"
+        },
+        "paragraph_gift": {
+          "content": "在购物车页面和购物车抽屉中显示礼品包装。礼品包装需要设置为产品。"
+        },
+        "gift_wrap_pr": {
+          "label": "选择产品礼品包装"
+        },
+        "show_vendor": {
+          "label": "显示供应商"
+        },
+        "show_cart_note": {
+          "label": "启用购物车备注"
+        },
+        "cart_drawer": {
+          "header": "购物车抽屉",
+          "collection": {
+            "label": "集合",
+            "info": "购物车抽屉为空时可见。"
+          }
+        }
+      }
+    },
+    "social-media": {
+      "name": "社交媒体",
+      "settings": {
+        "header": {
+          "content": "社交账户"
+        },
+        "paragraph": {
+          "content": "要显示您的社交媒体账户，请在您的 [主题设置](\/editor?context=theme&category=social%20media) 中链接它们。"
+        },
+        "social_style": {
+          "label": "社交样式",
+          "options__1": {
+            "label": "默认"
+          },
+          "options__2": {
+            "label": "轮廓"
+          },
+          "options__3": {
+            "label": "简洁"
+          }
+        },
+        "social_size": {
+          "label": "社交大小",
+          "options__1": {
+            "label": "小"
+          },
+          "options__2": {
+            "label": "中"
+          },
+          "options__3": {
+            "label": "大"
+          }
+        },
+        "social_facebook_link": {
+          "label": "脸书",
+          "info": "https:\/\/facebook.com\/shopify"
+        },
+        "social_x_link": {
+          "label": "X",
+          "info": "https:\/\/x.com\/shopify"
+        },
+        "social_instagram_link": {
+          "label": "Instagram",
+          "info": "http:\/\/instagram.com\/shopify"
+        },
+        "social_threads_link": {
+          "label": "Threads",
+          "info": "http:\/\/threads.com\/shopify"
+        },
+        "social_youtube_link": {
+          "label": "YouTube",
+          "info": "https:\/\/www.youtube.com\/shopify"
+        },
+        "social_tiktok_link": {
+          "label": "抖音",
+          "info": "https:\/\/tiktok.com\/@shopify"
+        },
+        "social_pinterest_link": {
+          "label": "Pinterest",
+          "info": "https:\/\/pinterest.com\/shopify"
+        },
+        "social_tumblr_link": {
+          "label": "汤不热",
+          "info": "https:\/\/shopify.tumblr.com"
+        },
+        "social_vimeo_link": {
+          "label": "Vimeo",
+          "info": "https:\/\/vimeo.com\/shopify"
+        },
+        "social_snapchat_link": {
+          "label": "Snapchat",
+          "info": "https:\/\/www.snapchat.com\/add\/shopify"
+        },
+        "social_whatsapp_link": {
+          "label": "WhatsApp",
+          "info": "https://wa.me/123456789"
+        },
+        "social_linked_in_link": {
+          "label": "领英",
+          "info": ""
+        },
+        "social_wechat_link": {
+          "label": "微信",
+          "info": ""
+        },
+        "social_reddit_link": {
+          "label": "Reddit",
+          "info": ""
+        },
+        "social_line_link": {
+          "label": "LINE",
+          "info": ""
+        },
+        "social_spotify_link": {
+          "label": "Spotify",
+          "info": ""
+        }
+      }
+    },
+    "search_input": {
+      "name": "搜索行为",
+      "settings": {
+        "header": {
+          "content": "搜索建议"
+        },
+        "predictive_search_enabled": {
+          "label": "启用搜索建议",
+          "info": "[预测搜索](https:\/\/help.shopify.com\/en\/manual\/online-store\/storefront-search\/predictive-search)，[支持语言](https:\/\/shopify.dev\/docs\/api\/ajax\/reference\/predictive-search#supported-languages)"
+        },
+        "predictive_search_show_vendor": {
+          "label": "显示产品供应商",
+          "info": "启用搜索建议时可见。"
+        },
+        "predictive_search_show_price": {
+          "label": "显示产品价格",
+          "info": "启用搜索建议时可见。"
+        },
+        "search_quick_link": {
+          "label": "快速链接"
+        },
+        "search_quick_search": {
+          "label": "快速搜索",
+          "info": "例如：时尚,男,女,儿童"
+        },
+        "search_fullwidth": {
+          "label": "启用全宽搜索",
+          "info": "仅适用于桌面端"
+        },
+        "logo_search_full": {
+          "label": "全宽搜索图标",
+          "info": "仅适用于全宽搜索"
+        },
+        "quick_link": {
+          "label": "快速链接",
+          "menu": "选择快速链接"
+        },
+        "search_suggest": "产品建议"
+      }
+    },
+    "currency_format": {
+      "name": "货币格式",
+      "settings": {
+        "content": "货币代码",
+        "paragraph": "购物车和结账价格始终显示货币代码。例如：1.00 美元。",
+        "currency_code_enabled": {
+          "label": "显示货币代码"
+        },
+        "currency_type": {
+          "label": "多种货币支持者",
+          "options__1": {
+            "label": "Shopify"
+          },
+          "options__2": {
+            "label": "The4"
+          }
+        },
+        "flag_currency": {
+          "label": "显示国旗"
+        },
+        "size_currency": {
+          "label": "旗帜大小",
+          "options__1": {
+            "label": "小"
+          },
+          "options__2": {
+            "label": "中"
+          }
+        },
+        "header_currency_by_t4s": {
+          "content": "The4 提供的多种货币"
+        },
+        "auto_currency": {
+          "label": "启用客户地理位置",
+          "info": "通过访客货币显示价格来提升销售！当客户访问您的商店时，您的商店会根据其 IP 地址的地理位置选择要使用的货币。您商店前端和结账时的价格会立即转换为该货币。如果客户所在地使用您的商店不支持的货币，则会使用商店的货币。例如，您的商店货币是美元，您接受美元、欧元和日元。当来自巴西的客户访问您的商店时，他们会看到美元（您商店的货币）的价格，因为您不接受巴西雷亚尔付款。"
+        },
+        "paragraph2": "尽管价格以不同货币显示，订单仍将以您商店的货币处理。",
+        "paragraph3": "要在您的在线商店提供多种货币，您必须首先 [编辑您商店的货币格式](https:\/\/support.the4.co\/articles\/kalles5-currency-format)。",
+        "supported_currencies": {
+          "label": "支持的货币",
+          "info": "使用国家/地区的 ISO [货币代码](http:\/\/www.xe.com\/iso4217.php)。规则：货币代码 - 货币名称。每条规则必须单独一行。"
+        },
+        "round_currency": {
+          "label": "舍入转换金额",
+          "info": "例如：9.9 美元 ==> 10 美元"
+        }
+      }
+    },
+    "favicon": {
+      "name": "收藏夹图标",
+      "settings": {
+        "favicon": {
+          "label": "图像",
+          "info": "将缩小至 48 x 48px"
+        }
+      }
+    },
+    "extras": {
+      "name": "额外功能",
+      "settings": {
+        "right_to_left": {
+          "label": "从右到左",
+          "info": "列出 RTL 语言 ISO 代码：ar（阿拉伯语）、dv（迪维希语、马尔代夫语）、ha（豪萨语）、he（希伯来语）、ku（库尔德语/索拉尼语）、fa（波斯语/法尔西语）、ur（乌尔都语）、ps（普什图语）、yi（意第绪语）。",
+          "options__1": {
+            "label": "关闭"
+          },
+          "options__2": {
+            "label": "开启"
+          },
+          "options__3": {
+            "label": "开启并显示 RTL 文本列表"
+          }
+        },
+        "countdown_timezone": {
+          "label": "倒计时时区",
+          "info": "选择您希望倒计时显示的时区",
+          "options__1": {
+            "label": "商店时区"
+          },
+          "options__2": {
+            "label": "用户本地时区"
+          }
+        },
+        "timezone_help": {
+          "content": "在 [主题设置](\/editor?context=theme&category=Extras) 中选择时区。"
+        },
+        "login_sidebar": {
+          "label": "启用登录表单侧边栏"
+        },
+        "login_popup": {
+          "label": "启用登录表单弹窗"
+        }
+      }
+    },
+    "import_demo": {
+      "name": "导入演示",
+      "content": "[安装 EcomRise (免费)](https:\/\/apps.shopify.com\/ecomrise?utm_source=the4-ecomus&utm_medium=intheme&utm_content=import-demo) 以快速导入新演示并更新最新主题版本。此外，还可访问所有销售提升功能。 [立即安装应用。](https:\/\/apps.shopify.com\/ecomrise?utm_source=the4-ecomus&utm_medium=intheme&utm_content=import-demo)"
+    }
+  },
+  "sections": {
+    "name_group": {
+      "header": "头部组",
+      "footer": "底部组",
+      "system": "系统组",
+      "config": "配置组"
+    },
+    "all": {
+      "colors": {
+        "label": "颜色"
+      }
+    }
+  }
+}

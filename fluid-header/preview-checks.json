@@ -1,0 +1,281 @@
+{
+  "mobile-320": {
+    "arrival": {
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 50
+      },
+      "hero": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 831.78125
+      },
+      "scrollY": 0,
+      "headerClass": "",
+      "overflow": false,
+      "brand": {
+        "x": 115,
+        "y": 0,
+        "width": 90,
+        "height": 40
+      }
+    },
+    "scrolled": {
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 52
+      },
+      "headerClass": "is-scrolled",
+      "scrollY": 650,
+      "menu": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "search": {
+        "x": 230,
+        "y": 6,
+        "width": 44,
+        "height": 44
+      },
+      "cart": {
+        "x": 268,
+        "y": 6,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    "menuOpen": true,
+    "searchOpen": true
+  },
+  "mobile-375": {
+    "arrival": {
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 375,
+        "height": 50
+      },
+      "hero": {
+        "x": 0,
+        "y": 0,
+        "width": 375,
+        "height": 827.40625
+      },
+      "scrollY": 0,
+      "headerClass": "",
+      "overflow": false,
+      "brand": {
+        "x": 142.5,
+        "y": 0,
+        "width": 90,
+        "height": 40
+      }
+    },
+    "scrolled": {
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 375,
+        "height": 52
+      },
+      "headerClass": "is-scrolled",
+      "scrollY": 650,
+      "menu": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "search": {
+        "x": 285,
+        "y": 6,
+        "width": 44,
+        "height": 44
+      },
+      "cart": {
+        "x": 323,
+        "y": 6,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    "menuOpen": true,
+    "searchOpen": true
+  },
+  "mobile-393": {
+    "arrival": {
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 50
+      },
+      "hero": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 815.96875
+      },
+      "scrollY": 0,
+      "headerClass": "",
+      "overflow": false,
+      "brand": {
+        "x": 151.5,
+        "y": 0,
+        "width": 90,
+        "height": 40
+      }
+    },
+    "scrolled": {
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 52
+      },
+      "headerClass": "is-scrolled",
+      "scrollY": 650,
+      "menu": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "search": {
+        "x": 303,
+        "y": 6,
+        "width": 44,
+        "height": 44
+      },
+      "cart": {
+        "x": 341,
+        "y": 6,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    "menuOpen": true,
+    "searchOpen": true
+  },
+  "mobile-430": {
+    "arrival": {
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 430,
+        "height": 50
+      },
+      "hero": {
+        "x": 0,
+        "y": 0,
+        "width": 430,
+        "height": 815.96875
+      },
+      "scrollY": 0,
+      "headerClass": "",
+      "overflow": false,
+      "brand": {
+        "x": 170,
+        "y": 0,
+        "width": 90,
+        "height": 40
+      }
+    },
+    "scrolled": {
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 430,
+        "height": 52
+      },
+      "headerClass": "is-scrolled",
+      "scrollY": 650,
+      "menu": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "search": {
+        "x": 340,
+        "y": 6,
+        "width": 44,
+        "height": 44
+      },
+      "cart": {
+        "x": 378,
+        "y": 6,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    "menuOpen": true,
+    "searchOpen": true
+  },
+  "desktop-1440": {
+    "arrival": {
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 76
+      },
+      "hero": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 785
+      },
+      "scrollY": 0,
+      "headerClass": "",
+      "overflow": false,
+      "brand": {
+        "x": 600,
+        "y": 0,
+        "width": 240,
+        "height": 46
+      }
+    },
+    "scrolled": {
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 76
+      },
+      "headerClass": "is-scrolled is-hidden",
+      "scrollY": 650,
+      "menu": {
+        "x": 28,
+        "y": 16,
+        "width": 115.203125,
+        "height": 44
+      },
+      "search": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "cart": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "overflow": false
+    },
+    "menuOpen": true
+  }
+}

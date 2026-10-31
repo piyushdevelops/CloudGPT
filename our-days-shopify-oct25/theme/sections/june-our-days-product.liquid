@@ -1,0 +1,73 @@
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+%}
+<section class="jod-product" style="--accent:{{ section.settings.accent }};--surface:{{ section.settings.surface }};--heading-size:{{ section.settings.heading_size }}px;--heading-mobile:{{ section.settings.heading_mobile }}px;--body-size:{{ section.settings.body_size }}px;--body-mobile:{{ section.settings.body_mobile }}px;--button-size:{{ section.settings.button_size }}px;--button-mobile:{{ section.settings.button_mobile }}px;--heading-weight:{{ section.settings.heading_weight }};--body-weight:{{ section.settings.body_weight }};--button-weight:{{ section.settings.button_weight }};--heading-spacing:{{ section.settings.heading_spacing | divided_by: 100.0 }}em;--body-spacing:{{ section.settings.body_spacing | divided_by: 100.0 }}em;--button-spacing:{{ section.settings.button_spacing | divided_by: 100.0 }}em;--heading-leading:{{ section.settings.heading_leading | divided_by: 100.0 }};--body-leading:{{ section.settings.body_leading | divided_by: 100.0 }}">
+  <div class="jod-product__intro">
+    <p class="jod-product__eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1>{{ product.title }}</h1>
+    <div class="jod-product__description">{{ product.description }}</div>
+  </div>
+
+  {% form 'product', product, class: 'jod-product__form' %}
+    <input type="hidden" name="quantity" value="1">
+    <input type="hidden" name="properties[Journey]" value="Our Days">
+    <fieldset class="jod-product__plans">
+      <legend>Choose your chapter</legend>
+      {% for variant in product.variants %}
+        <label class="jod-plan{% if variant == current_variant %} is-selected{% endif %}">
+          <input type="radio" name="id" value="{{ variant.id }}" {% if variant == current_variant %}checked{% endif %} {% unless variant.available %}disabled{% endunless %}>
+          <span class="jod-plan__number">0{{ forloop.index }}</span>
+          {% if forloop.index == 2 %}<em>Most loved</em>{% endif %}
+          <strong>{{ variant.title }}</strong>
+          <b>{{ variant.price | money_without_trailing_zeros }}</b>
+          <small>{% case forloop.index %}{% when 1 %}20-page Regular book{% when 2 %}32-page Regular book{% else %}52-page Regular book{% endcase %}</small>
+        </label>
+      {% endfor %}
+    </fieldset>
+    <button class="jod-product__submit" type="submit" {% unless current_variant.available %}disabled{% endunless %}>
+      <span>{{ section.settings.button_label }}</span><i aria-hidden="true">→</i>
+    </button>
+    <p class="jod-product__note">Secure checkout. We’ll collect the recipient and prompt preferences after purchase.</p>
+  {% endform %}
+</section>
+<script>
+  (() => {
+    const root = document.currentScript.previousElementSibling;
+    if (!root) return;
+    root.querySelectorAll('.jod-plan input').forEach(input => input.addEventListener('change', () => {
+      root.querySelectorAll('.jod-plan').forEach(card => card.classList.toggle('is-selected', card.contains(input)));
+    }));
+  })();
+</script>
+{% stylesheet %}
+  .jod-product{max-width:1680px;margin:auto;padding:clamp(42px,7vw,108px) clamp(20px,5vw,80px);color:#171717;background:#fff;font-size:var(--body-size);font-weight:var(--body-weight);letter-spacing:var(--body-spacing);line-height:var(--body-leading)}.jod-product__intro{max-width:850px}.jod-product__eyebrow{margin:0 0 14px;font-size:12px;font-weight:800;letter-spacing:.17em;text-transform:uppercase}.jod-product h1{margin:0;font-size:var(--heading-size);font-weight:var(--heading-weight);letter-spacing:var(--heading-spacing);line-height:var(--heading-leading)}.jod-product__description{max-width:700px;margin-top:18px}.jod-product__plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:48px 0 28px;padding:0;border:0}.jod-product__plans legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.jod-plan{position:relative;display:grid;min-height:300px;padding:30px;border:2px solid #171717;border-radius:28px;background:var(--surface);box-shadow:8px 8px 0 #171717;cursor:pointer}.jod-plan:nth-of-type(2){background:#f8d363}.jod-plan input{position:absolute;opacity:0}.jod-plan__number{font-weight:800}.jod-plan em{position:absolute;top:-18px;right:18px;padding:9px 13px;border:2px solid #171717;border-radius:999px;background:#fb5b42;color:#fff;font-size:12px;font-style:normal;font-weight:800;text-transform:uppercase}.jod-plan strong{align-self:end;font-size:clamp(24px,3vw,42px);line-height:1}.jod-plan b{font-size:clamp(28px,4vw,54px)}.jod-plan small{font-size:13px}.jod-plan.is-selected{outline:5px solid var(--accent);outline-offset:4px}.jod-product__submit{display:flex;align-items:center;justify-content:space-between;width:min(100%,440px);padding:9px 10px 9px 26px;border:2px solid #171717;border-radius:999px;background:var(--accent);color:#171717;font:inherit;font-size:var(--button-size);font-weight:var(--button-weight);letter-spacing:var(--button-spacing);box-shadow:0 6px 0 #171717;cursor:pointer}.jod-product__submit i{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:#171717;color:#fff;font-style:normal}.jod-product__note{color:#656565;font-size:12px}@media(max-width:749px){.jod-product{padding:34px 18px 70px;font-size:var(--body-mobile)}.jod-product h1{font-size:var(--heading-mobile)}.jod-product__plans{grid-template-columns:1fr;margin-top:34px}.jod-plan{min-height:220px;padding:24px}.jod-product__submit{font-size:var(--button-mobile)}}
+{% endstylesheet %}
+{% schema %}
+{
+  "name":"June Our Days product",
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"OUR DAYS BY JUNE"},
+    {"type":"text","id":"button_label","label":"Add-to-cart label","default":"Begin Our Days"},
+    {"type":"color","id":"accent","label":"Accent","default":"#FB5B42"},
+    {"type":"color","id":"surface","label":"Surface","default":"#F8F1E5"},
+    {"type":"header","content":"Heading typography"},
+    {"type":"range","id":"heading_size","label":"Desktop size","min":36,"max":96,"step":2,"unit":"px","default":72},
+    {"type":"range","id":"heading_mobile","label":"Mobile size","min":30,"max":60,"step":1,"unit":"px","default":48},
+    {"type":"range","id":"heading_weight","label":"Weight","min":500,"max":900,"step":100,"default":900},
+    {"type":"range","id":"heading_spacing","label":"Letter spacing","min":-8,"max":8,"step":1,"default":-5},
+    {"type":"range","id":"heading_leading","label":"Line height","min":85,"max":130,"step":5,"default":95},
+    {"type":"header","content":"Body typography"},
+    {"type":"range","id":"body_size","label":"Desktop size","min":14,"max":24,"step":1,"unit":"px","default":17},
+    {"type":"range","id":"body_mobile","label":"Mobile size","min":13,"max":20,"step":1,"unit":"px","default":15},
+    {"type":"range","id":"body_weight","label":"Weight","min":400,"max":700,"step":100,"default":400},
+    {"type":"range","id":"body_spacing","label":"Letter spacing","min":-4,"max":8,"step":1,"default":0},
+    {"type":"range","id":"body_leading","label":"Line height","min":120,"max":180,"step":5,"default":150},
+    {"type":"header","content":"Button typography"},
+    {"type":"range","id":"button_size","label":"Desktop size","min":13,"max":22,"step":1,"unit":"px","default":16},
+    {"type":"range","id":"button_mobile","label":"Mobile size","min":12,"max":19,"step":1,"unit":"px","default":15},
+    {"type":"range","id":"button_weight","label":"Weight","min":500,"max":900,"step":100,"default":800},
+    {"type":"range","id":"button_spacing","label":"Letter spacing","min":-3,"max":8,"step":1,"default":0}
+  ],
+  "presets":[{"name":"June Our Days product"}]
+}
+{% endschema %}

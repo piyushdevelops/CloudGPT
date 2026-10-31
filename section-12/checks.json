@@ -1,0 +1,11 @@
+{
+  "status": "installed and checked; awaiting review",
+  "validator": "revision4 source+footer-group passed",
+  "previous_sections_preserved": true,
+  "old_footer_settings_preserved": true,
+  "back_to_top": "scrollY0; visible H1 focus",
+  "mobile_accordion": "click opens; Enter closes",
+  "newsletter": "native form wiring inspected; no real submission",
+  "collection_page": "single new footer, old SEO footer absent",
+  "published": false
+}

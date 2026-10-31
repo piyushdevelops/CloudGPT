@@ -1,0 +1,1470 @@
+{
+  "menus": {
+    "nodes": [
+      {
+        "id": "gid://shopify/Menu/76404719670",
+        "handle": "main-menu",
+        "title": "Main menu",
+        "items": [
+          {
+            "id": "gid://shopify/MenuItem/172601999414",
+            "title": "Home & Decor",
+            "type": "COLLECTION",
+            "url": "/collections/home-all",
+            "resourceId": "gid://shopify/Collection/158055727158",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/454368460995",
+                "title": "Wall Clocks",
+                "type": "COLLECTION",
+                "url": "/collections/wall-clocks",
+                "resourceId": "gid://shopify/Collection/289216397507",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/267001102390",
+                "title": "Organizers",
+                "type": "COLLECTION",
+                "url": "/collections/home-organizers",
+                "resourceId": "gid://shopify/Collection/158055301174",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/267001069622",
+                "title": "Cushion Cover",
+                "type": "COLLECTION",
+                "url": "/collections/cushion-cover",
+                "resourceId": "gid://shopify/Collection/161440825398",
+                "items": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "gid://shopify/Menu/76404752438",
+        "handle": "footer",
+        "title": "Help",
+        "items": [
+          {
+            "id": "gid://shopify/MenuItem/171183702070",
+            "title": "Contact Us",
+            "type": "PAGE",
+            "url": "/pages/contact-us",
+            "resourceId": "gid://shopify/Page/44381601846",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/171474845750",
+            "title": "Track Order",
+            "type": "HTTP",
+            "url": "https://thejuneshop.shiprocket.co/",
+            "resourceId": null,
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/264275656758",
+            "title": "Sell With Us",
+            "type": "PAGE",
+            "url": "/pages/sell-with-us",
+            "resourceId": "gid://shopify/Page/47182643254",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/444326379715",
+            "title": "Help Center",
+            "type": "HTTP",
+            "url": "/apps/help-center",
+            "resourceId": null,
+            "items": []
+          }
+        ]
+      },
+      {
+        "id": "gid://shopify/Menu/76516556854",
+        "handle": "contact-us",
+        "title": "Quick Links",
+        "items": [
+          {
+            "id": "gid://shopify/MenuItem/171489624118",
+            "title": "About The June Shop",
+            "type": "PAGE",
+            "url": "/pages/our-story",
+            "resourceId": "gid://shopify/Page/91611234499",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/461266157763",
+            "title": "News Articles",
+            "type": "PAGE",
+            "url": "/pages/news-corner",
+            "resourceId": "gid://shopify/Page/92183068867",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/263900463158",
+            "title": "TJS Blogs",
+            "type": "HTTP",
+            "url": "https://thejuneshop.com/blogs/june-shop",
+            "resourceId": null,
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/248494489654",
+            "title": "Returns & Refund Policy",
+            "type": "PAGE",
+            "url": "/pages/return-and-refund-policy",
+            "resourceId": "gid://shopify/Page/89761054915",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/280184979510",
+            "title": "Shipping & Delivery",
+            "type": "PAGE",
+            "url": "/pages/shipping-delivery",
+            "resourceId": "gid://shopify/Page/52540964918",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/172598788150",
+            "title": "Privacy Policy",
+            "type": "PAGE",
+            "url": "/pages/privacy-policy",
+            "resourceId": "gid://shopify/Page/44636864566",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/172598755382",
+            "title": "Terms & Conditions",
+            "type": "PAGE",
+            "url": "/pages/terms-conditions",
+            "resourceId": "gid://shopify/Page/44636799030",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/171492933686",
+            "title": "FAQs",
+            "type": "PAGE",
+            "url": "/pages/faqs",
+            "resourceId": "gid://shopify/Page/44384190518",
+            "items": []
+          }
+        ]
+      },
+      {
+        "id": "gid://shopify/Menu/116543881270",
+        "handle": "sidebar-menu",
+        "title": "Sidebar Menu",
+        "items": [
+          {
+            "id": "gid://shopify/MenuItem/267200495670",
+            "title": "Home & Decor",
+            "type": "COLLECTION",
+            "url": "/collections/home-all",
+            "resourceId": "gid://shopify/Collection/158055727158",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/267200528438",
+                "title": "All",
+                "type": "COLLECTION",
+                "url": "/collections/home-all",
+                "resourceId": "gid://shopify/Collection/158055727158",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/267200725046",
+                "title": "Cushion Cover",
+                "type": "COLLECTION",
+                "url": "/collections/cushion-cover",
+                "resourceId": "gid://shopify/Collection/161440825398",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/267200757814",
+                "title": "Organizers",
+                "type": "COLLECTION",
+                "url": "/collections/home-organizers",
+                "resourceId": "gid://shopify/Collection/158055301174",
+                "items": []
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/MenuItem/267200987190",
+            "title": "Gifting",
+            "type": "COLLECTION",
+            "url": "/collections/gifting",
+            "resourceId": "gid://shopify/Collection/245948154051",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/267201019958",
+                "title": "By Occasion",
+                "type": "COLLECTION",
+                "url": "/collections/gifting",
+                "resourceId": "gid://shopify/Collection/245948154051",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/267201052726",
+                "title": "By Theme",
+                "type": "COLLECTION",
+                "url": "/collections/gifting",
+                "resourceId": "gid://shopify/Collection/245948154051",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/410630619331",
+                "title": "By Disposition",
+                "type": "COLLECTION",
+                "url": "/collections/gifting",
+                "resourceId": "gid://shopify/Collection/245948154051",
+                "items": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "gid://shopify/Menu/196221141187",
+        "handle": "new-navigation",
+        "title": "Live Navigation",
+        "items": [
+          {
+            "id": "gid://shopify/MenuItem/454127222979",
+            "title": "Home & Living",
+            "type": "COLLECTION",
+            "url": "/collections/home-living",
+            "resourceId": "gid://shopify/Collection/289188970691",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/474702217411",
+                "title": "Decor Objects",
+                "type": "COLLECTION",
+                "url": "/collections/decor-objects",
+                "resourceId": "gid://shopify/Collection/328025833667",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/454278152387",
+                    "title": "Artifacts",
+                    "type": "COLLECTION",
+                    "url": "/collections/artifacts",
+                    "resourceId": "gid://shopify/Collection/289362608323"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/454127714499",
+                    "title": "Photo Frames",
+                    "type": "COLLECTION",
+                    "url": "/collections/photo-frames",
+                    "resourceId": "gid://shopify/Collection/289363361987"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/454127288515",
+                "title": "Lamps & Lighting",
+                "type": "COLLECTION",
+                "url": "/collections/lamps-lighting",
+                "resourceId": "gid://shopify/Collection/289189068995",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/455683375299",
+                    "title": "Table Lamps",
+                    "type": "COLLECTION",
+                    "url": "/collections/table-lamps",
+                    "resourceId": "gid://shopify/Collection/289363394755"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/455683342531",
+                    "title": "3D Lights",
+                    "type": "COLLECTION",
+                    "url": "/collections/3d-lights",
+                    "resourceId": "gid://shopify/Collection/271340765379"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/474702938307",
+                "title": "Wall Accessories",
+                "type": "COLLECTION",
+                "url": "/collections/wall-accessories",
+                "resourceId": "gid://shopify/Collection/328839823555",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/474702971075",
+                    "title": "Hanging Organizers",
+                    "type": "COLLECTION",
+                    "url": "/collections/hanging-organizers",
+                    "resourceId": "gid://shopify/Collection/328839954627"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/457613836483",
+                    "title": "Wall Clocks",
+                    "type": "COLLECTION",
+                    "url": "/collections/wall-clocks",
+                    "resourceId": "gid://shopify/Collection/289216397507"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/454278283459",
+                    "title": "Macrame",
+                    "type": "COLLECTION",
+                    "url": "/collections/macrames",
+                    "resourceId": "gid://shopify/Collection/289362739395"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/454278250691",
+                "title": "Mats & Rugs",
+                "type": "COLLECTION",
+                "url": "/collections/mats-rugs-2",
+                "resourceId": "gid://shopify/Collection/289362706627",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/457494331587",
+                    "title": "Doormats",
+                    "type": "COLLECTION",
+                    "url": "/collections/doormats",
+                    "resourceId": "gid://shopify/Collection/289194475715"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/455683047619",
+                    "title": "Long Mat Runners",
+                    "type": "COLLECTION",
+                    "url": "/collections/long-mat-runners",
+                    "resourceId": "gid://shopify/Collection/286829772995"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/462587134147",
+                    "title": "Bathroom Mats",
+                    "type": "COLLECTION",
+                    "url": "/collections/bathroom-mats",
+                    "resourceId": "gid://shopify/Collection/289358708931"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/454274449603",
+                    "title": "Rugs",
+                    "type": "COLLECTION",
+                    "url": "/collections/fur-rugs-1",
+                    "resourceId": "gid://shopify/Collection/289358676163"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/455683473603",
+                "title": "Organizers",
+                "type": "COLLECTION",
+                "url": "/collections/home-organizers",
+                "resourceId": "gid://shopify/Collection/158055301174",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/454278971587",
+                    "title": "Home Organizers",
+                    "type": "COLLECTION",
+                    "url": "/collections/home-organizers-1",
+                    "resourceId": "gid://shopify/Collection/328841003203"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/474704576707",
+                    "title": "Kitchen Organizers",
+                    "type": "COLLECTION",
+                    "url": "/collections/kitchen-organizers",
+                    "resourceId": "gid://shopify/Collection/328841068739"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/474704609475",
+                    "title": "Vanity Organizers",
+                    "type": "COLLECTION",
+                    "url": "/collections/vanity-organizers",
+                    "resourceId": "gid://shopify/Collection/328841134275"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/474704969923",
+                "title": "Scents & Diffusers",
+                "type": "COLLECTION",
+                "url": "/collections/scents-diffusers",
+                "resourceId": "gid://shopify/Collection/328841363651",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/462159118531",
+                    "title": "Aroma Diffusers",
+                    "type": "COLLECTION",
+                    "url": "/collections/aroma-diffusers",
+                    "resourceId": "gid://shopify/Collection/289358741699"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/454278348995",
+                "title": "Smart Furniture",
+                "type": "COLLECTION",
+                "url": "/collections/home-stools",
+                "resourceId": "gid://shopify/Collection/289362837699",
+                "items": []
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/MenuItem/454279233731",
+            "title": "Kitchen & Dining",
+            "type": "COLLECTION",
+            "url": "/collections/dining",
+            "resourceId": "gid://shopify/Collection/289363493059",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/455058653379",
+                "title": "Dinner Sets",
+                "type": "COLLECTION",
+                "url": "/collections/dinner-sets",
+                "resourceId": "gid://shopify/Collection/289363689667",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/454279266499",
+                "title": "Plates & Platers",
+                "type": "COLLECTION",
+                "url": "/collections/dinnerware",
+                "resourceId": "gid://shopify/Collection/289363525827",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/454279299267",
+                    "title": "Dinner Plates",
+                    "type": "COLLECTION",
+                    "url": "/collections/dinner-plates",
+                    "resourceId": "gid://shopify/Collection/289363558595"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/458261954755",
+                    "title": "Snack Plates",
+                    "type": "COLLECTION",
+                    "url": "/collections/snack-plates",
+                    "resourceId": "gid://shopify/Collection/309243510979"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/458257367235",
+                    "title": "Serving Platters",
+                    "type": "COLLECTION",
+                    "url": "/collections/serving-trays-platters",
+                    "resourceId": "gid://shopify/Collection/309543174339"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/454279332035",
+                "title": "Bowls",
+                "type": "COLLECTION",
+                "url": "/collections/bowls",
+                "resourceId": "gid://shopify/Collection/289363591363",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/474767687875",
+                    "title": "Serving Bowls",
+                    "type": "COLLECTION",
+                    "url": "/collections/serving-bowls",
+                    "resourceId": "gid://shopify/Collection/309243543747"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/454279430339",
+                "title": "Drinkware",
+                "type": "COLLECTION",
+                "url": "/collections/drinkware",
+                "resourceId": "gid://shopify/Collection/289363722435",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/454279495875",
+                    "title": "🥃Glassware",
+                    "type": "COLLECTION",
+                    "url": "/collections/glassware",
+                    "resourceId": "gid://shopify/Collection/289363755203"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/454279463107",
+                    "title": "☕Cups & Mugs",
+                    "type": "COLLECTION",
+                    "url": "/collections/tea-cups-coffee-mugs",
+                    "resourceId": "gid://shopify/Collection/289363820739"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/454279528643",
+                    "title": "🥤Bottles & Sippers",
+                    "type": "COLLECTION",
+                    "url": "/collections/bottles-sippers",
+                    "resourceId": "gid://shopify/Collection/289363787971"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/454279364803",
+                "title": "Casseroles",
+                "type": "COLLECTION",
+                "url": "/collections/casserole",
+                "resourceId": "gid://shopify/Collection/289363624131",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/454278774979",
+                "title": "Lunch Box & Bags",
+                "type": "COLLECTION",
+                "url": "/collections/lunch-bags-boxes",
+                "resourceId": "gid://shopify/Collection/289363230915",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/455392198851",
+                "title": "Kitchen Accessories",
+                "type": "COLLECTION",
+                "url": "/collections/kitchen-utility",
+                "resourceId": "gid://shopify/Collection/291125887171",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/501766619331",
+                "title": "Kitchen Organisers",
+                "type": "COLLECTION",
+                "url": "/collections/kitchen-organizers",
+                "resourceId": "gid://shopify/Collection/328841068739",
+                "items": []
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/MenuItem/456870428867",
+            "title": "Eyewear",
+            "type": "COLLECTION",
+            "url": "/collections/eyewear-sunglasses",
+            "resourceId": "gid://shopify/Collection/296318959811",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/461260882115",
+                "title": "Sunglasses",
+                "type": "COLLECTION",
+                "url": "/collections/adult-sunglasses",
+                "resourceId": "gid://shopify/Collection/322886238403",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/479784861891",
+                "title": "Kid's Sunglasses",
+                "type": "COLLECTION",
+                "url": "/collections/kids-sunglasses",
+                "resourceId": "gid://shopify/Collection/331371872451",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/461260914883",
+                "title": "Eyeglasses",
+                "type": "COLLECTION",
+                "url": "/collections/eyeglasses",
+                "resourceId": "gid://shopify/Collection/322666725571",
+                "items": []
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/MenuItem/524470190275",
+            "title": "View All Products",
+            "type": "CATALOG",
+            "url": "/collections/all",
+            "resourceId": null,
+            "items": []
+          }
+        ]
+      },
+      {
+        "id": "gid://shopify/Menu/197227872451",
+        "handle": "more-navigation",
+        "title": "More Navigation",
+        "items": [
+          {
+            "id": "gid://shopify/MenuItem/458502373571",
+            "title": "Lamps & Lighting",
+            "type": "COLLECTION",
+            "url": "/collections/lamps-lighting",
+            "resourceId": "gid://shopify/Collection/289189068995",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/458502406339",
+            "title": "Dinner Sets",
+            "type": "COLLECTION",
+            "url": "/collections/dinner-sets",
+            "resourceId": "gid://shopify/Collection/289363689667",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/458295738563",
+            "title": "Undated Planners",
+            "type": "COLLECTION",
+            "url": "/collections/undated-yearly-planners",
+            "resourceId": "gid://shopify/Collection/289364181187",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/458502439107",
+            "title": "Mats & Rugs",
+            "type": "COLLECTION",
+            "url": "/collections/mats-rugs-2",
+            "resourceId": "gid://shopify/Collection/289362706627",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/458295771331",
+            "title": "Baby Record Books",
+            "type": "COLLECTION",
+            "url": "/collections/baby-record-book",
+            "resourceId": "gid://shopify/Collection/289364148419",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/458502537411",
+            "title": "Tea Cups & Coffee Mugs",
+            "type": "COLLECTION",
+            "url": "/collections/tea-cups-coffee-mugs",
+            "resourceId": "gid://shopify/Collection/289363820739",
+            "items": []
+          }
+        ]
+      },
+      {
+        "id": "gid://shopify/Menu/203126931651",
+        "handle": "new-navigation-2024",
+        "title": "New Navigation 2024",
+        "items": [
+          {
+            "id": "gid://shopify/MenuItem/473206161603",
+            "title": "Home & Living",
+            "type": "COLLECTION",
+            "url": "/collections/home-living",
+            "resourceId": "gid://shopify/Collection/289188970691",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/473212387523",
+                "title": "Decor Objects",
+                "type": "COLLECTION",
+                "url": "/collections/decor-objects",
+                "resourceId": "gid://shopify/Collection/328025833667",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/473213501635",
+                    "title": "Artifacts",
+                    "type": "COLLECTION",
+                    "url": "/collections/artifacts",
+                    "resourceId": "gid://shopify/Collection/289362608323"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473213567171",
+                    "title": "Photo Frames",
+                    "type": "COLLECTION",
+                    "url": "/collections/desk-photo-frames1",
+                    "resourceId": "gid://shopify/Collection/289363001539"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/473212420291",
+                "title": "Lamps & Lighting",
+                "type": "COLLECTION",
+                "url": "/collections/lamps-lighting",
+                "resourceId": "gid://shopify/Collection/289189068995",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/473214189763",
+                    "title": "3D Lights",
+                    "type": "COLLECTION",
+                    "url": "/collections/3d-lights",
+                    "resourceId": "gid://shopify/Collection/271340765379"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473214222531",
+                    "title": "Projector Lights",
+                    "type": "PRODUCT",
+                    "url": "/products/disco-projector-light",
+                    "resourceId": "gid://shopify/Product/6728700428483"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473214255299",
+                    "title": "String Lights",
+                    "type": "CATALOG",
+                    "url": "/collections/all",
+                    "resourceId": null
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473214288067",
+                    "title": "Table Lamps",
+                    "type": "COLLECTION",
+                    "url": "/collections/table-lamps",
+                    "resourceId": "gid://shopify/Collection/289363394755"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/473212485827",
+                "title": "Smart Furniture",
+                "type": "COLLECTION",
+                "url": "/collections/home-stools",
+                "resourceId": "gid://shopify/Collection/289362837699",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/473213829315",
+                    "title": "Stools",
+                    "type": "COLLECTION",
+                    "url": "/collections/home-stools",
+                    "resourceId": "gid://shopify/Collection/289362837699"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473213862083",
+                    "title": "Tables",
+                    "type": "COLLECTION",
+                    "url": "/collections/home-stools",
+                    "resourceId": "gid://shopify/Collection/289362837699"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/473212518595",
+                "title": "Mats & Rugs",
+                "type": "COLLECTION",
+                "url": "/collections/mats-rugs-2",
+                "resourceId": "gid://shopify/Collection/289362706627",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/473212551363",
+                    "title": "Doormats",
+                    "type": "COLLECTION",
+                    "url": "/collections/doormats",
+                    "resourceId": "gid://shopify/Collection/289194475715"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473212584131",
+                    "title": "Long Mats",
+                    "type": "COLLECTION",
+                    "url": "/collections/long-mat-runners",
+                    "resourceId": "gid://shopify/Collection/286829772995"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473212649667",
+                    "title": "Bathroom Mats",
+                    "type": "COLLECTION",
+                    "url": "/collections/bathroom-mats",
+                    "resourceId": "gid://shopify/Collection/289358708931"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/473212846275",
+                "title": "Organisers",
+                "type": "COLLECTION",
+                "url": "/collections/home-organizers",
+                "resourceId": "gid://shopify/Collection/158055301174",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/473212879043",
+                    "title": "Home Organisers",
+                    "type": "COLLECTION",
+                    "url": "/collections/home-organizers",
+                    "resourceId": "gid://shopify/Collection/158055301174"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473212911811",
+                    "title": "Vanity Organisers",
+                    "type": "COLLECTION",
+                    "url": "/collections/home-organizers",
+                    "resourceId": "gid://shopify/Collection/158055301174"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473212944579",
+                    "title": "Kitchen Organisers",
+                    "type": "COLLECTION",
+                    "url": "/collections/kitchen-organizers",
+                    "resourceId": "gid://shopify/Collection/328841068739"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/473213075651",
+                "title": "Scents & Diffusers",
+                "type": "COLLECTION",
+                "url": "/collections/aroma-diffusers",
+                "resourceId": "gid://shopify/Collection/289358741699",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/473213108419",
+                    "title": "Aroma Diffusers",
+                    "type": "COLLECTION",
+                    "url": "/collections/aroma-diffusers",
+                    "resourceId": "gid://shopify/Collection/289358741699"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/MenuItem/473206194371",
+            "title": "Kitchen & Dining",
+            "type": "COLLECTION",
+            "url": "/collections/dining",
+            "resourceId": "gid://shopify/Collection/289363493059",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/473216024771",
+                "title": "Dinner Sets",
+                "type": "COLLECTION",
+                "url": "/collections/dinner-sets",
+                "resourceId": "gid://shopify/Collection/289363689667",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/473216057539",
+                "title": "Plates & Platters",
+                "type": "COLLECTION",
+                "url": "/collections/dinner-plates",
+                "resourceId": "gid://shopify/Collection/289363558595",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/473216090307",
+                    "title": "Dinner Plates",
+                    "type": "COLLECTION",
+                    "url": "/collections/dinner-plates",
+                    "resourceId": "gid://shopify/Collection/289363558595"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473216123075",
+                    "title": "Snack Plates",
+                    "type": "COLLECTION",
+                    "url": "/collections/snack-plates",
+                    "resourceId": "gid://shopify/Collection/309243510979"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473216155843",
+                    "title": "Serving Platters",
+                    "type": "COLLECTION",
+                    "url": "/collections/serving-trays-platters",
+                    "resourceId": "gid://shopify/Collection/309543174339"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/473216188611",
+                "title": "Bowls",
+                "type": "COLLECTION",
+                "url": "/collections/bowls",
+                "resourceId": "gid://shopify/Collection/289363591363",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/473216221379",
+                    "title": "Serving Bowls",
+                    "type": "COLLECTION",
+                    "url": "/collections/serving-bowls",
+                    "resourceId": "gid://shopify/Collection/309243543747"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473216254147",
+                    "title": "Soup Snack Bowl",
+                    "type": "COLLECTION",
+                    "url": "/collections/bowls",
+                    "resourceId": "gid://shopify/Collection/289363591363"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473216286915",
+                    "title": "Dip Bowls",
+                    "type": "CATALOG",
+                    "url": "/collections/all",
+                    "resourceId": null
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/473216319683",
+                "title": "Tableware",
+                "type": "COLLECTION",
+                "url": "/collections/table-accessories",
+                "resourceId": "gid://shopify/Collection/309568798915",
+                "items": [
+                  {
+                    "id": "gid://shopify/MenuItem/473216352451",
+                    "title": "Place Mats",
+                    "type": "PRODUCT",
+                    "url": "/products/ardea-grey-table-mats-set-6-pcs",
+                    "resourceId": "gid://shopify/Product/7610705969347"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473216385219",
+                    "title": "Napkin Rings",
+                    "type": "COLLECTION",
+                    "url": "/collections/napkin-rings",
+                    "resourceId": "gid://shopify/Collection/320132972739"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473216417987",
+                    "title": "Coasters",
+                    "type": "COLLECTION",
+                    "url": "/collections/coasters-1",
+                    "resourceId": "gid://shopify/Collection/289363951811"
+                  },
+                  {
+                    "id": "gid://shopify/MenuItem/473216483523",
+                    "title": "Storage Jars",
+                    "type": "CATALOG",
+                    "url": "/collections/all",
+                    "resourceId": null
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/MenuItem/473216516291",
+                "title": "Casserole",
+                "type": "COLLECTION",
+                "url": "/collections/casserole",
+                "resourceId": "gid://shopify/Collection/289363624131",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/473216549059",
+                "title": "Glassware",
+                "type": "COLLECTION",
+                "url": "/collections/glassware",
+                "resourceId": "gid://shopify/Collection/289363755203",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/473216581827",
+                "title": "Lunch Bags & Boxes",
+                "type": "COLLECTION",
+                "url": "/collections/lunch-bags-boxes",
+                "resourceId": "gid://shopify/Collection/289363230915",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/473216614595",
+                "title": "Cups & Mugs",
+                "type": "COLLECTION",
+                "url": "/collections/tea-cups-coffee-mugs",
+                "resourceId": "gid://shopify/Collection/289363820739",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/473216647363",
+                "title": "Bottles & Sippers",
+                "type": "COLLECTION",
+                "url": "/collections/bottles-sippers",
+                "resourceId": "gid://shopify/Collection/289363787971",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/501766422723",
+                "title": "Kitchen Organisers",
+                "type": "COLLECTION",
+                "url": "/collections/kitchen-organizers",
+                "resourceId": "gid://shopify/Collection/328841068739",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/473216680131",
+                "title": "Kitchen Accessories",
+                "type": "COLLECTION",
+                "url": "/collections/kitchen-utility",
+                "resourceId": "gid://shopify/Collection/291125887171",
+                "items": []
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/MenuItem/473206259907",
+            "title": "Eyewear",
+            "type": "COLLECTION",
+            "url": "/collections/eyewear-sunglasses",
+            "resourceId": "gid://shopify/Collection/296318959811",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/473206882499",
+                "title": "Sunglasses",
+                "type": "COLLECTION",
+                "url": "/collections/adult-sunglasses",
+                "resourceId": "gid://shopify/Collection/322886238403",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/479783518403",
+                "title": "Kid's Sunglasses",
+                "type": "COLLECTION",
+                "url": "/collections/kids-sunglasses",
+                "resourceId": "gid://shopify/Collection/331371872451",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/473206915267",
+                "title": "Eyeglasses",
+                "type": "COLLECTION",
+                "url": "/collections/eyeglasses",
+                "resourceId": "gid://shopify/Collection/322666725571",
+                "items": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "gid://shopify/Menu/206197457091",
+        "handle": "decor-furnishing",
+        "title": "Decor & Furnishing",
+        "items": [
+          {
+            "id": "gid://shopify/MenuItem/480979222723",
+            "title": "Smart Furniture",
+            "type": "COLLECTION",
+            "url": "/collections/home-stools",
+            "resourceId": "gid://shopify/Collection/289362837699",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/480979255491",
+            "title": "Artifacts",
+            "type": "COLLECTION",
+            "url": "/collections/artifacts",
+            "resourceId": "gid://shopify/Collection/289362608323",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/480979288259",
+            "title": "Photo Frames",
+            "type": "COLLECTION",
+            "url": "/collections/desk-photo-frames1",
+            "resourceId": "gid://shopify/Collection/289363001539",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/480979353795",
+            "title": "Table Lamps",
+            "type": "COLLECTION",
+            "url": "/collections/table-lamps",
+            "resourceId": "gid://shopify/Collection/289363394755",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/480979386563",
+            "title": "Wall Accessories",
+            "type": "COLLECTION",
+            "url": "/collections/wall-accessories",
+            "resourceId": "gid://shopify/Collection/328839823555",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/480979419331",
+            "title": "Mats & Rugs",
+            "type": "COLLECTION",
+            "url": "/collections/mats-rugs-2",
+            "resourceId": "gid://shopify/Collection/289362706627",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/480979517635",
+            "title": "Artificial Flowers",
+            "type": "COLLECTION",
+            "url": "/collections/artificial-flowers",
+            "resourceId": "gid://shopify/Collection/322283602115",
+            "items": []
+          }
+        ]
+      },
+      {
+        "id": "gid://shopify/Menu/207041364163",
+        "handle": "customer-account-main-menu",
+        "title": "Customer account main menu",
+        "items": [
+          {
+            "id": "gid://shopify/MenuItem/495728361667",
+            "title": "Orders",
+            "type": "CUSTOMER_ACCOUNT_PAGE",
+            "url": "https://account.thejuneshop.com/orders",
+            "resourceId": "gid://shopify/CustomerAccountPage/34840281283",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/530417647811",
+            "title": "Profile",
+            "type": "CUSTOMER_ACCOUNT_PAGE",
+            "url": "https://account.thejuneshop.com/profile",
+            "resourceId": "gid://shopify/CustomerAccountPage/34840314051",
+            "items": []
+          }
+        ]
+      },
+      {
+        "id": "gid://shopify/Menu/304161587395",
+        "handle": "tjs-redesign-navigation",
+        "title": "TJS Redesign Navigation",
+        "items": [
+          {
+            "id": "gid://shopify/MenuItem/767841370307",
+            "title": "New & Bestsellers",
+            "type": "COLLECTION",
+            "url": "/collections/new-arrivals",
+            "resourceId": "gid://shopify/Collection/296347566275",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/767841403075",
+            "title": "Home",
+            "type": "COLLECTION",
+            "url": "/collections/home-all",
+            "resourceId": "gid://shopify/Collection/158055727158",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/767841435843",
+                "title": "Shop All Home",
+                "type": "COLLECTION",
+                "url": "/collections/home-all",
+                "resourceId": "gid://shopify/Collection/158055727158",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841468611",
+                "title": "Décor Objects & Accents",
+                "type": "COLLECTION",
+                "url": "/collections/decor-objects",
+                "resourceId": "gid://shopify/Collection/328025833667",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841501379",
+                "title": "Lamps & Lighting",
+                "type": "COLLECTION",
+                "url": "/collections/lamps-lighting",
+                "resourceId": "gid://shopify/Collection/289189068995",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841534147",
+                "title": "Wall Décor & Frames",
+                "type": "COLLECTION",
+                "url": "/collections/wall-accessories",
+                "resourceId": "gid://shopify/Collection/328839823555",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841566915",
+                "title": "Candlelight & Fragrance",
+                "type": "COLLECTION",
+                "url": "/collections/scents-diffusers",
+                "resourceId": "gid://shopify/Collection/328841363651",
+                "items": []
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/MenuItem/767841599683",
+            "title": "Kitchen & Dining",
+            "type": "COLLECTION",
+            "url": "/collections/dining",
+            "resourceId": "gid://shopify/Collection/289363493059",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/767841632451",
+                "title": "Shop All Kitchen & Dining",
+                "type": "COLLECTION",
+                "url": "/collections/dining",
+                "resourceId": "gid://shopify/Collection/289363493059",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841665219",
+                "title": "Dinnerware",
+                "type": "COLLECTION",
+                "url": "/collections/dinnerware",
+                "resourceId": "gid://shopify/Collection/289363525827",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841697987",
+                "title": "Serveware",
+                "type": "COLLECTION",
+                "url": "/collections/serveware",
+                "resourceId": "gid://shopify/Collection/289363886275",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841730755",
+                "title": "Drinkware & Glassware",
+                "type": "COLLECTION",
+                "url": "/collections/drinkware",
+                "resourceId": "gid://shopify/Collection/289363722435",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841763523",
+                "title": "Tea & Coffee",
+                "type": "COLLECTION",
+                "url": "/collections/tea-cups-coffee-mugs",
+                "resourceId": "gid://shopify/Collection/289363820739",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841796291",
+                "title": "Table Accessories",
+                "type": "COLLECTION",
+                "url": "/collections/table-accessories",
+                "resourceId": "gid://shopify/Collection/309568798915",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841829059",
+                "title": "Lunch & On-the-Go",
+                "type": "COLLECTION",
+                "url": "/collections/lunch-bags-boxes",
+                "resourceId": "gid://shopify/Collection/289363230915",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841861827",
+                "title": "Kitchen Storage & Utility",
+                "type": "COLLECTION",
+                "url": "/collections/kitchen-utility",
+                "resourceId": "gid://shopify/Collection/291125887171",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841894595",
+                "title": "The Hosting Edit",
+                "type": "COLLECTION",
+                "url": "/collections/dining-crockery-ceramic",
+                "resourceId": "gid://shopify/Collection/643354788035",
+                "items": []
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/MenuItem/767841927363",
+            "title": "Organise",
+            "type": "COLLECTION",
+            "url": "/collections/home-organizers",
+            "resourceId": "gid://shopify/Collection/158055301174",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/767841960131",
+                "title": "Shop All Organise",
+                "type": "COLLECTION",
+                "url": "/collections/home-organizers",
+                "resourceId": "gid://shopify/Collection/158055301174",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767841992899",
+                "title": "The Organised Home",
+                "type": "COLLECTION",
+                "url": "/collections/home-organizers-1",
+                "resourceId": "gid://shopify/Collection/328841003203",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842025667",
+                "title": "Vanity & Desk Organisation",
+                "type": "COLLECTION",
+                "url": "/collections/desk-organisers",
+                "resourceId": "gid://shopify/Collection/289363296451",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842058435",
+                "title": "Wardrobe Organisation",
+                "type": "COLLECTION",
+                "url": "/collections/hanging-organizers",
+                "resourceId": "gid://shopify/Collection/328839954627",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842091203",
+                "title": "The Desk Reset",
+                "type": "COLLECTION",
+                "url": "/collections/vanity-organizers",
+                "resourceId": "gid://shopify/Collection/328841134275",
+                "items": []
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/MenuItem/767842123971",
+            "title": "Planners & Journals",
+            "type": "COLLECTION",
+            "url": "/collections/planners-journals",
+            "resourceId": "gid://shopify/Collection/289364050115",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/767842156739",
+                "title": "Shop All Planners & Journals",
+                "type": "COLLECTION",
+                "url": "/collections/planners-journals",
+                "resourceId": "gid://shopify/Collection/289364050115",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842189507",
+                "title": "Dated Planners",
+                "type": "COLLECTION",
+                "url": "/collections/2026-dated-planners",
+                "resourceId": "gid://shopify/Collection/342500573379",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842222275",
+                "title": "Undated Planners",
+                "type": "COLLECTION",
+                "url": "/collections/undated-yearly-planners",
+                "resourceId": "gid://shopify/Collection/289364181187",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842255043",
+                "title": "Financial Planners",
+                "type": "COLLECTION",
+                "url": "/collections/financial-planners",
+                "resourceId": "gid://shopify/Collection/289364082883",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842287811",
+                "title": "Rewritable Planners",
+                "type": "COLLECTION",
+                "url": "/collections/rewritable-planners",
+                "resourceId": "gid://shopify/Collection/289363427523",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842320579",
+                "title": "Journals & Notebooks",
+                "type": "COLLECTION",
+                "url": "/collections/journals",
+                "resourceId": "gid://shopify/Collection/328869511363",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842353347",
+                "title": "Wedding & Memory Planners",
+                "type": "COLLECTION",
+                "url": "/collections/wedding-planners",
+                "resourceId": "gid://shopify/Collection/289364115651",
+                "items": []
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/MenuItem/768679346371",
+            "title": "Our Days",
+            "type": "COLLECTION",
+            "url": "/collections/our-days-memory-books",
+            "resourceId": "gid://shopify/Collection/643833626819",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/768679379139",
+            "title": "Photo Books",
+            "type": "COLLECTION",
+            "url": "/collections/photo-books",
+            "resourceId": "gid://shopify/Collection/643832283331",
+            "items": []
+          },
+          {
+            "id": "gid://shopify/MenuItem/767842386115",
+            "title": "Eyewear",
+            "type": "COLLECTION",
+            "url": "/collections/eyewear-sunglasses",
+            "resourceId": "gid://shopify/Collection/296318959811",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/767842418883",
+                "title": "Shop All Eyewear",
+                "type": "COLLECTION",
+                "url": "/collections/eyewear-sunglasses",
+                "resourceId": "gid://shopify/Collection/296318959811",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842451651",
+                "title": "Adult Sunglasses",
+                "type": "COLLECTION",
+                "url": "/collections/adult-sunglasses",
+                "resourceId": "gid://shopify/Collection/322886238403",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842484419",
+                "title": "Kids’ Sunglasses",
+                "type": "COLLECTION",
+                "url": "/collections/kids-sunglasses",
+                "resourceId": "gid://shopify/Collection/331371872451",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842517187",
+                "title": "Eyeglasses",
+                "type": "COLLECTION",
+                "url": "/collections/eyeglasses",
+                "resourceId": "gid://shopify/Collection/322666725571",
+                "items": []
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/MenuItem/767842549955",
+            "title": "Gifting",
+            "type": "COLLECTION",
+            "url": "/collections/gifting",
+            "resourceId": "gid://shopify/Collection/245948154051",
+            "items": [
+              {
+                "id": "gid://shopify/MenuItem/767842582723",
+                "title": "Gifts That Feel Personal",
+                "type": "COLLECTION",
+                "url": "/collections/gifting",
+                "resourceId": "gid://shopify/Collection/245948154051",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842615491",
+                "title": "Housewarming Favourites",
+                "type": "COLLECTION",
+                "url": "/collections/premium-home-dining",
+                "resourceId": "gid://shopify/Collection/643393749187",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767842648259",
+                "title": "The Celebration Table",
+                "type": "COLLECTION",
+                "url": "/collections/festive-table-decor",
+                "resourceId": "gid://shopify/Collection/334575173827",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767857721539",
+                "title": "Thoughtful Keepsakes",
+                "type": "COLLECTION",
+                "url": "/collections/thoughtful-keepsakes",
+                "resourceId": "gid://shopify/Collection/643487301827",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767857754307",
+                "title": "Finds Under ₹499",
+                "type": "COLLECTION",
+                "url": "/collections/under-499",
+                "resourceId": "gid://shopify/Collection/330123083971",
+                "items": []
+              },
+              {
+                "id": "gid://shopify/MenuItem/767857787075",
+                "title": "Finds Under ₹999",
+                "type": "COLLECTION",
+                "url": "/collections/under-999",
+                "resourceId": "gid://shopify/Collection/330123116739",
+                "items": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

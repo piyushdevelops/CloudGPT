@@ -1,0 +1,13 @@
+cloudflared.exe
+cloudflared.err.log
+cloudflared.out.log
+/*.png
+/*.pdf
+check-*.cjs
+debug-*.cjs
+rect.cjs
+rewrite-overlays.cjs
+tmp/
+audit*/
+audit-responsive.cjs
+/node_modules/

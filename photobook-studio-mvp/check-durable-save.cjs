@@ -1,0 +1,31 @@
+const { chromium } = require('../tools/node_modules/playwright');
+const path = require('path');
+(async()=>{
+  const browser=await chromium.launch({headless:true,executablePath:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'});
+  const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+  let page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+  await page.goto('http://127.0.0.1:4173/?durable=21',{waitUntil:'networkidle'});
+  await page.evaluate(async()=>{const db=await openDraftDb();await new Promise((resolve,reject)=>{const tx=db.transaction(DRAFT_STORE,'readwrite');tx.objectStore(DRAFT_STORE).clear();tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})});
+  await page.reload({waitUntil:'networkidle'});
+  await page.locator('[data-jump="pages"]').click();
+  const files=Array.from({length:10},(_,i)=>path.resolve(`assets/cover-${[1,3,6,9,12][i%5]}.jpg`));
+  await page.locator('#photoUpload').setInputFiles(files);
+  await page.waitForFunction(()=>document.querySelectorAll('#uploadedPhotos img').length===10);
+  await page.waitForFunction(()=>document.querySelector('#saveState b').textContent.includes('Saved'),null,{timeout:15000});
+  const before=await page.evaluate(()=>({photos:state.photos.length,items:state.items.length,saved:document.querySelector('#saveState b').textContent}));
+  await page.close();
+  page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));
+  await page.goto('http://127.0.0.1:4173/?durable=reopen',{waitUntil:'networkidle'});
+  await page.waitForFunction(()=>document.querySelectorAll('#uploadedPhotos img').length===10,null,{timeout:15000});
+  const after=await page.evaluate(()=>({photos:state.photos.length,items:state.items.length,status:document.querySelector('#saveState b').textContent}));
+  await page.locator('#studioPreview').click();
+  await page.waitForTimeout(300);
+  const review=await page.evaluate(()=>({album:document.querySelector('#reviewAlbum').textContent,photos:document.querySelector('#reviewPhotos').textContent,price:document.querySelector('#reviewPrice').textContent,open:document.querySelector('#previewDialog').open}));
+  await page.locator('#addToCartButton').click();
+  await page.waitForFunction(()=>!document.querySelector('#cartConfirmation').hidden);
+  const cart=await page.evaluate(()=>({bag:document.querySelector('.bag').textContent,stored:JSON.parse(localStorage.getItem('june-photo-studio-cart')),confirmation:document.querySelector('#cartConfirmation').innerText}));
+  await page.screenshot({path:'final-review-save-21.png',fullPage:true});
+  console.log(JSON.stringify({before,after,review,cart,errors,overflow:await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)},null,2));
+  await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});
+

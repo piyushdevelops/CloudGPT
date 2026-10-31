@@ -1,0 +1,64 @@
+{% capture arrow %}<span class="jg__arrow" aria-hidden="true">&#8599;</span>{% endcapture %}
+{% if count > 0 %}
+<june-pour id="JunePour-{{ section.id }}" class="jg" data-motion="{{ section.settings.motion }}" aria-labelledby="JunePourHeading-{{ section.id }}">
+ <div class="jg__scenes">
+ {% assign number = 0 %}{% for block in pours %}{% assign product = block.settings.product %}{% if product != blank %}
+ {% liquid
+  assign image_index = block.settings.image_number | minus: 1
+  assign scene = block.settings.image | default: product.images[image_index] | default: product.featured_image
+  assign mobile_scene = block.settings.mobile_image | default: scene
+  assign scene_key = scene.src | split: '/' | last | split: '?' | first
+  assign silhouette = ''
+  if scene_key == 'glasses_2.2_df3e2489-eb78-41c0-a503-e2e5d48a4c18.png'
+   assign silhouette = 'polygon(52% 0,79% 0,79% 3%,70% 6%,64% 3%,56% 2%,54% 7%,53% 12%,52% 16%,57% 17%,58% 19%,57% 72%,56% 79%,43% 80%,42% 76%,41% 19%,42% 17%,50% 16%,51% 10%)'
+  elsif scene_key == 'glasses_3.1_38c5293b-a3f6-473e-b046-f2196cd3d38e.png'
+   assign silhouette = 'polygon(57% 0,90% 0,87% 6%,82% 9%,73% 10%,66% 6%,59% 3%,58% 8%,57% 12%,59% 13%,60% 15%,57% 52%,55% 56%,55% 79%,60% 82%,60% 86%,47% 87%,47% 82%,52% 78%,52% 57%,50% 55%,47% 16%,48% 13%,52% 12%,52% 11%,55% 10%,56% 5%)'
+  elsif scene_key == 'Glasses_1.1_053b2e17-2dfc-4ede-87cb-24b868e8f052.png'
+   assign silhouette = 'polygon(53% 0,81% 0,79% 7%,76% 12%,70% 13%,62% 6%,56% 5%,55% 11%,54% 17%,54% 22%,61% 23%,62% 27%,62% 44%,60% 53%,56% 58%,54% 59%,54% 72%,59% 78%,60% 82%,59% 84%,44% 85%,43% 81%,45% 78%,49% 72%,49% 60%,45% 58%,42% 52%,40% 45%,40% 32%,38% 31%,37% 28%,37% 22%,39% 18%,43% 16%,46% 18%,48% 23%,52% 23%,53% 14%)'
+  endif
+ %}
+ <picture data-scene="{{ number }}" style="--jg-focus:{{ block.settings.focus }}%" {% unless number == 0 %}hidden{% endunless %}>
+  <source media="(max-width:900px)" srcset="{{ mobile_scene | image_url: width: 900 }}">
+  {{ scene | image_url: width: 2000 | image_tag: widths: '750,1200,1680,2000', sizes: '(min-width:1680px) 1680px, 100vw', loading: 'lazy', alt: block.settings.alt }}
+ </picture>
+ {% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+ </div>
+ <header class="jg__header">
+  <p class="jg__eyebrow jg__button-type">{{ section.settings.eyebrow | escape }}</p>
+  <h2 class="jg__heading" id="JunePourHeading-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+  <div class="jg__body jg__intro">{{ section.settings.body }}</div>
+ </header>
+ <div class="jg__foregrounds" aria-hidden="true">
+ {% assign number = 0 %}{% for block in pours %}{% assign product = block.settings.product %}{% if product != blank %}
+ {% liquid
+  assign image_index = block.settings.image_number | minus: 1
+  assign scene = block.settings.image | default: product.images[image_index] | default: product.featured_image
+  assign scene_key = scene.src | split: '/' | last | split: '?' | first
+  assign silhouette = ''
+ %}
+ <!-- BUILTIN_MASKS -->
+ {% if block.settings.foreground_mask != blank and block.settings.mask_source.id == scene.id %}
+  <div class="jg__foreground" data-foreground="{{ number }}" style="--jg-focus:{{ block.settings.focus }}%;mask-image:url({{ block.settings.foreground_mask | image_url: width: 2000 }});mask-size:cover;mask-position:{{ block.settings.focus }}% center" {% unless number == 0 %}hidden{% endunless %}>{{ scene | image_url: width: 2000 | image_tag: widths: '750,1200,1680,2000', sizes: '(min-width:1680px) 1680px, 100vw', loading: 'lazy', alt: '' }}</div>
+ {% elsif silhouette != blank %}
+  <div class="jg__foreground" data-foreground="{{ number }}" style="--jg-focus:{{ block.settings.focus }}%;clip-path:{{ silhouette }}" {% unless number == 0 %}hidden{% endunless %}>{{ scene | image_url: width: 2000 | image_tag: widths: '750,1200,1680,2000', sizes: '(min-width:1680px) 1680px, 100vw', loading: 'lazy', alt: '' }}</div>
+ {% endif %}
+ {% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+ </div>
+ <div class="jg__footer">
+  <div class="jg__choices"><p class="jg__body" id="JunePourChoose-{{ section.id }}">{{ section.settings.choose | escape }}</p><div class="jg__tabs" role="group" aria-labelledby="JunePourChoose-{{ section.id }}">
+   {% assign number = 0 %}{% for block in pours %}{% if block.settings.product != blank %}<button class="jg__tab jg__button-type" type="button" data-select="{{ number }}" data-block="{{ block.id }}" aria-pressed="{% if number == 0 %}true{% else %}false{% endif %}" aria-controls="JunePourProduct-{{ section.id }}-{{ number }}" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</button>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+  </div></div>
+  <div class="jg__products" aria-live="polite" aria-atomic="true">
+  {% assign number = 0 %}{% for block in pours %}{% assign product = block.settings.product %}{% if product != blank %}
+   <div class="jg__product" data-product="{{ number }}" id="JunePourProduct-{{ section.id }}-{{ number }}" {% unless number == 0 %}hidden{% endunless %}>
+    <p class="jg__eyebrow jg__button-type">{{ block.settings.label | escape }}</p><h3 class="jg__title">{{ block.settings.name | default: product.title | escape }}</h3>
+    <p class="jg__body jg__price">{% if product.price_varies %}{{ section.settings.from | escape }} {% endif %}{{ product.price | money }}</p>
+    <a class="jg__primary jg__button-type" href="{{ product.url }}">{% if product.available %}{{ section.settings.shop | escape }}{% else %}{{ section.settings.view | escape }}{% endif %}{{ arrow }}</a>
+    <details class="jg__details jg__body"><summary>Details</summary><div><p>{{ block.settings.detail | escape }}</p><p>{{ block.settings.specification | escape }}</p></div></details>
+   </div>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+   {% if section.settings.collection != blank %}<a class="jg__all jg__button-type" href="{{ section.settings.collection.url }}">{{ section.settings.all | escape }}{{ arrow }}</a>{% endif %}
+  </div>
+ </div>
+ <noscript><div class="jg__fallback">{% for block in pours %}{% if block.settings.product != blank %}<a href="{{ block.settings.product.url }}">{{ block.settings.product.title | escape }}</a>{% endif %}{% endfor %}</div></noscript>
+</june-pour>
+{% elsif request.design_mode %}<p>Add a product to each pour block.</p>{% endif %}

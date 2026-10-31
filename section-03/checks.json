@@ -1,0 +1,34 @@
+{
+  "date": "2026-09-28",
+  "role": "UNPUBLISHED",
+  "files": [
+    {
+      "filename": "locales/en.default.json",
+      "checksumMd5": "9b43a08391603c8a03d6424475013f71"
+    },
+    {
+      "filename": "sections/june-make-room.liquid",
+      "checksumMd5": "bf79951765103d6e089af3d1d0d89d7d"
+    },
+    {
+      "filename": "sections/june-with-extras.liquid",
+      "checksumMd5": "5da3f876e9ac2a4bca99b9a458b8ddad"
+    },
+    {
+      "filename": "sections/june-your-year.liquid",
+      "checksumMd5": "abdc92980f30bc15780a4152a05a7a15"
+    },
+    {
+      "filename": "templates/index.json",
+      "checksumMd5": "0491ec862ca96b3b3bff1dce9a9e3626"
+    }
+  ],
+  "section1And2SettingsUnchanged": true,
+  "validation": "Liquid validation passed revision 3; initial section, template and locale passed revision 1",
+  "browser": "See interactions.json",
+  "limitations": [
+    "Reduced-motion CSS present; not dynamically tested",
+    "No-JavaScript fallback not dynamically tested",
+    "Awaiting user review; fourth product has only three catalog-verified gifts"
+  ]
+}

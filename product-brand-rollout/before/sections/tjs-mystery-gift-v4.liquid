@@ -1,0 +1,163 @@
+<section id="TjsMysteryGift-{{ section.id }}" class="tjs-mv4 tjs-mv4-gift" style="--tjs-gift-pt:{{ section.settings.gift_pt }}px;--tjs-gift-pb:{{ section.settings.gift_pb }}px;--tjs-gift-mpt:{{ section.settings.mobile_pt }}px;--tjs-gift-mpb:{{ section.settings.mobile_pb }}px;--tjs-gift-media-h:{{ section.settings.mobile_media_height }}px;--tjs-gift-copy-pad:{{ section.settings.mobile_copy_padding }}px;">
+  <div class="tjs-mv4__shell"><div class="tjs-mv4__content tjs-mv4-gift__grid">
+    <div class="tjs-mv4-gift__media">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', alt: section.settings.image_alt }}
+      {% else %}
+        <div class="tjs-mv4-gift__fallback" aria-hidden="true"><div class="tjs-mv4-gift__box"><span>THE JUNE SHOP</span><i></i></div><div class="tjs-mv4-gift__tag">FOR: ______</div></div>
+      {% endif %}
+    </div>
+    <div class="tjs-mv4-gift__copy" data-reveal>
+      {% if section.settings.eyebrow != blank %}<div class="tjs-mv4__eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
+      <h2 class="tjs-mv4__display tjs-mv4-gift__heading tjs-mv5-manual-heading" aria-label="{{ section.settings.heading_line_1 | escape }} {{ section.settings.heading_line_2 | escape }} {{ section.settings.heading_line_3 | escape }} {{ section.settings.heading_line_4 | escape }}">
+        {% if section.settings.heading_line_1 != blank %}<span class="tjs-mv5-manual-line">{{ section.settings.heading_line_1 }}</span>{% endif %}
+        {% if section.settings.heading_line_2 != blank %}<span class="tjs-mv5-manual-line">{{ section.settings.heading_line_2 }}</span>{% endif %}
+        {% if section.settings.heading_line_3 != blank %}<span class="tjs-mv5-manual-line">{{ section.settings.heading_line_3 }}</span>{% endif %}
+        {% if section.settings.heading_line_4 != blank %}<span class="tjs-mv5-manual-line">{{ section.settings.heading_line_4 }}</span>{% endif %}
+      </h2>
+      <p class="tjs-mv4__body">{{ section.settings.body }}</p>
+      {% if section.settings.show_cta %}<button type="button" class="tjs-mv4-cta" data-gift-cta><span>{{ section.settings.cta_text }}</span><span class="tjs-mv4-cta__arrow" aria-hidden="true">→</span></button>{% endif %}
+    </div>
+  </div></div>
+</section>
+<script>
+  (function(){var s=document.getElementById('TjsMysteryGift-{{ section.id }}');if(!s)return;var b=s.querySelector('[data-gift-cta]');if(b)b.addEventListener('click',function(){var p=document.querySelector('[data-mystery-primary-cta]');if(p)p.click();});})();
+</script>
+{% schema %}
+{
+  "name": "TJS Mystery Gift",
+  "tag": "section",
+  "class": "tjs-mystery-v4-gift-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "gift_pt",
+      "label": "Top spacing",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 54
+    },
+    {
+      "type": "range",
+      "id": "gift_pb",
+      "label": "Bottom spacing",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 54
+    },
+    {
+      "type": "range",
+      "id": "mobile_pt",
+      "label": "Mobile top spacing",
+      "min": 12,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_pb",
+      "label": "Mobile bottom spacing",
+      "min": 12,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "mobile_media_height",
+      "label": "Mobile media height",
+      "min": 180,
+      "max": 420,
+      "step": 10,
+      "unit": "px",
+      "default": 260
+    },
+    {
+      "type": "range",
+      "id": "mobile_copy_padding",
+      "label": "Mobile text padding",
+      "min": 12,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "GIFT / THE UNKNOWN"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "GOOD GIFTS"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "default": "ARE EXPECTED."
+    },
+    {
+      "type": "text",
+      "id": "heading_line_3",
+      "label": "Heading line 3",
+      "default": "GREAT ONES"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_4",
+      "label": "Heading line 4",
+      "default": "AREN’T."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "Send the Mystery Box directly to someone you want to surprise—or keep the reveal entirely for yourself."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Gift lifestyle image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "The June Shop Mystery Box ready to gift"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show gift CTA",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "GIFT A MYSTERY"
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS Mystery Gift"
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,0 +1,34 @@
+{
+  "unit": "passed",
+  "live": [
+    {
+      "query": "zzqaunfindable",
+      "matched": false
+    },
+    {
+      "query": "xqzv987654321",
+      "matched": false
+    },
+    {
+      "query": "planner",
+      "matched": true
+    },
+    {
+      "query": "undated planner",
+      "matched": true
+    },
+    {
+      "query": "mug",
+      "matched": true
+    },
+    {
+      "query": "planer",
+      "matched": true
+    },
+    {
+      "query": "planne",
+      "matched": true
+    }
+  ]
+}
+Failed verification rejects rather than declaring no matches: passed

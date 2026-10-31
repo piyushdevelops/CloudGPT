@@ -1,0 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "june-photo-studio-page",
+      "settings": {
+        "heading": "Make a book worth opening.",
+        "copy": "<p>Choose the memory, name the story and build every page right here.</p>",
+        "builder_url": "https://june-photo-studio-production.up.railway.app",
+
+        "accent": "#CBF36B"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
+

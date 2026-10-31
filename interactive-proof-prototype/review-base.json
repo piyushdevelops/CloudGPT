@@ -1,0 +1,15 @@
+{
+  "status": "Research seed only; not a complete review corpus or deployment-ready content",
+  "observedAt": "2026-10-07",
+  "source": "https://www.google.com/maps/place/The+June+Shop/@22.5726576,88.4315199,17z/data=!3m1!4b1!4m6!3m5!1s0x3a0275bb4df8a60f:0xbd237e53abceb646!8m2!3d22.5726576!4d88.4315199!16s%2Fg%2F11j2b_mqqp",
+  "listing": {"name":"The June Shop", "rating":4.5,"count":1338,"address":"EN-22, Sector V, Bidhannagar, Kolkata"},
+  "accessLimitation":"Google Maps showed a limited view and required sign-in for topic search/full review access. All 1338 reviews have NOT been studied.",
+  "candidates": [
+    {"id":"mudita-planner","author":"Mudita Shauq","stars":5,"displayedDate":"a year ago","topic":"Planners","excerpt":"Good quality mixed with fun!","context":"Discusses repeated yearly-planner purchases and interest in new products.","customerPhotoPresent":true,"reuseCleared":false},
+    {"id":"smriti-quality","author":"smriti singh","stars":5,"displayedDate":"2 months ago","topic":"Quality","excerpt":"amazing quality","context":"Describes initial uncertainty after discovering June on Instagram and a positive reaction on receiving the item. Product identity is not established in the visible excerpt.","customerPhotoPresent":false,"reuseCleared":false},
+    {"id":"lenny-care","author":"Lenny Kisku","stars":5,"displayedDate":"6 months ago","topic":"Customer care","excerpt":"very kind to immediately replace the missing order","context":"Ordered two plates, received one and reports that the missing item was replaced. Do not frame this as an initially flawless delivery.","customerPhotoPresent":false,"reuseCleared":false},
+    {"id":"drkap-care","author":"Dr KAP","stars":5,"displayedDate":"9 months ago","topic":"Customer care","excerpt":"Very good service and response","context":"Discusses a customised 2026 diary planner and communication through WhatsApp and the owner.","customerPhotoPresent":true,"reuseCleared":false},
+    {"id":"pooja-delivery","author":"Pooja Sharma","stars":5,"displayedDate":"2 years ago","topic":"Delivery","excerpt":null,"context":"Discusses a kitchen mat for a new home, positive quality/design impressions and an individual two-day delivery experience. This is not a general delivery promise; current policy is separate.","customerPhotoPresent":true,"reuseCleared":false}
+  ],
+  "contentRequirements": ["5–8 distinct sourced reviews per topic", "Review-level source URL or source-provider ID", "Original rating and date", "Faithful short excerpt plus unedited full review via source", "Avatar/photo permission and provider attribution requirements", "No duplicate reviewers padded into slots", "No fake verified-purchase badge", "Gifting topic is provisional until supported by reviews", "Aggregate rating must remain source-dated or synchronised"]
+}

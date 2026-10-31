@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>June Photo Studio — MVP</title>
+  <link rel="icon" href="data:,">
+  <script>{const p=new URLSearchParams(location.search);if(p.get('embed')==='shopify'||p.has('shopify_store'))document.documentElement.classList.add('embed-shopify')}</script>
+  <link rel="stylesheet" href="styles.css?v=20261027-auto-book">
+</head>
+<body>
+  <svg class="studio-icon-sprite" aria-hidden="true">
+    <defs>
+      <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/><path d="M9 12h11"/></symbol>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/><path d="M4 12h11"/></symbol>
+      <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 7 4 12l5 5"/><path d="M4 12h9a7 7 0 0 1 7 7"/></symbol>
+      <symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 7 5 5-5 5"/><path d="M20 12h-9a7 7 0 0 0-7 7"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+      <symbol id="i-crop" viewBox="0 0 24 24"><path d="M6 2v16a2 2 0 0 0 2 2h14"/><path d="M2 6h16v12"/></symbol>
+      <symbol id="i-adjust" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h7M15 18h5"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="13" cy="18" r="2"/></symbol>
+      <symbol id="i-filter" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16Z"/></symbol>
+      <symbol id="i-replace" viewBox="0 0 24 24"><path d="M20 7h-9a5 5 0 0 0-5 5"/><path d="m16 3 4 4-4 4"/><path d="M4 17h9a5 5 0 0 0 5-5"/><path d="m8 21-4-4 4-4"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 8 5-8 5-8-5 8-5Z"/><path d="m4 12 8 5 8-5M4 16l8 5 8-5"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V3h8v3M6 6l1 15h10l1-15M10 10v7M14 10v7"/></symbol>
+      <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="5" rx="1"/><rect x="13" y="10" width="8" height="11" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/></symbol>
+      <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m3 17 5-5 4 4 3-3 6 6"/></symbol>
+      <symbol id="i-frame" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="10" rx="1"/></symbol>
+      <symbol id="i-type" viewBox="0 0 24 24"><path d="M5 5h14M12 5v14M8 19h8"/></symbol>
+      <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></symbol>
+      <symbol id="i-rotate-left" viewBox="0 0 24 24"><path d="M4 8V3m0 0h5M4 3l4 4"/><path d="M5.5 9a8 8 0 1 0 2-3"/></symbol>
+      <symbol id="i-rotate-right" viewBox="0 0 24 24"><path d="M20 8V3m0 0h-5m5 0-4 4"/><path d="M18.5 9a8 8 0 1 1-2-3"/></symbol>
+      <symbol id="i-flip-h" viewBox="0 0 24 24"><path d="M12 3v18" stroke-dasharray="2 2"/><path d="m9 7-5 5 5 5M15 7l5 5-5 5"/></symbol>
+      <symbol id="i-flip-v" viewBox="0 0 24 24"><path d="M3 12h18" stroke-dasharray="2 2"/><path d="m7 9 5-5 5 5M7 15l5 5 5-5"/></symbol>
+      <symbol id="i-layer-down" viewBox="0 0 24 24"><path d="m12 4 6 4-6 4-6-4 6-4Z"/><path d="m6 13 6 4 6-4M12 17v4m0 0-2-2m2 2 2-2"/></symbol>
+      <symbol id="i-layer-up" viewBox="0 0 24 24"><path d="m12 12 6 4-6 4-6-4 6-4Z"/><path d="m6 11 6-4 6 4M12 7V3m0 0-2 2m2-2 2 2"/></symbol>
+      <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 7v5h5"/><path d="M5.5 16a8 8 0 1 0 .5-9l-2 5"/></symbol>
+      <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3 1.4 4.1L17.5 8.5l-4.1 1.4L12 14l-1.4-4.1-4.1-1.4 4.1-1.4L12 3Z"/><path d="m18.5 14 .8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"/></symbol>
+      <symbol id="i-align-left" viewBox="0 0 24 24"><path d="M4 4v16M8 7h11M8 12h7M8 17h11"/></symbol>
+      <symbol id="i-align-center" viewBox="0 0 24 24"><path d="M12 3v18M6 7h12M8 12h8M6 17h12"/></symbol>
+      <symbol id="i-align-right" viewBox="0 0 24 24"><path d="M20 4v16M5 7h11M9 12h7M5 17h11"/></symbol>
+      <symbol id="i-align-top" viewBox="0 0 24 24"><path d="M4 4h16M7 8v11M12 8v7M17 8v11"/></symbol>
+      <symbol id="i-align-middle" viewBox="0 0 24 24"><path d="M3 12h18M7 5v14M12 7v10M17 5v14"/></symbol>
+      <symbol id="i-align-bottom" viewBox="0 0 24 24"><path d="M4 20h16M7 5v11M12 9v7M17 5v11"/></symbol>
+      <symbol id="i-clear" viewBox="0 0 24 24"><path d="m4 15 8-8 7 7-6 6H9l-5-5Z"/><path d="m10 20 6-6M15 20h6"/></symbol>
+      <symbol id="i-paste" viewBox="0 0 24 24"><path d="M9 5h6M9 3h6v4H9z"/><path d="M7 5H5v16h14V5h-2"/><path d="M9 11h6M9 15h6"/></symbol>
+      <symbol id="i-focus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></symbol>
+    </defs>
+  </svg>
+  <header class="site-header">
+    <button class="icon-button" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a class="brand" href="#">THE JUNE SHOP</a>
+    <div class="header-actions"><button class="header-link" id="saveDraftButton">Save</button><button class="bag" aria-label="Bag">0</button></div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="eyebrow">JUNE PHOTO STUDIO</p>
+      <h1>Make a book<br>worth opening.</h1>
+      <p class="lede">Choose the memory, name the story and build every page right here.</p>
+    </section>
+
+    <nav class="progress" aria-label="Album creation progress">
+      <button class="progress-step active" data-jump="occasion"><b>01</b><span>Occasion</span></button>
+      <button class="progress-step" data-jump="cover"><b>02</b><span>Cover</span></button>
+      <button class="progress-step" data-jump="name"><b>03</b><span>Name it</span></button>
+      <button class="progress-step" data-jump="book"><b>04</b><span>Book</span></button>
+      <button class="progress-step" data-jump="pages"><b>05</b><span>Pages</span></button>
+    </nav>
+
+    <section class="panel active" id="occasion" data-index="0">
+      <div class="panel-heading"><p class="eyebrow">START WITH THE STORY</p><h2>What are we remembering?</h2></div>
+      <div class="occasion-grid" id="occasionGrid"></div>
+      <button class="primary next occasion-next"><i aria-hidden="true"></i><b>Choose anniversary covers</b><span aria-hidden="true">→</span></button>
+    </section>
+
+    <section class="panel" id="cover" data-index="1">
+      <div class="panel-heading"><p class="eyebrow" id="coverEyebrow">THE ANNIVERSARY EDIT</p><h2 id="coverHeading">Pick its personality.</h2><p id="coverCopy">A considered cover edit for the story you are making.</p></div>
+      <div class="cover-layout">
+        <div class="cover-preview-wrap">
+          <div class="book-mockup" id="coverPreview"><img src="assets/occasion-covers/couples/all-the-ways-you-love-us.jpg" alt="Selected album cover"><span class="cover-title">Our Story</span></div>
+          <p class="selection-note"><span id="selectedCoverName">Bold Orbit</span> · available in both sizes</p>
+        </div>
+        <div class="cover-grid" id="coverGrid"></div>
+      </div>
+      <div class="actions"><button class="secondary back">Back</button><button class="primary next">Name your album <span aria-hidden="true">→</span></button></div>
+    </section>
+
+    <section class="panel" id="name" data-index="2">
+      <div class="naming-layout">
+        <div>
+          <p class="eyebrow">MAKE IT YOURS</p>
+          <h2>Personalise this cover.</h2>
+          <p class="personalization-intro">Add only the details this design needs. Character limits keep every line inside the cover artwork.</p>
+          <input type="hidden" id="albumTitle" value="Our Story">
+          <input type="hidden" id="albumSubtitle" value="">
+          <div class="personalization-fields" id="personalizationFields"></div>
+          <p class="suggestion-label">Suggestions for <b id="suggestionOccasion">Anniversary</b></p>
+          <div class="suggestions" id="suggestions"></div>
+          <div class="personalization-add"><b>Add another detail</b><div id="optionalFieldChoices" class="optional-field-choices"></div></div>
+          <section class="cover-photo-section" id="coverPhotoSection">
+            <div><b>Cover photos</b><span id="coverPhotoRequirement"></span></div>
+            <div class="cover-photo-fields" id="coverPhotoFields"></div>
+          </section>
+          <aside class="proof-note"><b>Your full proof comes next.</b><span>After purchase, we’ll place these details and cover photos into the chosen design, complete the inside pages, and share the full book preview with you for approval before printing.</span><p id="personalizationError" role="alert" hidden></p></aside>
+        </div>
+        <div class="title-stage">
+          <div class="book-mockup large" id="titlePreview"><img src="assets/occasion-covers/couples/all-the-ways-you-love-us.jpg" alt="Album cover title preview"><div class="cover-photo-preview-layer" id="coverPhotoPreviewLayer"></div><span class="cover-title">Our Story</span><small class="cover-subtitle"></small><span class="cover-name"></span><span class="cover-age"></span></div>
+          <p>Placement preview · final proof follows your purchase</p>
+        </div>
+      </div>
+      <div class="actions"><button class="secondary back">Back</button><button class="primary next">Choose the book <span aria-hidden="true">→</span></button></div>
+    </section>
+
+    <section class="panel" id="book" data-index="3">
+      <div class="panel-heading"><p class="eyebrow">BOOK DETAILS</p><h2>How big is this chapter?</h2></div>
+      <div class="size-grid">
+        <button class="size-card selected" data-size="Regular" data-price="2799" data-page-price="75"><span class="size-art small"></span><b>Regular</b><em>8 × 8 in</em><small>Starts at ₹2,799 · ₹75 per extra page</small></button>
+        <button class="size-card" data-size="Large" data-price="3099" data-page-price="90"><span class="size-art large"></span><b>Large</b><em>11 × 11 in</em><small>Starts at ₹3,099 · ₹90 per extra page</small></button>
+      </div>
+      <div class="page-control">
+        <div><p class="eyebrow">PAGE COUNT</p><h3><span id="pageCount">20</span> pages</h3><p>Ten spreads · add four pages at a time · <b id="extraPageRate">₹75 per page</b></p></div>
+        <div class="counter"><button id="minusPages" aria-label="Remove four pages">−</button><strong id="pageCountControl">20</strong><button id="plusPages" aria-label="Add four pages">+</button></div>
+      </div>
+      <aside class="price-bar"><div><span>Your album</span><strong id="summaryLine">Regular · 20 pages</strong></div><b id="price">₹2,799</b></aside>
+      <div class="actions"><button class="secondary back">Back</button><button class="primary next">Start adding photos <span aria-hidden="true">→</span></button></div>
+    </section>
+
+    <section class="panel" id="pages" data-index="4">
+      <div class="editor-head"><div class="studio-title"><p class="eyebrow">JUNE ALBUM STUDIO</p><h2>Build it page by page.</h2></div><div class="studio-commandbar"><button id="studioExit" class="studio-command studio-exit" aria-label="Exit studio"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-arrow-left"/></svg><span>Album</span></button><button id="studioUndo" class="studio-command" aria-label="Undo" disabled><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-undo"/></svg></button><button id="studioRedo" class="studio-command" aria-label="Redo" disabled><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-redo"/></svg></button><div class="save-state" id="saveState" role="status"><span></span><b>Saved on this device</b></div><button id="studioPreview" class="studio-command studio-preview">Preview</button></div></div>
+      <div class="editor">
+        <aside class="photo-tray">
+          <h3>Your photos</h3><p>Upload high-resolution JPG, PNG or HEIC files.</p>
+          <label class="upload"><input type="file" id="photoUpload" accept="image/*" multiple><span><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-plus"/></svg></span><b>Add photos</b><small>We’ll check print quality</small></label>
+          <section class="auto-create-card" id="autoCreateCard" aria-labelledby="autoCreateTitle">
+            <div class="auto-create-heading"><span>Auto album</span><b id="autoCreateTitle">Let June build your first draft</b></div>
+            <p id="autoCreateProgress">Add 30 photos to unlock automatic creation.</p>
+            <div class="auto-create-meter" aria-hidden="true"><i id="autoCreateMeter"></i></div>
+            <button id="openAutoCreate" disabled>Auto-create album <svg class="studio-ui-icon" aria-hidden="true"><use href="#i-sparkles"/></svg></button>
+          </section>
+          <div id="uploadedPhotos" class="uploaded-photos"></div>
+        </aside>
+        <div class="canvas-area">
+          <div class="design-tools"><div class="design-mode" role="group" aria-label="Design mode"><button data-mode="quick">Quick collage</button><button class="active" data-mode="custom">Custom design</button></div><button class="add-design" id="openDesignLibrary" aria-label="Open page design tools"><span>Design page</span><small>Layouts, backgrounds &amp; more</small></button></div>
+          <div class="spread-label"><button id="previousSpread" aria-label="Previous spread"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button><div><b id="spreadLabel">Pages 1–2</b><small id="spreadCount">Spread 1 of 9</small></div><button id="nextSpread" aria-label="Next spread"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></button></div>
+          <div class="spread" id="spreadCanvas"><div class="album-page" data-side="left"></div><div class="album-page" data-side="right"></div></div>
+          <div class="studio-zoom" aria-label="Canvas zoom"><button id="canvasZoomOut" aria-label="Zoom out"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-minus"/></svg></button><output id="canvasZoomValue">100%</output><button id="canvasZoomIn" aria-label="Zoom in"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-plus"/></svg></button><button id="canvasZoomFit">Fit</button></div>
+          <div class="context-toolbar" id="contextToolbar" hidden role="toolbar" aria-label="Selected photo quick actions">
+            <button id="quickCrop" aria-label="Change crop and size"><svg class="tool-icon" aria-hidden="true"><use href="#i-crop"/></svg><small>Crop</small></button>
+            <button id="quickReplace" aria-label="Replace photo"><svg class="tool-icon" aria-hidden="true"><use href="#i-replace"/></svg><small>Replace</small></button>
+            <button id="quickDuplicate" aria-label="Duplicate photo"><svg class="tool-icon" aria-hidden="true"><use href="#i-copy"/></svg><small>Copy</small></button>
+            <button id="quickPosition" aria-label="Change photo layer position"><svg class="tool-icon" aria-hidden="true"><use href="#i-layers"/></svg><small>Position</small></button>
+            <button id="quickLock" aria-label="Lock photo in place"><svg class="tool-icon lock-open-icon" aria-hidden="true"><use href="#i-lock"/></svg><small>Lock</small></button>
+            <button id="quickDelete" class="danger" aria-label="Delete photo"><svg class="tool-icon" aria-hidden="true"><use href="#i-trash"/></svg><small>Delete</small></button>
+          </div>
+          <div class="layer-order-menu" id="layerOrderMenu" hidden><button id="sendBackward">Send backward</button><button id="bringForward">Bring forward</button></div>
+          <div class="page-toolbar" id="pageToolbar" role="toolbar" aria-label="Page tools">
+            <button data-page-tool="layouts"><svg class="tool-icon" aria-hidden="true"><use href="#i-layout"/></svg><small>Layout</small></button>
+            <button data-page-tool="backgrounds"><svg class="tool-icon" aria-hidden="true"><use href="#i-image"/></svg><small>Background</small></button>
+            <button data-page-tool="frames"><svg class="tool-icon" aria-hidden="true"><use href="#i-frame"/></svg><small>Frames</small></button>
+            <button data-page-tool="add"><svg class="tool-icon" aria-hidden="true"><use href="#i-plus"/></svg><small>Add photo</small></button>
+          </div>
+          <section class="photo-adjustments" id="photoAdjustments" aria-label="Selected photo adjustments">
+            <div class="adjustment-sticky">
+              <button class="adjustment-close" id="adjustmentClose" aria-label="Close photo controls"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+              <div class="adjustment-head"><div><small>SELECTED PHOTO</small><b id="selectedPhotoName">Tap a photo to adjust it</b></div><span id="qualityStatus">Upload a photo to check quality</span></div>
+              <div class="ratio-options" role="group" aria-label="Photo size and ratio">
+                <button data-preset="full">Full page<small>Hero</small></button><button data-preset="portrait">Portrait<small>2:3</small></button><button data-preset="square">Square<small>1:1</small></button><button data-preset="landscape">Wide<small>3:2</small></button><button data-preset="half">Half page<small>1:2</small></button><button data-preset="small">Small<small>Detail</small></button>
+              </div>
+            </div>
+            <div class="inspector-section crop-section"><div class="inspector-label"><b>Crop &amp; scale</b><span id="zoomValue">100%</span></div><div class="crop-control"><button id="zoomOut" aria-label="Zoom out"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-minus"/></svg></button><input type="range" id="cropZoom" min="50" max="300" value="100" aria-label="Photo zoom"><button id="zoomIn" aria-label="Zoom in"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-plus"/></svg></button></div><div class="fit-options" role="group" aria-label="Image fit"><button data-fit="cover">Fill frame</button><button data-fit="contain">Fit image</button></div></div>
+            <div class="inspector-grid">
+              <div class="inspector-section"><div class="inspector-label"><b>Focus point</b><span>Crop anchor</span></div><div class="focus-options" role="group" aria-label="Crop focus point"><button data-focus="left top"><svg class="studio-ui-icon rotate-225" aria-hidden="true"><use href="#i-arrow-right"/></svg></button><button data-focus="top"><svg class="studio-ui-icon rotate-270" aria-hidden="true"><use href="#i-arrow-right"/></svg></button><button data-focus="right top"><svg class="studio-ui-icon rotate-315" aria-hidden="true"><use href="#i-arrow-right"/></svg></button><button data-focus="left"><svg class="studio-ui-icon rotate-180" aria-hidden="true"><use href="#i-arrow-right"/></svg></button><button data-focus="center"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-focus"/></svg></button><button data-focus="right"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></button><button data-focus="left bottom"><svg class="studio-ui-icon rotate-135" aria-hidden="true"><use href="#i-arrow-right"/></svg></button><button data-focus="bottom"><svg class="studio-ui-icon rotate-90" aria-hidden="true"><use href="#i-arrow-right"/></svg></button><button data-focus="right bottom"><svg class="studio-ui-icon rotate-45" aria-hidden="true"><use href="#i-arrow-right"/></svg></button></div></div>
+              <div class="inspector-section"><div class="inspector-label"><b>Transform</b><span>Page %</span></div><div class="transform-fields"><label>X<input id="transformX" type="number" min="0" max="100" step="0.1"></label><label>Y<input id="transformY" type="number" min="0" max="100" step="0.1"></label><label>W<input id="transformW" type="number" min="12" max="96" step="0.1"></label><label>H<input id="transformH" type="number" min="12" max="96" step="0.1"></label><label>Angle<input id="transformRotation" type="number" min="-180" max="180" step="1"></label></div></div>
+            </div>
+            <div class="transform-actions" role="toolbar" aria-label="Transform actions"><button data-inspector-action="rotate-left" title="Rotate left"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-rotate-left"/></svg><small>Rotate</small></button><button data-inspector-action="rotate-right" title="Rotate right"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-rotate-right"/></svg><small>Rotate</small></button><button data-inspector-action="flip-horizontal" title="Flip horizontal"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-flip-h"/></svg><small>Flip H</small></button><button data-inspector-action="flip-vertical" title="Flip vertical"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-flip-v"/></svg><small>Flip V</small></button><button data-inspector-action="backward" title="Send backward"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-layer-down"/></svg><small>Back</small></button><button data-inspector-action="forward" title="Bring forward"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-layer-up"/></svg><small>Front</small></button><button data-inspector-action="duplicate" title="Duplicate"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-copy"/></svg><small>Copy</small></button><button data-inspector-action="reset" title="Reset transforms"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-reset"/></svg><small>Reset</small></button><button class="danger" data-inspector-action="delete" title="Delete photo"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-trash"/></svg><small>Delete</small></button></div>
+          </section>
+          <section class="design-library" id="designLibrary" aria-label="Design library" hidden>
+            <div class="library-sticky">
+              <div class="library-head"><div><small>LAYOUTS, BACKGROUNDS, FRAMES &amp; TEXT</small><b>Design this page</b></div><button id="closeDesignLibrary" aria-label="Close page design tools"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+              <div class="library-tabs" role="tablist"><button class="active" data-library="layouts">Layouts</button><button data-library="backgrounds">Backgrounds</button><button data-library="frames">Photo frames</button><button data-library="words">Text</button><button data-library="stickers">Illustrations</button></div>
+            </div>
+            <div class="library-panel active" data-library-panel="layouts"><button data-layout="classic"><i class="layout-mini classic"></i><span>Classic four</span></button><button data-layout="hero"><i class="layout-mini hero"></i><span>Hero + two</span></button><button data-layout="film"><i class="layout-mini film"></i><span>Film strip</span></button></div>
+            <div class="library-panel background-library" data-library-panel="backgrounds">
+              <p class="background-edition" id="backgroundEdition">Backgrounds for Anniversary</p>
+              <label class="background-upload"><input id="backgroundUpload" type="file" accept="image/*"><b><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-plus"/></svg></b><span>Upload yours</span></label>
+              <button data-background="none"><i class="background-mini bg-none"></i><span>Plain</span></button><button data-background="wash"><i class="background-mini bg-wash"></i><span>Lilac wash</span></button><button data-background="ribbons"><i class="background-mini bg-ribbons"></i><span>Ribbons</span></button><button data-background="daisies"><i class="background-mini bg-daisies"></i><span>Daisies</span></button><button data-background="stars"><i class="background-mini bg-stars"></i><span>Little stars</span></button><button data-background="waves"><i class="background-mini bg-waves"></i><span>Soft waves</span></button><button data-background="checks"><i class="background-mini bg-checks"></i><span>Wonky checks</span></button><button data-background="hearts"><i class="background-mini bg-hearts"></i><span>Tiny hearts</span></button><button data-background="sunny"><i class="background-mini bg-sunny"></i><span>Sunshine</span></button><button data-background="botanical"><i class="background-mini bg-botanical"></i><span>Botanical</span></button><button data-background="confetti"><i class="background-mini bg-confetti"></i><span>Confetti</span></button><button data-background="postcard"><i class="background-mini bg-postcard"></i><span>Postcard</span></button><button data-background="frames"><i class="background-mini bg-frames"></i><span>Gallery</span></button><button data-background="moon"><i class="background-mini bg-moon"></i><span>Moonlight</span></button><button data-background="scribble"><i class="background-mini bg-scribble"></i><span>Scribbles</span></button><button data-background="pop"><i class="background-mini bg-pop"></i><span>Colour pop</span></button><button data-background="terrazzo"><i class="background-mini bg-terrazzo"></i><span>Terrazzo</span></button><button data-background="checkerwave"><i class="background-mini bg-checkerwave"></i><span>Wavy checks</span></button><button data-background="burst"><i class="background-mini bg-burst"></i><span>Big burst</span></button><button data-background="blobs"><i class="background-mini bg-blobs"></i><span>Happy blobs</span></button><button data-background="stamps"><i class="background-mini bg-stamps"></i><span>Memory stamps</span></button><button data-background="rainbow"><i class="background-mini bg-rainbow"></i><span>Rainbow road</span></button><button data-background="petals"><i class="background-mini bg-petals"></i><span>Petal party</span></button><button data-background="neon"><i class="background-mini bg-neon"></i><span>Neon night</span></button><button data-background="gingham"><i class="background-mini bg-gingham"></i><span>Picnic gingham</span></button><button data-background="doodle"><i class="background-mini bg-doodle"></i><span>Doodle day</span></button><button data-background="scallops"><i class="background-mini bg-scallops"></i><span>Scallop parade</span></button>
+            </div>
+            <div class="library-panel" data-library-panel="frames"><p class="library-guidance">Select a photo first, then choose its frame.</p><button data-frame="clean"><i class="frame-mini clean"></i><span>Clean</span></button><button data-frame="polaroid"><i class="frame-mini polaroid"></i><span>Polaroid</span></button><button data-frame="film"><i class="frame-mini film"></i><span>35mm film</span></button><button data-frame="soft"><i class="frame-mini soft"></i><span>Soft edge</span></button></div>
+            <div class="library-panel" data-library-panel="words"><button data-add-layer="title"><b class="type-mark">Aa</b><span>Add title</span></button><button data-add-layer="date"><b class="date-mark">24</b><span>Add date</span></button><button data-add-layer="caption"><b class="type-mark">Aa</b><span>Add caption</span></button></div>
+            <div class="library-panel sticker-library" id="illustrationLibrary" data-library-panel="stickers"></div>
+          </section>
+          <section class="studio-sheet" id="studioSheet" hidden aria-label="Editing tools">
+            <div class="studio-sheet-handle" aria-hidden="true"></div>
+            <header><div><small id="studioSheetEyebrow">EDIT</small><b id="studioSheetTitle">Photo tools</b></div><button id="studioSheetClose" aria-label="Close tools"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-x"/></svg></button></header>
+            <div id="studioSheetContent" class="studio-sheet-content"></div>
+          </section>
+        </div>
+        <aside class="layout-tray"><h3>Layouts</h3><button class="layout active"><i></i><i></i><i></i></button><button class="layout two"><i></i><i></i></button><button class="layout one"><i></i></button><div class="preflight"><b>Print check</b><p id="preflightText">Add photos to begin.</p></div></aside>
+      </div>
+      <div class="page-filmstrip-wrap"><button class="filmstrip-step" id="filmstripPrevious" aria-label="Previous page"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button><div id="pageFilmstrip" class="page-filmstrip" role="list" aria-label="Album pages"></div><button class="filmstrip-step" id="filmstripNext" aria-label="Next page"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></button><button id="addPageSignature" class="add-page-signature" aria-label="Add four pages"><span><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-plus"/></svg></span><small>Add 4</small></button></div>
+      <div class="actions"><button class="secondary back">Back</button><button class="primary" id="previewButton">Preview album <span aria-hidden="true">→</span></button></div>
+    </section>
+  </main>
+
+  <dialog id="previewDialog">
+    <button class="dialog-close" aria-label="Close preview"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+    <p class="eyebrow">YOUR ALBUM IS READY</p><h2 id="dialogTitle">Our Story</h2>
+    <p class="review-copy">Take one last look. Your album stays saved on this device, so you can close this page and return without starting again.</p>
+    <div class="preview-spread"><div><img id="reviewCoverImage" src="assets/occasion-covers/couples/all-the-ways-you-love-us.jpg" alt="Selected album cover"><span>Cover</span></div><div><img id="reviewPageImage" alt="First album photo" hidden><span>Pages 2–3</span></div></div>
+    <dl class="order-summary">
+      <div><dt>Album</dt><dd id="reviewAlbum">Regular · 20 pages</dd></div>
+      <div><dt>Photos added</dt><dd id="reviewPhotos">0</dd></div>
+      <div><dt>Final price</dt><dd id="reviewPrice">₹2,799</dd></div>
+    </dl>
+    <div class="draft-assurance"><span aria-hidden="true">✓</span><p><b id="reviewSaveStatus">All changes saved</b><small>Your photos and edits are stored securely on this device.</small></p></div>
+    <div class="checkout-actions">
+      <button class="primary" id="addToCartButton">Save &amp; add to cart <span aria-hidden="true">→</span></button>
+      <button class="pdf-download" id="downloadPdfButton"><span aria-hidden="true"><svg class="studio-ui-icon" style="transform:rotate(90deg)" aria-hidden="true"><use href="#i-arrow-right"/></svg></span> Download album PDF</button>
+      <button class="secondary dialog-close-action">Keep editing</button>
+    </div>
+    <div class="cart-error" id="cartError" role="alert" hidden></div>
+    <div class="cart-confirmation" id="cartConfirmation" hidden><b>Album saved and added to your prototype bag.</b><a href="https://thejuneshop.com/cart">Open The June Shop cart →</a></div>
+  </dialog>
+  <dialog id="autoBookDialog" class="auto-book-dialog" aria-labelledby="autoBookTitle">
+    <div class="auto-book-head">
+      <div><p class="eyebrow">AUTO ALBUM</p><h2 id="autoBookTitle">Choose how your story should feel.</h2></div>
+      <button id="closeAutoBook" aria-label="Close automatic album"><svg class="studio-ui-icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <div id="autoBookSetup">
+      <p class="auto-book-intro">We’ll make three complete drafts. You can change every photo, crop, caption and illustration afterward.</p>
+      <fieldset class="auto-choice" data-auto-group="order"><legend>Story order <small>How the memories flow</small></legend><div>
+        <button class="active" data-auto-value="timeline"><b>Timeline</b><small>Oldest to newest</small></button>
+        <button data-auto-value="highlights"><b>Highlights</b><small>Strong moments lead</small></button>
+        <button data-auto-value="upload"><b>Upload order</b><small>Keep your sequence</small></button>
+      </div></fieldset>
+      <fieldset class="auto-choice" data-auto-group="density"><legend>Page feel <small>How much breathing room</small></legend><div>
+        <button data-auto-value="spacious"><b>Spacious</b><small>Large, quiet images</small></button>
+        <button class="active" data-auto-value="balanced"><b>Balanced</b><small>Varied and polished</small></button>
+        <button data-auto-value="lively"><b>Lively</b><small>More collage moments</small></button>
+      </div></fieldset>
+      <fieldset class="auto-choice" data-auto-group="style"><legend>Visual style <small>Applied across the book</small></legend><div>
+        <button class="active" data-auto-value="editorial"><b>Clean editorial</b><small>White space and restraint</small></button>
+        <button data-auto-value="keepsake"><b>Warm keepsake</b><small>Soft, nostalgic details</small></button>
+        <button data-auto-value="scrapbook"><b>Playful scrapbook</b><small>Colour and illustrations</small></button>
+      </div></fieldset>
+      <button class="auto-generate-primary" id="generateAutoVersions">Make 3 versions <span aria-hidden="true">→</span></button>
+    </div>
+    <div id="autoBookResults" hidden>
+      <div class="auto-results-copy"><div><p class="eyebrow">THREE DIRECTIONS</p><h3>Pick the best beginning.</h3></div><button id="editAutoChoices">Change choices</button></div>
+      <div class="auto-remix" role="group" aria-label="Generate different album alternatives">
+        <button data-auto-remix="order">Reorder photos</button><button data-auto-remix="layout">Shuffle layouts</button><button data-auto-remix="style">Try other styles</button>
+      </div>
+      <div class="auto-version-list" id="autoVersionList"></div>
+      <p class="auto-version-note">Selecting a version creates an editable draft. Locked pages remain unchanged when you try another version.</p>
+    </div>
+  </dialog>
+  <script src="cover-catalog.js?v=20261027-catalog"></script>
+  <script src="cover-personalization.js?v=20261027-personalization"></script>
+  <script src="app.js?v=20261027-personalization"></script>
+  <script src="studio-v2.js?v=20261027-auto-book"></script>
+  <script src="auto-book.js?v=20261027-auto-book-2"></script>
+</body>
+</html>

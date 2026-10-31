@@ -1,0 +1,118 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_liquid_Jkg6pz": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "section_fullwidth": true,
+        "custom_liquid": "<style>\n  .tjs-undated-collection-mini {\n    position: relative;\n    margin: 0 0 18px;\n    padding: 22px 14px;\n    overflow: hidden;\n    border-radius: 22px;\n    font-family: inherit;\n    background:\n      radial-gradient(circle at 8% 10%, rgba(255, 206, 194, 0.48), transparent 28%),\n      radial-gradient(circle at 92% 12%, rgba(245, 224, 188, 0.42), transparent 30%),\n      linear-gradient(135deg, #fffdfb 0%, #fff8f4 54%, #fffaf7 100%);\n    border: 1px solid rgba(216, 176, 140, 0.32);\n    box-shadow: 0 12px 28px rgba(47, 36, 32, 0.055);\n  }\n\n  .tjs-undated-collection-mini::before {\n    content: \"\";\n    position: absolute;\n    inset: 0;\n    pointer-events: none;\n    background:\n      radial-gradient(circle, rgba(143, 86, 69, 0.065) 0 1px, transparent 1.7px) 0 0 / 30px 30px,\n      linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.34) 44%, transparent 58%);\n    opacity: 0.5;\n  }\n\n  .tjs-undated-collection-mini__inner {\n    position: relative;\n    z-index: 1;\n    max-width: 1060px;\n    margin: 0 auto;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    gap: 18px;\n  }\n\n  .tjs-undated-collection-mini__content {\n    min-width: 0;\n  }\n\n  .tjs-undated-collection-mini__kicker {\n    margin-bottom: 7px;\n    font-size: 10px;\n    line-height: 1;\n    letter-spacing: 1.3px;\n    text-transform: uppercase;\n    color: #9b7355;\n    font-weight: 900;\n  }\n\n  .tjs-undated-collection-mini__title {\n    margin: 0;\n    font-size: clamp(24px, 3vw, 38px);\n    line-height: 1.02;\n    letter-spacing: -1px;\n    color: #2f2420;\n    font-weight: 950;\n  }\n\n  .tjs-undated-collection-mini__title span {\n    background: linear-gradient(115deg, #8f5645, #d8b08c, #c96f67, #8f5645);\n    background-size: 240% 100%;\n    -webkit-background-clip: text;\n    background-clip: text;\n    color: transparent;\n    animation: tjsUndatedMiniGold 4s ease-in-out infinite;\n  }\n\n  @keyframes tjsUndatedMiniGold {\n    0%, 100% {\n      background-position: 100% 0;\n    }\n    50% {\n      background-position: 0 0;\n    }\n  }\n\n  .tjs-undated-collection-mini__copy {\n    margin-top: 8px;\n    max-width: 580px;\n    font-size: 12.5px;\n    line-height: 1.55;\n    color: #725f58;\n    font-weight: 500;\n  }\n\n  .tjs-undated-collection-mini__chips {\n    display: flex;\n    align-items: center;\n    justify-content: flex-end;\n    gap: 7px;\n    flex-wrap: wrap;\n    flex-shrink: 0;\n  }\n\n  .tjs-undated-collection-mini__chip {\n    padding: 8px 10px;\n    border-radius: 999px;\n    background: rgba(255, 255, 255, 0.66);\n    border: 1px solid rgba(216, 176, 140, 0.34);\n    color: #8f5645;\n    font-size: 10px;\n    line-height: 1;\n    font-weight: 850;\n    white-space: nowrap;\n    backdrop-filter: blur(10px);\n    -webkit-backdrop-filter: blur(10px);\n  }\n\n  @media screen and (max-width: 749px) {\n    .tjs-undated-collection-mini {\n      margin: 0 0 14px;\n      padding: 18px 12px;\n      border-radius: 18px;\n    }\n\n    .tjs-undated-collection-mini__inner {\n      display: block;\n      text-align: center;\n    }\n\n    .tjs-undated-collection-mini__kicker {\n      font-size: 9px;\n      margin-bottom: 6px;\n    }\n\n    .tjs-undated-collection-mini__title {\n      font-size: 28px;\n      letter-spacing: -0.8px;\n    }\n\n    .tjs-undated-collection-mini__copy {\n      margin: 8px auto 0;\n      font-size: 12px;\n      line-height: 1.5;\n      max-width: 92%;\n    }\n\n    .tjs-undated-collection-mini__chips {\n      justify-content: center;\n      margin-top: 12px;\n      gap: 6px;\n    }\n\n    .tjs-undated-collection-mini__chip {\n      font-size: 9.5px;\n      padding: 7px 9px;\n    }\n  }\n</style>\n\n<section class=\"tjs-undated-collection-mini\">\n  <div class=\"tjs-undated-collection-mini__inner\">\n    <div class=\"tjs-undated-collection-mini__content\">\n      <div class=\"tjs-undated-collection-mini__kicker\">\n        The June Shop Planners\n      </div>\n\n      <h1 class=\"tjs-undated-collection-mini__title\">\n        {{ collection.title | default: \"Undated Planners\" }}\n        <span>for fresh starts</span>\n      </h1>\n\n      <div class=\"tjs-undated-collection-mini__copy\">\n        No fixed dates. No wasted pages. Pick your cover and start whenever you’re ready.\n      </div>\n    </div>\n\n    <div class=\"tjs-undated-collection-mini__chips\">\n      <span class=\"tjs-undated-collection-mini__chip\">Start Anytime</span>\n      <span class=\"tjs-undated-collection-mini__chip\">Free Sticker Book</span>\n      <span class=\"tjs-undated-collection-mini__chip\">Gold Wiro</span>\n    </div>\n  </div>\n</section>",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_rate": 26
+      }
+    },
+    "heading": {
+      "type": "heading-collection",
+      "blocks": {
+        "9a1347b4-da62-490d-9fd4-427a03686ac2": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "",
+            "hidden_br_mobile": false,
+            "hidden_on_mobile": false,
+            "heading_size": "h4",
+            "text_color": "hdt-s-text",
+            "font_size_heading_lg": 50,
+            "font_size_heading_md": 30,
+            "font_size_heading": 24,
+            "font_weight_heading": 600,
+            "letter_spacing_heading": 0
+          }
+        },
+        "6df762d7-beda-4452-bcf6-1242b294077c": {
+          "type": "description",
+          "settings": {
+            "description": "",
+            "short_des": false,
+            "limit_words": 15
+          }
+        }
+      },
+      "block_order": [
+        "9a1347b4-da62-490d-9fd4-427a03686ac2",
+        "6df762d7-beda-4452-bcf6-1242b294077c"
+      ],
+      "disabled": true,
+      "settings": {
+        "spacing_hd": 10,
+        "color_scheme": "",
+        "padding_top": 65,
+        "padding_bottom": 65,
+        "padding_rate": 75
+      }
+    },
+    "custom_liquid_AtAkkh": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "section_fullwidth": true,
+        "custom_liquid": "{% assign active_collection = collection %}\n{% assign first_product = active_collection.products.first %}\n\n{% if active_collection != blank and active_collection.products_count > 0 %}\n  <style>\n    .tjs-drop-room {\n      position: relative;\n      overflow: hidden;\n      padding: 26px 14px 46px;\n      font-family: inherit;\n      background:\n        radial-gradient(circle at 10% 8%, rgba(255, 213, 202, 0.72), transparent 28%),\n        radial-gradient(circle at 86% 10%, rgba(239, 217, 174, 0.62), transparent 30%),\n        radial-gradient(circle at 50% 90%, rgba(226, 238, 222, 0.42), transparent 34%),\n        linear-gradient(135deg, #fffdfb 0%, #fff7f1 54%, #fffaf7 100%);\n      isolation: isolate;\n    }\n\n    .tjs-drop-room::before {\n      content: \"\";\n      position: absolute;\n      inset: 0;\n      z-index: 0;\n      pointer-events: none;\n      background:\n        radial-gradient(circle, rgba(143, 86, 69, 0.07) 0 1px, transparent 1.8px) 0 0 / 34px 34px,\n        linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.36) 45%, transparent 58%);\n      opacity: 0.55;\n    }\n\n    .tjs-drop-room__inner {\n      position: relative;\n      z-index: 1;\n      max-width: 1240px;\n      margin: 0 auto;\n    }\n\n    .tjs-drop-room__top {\n      display: grid;\n      grid-template-columns: 1fr auto;\n      align-items: end;\n      gap: 22px;\n      margin-bottom: 24px;\n      padding: 22px;\n      border-radius: 30px;\n      background: rgba(255,255,255,0.56);\n      border: 1px solid rgba(216,176,140,0.34);\n      box-shadow: 0 18px 42px rgba(47,36,32,0.075);\n      backdrop-filter: blur(16px);\n      -webkit-backdrop-filter: blur(16px);\n    }\n\n    .tjs-drop-room__kicker {\n      display: inline-flex;\n      align-items: center;\n      gap: 7px;\n      margin-bottom: 10px;\n      color: #9b7355;\n      font-size: 10px;\n      line-height: 1;\n      font-weight: 950;\n      letter-spacing: 1.3px;\n      text-transform: uppercase;\n    }\n\n    .tjs-drop-room__kicker::before {\n      content: \"✦\";\n      color: #c89664;\n    }\n\n    .tjs-drop-room__title {\n      margin: 0;\n      max-width: 720px;\n      color: #2f2420;\n      font-size: clamp(34px, 5vw, 66px);\n      line-height: 0.92;\n      letter-spacing: -2.2px;\n      font-weight: 950;\n    }\n\n    .tjs-drop-room__title span {\n      background: linear-gradient(115deg, #8f5645, #d8b08c, #c96f67, #8f5645);\n      background-size: 260% 100%;\n      -webkit-background-clip: text;\n      background-clip: text;\n      color: transparent;\n      animation: tjsDropGold 4s ease-in-out infinite;\n    }\n\n    @keyframes tjsDropGold {\n      0%, 100% { background-position: 100% 0; }\n      50% { background-position: 0 0; }\n    }\n\n    .tjs-drop-room__copy {\n      margin-top: 12px;\n      max-width: 620px;\n      color: #725f58;\n      font-size: 13.5px;\n      line-height: 1.65;\n      font-weight: 500;\n    }\n\n    .tjs-drop-room__meta {\n      display: grid;\n      grid-template-columns: repeat(2, auto);\n      gap: 9px;\n      justify-content: end;\n    }\n\n    .tjs-drop-room__pill {\n      padding: 10px 12px;\n      border-radius: 999px;\n      background: rgba(255,255,255,0.72);\n      border: 1px solid rgba(216,176,140,0.34);\n      color: #8f5645;\n      font-size: 11px;\n      line-height: 1;\n      font-weight: 900;\n      white-space: nowrap;\n      box-shadow: 0 10px 22px rgba(47,36,32,0.045);\n    }\n\n    .tjs-drop-room__count {\n      grid-column: 1 / -1;\n      padding: 13px 15px;\n      border-radius: 20px;\n      background: linear-gradient(135deg, #2f2420, #5b4035);\n      color: #fff9f3;\n      text-align: center;\n      box-shadow: 0 14px 28px rgba(47,36,32,0.16);\n    }\n\n    .tjs-drop-room__count strong {\n      display: block;\n      font-size: 26px;\n      line-height: 1;\n      font-weight: 950;\n    }\n\n    .tjs-drop-room__count span {\n      display: block;\n      margin-top: 4px;\n      font-size: 10px;\n      line-height: 1;\n      font-weight: 700;\n      color: rgba(255,249,243,0.72);\n    }\n\n    .tjs-drop-room__shelf {\n      position: relative;\n      overflow: hidden;\n      padding: 22px;\n      border-radius: 34px;\n      background:\n        linear-gradient(135deg, rgba(255,255,255,0.62), rgba(255,246,240,0.52));\n      border: 1px solid rgba(216,176,140,0.32);\n      box-shadow: 0 20px 50px rgba(47,36,32,0.08);\n      backdrop-filter: blur(18px);\n      -webkit-backdrop-filter: blur(18px);\n    }\n\n    .tjs-drop-room__shelf::before {\n      content: \"\";\n      position: absolute;\n      left: 0;\n      right: 0;\n      bottom: 32px;\n      height: 42px;\n      background:\n        linear-gradient(180deg, rgba(143,86,69,0.08), rgba(143,86,69,0.02));\n      border-top: 1px solid rgba(143,86,69,0.12);\n      border-bottom: 1px solid rgba(255,255,255,0.6);\n      pointer-events: none;\n    }\n\n    .tjs-drop-room__rail {\n      position: relative;\n      z-index: 1;\n      display: grid;\n      grid-auto-flow: column;\n      grid-auto-columns: minmax(220px, 1fr);\n      gap: 20px;\n      overflow-x: auto;\n      padding: 8px 4px 26px;\n      scroll-snap-type: x mandatory;\n      scrollbar-width: none;\n      -webkit-overflow-scrolling: touch;\n    }\n\n    .tjs-drop-room__rail::-webkit-scrollbar {\n      display: none;\n    }\n\n    .tjs-drop-card {\n      position: relative;\n      display: block;\n      scroll-snap-align: start;\n      text-decoration: none;\n      color: inherit;\n      min-width: 0;\n    }\n\n    .tjs-drop-card__cover {\n      position: relative;\n      aspect-ratio: 3 / 4.28;\n      overflow: hidden;\n      border-radius: 28px;\n      background: #fff;\n      border: 1px solid rgba(216,176,140,0.36);\n      box-shadow:\n        0 24px 44px rgba(47,36,32,0.16),\n        inset 0 1px 0 rgba(255,255,255,0.9);\n      transform-origin: center bottom;\n      transition: transform 0.34s ease, box-shadow 0.34s ease, border-color 0.34s ease;\n    }\n\n    .tjs-drop-card:nth-child(5n+1) .tjs-drop-card__cover { transform: rotate(-1.6deg); }\n    .tjs-drop-card:nth-child(5n+2) .tjs-drop-card__cover { transform: translateY(12px) rotate(1.1deg); }\n    .tjs-drop-card:nth-child(5n+3) .tjs-drop-card__cover { transform: rotate(0.8deg); }\n    .tjs-drop-card:nth-child(5n+4) .tjs-drop-card__cover { transform: translateY(7px) rotate(-0.8deg); }\n    .tjs-drop-card:nth-child(5n+5) .tjs-drop-card__cover { transform: rotate(1.4deg); }\n\n    .tjs-drop-card:hover .tjs-drop-card__cover {\n      transform: translateY(-10px) rotate(0deg) scale(1.018);\n      border-color: rgba(143,86,69,0.46);\n      box-shadow:\n        0 34px 66px rgba(47,36,32,0.24),\n        inset 0 1px 0 rgba(255,255,255,0.94);\n    }\n\n    .tjs-drop-card__cover img {\n      width: 100%;\n      height: 100%;\n      object-fit: cover;\n      display: block;\n      transition: transform 0.45s ease, filter 0.45s ease;\n    }\n\n    .tjs-drop-card:hover .tjs-drop-card__cover img {\n      transform: scale(1.04);\n      filter: saturate(1.04) contrast(1.02);\n    }\n\n    .tjs-drop-card__cover::after {\n      content: \"\";\n      position: absolute;\n      inset: 0;\n      pointer-events: none;\n      background:\n        linear-gradient(180deg, transparent 0%, transparent 64%, rgba(47,36,32,0.54) 100%),\n        linear-gradient(115deg, transparent 0%, transparent 42%, rgba(255,255,255,0.58) 50%, transparent 60%, transparent 100%);\n      transform: translateX(-135%);\n      transition: transform 0.85s ease;\n    }\n\n    .tjs-drop-card:hover .tjs-drop-card__cover::after {\n      transform: translateX(135%);\n    }\n\n    .tjs-drop-card__tag {\n      position: absolute;\n      z-index: 3;\n      top: 12px;\n      left: 12px;\n      padding: 7px 10px;\n      border-radius: 999px;\n      background: rgba(47,36,32,0.86);\n      color: #fff9f3;\n      font-size: 9px;\n      line-height: 1;\n      font-weight: 900;\n      backdrop-filter: blur(10px);\n      -webkit-backdrop-filter: blur(10px);\n    }\n\n    .tjs-drop-card__info {\n      position: absolute;\n      z-index: 3;\n      left: 12px;\n      right: 12px;\n      bottom: 12px;\n      padding: 11px;\n      border-radius: 18px;\n      background: rgba(255,255,255,0.8);\n      border: 1px solid rgba(255,255,255,0.62);\n      box-shadow: 0 12px 24px rgba(47,36,32,0.13);\n      backdrop-filter: blur(14px);\n      -webkit-backdrop-filter: blur(14px);\n      transform: translateY(4px);\n      transition: transform 0.28s ease, background 0.28s ease;\n    }\n\n    .tjs-drop-card:hover .tjs-drop-card__info {\n      transform: translateY(0);\n      background: rgba(255,255,255,0.88);\n    }\n\n    .tjs-drop-card__title {\n      color: #2f2420;\n      font-size: 12px;\n      line-height: 1.18;\n      font-weight: 950;\n      letter-spacing: -0.2px;\n      display: -webkit-box;\n      -webkit-line-clamp: 2;\n      -webkit-box-orient: vertical;\n      overflow: hidden;\n    }\n\n    .tjs-drop-card__bottom {\n      margin-top: 7px;\n      display: flex;\n      align-items: center;\n      justify-content: space-between;\n      gap: 8px;\n    }\n\n    .tjs-drop-card__price {\n      color: #8f5645;\n      font-size: 11.5px;\n      line-height: 1;\n      font-weight: 950;\n    }\n\n    .tjs-drop-card__view {\n      color: #2f2420;\n      font-size: 9.5px;\n      line-height: 1;\n      font-weight: 950;\n      text-transform: uppercase;\n      letter-spacing: 0.5px;\n    }\n\n    .tjs-drop-room__below {\n      margin-top: 20px;\n      display: grid;\n      grid-template-columns: 1fr auto;\n      align-items: center;\n      gap: 14px;\n    }\n\n    .tjs-drop-room__note {\n      color: #725f58;\n      font-size: 12px;\n      line-height: 1.5;\n      font-weight: 650;\n    }\n\n    .tjs-drop-room__note strong {\n      color: #2f2420;\n      font-weight: 950;\n    }\n\n    .tjs-drop-room__jump {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      min-height: 42px;\n      padding: 12px 17px;\n      border-radius: 999px;\n      background: linear-gradient(135deg, #2f2420, #5b4035);\n      color: #fff9f3;\n      text-decoration: none;\n      font-size: 12px;\n      line-height: 1;\n      font-weight: 900;\n      box-shadow: 0 14px 26px rgba(47,36,32,0.15);\n    }\n\n    @media screen and (min-width: 990px) {\n      .tjs-drop-room__rail {\n        grid-auto-columns: calc((100% - 80px) / 5);\n      }\n    }\n\n    @media screen and (max-width: 989px) {\n      .tjs-drop-room__top {\n        grid-template-columns: 1fr;\n        text-align: center;\n      }\n\n      .tjs-drop-room__copy,\n      .tjs-drop-room__title {\n        margin-left: auto;\n        margin-right: auto;\n      }\n\n      .tjs-drop-room__meta {\n        justify-content: center;\n      }\n\n      .tjs-drop-room__rail {\n        grid-auto-columns: 32%;\n      }\n    }\n\n    @media screen and (max-width: 749px) {\n      .tjs-drop-room {\n        padding: 14px 10px 34px;\n      }\n\n      .tjs-drop-room__top {\n        padding: 18px 14px;\n        border-radius: 24px;\n        margin-bottom: 14px;\n      }\n\n      .tjs-drop-room__title {\n        font-size: 34px;\n        line-height: 0.96;\n        letter-spacing: -1.3px;\n      }\n\n      .tjs-drop-room__copy {\n        font-size: 12.3px;\n        line-height: 1.55;\n      }\n\n      .tjs-drop-room__meta {\n        grid-template-columns: repeat(2, minmax(0, 1fr));\n      }\n\n      .tjs-drop-room__pill {\n        font-size: 9.5px;\n        padding: 8px 9px;\n        text-align: center;\n      }\n\n      .tjs-drop-room__count strong {\n        font-size: 22px;\n      }\n\n      .tjs-drop-room__shelf {\n        padding: 12px;\n        border-radius: 24px;\n      }\n\n      .tjs-drop-room__rail {\n        grid-auto-columns: 78%;\n        gap: 14px;\n        padding-bottom: 18px;\n      }\n\n      .tjs-drop-card:nth-child(n) .tjs-drop-card__cover {\n        transform: none;\n      }\n\n      .tjs-drop-card__cover {\n        border-radius: 22px;\n      }\n\n      .tjs-drop-room__below {\n        grid-template-columns: 1fr;\n        text-align: center;\n      }\n\n      .tjs-drop-room__jump {\n        width: 100%;\n      }\n    }\n  </style>\n\n  <section class=\"tjs-drop-room\">\n    <div class=\"tjs-drop-room__inner\">\n      <div class=\"tjs-drop-room__top\">\n        <div>\n          <div class=\"tjs-drop-room__kicker\">The Undated Planner Drop</div>\n\n          <h1 class=\"tjs-drop-room__title\">\n            Covers made for your\n            <span>next era.</span>\n          </h1>\n\n          <div class=\"tjs-drop-room__copy\">\n            No dates. No pressure. Just beautifully designed planners you can start whenever life feels ready for a reset.\n          </div>\n        </div>\n\n        <div class=\"tjs-drop-room__meta\">\n          <div class=\"tjs-drop-room__pill\">Start Anytime</div>\n          <div class=\"tjs-drop-room__pill\">Free Sticker Book</div>\n          <div class=\"tjs-drop-room__count\">\n            <strong>{{ active_collection.products_count }}</strong>\n            <span>cover designs</span>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"tjs-drop-room__shelf\">\n        <div class=\"tjs-drop-room__rail\">\n          {% for linked_product in active_collection.products %}\n            {% assign style_title = linked_product.title\n              | remove: \"Undated Yearly Planner 2025 Collection\"\n              | remove: \"Undated Yearly Planner Current State\"\n              | remove: \"Undated Yearly Planner\"\n              | remove: \"Undated Yealry Planner\"\n              | remove: \"Limited Edition Undated Planner\"\n              | remove: \"(Limited Hardbound Collection)\"\n              | remove: \"Limited Hardbound Collection\"\n              | remove: \"Ultimate Sticker Book\"\n              | remove: \"+\"\n              | remove: \"–\"\n              | remove: \"—\"\n              | remove: \"-\"\n              | strip\n            %}\n\n            {% capture linked_price %}\n              {{ linked_product.price | money }}\n            {% endcapture %}\n            {% assign linked_price = linked_price | strip %}\n\n            <a class=\"tjs-drop-card\" href=\"{{ linked_product.url }}\">\n              <div class=\"tjs-drop-card__cover\">\n                <span class=\"tjs-drop-card__tag\">Undated</span>\n\n                {% if linked_product.featured_image %}\n                  <img\n                    src=\"{{ linked_product.featured_image | image_url: width: 800 }}\"\n                    alt=\"{{ style_title | escape }}\"\n                    loading=\"lazy\"\n                  >\n                {% endif %}\n\n                <div class=\"tjs-drop-card__info\">\n                  <div class=\"tjs-drop-card__title\">\n                    {{ style_title }}\n                  </div>\n\n                  <div class=\"tjs-drop-card__bottom\">\n                    <div class=\"tjs-drop-card__price\">\n                      {{ linked_price }}\n                    </div>\n\n                    <div class=\"tjs-drop-card__view\">\n                      View\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </a>\n          {% endfor %}\n        </div>\n\n        <div class=\"tjs-drop-room__below\">\n          <div class=\"tjs-drop-room__note\">\n            <strong>Swipe the shelf</strong> to explore every planner cover design.\n          </div>\n\n          <a class=\"tjs-drop-room__jump\" href=\"#MainContent\">\n            Continue Shopping\n          </a>\n        </div>\n      </div>\n    </div>\n  </section>\n{% endif %}",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 52,
+        "padding_rate": 75
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "custom_css": [],
+      "settings": {
+        "product_des": "1",
+        "image_ratio": "custom-pr",
+        "image_size": true,
+        "show_vendor": false,
+        "pr_border": "none",
+        "products_count": 12,
+        "col_dk": "4",
+        "col_tb": "3",
+        "col_mb": "2",
+        "pagination_type": "links",
+        "paginate_pos": "center",
+        "dis_pagination": 25,
+        "enable_sorting": true,
+        "enable_filtering": true,
+        "price_behavior": "auto",
+        "enable_num_cols_selector": true,
+        "widget_heading": "Product categories",
+        "cat_source": "1",
+        "cat_link_list": "",
+        "count": false,
+        "section_fullwidth": false,
+        "color_scheme": "scheme-2",
+        "sidebar_position": "left",
+        "sidebar_size": "medium",
+        "padding_top": 0,
+        "padding_bottom": 27,
+        "padding_rate": 75
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_Jkg6pz",
+    "heading",
+    "custom_liquid_AtAkkh",
+    "main"
+  ]
+}

@@ -1,0 +1,1139 @@
+{% comment %}
+  TJS Heart Shape Champagne Glasses — Restock Hero v2
+  Fresh editorial approach:
+  - One clean product stage, no floating thumbnails/cards
+  - Three colour selectors update the hero image
+  - Product picker for live price and fallback CTA
+  - Natural image proportions with object-fit: contain
+  - Desktop editorial split / mobile image-first layout
+{% endcomment %}
+
+{% liquid
+  assign hero_product = section.settings.product
+  assign hero_variant = hero_product.selected_or_first_available_variant
+  assign hero_price = blank
+  assign hero_compare = blank
+  assign hero_product_url = blank
+
+  if hero_product != blank
+    assign hero_price = hero_variant.price
+    assign hero_compare = hero_variant.compare_at_price
+    assign hero_product_url = hero_product.url
+  endif
+
+  assign first_block = section.blocks.first
+  assign first_colour = section.settings.accent_color
+  assign first_title = 'Pink'
+  assign first_link = hero_product_url
+
+  if first_block != blank
+    assign first_colour = first_block.settings.swatch_color
+    assign first_title = first_block.settings.title
+    if first_block.settings.link != blank
+      assign first_link = first_block.settings.link
+    endif
+  endif
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --hr-bg: {{ section.settings.background }};
+    --hr-text: {{ section.settings.text_color }};
+    --hr-muted: {{ section.settings.muted_color }};
+    --hr-accent: {{ section.settings.accent_color }};
+    --hr-soft: {{ section.settings.soft_accent }};
+    --hr-border: {{ section.settings.border_color }};
+    --hr-button: {{ section.settings.button_background }};
+    --hr-button-text: {{ section.settings.button_text }};
+    --hr-stage: {{ section.settings.stage_background }};
+    --hr-max: {{ section.settings.max_width }}px;
+    --hr-radius: {{ section.settings.radius }}px;
+    --hr-active: {{ first_colour }};
+    background: var(--hr-bg);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock,
+  #shopify-section-{{ section.id }} .tjs-heart-restock * {
+    box-sizing: border-box;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock {
+    position: relative;
+    overflow: clip;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    color: var(--hr-text);
+    font-family: var(--font-body-family, Arial, sans-serif);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__inner {
+    width: min(calc(100% - 32px), var(--hr-max));
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: minmax(0, .82fr) minmax(520px, 1.18fr);
+    align-items: center;
+    gap: clamp(34px, 5vw, 78px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__copy {
+    max-width: 560px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 17px;
+    color: var(--hr-accent);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .13em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--hr-accent);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--hr-accent) 12%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__heading {
+    margin: 0;
+    font-family: var(--font-heading-family, var(--font-body-family, Arial, sans-serif));
+    font-size: clamp(42px, 5.3vw, {{ section.settings.heading_size }}px);
+    font-weight: 500;
+    line-height: .95;
+    letter-spacing: -.052em;
+    text-wrap: balance;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__heading strong {
+    color: var(--hr-accent);
+    font-weight: inherit;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__description {
+    max-width: 52ch;
+    margin-top: 18px;
+    color: var(--hr-muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__description > * {
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__fact {
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 11px;
+    border: 1px solid var(--hr-border);
+    border-radius: 999px;
+    background: color-mix(in srgb, #fff 82%, var(--hr-bg));
+    color: var(--hr-text);
+    font-size: 9px;
+    font-weight: 720;
+    letter-spacing: .025em;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__fact svg {
+    width: 13px;
+    height: 13px;
+    color: var(--hr-accent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 27px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__price strong {
+    font-size: 25px;
+    font-weight: 850;
+    line-height: 1;
+    letter-spacing: -.035em;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__price s {
+    color: var(--hr-muted);
+    font-size: 14px;
+    font-weight: 560;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__price small {
+    color: var(--hr-muted);
+    font-size: 9px;
+    font-weight: 650;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__primary,
+  #shopify-section-{{ section.id }} .tjs-heart-restock__secondary {
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 0 19px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 820;
+    letter-spacing: .075em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__primary {
+    border: 1px solid var(--hr-button);
+    background: var(--hr-button);
+    color: var(--hr-button-text);
+    box-shadow: 0 13px 30px rgba(21, 17, 14, .12);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__secondary {
+    border: 1px solid var(--hr-border);
+    background: transparent;
+    color: var(--hr-text);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__primary:hover,
+  #shopify-section-{{ section.id }} .tjs-heart-restock__primary:focus-visible,
+  #shopify-section-{{ section.id }} .tjs-heart-restock__secondary:hover,
+  #shopify-section-{{ section.id }} .tjs-heart-restock__secondary:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__primary svg,
+  #shopify-section-{{ section.id }} .tjs-heart-restock__secondary svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__visual {
+    min-width: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__stage {
+    position: relative;
+    min-height: clamp(520px, 52vw, 690px);
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    overflow: hidden;
+    border: 1px solid var(--hr-border);
+    border-radius: var(--hr-radius);
+    background:
+      radial-gradient(circle at 48% 38%, color-mix(in srgb, var(--hr-active) 13%, transparent) 0%, transparent 38%),
+      linear-gradient(145deg, color-mix(in srgb, var(--hr-stage) 96%, white), var(--hr-stage));
+    box-shadow: 0 26px 72px rgba(23, 18, 14, .08);
+    transition: background .28s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__stage::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 10%;
+    left: 50%;
+    width: min(58%, 390px);
+    aspect-ratio: 1;
+    border: 1px solid color-mix(in srgb, var(--hr-active) 18%, transparent);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    transition: border-color .28s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__stage-top {
+    position: absolute;
+    z-index: 5;
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__stage-badge {
+    min-height: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 10px;
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: 999px;
+    background: rgba(255,255,255,.82);
+    color: var(--hr-text);
+    box-shadow: 0 9px 22px rgba(21, 17, 14, .06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: 8px;
+    font-weight: 780;
+    letter-spacing: .045em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__stage-badge--stock {
+    color: var(--hr-accent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__gallery {
+    position: relative;
+    z-index: 2;
+    min-height: 0;
+    display: grid;
+    place-items: center;
+    padding: 58px 50px 18px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__slide {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px) scale(.985);
+    pointer-events: none;
+    transition:
+      opacity .34s ease,
+      visibility .34s ease,
+      transform .42s cubic-bezier(.22,.61,.36,1);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__image-link {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__image {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 28px 38px rgba(18, 14, 12, .13));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__placeholder {
+    width: 65%;
+    max-height: 460px;
+    color: color-mix(in srgb, var(--hr-muted) 30%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__selected-label {
+    position: absolute;
+    z-index: 4;
+    left: 22px;
+    bottom: 90px;
+    display: grid;
+    gap: 2px;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__selected-label small {
+    color: var(--hr-muted);
+    font-size: 7px;
+    font-weight: 780;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__selected-label strong {
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__selector {
+    position: relative;
+    z-index: 5;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat({{ section.blocks.size | at_least: 1 }}, minmax(0, 1fr));
+    border-top: 1px solid var(--hr-border);
+    background: rgba(255,255,255,.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__option {
+    min-width: 0;
+    min-height: 72px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border: 0;
+    border-right: 1px solid var(--hr-border);
+    background: transparent;
+    color: var(--hr-text);
+    cursor: pointer;
+    text-align: left;
+    transition: background-color .18s ease, color .18s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__option:last-child {
+    border-right: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__option:hover,
+  #shopify-section-{{ section.id }} .tjs-heart-restock__option:focus-visible {
+    background: color-mix(in srgb, var(--hr-active) 7%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__option.is-active {
+    background: color-mix(in srgb, var(--hr-active) 10%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__swatch {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    border: 1px solid rgba(20,17,14,.12);
+    border-radius: 50%;
+    box-shadow:
+      inset 0 0 0 3px rgba(255,255,255,.72),
+      0 3px 8px rgba(21,17,14,.08);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__option-copy {
+    min-width: 0;
+    display: grid;
+    gap: 3px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__option-copy strong {
+    overflow: hidden;
+    font-size: 11px;
+    font-weight: 790;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-heart-restock__option-copy small {
+    overflow: hidden;
+    color: var(--hr-muted);
+    font-size: 7px;
+    font-weight: 580;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 1100px) {
+    #shopify-section-{{ section.id }} .tjs-heart-restock__inner {
+      grid-template-columns: minmax(0, .9fr) minmax(440px, 1.1fr);
+      gap: 30px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__heading {
+      font-size: clamp(38px, 5vw, 58px);
+    }
+  }
+
+  @media screen and (max-width: 899px) {
+    #shopify-section-{{ section.id }} .tjs-heart-restock__inner {
+      grid-template-columns: 1fr;
+      gap: 26px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__visual {
+      order: -1;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__copy {
+      max-width: 680px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__stage {
+      min-height: 560px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tjs-heart-restock {
+      padding: {{ section.settings.mobile_padding_top }}px 0 {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__inner {
+      width: min(calc(100% - 18px), var(--hr-max));
+      gap: 22px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__stage {
+      min-height: 470px;
+      border-radius: min(var(--hr-radius), 20px);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__stage-top {
+      top: 10px;
+      right: 10px;
+      left: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__stage-badge {
+      min-height: 28px;
+      padding-inline: 9px;
+      font-size: 7px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__gallery {
+      padding: 46px 22px 18px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__selected-label {
+      left: 14px;
+      bottom: 77px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__selector {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__selector::-webkit-scrollbar {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__option {
+      min-width: 42%;
+      min-height: 64px;
+      flex: 0 0 42%;
+      padding: 10px 12px;
+      scroll-snap-align: start;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__heading {
+      font-size: clamp(33px, 11vw, {{ section.settings.mobile_heading_size }}px);
+      line-height: .97;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__description {
+      margin-top: 14px;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__facts {
+      margin-top: 17px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__price {
+      margin-top: 20px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__price strong {
+      font-size: 22px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-top: 18px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-heart-restock__primary,
+    #shopify-section-{{ section.id }} .tjs-heart-restock__secondary {
+      width: 100%;
+      min-height: 46px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{ section.id }} .tjs-heart-restock__slide,
+    #shopify-section-{{ section.id }} .tjs-heart-restock__option,
+    #shopify-section-{{ section.id }} .tjs-heart-restock__stage,
+    #shopify-section-{{ section.id }} .tjs-heart-restock__primary,
+    #shopify-section-{{ section.id }} .tjs-heart-restock__secondary {
+      transition-duration: .01ms !important;
+    }
+  }
+{% endstyle %}
+
+<section
+  class="tjs-heart-restock"
+  data-tjs-heart-restock="{{ section.id }}"
+  aria-labelledby="TjsHeartRestockHeading-{{ section.id }}"
+>
+  <div class="tjs-heart-restock__inner">
+    <div class="tjs-heart-restock__copy">
+      {% if section.settings.eyebrow != blank %}
+        <p class="tjs-heart-restock__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+
+      <h2 id="TjsHeartRestockHeading-{{ section.id }}" class="tjs-heart-restock__heading">
+        {{ section.settings.heading }}
+      </h2>
+
+      {% if section.settings.description != blank %}
+        <div class="tjs-heart-restock__description rte">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+
+      <div class="tjs-heart-restock__facts" aria-label="Product highlights">
+        <span class="tjs-heart-restock__fact">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 3.5h10v13H5z" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M8 6.5h4M8 10h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          {{ section.settings.fact_one | escape }}
+        </span>
+
+        <span class="tjs-heart-restock__fact">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 16s5-3.2 5-7a3 3 0 0 0-5-2.2A3 3 0 0 0 5 9c0 3.8 5 7 5 7Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+          </svg>
+          {{ section.settings.fact_two | escape }}
+        </span>
+
+        <span class="tjs-heart-restock__fact">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="6.5" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M7 10.2 9.1 12 13.3 7.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {{ section.settings.fact_three | escape }}
+        </span>
+      </div>
+
+      {% if hero_product != blank and section.settings.show_price %}
+        <div class="tjs-heart-restock__price">
+          <strong>{{ hero_price | money }}</strong>
+          {% if hero_compare != blank and hero_compare > hero_price %}
+            <s>{{ hero_compare | money }}</s>
+          {% endif %}
+          {% if section.settings.price_note != blank %}
+            <small>{{ section.settings.price_note | escape }}</small>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div class="tjs-heart-restock__actions">
+        {% if section.settings.primary_label != blank %}
+          <a
+            class="tjs-heart-restock__primary"
+            href="{{ first_link | default: hero_product_url | default: '#' }}"
+            data-restock-primary
+          >
+            <span>{{ section.settings.primary_label | escape }}</span>
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M4 10h12m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        {% endif %}
+
+        {% if section.settings.secondary_label != blank and section.settings.secondary_link != blank %}
+          <a class="tjs-heart-restock__secondary" href="{{ section.settings.secondary_link }}">
+            {{ section.settings.secondary_label | escape }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="tjs-heart-restock__visual">
+      <div class="tjs-heart-restock__stage" data-restock-stage>
+        <div class="tjs-heart-restock__stage-top">
+          <span class="tjs-heart-restock__stage-badge">
+            {{ section.settings.stage_left_badge | escape }}
+          </span>
+          <span class="tjs-heart-restock__stage-badge tjs-heart-restock__stage-badge--stock">
+            {{ section.settings.stage_right_badge | escape }}
+          </span>
+        </div>
+
+        <div class="tjs-heart-restock__gallery">
+          {% if section.blocks.size > 0 %}
+            {% for block in section.blocks %}
+              {% liquid
+                assign block_image_alt = block.settings.image.alt | default: block.settings.title
+                assign block_link = block.settings.link | default: hero_product_url
+              %}
+              <div
+                class="tjs-heart-restock__slide{% if forloop.first %} is-active{% endif %}"
+                data-restock-slide
+                data-index="{{ forloop.index0 }}"
+                {{ block.shopify_attributes }}
+              >
+                <a class="tjs-heart-restock__image-link" href="{{ block_link | default: '#' }}">
+                  {% if block.settings.image != blank %}
+                    {{ block.settings.image
+                      | image_url: width: 1300
+                      | image_tag:
+                        class: 'tjs-heart-restock__image',
+                        loading: 'lazy',
+                        widths: '320, 420, 560, 720, 900, 1100, 1300',
+                        sizes: '(max-width: 749px) 86vw, (max-width: 899px) 76vw, 48vw',
+                        alt: block_image_alt
+                    }}
+                  {% else %}
+                    {{ 'product-1' | placeholder_svg_tag: 'tjs-heart-restock__placeholder' }}
+                  {% endif %}
+                </a>
+              </div>
+            {% endfor %}
+          {% elsif hero_product != blank and hero_product.featured_image != blank %}
+            {% assign fallback_alt = hero_product.featured_image.alt | default: hero_product.title %}
+            <div class="tjs-heart-restock__slide is-active">
+              <a class="tjs-heart-restock__image-link" href="{{ hero_product.url }}">
+                {{ hero_product.featured_image
+                  | image_url: width: 1300
+                  | image_tag:
+                    class: 'tjs-heart-restock__image',
+                    loading: 'eager',
+                    fetchpriority: 'high',
+                    widths: '320, 420, 560, 720, 900, 1100, 1300',
+                    sizes: '(max-width: 749px) 86vw, (max-width: 899px) 76vw, 48vw',
+                    alt: fallback_alt
+                }}
+              </a>
+            </div>
+          {% endif %}
+        </div>
+
+        {% if section.blocks.size > 0 %}
+          <div class="tjs-heart-restock__selected-label" aria-live="polite">
+            <small>{{ section.settings.selected_label | escape }}</small>
+            <strong data-restock-selected>{{ first_title | escape }}</strong>
+          </div>
+
+          <div class="tjs-heart-restock__selector" role="tablist" aria-label="Choose colour">
+            {% for block in section.blocks %}
+              <button
+                class="tjs-heart-restock__option{% if forloop.first %} is-active{% endif %}"
+                type="button"
+                role="tab"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                data-restock-option
+                data-index="{{ forloop.index0 }}"
+                data-colour="{{ block.settings.swatch_color }}"
+                data-title="{{ block.settings.title | escape }}"
+                data-link="{{ block.settings.link | default: hero_product_url }}"
+              >
+                <span class="tjs-heart-restock__swatch" style="background: {{ block.settings.swatch_color }};" aria-hidden="true"></span>
+                <span class="tjs-heart-restock__option-copy">
+                  <strong>{{ block.settings.title | escape }}</strong>
+                  {% if block.settings.note != blank %}
+                    <small>{{ block.settings.note | escape }}</small>
+                  {% endif %}
+                </span>
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const selector = '[data-tjs-heart-restock="{{ section.id }}"]';
+    const root = document.querySelector(selector);
+
+    if (!root || root.dataset.initialised === 'true') return;
+    root.dataset.initialised = 'true';
+
+    const stage = root.querySelector('[data-restock-stage]');
+    const slides = Array.from(root.querySelectorAll('[data-restock-slide]'));
+    const options = Array.from(root.querySelectorAll('[data-restock-option]'));
+    const selected = root.querySelector('[data-restock-selected]');
+    const primary = root.querySelector('[data-restock-primary]');
+
+    const setActive = (index) => {
+      slides.forEach((slide) => {
+        slide.classList.toggle('is-active', Number(slide.dataset.index) === index);
+      });
+
+      options.forEach((option) => {
+        const active = Number(option.dataset.index) === index;
+        option.classList.toggle('is-active', active);
+        option.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+
+      const option = options.find((item) => Number(item.dataset.index) === index);
+      if (!option) return;
+
+      const colour = option.dataset.colour || '';
+      const title = option.dataset.title || '';
+      const link = option.dataset.link || '';
+
+      if (stage && colour) {
+        stage.style.setProperty('--hr-active', colour);
+      }
+
+      if (selected) selected.textContent = title;
+      if (primary && link) primary.setAttribute('href', link);
+    };
+
+    options.forEach((option) => {
+      option.addEventListener('click', () => {
+        setActive(Number(option.dataset.index) || 0);
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TJS heart restock hero",
+  "tag": "section",
+  "class": "section-tjs-heart-restock-hero",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Used for live price and fallback product links."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show product price",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "price_note",
+      "label": "Price note",
+      "default": "Set of 2"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Restocked favourite"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Heart Shape <strong>Champagne Glasses</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>The heart-shaped stemware you loved is back. A statement set of two for celebrations, hosting and thoughtful gifting.</p>"
+    },
+    {
+      "type": "text",
+      "id": "fact_one",
+      "label": "Fact 1",
+      "default": "Set of 2"
+    },
+    {
+      "type": "text",
+      "id": "fact_two",
+      "label": "Fact 2",
+      "default": "Heart-shaped rim"
+    },
+    {
+      "type": "text",
+      "id": "fact_three",
+      "label": "Fact 3",
+      "default": "3 colours restocked"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary button",
+      "default": "Shop the restock"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary button",
+      "default": "View all drinkware"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Product stage"
+    },
+    {
+      "type": "text",
+      "id": "stage_left_badge",
+      "label": "Left stage badge",
+      "default": "Set of 2"
+    },
+    {
+      "type": "text",
+      "id": "stage_right_badge",
+      "label": "Right stage badge",
+      "default": "Back in stock"
+    },
+    {
+      "type": "text",
+      "id": "selected_label",
+      "label": "Selected colour label",
+      "default": "Selected colour"
+    },
+    {
+      "type": "header",
+      "content": "Typography and layout"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Desktop heading size",
+      "min": 48,
+      "max": 88,
+      "step": 2,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile heading size",
+      "min": 32,
+      "max": 52,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 1100,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1500
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Stage corner radius",
+      "min": 10,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop top spacing",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop bottom spacing",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile top spacing",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile bottom spacing",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Section background",
+      "default": "#F8F5F1"
+    },
+    {
+      "type": "color",
+      "id": "stage_background",
+      "label": "Product stage",
+      "default": "#FBF9F6"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#171411"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted text",
+      "default": "#746E68"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#C98EA0"
+    },
+    {
+      "type": "color",
+      "id": "soft_accent",
+      "label": "Soft accent",
+      "default": "#F4E2E8"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Borders",
+      "default": "#E6DED7"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#171411"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "colour",
+      "name": "Colour",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Colour name",
+          "default": "Pink"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Short descriptor",
+          "default": "Soft & romantic"
+        },
+        {
+          "type": "color",
+          "id": "swatch_color",
+          "label": "Swatch colour",
+          "default": "#F3B4C6"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Product / variant link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS heart restock hero",
+      "blocks": [
+        {
+          "type": "colour",
+          "settings": {
+            "title": "Pink",
+            "note": "Soft & romantic",
+            "swatch_color": "#F3B4C6"
+          }
+        },
+        {
+          "type": "colour",
+          "settings": {
+            "title": "Black",
+            "note": "Bold & dramatic",
+            "swatch_color": "#252525"
+          }
+        },
+        {
+          "type": "colour",
+          "settings": {
+            "title": "Turquoise",
+            "note": "Fresh & playful",
+            "swatch_color": "#49C9C4"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

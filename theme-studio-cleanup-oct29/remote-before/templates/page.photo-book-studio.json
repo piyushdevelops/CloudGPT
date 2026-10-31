@@ -1,0 +1,28 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "june-photo-studio-page",
+      "settings": {
+        "heading": "Make a book worth opening.",
+        "copy": "<p>Choose the memory, name the story and build every page right here.</p>",
+        "builder_url": "https://june-photo-studio-production.up.railway.app",
+        "product": "june-photo-book",
+        "variant_map": "regular_20=54106898432195\nregular_24=54106898464963\nregular_28=54106898497731\nregular_32=54106898530499\nregular_36=54106898563267\nregular_40=54106898596035\nregular_44=54106898628803\nregular_48=54106898661571\nregular_52=54106898694339\nregular_56=54106898727107\nregular_60=54106898759875\nlarge_20=54106898792643\nlarge_24=54106898825411\nlarge_28=54106898858179\nlarge_32=54106898890947\nlarge_36=54106898923715\nlarge_40=54106898956483\nlarge_44=54106898989251\nlarge_48=54106899022019\nlarge_52=54106899054787\nlarge_56=54106899087555\nlarge_60=54106899120323",
+        "accent": "#CBF36B"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
+

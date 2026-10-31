@@ -1,0 +1,78 @@
+[
+  {
+    "viewport": 2560,
+    "stage": {
+      "x": 0,
+      "width": 2560,
+      "height": 1010.171875
+    },
+    "art": {
+      "x": 0,
+      "width": 2560,
+      "height": 1010.171875
+    },
+    "copy": {
+      "x": 490,
+      "width": 679.390625,
+      "height": 387.6875
+    },
+    "overflow": false
+  },
+  {
+    "viewport": 1920,
+    "stage": {
+      "x": 0,
+      "width": 1920,
+      "height": 780
+    },
+    "art": {
+      "x": 0,
+      "width": 1920,
+      "height": 780
+    },
+    "copy": {
+      "x": 170,
+      "width": 679.390625,
+      "height": 387.6875
+    },
+    "overflow": false
+  },
+  {
+    "viewport": 1440,
+    "stage": {
+      "x": 0,
+      "width": 1440,
+      "height": 780
+    },
+    "art": {
+      "x": 0,
+      "width": 1440,
+      "height": 780
+    },
+    "copy": {
+      "x": 43.1875,
+      "width": 582.046875,
+      "height": 387.6875
+    },
+    "overflow": false
+  },
+  {
+    "viewport": 390,
+    "stage": {
+      "x": 0,
+      "width": 390,
+      "height": 857.1875
+    },
+    "art": {
+      "x": 10,
+      "width": 370,
+      "height": 392.8125
+    },
+    "copy": {
+      "x": 20,
+      "width": 332.796875,
+      "height": 274.375
+    },
+    "overflow": false
+  }
+]

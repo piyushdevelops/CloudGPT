@@ -1,0 +1,8 @@
+june-scoop-announcements{display:none}
+.jsa-brand-active{opacity:0!important;pointer-events:none!important}
+.jsa-layer{position:absolute;z-index:5;display:flex;align-items:center;gap:6px;color:var(--jsa-color,var(--june-on-dark,#fff));font-family:var(--jsa-font);font-size:var(--jsa-size);font-weight:var(--jsa-weight);letter-spacing:var(--jsa-tracking);line-height:var(--jsa-line);overflow:hidden;box-sizing:border-box}
+.jsa-clip{display:block;flex:1;min-width:0;overflow:hidden;color:inherit!important;text-decoration:none!important}
+.jsa-track{display:block;white-space:nowrap;width:max-content;min-width:100%;text-align:center;max-width:none}
+.jsa-pause{flex:none;display:grid;place-items:center;width:24px;height:32px;min-height:0!important;padding:0!important;margin:0;border:0!important;background:transparent!important;color:inherit!important;font:12px/1 sans-serif;cursor:pointer;opacity:.7}
+.jsa-layer :focus-visible{outline:2px solid currentColor;outline-offset:-2px}
+@media(max-width:1149px){.jsa-layer{font-size:var(--jsa-size-mobile)}}

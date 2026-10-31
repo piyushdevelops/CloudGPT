@@ -1,0 +1,60 @@
+{
+  "responsive": [
+    {
+      "overflow": false,
+      "stage": 305,
+      "width": 320
+    },
+    {
+      "overflow": false,
+      "stage": 375,
+      "width": 390
+    },
+    {
+      "overflow": false,
+      "stage": 735,
+      "width": 750
+    },
+    {
+      "overflow": false,
+      "stage": 1009,
+      "width": 1024
+    },
+    {
+      "overflow": false,
+      "stage": 1425,
+      "width": 1440
+    },
+    {
+      "overflow": false,
+      "stage": 1680,
+      "width": 2560
+    }
+  ],
+  "selections": [
+    {
+      "href": "/products/ripple-coffee-mug-with-lid-spoon",
+      "loaded": true,
+      "selected": "Slow mornings",
+      "title": "Ripple Coffee Mug"
+    },
+    {
+      "href": "/products/gold-rimmed-clear-heart-champagne-flute-stemware-hammered-style",
+      "loaded": false,
+      "selected": "Celebrations",
+      "title": "Gold-rimmed champagne flutes"
+    },
+    {
+      "href": "/products/alpine-timber-glass",
+      "loaded": true,
+      "selected": "Everyday",
+      "title": "Alpine Timber Glass"
+    }
+  ],
+  "allImagesLoaded": true,
+  "keyboardHomeEnd": true,
+  "mobile": {
+    "height": 958.71875,
+    "y": 4577.328125
+  }
+}

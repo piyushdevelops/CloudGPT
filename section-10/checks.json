@@ -1,0 +1,58 @@
+{
+  "date": "2026-09-28",
+  "theme": "gid://shopify/OnlineStoreTheme/187527266499",
+  "role": "UNPUBLISHED",
+  "validation": "Liquid and index passed revision 3",
+  "unchangedPriorConfigurations": true,
+  "oldOrderPreserved": true,
+  "priorSourcesUnchanged": true,
+  "files": [
+    {
+      "filename": "assets/june-table-bowl.webp",
+      "checksumMd5": "59ef3fdd21fa3b493396bc8aef4d5eda"
+    },
+    {
+      "filename": "assets/june-table-dinner.webp",
+      "checksumMd5": "8f05698bc1f409771e117e45df12c393"
+    },
+    {
+      "filename": "assets/june-table-side.webp",
+      "checksumMd5": "bbf17bee9e6e1cfe758000c71de91ef8"
+    },
+    {
+      "filename": "locales/en.default.json",
+      "checksumMd5": "9b43a08391603c8a03d6424475013f71"
+    },
+    {
+      "filename": "sections/june-layer-the-table.liquid",
+      "checksumMd5": "51586945f52470adbedb7e51e0d6242d"
+    },
+    {
+      "filename": "sections/june-make-room.liquid",
+      "checksumMd5": "bf79951765103d6e089af3d1d0d89d7d"
+    },
+    {
+      "filename": "sections/june-next-chapter.liquid",
+      "checksumMd5": "0a85f37894c1385f4b2716bdc12667bf"
+    },
+    {
+      "filename": "sections/june-pick-your-pour.liquid",
+      "checksumMd5": "88b1f80ff544bc6f7b78f88eb66160bc"
+    },
+    {
+      "filename": "sections/june-with-extras.liquid",
+      "checksumMd5": "16ca9a61f1f724bee938a4bcaba582b1"
+    },
+    {
+      "filename": "sections/june-your-year.liquid",
+      "checksumMd5": "1c965a380520862a98b44c8162143a6e"
+    },
+    {
+      "filename": "templates/index.json",
+      "checksumMd5": "c46318d8092a349c8f904e3c42d838a7"
+    }
+  ],
+  "artwork": "Built-in ImageGen, alpha preserved. Lossless WebP encoding; decoded RGBA comparison passed. Artwork reconstructed from catalog references.",
+  "reducedMotion": "CSS disables all transitions under prefers-reduced-motion:reduce; not OS-emulated in browser",
+  "publishing": "None"
+}

@@ -1,0 +1,3384 @@
+{% comment %}
+  TJS App PDP — Fresh build
+  Mobile: product-image viewport -> swipe cue -> floating white purchase card -> white details surface.
+  Desktop: large gallery left -> sticky commercial info right -> full-width details surface below.
+{% endcomment %}
+
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant
+
+  assign department_meta = product.metafields.custom.department
+  assign category_meta = product.metafields.custom.category
+  assign short_description_meta = product.metafields.custom.short_description
+  assign primary_use_meta = product.metafields.custom.primary_use
+  assign material_meta = product.metafields.custom.material
+  assign room_meta = product.metafields.custom.room
+  assign occasion_meta = product.metafields.custom.occasion
+  assign key_features_meta = product.metafields.custom.key_features
+  assign dimensions_meta = product.metafields.custom.dimensions_display
+  assign whats_in_box_meta = product.metafields.custom.whats_in_box
+  assign care_meta = product.metafields.custom.care_instructions
+  assign return_class_meta = product.metafields.custom.return_class
+  assign dispatch_class_meta = product.metafields.custom.dispatch_class
+  assign capacity_meta = product.metafields.custom.capacity
+  assign capacity_range_meta = product.metafields.custom.capacity_range
+  assign set_size_meta = product.metafields.custom.set_size
+  assign compartment_meta = product.metafields.custom.compartment_count
+  assign insulated_meta = product.metafields.custom.insulated
+  assign intended_contents_meta = product.metafields.custom.intended_contents
+  assign assembly_meta = product.metafields.custom.assembly_required
+  assign power_source_meta = product.metafields.custom.power_source
+  assign light_source_meta = product.metafields.custom.light_source
+  assign control_type_meta = product.metafields.custom.control_type
+  assign planner_type_meta = product.metafields.custom.planner_type
+  assign dated_status_meta = product.metafields.custom.dated_status
+  assign planner_year_meta = product.metafields.custom.planner_year
+  assign planner_size_meta = product.metafields.custom.planner_size
+  assign page_count_meta = product.metafields.custom.page_count
+  assign binding_meta = product.metafields.custom.binding
+  assign personalisation_meta = product.metafields.custom.personalisation_available
+  assign frame_shape_meta = product.metafields.custom.frame_shape
+  assign frame_colour_meta = product.metafields.custom.frame_colour
+  assign lens_colour_meta = product.metafields.custom.lens_colour
+  assign fit_meta = product.metafields.custom.fit
+  assign intended_wearer_meta = product.metafields.custom.intended_wearer
+
+  assign department_text = department_meta.value | default: department_meta
+  assign category_text = category_meta.value | default: category_meta
+  assign product_context = category_text | default: product.type | default: department_text
+  assign fingerprint = product.type | append: ' ' | append: department_text | append: ' ' | append: category_text | downcase
+
+  assign pdp_mode = 'default'
+  if section.settings.mode_override != 'smart'
+    assign pdp_mode = section.settings.mode_override
+  else
+    if fingerprint contains 'sunglass' or fingerprint contains 'eyewear' or fingerprint contains 'eyeglass'
+      assign pdp_mode = 'eyewear'
+    elsif fingerprint contains 'planner' or fingerprint contains 'journal' or fingerprint contains 'notebook' or fingerprint contains 'record book' or fingerprint contains 'vision board'
+      assign pdp_mode = 'planner'
+    elsif fingerprint contains 'baby' or fingerprint contains 'kids tableware' or fingerprint contains 'kid'
+      assign pdp_mode = 'baby'
+    elsif fingerprint contains 'lamp' or fingerprint contains 'light' or fingerprint contains 'clock' or fingerprint contains 'decor' or fingerprint contains 'artifact' or fingerprint contains 'figurine' or fingerprint contains 'planter' or fingerprint contains 'mirror' or fingerprint contains 'ottoman' or fingerprint contains 'pouf' or fingerprint contains 'rug'
+      assign pdp_mode = 'decor'
+    elsif fingerprint contains 'lunch' or fingerprint contains 'organiser' or fingerprint contains 'organizer' or fingerprint contains 'storage' or fingerprint contains 'sipper' or fingerprint contains 'bottle' or fingerprint contains 'travel mug' or fingerprint contains 'backpack' or fingerprint contains 'bag'
+      assign pdp_mode = 'utility'
+    elsif fingerprint contains 'mug' or fingerprint contains 'glass' or fingerprint contains 'drinkware' or fingerprint contains 'serve' or fingerprint contains 'dinner' or fingerprint contains 'bowl' or fingerprint contains 'plate' or fingerprint contains 'jug' or fingerprint contains 'decanter' or fingerprint contains 'cutlery' or fingerprint contains 'tea cup' or fingerprint contains 'casserole'
+      assign pdp_mode = 'tableware'
+    endif
+  endif
+
+  case pdp_mode
+    when 'tableware'
+      assign mode_label = 'Kitchen & Dining'
+    when 'utility'
+      assign mode_label = 'Everyday Utility'
+    when 'planner'
+      assign mode_label = 'Planners & Journals'
+    when 'eyewear'
+      assign mode_label = 'Eyewear'
+    when 'decor'
+      assign mode_label = 'Home & Decor'
+    when 'baby'
+      assign mode_label = 'Baby & Kids'
+    else
+      assign mode_label = product_context | default: 'The June Shop'
+  endcase
+
+  assign clean_description = product.description
+  assign clean_description = clean_description | replace: '</p>', ' ' | replace: '</div>', ' ' | replace: '</li>', ' ' | replace: '<br>', ' ' | replace: '<br/>', ' ' | replace: '<br />', ' ' | strip_html
+  assign clean_description = clean_description | split: 'Specs:' | first | split: 'Specs :' | first | split: 'Specifications:' | first | split: 'SPECIFICATIONS:' | first | strip
+
+  assign legacy_spec_text = product.description
+  assign legacy_spec_text = legacy_spec_text | replace: '</p>', ' | ' | replace: '</div>', ' | ' | replace: '</li>', ' | ' | replace: '<br>', ' | ' | replace: '<br/>', ' | ' | replace: '<br />', ' | ' | strip_html | strip
+
+  assign short_description = short_description_meta.value
+  if short_description == blank
+    assign short_description = clean_description | truncatewords: 26
+  endif
+
+  assign review_rating = blank
+  assign review_count = blank
+  assign rating_meta = product.metafields.reviews.rating.value
+  if rating_meta != blank
+    if rating_meta.rating != blank
+      assign review_rating = rating_meta.rating | round: 1
+    else
+      assign review_rating = rating_meta | round: 1
+    endif
+  endif
+  if product.metafields.reviews.rating_count.value != blank
+    assign review_count = product.metafields.reviews.rating_count.value
+  endif
+
+  assign app_block_count = 0
+  for block in section.blocks
+    if block.type == '@app'
+      assign app_block_count = app_block_count | plus: 1
+    endif
+  endfor
+
+  assign compare_price = selected_variant.compare_at_price
+  assign selling_price = selected_variant.price
+  assign on_sale = false
+  assign saving_amount = 0
+  assign saving_percent = 0
+  if compare_price != blank and compare_price > selling_price
+    assign on_sale = true
+    assign saving_amount = compare_price | minus: selling_price
+    assign saving_percent = saving_amount | times: 100.0 | divided_by: compare_price | round
+  endif
+
+  assign low_stock = false
+  if selected_variant.available and selected_variant.inventory_management != blank and selected_variant.inventory_policy == 'deny' and selected_variant.inventory_quantity > 0 and selected_variant.inventory_quantity <= section.settings.low_stock_threshold
+    assign low_stock = true
+  endif
+
+  assign material_text = blank
+  if material_meta != blank
+    if material_meta.type contains 'list.'
+      assign material_text = material_meta.value | join: ', '
+    else
+      assign material_text = material_meta.value
+    endif
+  endif
+
+  assign capacity_text = blank
+  if capacity_meta != blank
+    if capacity_meta.type contains 'list.'
+      assign capacity_text = capacity_meta.value | join: ', '
+    else
+      assign capacity_text = capacity_meta.value
+    endif
+  elsif capacity_range_meta != blank
+    if capacity_range_meta.type contains 'list.'
+      assign capacity_text = capacity_range_meta.value | join: ', '
+    else
+      assign capacity_text = capacity_range_meta.value
+    endif
+  endif
+
+  assign room_text = blank
+  if room_meta != blank
+    if room_meta.type contains 'list.'
+      assign room_text = room_meta.value | join: ', '
+    else
+      assign room_text = room_meta.value
+    endif
+  endif
+
+  assign primary_use_text = blank
+  if primary_use_meta != blank
+    if primary_use_meta.type contains 'list.'
+      assign primary_use_text = primary_use_meta.value | join: ', '
+    else
+      assign primary_use_text = primary_use_meta.value
+    endif
+  endif
+
+  assign intended_contents_text = blank
+  if intended_contents_meta != blank
+    if intended_contents_meta.type contains 'list.'
+      assign intended_contents_text = intended_contents_meta.value | join: ', '
+    else
+      assign intended_contents_text = intended_contents_meta.value
+    endif
+  endif
+
+  assign designed_for_value = primary_use_text
+
+  if designed_for_value == blank
+    assign designed_for_value = intended_contents_text
+  endif
+
+  if designed_for_value == blank
+    assign designed_for_value = room_text
+  endif
+
+  if designed_for_value == blank
+    assign designed_for_value = product.type
+  endif
+
+  if designed_for_value == blank
+    assign designed_for_value = mode_label
+  endif
+
+
+  assign form_id = 'TjsAppPdpForm-' | append: section.id
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --pdp-bg: {{ section.settings.background }};
+    --pdp-media: {{ section.settings.media_background }};
+    --pdp-card: {{ section.settings.card_background }};
+    --pdp-details: {{ section.settings.details_background }};
+    --pdp-text: {{ section.settings.text_color }};
+    --pdp-muted: {{ section.settings.muted_color }};
+    --pdp-accent: {{ section.settings.accent_color }};
+    --pdp-accent-soft: color-mix(in srgb, {{ section.settings.accent_color }} 10%, #fff);
+    --pdp-border: {{ section.settings.border_color }};
+    --pdp-button: {{ section.settings.button_background }};
+    --pdp-button-text: {{ section.settings.button_text }};
+    --pdp-max: {{ section.settings.max_width }}px;
+    --pdp-title-d: {{ section.settings.desktop_title_size }}px;
+    --pdp-title-m: {{ section.settings.mobile_title_size }}px;
+    --pdp-price-d: {{ section.settings.desktop_price_size }}px;
+    --pdp-price-m: {{ section.settings.mobile_price_size }}px;
+    --pdp-body-size: {{ section.settings.body_size }}px;
+    background: var(--pdp-bg);
+  }
+
+  #shopify-section-{{ section.id }} [data-heading-font="modern"] { --pdp-heading-font: "Avenir Next", "Helvetica Neue", Arial, sans-serif; }
+  #shopify-section-{{ section.id }} [data-heading-font="clean"] { --pdp-heading-font: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  #shopify-section-{{ section.id }} [data-heading-font="theme"] { --pdp-heading-font: var(--font-heading-family, "Avenir Next", "Helvetica Neue", Arial, sans-serif); }
+  #shopify-section-{{ section.id }} [data-heading-font="serif"] { --pdp-heading-font: Georgia, "Times New Roman", serif; }
+  #shopify-section-{{ section.id }} [data-body-font="modern"] { --pdp-body-font: "Avenir Next", "Helvetica Neue", Arial, sans-serif; }
+  #shopify-section-{{ section.id }} [data-body-font="clean"] { --pdp-body-font: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  #shopify-section-{{ section.id }} [data-body-font="theme"] { --pdp-body-font: var(--font-body-family, "Avenir Next", "Helvetica Neue", Arial, sans-serif); }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp,
+  #shopify-section-{{ section.id }} .tjs-app-pdp * { box-sizing: border-box; }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp {
+    position: relative;
+    overflow: clip;
+    padding: {{ section.settings.desktop_padding }}px 0;
+    color: var(--pdp-text);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--pdp-bg) 96%, #fff), var(--pdp-bg));
+    font-family: var(--pdp-body-font);
+    font-size: var(--pdp-body-size);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__inner { width: min(calc(100% - 44px), var(--pdp-max)); margin-inline: auto; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__breadcrumbs { display:flex; align-items:center; gap:7px; margin-bottom:18px; color:var(--pdp-muted); font-size:11px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__breadcrumbs a { color:inherit; text-decoration:none; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__hero { display:grid; grid-template-columns:minmax(0,1.08fr) minmax(420px,.92fr); align-items:start; gap:clamp(40px,5vw,78px); }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__gallery { display:grid; grid-template-columns:{% if section.settings.show_thumbnails %}76px{% else %}0{% endif %} minmax(0,1fr); gap:{% if section.settings.show_thumbnails %}12px{% else %}0{% endif %}; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__thumbs { display:grid; align-content:start; gap:8px; max-height:660px; overflow-y:auto; scrollbar-width:none; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__thumbs::-webkit-scrollbar { display:none; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__thumb { width:72px; height:86px; display:grid; place-items:center; overflow:hidden; padding:3px; border:1px solid transparent; border-radius:14px; background:#fff; cursor:pointer; opacity:.66; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__thumb.is-active, #shopify-section-{{ section.id }} .tjs-app-pdp__thumb:hover { border-color:var(--pdp-accent); opacity:1; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__thumb img, #shopify-section-{{ section.id }} .tjs-app-pdp__thumb svg { width:100%; height:100%; display:block; object-fit:cover; }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__stage { position:relative; height:660px; overflow:hidden; border-radius:30px; background:var(--pdp-media); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--pdp-border) 72%,transparent),0 24px 60px rgba(21,17,14,.065); }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__slides { position:absolute; inset:0; display:grid; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__slide { grid-area:1/1; width:100%; height:100%; display:grid; place-items:center; opacity:0; visibility:hidden; pointer-events:none; transform:translateY(8px); transition:opacity .28s ease,visibility .28s ease,transform .34s cubic-bezier(.22,.61,.36,1); }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__slide.is-active { opacity:1; visibility:visible; pointer-events:auto; transform:none; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__media-button, #shopify-section-{{ section.id }} .tjs-app-pdp__media-frame { width:100%; height:100%; display:grid; place-items:center; padding:0; border:0; background:transparent; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__media-button { cursor:zoom-in; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__image { width:100%; height:100%; display:block; object-position:center; transform:scale({{ section.settings.image_scale | times: 0.01 }}); }
+  {% if section.settings.image_fit == 'smart' %}
+    #shopify-section-{{ section.id }} .tjs-app-pdp__slide[data-orientation="landscape"] .tjs-app-pdp__image { object-fit:cover; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__slide[data-orientation="portrait"] .tjs-app-pdp__image, #shopify-section-{{ section.id }} .tjs-app-pdp__slide[data-orientation="square"] .tjs-app-pdp__image { object-fit:contain; }
+  {% else %}
+    #shopify-section-{{ section.id }} .tjs-app-pdp__image { object-fit:{{ section.settings.image_fit }}; }
+  {% endif %}
+  #shopify-section-{{ section.id }} .tjs-app-pdp__media-frame video, #shopify-section-{{ section.id }} .tjs-app-pdp__media-frame iframe, #shopify-section-{{ section.id }} .tjs-app-pdp__media-frame model-viewer { width:100%; height:100%; display:block; object-fit:contain; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__counter { position:absolute; z-index:5; right:16px; bottom:16px; min-height:34px; display:inline-flex; align-items:center; gap:3px; padding:0 11px; border-radius:999px; background:rgba(255,255,255,.91); box-shadow:0 8px 24px rgba(20,17,14,.08); font-size:11px; font-weight:650; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__mobile-controls, #shopify-section-{{ section.id }} .tjs-app-pdp__swipe-cue { display:none; }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__purchase { position:sticky; top:94px; max-width:620px; padding-top:6px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__type { margin:0 0 10px; color:var(--pdp-accent); font-size:11px; font-weight:700; letter-spacing:.075em; text-transform:uppercase; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__title { max-width:15ch; margin:0; font-family:var(--pdp-heading-font); font-size:clamp(40px,4.3vw,var(--pdp-title-d)); font-weight:600; line-height:1.03; letter-spacing:-.05em; text-wrap:balance; }
+  #shopify-section-{{ section.id }} [data-title-effect="gradient"] .tjs-app-pdp__title { color:transparent; background:linear-gradient(105deg,var(--pdp-text),{{ section.settings.accent_color }}); background-clip:text; -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  #shopify-section-{{ section.id }} [data-title-effect="sheen"] .tjs-app-pdp__title { color:transparent; background:linear-gradient(110deg,var(--pdp-text) 0%,var(--pdp-text) 38%,{{ section.settings.accent_color }} 48%,#fff 52%,{{ section.settings.accent_color }} 56%,var(--pdp-text) 68%,var(--pdp-text) 100%); background-size:250% 100%; background-clip:text; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:tjsAppPdpSheen 7s linear infinite; }
+  @keyframes tjsAppPdpSheen { from{background-position:170% 50%} to{background-position:-70% 50%} }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__reviews-summary { display:flex; align-items:center; gap:8px; margin-top:13px; font-size:12px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__stars { color:#d99916; letter-spacing:.035em; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit { max-width:54ch; margin-top:14px; color:var(--pdp-muted); font-size:15px; line-height:1.65; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__price-row { display:flex; align-items:baseline; flex-wrap:wrap; gap:9px; margin-top:22px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__price { font-size:var(--pdp-price-d); font-weight:760; line-height:1; letter-spacing:-.04em; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__compare { color:var(--pdp-muted); font-size:15px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__saving { min-height:28px; display:inline-flex; align-items:center; padding:0 9px; border-radius:999px; background:var(--pdp-accent-soft); color:var(--pdp-accent); font-size:10px; font-weight:700; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__tax { margin:7px 0 0; color:var(--pdp-muted); font-size:10px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__stock { min-height:34px; display:inline-flex; align-items:center; gap:7px; margin-top:13px; padding:0 11px; border:1px solid var(--pdp-border); border-radius:999px; background:#fff; color:var(--pdp-muted); font-size:10px; font-weight:650; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__stock::before { content:""; width:7px; height:7px; border-radius:50%; background:#4ea35e; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__stock.is-low::before { background:#d58a2d; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__stock.is-sold-out::before { background:#aaa49d; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__form { margin-top:22px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__options { display:grid; gap:17px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__option { display:grid; gap:9px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__option-head { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__option-head strong { font-size:13px; font-weight:650; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__option-head span { color:var(--pdp-muted); font-size:12px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__values { display:flex; flex-wrap:wrap; gap:8px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__value { min-height:43px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:0 14px; border:1px solid var(--pdp-border); border-radius:999px; background:#fff; color:var(--pdp-text); cursor:pointer; font:inherit; font-size:12px; font-weight:600; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__value.is-active { border-color:var(--pdp-text); background:var(--pdp-text); color:#fff; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__value:disabled { opacity:.28; cursor:not-allowed; text-decoration:line-through; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__swatch { width:20px; height:20px; flex:0 0 20px; border:1px solid rgba(0,0,0,.12); border-radius:50%; background-color:var(--swatch,#d9d5cf); background-image:var(--swatch-image,none); background-position:center; background-size:cover; box-shadow:inset 0 0 0 2px rgba(255,255,255,.72); }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__select { min-height:46px; padding:0 38px 0 13px; border:1px solid var(--pdp-border); border-radius:12px; background:#fff; color:var(--pdp-text); font:inherit; font-size:13px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__buy-row { display:grid; grid-template-columns:{% if section.settings.show_quantity %}124px{% else %}1fr{% endif %} minmax(0,1fr); gap:10px; margin-top:19px; }
+  {% unless section.settings.show_quantity %}#shopify-section-{{ section.id }} .tjs-app-pdp__buy-row{grid-template-columns:1fr}{% endunless %}
+  #shopify-section-{{ section.id }} .tjs-app-pdp__quantity { min-height:54px; display:grid; grid-template-columns:38px 46px 38px; align-items:center; overflow:hidden; border:1px solid var(--pdp-border); border-radius:15px; background:#fff; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__quantity button { width:38px; height:52px; padding:0; border:0; background:transparent; font-size:18px; cursor:pointer; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__quantity input { width:46px; height:52px; padding:0; border:0; outline:0; background:transparent; font:inherit; font-size:14px; font-weight:650; text-align:center; appearance:textfield; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__quantity input::-webkit-inner-spin-button, #shopify-section-{{ section.id }} .tjs-app-pdp__quantity input::-webkit-outer-spin-button { -webkit-appearance:none; margin:0; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__add { min-height:54px; display:inline-flex; align-items:center; justify-content:center; gap:9px; padding:0 18px; border:0; border-radius:15px; background:var(--pdp-button); color:var(--pdp-button-text); cursor:pointer; font:inherit; font-size:13px; font-weight:700; box-shadow:0 13px 30px rgba(17,15,13,.14); }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__add:disabled { opacity:.45; cursor:not-allowed; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__add svg { width:17px; height:17px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__assurance { display:flex; flex-wrap:wrap; gap:6px 18px; margin-top:16px; padding-top:14px; border-top:1px solid var(--pdp-border); color:var(--pdp-muted); font-size:10.5px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__assurance strong { color:var(--pdp-text); }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__details-shell { margin-top:clamp(56px,6vw,90px); padding:clamp(34px,4vw,52px); border-radius:{{ section.settings.details_radius }}px; background:var(--pdp-details); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--pdp-border) 76%,transparent),0 18px 48px rgba(20,16,13,.05); }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__tabs { display:flex; align-items:center; gap:26px; overflow-x:auto; padding-bottom:13px; border-bottom:1px solid var(--pdp-border); scrollbar-width:none; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__tabs::-webkit-scrollbar { display:none; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__tab { position:relative; flex:0 0 auto; padding:0 0 12px; border:0; background:transparent; color:var(--pdp-muted); cursor:pointer; font:inherit; font-size:14px; font-weight:600; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__tab::after { content:""; position:absolute; right:0; bottom:-14px; left:0; height:2px; background:var(--pdp-text); transform:scaleX(0); transition:transform .18s ease; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__tab.is-active { color:var(--pdp-text); }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__tab.is-active::after { transform:scaleX(1); }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__panel { display:none; padding-top:30px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__panel.is-active { display:block; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__description { max-width:78ch; color:var(--pdp-muted); font-size:14px; line-height:1.75; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__description p { margin:0; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__spec-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__spec { min-height:86px; display:grid; align-content:center; gap:7px; padding:16px; border-radius:16px; background:color-mix(in srgb,var(--pdp-bg) 74%,#fff); }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__spec small { color:var(--pdp-muted); font-size:10px; font-weight:650; letter-spacing:.055em; text-transform:uppercase; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__spec strong { font-size:14px; font-weight:600; line-height:1.45; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__features { display:grid; gap:8px; margin:18px 0 0; padding:0; list-style:none; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__features li { position:relative; padding-left:22px; color:var(--pdp-muted); font-size:13px; line-height:1.5; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__features li::before { content:"✓"; position:absolute; left:0; color:var(--pdp-accent); font-weight:800; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__review-summary { display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:16px; max-width:560px; margin-bottom:24px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__review-score { font-size:44px; font-weight:700; line-height:1; letter-spacing:-.05em; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__review-copy { display:grid; gap:4px; color:var(--pdp-muted); font-size:12px; }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related { margin-top:44px; padding-top:34px; border-top:1px solid var(--pdp-border); }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related[hidden] { display:none; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-head { display:flex; align-items:end; justify-content:space-between; gap:18px; margin-bottom:18px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-head h2 { margin:0; font-family:var(--pdp-heading-font); font-size:30px; font-weight:600; line-height:1; letter-spacing:-.035em; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-head span { color:var(--pdp-muted); font-size:11px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-card { min-width:0; color:var(--pdp-text); text-decoration:none; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-image { aspect-ratio:4/5; display:block; overflow:hidden; border-radius:16px; background:var(--pdp-media); }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-image img { width:100%; height:100%; display:block; object-fit:cover; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-copy { display:grid; gap:5px; padding:10px 2px 0; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-copy strong { overflow:hidden; font-size:12px; font-weight:650; text-overflow:ellipsis; white-space:nowrap; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-copy span { font-size:12px; font-weight:700; }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__zoom { position:fixed; z-index:9999; inset:0; display:grid; grid-template-rows:auto minmax(0,1fr); padding:16px; background:rgba(13,12,10,.92); }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__zoom[hidden] { display:none; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__zoom-head { display:flex; justify-content:flex-end; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__zoom-close { width:42px; height:42px; display:grid; place-items:center; border:0; border-radius:50%; background:#fff; font-size:20px; cursor:pointer; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__zoom-image { max-width:96vw; max-height:calc(100vh - 78px); place-self:center; display:block; object-fit:contain; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__toast { position:fixed; z-index:10000; right:16px; bottom:16px; max-width:min(340px,calc(100% - 32px)); padding:12px 14px; border-radius:12px; background:var(--pdp-text); color:#fff; font-size:11px; opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .18s ease,transform .18s ease; }
+  #shopify-section-{{ section.id }} .tjs-app-pdp__toast.is-visible { opacity:1; transform:none; }
+
+  @media screen and (max-width:989px) {
+    #shopify-section-{{ section.id }} .tjs-app-pdp__hero { grid-template-columns:1fr; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__purchase { position:static; max-width:none; }
+  }
+
+  @media screen and (max-width:749px) {
+    #shopify-section-{{ section.id }} .tjs-app-pdp { padding:{{ section.settings.mobile_padding }}px 0 22px; background:linear-gradient(180deg,color-mix(in srgb,var(--pdp-media) 82%,var(--pdp-bg)) 0%,var(--pdp-bg) 48%,var(--pdp-bg) 100%); }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__inner { width:min(calc(100% - 12px),640px); }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__breadcrumbs { display:none; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__hero, #shopify-section-{{ section.id }} .tjs-app-pdp__gallery { display:block; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__thumbs { display:none; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__stage { height:calc(86svh - 8px); min-height:520px; max-height:760px; border-radius:32px; box-shadow:inset 0 0 0 1px rgba(0,0,0,.035),0 14px 38px rgba(18,15,13,.08); }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__slides { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__slides::-webkit-scrollbar { display:none; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__slide { grid-area:auto; width:100%; min-width:100%; flex:0 0 100%; position:relative; opacity:1; visibility:visible; pointer-events:auto; transform:none; scroll-snap-align:start; scroll-snap-stop:always; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__counter { right:13px; bottom:102px; min-height:31px; font-size:10px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__mobile-controls { position:absolute; z-index:8; top:14px; right:14px; left:14px; display:flex; justify-content:space-between; pointer-events:none; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__mobile-control { width:42px; height:42px; display:grid; place-items:center; padding:0; border:0; border-radius:50%; background:rgba(255,255,255,.88); box-shadow:0 8px 22px rgba(20,16,13,.08); pointer-events:auto; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__mobile-control svg { width:18px; height:18px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__swipe-cue { position:absolute; z-index:8; left:50%; bottom:44px; display:{% if section.settings.show_swipe_cue %}grid{% else %}none{% endif %}; justify-items:center; gap:6px; min-width:176px; padding:9px 14px 10px; border:0; border-radius:999px; background:rgba(17,15,13,.72); color:#fff; box-shadow:0 13px 28px rgba(17,15,13,.17); transform:translateX(-50%); cursor:pointer; animation:tjsSwipe 2.4s ease-in-out infinite; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__swipe-cue::before { content:""; width:32px; height:4px; border-radius:999px; background:rgba(255,255,255,.72); }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__swipe-cue span { font-size:10px; font-weight:650; }
+    @keyframes tjsSwipe { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-4px)} }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__purchase { position:relative; z-index:10; width:calc(100% - 24px); margin:-64px auto 0; padding:29px 18px 19px; border:1px solid rgba(0,0,0,.045); border-radius:{{ section.settings.card_radius }}px; background:var(--pdp-card); box-shadow:0 22px 52px rgba(18,15,13,.12); }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__purchase::before { content:""; position:absolute; top:11px; left:50%; width:38px; height:4px; border-radius:999px; background:color-mix(in srgb,var(--pdp-accent) 80%,#fff); transform:translateX(-50%); }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__type { margin-bottom:7px; font-size:10px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__title { max-width:none; font-size:var(--pdp-title-m); line-height:1.06; letter-spacing:-.038em; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__reviews-summary { margin-top:9px; font-size:11px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit { margin-top:10px; font-size:13px; line-height:1.6; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__price-row { margin-top:15px; gap:7px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__price { font-size:var(--pdp-price-m); }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__compare { font-size:13px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__saving { min-height:25px; font-size:9px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__tax { font-size:9.5px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__stock { min-height:31px; margin-top:11px; font-size:9.5px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__form { margin-top:16px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__options { gap:14px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__option-head strong, #shopify-section-{{ section.id }} .tjs-app-pdp__option-head span { font-size:11px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__values { flex-wrap:nowrap; overflow-x:auto; padding-bottom:2px; scrollbar-width:none; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__values::-webkit-scrollbar { display:none; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__value { min-height:41px; flex:0 0 auto; padding-inline:13px; font-size:11.5px; white-space:nowrap; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__buy-row { grid-template-columns:{% if section.settings.show_quantity %}96px{% else %}1fr{% endif %} minmax(0,1fr); gap:8px; margin-top:17px; }
+    {% unless section.settings.show_quantity %}#shopify-section-{{ section.id }} .tjs-app-pdp__buy-row{grid-template-columns:1fr}{% endunless %}
+    #shopify-section-{{ section.id }} .tjs-app-pdp__quantity { min-height:50px; grid-template-columns:28px 38px 28px; border-radius:15px; background:color-mix(in srgb,var(--pdp-bg) 68%,#fff); }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__quantity button { width:28px; height:48px; font-size:16px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__quantity input { width:38px; height:48px; font-size:13px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__add { min-height:50px; border-radius:15px; font-size:12px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__assurance { gap:6px 12px; margin-top:14px; padding-top:12px; font-size:9.5px; }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__details-shell { margin-top:14px; padding:26px 17px 24px; border-radius:{{ section.settings.details_radius }}px {{ section.settings.details_radius }}px 0 0; box-shadow:0 -8px 26px rgba(18,15,13,.045); }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__tabs { gap:22px; padding-bottom:11px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__tab { padding-bottom:10px; font-size:12px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__tab::after { bottom:-12px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__panel { padding-top:24px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__description { font-size:13px; line-height:1.72; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__spec-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__spec { min-height:73px; padding:13px; border-radius:15px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__spec small { font-size:9px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__spec strong { font-size:12.5px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__features li { font-size:12px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__review-score { font-size:38px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related { margin-top:34px; padding-top:28px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-head h2 { font-size:25px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-head span { display:none; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-grid { display:flex; gap:10px; overflow-x:auto; margin-right:-17px; padding-right:17px; padding-bottom:4px; scroll-snap-type:x mandatory; scrollbar-width:none; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-grid::-webkit-scrollbar { display:none; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-card { min-width:44%; flex:0 0 44%; scroll-snap-align:start; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-copy strong, #shopify-section-{{ section.id }} .tjs-app-pdp__related-copy span { font-size:11px; }
+  }
+
+  @media screen and (max-width:370px) {
+    #shopify-section-{{ section.id }} .tjs-app-pdp__purchase { width:calc(100% - 14px); padding-inline:15px; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__spec-grid { grid-template-columns:1fr; }
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-card { min-width:54%; flex-basis:54%; }
+  }
+
+  @media (prefers-reduced-motion:reduce) {
+    #shopify-section-{{ section.id }} .tjs-app-pdp *, #shopify-section-{{ section.id }} .tjs-app-pdp *::before, #shopify-section-{{ section.id }} .tjs-app-pdp *::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; }
+  }
+
+  /* =====================================================
+     TJS APP PDP V2 — SQUARE PREMIUM MEDIA SYSTEM
+     All catalogue images are 1:1, so the interface now respects that.
+  ===================================================== */
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp {
+    --app-pdp-square-max: 690px;
+  }
+
+  /* More deliberate premium page canvas */
+  #shopify-section-{{ section.id }} .tjs-app-pdp {
+    background:
+      radial-gradient(
+        circle at 16% 14%,
+        color-mix(in srgb, var(--app-pdp-accent) 6%, transparent) 0%,
+        transparent 28%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--app-pdp-bg) 96%, #fff) 0%,
+        var(--app-pdp-bg) 100%
+      );
+  }
+
+  /* Product gallery is a true square, not an artificial tall hero */
+  #shopify-section-{{ section.id }} .tjs-app-pdp__media-column {
+    width: 100%;
+    max-width: calc(var(--app-pdp-square-max) + 88px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__stage {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    max-height: none;
+    border-radius: 32px;
+    background:
+      radial-gradient(
+        circle at 50% 44%,
+        color-mix(in srgb, var(--app-pdp-accent) 7%, #fff) 0%,
+        transparent 44%
+      ),
+      var(--app-pdp-media-bg);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--app-pdp-border) 72%, transparent),
+      0 26px 70px rgba(25, 19, 15, .075);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__image {
+    object-fit: contain !important;
+    padding: clamp(8px, 1.2vw, 18px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__thumb {
+    width: 72px;
+    height: 72px;
+    border-radius: 15px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__thumb img {
+    object-fit: cover;
+  }
+
+  /* Commercial column gets more presence */
+  #shopify-section-{{ section.id }} .tjs-app-pdp__purchase {
+    max-width: 640px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__type {
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .085em;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__title {
+    max-width: 13ch;
+    font-size: clamp(46px, 4.8vw, var(--app-pdp-title-desktop));
+    font-weight: 650;
+    line-height: .99;
+    letter-spacing: -.052em;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit {
+    max-width: 50ch;
+    margin-top: 17px;
+    font-size: 16px;
+    line-height: 1.68;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__reviews-summary {
+    margin-top: 15px;
+    font-size: 13px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__price-row {
+    margin-top: 27px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__price {
+    font-size: var(--app-pdp-price-desktop);
+    font-weight: 780;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__compare {
+    font-size: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__saving {
+    min-height: 30px;
+    padding-inline: 10px;
+    font-size: 11px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__tax {
+    margin-top: 8px;
+    font-size: 11px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__stock {
+    min-height: 36px;
+    margin-top: 15px;
+    font-size: 11px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__form {
+    margin-top: 26px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__option-head strong {
+    font-size: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__option-head span {
+    font-size: 13px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__value {
+    min-height: 46px;
+    padding-inline: 16px;
+    font-size: 13px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__buy-row {
+    grid-template-columns: {% if section.settings.show_quantity %}128px{% else %}1fr{% endif %} minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 23px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__quantity,
+  #shopify-section-{{ section.id }} .tjs-app-pdp__add {
+    min-height: 58px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__quantity {
+    border-radius: 17px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__add {
+    border-radius: 17px;
+    font-size: 14px;
+    font-weight: 720;
+    box-shadow: 0 15px 34px rgba(19,16,13,.15);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__assurance {
+    margin-top: 19px;
+    padding-top: 16px;
+    font-size: 11.5px;
+  }
+
+  /* White lower product-information surface feels like a second app screen */
+  #shopify-section-{{ section.id }} .tjs-app-pdp__details-shell {
+    margin-top: clamp(64px, 7vw, 104px);
+    padding: clamp(40px, 4.4vw, 60px);
+    border-radius: 34px;
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--app-pdp-border) 72%, transparent),
+      0 24px 68px rgba(22,17,13,.065);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__tabs {
+    gap: 32px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__tab {
+    font-size: 15px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__description {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__spec {
+    min-height: 96px;
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__spec small {
+    font-size: 11px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__spec strong {
+    font-size: 15px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-head h2 {
+    font-size: 34px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-copy strong,
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-copy span {
+    font-size: 13px;
+  }
+
+  @media screen and (max-width: 1180px) and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .tjs-app-pdp__hero {
+      grid-template-columns: minmax(0, 1fr) minmax(400px, .9fr);
+      gap: 34px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__title {
+      font-size: clamp(42px, 4.2vw, 54px);
+    }
+  }
+
+  /* =====================================================
+     MOBILE: square product image + floating app-style card
+     ===================================================== */
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tjs-app-pdp {
+      padding-top: 6px;
+      background:
+        radial-gradient(
+          circle at 50% 7%,
+          color-mix(in srgb, var(--app-pdp-accent) 8%, transparent) 0%,
+          transparent 28%
+        ),
+        linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--app-pdp-media-bg) 83%, var(--app-pdp-bg)) 0%,
+          var(--app-pdp-bg) 47%,
+          var(--app-pdp-bg) 100%
+        );
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__inner {
+      width: min(calc(100% - 10px), 640px);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__stage {
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      aspect-ratio: 1 / 1;
+      border-radius: 30px;
+      background:
+        radial-gradient(
+          circle at 50% 43%,
+          color-mix(in srgb, var(--app-pdp-accent) 8%, #fff) 0%,
+          transparent 46%
+        ),
+        var(--app-pdp-media-bg);
+      box-shadow:
+        inset 0 0 0 1px rgba(0,0,0,.035),
+        0 15px 44px rgba(20,16,13,.095);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__image {
+      padding: 6px;
+      transform: scale({{ section.settings.image_scale | times: 0.01 }});
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__counter {
+      right: 13px;
+      bottom: 76px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__swipe-cue {
+      bottom: 18px;
+      min-width: 172px;
+      padding: 9px 13px 10px;
+      background: rgba(23,20,17,.76);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__purchase {
+      width: calc(100% - 22px);
+      margin: -48px auto 0;
+      padding: 30px 19px 20px;
+      border-radius: var(--app-pdp-card-radius);
+      box-shadow:
+        0 25px 58px rgba(21,17,13,.135),
+        inset 0 0 0 1px rgba(0,0,0,.03);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__purchase::before {
+      top: 10px;
+      width: 40px;
+      height: 4px;
+      background: var(--app-pdp-accent);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__type {
+      margin-bottom: 7px;
+      font-size: 11px;
+      letter-spacing: .07em;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__title {
+      max-width: none;
+      font-size: var(--app-pdp-title-mobile);
+      font-weight: 650;
+      line-height: 1.04;
+      letter-spacing: -.043em;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit {
+      margin-top: 11px;
+      font-size: 14px;
+      line-height: 1.62;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__reviews-summary {
+      margin-top: 10px;
+      font-size: 11.5px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__price-row {
+      margin-top: 18px;
+      gap: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__price {
+      font-size: var(--app-pdp-price-mobile);
+      font-weight: 780;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__compare {
+      font-size: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__tax {
+      font-size: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__stock {
+      margin-top: 12px;
+      font-size: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__form {
+      margin-top: 18px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__option-head strong,
+    #shopify-section-{{ section.id }} .tjs-app-pdp__option-head span {
+      font-size: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__value {
+      min-height: 43px;
+      font-size: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__buy-row {
+      grid-template-columns: {% if section.settings.show_quantity %}98px{% else %}1fr{% endif %} minmax(0, 1fr);
+      gap: 9px;
+      margin-top: 19px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__quantity,
+    #shopify-section-{{ section.id }} .tjs-app-pdp__add {
+      min-height: 52px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__add {
+      font-size: 12.5px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__assurance {
+      margin-top: 15px;
+      padding-top: 13px;
+      font-size: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__details-shell {
+      margin-top: 14px;
+      padding: 29px 18px 28px;
+      border-radius: var(--app-pdp-details-radius) var(--app-pdp-details-radius) 0 0;
+      box-shadow: 0 -10px 30px rgba(19,15,12,.045);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__tabs {
+      gap: 24px;
+      padding-bottom: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__tab {
+      font-size: 13px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__panel {
+      padding-top: 25px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__description {
+      font-size: 14px;
+      line-height: 1.76;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__spec {
+      min-height: 78px;
+      padding: 14px;
+      border-radius: 16px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__spec small {
+      font-size: 9.5px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__spec strong {
+      font-size: 13px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-head h2 {
+      font-size: 27px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-card {
+      min-width: 48%;
+      flex-basis: 48%;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-copy strong,
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-copy span {
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: 370px) {
+    #shopify-section-{{ section.id }} .tjs-app-pdp__purchase {
+      width: calc(100% - 14px);
+      padding-inline: 16px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__title {
+      font-size: 30px;
+    }
+  }
+
+
+  /* =====================================================
+     TJS APP PDP V3 — OVERLAPPING MOBILE PRODUCT SHEET
+  ===================================================== */
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__headline {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__headline-copy {
+    min-width: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__headline-price {
+    min-width: 120px;
+    display: grid;
+    justify-items: end;
+    gap: 7px;
+    padding-bottom: 4px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__headline-price .tjs-app-pdp__price-row {
+    justify-content: flex-end;
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 24px;
+    padding: 15px 0;
+    border-top: 1px solid var(--pdp-border);
+    border-bottom: 1px solid var(--pdp-border);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-item {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    align-items: center;
+    gap: 9px;
+    padding: 0 12px;
+    border-right: 1px solid var(--pdp-border);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-item:first-child {
+    padding-left: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-item:last-child {
+    padding-right: 0;
+    border-right: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-icon {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--pdp-accent-soft);
+    color: var(--pdp-accent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-copy {
+    min-width: 0;
+    display: grid;
+    gap: 3px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-copy strong {
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-copy small {
+    overflow: hidden;
+    color: var(--pdp-muted);
+    font-size: 10px;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__description-preview {
+    margin-top: 19px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__description-preview p {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0;
+    color: var(--pdp-muted);
+    font-size: 14px;
+    line-height: 1.65;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__description-preview.is-expanded p {
+    display: block;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__description-preview button {
+    display: inline-flex;
+    margin-top: 5px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--pdp-accent);
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__panel-heading {
+    display: none;
+    margin: 0 0 16px;
+    font-family: var(--pdp-heading-font);
+    font-size: 25px;
+    font-weight: 650;
+    line-height: 1.05;
+    letter-spacing: -.035em;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-image {
+    aspect-ratio: 1 / 1;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__related-image img {
+    object-fit: cover;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .tjs-app-pdp__purchase {
+      padding-top: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__headline-price .tjs-app-pdp__price {
+      font-size: clamp(28px, 2.6vw, var(--pdp-price-d));
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__description-preview p {
+      font-size: 15px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tjs-app-pdp__stage {
+      position: relative;
+      z-index: 1;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__counter {
+      bottom: 86px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__swipe-cue {
+      bottom: 24px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__purchase {
+      position: relative;
+      z-index: 12;
+      width: calc(100% - 20px);
+      margin: -94px auto 0;
+      padding: {% if section.settings.show_quantity %}47px{% else %}30px{% endif %} 18px 20px;
+      border: 0;
+      border-radius: 30px;
+      background: #fff;
+      box-shadow:
+        0 30px 68px rgba(20,16,13,.17),
+        inset 0 0 0 1px rgba(0,0,0,.025);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__purchase::before {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__headline {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__type {
+      margin-bottom: 5px;
+      font-size: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__title {
+      max-width: 11ch;
+      font-size: clamp(29px, 8.8vw, var(--pdp-title-m));
+      line-height: 1.02;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__headline-price {
+      min-width: 92px;
+      gap: 5px;
+      padding-bottom: 2px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__headline-price .tjs-app-pdp__price-row {
+      display: grid;
+      justify-items: end;
+      gap: 3px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__headline-price .tjs-app-pdp__price {
+      font-size: var(--pdp-price-m);
+      line-height: 1;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__headline-price .tjs-app-pdp__compare {
+      font-size: 11px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__headline-price .tjs-app-pdp__saving {
+      min-height: 22px;
+      padding-inline: 7px;
+      font-size: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__reviews-summary {
+      margin-top: 11px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-strip {
+      margin-top: 17px;
+      padding: 13px 0;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-item {
+      grid-template-columns: 25px minmax(0, 1fr);
+      gap: 6px;
+      padding: 0 8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-icon {
+      width: 25px;
+      height: 25px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-copy strong {
+      font-size: 9.5px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-copy small {
+      font-size: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__description-preview {
+      margin-top: 15px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__description-preview p {
+      font-size: 13px;
+      line-height: 1.62;
+    }
+
+    {% if section.settings.show_quantity %}
+      #shopify-section-{{ section.id }} .tjs-app-pdp__quantity {
+        position: absolute;
+        z-index: 15;
+        top: -26px;
+        left: 50%;
+        min-height: 52px;
+        grid-template-columns: 34px 42px 34px;
+        border: 5px solid #fff;
+        border-radius: 999px;
+        background: var(--pdp-accent);
+        color: #fff;
+        box-shadow: 0 14px 30px rgba(20,16,13,.18);
+        transform: translateX(-50%);
+      }
+
+      #shopify-section-{{ section.id }} .tjs-app-pdp__quantity button,
+      #shopify-section-{{ section.id }} .tjs-app-pdp__quantity input {
+        height: 42px;
+        color: #fff;
+      }
+
+      #shopify-section-{{ section.id }} .tjs-app-pdp__quantity button {
+        width: 34px;
+      }
+
+      #shopify-section-{{ section.id }} .tjs-app-pdp__quantity input {
+        width: 42px;
+        font-weight: 700;
+      }
+    {% endif %}
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__form {
+      margin-top: 17px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__buy-row {
+      display: block;
+      margin-top: 18px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__add {
+      width: 100%;
+      min-height: 54px;
+      border-radius: 999px;
+      font-size: 13px;
+      box-shadow: 0 14px 32px rgba(20,16,13,.15);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__assurance {
+      justify-content: center;
+      margin-top: 15px;
+      padding-top: 13px;
+      text-align: center;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__details-shell {
+      margin-top: 16px;
+      padding: 31px 18px 30px;
+      border: 0;
+      border-radius: 30px 30px 0 0;
+      background: #fff;
+      box-shadow: 0 -10px 30px rgba(20,16,13,.045);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__tabs {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__panel {
+      display: block !important;
+      padding: 28px 0;
+      border-top: 1px solid var(--pdp-border);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__panel:first-of-type {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__panel-heading {
+      display: block;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__description {
+      font-size: 14px;
+      line-height: 1.78;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__spec-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__spec {
+      min-height: 80px;
+      padding: 14px;
+      border-radius: 17px;
+      background: #f7f5f1;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related {
+      margin-top: 32px;
+      padding-top: 30px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-head h2 {
+      font-size: 28px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__related-card {
+      min-width: 48%;
+      flex-basis: 48%;
+    }
+  }
+
+  @media screen and (max-width: 370px) {
+    #shopify-section-{{ section.id }} .tjs-app-pdp__purchase {
+      width: calc(100% - 12px);
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__title {
+      font-size: 28px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-copy strong {
+      font-size: 8.8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-copy small {
+      font-size: 7.5px;
+    }
+  }
+
+
+  /* =====================================================
+     TJS APP PDP V4 — DELIVERY + NATIVE PREMIUM ATC
+  ===================================================== */
+
+  #shopify-section-{{ section.id }} {
+    --pdp-details-gap: {{ section.settings.details_gap }}px;
+    --pdp-specs-bg: {{ section.settings.specs_background }};
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-item {
+    padding-inline: clamp(12px, 2vw, 22px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-copy strong {
+    font-size: 13px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-copy small {
+    font-size: 10.5px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__reviews-summary--headline {
+    margin-top: 10px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__reviews-summary--headline .tjs-app-pdp__stars {
+    font-size: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__details-shell {
+    margin-top: var(--pdp-details-gap);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__panel[data-panel="specifications"] {
+    padding: 28px;
+    border-radius: 24px;
+    background: var(--pdp-specs-bg);
+    box-shadow:
+      inset 0 0 0 1px
+      color-mix(in srgb, var(--pdp-border) 72%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__panel[data-panel="specifications"] .tjs-app-pdp__spec {
+    background: color-mix(in srgb, #fff 76%, var(--pdp-specs-bg));
+  }
+
+  /* Native premium Add to Cart */
+  #shopify-section-{{ section.id }} .tjs-atc-row {
+    width: 100%;
+    margin: 0;
+    font-family: inherit;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row *,
+  #shopify-section-{{ section.id }} .tjs-atc-row *::before,
+  #shopify-section-{{ section.id }} .tjs-atc-row *::after {
+    box-sizing: border-box;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 54px;
+    gap: 10px;
+    width: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__wrap.is-single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__button,
+  #shopify-section-{{ section.id }} .tjs-atc-row__wishlist {
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__button {
+    position: relative;
+    width: 100%;
+    min-height: 56px;
+    display: block;
+    overflow: hidden;
+    border-radius: 17px;
+    background: var(--pdp-button);
+    color: var(--pdp-button-text);
+    box-shadow: 0 14px 30px rgba(47,36,32,.21);
+    transition:
+      transform .22s ease,
+      box-shadow .22s ease,
+      opacity .22s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__button::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 16px;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__button::after {
+    content: "";
+    position: absolute;
+    top: -90%;
+    left: -55%;
+    width: 46px;
+    height: 290%;
+    background:
+      linear-gradient(
+        110deg,
+        transparent,
+        rgba(255,255,255,.42),
+        transparent
+      );
+    transform: rotate(18deg);
+    animation: tjsAppAtcShine 4.4s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes tjsAppAtcShine {
+    0%, 48% {
+      left: -55%;
+      opacity: 0;
+    }
+
+    60% {
+      opacity: 1;
+    }
+
+    84%, 100% {
+      left: 130%;
+      opacity: 0;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 36px rgba(47,36,32,.25);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__button:disabled {
+    cursor: not-allowed;
+    opacity: .48;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__button.is-loading {
+    opacity: .72;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__button-inner {
+    position: relative;
+    z-index: 2;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 17px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__button-text {
+    font-size: 14px;
+    font-weight: 850;
+    line-height: 1;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__button-icon {
+    width: 23px;
+    height: 23px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(255,255,255,.13);
+    color: #ffe2a4;
+    font-size: 15px;
+    line-height: 1;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__wishlist {
+    position: relative;
+    min-height: 56px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(47,36,32,.14);
+    border-radius: 17px;
+    background: #fff;
+    color: #241c19;
+    box-shadow: 0 10px 22px rgba(47,36,32,.07);
+    transition:
+      transform .22s ease,
+      border-color .22s ease,
+      background .22s ease,
+      color .22s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__wishlist:hover {
+    transform: translateY(-1px);
+    border-color: rgba(47,36,32,.32);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__wishlist svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    transition: fill .22s ease, transform .22s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__wishlist.is-active {
+    border-color: rgba(182,78,71,.22);
+    background: #fff4f1;
+    color: #b64e47;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__wishlist.is-active svg {
+    fill: currentColor;
+    transform: scale(1.05);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__hint {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 9px;
+    color: #75645d;
+    font-size: 10.8px;
+    font-weight: 650;
+    line-height: 1.35;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__hint::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    flex: 0 0 5px;
+    border-radius: 999px;
+    background: #9a7a67;
+    box-shadow: 0 0 0 4px rgba(154,122,103,.1);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-atc-row__hint strong {
+    color: #2f2420;
+    font-weight: 800;
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-item {
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 8px;
+      padding-inline: 11px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-copy strong {
+      font-size: 11px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__benefit-copy small {
+      font-size: 9px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__details-shell {
+      margin-top: var(--pdp-details-gap);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__panel[data-panel="specifications"] {
+      margin-top: 24px;
+      padding: 23px 15px;
+      border: 0;
+      border-radius: 22px;
+      background: var(--pdp-specs-bg);
+      box-shadow: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__panel[data-panel="specifications"] .tjs-app-pdp__panel-heading {
+      margin-bottom: 18px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__buy-row {
+      display: block;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-atc-row {
+      width: 100%;
+      margin-top: 18px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-atc-row__wrap {
+      grid-template-columns: minmax(0, 1fr) 50px;
+      gap: 9px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-atc-row__wrap.is-single {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-atc-row__button,
+    #shopify-section-{{ section.id }} .tjs-atc-row__wishlist {
+      min-height: 52px;
+      border-radius: 16px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-atc-row__button::before {
+      border-radius: 15px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-atc-row__button-inner {
+      min-height: 52px;
+      padding: 0 14px;
+      gap: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-atc-row__button-text {
+      font-size: 13px;
+      letter-spacing: .24px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-atc-row__button-icon {
+      width: 21px;
+      height: 21px;
+      font-size: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-atc-row__wishlist svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-atc-row__hint {
+      margin-top: 8px;
+      font-size: 10.3px;
+    }
+  }
+
+
+  /* =====================================================
+     V4.1 — PRODUCT INFORMATION HEADING / FLOW FIX
+  ===================================================== */
+
+  #shopify-section-{{ section.id }} .tjs-app-pdp__panel-heading {
+    font-family: var(--pdp-heading-font);
+    color: var(--pdp-text);
+  }
+
+  @media screen and (max-width: 749px) {
+    /*
+      The purchase card uses a negative top margin to overlap the image.
+      Give it a genuine bottom margin so the next white screen starts
+      after the full visible card rather than underneath it.
+    */
+    #shopify-section-{{ section.id }} .tjs-app-pdp__purchase {
+      margin-bottom: var(--pdp-details-gap) !important;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__details-shell {
+      position: relative !important;
+      z-index: 20 !important;
+      isolation: isolate;
+      margin-top: 0 !important;
+      padding-top: 32px !important;
+      overflow: visible !important;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__panel[data-panel="description"] {
+      position: relative !important;
+      z-index: 2 !important;
+      display: block !important;
+      padding-top: 0 !important;
+      overflow: visible !important;
+    }
+
+    /*
+      Do not let global theme H1/H2 reveal effects, masks, clipping,
+      line wrappers, or transforms affect these section headings.
+    */
+    #shopify-section-{{ section.id }} .tjs-app-pdp__panel-heading {
+      position: static !important;
+      inset: auto !important;
+      display: block !important;
+      width: 100% !important;
+      max-width: none !important;
+      height: auto !important;
+      min-height: 30px !important;
+      margin: 0 0 18px !important;
+      padding: 0 !important;
+      overflow: visible !important;
+      clip: auto !important;
+      clip-path: none !important;
+      mask: none !important;
+      -webkit-mask: none !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: none !important;
+      translate: none !important;
+      filter: none !important;
+      color: var(--pdp-text) !important;
+      background: none !important;
+      -webkit-text-fill-color: currentColor !important;
+      font-family: var(--pdp-heading-font) !important;
+      font-size: 26px !important;
+      font-weight: 650 !important;
+      line-height: 1.08 !important;
+      letter-spacing: -.035em !important;
+      text-indent: 0 !important;
+      white-space: normal !important;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__description {
+      position: relative;
+      z-index: 1;
+      margin-top: 0 !important;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__panel[data-panel="specifications"] {
+      margin-top: 30px !important;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-app-pdp__panel[data-panel="reviews"] {
+      margin-top: 30px;
+    }
+  }
+
+{% endstyle %}
+
+<tjs-app-pdp-v4
+  id="TjsAppPdp-{{ section.id }}"
+  class="tjs-app-pdp"
+  data-heading-font="{{ section.settings.heading_font_style }}"
+  data-body-font="{{ section.settings.body_font_style }}"
+  data-title-effect="{{ section.settings.title_effect }}"
+  data-product-id="{{ product.id }}"
+  data-mode="{{ pdp_mode }}"
+  data-recommendations-url="{{ routes.product_recommendations_url }}"
+  data-related-limit="{{ section.settings.related_limit }}"
+  data-money-format="{{ shop.money_format | replace: '&amp;', '&' | escape }}"
+  data-currency="{{ cart.currency.iso_code | default: shop.currency | replace: '&amp;', '&' | escape }}"
+  data-open-cart="{{ section.settings.open_cart_drawer }}"
+  data-low-stock-threshold="{{ section.settings.low_stock_threshold }}"
+  data-savings-mode="{{ section.settings.savings_mode }}"
+  data-add-label="{{ section.settings.add_button_label | replace: '&amp;', '&' | escape }}"
+>
+  <script type="application/json" data-variant-data>
+    [
+      {% assign has_variant_json = false %}
+      {% for variant in product.variants %}
+        {% if has_variant_json %},{% endif %}
+        {
+          "id": {{ variant.id | json }},
+          "available": {{ variant.available | json }},
+          "options": {{ variant.options | json }},
+          "price": {{ variant.price | json }},
+          "compare_at_price": {{ variant.compare_at_price | default: 0 | json }},
+          "inventory_management": {{ variant.inventory_management | json }},
+          "inventory_policy": {{ variant.inventory_policy | json }},
+          "inventory_quantity": {{ variant.inventory_quantity | json }},
+          "featured_media_id": {% if variant.featured_media != blank %}{{ variant.featured_media.id | json }}{% else %}null{% endif %}
+        }
+        {% assign has_variant_json = true %}
+      {% endfor %}
+    ]
+  </script>
+  <script type="application/json" data-selected-options>{{ selected_variant.options | json }}</script>
+  <script type="application/json" data-legacy-spec-text>{{ legacy_spec_text | json }}</script>
+
+  <div class="tjs-app-pdp__inner">
+    <div class="tjs-app-pdp__hero">
+      <div class="tjs-app-pdp__media-column">
+        <div class="tjs-app-pdp__gallery">
+          {% if section.settings.show_thumbnails and product.media.size > 1 %}
+            <div class="tjs-app-pdp__thumbs" data-thumbs>
+              {% for media in product.media %}
+                {% assign thumb_active = false %}
+                {% if selected_variant.featured_media != blank %}
+                  {% if media.id == selected_variant.featured_media.id %}
+                    {% assign thumb_active = true %}
+                  {% endif %}
+                {% elsif forloop.first %}
+                  {% assign thumb_active = true %}
+                {% endif %}
+
+                <button
+                  type="button"
+                  class="tjs-app-pdp__thumb{% if thumb_active %} is-active{% endif %}"
+                  data-thumb
+                  data-index="{{ forloop.index0 }}"
+                  data-media-id="{{ media.id }}"
+                  aria-label="View product media {{ forloop.index }}"
+                >
+                  {% if media.preview_image != blank %}
+                    {% assign thumb_alt = media.preview_image.alt | default: product.title %}
+                    {{ media.preview_image
+                      | image_url: width: 180
+                      | image_tag:
+                        widths: '72,100,140,180',
+                        sizes: '72px',
+                        loading: 'lazy',
+                        alt: thumb_alt
+                    }}
+                  {% else %}
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  {% endif %}
+                </button>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <div class="tjs-app-pdp__stage" data-stage>
+            <div class="tjs-app-pdp__mobile-controls">
+                <button type="button" class="tjs-app-pdp__mobile-control" data-mobile-back aria-label="Go back">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button type="button" class="tjs-app-pdp__mobile-control" data-mobile-share aria-label="Share product">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="18" cy="5" r="2.4" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="12" r="2.4" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="19" r="2.4" stroke="currentColor" stroke-width="1.5"/><path d="m8.1 10.8 7.7-4.5M8.1 13.2l7.7 4.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                </button>
+              </div>
+
+            <div class="tjs-app-pdp__slides" data-slides>
+              {% if product.media.size > 0 %}
+                {% for media in product.media %}
+                  {% assign media_active = false %}
+                  {% if selected_variant.featured_media != blank %}
+                    {% if media.id == selected_variant.featured_media.id %}{% assign media_active = true %}{% endif %}
+                  {% elsif forloop.first %}
+                    {% assign media_active = true %}
+                  {% endif %}
+
+                  {% assign media_orientation = 'portrait' %}
+                  {% if media.media_type == 'image' %}
+                    {% if media.aspect_ratio > 1.08 %}
+                      {% assign media_orientation = 'landscape' %}
+                    {% elsif media.aspect_ratio > 0.92 %}
+                      {% assign media_orientation = 'square' %}
+                    {% endif %}
+                  {% endif %}
+
+                  <div
+                    class="tjs-app-pdp__slide{% if media_active %} is-active{% endif %}"
+                    data-slide
+                    data-index="{{ forloop.index0 }}"
+                    data-media-id="{{ media.id }}"
+                    data-orientation="{{ media_orientation }}"
+                  >
+                    {% case media.media_type %}
+                      {% when 'image' %}
+                        {% assign image_alt = media.alt | default: product.title %}
+                        {% assign zoom_url = media | image_url: width: 2200 %}
+                        {% if section.settings.enable_zoom %}
+                          <button type="button" class="tjs-app-pdp__media-button" data-zoom data-zoom-src="{{ zoom_url }}" aria-label="Zoom {{ image_alt | replace: '&amp;', '&' | escape }}">
+                        {% else %}
+                          <div class="tjs-app-pdp__media-frame">
+                        {% endif %}
+
+                        {{ media
+                          | image_url: width: 1600
+                          | image_tag:
+                            class: 'tjs-app-pdp__image',
+                            widths: '360,480,620,760,900,1100,1300,1600',
+                            sizes: '(max-width: 749px) 100vw, (max-width: 989px) 92vw, 58vw',
+                            loading: 'lazy',
+                            decoding: 'async',
+                            alt: image_alt
+                        }}
+
+                        {% if section.settings.enable_zoom %}</button>{% else %}</div>{% endif %}
+                      {% when 'video' %}
+                        <div class="tjs-app-pdp__media-frame">{{ media | video_tag: controls: true, preload: 'metadata', image_size: '1200x' }}</div>
+                      {% when 'external_video' %}
+                        <div class="tjs-app-pdp__media-frame">{{ media | external_video_tag }}</div>
+                      {% when 'model' %}
+                        <div class="tjs-app-pdp__media-frame">{{ media | model_viewer_tag }}</div>
+                    {% endcase %}
+                  </div>
+                {% endfor %}
+              {% else %}
+                <div class="tjs-app-pdp__slide is-active" data-slide data-index="0">{{ 'product-1' | placeholder_svg_tag: 'tjs-app-pdp__image' }}</div>
+              {% endif %}
+            </div>
+
+            {% if product.media.size > 1 %}
+              <div class="tjs-app-pdp__counter"><b data-current-index>1</b><span>/</span><span>{{ product.media.size }}</span></div>
+            {% endif %}
+
+            <button type="button" class="tjs-app-pdp__swipe-cue" data-scroll-to-card><span>{{ section.settings.swipe_cue_text | replace: '&amp;', '&' | escape }}</span></button>
+          </div>
+        </div>
+      </div>
+
+      <section class="tjs-app-pdp__purchase" data-purchase-card aria-labelledby="TjsAppPdpTitle-{{ section.id }}">
+        <div class="tjs-app-pdp__headline">
+          <div class="tjs-app-pdp__headline-copy">
+            <p class="tjs-app-pdp__type">{{ mode_label | replace: '&amp;', '&' | escape }}</p>
+            <h1 id="TjsAppPdpTitle-{{ section.id }}" class="tjs-app-pdp__title">{{ product.title | replace: '&amp;', '&' | escape }}</h1>
+
+            {% if section.settings.show_real_reviews and review_rating != blank %}
+              <div class="tjs-app-pdp__reviews-summary tjs-app-pdp__reviews-summary--headline">
+                <span class="tjs-app-pdp__stars" aria-hidden="true">★★★★★</span>
+                <strong>{{ review_rating }}</strong>
+                {% if review_count != blank %}
+                  <span>{{ review_count }} reviews</span>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="tjs-app-pdp__headline-price">
+            <div class="tjs-app-pdp__price-row">
+              <strong class="tjs-app-pdp__price" data-price>{{ selling_price | money }}</strong>
+              <s class="tjs-app-pdp__compare" data-compare{% unless on_sale %} hidden{% endunless %}>{% if on_sale %}{{ compare_price | money }}{% endif %}</s>
+            </div>
+
+            {% if section.settings.show_savings %}
+              <span class="tjs-app-pdp__saving" data-saving{% unless on_sale %} hidden{% endunless %}>
+                {% case section.settings.savings_mode %}
+                  {% when 'percentage' %}
+                    {{ saving_percent }}% off
+                  {% when 'both' %}
+                    Save {{ saving_amount | money_without_trailing_zeros }} · {{ saving_percent }}%
+                  {% else %}
+                    Save {{ saving_amount | money_without_trailing_zeros }}
+                {% endcase %}
+              </span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="tjs-app-pdp__benefit-strip" aria-label="Product highlights">
+          <div class="tjs-app-pdp__benefit-item">
+            <span class="tjs-app-pdp__benefit-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 20s6-4 6-9.1A3.9 3.9 0 0 0 12 7.7a3.9 3.9 0 0 0-6 3.2C6 16 12 20 12 20Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </span>
+
+            <span class="tjs-app-pdp__benefit-copy">
+              <strong>{{ designed_for_value | replace: '&amp;', '&' | escape }}</strong>
+              <small>Designed for</small>
+            </span>
+          </div>
+
+          <div class="tjs-app-pdp__benefit-item">
+            <span class="tjs-app-pdp__benefit-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M3.5 7.5h11v9h-11zM14.5 10h3.2l2.8 3v3.5h-6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <circle cx="7" cy="18" r="1.7" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="17.5" cy="18" r="1.7" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </span>
+
+            <span class="tjs-app-pdp__benefit-copy">
+              <strong>{{ section.settings.dispatch_promise | default: 'Dispatches in 24 Hours' | escape }}</strong>
+              <small>{{ section.settings.delivery_promise | default: 'Delivery 2–4 days' | escape }}</small>
+            </span>
+          </div>
+        </div>
+
+        {% if short_description != blank %}
+          <div class="tjs-app-pdp__description-preview" data-description-preview>
+            <p>{{ short_description | replace: '&amp;', '&' | escape }}</p>
+            <button type="button" data-description-toggle aria-expanded="false">Read more</button>
+          </div>
+        {% endif %}
+
+        <p class="tjs-app-pdp__tax">Inclusive of applicable taxes.</p>
+
+        {% if section.settings.show_stock %}
+          <span class="tjs-app-pdp__stock{% if low_stock %} is-low{% endif %}{% unless selected_variant.available %} is-sold-out{% endunless %}" data-stock>
+            {% if selected_variant.available %}
+              {% if low_stock %}
+                Only {{ selected_variant.inventory_quantity }} left
+              {% else %}
+                In stock
+              {% endif %}
+            {% else %}
+              Sold out
+            {% endif %}
+          </span>
+        {% endif %}
+
+        <form id="{{ form_id }}" class="tjs-app-pdp__form" action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-product-form>
+          <input type="hidden" name="id" value="{{ selected_variant.id }}" data-variant-id>
+
+          {% unless product.has_only_default_variant %}
+            <div class="tjs-app-pdp__options">
+              {% for option in product.options_with_values %}
+                {% assign option_index = forloop.index0 %}
+                {% assign selected_value = selected_variant.options[option_index] %}
+                {% assign option_downcase = option.name | downcase %}
+                {% assign colour_option = false %}
+                {% if option_downcase contains 'color' or option_downcase contains 'colour' or option_downcase contains 'shade' or option_downcase contains 'finish' %}{% assign colour_option = true %}{% endif %}
+
+                <div class="tjs-app-pdp__option" data-option-group data-option-index="{{ option_index }}">
+                  <div class="tjs-app-pdp__option-head"><strong>{{ option.name | replace: '&amp;', '&' | escape }}</strong><span data-option-selected>{{ selected_value | replace: '&amp;', '&' | escape }}</span></div>
+
+                  {% if section.settings.variant_style == 'dropdown' %}
+                    <select class="tjs-app-pdp__select" data-option-select data-option-index="{{ option_index }}">
+                      {% for value in option.values %}
+                        {% assign option_value_text = value.name | default: value %}
+                        <option value="{{ option_value_text | replace: '&amp;', '&' | escape }}" {% if option_value_text == selected_value %}selected{% endif %}>{{ option_value_text | replace: '&amp;', '&' | escape }}</option>
+                      {% endfor %}
+                    </select>
+                  {% else %}
+                    <div class="tjs-app-pdp__values">
+                      {% for value in option.values %}
+                        {% assign option_value_text = value.name | default: value %}
+                        <button
+                          type="button"
+                          class="tjs-app-pdp__value{% if option_value_text == selected_value %} is-active{% endif %}"
+                          data-option-index="{{ option_index }}"
+                          data-option-value="{{ option_value_text | replace: '&amp;', '&' | escape }}"
+                          aria-pressed="{% if option_value_text == selected_value %}true{% else %}false{% endif %}"
+                        >
+                          {% if section.settings.variant_style == 'smart' and colour_option %}
+                            <span
+                              class="tjs-app-pdp__swatch"
+                              data-swatch
+                              data-swatch-name="{{ option_value_text | replace: '&amp;', '&' | escape }}"
+                              {% if value.swatch.image != blank %}style="--swatch-image:url('{{ value.swatch.image | image_url: width: 48 }}');"{% elsif value.swatch.color != blank %}style="--swatch:{{ value.swatch.color }};"{% endif %}
+                              aria-hidden="true"
+                            ></span>
+                          {% endif %}
+                          <span>{{ option_value_text | replace: '&amp;', '&' | escape }}</span>
+                        </button>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% endunless %}
+
+          <div class="tjs-app-pdp__buy-row">
+            {% if section.settings.show_quantity %}
+              <div class="tjs-app-pdp__quantity">
+                <button type="button" data-qty-minus aria-label="Decrease quantity">−</button>
+                <input type="number" name="quantity" min="1" value="1" inputmode="numeric" data-quantity aria-label="Quantity">
+                <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
+              </div>
+            {% else %}
+              <input type="hidden" name="quantity" value="1">
+            {% endif %}
+
+            <div class="tjs-atc-row" data-tjs-atc-row>
+              <div class="tjs-atc-row__wrap{% unless section.settings.show_wishlist %} is-single{% endunless %}">
+                <button
+                  type="submit"
+                  name="add"
+                  class="tjs-atc-row__button"
+                  data-add
+                  {% unless selected_variant.available %}disabled{% endunless %}
+                >
+                  <span class="tjs-atc-row__button-inner">
+                    <span class="tjs-atc-row__button-text" data-add-label>
+                      {% if selected_variant.available %}
+                        {{ section.settings.add_button_label | replace: '&amp;', '&' | escape }}
+                      {% else %}
+                        Sold out
+                      {% endif %}
+                    </span>
+
+                    <span class="tjs-atc-row__button-icon" aria-hidden="true">→</span>
+                  </span>
+                </button>
+
+                {% if section.settings.show_wishlist %}
+                  <button
+                    type="button"
+                    class="tjs-atc-row__wishlist"
+                    data-custom-wishlist
+                    aria-label="Add to wishlist"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M20.8 4.6c-1.8-1.7-4.6-1.6-6.3.2L12 7.4 9.5 4.8C7.8 3 5 2.9 3.2 4.6 1.4 6.4 1.3 9.2 3 11l9 9 9-9c1.7-1.8 1.6-4.6-.2-6.4z"></path>
+                    </svg>
+                  </button>
+                {% endif %}
+              </div>
+
+              <div class="tjs-atc-row__hint">
+                Add now to unlock <strong>free shipping</strong>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <section class="tjs-app-pdp__details-shell" data-details-shell>
+      <nav class="tjs-app-pdp__tabs" role="tablist" aria-label="Product information">
+        {% if section.settings.show_description and clean_description != blank %}
+          <button type="button" class="tjs-app-pdp__tab is-active" role="tab" aria-selected="true" data-tab="description">Description</button>
+        {% endif %}
+
+        {% if section.settings.show_specs %}
+          <button type="button" class="tjs-app-pdp__tab{% unless section.settings.show_description and clean_description != blank %} is-active{% endunless %}" role="tab" aria-selected="{% unless section.settings.show_description and clean_description != blank %}true{% else %}false{% endunless %}" data-tab="specifications" data-spec-tab>Specifications</button>
+        {% endif %}
+
+        {% if section.settings.show_reviews and review_rating != blank or section.settings.show_reviews and app_block_count > 0 %}
+          <button type="button" class="tjs-app-pdp__tab" role="tab" aria-selected="false" data-tab="reviews">Reviews</button>
+        {% endif %}
+      </nav>
+
+      {% if section.settings.show_description and clean_description != blank %}
+        <div class="tjs-app-pdp__panel is-active" data-panel="description">
+                    <div class="tjs-app-pdp__panel-heading" role="heading" aria-level="2">About this product</div>
+<div class="tjs-app-pdp__description"><p>{{ clean_description | replace: '&amp;', '&' | escape }}</p></div>
+
+          {% if whats_in_box_meta != blank %}
+            <ul class="tjs-app-pdp__features"><li><strong>What's included:</strong> {{ whats_in_box_meta.value | newline_to_br }}</li></ul>
+          {% endif %}
+
+          {% if care_meta != blank %}
+            <ul class="tjs-app-pdp__features"><li><strong>Care:</strong> {{ care_meta.value | newline_to_br }}</li></ul>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.show_specs %}
+        <div class="tjs-app-pdp__panel{% unless section.settings.show_description and clean_description != blank %} is-active{% endunless %}" data-panel="specifications" data-spec-panel>
+                    <div class="tjs-app-pdp__panel-heading" role="heading" aria-level="2">Specifications</div>
+<div class="tjs-app-pdp__spec-grid" data-spec-grid>
+            {% case pdp_mode %}
+              {% when 'tableware' %}
+                {% if material_meta != blank %}<div class="tjs-app-pdp__spec"><small>Material</small><strong>{{ material_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if capacity_meta != blank %}<div class="tjs-app-pdp__spec"><small>Capacity</small><strong>{{ capacity_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if set_size_meta != blank %}<div class="tjs-app-pdp__spec"><small>Set size</small><strong>{{ set_size_meta.value }} piece{% if set_size_meta.value != 1 %}s{% endif %}</strong></div>{% endif %}
+                {% if dimensions_meta != blank %}<div class="tjs-app-pdp__spec"><small>Dimensions</small><strong>{{ dimensions_meta.value | newline_to_br }}</strong></div>{% endif %}
+                {% if primary_use_meta != blank %}<div class="tjs-app-pdp__spec"><small>Designed for</small><strong>{{ primary_use_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if occasion_meta != blank %}<div class="tjs-app-pdp__spec"><small>Occasion</small><strong>{{ occasion_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+
+              {% when 'utility' %}
+                {% if material_meta != blank %}<div class="tjs-app-pdp__spec"><small>Material</small><strong>{{ material_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if capacity_meta != blank %}<div class="tjs-app-pdp__spec"><small>Capacity</small><strong>{{ capacity_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% elsif capacity_range_meta != blank %}<div class="tjs-app-pdp__spec"><small>Capacity</small><strong>{{ capacity_range_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if compartment_meta != blank %}<div class="tjs-app-pdp__spec"><small>Compartments</small><strong>{{ compartment_meta.value }}</strong></div>{% endif %}
+                {% if insulated_meta != blank %}<div class="tjs-app-pdp__spec"><small>Insulated</small><strong>{% if insulated_meta.value %}Yes{% else %}No{% endif %}</strong></div>{% endif %}
+                {% if dimensions_meta != blank %}<div class="tjs-app-pdp__spec"><small>Dimensions</small><strong>{{ dimensions_meta.value | newline_to_br }}</strong></div>{% endif %}
+                {% if intended_contents_meta != blank %}<div class="tjs-app-pdp__spec"><small>Best for</small><strong>{{ intended_contents_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+
+              {% when 'planner' %}
+                {% if planner_type_meta != blank %}<div class="tjs-app-pdp__spec"><small>Planner type</small><strong>{{ planner_type_meta.value | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if dated_status_meta != blank %}<div class="tjs-app-pdp__spec"><small>Dated status</small><strong>{{ dated_status_meta.value | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if planner_year_meta != blank %}<div class="tjs-app-pdp__spec"><small>Year</small><strong>{{ planner_year_meta.value | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if planner_size_meta != blank %}<div class="tjs-app-pdp__spec"><small>Size</small><strong>{{ planner_size_meta.value | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if page_count_meta != blank %}<div class="tjs-app-pdp__spec"><small>Pages</small><strong>{{ page_count_meta.value | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if binding_meta != blank %}<div class="tjs-app-pdp__spec"><small>Binding</small><strong>{{ binding_meta.value | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if personalisation_meta != blank %}<div class="tjs-app-pdp__spec"><small>Personalisation</small><strong>{% if personalisation_meta.value %}Available{% else %}Not available{% endif %}</strong></div>{% endif %}
+
+              {% when 'eyewear' %}
+                {% if frame_shape_meta != blank %}<div class="tjs-app-pdp__spec"><small>Frame shape</small><strong>{{ frame_shape_meta.value | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if frame_colour_meta != blank %}<div class="tjs-app-pdp__spec"><small>Frame colour</small><strong>{{ frame_colour_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if lens_colour_meta != blank %}<div class="tjs-app-pdp__spec"><small>Lens colour</small><strong>{{ lens_colour_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if fit_meta != blank %}<div class="tjs-app-pdp__spec"><small>Fit</small><strong>{{ fit_meta.value | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if intended_wearer_meta != blank %}<div class="tjs-app-pdp__spec"><small>Intended for</small><strong>{{ intended_wearer_meta.value | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if material_meta != blank %}<div class="tjs-app-pdp__spec"><small>Material</small><strong>{{ material_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+
+              {% when 'decor' %}
+                {% if material_meta != blank %}<div class="tjs-app-pdp__spec"><small>Material</small><strong>{{ material_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if dimensions_meta != blank %}<div class="tjs-app-pdp__spec"><small>Dimensions</small><strong>{{ dimensions_meta.value | newline_to_br }}</strong></div>{% endif %}
+                {% if room_meta != blank %}<div class="tjs-app-pdp__spec"><small>Room / space</small><strong>{{ room_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if power_source_meta != blank %}<div class="tjs-app-pdp__spec"><small>Power source</small><strong>{{ power_source_meta.value | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if light_source_meta != blank %}<div class="tjs-app-pdp__spec"><small>Light source</small><strong>{{ light_source_meta.value | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if control_type_meta != blank %}<div class="tjs-app-pdp__spec"><small>Controls</small><strong>{{ control_type_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if assembly_meta != blank %}<div class="tjs-app-pdp__spec"><small>Assembly</small><strong>{% if assembly_meta.value %}Required{% else %}Not required{% endif %}</strong></div>{% endif %}
+
+              {% when 'baby' %}
+                {% if material_meta != blank %}<div class="tjs-app-pdp__spec"><small>Material</small><strong>{{ material_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if dimensions_meta != blank %}<div class="tjs-app-pdp__spec"><small>Dimensions</small><strong>{{ dimensions_meta.value | newline_to_br }}</strong></div>{% endif %}
+                {% if intended_wearer_meta != blank %}<div class="tjs-app-pdp__spec"><small>Intended for</small><strong>{{ intended_wearer_meta.value | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if intended_contents_meta != blank %}<div class="tjs-app-pdp__spec"><small>Best for</small><strong>{{ intended_contents_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% elsif primary_use_meta != blank %}<div class="tjs-app-pdp__spec"><small>Designed for</small><strong>{{ primary_use_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+
+              {% else %}
+                {% if material_meta != blank %}<div class="tjs-app-pdp__spec"><small>Material</small><strong>{{ material_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if dimensions_meta != blank %}<div class="tjs-app-pdp__spec"><small>Dimensions</small><strong>{{ dimensions_meta.value | newline_to_br }}</strong></div>{% endif %}
+                {% if primary_use_meta != blank %}<div class="tjs-app-pdp__spec"><small>Designed for</small><strong>{{ primary_use_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+                {% if room_meta != blank %}<div class="tjs-app-pdp__spec"><small>Room / space</small><strong>{{ room_meta.value | join: ', ' | replace: '&amp;', '&' | escape }}</strong></div>{% endif %}
+            {% endcase %}
+
+            {% for block in section.blocks %}
+              {% if block.type == 'spec' %}
+                {% if block.settings.mode == 'all' or block.settings.mode == pdp_mode %}
+                  <div class="tjs-app-pdp__spec" {{ block.shopify_attributes }}><small>{{ block.settings.label | replace: '&amp;', '&' | escape }}</small><strong>{{ block.settings.value | replace: '&amp;', '&' | escape }}</strong></div>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          {% if key_features_meta != blank %}
+            <ul class="tjs-app-pdp__features">
+              {% if key_features_meta.type contains 'list.' %}
+                {% for feature in key_features_meta.value %}<li>{{ feature | replace: '&amp;', '&' | escape }}</li>{% endfor %}
+              {% else %}
+                <li>{{ key_features_meta.value | replace: '&amp;', '&' | escape }}</li>
+              {% endif %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.show_reviews and review_rating != blank or section.settings.show_reviews and app_block_count > 0 %}
+        <div class="tjs-app-pdp__panel" data-panel="reviews">
+                    <div class="tjs-app-pdp__panel-heading" role="heading" aria-level="2">Customer reviews</div>
+{% if review_rating != blank %}
+            <div class="tjs-app-pdp__review-summary">
+              <strong class="tjs-app-pdp__review-score">{{ review_rating }}</strong>
+              <div class="tjs-app-pdp__review-copy"><span class="tjs-app-pdp__stars" aria-hidden="true">★★★★★</span>{% if review_count != blank %}<span>Based on {{ review_count }} product reviews</span>{% else %}<span>Verified product rating</span>{% endif %}</div>
+            </div>
+          {% endif %}
+
+          {% for block in section.blocks %}
+            {% if block.type == '@app' %}{% render block %}{% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.show_related %}
+        <div class="tjs-app-pdp__related" data-related hidden>
+          <div class="tjs-app-pdp__related-head"><h2>{{ section.settings.related_heading | replace: '&amp;', '&' | escape }}</h2><span>Picked to complement this product</span></div>
+          <div class="tjs-app-pdp__related-grid" data-related-grid></div>
+        </div>
+      {% endif %}
+    </section>
+  </div>
+
+  {% if section.settings.enable_zoom %}
+    <div class="tjs-app-pdp__zoom" data-zoom-modal hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Product image zoom">
+      <div class="tjs-app-pdp__zoom-head"><button type="button" class="tjs-app-pdp__zoom-close" data-zoom-close aria-label="Close zoom">×</button></div>
+      <img class="tjs-app-pdp__zoom-image" data-zoom-image alt="">
+    </div>
+  {% endif %}
+
+  <div class="tjs-app-pdp__toast" data-toast role="status" aria-live="polite"></div>
+</tjs-app-pdp-v4>
+
+<script>
+  (() => {
+    if (customElements.get('tjs-app-pdp-v4')) return;
+
+    class TjsAppPdp extends HTMLElement {
+      connectedCallback() {
+        if (this.dataset.ready === 'true') return;
+        this.dataset.ready = 'true';
+
+        this.form = this.querySelector('[data-product-form]');
+        this.variantInput = this.querySelector('[data-variant-id]');
+        this.priceNode = this.querySelector('[data-price]');
+        this.compareNode = this.querySelector('[data-compare]');
+        this.savingNode = this.querySelector('[data-saving]');
+        this.stockNode = this.querySelector('[data-stock]');
+        this.addButton = this.querySelector('[data-add]');
+        this.addLabel = this.querySelector('[data-add-label]');
+        this.quantityInput = this.querySelector('[data-quantity]');
+        this.wishlistButton = this.querySelector('[data-custom-wishlist]');
+        this.purchaseCard = this.querySelector('[data-purchase-card]');
+        this.slidesRoot = this.querySelector('[data-slides]');
+        this.slides = [...this.querySelectorAll('[data-slide]')];
+        this.thumbs = [...this.querySelectorAll('[data-thumb]')];
+        this.counter = this.querySelector('[data-current-index]');
+        this.toast = this.querySelector('[data-toast]');
+        this.zoomModal = this.querySelector('[data-zoom-modal]');
+        this.zoomImage = this.querySelector('[data-zoom-image]');
+        this.specPanel = this.querySelector('[data-spec-panel]');
+        this.specGrid = this.querySelector('[data-spec-grid]');
+        this.specTab = this.querySelector('[data-spec-tab]');
+        this.related = this.querySelector('[data-related]');
+        this.relatedGrid = this.querySelector('[data-related-grid]');
+        this.openCart = this.dataset.openCart === 'true';
+        this.lowStockThreshold = Number(this.dataset.lowStockThreshold || 5);
+        this.currency = this.dataset.currency || 'INR';
+        this.moneyFormat = this.dataset.moneyFormat || '${{amount}}';
+        this.savingsMode = this.dataset.savingsMode || 'amount';
+        this.defaultAddLabel = this.dataset.addLabel || 'Add to cart';
+
+        try {
+          this.variants = JSON.parse(this.querySelector('[data-variant-data]')?.textContent || '[]');
+        } catch (error) {
+          this.variants = [];
+        }
+
+        try {
+          this.selectedOptions = JSON.parse(this.querySelector('[data-selected-options]')?.textContent || '[]');
+        } catch (error) {
+          this.selectedOptions = [];
+        }
+
+        try {
+          this.legacySpecText = JSON.parse(this.querySelector('[data-legacy-spec-text]')?.textContent || '""') || '';
+        } catch (error) {
+          this.legacySpecText = '';
+        }
+
+        this.setupSwatches();
+        this.setupVariants();
+        this.setupQuantity();
+        this.setupGallery();
+        this.setupScrollCue();
+        this.setupMobileControls();
+        this.setupTabs();
+        this.setupSpecs();
+        this.setupDescriptionPreview();
+        this.setupZoom();
+        this.setupWishlist();
+        this.setupForm();
+        this.loadRelatedProducts();
+
+        const initial = this.variants.find(variant => Number(variant.id) === Number(this.variantInput?.value));
+        if (initial) this.updateVariant(initial, false);
+      }
+
+
+      setupSwatches() {
+        this.querySelectorAll('[data-swatch]').forEach(swatch => {
+          if (swatch.style.getPropertyValue('--swatch') || swatch.style.getPropertyValue('--swatch-image')) return;
+          const colour = this.resolveColour(swatch.dataset.swatchName || '');
+          if (colour.includes('gradient(')) swatch.style.setProperty('--swatch-image', colour);
+          else swatch.style.setProperty('--swatch', colour);
+        });
+      }
+
+      resolveColour(value) {
+        const key = String(value || '').toLowerCase().replace(/[_-]+/g, ' ').trim();
+        const gradients = [
+          [/multi|rainbow|assorted/, 'conic-gradient(#e15b64,#f3c969,#58a66c,#4aa7c8,#7b61a8,#e15b64)'],
+          [/black.*gold|gold.*black/, 'linear-gradient(135deg,#151515 0 50%,#d4af37 50% 100%)'],
+          [/white.*gold|gold.*white/, 'linear-gradient(135deg,#fff 0 50%,#d4af37 50% 100%)'],
+          [/clear|transparent/, 'linear-gradient(135deg,#fff 0 44%,#d8d8d8 45% 55%,#fff 56% 100%)']
+        ];
+        const gradient = gradients.find(([pattern]) => pattern.test(key));
+        if (gradient) return gradient[1];
+        const colours = [
+          [/rose gold/, '#b76e79'], [/navy/, '#1f3155'], [/sky blue/, '#87ceeb'], [/royal blue/, '#3157a4'],
+          [/turquoise|cyan/, '#35b6b4'], [/teal/, '#267a78'], [/blue/, '#3f6fb5'], [/lavender/, '#b7a1d6'],
+          [/lilac/, '#c8a2c8'], [/violet|purple/, '#7e57a2'], [/magenta/, '#c13a8d'], [/burgundy|wine/, '#722f37'],
+          [/maroon/, '#800000'], [/coral/, '#f07f73'], [/peach/, '#f6b58d'], [/rose|pink/, '#f2a7c2'],
+          [/red/, '#c53b38'], [/mustard/, '#d4a017'], [/orange/, '#e87822'], [/yellow/, '#f2cf3a'],
+          [/sage/, '#a8b89a'], [/mint/, '#a8e6cf'], [/olive/, '#7c833a'], [/green/, '#3f7d4a'],
+          [/camel|tan/, '#c19a6b'], [/khaki/, '#bdb76b'], [/brown/, '#7a4e2d'], [/beige/, '#d8c3a5'],
+          [/cream/, '#fff3d6'], [/ivory/, '#fff8e7'], [/silver/, '#c0c0c0'], [/gold/, '#d4af37'],
+          [/charcoal/, '#4a4a4a'], [/grey|gray/, '#9a9a9a'], [/white/, '#fff'], [/black/, '#161616']
+        ];
+        return colours.find(([pattern]) => pattern.test(key))?.[1] || '#d9d5cf';
+      }
+
+      setupVariants() {
+        this.addEventListener('click', event => {
+          const button = event.target.closest('[data-option-value]');
+          if (!button || button.disabled) return;
+          const index = Number(button.dataset.optionIndex);
+          const value = button.dataset.optionValue;
+          this.selectedOptions[index] = value;
+          this.selectBestVariant(index, value);
+        });
+
+        this.addEventListener('change', event => {
+          const select = event.target.closest('[data-option-select]');
+          if (!select) return;
+          const index = Number(select.dataset.optionIndex);
+          this.selectedOptions[index] = select.value;
+          this.selectBestVariant(index, select.value);
+        });
+      }
+
+      selectBestVariant(changedIndex, changedValue) {
+        let variant = this.variants.find(candidate => candidate.available && candidate.options.every((value, index) => value === this.selectedOptions[index]));
+
+        if (!variant) {
+          const ranked = this.variants
+            .filter(candidate => candidate.available && candidate.options[changedIndex] === changedValue)
+            .map(candidate => ({
+              variant: candidate,
+              score: candidate.options.reduce((score, value, index) => {
+                if (index === changedIndex) return score;
+                return score + (value === this.selectedOptions[index] ? 1 : 0);
+              }, 0)
+            }))
+            .sort((a, b) => b.score - a.score);
+          variant = ranked[0]?.variant;
+        }
+
+        if (!variant) variant = this.variants.find(candidate => candidate.options[changedIndex] === changedValue);
+        if (variant) this.updateVariant(variant, true);
+      }
+
+      updateVariant(variant, updateUrl = true) {
+        this.selectedOptions = [...variant.options];
+        if (this.variantInput) this.variantInput.value = variant.id;
+
+        this.querySelectorAll('[data-option-group]').forEach(group => {
+          const groupIndex = Number(group.dataset.optionIndex);
+          const selected = variant.options[groupIndex];
+          const selectedNode = group.querySelector('[data-option-selected]');
+          if (selectedNode) selectedNode.textContent = selected || '';
+
+          group.querySelectorAll('[data-option-value]').forEach(button => {
+            const buttonIndex = Number(button.dataset.optionIndex);
+            const active = button.dataset.optionValue === variant.options[buttonIndex];
+            button.classList.toggle('is-active', active);
+            button.setAttribute('aria-pressed', active ? 'true' : 'false');
+
+            const available = this.variants.some(candidate => {
+              if (!candidate.available || candidate.options[buttonIndex] !== button.dataset.optionValue) return false;
+              return candidate.options.every((candidateValue, index) => index === buttonIndex || candidateValue === variant.options[index]);
+            });
+            button.disabled = !available;
+          });
+
+          const select = group.querySelector('[data-option-select]');
+          if (select) select.value = selected;
+        });
+
+        if (this.priceNode) this.priceNode.textContent = this.formatMoney(variant.price);
+
+        const price = Number(variant.price || 0);
+        const compare = Number(variant.compare_at_price || 0);
+        const onSale = compare > price;
+
+        if (this.compareNode) {
+          this.compareNode.hidden = !onSale;
+          this.compareNode.textContent = onSale ? this.formatMoney(compare) : '';
+        }
+
+        if (this.savingNode) {
+          this.savingNode.hidden = !onSale;
+          if (onSale) {
+            const amount = compare - price;
+            const percent = Math.round((amount * 100) / compare);
+            if (this.savingsMode === 'both') this.savingNode.textContent = `Save ${this.formatMoney(amount)} · ${percent}%`;
+            else if (this.savingsMode === 'percentage') this.savingNode.textContent = `${percent}% off`;
+            else this.savingNode.textContent = `Save ${this.formatMoney(amount)}`;
+          }
+        }
+
+        this.updateStock(variant);
+        this.updateVariantMedia(variant);
+
+        if (updateUrl && window.history?.replaceState) {
+          const url = new URL(window.location.href);
+          url.searchParams.set('variant', variant.id);
+          window.history.replaceState({}, '', url.toString());
+        }
+      }
+
+      updateStock(variant) {
+        const available = Boolean(variant.available);
+        if (this.addButton) {
+          this.addButton.disabled = !available;
+          if (this.addLabel) this.addLabel.textContent = available ? this.defaultAddLabel : 'Sold out';
+        }
+        if (!this.stockNode) return;
+        this.stockNode.classList.remove('is-low', 'is-sold-out');
+        if (!available) {
+          this.stockNode.classList.add('is-sold-out');
+          this.stockNode.textContent = 'Sold out';
+          return;
+        }
+        const inventory = Number(variant.inventory_quantity || 0);
+        const tracked = Boolean(variant.inventory_management);
+        const deny = variant.inventory_policy === 'deny';
+        if (tracked && deny && inventory > 0 && inventory <= this.lowStockThreshold) {
+          this.stockNode.classList.add('is-low');
+          this.stockNode.textContent = `Only ${inventory} left`;
+        } else {
+          this.stockNode.textContent = 'In stock';
+        }
+      }
+
+      updateVariantMedia(variant) {
+        const mediaId = Number(variant.featured_media_id || 0);
+        if (!mediaId) return;
+        const slide = this.slides.find(item => Number(item.dataset.mediaId) === mediaId);
+        if (slide) this.activateMedia(Number(slide.dataset.index), true);
+      }
+
+      setupQuantity() {
+        this.querySelector('[data-qty-minus]')?.addEventListener('click', () => {
+          if (!this.quantityInput) return;
+          this.quantityInput.value = Math.max(1, Number(this.quantityInput.value || 1) - 1);
+        });
+        this.querySelector('[data-qty-plus]')?.addEventListener('click', () => {
+          if (!this.quantityInput) return;
+          this.quantityInput.value = Math.max(1, Number(this.quantityInput.value || 1) + 1);
+        });
+      }
+
+      setupGallery() {
+        this.thumbs.forEach(thumb => thumb.addEventListener('click', () => this.activateMedia(Number(thumb.dataset.index), true)));
+        const initial = Math.max(this.slides.findIndex(slide => slide.classList.contains('is-active')), 0);
+        this.syncMedia(initial);
+        if (!this.slidesRoot) return;
+        let frame = null;
+        this.slidesRoot.addEventListener('scroll', () => {
+          if (!window.matchMedia('(max-width: 749px)').matches) return;
+          cancelAnimationFrame(frame);
+          frame = requestAnimationFrame(() => {
+            const width = Math.max(this.slidesRoot.getBoundingClientRect().width, 1);
+            this.syncMedia(Math.round(this.slidesRoot.scrollLeft / width));
+          });
+        }, { passive: true });
+      }
+
+      activateMedia(index, scroll = false) {
+        index = Math.max(0, Math.min(this.slides.length - 1, index));
+        this.slides.forEach((slide, slideIndex) => slide.classList.toggle('is-active', slideIndex === index));
+        this.syncMedia(index);
+        if (scroll && window.matchMedia('(max-width: 749px)').matches && this.slidesRoot) {
+          const width = this.slidesRoot.getBoundingClientRect().width;
+          this.slidesRoot.scrollTo({ left: width * index, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+        }
+      }
+
+      syncMedia(index) {
+        this.thumbs.forEach((thumb, thumbIndex) => thumb.classList.toggle('is-active', thumbIndex === index));
+        if (this.counter) this.counter.textContent = String(index + 1);
+      }
+
+      setupScrollCue() {
+        this.querySelector('[data-scroll-to-card]')?.addEventListener('click', () => {
+          if (!this.purchaseCard) return;
+          const top = this.purchaseCard.getBoundingClientRect().top + window.scrollY - 10;
+          window.scrollTo({ top, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+        });
+      }
+
+      setupMobileControls() {
+        this.querySelector('[data-mobile-back]')?.addEventListener('click', () => {
+          if (window.history.length > 1) window.history.back();
+          else window.location.assign('/');
+        });
+
+        this.querySelector('[data-mobile-share]')?.addEventListener('click', async () => {
+          try {
+            if (navigator.share) await navigator.share({ title: document.title, url: window.location.href });
+            else if (navigator.clipboard) {
+              await navigator.clipboard.writeText(window.location.href);
+              this.showToast('Product link copied.');
+            }
+          } catch (error) {}
+        });
+      }
+
+      setupTabs() {
+        const tabs = [...this.querySelectorAll('[data-tab]')];
+        const panels = [...this.querySelectorAll('[data-panel]')];
+        const activate = name => {
+          tabs.forEach(tab => {
+            const active = tab.dataset.tab === name;
+            tab.classList.toggle('is-active', active);
+            tab.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach(panel => panel.classList.toggle('is-active', panel.dataset.panel === name));
+        };
+        tabs.forEach(tab => tab.addEventListener('click', () => activate(tab.dataset.tab)));
+        const activeTab = tabs.find(tab => tab.classList.contains('is-active'));
+        if (activeTab) activate(activeTab.dataset.tab);
+        else if (tabs[0]) activate(tabs[0].dataset.tab);
+      }
+
+      setupSpecs() {
+        if (!this.specPanel || !this.specGrid) return;
+        let count = this.specGrid.querySelectorAll('.tjs-app-pdp__spec').length;
+        if (!count) {
+          const specs = this.parseLegacySpecs(this.legacySpecText);
+          specs.forEach(spec => {
+            const card = document.createElement('div');
+            card.className = 'tjs-app-pdp__spec tjs-app-pdp__spec--legacy';
+            const label = document.createElement('small');
+            label.textContent = spec.label;
+            const value = document.createElement('strong');
+            value.textContent = spec.value;
+            card.append(label, value);
+            this.specGrid.appendChild(card);
+          });
+          count = specs.length;
+        }
+        if (!count) {
+          this.specPanel.remove();
+          this.specTab?.remove();
+          const tabs = [...this.querySelectorAll('[data-tab]')];
+          if (!tabs.some(tab => tab.classList.contains('is-active')) && tabs[0]) tabs[0].click();
+        }
+      }
+
+      parseLegacySpecs(text) {
+        const source = String(text || '').replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+        if (!source) return [];
+        const specs = [];
+        const seen = new Set();
+        const pick = (label, aliases) => {
+          for (const alias of aliases) {
+            const pattern = new RegExp(`(?:^|\\||\\s)${alias}\\s*:\\s*([^|]+?)(?=\\s+(?:Material|Qty|Quantity|Length|Width|Height|Capacity|Volume|Size|Weight|Note)\\s*:|\\||$)`, 'i');
+            const match = source.match(pattern);
+            if (match?.[1]) {
+              const value = match[1].replace(/\s+/g, ' ').replace(/[;,.\s]+$/, '').trim();
+              if (value && value.length <= 90 && !seen.has(label.toLowerCase())) {
+                seen.add(label.toLowerCase());
+                specs.push({ label, value });
+              }
+              return value;
+            }
+          }
+          return '';
+        };
+        pick('Material', ['Material']);
+        pick('Set / quantity', ['Qty', 'Quantity']);
+        pick('Capacity', ['Capacity', 'Volume']);
+        pick('Weight', ['Weight']);
+        const length = pick('_length', ['Length']);
+        const width = pick('_width', ['Width']);
+        const height = pick('_height', ['Height']);
+        const size = pick('_size', ['Size']);
+        const cleaned = specs.filter(spec => !spec.label.startsWith('_'));
+        const dimensions = [length, width, height].filter(Boolean);
+        if (dimensions.length >= 2) cleaned.push({ label: 'Dimensions', value: dimensions.join(' × ') });
+        else if (size) cleaned.push({ label: 'Size', value: size });
+        else if (dimensions.length === 1) cleaned.push({ label: 'Dimensions', value: dimensions[0] });
+        return cleaned.slice(0, 6);
+      }
+
+      setupDescriptionPreview() {
+        const wrapper = this.querySelector('[data-description-preview]');
+        const button = wrapper?.querySelector('[data-description-toggle]');
+        const paragraph = wrapper?.querySelector('p');
+
+        if (!wrapper || !button || !paragraph) return;
+
+        const syncButton = () => {
+          if (wrapper.classList.contains('is-expanded')) {
+            button.hidden = false;
+            return;
+          }
+
+          button.hidden =
+            paragraph.scrollHeight <= paragraph.clientHeight + 2;
+        };
+
+        button.addEventListener('click', () => {
+          const expanded = wrapper.classList.toggle('is-expanded');
+
+          button.textContent = expanded ? 'Read less' : 'Read more';
+          button.setAttribute(
+            'aria-expanded',
+            expanded ? 'true' : 'false'
+          );
+        });
+
+        requestAnimationFrame(syncButton);
+        window.addEventListener('resize', syncButton, { passive: true });
+      }
+
+      setupZoom() {
+        this.querySelectorAll('[data-zoom]').forEach(button => {
+          button.addEventListener('click', () => {
+            if (window.matchMedia('(max-width: 749px)').matches || !this.zoomModal || !this.zoomImage) return;
+            this.zoomImage.src = button.dataset.zoomSrc || '';
+            this.zoomImage.alt = button.getAttribute('aria-label') || 'Product image';
+            this.zoomModal.hidden = false;
+            this.zoomModal.setAttribute('aria-hidden', 'false');
+            document.documentElement.style.overflow = 'hidden';
+          });
+        });
+        this.querySelector('[data-zoom-close]')?.addEventListener('click', () => this.closeZoom());
+        this.zoomModal?.addEventListener('click', event => { if (event.target === this.zoomModal) this.closeZoom(); });
+        document.addEventListener('keydown', event => { if (event.key === 'Escape' && this.zoomModal && !this.zoomModal.hidden) this.closeZoom(); });
+      }
+
+      closeZoom() {
+        if (!this.zoomModal) return;
+        this.zoomModal.hidden = true;
+        this.zoomModal.setAttribute('aria-hidden', 'true');
+        document.documentElement.style.overflow = '';
+      }
+
+      setupWishlist() {
+        if (!this.wishlistButton) return;
+
+        this.wishlistButton.addEventListener('click', () => {
+          const realWishlist =
+            document.querySelector('[data-wishlist-add]') ||
+            document.querySelector('[data-wishlist-button]') ||
+            document.querySelector('.wishlist-button') ||
+            document.querySelector('.tinvwl_add_to_wishlist_button') ||
+            document.querySelector('[aria-label*="Wishlist"]') ||
+            document.querySelector('[aria-label*="wishlist"]');
+
+          if (
+            realWishlist &&
+            realWishlist !== this.wishlistButton &&
+            typeof realWishlist.click === 'function'
+          ) {
+            realWishlist.click();
+          }
+
+          const active =
+            this.wishlistButton.classList.toggle('is-active');
+
+          this.wishlistButton.setAttribute(
+            'aria-label',
+            active
+              ? 'Remove from wishlist'
+              : 'Add to wishlist'
+          );
+        });
+      }
+
+      setupForm() {
+        if (!this.form) return;
+        this.form.addEventListener('submit', async event => {
+          if (!window.fetch || !this.addButton || this.addButton.disabled) return;
+          event.preventDefault();
+          this.addButton.disabled = true;
+          this.addButton.classList.add('is-loading');
+          if (this.addLabel) this.addLabel.textContent = 'Adding…';
+          try {
+            const rootPath = window.Shopify?.routes?.root || '/';
+            const response = await fetch(`${rootPath}cart/add.js`, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(this.form) });
+            const payload = await response.json();
+            if (!response.ok) throw new Error(payload.description || payload.message || 'Unable to add this product.');
+            document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true, detail: { item: payload } }));
+            document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true, detail: { item: payload } }));
+            document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { item: payload } }));
+            this.showToast('Added to your cart.');
+            if (this.openCart) window.setTimeout(() => document.querySelector('[aria-controls="CartDrawer"]')?.click?.(), 160);
+          } catch (error) {
+            this.showToast(error.message || 'Unable to add this product.');
+          } finally {
+            const current = this.variants.find(variant => Number(variant.id) === Number(this.variantInput?.value));
+            const available = current?.available !== false;
+            this.addButton.disabled = !available;
+            this.addButton.classList.remove('is-loading');
+            if (this.addLabel) this.addLabel.textContent = available ? this.defaultAddLabel : 'Sold out';
+          }
+        });
+      }
+
+      async loadRelatedProducts() {
+        if (!this.related || !this.relatedGrid) return;
+        const base = this.dataset.recommendationsUrl || '/recommendations/products';
+        const endpoint = base.endsWith('.json') ? base : `${base}.json`;
+        const url = new URL(endpoint, window.location.origin);
+        url.searchParams.set('product_id', this.dataset.productId || '');
+        url.searchParams.set('limit', this.dataset.relatedLimit || '6');
+        url.searchParams.set('intent', 'related');
+        try {
+          const response = await fetch(url.toString(), { headers: { Accept: 'application/json' } });
+          if (!response.ok) return;
+          const payload = await response.json();
+          const products = Array.isArray(payload.products) ? payload.products : [];
+          if (!products.length) return;
+          this.relatedGrid.innerHTML = products.map(product => this.relatedProductMarkup(product)).join('');
+          this.related.hidden = false;
+        } catch (error) {}
+      }
+
+      relatedProductMarkup(product) {
+        const featured = product.featured_image;
+        const image = typeof featured === 'string' ? featured : featured?.url || '';
+        return `<a class="tjs-app-pdp__related-card" href="${this.escapeAttribute(product.url || '#')}"><span class="tjs-app-pdp__related-image">${image ? `<img src="${this.escapeAttribute(image)}" alt="" loading="lazy">` : ''}</span><span class="tjs-app-pdp__related-copy"><strong>${this.escapeHtml(this.decodeHtmlEntities(product.title || 'Product'))}</strong><span>${this.escapeHtml(this.formatMoney(product.price || 0))}</span></span></a>`;
+      }
+
+      formatMoney(cents) {
+        if (window.Shopify?.formatMoney) {
+          try { return window.Shopify.formatMoney(Number(cents || 0), this.moneyFormat); } catch (error) {}
+        }
+        return new Intl.NumberFormat('en-IN', { style: 'currency', currency: this.currency, maximumFractionDigits: 0 }).format(Number(cents || 0) / 100);
+      }
+
+      decodeHtmlEntities(value) {
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = String(value || '');
+        return textarea.value;
+      }
+
+      escapeHtml(value) {
+        return String(value || '').replace(/[&<>"']/g, character => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#039;' })[character]);
+      }
+
+      escapeAttribute(value) { return this.escapeHtml(String(value || '')); }
+
+      showToast(message) {
+        if (!this.toast) return;
+        this.toast.textContent = message;
+        this.toast.classList.add('is-visible');
+        clearTimeout(this.toast._timer);
+        this.toast._timer = setTimeout(() => this.toast.classList.remove('is-visible'), 2500);
+      }
+    }
+
+    customElements.define('tjs-app-pdp-v4', TjsAppPdp);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TJS app PDP",
+  "tag": "section",
+  "class": "section-tjs-app-pdp",
+  "max_blocks": 12,
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "mode_override",
+      "label": "Product mode",
+      "default": "smart",
+      "options": [
+        {
+          "value": "smart",
+          "label": "Smart — detect automatically"
+        },
+        {
+          "value": "default",
+          "label": "General"
+        },
+        {
+          "value": "tableware",
+          "label": "Tableware & drinkware"
+        },
+        {
+          "value": "utility",
+          "label": "Lunch, storage & utility"
+        },
+        {
+          "value": "planner",
+          "label": "Planners & journals"
+        },
+        {
+          "value": "eyewear",
+          "label": "Eyewear"
+        },
+        {
+          "value": "decor",
+          "label": "Décor & lighting"
+        },
+        {
+          "value": "baby",
+          "label": "Baby & kids"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_font_style",
+      "label": "Heading font",
+      "default": "clean",
+      "options": [
+        {
+          "value": "modern",
+          "label": "Modern — Avenir style"
+        },
+        {
+          "value": "clean",
+          "label": "Clean — Helvetica style"
+        },
+        {
+          "value": "theme",
+          "label": "Theme heading font"
+        },
+        {
+          "value": "serif",
+          "label": "Editorial serif"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "body_font_style",
+      "label": "Body font",
+      "default": "clean",
+      "options": [
+        {
+          "value": "modern",
+          "label": "Modern — Avenir style"
+        },
+        {
+          "value": "clean",
+          "label": "Clean — Helvetica style"
+        },
+        {
+          "value": "theme",
+          "label": "Theme body font"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "desktop_title_size",
+      "label": "Desktop product title",
+      "min": 42,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_size",
+      "label": "Mobile product title",
+      "min": 26,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "desktop_price_size",
+      "label": "Desktop price",
+      "min": 26,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "mobile_price_size",
+      "label": "Mobile price",
+      "min": 22,
+      "max": 34,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Base body size",
+      "min": 13,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "title_effect",
+      "label": "Title effect",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "gradient",
+          "label": "Soft gradient"
+        },
+        {
+          "value": "sheen",
+          "label": "Subtle sheen"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "default": "contain",
+      "options": [
+        {
+          "value": "smart",
+          "label": "Smart — lifestyle fills, product shots contain"
+        },
+        {
+          "value": "contain",
+          "label": "Always contain"
+        },
+        {
+          "value": "cover",
+          "label": "Always fill / crop"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "image_scale",
+      "label": "Image scale",
+      "min": 90,
+      "max": 112,
+      "step": 1,
+      "unit": "%",
+      "default": 96
+    },
+    {
+      "type": "checkbox",
+      "id": "show_thumbnails",
+      "label": "Show desktop thumbnails",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_zoom",
+      "label": "Enable desktop image zoom",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_swipe_cue",
+      "label": "Show mobile swipe-up cue",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "swipe_cue_text",
+      "label": "Swipe cue text",
+      "default": "Swipe up for more details"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_real_reviews",
+      "label": "Show real rating beside title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Show wishlist beside Add to Cart",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_savings",
+      "label": "Show savings",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "savings_mode",
+      "label": "Savings display",
+      "default": "amount",
+      "options": [
+        {
+          "value": "amount",
+          "label": "Save amount"
+        },
+        {
+          "value": "percentage",
+          "label": "Percentage off"
+        },
+        {
+          "value": "both",
+          "label": "Amount + percentage"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "variant_style",
+      "label": "Variant controls",
+      "default": "smart",
+      "options": [
+        {
+          "value": "smart",
+          "label": "Smart swatches + pills"
+        },
+        {
+          "value": "pills",
+          "label": "Pills only"
+        },
+        {
+          "value": "dropdown",
+          "label": "Dropdowns"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity",
+      "label": "Show quantity selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stock",
+      "label": "Show stock status",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "low_stock_threshold",
+      "label": "Low-stock warning threshold",
+      "min": 1,
+      "max": 15,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "add_button_label",
+      "label": "Add to Cart label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_cart_drawer",
+      "label": "Open cart drawer after adding",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show Description tab",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_specs",
+      "label": "Show Specifications tab",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show Reviews when real data or app block exists",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related",
+      "label": "Show similar products",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "related_heading",
+      "label": "Similar products heading",
+      "default": "You may also like"
+    },
+    {
+      "type": "range",
+      "id": "related_limit",
+      "label": "Similar product count",
+      "min": 4,
+      "max": 10,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum page width",
+      "min": 1100,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1460
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding",
+      "label": "Desktop vertical spacing",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding",
+      "label": "Mobile top spacing",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Mobile purchase-card radius",
+      "min": 18,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "details_radius",
+      "label": "Details-section radius",
+      "min": 18,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "details_gap",
+      "label": "Space before product information",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "specs_background",
+      "label": "Specifications surface",
+      "default": "#F7F3EE"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Page background",
+      "default": "#F4F1EC"
+    },
+    {
+      "type": "color",
+      "id": "media_background",
+      "label": "Media background",
+      "default": "#F1EEE8"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Purchase card",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "details_background",
+      "label": "Details section",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#171411"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted text",
+      "default": "#716B64"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#B86F42"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Borders",
+      "default": "#E5DED6"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Add to Cart background",
+      "default": "#171411"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Add to Cart text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "text",
+      "id": "dispatch_promise",
+      "label": "Dispatch promise",
+      "default": "Dispatches in 24 Hours"
+    },
+    {
+      "type": "text",
+      "id": "delivery_promise",
+      "label": "Delivery promise",
+      "default": "Delivery 2–4 days"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "spec",
+      "name": "Manual specification",
+      "settings": [
+        {
+          "type": "select",
+          "id": "mode",
+          "label": "Show for",
+          "default": "all",
+          "options": [
+            {
+              "value": "all",
+              "label": "All product types"
+            },
+            {
+              "value": "tableware",
+              "label": "Tableware & drinkware"
+            },
+            {
+              "value": "utility",
+              "label": "Lunch, storage & utility"
+            },
+            {
+              "value": "planner",
+              "label": "Planners & journals"
+            },
+            {
+              "value": "eyewear",
+              "label": "Eyewear"
+            },
+            {
+              "value": "decor",
+              "label": "Décor & lighting"
+            },
+            {
+              "value": "baby",
+              "label": "Baby & kids"
+            },
+            {
+              "value": "default",
+              "label": "General"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Specification"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "Add product detail"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS app PDP"
+    }
+  ]
+}
+{% endschema %}

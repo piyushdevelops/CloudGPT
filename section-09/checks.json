@@ -1,0 +1,49 @@
+{
+  "date": "2026-09-28",
+  "role": "UNPUBLISHED",
+  "files": [
+    {
+      "filename": "locales/en.default.json",
+      "md5": "9b43a08391603c8a03d6424475013f71"
+    },
+    {
+      "filename": "sections/june-make-room.liquid",
+      "md5": "bf79951765103d6e089af3d1d0d89d7d"
+    },
+    {
+      "filename": "sections/june-next-chapter.liquid",
+      "md5": "0a85f37894c1385f4b2716bdc12667bf"
+    },
+    {
+      "filename": "sections/june-pick-your-pour.liquid",
+      "md5": "88b1f80ff544bc6f7b78f88eb66160bc"
+    },
+    {
+      "filename": "sections/june-with-extras.liquid",
+      "md5": "16ca9a61f1f724bee938a4bcaba582b1"
+    },
+    {
+      "filename": "sections/june-your-year.liquid",
+      "md5": "1c965a380520862a98b44c8162143a6e"
+    },
+    {
+      "filename": "templates/index.json",
+      "md5": "f98bf7610832924a11b5a9905a2f7e54"
+    }
+  ],
+  "priorSectionsPreserved": true,
+  "order": [
+    "june_make_room",
+    "june_your_year",
+    "june_with_extras",
+    "june_next_chapter",
+    "june_pick_your_pour",
+    "home_banner_swiper_gPUxE8",
+    "collection_nav_2_wex36J",
+    "collection_mini_swipe_4MmHrQ",
+    "carousel_focus_qkPVkN",
+    "card_deck_XggB3x"
+  ],
+  "validation": "Both changed files passed Liquid validator revision 1",
+  "browser": "browser-checks.json"
+}

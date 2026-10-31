@@ -1,0 +1,2039 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "champagne_home_page_LmzWdd": {
+      "type": "champagne-home-page",
+      "blocks": {
+        "variant_zL748f": {
+          "type": "variant",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_25_2026_12_57_51_PM.png",
+            "name": "Rose Bloom",
+            "kicker": "Softly romantic",
+            "description": "A blush-toned statement for celebratory tables.",
+            "accent": "#ff719b",
+            "soft_color": "#fbe5ed",
+            "link": "shopify://products/gold-rimmed-rose-heart-champagne-flute-stemware",
+            "button_label": "Shop Rose Bloom"
+          }
+        },
+        "variant_CykTGr": {
+          "type": "variant",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_25_2026_01_00_02_PM.png",
+            "name": "Aqua Glaze",
+            "kicker": "Freshly unexpected",
+            "description": "A clear aqua tone with playful, modern energy.",
+            "accent": "#21b8c4",
+            "soft_color": "#ddf7f7",
+            "link": "shopify://products/gold-rimmed-turquoise-heart-champagne-flute-stemware",
+            "button_label": "Shop Aqua Glaze"
+          }
+        },
+        "variant_R8adee": {
+          "type": "variant",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_25_2026_01_07_25_PM.png",
+            "name": "Smoke Noir",
+            "kicker": "Quietly dramatic",
+            "description": "A smoky finish for refined, contemporary tables.",
+            "accent": "#4a4749",
+            "soft_color": "#e8e5e5",
+            "link": "shopify://products/gold-rimmed-heart-champagne-flute-stemware",
+            "button_label": "Shop Smoke Noir"
+          }
+        }
+      },
+      "block_order": [
+        "variant_zL748f",
+        "variant_CykTGr",
+        "variant_R8adee"
+      ],
+      "disabled": true,
+      "name": "TJS champagne hero",
+      "settings": {
+        "eyebrow": "The Heartline Edit",
+        "heading": "A toast, shaped a little <em>differently.</em>",
+        "body": "<p>Heart-rimmed champagne flutes in rose, aqua and smoke—each finished with a fine gold edge and designed to make the table feel instantly more considered.</p>",
+        "primary_label": "Shop the selected tone",
+        "secondary_label": "Explore stemware",
+        "secondary_link": "",
+        "proof_1_title": "Set of 2",
+        "proof_1_text": "Made for two",
+        "proof_2_title": "Gold-edged",
+        "proof_2_text": "Fine rim detail",
+        "proof_3_title": "Heart-shaped",
+        "proof_3_text": "A playful silhouette",
+        "selector_label": "Choose your tone",
+        "selector_note": "Three distinct moods, one signature heart-shaped silhouette.",
+        "auto_rotate": true,
+        "rotation_interval": 5,
+        "pause_on_hover": true,
+        "desktop_height": 720,
+        "heading_size": 72,
+        "mobile_heading_size": 40,
+        "max_width": 1560,
+        "corner_radius": 36,
+        "frame_width": 20,
+        "background": "#ffffff",
+        "text_color": "#171411",
+        "muted_color": "#746e67",
+        "border_color": "#e8e0d8",
+        "frame_color": "#e76c92",
+        "soft_color": "#fbe5ed",
+        "button_color": "#171411",
+        "button_text_color": "#ffffff"
+      }
+    },
+    "tjs_heartline_A8WHyQ": {
+      "type": "tjs-heartline",
+      "blocks": {
+        "colour_higUNe": {
+          "type": "colour",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_2_32ed2def-9e36-4958-937c-6890fdfc13cf.png",
+            "title": "Pink",
+            "kicker": "Signature colour",
+            "note": "Softly romantic",
+            "price_text": "",
+            "card_cta": "Shop",
+            "link": "",
+            "swatch_color": "#f2afc2",
+            "accent": "#e9779b",
+            "soft_color": "#f7dde5",
+            "feature_one": "",
+            "feature_two": "",
+            "feature_three": ""
+          }
+        },
+        "colour_3phAMK": {
+          "type": "colour",
+          "settings": {
+            "title": "Turquoise",
+            "kicker": "Fresh tone",
+            "note": "Fresh & playful",
+            "price_text": "",
+            "card_cta": "Shop",
+            "link": "",
+            "swatch_color": "#53c9c4",
+            "accent": "#2cb3b1",
+            "soft_color": "#ddf4f3",
+            "feature_one": "",
+            "feature_two": "",
+            "feature_three": ""
+          }
+        },
+        "colour_gKVhib": {
+          "type": "colour",
+          "settings": {
+            "title": "Black",
+            "kicker": "Statement tone",
+            "note": "Bold & dramatic",
+            "price_text": "",
+            "card_cta": "Shop",
+            "link": "",
+            "swatch_color": "#2b292a",
+            "accent": "#50464a",
+            "soft_color": "#e7e1e3",
+            "feature_one": "",
+            "feature_two": "",
+            "feature_three": ""
+          }
+        }
+      },
+      "block_order": [
+        "colour_higUNe",
+        "colour_3phAMK",
+        "colour_gKVhib"
+      ],
+      "name": "TJS Heartline Hero",
+      "settings": {
+        "eyebrow": "Back in stock",
+        "heading": "A toast, shaped differently.",
+        "body": "<p>Heart-shaped champagne flutes finished with a fine gold rim—made for celebrations, gifting and tables with personality.</p>",
+        "fact_one": "Set of 2",
+        "fact_two": "Heart-shaped rim",
+        "fact_three": "3 colours",
+        "selector_label": "Choose your colour",
+        "primary_label": "Shop the Heartline",
+        "secondary_label": "Explore stemware",
+        "secondary_link": "",
+        "utility_line": "Set of 2 · Pink, Turquoise & Black",
+        "graphic_line_one": "HEARTS &",
+        "graphic_line_two": "BUBBLES",
+        "default_feature_one": "Heart-shaped rim",
+        "feature_one_text": "A playful silhouette for celebratory pours.",
+        "default_feature_two": "Fine gold edge",
+        "feature_two_text": "Finished with a delicate metallic rim.",
+        "default_feature_three": "Set of two",
+        "feature_three_text": "Made for date nights, gifting and hosting.",
+        "max_width": 1500,
+        "desktop_height": 680,
+        "heading_size": 68,
+        "mobile_heading_size": 42,
+        "corner_radius": 28,
+        "padding_top": 28,
+        "padding_bottom": 28,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20,
+        "background": "#f7f1e8",
+        "stage_background": "#fffdfc",
+        "text_color": "#181412",
+        "muted_color": "#746b65",
+        "border_color": "#e7ddd4",
+        "button_background": "#181412",
+        "button_text": "#ffffff"
+      }
+    },
+    "about_us_tes_m3nTBw": {
+      "type": "about-us-tes",
+      "blocks": {
+        "planner_image_HzQ7iY": {
+          "type": "planner_image",
+          "settings": {
+            "image": "shopify://shop_images/5_5.png",
+            "nav_title": "Daily",
+            "background_color": "#f2a18e",
+            "text_color": "#ffffff",
+            "background_text": "PLAN",
+            "image_scale": 140,
+            "offset_x": 0,
+            "offset_y": 0,
+            "mobile_image_scale": 130,
+            "mobile_offset_x": 0,
+            "mobile_offset_y": 0,
+            "eyebrow": "Inside the planner",
+            "title": "Designed for your day",
+            "description": "",
+            "button_text": "Shop planner",
+            "button_link": ""
+          }
+        },
+        "planner_image_P6PegK": {
+          "type": "planner_image",
+          "settings": {
+            "image": "shopify://shop_images/1_4.png",
+            "nav_title": "Daily",
+            "background_color": "#f2a18e",
+            "text_color": "#ffffff",
+            "background_text": "BRIDAL",
+            "image_scale": 140,
+            "offset_x": 0,
+            "offset_y": 0,
+            "mobile_image_scale": 100,
+            "mobile_offset_x": 0,
+            "mobile_offset_y": 0,
+            "eyebrow": "Inside the planner",
+            "title": "Designed for your day",
+            "description": "",
+            "button_text": "Shop planner",
+            "button_link": ""
+          }
+        },
+        "planner_image_rM3XM3": {
+          "type": "planner_image",
+          "settings": {
+            "image": "shopify://shop_images/4_3.png",
+            "nav_title": "Daily",
+            "background_color": "#f2a18e",
+            "text_color": "#ffffff",
+            "background_text": "SELF",
+            "image_scale": 140,
+            "offset_x": 0,
+            "offset_y": 0,
+            "mobile_image_scale": 100,
+            "mobile_offset_x": 0,
+            "mobile_offset_y": 0,
+            "eyebrow": "Inside the planner",
+            "title": "Designed for your day",
+            "description": "",
+            "button_text": "Shop planner",
+            "button_link": ""
+          }
+        },
+        "planner_image_LqEbWq": {
+          "type": "planner_image",
+          "settings": {
+            "image": "shopify://shop_images/3_4.png",
+            "nav_title": "Daily",
+            "background_color": "#f2a18e",
+            "text_color": "#ffffff",
+            "background_text": "BABY",
+            "image_scale": 140,
+            "offset_x": 0,
+            "offset_y": 0,
+            "mobile_image_scale": 125,
+            "mobile_offset_x": 0,
+            "mobile_offset_y": 0,
+            "eyebrow": "Inside the planner",
+            "title": "Designed for your day",
+            "description": "",
+            "button_text": "Shop planner",
+            "button_link": ""
+          }
+        },
+        "planner_image_cJj3QC": {
+          "type": "planner_image",
+          "settings": {
+            "image": "shopify://shop_images/2_3.png",
+            "nav_title": "Daily",
+            "background_color": "#f2a18e",
+            "text_color": "#ffffff",
+            "background_text": "TRAVLE",
+            "image_scale": 140,
+            "offset_x": 0,
+            "offset_y": 0,
+            "mobile_image_scale": 100,
+            "mobile_offset_x": 0,
+            "mobile_offset_y": 0,
+            "eyebrow": "Inside the planner",
+            "title": "Designed for your day",
+            "description": "",
+            "button_text": "Shop planner",
+            "button_link": ""
+          }
+        },
+        "planner_image_6aWwqC": {
+          "type": "planner_image",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_1_03ffe87c-a6c8-4fb4-b8dc-8e1943a99dcc.png",
+            "nav_title": "Daily",
+            "background_color": "#f2a18e",
+            "text_color": "#ffffff",
+            "background_text": "LOVE",
+            "image_scale": 140,
+            "offset_x": 0,
+            "offset_y": 0,
+            "mobile_image_scale": 100,
+            "mobile_offset_x": 0,
+            "mobile_offset_y": 0,
+            "eyebrow": "Inside the planner",
+            "title": "Designed for your day",
+            "description": "",
+            "button_text": "Shop planner",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "planner_image_HzQ7iY",
+        "planner_image_P6PegK",
+        "planner_image_rM3XM3",
+        "planner_image_LqEbWq",
+        "planner_image_cJj3QC",
+        "planner_image_6aWwqC"
+      ],
+      "name": "About pond",
+      "settings": {
+        "desktop_image_width": 430,
+        "mobile_image_width": 280,
+        "corner_radius": 8,
+        "shadow_strength": 55,
+        "big_text_size": 15,
+        "big_text_size_mobile": 38,
+        "big_text_opacity": 80,
+        "scroll_length": 125
+      }
+    },
+    "home_banner_swiper_gPUxE8": {
+      "type": "Home-banner-swiper",
+      "blocks": {
+        "category_RPGpxw": {
+          "type": "category",
+          "settings": {
+            "collection": "drinkware",
+            "image": "shopify://shop_images/15_e1974d83-43b8-4175-a627-e6eaf20a6a35.png",
+            "image_alt": "",
+            "title": "",
+            "kicker": "",
+            "subtitle": "",
+            "badge": "",
+            "custom_link": ""
+          }
+        },
+        "category_PCpbgd": {
+          "type": "category",
+          "settings": {
+            "collection": "decor-objects",
+            "image": "shopify://shop_images/2_jpg.jpg",
+            "image_alt": "",
+            "title": "",
+            "kicker": "",
+            "subtitle": "",
+            "badge": "",
+            "custom_link": "https://thejuneshop.com/collections/decor-objects?filter.v.availability=1&filter.p.product_type=Vases"
+          }
+        },
+        "category_L4CJcV": {
+          "type": "category",
+          "settings": {
+            "collection": "lamps-lighting",
+            "image": "shopify://shop_images/1_jpg.jpg",
+            "image_alt": "",
+            "title": "",
+            "kicker": "",
+            "subtitle": "",
+            "badge": "",
+            "custom_link": ""
+          }
+        },
+        "category_KKFReh": {
+          "type": "category",
+          "settings": {
+            "collection": "serveware",
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_10_2026_02_27_34_PM.png",
+            "image_alt": "",
+            "title": "",
+            "kicker": "",
+            "subtitle": "",
+            "badge": "",
+            "custom_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_RPGpxw",
+        "category_PCpbgd",
+        "category_L4CJcV",
+        "category_KKFReh"
+      ],
+      "disabled": true,
+      "name": "TJS category hero",
+      "settings": {
+        "eyebrow": "Customer Satisfaction Is Our Priority",
+        "show_eyebrow_icon": true,
+        "heading_before": "Curated Pieces for",
+        "heading_accent": "Everyday Life",
+        "heading_after": "",
+        "heading_tag": "h1",
+        "heading_font_style": "theme",
+        "enable_accent_switch": true,
+        "accent_switch_delay": 1,
+        "body": "<p>Curated pieces for your home, table, routines and celebrations—chosen to make everyday life feel more considered.</p>",
+        "primary_button_label": "Shop Bestsellers",
+        "primary_button_link": "shopify://collections/new-arrivals",
+        "secondary_button_label": "View All Products",
+        "secondary_button_link": "shopify://collections/all",
+        "show_reviews": true,
+        "google_reviews_url": "https://g.page/r/CUa2zqtTfiO9EAE/review",
+        "open_reviews_new_tab": true,
+        "rating_value": "4.58",
+        "review_heading": "Excellent",
+        "review_label": "Trusted by",
+        "review_count": ": 652,000+ customers",
+        "review_link_text": "Google Reviews",
+        "google_reviews_aria_label": "Read The June Shop reviews on Google",
+        "review_region_label": "Customer reviews",
+        "show_avatar_placeholders": true,
+        "avatar_1": "shopify://shop_images/unnamed_4.png",
+        "avatar_2": "shopify://shop_images/unnamed_3.png",
+        "avatar_3": "shopify://shop_images/unnamed_2.png",
+        "avatar_4": "shopify://shop_images/unnamed_1.png",
+        "avatar_5": "shopify://shop_images/unnamed.png",
+        "show_cx_badge": false,
+        "cx_title": "Need help?",
+        "cx_text": "Real support before and after purchase",
+        "cx_link": "",
+        "card_kicker_label": "Explore the edit",
+        "card_cta_label": "Shop",
+        "show_product_count": true,
+        "product_count_label": "products",
+        "cards_desktop": "1.5",
+        "cards_mobile": "1.5",
+        "card_gap": 16,
+        "show_slider_controls": true,
+        "swipe_hint": "Swipe to explore",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "slider_aria_label": "Shop featured categories",
+        "previous_label": "Previous category",
+        "next_label": "Next category",
+        "content_width": 1480,
+        "left_column_width": 40,
+        "section_min_height": 620,
+        "heading_size": 60,
+        "heading_size_mobile": 38,
+        "card_radius": 18,
+        "image_fit": "cover",
+        "show_top_pattern": true,
+        "background_color": "#ffffff",
+        "text_color": "#16221b",
+        "muted_text_color": "#667069",
+        "accent_color": "#ffca0b",
+        "accent_color_2": "#000000",
+        "button_background": "#ffc35b",
+        "button_text_color": "#000000",
+        "card_background": "#ffffff",
+        "card_text_color": "#172019",
+        "card_muted_color": "#737b75",
+        "border_color": "#dddcd6",
+        "padding_top": 24,
+        "padding_bottom": 24,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "collection_nav_2_wex36J": {
+      "type": "collection-nav-2",
+      "blocks": {
+        "category_xx4dpb": {
+          "type": "category",
+          "settings": {
+            "collection": "home-all",
+            "custom_url": "",
+            "label": "Home Decor",
+            "image_alt": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "hide_everywhere": false
+          }
+        },
+        "category_TWz7ET": {
+          "type": "category",
+          "settings": {
+            "collection": "dinnerware",
+            "custom_url": "",
+            "label": "Dinnerware",
+            "image_alt": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "hide_everywhere": false
+          }
+        },
+        "category_ADjMQd": {
+          "type": "category",
+          "settings": {
+            "collection": "serveware",
+            "custom_url": "",
+            "label": "Serveware",
+            "image_alt": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "hide_everywhere": false
+          }
+        },
+        "category_fmUMwC": {
+          "type": "category",
+          "settings": {
+            "collection": "lamps-lighting",
+            "custom_url": "",
+            "label": "Lighting",
+            "image_alt": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "hide_everywhere": false
+          }
+        },
+        "category_cWtRBB": {
+          "type": "category",
+          "settings": {
+            "collection": "lunch-bags-boxes",
+            "custom_url": "",
+            "label": "Lunch & More",
+            "image_alt": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "hide_everywhere": false
+          }
+        }
+      },
+      "block_order": [
+        "category_xx4dpb",
+        "category_TWz7ET",
+        "category_ADjMQd",
+        "category_fmUMwC",
+        "category_cWtRBB"
+      ],
+      "disabled": true,
+      "name": "TJS category navigation",
+      "settings": {
+        "heading": "Shop by Category",
+        "navigation_label": "Shop by category",
+        "heading_font": "serif",
+        "heading_size": 23,
+        "mobile_heading_size": 20,
+        "show_heading_mobile": true,
+        "show_ornaments": true,
+        "show_center_mark": true,
+        "ornament_width": 50,
+        "heading_gap": 18,
+        "mobile_heading_gap": 16,
+        "desktop_columns": 5,
+        "desktop_gap": 12,
+        "desktop_image_ratio": "square",
+        "image_fit": "cover",
+        "card_radius": 10,
+        "shadow_style": "strong",
+        "enable_hover": true,
+        "label_size": 12,
+        "mobile_item_size": 82,
+        "mobile_gap": 12,
+        "mobile_image_fit": "cover",
+        "mobile_circle_border": 1,
+        "mobile_shadow_style": "strong",
+        "mobile_label_size": 11,
+        "max_width": 1120,
+        "padding_top": 28,
+        "padding_bottom": 32,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 24,
+        "background": "#ffffff",
+        "heading_color": "#28201c",
+        "label_color": "#2f2723",
+        "ornament_color": "#5972ff",
+        "card_background": "#fffdfc",
+        "border_color": "#e9ded3",
+        "accent_color": "#c8834d"
+      }
+    },
+    "collection_mini_swipe_4MmHrQ": {
+      "type": "collection-mini-swipe",
+      "blocks": {
+        "heading_effect_7K3awa": {
+          "type": "heading_effect",
+          "settings": {
+            "enable_letter_switch": true,
+            "alternate_color": "#322e2a",
+            "switch_speed": 0.5,
+            "shadow_intensity": 30,
+            "shadow_color": "#000000"
+          }
+        },
+        "subcategory_bBEn4d": {
+          "type": "subcategory",
+          "settings": {
+            "collection": "2026-dated-planners",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_JxEVeG": {
+          "type": "subcategory",
+          "settings": {
+            "collection": "undated-yearly-planners",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_rypBNX": {
+          "type": "subcategory",
+          "settings": {
+            "collection": "wedding-planners",
+            "label": "Wedding Planners",
+            "link": ""
+          }
+        },
+        "subcategory_wAh9a4": {
+          "type": "subcategory",
+          "settings": {
+            "collection": "baby-record-book",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_YHpkgT": {
+          "type": "subcategory",
+          "settings": {
+            "collection": "travel-journals",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_7N3ban": {
+          "type": "subcategory",
+          "settings": {
+            "collection": "financial-planners",
+            "label": "",
+            "link": ""
+          }
+        },
+        "product_slide_rKtfKe": {
+          "type": "product_slide",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_1_03ffe87c-a6c8-4fb4-b8dc-8e1943a99dcc.png",
+            "label": "",
+            "link": "shopify://collections/undated-yearly-planners",
+            "matching_collection": "undated-yearly-planners",
+            "alt_text": "",
+            "image_x": 0,
+            "image_y": 0,
+            "mobile_image_x": 28,
+            "mobile_image_y": 15,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_pQGGfK": {
+          "type": "product_slide",
+          "settings": {
+            "image": "shopify://shop_images/5_5.png",
+            "label": "",
+            "link": "shopify://collections/2026-dated-planners",
+            "matching_collection": "2026-dated-planners",
+            "alt_text": "",
+            "image_x": 0,
+            "image_y": 0,
+            "mobile_image_x": 28,
+            "mobile_image_y": 15,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_MhDTix": {
+          "type": "product_slide",
+          "settings": {
+            "image": "shopify://shop_images/4_3.png",
+            "label": "",
+            "link": "shopify://collections/financial-planners",
+            "matching_collection": "financial-planners",
+            "alt_text": "",
+            "image_x": 0,
+            "image_y": 0,
+            "mobile_image_x": 28,
+            "mobile_image_y": 15,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_kTxf9g": {
+          "type": "product_slide",
+          "settings": {
+            "image": "shopify://shop_images/1_4.png",
+            "label": "",
+            "link": "shopify://collections/wedding-planners",
+            "matching_collection": "wedding-planners",
+            "alt_text": "",
+            "image_x": 0,
+            "image_y": 0,
+            "mobile_image_x": 28,
+            "mobile_image_y": 15,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_yEBTUc": {
+          "type": "product_slide",
+          "settings": {
+            "image": "shopify://shop_images/3_4.png",
+            "label": "",
+            "link": "shopify://collections/baby-record-book",
+            "matching_collection": "baby-record-book",
+            "alt_text": "",
+            "image_x": 0,
+            "image_y": 0,
+            "mobile_image_x": 22,
+            "mobile_image_y": 12,
+            "mobile_image_rotate": 4
+          }
+        },
+        "product_slide_tgWHNm": {
+          "type": "product_slide",
+          "settings": {
+            "image": "shopify://shop_images/2_3.png",
+            "label": "",
+            "link": "shopify://collections/travel-journals",
+            "matching_collection": "travel-journals",
+            "alt_text": "",
+            "image_x": 0,
+            "image_y": 0,
+            "mobile_image_x": 24,
+            "mobile_image_y": 15,
+            "mobile_image_rotate": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_effect_7K3awa",
+        "subcategory_bBEn4d",
+        "subcategory_JxEVeG",
+        "subcategory_rypBNX",
+        "subcategory_wAh9a4",
+        "subcategory_YHpkgT",
+        "subcategory_7N3ban",
+        "product_slide_rKtfKe",
+        "product_slide_pQGGfK",
+        "product_slide_MhDTix",
+        "product_slide_kTxf9g",
+        "product_slide_yEBTUc",
+        "product_slide_tgWHNm"
+      ],
+      "disabled": true,
+      "name": "Category Showcase Main",
+      "settings": {
+        "collection": "planners-journals",
+        "heading": "",
+        "description": "",
+        "eyebrow": "",
+        "show_count": false,
+        "count_override": "",
+        "show_plus": true,
+        "count_label": "items",
+        "show_subcategory_counts": false,
+        "show_button": true,
+        "button_label": "Explore the collection",
+        "button_link": "",
+        "heading_font_style": "body",
+        "heading_size": 48,
+        "heading_weight": "700",
+        "mobile_heading_size": 46,
+        "autoplay": true,
+        "autoplay_speed": 2.5,
+        "enable_float": true,
+        "product_scale_desktop": 83,
+        "product_scale_mobile": 110,
+        "product_shadow_strength": 100,
+        "ground_shadow_opacity": 25,
+        "spotlight_strength": 15,
+        "max_width": 1480,
+        "desktop_height": 440,
+        "content_width": 41,
+        "page_gutter": 32,
+        "mobile_ratio": "four-five",
+        "mobile_content_width": 50,
+        "mobile_scrim_strength": 100,
+        "mobile_description_lines": 2,
+        "mobile_links_limit": 8,
+        "mobile_gutter": 12,
+        "corner_radius": 6,
+        "background_color": "#ffffff",
+        "text_color": "#191715",
+        "muted_text_color": "#bebebe",
+        "accent_color": "#ffd1a3",
+        "shadow_opacity": 6,
+        "padding_top": 8,
+        "padding_bottom": 20
+      }
+    },
+    "triple_sec_VirT69": {
+      "type": "triple-sec",
+      "blocks": {
+        "subcategory_gHtDM4": {
+          "type": "subcategory",
+          "settings": {
+            "panel": "1",
+            "collection": "glassware",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_WttMUk": {
+          "type": "subcategory",
+          "settings": {
+            "panel": "1",
+            "collection": "champagne-glasses",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_f6V3wx": {
+          "type": "subcategory",
+          "settings": {
+            "panel": "1",
+            "collection": "drink-dispensers-1",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_VRPPUH": {
+          "type": "subcategory",
+          "settings": {
+            "panel": "1",
+            "collection": "tea-cups-coffee-mugs",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_hbxdTb": {
+          "type": "subcategory",
+          "settings": {
+            "panel": "1",
+            "collection": "bottles-sippers",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_Y6LniB": {
+          "type": "subcategory",
+          "settings": {
+            "panel": "2",
+            "collection": "artifacts",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_CrXnqk": {
+          "type": "subcategory",
+          "settings": {
+            "panel": "2",
+            "collection": "photo-frames",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_ChK7Vt": {
+          "type": "subcategory",
+          "settings": {
+            "panel": "2",
+            "collection": "diya-candle-holders",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_HCY4EU": {
+          "type": "subcategory",
+          "settings": {
+            "panel": "2",
+            "collection": "vases-planters-1",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_4jQPpD": {
+          "type": "subcategory",
+          "settings": {
+            "panel": "2",
+            "collection": "gadgets",
+            "label": "",
+            "link": ""
+          }
+        },
+        "product_slide_GDN8Wi": {
+          "type": "product_slide",
+          "settings": {
+            "panel": "1",
+            "image": "shopify://shop_images/5_4.png",
+            "label": "",
+            "link": "",
+            "matching_collection": "glassware",
+            "alt_text": "",
+            "image_x": 8,
+            "image_y": 8,
+            "image_rotate": 0,
+            "mobile_image_x": 22,
+            "mobile_image_y": 10,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_6xX3CH": {
+          "type": "product_slide",
+          "settings": {
+            "panel": "1",
+            "image": "shopify://shop_images/7_2.png",
+            "label": "",
+            "link": "shopify://products/gold-rimmed-rose-heart-champagne-flute-stemware",
+            "matching_collection": "champagne-glasses",
+            "alt_text": "",
+            "image_x": 21,
+            "image_y": 8,
+            "image_rotate": 0,
+            "mobile_image_x": 20,
+            "mobile_image_y": 2,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_xbAArF": {
+          "type": "product_slide",
+          "settings": {
+            "panel": "1",
+            "image": "shopify://shop_images/2_5882f2dc-75f9-436b-bc75-7293c88cf9f7.png",
+            "label": "",
+            "link": "shopify://collections/drink-dispensers-1",
+            "matching_collection": "drink-dispensers-1",
+            "alt_text": "",
+            "image_x": 8,
+            "image_y": 8,
+            "image_rotate": 0,
+            "mobile_image_x": 22,
+            "mobile_image_y": 5,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_iAyG3y": {
+          "type": "product_slide",
+          "settings": {
+            "panel": "1",
+            "image": "shopify://shop_images/4_2.png",
+            "label": "",
+            "link": "",
+            "matching_collection": "tea-cups-coffee-mugs",
+            "alt_text": "",
+            "image_x": 8,
+            "image_y": 8,
+            "image_rotate": 0,
+            "mobile_image_x": 23,
+            "mobile_image_y": 5,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_P64tTK": {
+          "type": "product_slide",
+          "settings": {
+            "panel": "1",
+            "image": "shopify://shop_images/1_1ba37b1e-e94b-4530-9af0-c5b32de630a0.png",
+            "label": "",
+            "link": "shopify://products/voyage-xl-heat-insulated-travel-coffee-mug",
+            "matching_collection": "bottles-sippers",
+            "alt_text": "",
+            "image_x": 12,
+            "image_y": 16,
+            "image_rotate": 0,
+            "mobile_image_x": 23,
+            "mobile_image_y": 6,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_jcXbXB": {
+          "type": "product_slide",
+          "settings": {
+            "panel": "2",
+            "image": "shopify://shop_images/7_1.png",
+            "label": "",
+            "link": "",
+            "matching_collection": "gadgets",
+            "alt_text": "",
+            "image_x": 14,
+            "image_y": 15,
+            "image_rotate": 0,
+            "mobile_image_x": 19,
+            "mobile_image_y": 1,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_hC7XwF": {
+          "type": "product_slide",
+          "settings": {
+            "panel": "2",
+            "image": "shopify://shop_images/8_1.png",
+            "label": "",
+            "link": "",
+            "matching_collection": "artifacts",
+            "alt_text": "",
+            "image_x": 20,
+            "image_y": 12,
+            "image_rotate": 0,
+            "mobile_image_x": 20,
+            "mobile_image_y": 0,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_GA3rVA": {
+          "type": "product_slide",
+          "settings": {
+            "panel": "2",
+            "image": "shopify://shop_images/9_8c71b7f1-4aa8-4bbf-b1c8-d4172c9c9d0b.png",
+            "label": "",
+            "link": "",
+            "matching_collection": "photo-frames",
+            "alt_text": "",
+            "image_x": 13,
+            "image_y": 8,
+            "image_rotate": 0,
+            "mobile_image_x": 20,
+            "mobile_image_y": -2,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_aAKdTL": {
+          "type": "product_slide",
+          "settings": {
+            "panel": "2",
+            "image": "shopify://shop_images/10_51e77a2c-13b8-45ad-8b46-821463a6488a.png",
+            "label": "Candle Holder",
+            "link": "shopify://collections/diya-candle-holders",
+            "matching_collection": "diya-candle-holders",
+            "alt_text": "",
+            "image_x": 20,
+            "image_y": 10,
+            "image_rotate": 0,
+            "mobile_image_x": 20,
+            "mobile_image_y": -2,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_CbH6jU": {
+          "type": "product_slide",
+          "settings": {
+            "panel": "2",
+            "image": "shopify://shop_images/11_09eb3bda-1285-4161-95be-16bd0b8e80b3.png",
+            "label": "",
+            "link": "shopify://collections/vases-planters-1",
+            "matching_collection": "vases-planters-1",
+            "alt_text": "",
+            "image_x": 19,
+            "image_y": 15,
+            "image_rotate": 0,
+            "mobile_image_x": 20,
+            "mobile_image_y": -2,
+            "mobile_image_rotate": 0
+          }
+        }
+      },
+      "block_order": [
+        "subcategory_gHtDM4",
+        "subcategory_WttMUk",
+        "subcategory_f6V3wx",
+        "subcategory_VRPPUH",
+        "subcategory_hbxdTb",
+        "subcategory_Y6LniB",
+        "subcategory_CrXnqk",
+        "subcategory_ChK7Vt",
+        "subcategory_HCY4EU",
+        "subcategory_4jQPpD",
+        "product_slide_GDN8Wi",
+        "product_slide_6xX3CH",
+        "product_slide_xbAArF",
+        "product_slide_iAyG3y",
+        "product_slide_P64tTK",
+        "product_slide_jcXbXB",
+        "product_slide_hC7XwF",
+        "product_slide_GA3rVA",
+        "product_slide_aAKdTL",
+        "product_slide_CbH6jU"
+      ],
+      "disabled": true,
+      "name": "Category Duo",
+      "settings": {
+        "show_counts": true,
+        "show_subcategory_counts": false,
+        "show_buttons": true,
+        "button_label": "View All",
+        "panel_1_collection": "drinkware",
+        "panel_1_heading": "Drinkware",
+        "panel_1_button_link": "",
+        "panel_1_background": "#ffffff",
+        "panel_1_accent": "#b98d55",
+        "panel_2_collection": "decor-objects",
+        "panel_2_heading": "Home Decor",
+        "panel_2_button_link": "",
+        "panel_2_background": "#ffffff",
+        "panel_2_accent": "#9b7652",
+        "heading_font_style": "body",
+        "heading_size": 42,
+        "heading_weight": "700",
+        "mobile_heading_size": 25,
+        "desktop_description_lines": 2,
+        "autoplay": true,
+        "autoplay_speed": 2.5,
+        "enable_float": true,
+        "product_scale_desktop": 70,
+        "product_scale_mobile": 77,
+        "product_shadow_strength": 65,
+        "ground_shadow_opacity": 60,
+        "spotlight_strength": 40,
+        "max_width": 1500,
+        "desktop_content_width": 48,
+        "mobile_content_width": 47,
+        "mobile_ratio": "three-two",
+        "mobile_scrim": 65,
+        "mobile_links_limit": 5,
+        "card_gap": 18,
+        "page_gutter": 32,
+        "mobile_gutter": 12,
+        "corner_radius": 10,
+        "text_color": "#191715",
+        "muted_text_color": "#6f6963",
+        "shadow_opacity": 8,
+        "padding_top": 0,
+        "padding_bottom": 12
+      }
+    },
+    "carousel_focus_qkPVkN": {
+      "type": "carousel-focus",
+      "disabled": true,
+      "name": "TJS featured focus",
+      "settings": {
+        "collection": "new-arrivals",
+        "product_limit": 10,
+        "hide_sold_out": true,
+        "show_header": true,
+        "eyebrow": "",
+        "heading": "Fast Moving",
+        "description": "",
+        "heading_alignment": "left",
+        "heading_size": 54,
+        "mobile_heading_size": 42,
+        "show_view_all": true,
+        "view_all_label": "View all",
+        "show_arrows": false,
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "desktop_height": 420,
+        "mobile_center_width": 60,
+        "mobile_card_ratio": "four-five",
+        "card_gap": 6,
+        "image_fit": "cover",
+        "image_scale": 100,
+        "active_image_scale": 116,
+        "image_position": "center",
+        "card_style": "elevated",
+        "corner_radius": 8,
+        "shadow_strength": 15,
+        "show_vendor": false,
+        "show_sale_badge": false,
+        "actions_mode": "active",
+        "show_quick_add": false,
+        "show_quick_view": true,
+        "button_style": "accent",
+        "section_bg": "#ffffff",
+        "card_bg": "#ffffff",
+        "image_bg": "#f1eee8",
+        "text_color": "#191715",
+        "muted_color": "#565656",
+        "accent_color": "#262626",
+        "max_width": 1800,
+        "page_gutter": 28,
+        "mobile_gutter": 6,
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "card_deck_XggB3x": {
+      "type": "card-deck",
+      "disabled": true,
+      "name": "Card Deck (Fan)",
+      "settings": {
+        "collection": "lunch-bags-boxes",
+        "product_limit": 10,
+        "hide_sold_out": true,
+        "eyebrow": "",
+        "heading": "Grab Your Lunch!",
+        "description": "",
+        "enable_scroll_spread": true,
+        "scroll_depth_desktop": 135,
+        "spread_desktop": 180,
+        "spread_mobile": 64,
+        "rotation_step": 5,
+        "active_lift": 44,
+        "card_ratio": "five-seven",
+        "card_width_desktop": 390,
+        "card_width_mobile": 270,
+        "card_radius": 14,
+        "show_card_index": false,
+        "card_shadow_strength": 21,
+        "image_fit": "contain",
+        "image_padding": 0,
+        "image_scale": 108,
+        "image_shadow_strength": 35,
+        "show_price": true,
+        "show_quick_add": true,
+        "show_view_product": true,
+        "show_arrows": true,
+        "heading_size": 64,
+        "heading_weight": "700",
+        "mobile_heading_size": 32,
+        "section_background": "#ffffff",
+        "text_color": "#181614",
+        "muted_text_color": "#756e67",
+        "accent_color": "#000000",
+        "card_background": "#f9f6f0",
+        "card_text_color": "#171513",
+        "media_background": "#ece7de",
+        "max_width": 1480,
+        "page_gutter": 32,
+        "mobile_gutter": 12,
+        "padding_top": 28,
+        "padding_bottom": 16
+      }
+    },
+    "heart_glassware_9bGxMg": {
+      "type": "heart-glassware",
+      "blocks": {
+        "colour_WCfttC": {
+          "type": "colour",
+          "settings": {
+            "image": "shopify://shop_images/7_2.png",
+            "title": "Pink",
+            "note": "Soft, romantic and giftable",
+            "swatch_color": "#f4b6c8",
+            "link": ""
+          }
+        },
+        "colour_nGaGiR": {
+          "type": "colour",
+          "settings": {
+            "image": "shopify://shop_images/11_jpg.jpg",
+            "title": "Black",
+            "note": "Bold and dramatic for statement tables",
+            "swatch_color": "#232323",
+            "link": ""
+          }
+        },
+        "colour_JjFya7": {
+          "type": "colour",
+          "settings": {
+            "image": "shopify://shop_images/12_jpg.jpg",
+            "title": "Turquoise",
+            "note": "Fresh and playful with a pop of colour",
+            "swatch_color": "#40c8c3",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "colour_WCfttC",
+        "colour_nGaGiR",
+        "colour_JjFya7"
+      ],
+      "disabled": true,
+      "name": "TJS heart glass hero",
+      "settings": {
+        "product": "",
+        "show_price": true,
+        "price_note": "Set of 2",
+        "eyebrow": "Restocked favourite",
+        "heading": "<p>Heart Shape <em>Champagne Glasses</em></p>",
+        "description": "<p>Our bestselling heart-shape champagne glasses are back. A statement set of 2 designed to elevate celebrations, gifting and intimate tablescapes.</p>",
+        "fact_one": "Set of 2",
+        "fact_two": "Heart-shaped rim",
+        "fact_three": "3 colours restocked",
+        "primary_label": "Shop the restock",
+        "secondary_label": "View all drinkware",
+        "secondary_link": "",
+        "stage_left_badge": "Set of 2",
+        "stage_right_badge": "Back in stock",
+        "selected_label": "Selected colour",
+        "heading_size": 68,
+        "mobile_heading_size": 38,
+        "max_width": 1500,
+        "radius": 26,
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "mobile_padding_top": 28,
+        "mobile_padding_bottom": 28,
+        "background": "#f8f5f1",
+        "stage_background": "#fbf9f6",
+        "text_color": "#1d1917",
+        "muted_color": "#7b736c",
+        "accent_color": "#d38a9b",
+        "soft_accent": "#f4e2e8",
+        "border_color": "#e7dfd7",
+        "button_background": "#171411",
+        "button_text": "#ffffff"
+      }
+    },
+    "instagram_sec_test_T9y7EF": {
+      "type": "Instagram-sec-test",
+      "blocks": {
+        "instagram_media_RaYHVt": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        },
+        "instagram_media_JAw98W": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.17 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        },
+        "instagram_media_4Y6BqT": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        },
+        "instagram_media_7trUCU": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.17 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        },
+        "instagram_media_Gpnqmw": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        },
+        "instagram_media_7DiRct": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.17 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        },
+        "instagram_media_jhcFKg": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        },
+        "instagram_media_7Aim88": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        },
+        "instagram_media_a6Lf4q": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.17 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        },
+        "instagram_media_AfadUz": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        },
+        "instagram_media_Hw7mUy": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.17 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        },
+        "instagram_media_3Eai4t": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.17 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        },
+        "instagram_media_LbQC6L": {
+          "type": "instagram_media",
+          "settings": {
+            "media_type": "reel",
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "instagram_url": "",
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "instagram_media_RaYHVt",
+        "instagram_media_JAw98W",
+        "instagram_media_4Y6BqT",
+        "instagram_media_7trUCU",
+        "instagram_media_Gpnqmw",
+        "instagram_media_7DiRct",
+        "instagram_media_jhcFKg",
+        "instagram_media_7Aim88",
+        "instagram_media_a6Lf4q",
+        "instagram_media_AfadUz",
+        "instagram_media_Hw7mUy",
+        "instagram_media_3Eai4t",
+        "instagram_media_LbQC6L"
+      ],
+      "disabled": true,
+      "name": "Clean curved Reels",
+      "settings": {
+        "eyebrow": "Follow along",
+        "heading": "From our Instagram",
+        "instagram_profile_url": "",
+        "instagram_link_text": "Instagram",
+        "desktop_visible": 5,
+        "tablet_visible": 4,
+        "mobile_visible": 3,
+        "curve_direction": "center_down",
+        "curve_strength": 80,
+        "mobile_curve_strength": 30,
+        "scale_style": "center_smaller",
+        "scale_strength": 10,
+        "mobile_scale_strength": 6,
+        "curve_space_top": 32,
+        "curve_space_bottom": 48,
+        "mobile_curve_space": 24,
+        "card_aspect_width": 2,
+        "card_aspect_height": 4,
+        "card_radius": 16,
+        "media_fit": "cover",
+        "hover_zoom": true,
+        "enable_card_shadow": false,
+        "shadow_vertical": 8,
+        "shadow_blur": 20,
+        "shadow_opacity": 10,
+        "autoplay_reels": true,
+        "loop_reels": true,
+        "video_controls": false,
+        "show_play_button": true,
+        "show_instagram_badge": true,
+        "show_reel_badge": false,
+        "badge_size": 32,
+        "mobile_badge_size": 28,
+        "badge_offset": 10,
+        "badge_background": "#ffffff",
+        "badge_opacity": 85,
+        "badge_color": "#222222",
+        "play_size": 46,
+        "mobile_play_size": 38,
+        "play_background": "#ffffff",
+        "play_opacity": 85,
+        "play_color": "#222222",
+        "show_captions": false,
+        "caption_size": 13,
+        "mobile_caption_size": 11,
+        "caption_horizontal_padding": 12,
+        "caption_vertical_padding": 12,
+        "caption_darkness": 65,
+        "caption_color": "#ffffff",
+        "background_color": "#f7f3eb",
+        "card_background": "#eeeeee",
+        "heading_color": "#111111",
+        "text_color": "#222222",
+        "heading_font": "assistant_n4",
+        "body_font": "assistant_n4",
+        "heading_size": 22,
+        "tablet_heading_size": 20,
+        "mobile_heading_size": 18,
+        "heading_line_height": 1.1,
+        "mobile_heading_line_height": 1.1,
+        "heading_letter_spacing": 0,
+        "heading_max_width": 600,
+        "eyebrow_size": 11,
+        "mobile_eyebrow_size": 10,
+        "eyebrow_spacing": 6,
+        "eyebrow_letter_spacing": 0,
+        "eyebrow_uppercase": false,
+        "profile_link_size": 11,
+        "desktop_gap": 12,
+        "tablet_gap": 10,
+        "mobile_gap": 10,
+        "track_vertical_padding": 4,
+        "track_side_padding": 2,
+        "mobile_end_peek": 36,
+        "show_arrows": true,
+        "hide_arrows_mobile": true,
+        "hide_profile_link_mobile": true,
+        "arrow_size": 36,
+        "mobile_arrow_size": 30,
+        "arrow_border_width": 1,
+        "arrow_background": "#ffffff",
+        "arrow_color": "#222222",
+        "arrow_border_color": "#d8d2ca",
+        "content_width": 1500,
+        "desktop_side_padding": 20,
+        "tablet_side_padding": 20,
+        "mobile_side_padding": 12,
+        "padding_top": 25,
+        "padding_bottom": 30,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 25,
+        "header_spacing": 12,
+        "mobile_header_spacing": 12
+      }
+    },
+    "instagram_sec_middle_big_aVTdVM": {
+      "type": "instagram-sec-middle_big",
+      "blocks": {
+        "instagram_media_cEngVQ": {
+          "type": "instagram_media",
+          "settings": {
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "card_title": "",
+            "card_text": ""
+          }
+        },
+        "instagram_media_RUqi4x": {
+          "type": "instagram_media",
+          "settings": {
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "card_title": "",
+            "card_text": ""
+          }
+        },
+        "instagram_media_CnAcfC": {
+          "type": "instagram_media",
+          "settings": {
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.17 PM.mp4",
+            "card_title": "",
+            "card_text": ""
+          }
+        },
+        "instagram_media_gMjdPQ": {
+          "type": "instagram_media",
+          "settings": {
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.17 PM.mp4",
+            "card_title": "",
+            "card_text": ""
+          }
+        },
+        "reel_video_6DVpQA": {
+          "type": "reel_video",
+          "settings": {
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "card_title": "",
+            "card_text": ""
+          }
+        },
+        "instagram_media_w3fnjz": {
+          "type": "instagram_media",
+          "settings": {
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.17 PM.mp4",
+            "card_title": "",
+            "card_text": ""
+          }
+        },
+        "reel_video_q948pA": {
+          "type": "reel_video",
+          "settings": {
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "card_title": "",
+            "card_text": ""
+          }
+        },
+        "instagram_media_DFxTbW": {
+          "type": "instagram_media",
+          "settings": {
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.17 PM.mp4",
+            "card_title": "",
+            "card_text": ""
+          }
+        },
+        "instagram_media_8LhFM7": {
+          "type": "instagram_media",
+          "settings": {
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "card_title": "",
+            "card_text": ""
+          }
+        },
+        "instagram_media_UbgNE4": {
+          "type": "instagram_media",
+          "settings": {
+            "reel_video": "shopify://files/videos/WhatsApp Video 2026-09-08 at 1.57.13 PM.mp4",
+            "card_title": "",
+            "card_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "instagram_media_cEngVQ",
+        "instagram_media_RUqi4x",
+        "instagram_media_CnAcfC",
+        "instagram_media_gMjdPQ",
+        "reel_video_6DVpQA",
+        "instagram_media_w3fnjz",
+        "reel_video_q948pA",
+        "instagram_media_DFxTbW",
+        "instagram_media_8LhFM7",
+        "instagram_media_UbgNE4"
+      ],
+      "name": "Curved Reel gallery",
+      "settings": {
+        "eyebrow": "Watch our latest",
+        "heading": "From our Instagram",
+        "heading_font": "assistant_n4",
+        "body_font": "assistant_n4",
+        "desktop_heading_size": 20,
+        "tablet_heading_size": 20,
+        "mobile_heading_size": 18,
+        "heading_line_height": 1,
+        "heading_letter_spacing": 0,
+        "heading_max_width": 700,
+        "eyebrow_size": 11,
+        "mobile_eyebrow_size": 10,
+        "eyebrow_spacing": 6,
+        "eyebrow_letter_spacing": 0,
+        "eyebrow_uppercase": false,
+        "desktop_visible": 5,
+        "tablet_visible": 3,
+        "mobile_visible": 3,
+        "desktop_base_size": 100,
+        "tablet_base_size": 100,
+        "mobile_base_size": 100,
+        "center_scale": 130,
+        "adjacent_scale": 104,
+        "outer_scale": 82,
+        "center_drop": -4,
+        "adjacent_drop": 10,
+        "outer_drop": 22,
+        "overlap_percent": 18,
+        "edge_opacity": 100,
+        "card_aspect_width": 2,
+        "card_aspect_height": 4,
+        "video_fit": "cover",
+        "card_radius": 21,
+        "card_background": "#eeeeee",
+        "placeholder_color": "#555555",
+        "shadow_y": 10,
+        "shadow_blur": 24,
+        "shadow_opacity": 10,
+        "show_card_overlay": false,
+        "overlay_text_color": "#ffffff",
+        "overlay_darkness": 55,
+        "overlay_padding_top": 42,
+        "overlay_padding_horizontal": 16,
+        "overlay_padding_bottom": 14,
+        "card_title_size": 14,
+        "card_text_size": 11,
+        "desktop_gap": 40,
+        "tablet_gap": 12,
+        "mobile_gap": 10,
+        "autoplay_slider": true,
+        "autoplay_delay": 2,
+        "resume_delay": 2,
+        "show_side_arrows": true,
+        "show_top_arrows": false,
+        "hide_side_arrows_mobile": true,
+        "hide_top_arrows_mobile": true,
+        "side_arrow_size": 42,
+        "mobile_side_arrow_size": 34,
+        "side_arrow_offset": 4,
+        "side_arrow_background": "#f1f1f1",
+        "side_arrow_color": "#555555",
+        "arrow_size": 30,
+        "arrow_border_width": 1,
+        "arrow_background": "#ffffff",
+        "arrow_color": "#222222",
+        "arrow_border_color": "#d6d0c8",
+        "show_dots": false,
+        "dot_size": 7,
+        "inactive_dot_opacity": 30,
+        "dot_color": "#222222",
+        "dots_spacing": 12,
+        "caption": "<p>Share a short message below your Reel carousel.</p>",
+        "caption_alignment": "center",
+        "caption_size": 14,
+        "mobile_caption_size": 13,
+        "caption_line_height": 1.4,
+        "caption_max_width": 620,
+        "caption_spacing_top": 24,
+        "desktop_stage_height": 520,
+        "tablet_stage_height": 460,
+        "mobile_stage_height": 420,
+        "desktop_card_lift_space": 40,
+        "desktop_card_drop_space": 60,
+        "mobile_card_lift_space": 28,
+        "mobile_card_drop_space": 40,
+        "background_color": "#f7f3eb",
+        "heading_color": "#111111",
+        "text_color": "#555555",
+        "max_width": 1300,
+        "desktop_side_padding": 20,
+        "tablet_side_padding": 20,
+        "mobile_side_padding": 12,
+        "desktop_padding_top": 25,
+        "desktop_padding_bottom": 30,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 25,
+        "desktop_heading_spacing": 12,
+        "mobile_heading_spacing": 12
+      }
+    },
+    "category_test_DTKxGL": {
+      "type": "category-test",
+      "blocks": {
+        "category_c9KnVb": {
+          "type": "category",
+          "settings": {
+            "enabled": true,
+            "collection": "",
+            "label": "",
+            "icon": "home",
+            "button_color": "#8D93CB",
+            "button_icon_color": "#173c3a",
+            "theme_color": "#8D93CB",
+            "theme_text_color": "#173c3a"
+          }
+        },
+        "category_9gAHW8": {
+          "type": "category",
+          "settings": {
+            "enabled": true,
+            "collection": "",
+            "label": "",
+            "icon": "home",
+            "button_color": "#BCD8EC",
+            "button_icon_color": "#173c3a",
+            "theme_color": "#BCD8EC",
+            "theme_text_color": "#173c3a"
+          }
+        },
+        "category_qPN4kd": {
+          "type": "category",
+          "settings": {
+            "enabled": true,
+            "collection": "",
+            "label": "",
+            "icon": "sunglasses",
+            "button_color": "#FFCBE1",
+            "button_icon_color": "#173c3a",
+            "theme_color": "#FFCBE1",
+            "theme_text_color": "#173c3a"
+          }
+        },
+        "category_dtDqa6": {
+          "type": "category",
+          "settings": {
+            "enabled": true,
+            "collection": "",
+            "label": "",
+            "icon": "lamp",
+            "button_color": "#f8dfa8",
+            "button_icon_color": "#173c3a",
+            "theme_color": "#f8dfa8",
+            "theme_text_color": "#173c3a"
+          }
+        }
+      },
+      "block_order": [
+        "category_c9KnVb",
+        "category_9gAHW8",
+        "category_qPN4kd",
+        "category_dtDqa6"
+      ],
+      "name": "Category showcase",
+      "settings": {
+        "tab_width": 105,
+        "mobile_tab_width": 80,
+        "tab_gap": 12,
+        "mobile_tab_gap": 8,
+        "tab_box_size": 72,
+        "mobile_tab_box_size": 60,
+        "tab_box_radius": 18,
+        "mobile_tab_box_radius": 16,
+        "tab_icon_size": 30,
+        "mobile_tab_icon_size": 26,
+        "tab_label_size": 12,
+        "mobile_tab_label_size": 10,
+        "icon_stroke_width": 1.7,
+        "tabs_bottom_spacing": 16,
+        "theme_transition_speed": 500,
+        "fallback_background": "#d6e7ae",
+        "fallback_text": "#35402d",
+        "new_heading": "New Arrivals",
+        "new_subtitle": "",
+        "best_heading": "Best Sellers",
+        "best_subtitle": "",
+        "gift_heading": "Gifting",
+        "gift_subtitle": "",
+        "zone_padding": 28,
+        "mobile_zone_padding": 22,
+        "zone_heading_size": 30,
+        "mobile_zone_heading_size": 24,
+        "divider_width": 1,
+        "heading_font": "assistant_n4",
+        "body_font": "assistant_n4",
+        "max_width": 1480,
+        "side_padding": 32,
+        "tablet_side_padding": 22,
+        "mobile_side_padding": 12,
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "google_review_card_AQFKUq": {
+      "type": "google-review-card",
+      "blocks": {
+        "review_wdKtmF": {
+          "type": "review",
+          "settings": {
+            "number": "01",
+            "rating": 5,
+            "title": "EVEN BETTER IN PERSON",
+            "review": "<p>The quality exceeded my expectations. It looks beautiful and feels premium.</p>",
+            "customer_name": "Ananya R.",
+            "customer_meta": "Verified buyer",
+            "card_color": "#cb654f",
+            "text_color": "#fff5e8",
+            "rotation": -4,
+            "decorative_text": "♥"
+          }
+        },
+        "review_RUYzjh": {
+          "type": "review",
+          "settings": {
+            "number": "02",
+            "rating": 5,
+            "title": "BEAUTIFUL QUALITY",
+            "review": "<p>Such a lovely product. The details are beautiful and it instantly elevated the space.</p>",
+            "customer_name": "Riya M.",
+            "customer_meta": "Verified buyer",
+            "card_color": "#d3b1a7",
+            "text_color": "#fff6e8",
+            "rotation": 2,
+            "decorative_text": "♥"
+          }
+        },
+        "review_BrC3bi": {
+          "type": "review",
+          "settings": {
+            "number": "03",
+            "rating": 5,
+            "title": "MY NEW FAVOURITE",
+            "review": "<p>Exactly what I was looking for. Stylish, well finished and even prettier in person.</p>",
+            "customer_name": "Neha K.",
+            "customer_meta": "Verified buyer",
+            "card_color": "#cfcb9c",
+            "text_color": "#fff9f1",
+            "rotation": -1,
+            "decorative_text": "♥"
+          }
+        },
+        "review_6bGPeD": {
+          "type": "review",
+          "settings": {
+            "number": "04",
+            "rating": 5,
+            "title": "SO MANY COMPLIMENTS",
+            "review": "<p>Everyone asks me where I got it from. It has quickly become one of my favourite pieces.</p>",
+            "customer_name": "Aditi P.",
+            "customer_meta": "Verified buyer",
+            "card_color": "#8cbea3",
+            "text_color": "#292520",
+            "rotation": 4,
+            "decorative_text": "♥"
+          }
+        }
+      },
+      "block_order": [
+        "review_wdKtmF",
+        "review_RUYzjh",
+        "review_BrC3bi",
+        "review_6bGPeD"
+      ],
+      "name": "Playful customer reviews",
+      "settings": {
+        "background_color": "#fbf2e9",
+        "section_height": 680,
+        "content_width": 1440,
+        "padding_top": 56,
+        "padding_bottom": 132,
+        "side_padding": 30,
+        "show_top_text": true,
+        "top_text": "Loved by our customers",
+        "top_text_size": 12,
+        "top_text_spacing": 10,
+        "heading": "WHAT THEY'RE SAYING ABOUT US",
+        "heading_color": "#302a2a",
+        "heading_size": 52,
+        "heading_size_mobile": 34,
+        "heading_width": 840,
+        "heading_weight": 600,
+        "heading_line_height": 100,
+        "heading_letter_spacing": -5,
+        "heading_uppercase": true,
+        "heading_bottom_spacing": 30,
+        "card_width": 255,
+        "card_height": 340,
+        "card_gap": 14,
+        "card_radius": 20,
+        "card_padding_vertical": 24,
+        "card_padding_horizontal": 22,
+        "show_numbers": false,
+        "show_stars": true,
+        "star_color": "#fff2b4",
+        "star_size": 14,
+        "review_title_size": 22,
+        "review_title_weight": 600,
+        "review_title_line_height": 105,
+        "review_title_letter_spacing": -2,
+        "review_title_uppercase": true,
+        "review_title_spacing": 16,
+        "review_body_size": 13,
+        "review_body_line_height": 145,
+        "review_body_opacity": 90,
+        "reviewer_spacing": 22,
+        "customer_name_size": 12,
+        "customer_meta_size": 10,
+        "avatar_size": 38,
+        "show_card_shadow": true,
+        "shadow_y": 10,
+        "shadow_blur": 30,
+        "shadow_opacity": 10,
+        "hover_lift": 8,
+        "hover_scale": 103,
+        "show_badges": false,
+        "badge_one_text": "Real Reviews",
+        "badge_one_color": "#ff6a86",
+        "badge_one_text_color": "#fff3da",
+        "badge_two_text": "Customer Love",
+        "badge_two_color": "#72c9e8",
+        "badge_two_text_color": "#dc3f74",
+        "badge_size": 70,
+        "badge_text_size": 10,
+        "badge_left_top": 70,
+        "badge_left_position": 35,
+        "badge_right_top": 50,
+        "badge_right_position": 30,
+        "badge_animation_speed": 40,
+        "show_ribbon": true,
+        "ribbon_text": "REAL REVIEWS FROM REAL CUSTOMERS",
+        "ribbon_color": "#fbf2e9",
+        "ribbon_text_color": "#302a2a",
+        "ribbon_thickness": 58,
+        "ribbon_text_size": 20,
+        "ribbon_text_weight": 700,
+        "ribbon_height": 290,
+        "ribbon_bottom_position": -55,
+        "animate_ribbon": true,
+        "ribbon_animation_speed": 10,
+        "tablet_side_padding": 45,
+        "mobile_padding_top": 55,
+        "mobile_padding_bottom": 170,
+        "mobile_top_text_size": 10,
+        "mobile_heading_spacing": 25,
+        "mobile_card_width": 275,
+        "mobile_card_height": 350,
+        "mobile_card_gap": 18,
+        "mobile_side_peek": 35,
+        "mobile_rotation_strength": 50,
+        "mobile_review_title_size": 21,
+        "mobile_review_body_size": 13,
+        "mobile_badge_size": 55,
+        "mobile_badge_text_size": 8,
+        "mobile_badge_top": 20,
+        "mobile_ribbon_bottom": -30,
+        "mobile_ribbon_height": 220,
+        "mobile_ribbon_thickness": 34,
+        "mobile_ribbon_text_size": 9
+      }
+    }
+  },
+  "order": [
+    "champagne_home_page_LmzWdd",
+    "tjs_heartline_A8WHyQ",
+    "about_us_tes_m3nTBw",
+    "home_banner_swiper_gPUxE8",
+    "collection_nav_2_wex36J",
+    "collection_mini_swipe_4MmHrQ",
+    "triple_sec_VirT69",
+    "carousel_focus_qkPVkN",
+    "card_deck_XggB3x",
+    "heart_glassware_9bGxMg",
+    "instagram_sec_test_T9y7EF",
+    "instagram_sec_middle_big_aVTdVM",
+    "category_test_DTKxGL",
+    "google_review_card_AQFKUq"
+  ]
+}
+

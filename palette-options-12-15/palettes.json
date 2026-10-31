@@ -1,0 +1,62 @@
+[
+  [
+    "midnight_copper",
+    "12 — Midnight & Copper",
+    [
+      "#F6F7F9",
+      "#E9E5E0",
+      "#202B40",
+      "#596273",
+      "#B56E48",
+      "#171717",
+      "#CFD1D6",
+      "#202B40",
+      "#F6F7F9"
+    ]
+  ],
+  [
+    "olive_peach",
+    "13 — Olive & Peach",
+    [
+      "#FCFAF4",
+      "#FBE3D2",
+      "#41452B",
+      "#666951",
+      "#EFB28C",
+      "#41452B",
+      "#D9D8C9",
+      "#41452B",
+      "#FCFAF4"
+    ]
+  ],
+  [
+    "graphite_mint",
+    "14 — Graphite & Mint",
+    [
+      "#FFFFFF",
+      "#EAF4F0",
+      "#25292D",
+      "#62696A",
+      "#8EDFC1",
+      "#25292D",
+      "#D3DFDA",
+      "#25292D",
+      "#FFFFFF"
+    ]
+  ],
+  [
+    "aubergine_chartreuse",
+    "15 — Aubergine & Chartreuse",
+    [
+      "#FCFAF7",
+      "#F0F2DA",
+      "#36253E",
+      "#6D6072",
+      "#CFD64B",
+      "#36253E",
+      "#DCDACF",
+      "#36253E",
+      "#FCFAF7"
+    ]
+  ]
+]

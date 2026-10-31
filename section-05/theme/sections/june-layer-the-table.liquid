@@ -1,0 +1,576 @@
+{% liquid
+ assign typography = section.blocks | where: 'type', 'typography' | first
+ assign type = typography.settings
+ assign pieces = section.blocks | where: 'type', 'piece'
+ assign count = 0
+ for block in pieces
+  if block.settings.product != blank
+   assign count = count | plus: 1
+  endif
+ endfor
+%}
+{% style %}
+#JuneTable-{{ section.id }}{--jt-bg:{{ section.settings.background }};--jt-ink:{{ section.settings.ink }};--jt-accent:{{ section.settings.accent }};--jt-duration:{{ section.settings.duration }}ms;}
+{% assign face = type.heading_font | default: section.settings.fallback_font %}{% assign weight = type.heading_weight | default: 900 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneTable-{{ section.id }}{--jt-heading-font:{{ face.family }},{{ face.fallback_families }};--jt-heading-weight:{{ type.heading_weight | default: 900 }};--jt-heading-size:{{ type.heading_size | default: 62 }}px;--jt-heading-mobile:{{ type.heading_mobile | default: 42 }}px;--jt-heading-tracking:{{ type.heading_tracking | default: -4 | divided_by: 100.0 }}em;--jt-heading-leading:{{ type.heading_leading | default: 105 | divided_by: 100.0 }};}
+{% assign face = type.title_font | default: section.settings.fallback_font %}{% assign weight = type.title_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneTable-{{ section.id }}{--jt-title-font:{{ face.family }},{{ face.fallback_families }};--jt-title-weight:{{ type.title_weight | default: 600 }};--jt-title-size:{{ type.title_size | default: 26 }}px;--jt-title-mobile:{{ type.title_mobile | default: 23 }}px;--jt-title-tracking:{{ type.title_tracking | default: -2 | divided_by: 100.0 }}em;--jt-title-leading:{{ type.title_leading | default: 120 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign weight = type.body_weight | default: 400 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneTable-{{ section.id }}{--jt-body-font:{{ face.family }},{{ face.fallback_families }};--jt-body-weight:{{ type.body_weight | default: 400 }};--jt-body-size:{{ type.body_size | default: 18 }}px;--jt-body-mobile:{{ type.body_mobile | default: 16 }}px;--jt-body-tracking:{{ type.body_tracking | default: -1 | divided_by: 100.0 }}em;--jt-body-leading:{{ type.body_leading | default: 150 | divided_by: 100.0 }};}
+{% assign face = type.button_font | default: section.settings.fallback_font %}{% assign weight = type.button_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneTable-{{ section.id }}{--jt-button-font:{{ face.family }},{{ face.fallback_families }};--jt-button-weight:{{ type.button_weight | default: 600 }};--jt-button-size:{{ type.button_size | default: 14 }}px;--jt-button-mobile:{{ type.button_mobile | default: 14 }}px;--jt-button-tracking:{{ type.button_tracking | default: -1 | divided_by: 100.0 }}em;--jt-button-leading:{{ type.button_leading | default: 130 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign bold = face | font_modify: 'weight', '700' %}{{ bold | font_face: font_display: 'swap' }}
+{% endstyle %}
+{% capture arrow %}<span class="jt__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{% endcapture %}
+{% if count > 0 %}
+<june-table class="jt" id="JuneTable-{{ section.id }}" data-motion="{{ section.settings.motion }}" data-stacked="false" aria-labelledby="JuneTableHeading-{{ section.id }}">
+ <div class="jt__layout">
+  <header class="jt__header">
+   <p class="jt__eyebrow jt__button-type">{{ section.settings.eyebrow | escape }}</p>
+   <h2 class="jt__heading" id="JuneTableHeading-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+   <div class="jt__body">{{ section.settings.body }}</div>
+  </header>
+  <div class="jt__visual">
+   <div class="jt__stack" aria-label="Table pieces">
+    {% assign number = 0 %}{% for block in pieces %}{% if block.settings.product != blank %}
+    <button class="jt__piece" data-piece="{{ number }}" data-select="{{ number }}" type="button" style="--jt-width:{{ block.settings.width }}%;--jt-order:{{ number }}" aria-label="{{ block.settings.label | escape }}" aria-pressed="{% if number == 0 %}true{% else %}false{% endif %}">
+    {% if block.settings.image != blank %}
+     {{ block.settings.image | image_url: width: 1000 | image_tag: widths: '400,700,1000', sizes: '(min-width: 901px) 35vw, 90vw', loading: 'lazy', alt: block.settings.product.title }}
+    {% else %}{% assign art = 'june-table-' | append: block.settings.art | append: '.webp' %}
+     <img src="{{ art | asset_url }}" alt="{{ block.settings.product.title | escape }}" width="1536" height="1024" loading="lazy">
+    {% endif %}
+    </button>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+    <div class="jt__plinth" aria-hidden="true"></div>
+   </div>
+   <div class="jt__modes jt__button-type" role="group" aria-label="Display arrangement">
+    <button type="button" data-stack="true" aria-pressed="false">{{ section.settings.stacked_label | escape }}</button>
+    <button type="button" data-stack="false" aria-pressed="true">{{ section.settings.open_label | escape }}</button>
+   </div>
+   <p class="jt__hint jt__body">{{ section.settings.hint | escape }}</p>
+  </div>
+  <div class="jt__selection">
+   <div class="jt__choices" role="group" aria-label="Choose a table piece">
+    {% assign number = 0 %}{% for block in pieces %}{% if block.settings.product != blank %}
+    <button type="button" class="jt__choice jt__title" data-select="{{ number }}" data-block="{{ block.id }}" aria-pressed="{% if number == 0 %}true{% else %}false{% endif %}" aria-controls="JuneTableProduct-{{ section.id }}-{{ number }}" {{ block.shopify_attributes }}><span class="jt__number jt__button-type">0{{ number | plus: 1 }}</span>{{ block.settings.label | escape }}<span class="jt__mark" aria-hidden="true">↗</span></button>
+    {% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+   </div>
+   <div class="jt__products" aria-live="polite" aria-atomic="true">
+    {% assign number = 0 %}{% for block in pieces %}{% assign product = block.settings.product %}{% if product != blank %}
+    <div data-product="{{ number }}" id="JuneTableProduct-{{ section.id }}-{{ number }}" {% unless number == 0 %}hidden{% endunless %}>
+     <h3 class="jt__product-name jt__body">{{ block.settings.name | default: product.title | escape }}</h3>
+     <p class="jt__detail jt__body">{{ block.settings.detail | escape }}</p>
+     <p class="jt__price jt__body">{% if product.price_varies %}From {% endif %}{{ product.price | money }}{% unless product.available %} · Sold out{% endunless %}</p>
+     <a class="jt__primary jt__button-type" href="{{ product.url }}">{{ section.settings.shop | escape }}{{ arrow }}</a>
+    </div>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+   </div>
+   {% if section.settings.collection != blank %}<a class="jt__secondary jt__button-type" href="{{ section.settings.collection.url }}">{{ section.settings.all | escape }}{{ arrow }}</a>{% endif %}
+  </div>
+ </div>
+ {% if section.settings.lunch != blank or section.settings.organisation != blank %}<div class="jt__footer jt__button-type">
+ {% if section.settings.lunch != blank %}<a href="{{ section.settings.lunch.url }}">{{ section.settings.lunch_label | escape }}{{ arrow }}</a>{% endif %}
+ {% if section.settings.organisation != blank %}<a href="{{ section.settings.organisation.url }}">{{ section.settings.organisation_label | escape }}{{ arrow }}</a>{% endif %}
+ </div>{% endif %}
+ <noscript><div class="jt__body">{% for block in pieces %}{% if block.settings.product != blank %}<a href="{{ block.settings.product.url }}">{{ block.settings.product.title | escape }}</a> {% endif %}{% endfor %}</div></noscript>
+</june-table>
+{% elsif request.design_mode %}<p>Add products to the table piece blocks.</p>{% endif %}
+{% stylesheet %}
+june-table.jt{display:block;max-width:1680px;margin:auto;background:var(--jt-bg);color:var(--jt-ink);border-bottom:1px solid #1113}.jt *{box-sizing:border-box}.jt [hidden]{display:none!important}.jt h2,.jt h3,.jt p{color:inherit;margin:0}.jt a{color:inherit;text-decoration:none}.jt button{appearance:none;cursor:pointer;color:inherit}.jt button:focus-visible,.jt a:focus-visible{outline:2px solid currentColor;outline-offset:5px}.jt strong{font-weight:700}
+.jt .jt__heading{font-family:var(--jt-heading-font);font-size:var(--jt-heading-size);font-weight:var(--jt-heading-weight);letter-spacing:var(--jt-heading-tracking);line-height:var(--jt-heading-leading)}
+.jt .jt__title{font-family:var(--jt-title-font);font-size:var(--jt-title-size);font-weight:var(--jt-title-weight);letter-spacing:var(--jt-title-tracking);line-height:var(--jt-title-leading)}
+.jt .jt__body{font-family:var(--jt-body-font);font-size:var(--jt-body-size);font-weight:var(--jt-body-weight);letter-spacing:var(--jt-body-tracking);line-height:var(--jt-body-leading)}
+.jt .jt__button-type{font-family:var(--jt-button-font);font-size:var(--jt-button-size);font-weight:var(--jt-button-weight);letter-spacing:var(--jt-button-tracking);line-height:var(--jt-button-leading)}
+.jt__layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr) minmax(0,.85fr);gap:28px;padding:48px;align-items:center}.jt__header{align-self:center}.jt .jt__heading{margin:20px 0 24px;overflow-wrap:break-word}.jt__eyebrow{text-transform:uppercase;letter-spacing:.12em!important}.jt__visual{min-width:0;text-align:center}.jt__stack{position:relative;height:420px;isolation:isolate}.jt__piece{position:absolute;left:50%;top:calc(0px + var(--jt-order)*104px);width:var(--jt-width);height:calc(140px + var(--jt-order)*40px);transform:translateX(-50%);border:0;background:transparent;padding:0;z-index:calc(5 - var(--jt-order));transition:top var(--jt-duration) ease,filter var(--jt-duration) ease}.jt__piece img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 10px 6px #6c42301c)}.jt__piece[aria-pressed=true] img{filter:drop-shadow(0 12px 8px #a3714240)}.jt[data-stacked=true] .jt__piece{top:calc(210px - var(--jt-order)*15px)}
+.jt__plinth{position:absolute;bottom:12px;height:54px;width:96%;left:2%;background:linear-gradient(#eddec6,#e5d4b9);border-radius:50% 50% 10% 10%;box-shadow:0 16px 20px #71503212;z-index:-1}.jt__modes{display:inline-flex;border:1px solid #1114;border-radius:999px;padding:4px;gap:2px}.jt__modes button{font:inherit;border:0;padding:11px 18px;border-radius:999px;background:transparent;min-height:44px}.jt__modes button[aria-pressed=true]{background:var(--jt-accent);color:#111}.jt .jt__hint{font-size:calc(var(--jt-body-size)*.8);margin-top:12px;opacity:.7}
+.jt__choice{display:flex;align-items:center;width:100%;gap:14px;padding:18px 0;background:none;border:0;border-bottom:1px solid #1113;text-align:left}.jt__number{opacity:.5}.jt__mark{margin-left:auto;opacity:0}.jt__choice[aria-pressed=true] .jt__mark{opacity:1}.jt__choice[aria-pressed=true] .jt__number{background:var(--jt-accent);opacity:1;color:#111}.jt__number{border-radius:50%;width:30px;height:30px;display:grid;place-items:center;flex:none}.jt__products{padding-top:24px}.jt .jt__product-name{font-weight:700}.jt .jt__detail{margin-top:7px;opacity:.7;font-size:calc(var(--jt-body-size)*.85)}.jt .jt__price{margin-top:10px}.jt .jt__primary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:52px;margin-top:22px;padding:9px 10px 9px 20px;border:1px solid #111;border-radius:999px;background:var(--jt-accent);color:#111;box-shadow:-2px 1px 0 #111}.jt__arrow{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:50%;background:#111;color:var(--jt-accent)}.jt__arrow svg{width:18px;height:18px}.jt .jt__secondary{display:flex;gap:12px;align-items:center;justify-content:center;min-height:44px;margin-top:12px;text-decoration:underline;text-underline-offset:5px}.jt__secondary .jt__arrow,.jt__footer .jt__arrow{width:22px;height:22px}.jt__footer{border-top:1px solid #1113;display:flex;justify-content:center;gap:48px;padding:16px 32px}.jt__footer a{display:flex;gap:14px;align-items:center;min-height:44px;text-decoration:underline;text-underline-offset:5px}
+@media(min-width:901px) and (max-width:1200px){.jt__layout{padding:32px 24px;gap:20px;grid-template-columns:.85fr 1fr 1fr}.jt .jt__heading{font-size:calc(var(--jt-heading-size)*.85)}.jt .jt__title{font-size:calc(var(--jt-title-size)*.85)}}
+@media(max-width:900px){.jt__layout{display:block;padding:28px 20px}.jt__header{max-width:600px}.jt .jt__heading{margin:12px 0 16px}
+.jt .jt__heading{font-size:var(--jt-heading-mobile)}
+.jt .jt__title{font-size:var(--jt-title-mobile)}
+.jt .jt__body{font-size:var(--jt-body-mobile)}
+.jt .jt__button-type{font-size:var(--jt-button-mobile)}
+.jt__visual{max-width:520px;margin:12px auto 28px}.jt__stack{height:380px}.jt__piece{height:calc(140px + var(--jt-order)*30px);top:calc(var(--jt-order)*90px)}.jt[data-stacked=true] .jt__piece{top:calc(200px - var(--jt-order)*15px)}.jt__choices{display:flex;gap:12px}.jt .jt__choice{flex:1;display:flex;flex-direction:column;gap:7px;text-align:center;padding:10px 2px;font-size:var(--jt-button-mobile);font-family:var(--jt-button-font);font-weight:var(--jt-button-weight);line-height:var(--jt-button-leading);letter-spacing:var(--jt-button-tracking)}.jt__mark{display:none}.jt__choice[aria-pressed=true]{border-bottom:2px solid currentColor}.jt .jt__hint{font-size:calc(var(--jt-body-mobile)*.8)}.jt__footer{gap:16px;flex-wrap:wrap;padding:10px 20px}.jt .jt__detail{font-size:calc(var(--jt-body-mobile)*.85)}}
+@media(prefers-reduced-motion:reduce){.jt *{transition:none!important;animation:none!important}}.jt[data-motion=false] *{transition:none!important}
+{% endstylesheet %}
+{% javascript %}
+if(!customElements.get('june-table'))customElements.define('june-table',class extends HTMLElement{
+ connectedCallback(){this.controller?.abort();this.controller=new AbortController();const o={signal:this.controller.signal};this.choices=[...this.querySelectorAll('.jt__choice')];
+ this.addEventListener('click',e=>{const select=e.target.closest('[data-select]');if(select)this.select(Number(select.dataset.select));const mode=e.target.closest('[data-stack]');if(mode){this.dataset.stacked=mode.dataset.stack;this.querySelectorAll('[data-stack]').forEach(b=>b.setAttribute('aria-pressed',String(b===mode)));}},o);
+ this.addEventListener('keydown',e=>{const b=e.target.closest('.jt__choice');if(!b)return;const i=this.choices.indexOf(b),n=this.choices.length;let next;if(e.key==='ArrowRight'||e.key==='ArrowDown')next=(i+1)%n;if(e.key==='ArrowLeft'||e.key==='ArrowUp')next=(i-1+n)%n;if(e.key==='Home')next=0;if(e.key==='End')next=n-1;if(next===undefined)return;e.preventDefault();this.select(next);this.choices[next].focus();},o);
+ this.addEventListener('shopify:block:select',e=>{const b=this.choices.find(b=>b.dataset.block===e.detail.blockId);if(b)this.select(Number(b.dataset.select));},o);
+ if(this.choices.length>1)this.select(1);
+ }
+ disconnectedCallback(){this.controller?.abort()}
+ select(i){this.querySelectorAll('[data-select]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.select)===i)));this.querySelectorAll('[data-product]').forEach(p=>p.hidden=Number(p.dataset.product)!==i)}
+});
+{% endjavascript %}
+{% schema %}
+{
+  "name": "June · Layer the table",
+  "tag": "section",
+  "class": "june-table-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Kitchen & dining"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Good taste. Layer by layer."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Supporting copy",
+      "default": "<p>Discover the pieces behind <strong>a well-set table.</strong></p>"
+    },
+    {
+      "type": "text",
+      "id": "shop",
+      "label": "Product button",
+      "default": "Explore this piece"
+    },
+    {
+      "type": "text",
+      "id": "all",
+      "label": "Collection link",
+      "default": "Shop the table edit"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Dining collection"
+    },
+    {
+      "type": "text",
+      "id": "stacked_label",
+      "label": "Stacked label",
+      "default": "Stacked"
+    },
+    {
+      "type": "text",
+      "id": "open_label",
+      "label": "Separated label",
+      "default": "Unstacked"
+    },
+    {
+      "type": "text",
+      "id": "hint",
+      "label": "Interaction hint",
+      "default": "Three pieces. Your kind of table."
+    },
+    {
+      "type": "collection",
+      "id": "lunch",
+      "label": "Lunch collection"
+    },
+    {
+      "type": "text",
+      "id": "lunch_label",
+      "label": "Lunch link",
+      "default": "Lunch essentials"
+    },
+    {
+      "type": "collection",
+      "id": "organisation",
+      "label": "Organisation collection"
+    },
+    {
+      "type": "text",
+      "id": "organisation_label",
+      "label": "Organisation link",
+      "default": "Kitchen organisation"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FFFBF1"
+    },
+    {
+      "type": "color",
+      "id": "ink",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent",
+      "default": "#D5FF46"
+    },
+    {
+      "type": "font_picker",
+      "id": "fallback_font",
+      "label": "Fallback font",
+      "default": "poppins_n4"
+    },
+    {
+      "type": "checkbox",
+      "id": "motion",
+      "label": "Enable transition",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "duration",
+      "label": "Transition duration",
+      "min": 100,
+      "max": 1000,
+      "step": 50,
+      "unit": "ms",
+      "default": 500
+    }
+  ],
+  "blocks": [
+    {
+      "type": "piece",
+      "name": "Table piece",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Category",
+          "default": "Bowls"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Short product name"
+        },
+        {
+          "type": "text",
+          "id": "detail",
+          "label": "Details"
+        },
+        {
+          "type": "select",
+          "id": "art",
+          "label": "Included artwork",
+          "options": [
+            {
+              "value": "bowl",
+              "label": "Pink gold-rimmed bowl"
+            },
+            {
+              "value": "side",
+              "label": "Pink gold-rimmed starter plate"
+            },
+            {
+              "value": "dinner",
+              "label": "Pink gold-rimmed dinner plate"
+            }
+          ],
+          "default": "bowl"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Transparent artwork override"
+        },
+        {
+          "type": "paragraph",
+          "content": "Included artwork depicts the pink gold-rimmed range. If changing the product, supply matching transparent artwork."
+        },
+        {
+          "type": "range",
+          "id": "width",
+          "label": "Artwork width",
+          "min": 35,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 70
+        }
+      ]
+    },
+    {
+      "type": "typography",
+      "name": "Typography controls",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "font_picker",
+          "id": "heading_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "heading_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 900
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 54
+        },
+        {
+          "type": "range",
+          "id": "heading_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 40
+        },
+        {
+          "type": "range",
+          "id": "heading_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -4
+        },
+        {
+          "type": "range",
+          "id": "heading_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 105
+        },
+        {
+          "type": "header",
+          "content": "Product title"
+        },
+        {
+          "type": "font_picker",
+          "id": "title_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "title_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 26
+        },
+        {
+          "type": "range",
+          "id": "title_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 23
+        },
+        {
+          "type": "range",
+          "id": "title_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "title_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 120
+        },
+        {
+          "type": "header",
+          "content": "Supporting copy"
+        },
+        {
+          "type": "font_picker",
+          "id": "body_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "body_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "body_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "header",
+          "content": "Actions and navigation"
+        },
+        {
+          "type": "font_picker",
+          "id": "button_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "button_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "button_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 130
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "June · Layer the table",
+      "blocks": [
+        {
+          "type": "piece",
+          "settings": {
+            "label": "Bowls",
+            "art": "bowl",
+            "width": 51
+          }
+        },
+        {
+          "type": "piece",
+          "settings": {
+            "label": "Side plates",
+            "art": "side",
+            "width": 76
+          }
+        },
+        {
+          "type": "piece",
+          "settings": {
+            "label": "Dinner plates",
+            "art": "dinner",
+            "width": 100
+          }
+        },
+        {
+          "type": "typography"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

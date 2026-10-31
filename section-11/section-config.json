@@ -1,0 +1,16 @@
+{
+  "type": "june-a-little-curious",
+  "settings": {
+    "product": "mystery-box-limited-drop",
+    "accent": "#FFB790"
+  },
+  "blocks": {
+    "typography": {
+      "type": "typography",
+      "settings": {}
+    }
+  },
+  "block_order": [
+    "typography"
+  ]
+}

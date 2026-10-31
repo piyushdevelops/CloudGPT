@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" role="img" aria-labelledby="cart-title">
+<title id="cart-title">Shopping cart with a planner</title>
+<style>
+.jc-book,.jc-bag{transform-box:view-box;animation-duration:9s;animation-iteration-count:infinite;animation-timing-function:cubic-bezier(.4,0,.2,1)}
+.jc-book{animation-name:jc-book;transform-origin:12px 12px}
+.jc-bag{animation-name:jc-bag;transform-origin:12px 21px}
+@keyframes jc-book{0%,28%,62%,100%{transform:translateY(0);fill:#FFFFFF}39%,44%{transform:translateY(-1.4px);fill:#BFAEE9}54%{transform:translateY(.7px);fill:#BFAEE9}58%{transform:translateY(-.3px);fill:#BFAEE9}}
+@keyframes jc-bag{0%,49%,64%,100%{transform:scale(1)}54%{transform:scale(1.035,.96)}59%{transform:scale(.99,1.015)}}
+@media(prefers-reduced-motion:reduce){.jc-book,.jc-bag{animation:none}}
+</style>
+<g stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<g class="jc-book" fill="#FFFFFF"><g transform="rotate(-10 14 10)"><rect x="10" y="4" width="9" height="10" rx="1"/><path d="M13 4v10"/></g></g>
+<g class="jc-bag"><path fill="#FFFFFF" d="M6 9h16l-2 6H7.5Z"/><path d="M2 5h3l3 12h12"/></g>
+<g fill="#000000" stroke="none"><circle cx="9" cy="21" r="1.6"/><circle cx="19" cy="21" r="1.6"/></g>
+</g>
+</svg>

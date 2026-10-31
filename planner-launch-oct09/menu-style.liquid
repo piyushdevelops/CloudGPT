@@ -1,0 +1,18 @@
+<style id="JunePlannerTabs-{{ section.id }}">
+#TjsPremiumHeader-{{ section.id }} .tjs-ph__drawer { width:min({{ drawer_type.settings.mobile_width | default: 94 }}vw, {{ drawer_type.settings.width | default: 460 }}px); border-radius:0 {{ drawer_type.settings.radius | default: 24 }}px {{ drawer_type.settings.radius | default: 24 }}px 0; }
+#TjsPremiumHeader-{{ section.id }} .tjs-ph__drawer .tjs-ph__mobile-summary,
+#TjsPremiumHeader-{{ section.id }} .tjs-ph__drawer .tjs-ph__mobile-link {min-height:{{ drawer_type.settings.row_height | default: 58 }}px;}
+#TjsPremiumHeader-{{ section.id }} .june-featured {display:grid;gap:{{ drawer_type.settings.tab_gap | default: 8 }}px;margin:0 0 24px;}
+#TjsPremiumHeader-{{ section.id }} .june-featured__tab {display:flex;align-items:center;gap:16px;justify-content:space-between;padding:18px;border-radius:16px;text-decoration:none;color:var(--tjs-ph-text);background:var(--tjs-ph-accent);border:1px solid transparent;min-height:108px;transition:transform .18s ease;}
+#TjsPremiumHeader-{{ section.id }} .june-featured__tab--dark {background:var(--june-dark,#171717);color:var(--june-on-dark,#fff);}
+#TjsPremiumHeader-{{ section.id }} .june-featured__tab--soft {background:color-mix(in srgb,var(--tjs-ph-accent) 14%,var(--tjs-ph-bg));border-color:var(--tjs-ph-border);}
+#TjsPremiumHeader-{{ section.id }} .june-featured__content {display:grid;gap:5px;min-width:0;}
+#TjsPremiumHeader-{{ section.id }} .june-featured__badge {width:fit-content;opacity:.8;}
+#TjsPremiumHeader-{{ section.id }} .june-featured__title {display:block;color:inherit;}
+#TjsPremiumHeader-{{ section.id }} .june-featured__copy {opacity:.85;}
+#TjsPremiumHeader-{{ section.id }} .june-featured__arrow {display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:var(--june-dark,#171717);color:var(--june-on-dark,#fff);}
+#TjsPremiumHeader-{{ section.id }} .june-featured__tab--dark .june-featured__arrow {background:var(--tjs-ph-accent);color:var(--tjs-ph-text);}
+#TjsPremiumHeader-{{ section.id }} .june-featured__arrow svg {width:20px!important;height:20px!important;max-width:20px;flex:none;}
+@media(hover:hover){#TjsPremiumHeader-{{ section.id }} .june-featured__tab:hover {transform:translateX(3px);}}
+@media(prefers-reduced-motion:reduce){#TjsPremiumHeader-{{ section.id }} .june-featured__tab {transition:none;}}
+</style>

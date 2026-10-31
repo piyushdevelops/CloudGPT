@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@shopify/theme-check-common": "^3.31.0",
+    "@shopify/theme-check-docs-updater": "^3.31.0",
+    "@shopify/theme-check-node": "^3.31.0"
+  }
+}

@@ -1,0 +1,69 @@
+{%- liquid
+	unless product 
+    assign product = section.settings.product
+    if product == null
+      assign product = null | default: title: "Example product title", price: 1999, compare_at_price: 2500, available: true, vendor: "Ecomus"
+    endif
+  endunless
+-%}
+{%- if section.id contains 'quick-view' or section.id contains 'featured_product' -%}
+  <div class="hdt-product-info__item hdt-product__title" data-type="{{ block.type }}" {{ block.shopify_attributes }}>
+    <a href="{{ product.url }}" class="hdt-inline-block hdt-s-text"><h2 class="hdt-product__title hdt-{{ block.settings.hdt_pr_title_size }}" {{ block.shopify_attributes }}>{{ product.title | escape }}</h2></a>
+  </div>
+{%- else -%}
+  <h1 class="hdt-product__title hdt-{{ block.settings.hdt_pr_title_size }}" {{ block.shopify_attributes }}>{{ product.title | escape }}</h1>
+{%- endif -%}
+
+{% schema %}
+	{
+		"name": "t:sections.main-product.blocks.title.name",
+		"tag": null,
+    "settings":[
+      {
+        "type": "select",
+        "id": "hdt_pr_title_size",
+        "label": "Size",
+        "options": [
+          {
+            "value": "base",
+            "label": "Base size"
+          },
+          {
+            "value": "h6",
+            "label": "H6 size"
+          },
+          {
+            "value": "h5",
+            "label": "H5 size"
+          },
+          {
+            "value": "h4",
+            "label": "H4 size"
+          },
+          {
+            "value": "h3",
+            "label": "H3 size"
+          },
+          {
+            "value": "h2",
+            "label": "H2 size"
+          },
+          {
+            "value": "h1",
+            "label": "H1 size"
+          },
+          {
+            "value": "h0",
+            "label": "H0 size"
+          }
+        ],
+        "default": "h5"
+      },
+    ],
+		"presets": [
+      { 
+        "name": "t:sections.main-product.blocks.title.name"
+      }
+    ]
+	}
+{% endschema %}

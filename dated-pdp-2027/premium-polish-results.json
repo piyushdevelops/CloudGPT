@@ -1,0 +1,521 @@
+[
+  {
+    "name": "desktop",
+    "status": 200,
+    "title": "Dolce Far Niente — Limited Edition Undated Planner | The June Shop",
+    "datedHero": 1,
+    "datedDetails": 1,
+    "heading": "Dolce Far Niente — Limited Edition Undated Planner",
+    "images": [
+      {
+        "loaded": true,
+        "width": 720
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      }
+    ],
+    "highlights": 4,
+    "featureGroups": 4,
+    "featureImages": [
+      {
+        "loaded": true,
+        "width": 648
+      },
+      {
+        "loaded": true,
+        "width": 648
+      },
+      {
+        "loaded": true,
+        "width": 648
+      },
+      {
+        "loaded": true,
+        "width": 648
+      }
+    ],
+    "dividerCards": 12,
+    "storyQuotes": 1,
+    "insideCards": 6,
+    "insideImages": [
+      {
+        "loaded": true,
+        "width": 576
+      },
+      {
+        "loaded": true,
+        "width": 576
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": true,
+        "width": 576
+      },
+      {
+        "loaded": true,
+        "width": 576
+      }
+    ],
+    "facts": 7,
+    "faqs": 5,
+    "overflow": false,
+    "scrollWidth": 1440,
+    "viewport": 1440,
+    "errors": []
+  },
+  {
+    "name": "mobile",
+    "status": 200,
+    "title": "Dolce Far Niente — Limited Edition Undated Planner | The June Shop",
+    "datedHero": 1,
+    "datedDetails": 1,
+    "heading": "Dolce Far Niente — Limited Edition Undated Planner",
+    "images": [
+      {
+        "loaded": true,
+        "width": 393
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      }
+    ],
+    "highlights": 4,
+    "featureGroups": 4,
+    "featureImages": [
+      {
+        "loaded": true,
+        "width": 393
+      },
+      {
+        "loaded": true,
+        "width": 393
+      },
+      {
+        "loaded": true,
+        "width": 393
+      },
+      {
+        "loaded": true,
+        "width": 393
+      }
+    ],
+    "dividerCards": 12,
+    "storyQuotes": 1,
+    "insideCards": 6,
+    "insideImages": [
+      {
+        "loaded": true,
+        "width": 334
+      },
+      {
+        "loaded": true,
+        "width": 334
+      },
+      {
+        "loaded": true,
+        "width": 334
+      },
+      {
+        "loaded": true,
+        "width": 334
+      },
+      {
+        "loaded": true,
+        "width": 334
+      },
+      {
+        "loaded": true,
+        "width": 334
+      }
+    ],
+    "facts": 7,
+    "faqs": 5,
+    "overflow": false,
+    "scrollWidth": 393,
+    "viewport": 393,
+    "errors": []
+  },
+  {
+    "name": "small-mobile",
+    "status": 200,
+    "title": "Dolce Far Niente — Limited Edition Undated Planner | The June Shop",
+    "datedHero": 1,
+    "datedDetails": 1,
+    "heading": "Dolce Far Niente — Limited Edition Undated Planner",
+    "images": [
+      {
+        "loaded": true,
+        "width": 320
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      },
+      {
+        "loaded": false,
+        "width": 0
+      }
+    ],
+    "highlights": 4,
+    "featureGroups": 4,
+    "featureImages": [
+      {
+        "loaded": true,
+        "width": 320
+      },
+      {
+        "loaded": true,
+        "width": 320
+      },
+      {
+        "loaded": true,
+        "width": 320
+      },
+      {
+        "loaded": true,
+        "width": 320
+      }
+    ],
+    "dividerCards": 12,
+    "storyQuotes": 1,
+    "insideCards": 6,
+    "insideImages": [
+      {
+        "loaded": true,
+        "width": 272
+      },
+      {
+        "loaded": true,
+        "width": 272
+      },
+      {
+        "loaded": true,
+        "width": 272
+      },
+      {
+        "loaded": true,
+        "width": 272
+      },
+      {
+        "loaded": true,
+        "width": 272
+      },
+      {
+        "loaded": true,
+        "width": 272
+      }
+    ],
+    "facts": 7,
+    "faqs": 5,
+    "overflow": false,
+    "scrollWidth": 320,
+    "viewport": 320,
+    "errors": []
+  }
+]

@@ -1,0 +1,719 @@
+{% liquid
+ assign type_block = section.blocks | where: 'type', 'typography' | first
+ assign type = type_block.settings
+ assign planners = section.blocks | where: 'type', 'planner'
+ assign count = 0
+ for block in planners
+  if block.settings.product != blank
+   assign count = count | plus: 1
+  endif
+ endfor
+%}
+{% style %}
+{% assign role_font = type.heading_font | default: section.settings.fallback_font %}{% assign weight = type.heading_weight | default: 900 | append: '' %}{% assign face = role_font | font_modify: 'weight', weight | default: role_font %}{{ face | font_face: font_display: 'swap' }}
+#JuneLimited-{{ section.id }}{--jl-heading-font:{{ role_font.family | default: 'Poppins' }},{{ role_font.fallback_families | default: 'sans-serif' }};--jl-heading-weight:{{ type.heading_weight | default: 900 }};--jl-heading-size:{{ type.heading_size | default: 62 }}px;--jl-heading-mobile:{{ type.heading_mobile | default: 42 }}px;--jl-heading-tracking:{{ type.heading_tracking | default: -4 | divided_by: 100.0 }}em;--jl-heading-leading:{{ type.heading_leading | default: 105 | divided_by: 100.0 }};}
+{% assign role_font = type.subheading_font | default: section.settings.fallback_font %}{% assign weight = type.subheading_weight | default: 600 | append: '' %}{% assign face = role_font | font_modify: 'weight', weight | default: role_font %}{{ face | font_face: font_display: 'swap' }}
+#JuneLimited-{{ section.id }}{--jl-subheading-font:{{ role_font.family | default: 'Poppins' }},{{ role_font.fallback_families | default: 'sans-serif' }};--jl-subheading-weight:{{ type.subheading_weight | default: 600 }};--jl-subheading-size:{{ type.subheading_size | default: 30 }}px;--jl-subheading-mobile:{{ type.subheading_mobile | default: 25 }}px;--jl-subheading-tracking:{{ type.subheading_tracking | default: -2 | divided_by: 100.0 }}em;--jl-subheading-leading:{{ type.subheading_leading | default: 120 | divided_by: 100.0 }};}
+{% assign role_font = type.body_font | default: section.settings.fallback_font %}{% assign weight = type.body_weight | default: 400 | append: '' %}{% assign face = role_font | font_modify: 'weight', weight | default: role_font %}{{ face | font_face: font_display: 'swap' }}
+#JuneLimited-{{ section.id }}{--jl-body-font:{{ role_font.family | default: 'Poppins' }},{{ role_font.fallback_families | default: 'sans-serif' }};--jl-body-weight:{{ type.body_weight | default: 400 }};--jl-body-size:{{ type.body_size | default: 16 }}px;--jl-body-mobile:{{ type.body_mobile | default: 16 }}px;--jl-body-tracking:{{ type.body_tracking | default: -1 | divided_by: 100.0 }}em;--jl-body-leading:{{ type.body_leading | default: 150 | divided_by: 100.0 }};}
+{% assign role_font = type.label_font | default: section.settings.fallback_font %}{% assign weight = type.label_weight | default: 500 | append: '' %}{% assign face = role_font | font_modify: 'weight', weight | default: role_font %}{{ face | font_face: font_display: 'swap' }}
+#JuneLimited-{{ section.id }}{--jl-label-font:{{ role_font.family | default: 'Poppins' }},{{ role_font.fallback_families | default: 'sans-serif' }};--jl-label-weight:{{ type.label_weight | default: 500 }};--jl-label-size:{{ type.label_size | default: 11 }}px;--jl-label-mobile:{{ type.label_mobile | default: 10 }}px;--jl-label-tracking:{{ type.label_tracking | default: 12 | divided_by: 100.0 }}em;--jl-label-leading:{{ type.label_leading | default: 150 | divided_by: 100.0 }};}
+{% assign role_font = type.button_font | default: section.settings.fallback_font %}{% assign weight = type.button_weight | default: 600 | append: '' %}{% assign face = role_font | font_modify: 'weight', weight | default: role_font %}{{ face | font_face: font_display: 'swap' }}
+#JuneLimited-{{ section.id }}{--jl-button-font:{{ role_font.family | default: 'Poppins' }},{{ role_font.fallback_families | default: 'sans-serif' }};--jl-button-weight:{{ type.button_weight | default: 600 }};--jl-button-size:{{ type.button_size | default: 14 }}px;--jl-button-mobile:{{ type.button_mobile | default: 14 }}px;--jl-button-tracking:{{ type.button_tracking | default: -1 | divided_by: 100.0 }}em;--jl-button-leading:{{ type.button_leading | default: 130 | divided_by: 100.0 }};}
+{% assign body_font = type.body_font | default: section.settings.fallback_font %}{% assign strong_font = body_font | font_modify: 'weight', '700' %}{{ strong_font | font_face: font_display: 'swap' }}
+#JuneLimited-{{ section.id }}{--jl-bg:{{ section.settings.background }};--jl-ink:{{ section.settings.ink }};--jl-accent:{{ section.settings.accent }};--jl-scene:{{ section.settings.scene_height }}px;--jl-mobile-scene:{{ section.settings.mobile_height }}px;--jl-duration:{{ 24000 | divided_by: section.settings.speed }}ms;}
+{% endstyle %}
+{% capture arrow %}<span class="jl__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{% endcapture %}
+{% if count > 0 %}
+<june-limited id="JuneLimited-{{ section.id }}" class="jl" data-motion="{{ section.settings.motion }}" aria-labelledby="JuneLimitedTitle-{{ section.id }}">
+ <div class="jl__editorial">
+  <header class="jl__header">
+   <p class="jl__label">{{ section.settings.eyebrow | escape }}</p>
+   <h2 class="jl__heading" id="JuneLimitedTitle-{{ section.id }}">{{ section.settings.heading | escape }}<br>{{ section.settings.heading_second | escape }}</h2>
+   <div class="jl__body jl__intro">{{ section.settings.intro }}</div>
+  </header>
+  <div class="jl__scenes">
+   {% assign number = 0 %}{% for block in planners %}{% assign product = block.settings.product %}{% if product != blank %}
+    {% liquid
+     assign name = block.settings.short_name | default: product.title
+     assign image_index = block.settings.scene_number | minus: 1
+     assign scene = block.settings.scene | default: product.images[image_index] | default: product.featured_image
+     assign mobile_scene = block.settings.mobile_scene | default: scene
+     assign scene_alt = block.settings.scene_alt | default: scene.alt | default: name
+     assign gifts = 0
+     for i in (1..5)
+      assign gift_key = 'gift_' | append: i
+      if block.settings[gift_key] != blank
+       assign gifts = gifts | plus: 1
+      endif
+     endfor
+    %}
+    <div class="jl__scene" data-scene="{{ number }}" {% unless number == 0 %}hidden{% endunless %}>
+     <picture>
+      <source media="(max-width: 900px)" srcset="{{ mobile_scene | image_url: width: 500 }} 500w, {{ mobile_scene | image_url: width: 900 }} 900w" sizes="100vw">
+      {{ scene | image_url: width: 1500 | image_tag: widths: '600,900,1200,1500', sizes: '(min-width: 1680px) 980px, (min-width: 901px) 60vw, 100vw', loading: 'lazy', alt: scene_alt }}
+     </picture>
+     {% if gifts > 0 %}<span class="jl__stamp jl__label">{{ 'june_limited.gift_count' | t: count: gifts }}</span>{% endif %}
+    </div>
+    {% assign number = number | plus: 1 %}
+   {% endif %}{% endfor %}
+  </div>
+ </div>
+ <div class="jl__shopping">
+  <div class="jl__product-heads" aria-live="polite" aria-atomic="true">
+   {% assign number = 0 %}{% for block in planners %}{% assign product = block.settings.product %}{% if product != blank %}
+   <div data-heading="{{ number }}" {% unless number == 0 %}hidden{% endunless %}>
+    <h3 class="jl__subheading">{{ block.settings.short_name | default: product.title | escape }}</h3>
+    <p class="jl__body jl__caption">{{ section.settings.product_caption | escape }}</p>
+    <p class="jl__price jl__subheading">{% if product.price_varies %}<span class="jl__body">{{ 'june_limited.from' | t }}</span> {% endif %}{{ product.price | money }}</p>
+    {% unless product.available %}<p class="jl__body">{{ 'june_limited.sold_out' | t }}</p>{% endunless %}
+   </div>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+  </div>
+  <div class="jl__choose">
+   <p class="jl__body" id="JuneLimitedChoose-{{ section.id }}">{{ 'june_limited.choose' | t }}</p>
+   <div class="jl__covers" role="group" aria-labelledby="JuneLimitedChoose-{{ section.id }}">
+    {% assign number = 0 %}{% for block in planners %}{% assign product = block.settings.product %}{% if product != blank %}
+     {% assign cover = block.settings.cover | default: product.featured_image %}{% assign name = block.settings.short_name | default: product.title %}
+     <button class="jl__cover" type="button" data-select="{{ number }}" data-block="{{ block.id }}" aria-pressed="{% if number == 0 %}true{% else %}false{% endif %}" aria-label="{{ name | escape }}" {{ block.shopify_attributes }}>{{ cover | image_url: width: 300 | image_tag: widths: '120,200,300', sizes: '100px', loading: 'lazy', alt: name }}</button>
+     {% assign number = number | plus: 1 %}
+    {% endif %}{% endfor %}
+   </div>
+  </div>
+  <div class="jl__actions">
+   {% assign number = 0 %}{% for block in planners %}{% assign product = block.settings.product %}{% if product != blank %}
+    <div data-buy="{{ number }}" {% unless number == 0 %}hidden{% endunless %}>
+     <a class="jl__primary jl__button" href="{{ product.url }}">{% if product.available %}{{ 'june_limited.shop' | t }}{% else %}{{ 'june_limited.view' | t }}{% endif %}{{ arrow }}</a>
+    </div>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+   <p class="jl__note jl__body">{{ section.settings.offer_note | escape }}</p>
+  </div>
+  <div class="jl__offers">
+   {% assign number = 0 %}{% for block in planners %}{% assign product = block.settings.product %}{% if product != blank %}
+   {% assign gifts = 0 %}{% for i in (1..5) %}{% assign gift_key = 'gift_' | append: i %}{% if block.settings[gift_key] != blank %}{% assign gifts = gifts | plus: 1 %}{% endif %}{% endfor %}
+   <div data-offer="{{ number }}" {% unless number == 0 %}hidden{% endunless %}>
+    {% if gifts > 0 %}
+    <details class="jl__gifts" open>
+     <summary class="jl__button"><span>{{ 'june_limited.included' | t }}</span><span class="jl__plus" aria-hidden="true">+</span></summary>
+     <ol>
+      {% assign gift_number = 0 %}{% for i in (1..5) %}{% assign gift_key = 'gift_' | append: i %}{% assign note_key = 'gift_note_' | append: i %}{% if block.settings[gift_key] != blank %}
+      {% assign gift_number = gift_number | plus: 1 %}<li><span class="jl__number jl__label" aria-hidden="true">0{{ gift_number }}</span><div class="jl__body">{{ block.settings[gift_key] | escape }}{% if block.settings[note_key] != blank %}<span class="jl__gift-note">{{ block.settings[note_key] | escape }}</span>{% endif %}</div></li>
+      {% endif %}{% endfor %}
+     </ol>
+    </details>
+    {% endif %}
+   </div>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+  </div>
+  {% if section.settings.collection != blank %}<a class="jl__textlink jl__button" href="{{ section.settings.collection.url }}">{{ 'june_limited.view_all' | t }}{{ arrow }}</a>{% endif %}
+ </div>
+ <noscript><div class="jl__fallback jl__body">{{ 'june_limited.no_script' | t }} {% for block in planners %}{% if block.settings.product != blank %}<a href="{{ block.settings.product.url }}">{{ block.settings.short_name | default: block.settings.product.title | escape }}</a>{% endif %}{% endfor %}</div></noscript>
+</june-limited>
+{% elsif request.design_mode %}<div class="jl__empty">{{ 'june_limited.setup' | t }}</div>{% endif %}
+
+{% stylesheet %}
+june-limited.jl{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(340px,1fr);max-width:1680px;margin:0 auto;background:var(--jl-bg);color:var(--jl-ink);border-bottom:1px solid #1113;}
+.jl *{box-sizing:border-box}.jl [hidden]{display:none!important}.jl h2,.jl h3,.jl p{margin:0;color:inherit}.jl a{color:inherit;text-decoration:none}.jl button,.jl summary{font:inherit;color:inherit}.jl button{appearance:none;cursor:pointer}.jl button:focus-visible,.jl a:focus-visible,.jl summary:focus-visible{outline:2px solid currentColor;outline-offset:5px}.jl img{display:block;max-width:100%}.jl strong{font-weight:700}
+.jl .jl__heading{font-family:var(--jl-heading-font);font-size:var(--jl-heading-size);font-weight:var(--jl-heading-weight);letter-spacing:var(--jl-heading-tracking);line-height:var(--jl-heading-leading);}
+.jl .jl__subheading{font-family:var(--jl-subheading-font);font-size:var(--jl-subheading-size);font-weight:var(--jl-subheading-weight);letter-spacing:var(--jl-subheading-tracking);line-height:var(--jl-subheading-leading);}
+.jl .jl__body{font-family:var(--jl-body-font);font-size:var(--jl-body-size);font-weight:var(--jl-body-weight);letter-spacing:var(--jl-body-tracking);line-height:var(--jl-body-leading);}
+.jl .jl__label{font-family:var(--jl-label-font);font-size:var(--jl-label-size);font-weight:var(--jl-label-weight);letter-spacing:var(--jl-label-tracking);line-height:var(--jl-label-leading);}
+.jl .jl__button{font-family:var(--jl-button-font);font-size:var(--jl-button-size);font-weight:var(--jl-button-weight);letter-spacing:var(--jl-button-tracking);line-height:var(--jl-button-leading);}
+.jl__editorial{min-width:0;display:flex;flex-direction:column}.jl__header{padding:48px 48px 30px}.jl__heading{margin:14px 0 18px!important;overflow-wrap:break-word}.jl__label{text-transform:uppercase}.jl__scenes{min-width:0;min-height:var(--jl-scene);flex:1;position:relative}.jl__scene{position:absolute;inset:0;height:100%;overflow:hidden}.jl__scene picture{display:block;width:100%;height:100%}.jl__scene img{width:100%;height:100%;object-fit:cover;object-position:50% 52%}.jl__stamp{position:absolute;top:22px;right:22px;max-width:160px;min-height:70px;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px 22px;border:1px solid currentColor;border-radius:50%;background:var(--jl-bg);transform:rotate(8deg);box-shadow:2px 3px 0 #1111;}
+.jl__shopping{min-width:0;margin:48px 0 40px;padding:0 44px;border-left:1px solid #1114;display:flex;flex-direction:column;align-items:stretch;justify-content:center}.jl__product-heads{min-height:125px}.jl__caption{margin-top:10px!important}.jl__price{margin-top:14px!important}.jl__choose{border-top:1px solid #1114;margin-top:16px;padding-top:16px}.jl__covers{display:grid;grid-template-columns:repeat(auto-fit,minmax(54px,1fr));gap:10px;margin:16px 0 20px}.jl__cover{display:block;min-width:0;min-height:44px;border:1px solid transparent;padding:5px;background:transparent;border-radius:3px;transition:border-color var(--jl-duration) ease,transform var(--jl-duration) ease}.jl__cover img{width:100%;height:90px;object-fit:contain;mix-blend-mode:multiply}.jl__cover[aria-pressed=true]{border:2px solid var(--jl-ink);padding:4px;background:#11105}.jl__arrow{flex:none;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;background:#111;color:var(--jl-accent);border-radius:50%}.jl__arrow svg{width:16px;height:16px}.jl .jl__primary{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:50px;padding:8px 9px 8px 22px;background:var(--jl-accent);color:#111;border:1px solid #111;border-radius:999px;box-shadow:-2px 1px 0 #111;transition:transform var(--jl-duration) ease}.jl__primary .jl__arrow{width:32px;height:32px;transition:transform var(--jl-duration) ease}.jl__primary svg{width:18px;height:18px}.jl__note{text-align:center;margin:12px 0 20px!important;opacity:.75}.jl__gifts{border-top:1px solid #1114}.jl__gifts summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:15px;min-height:56px;padding:14px 0}.jl__gifts summary::-webkit-details-marker{display:none}.jl__plus{font-size:24px;font-weight:400;line-height:1}.jl__gifts[open] .jl__plus{transform:rotate(45deg)}.jl__gifts ol{list-style:none;padding:0;margin:0}.jl__gifts li{display:flex;gap:14px;align-items:center;border-top:1px solid #1112;padding:10px 0;min-height:49px}.jl__number{display:grid;place-items:center;flex:none;width:31px;height:31px;border-radius:50%;background:color-mix(in srgb,var(--jl-accent) 40%,var(--jl-bg))}.jl__gift-note{display:block;font-size:.8em;margin-top:3px;opacity:.75}.jl .jl__textlink{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-top:20px;text-decoration:underline;text-underline-offset:5px}.jl__fallback{grid-column:1/-1;padding:20px}.jl__fallback a{display:inline-block;margin:8px;text-decoration:underline}.jl__empty{padding:40px;text-align:center}
+@media(hover:hover){.jl[data-motion=true] .jl__primary:hover{transform:translateY(-2px)}.jl[data-motion=true] .jl__primary:hover .jl__arrow{transform:translateX(2px)}.jl[data-motion=true] .jl__cover:hover{transform:translateY(-3px)}}.jl[data-motion=true] .jl__primary:active{transform:translateY(1px)}
+@media(min-width:901px) and (max-width:1150px){.jl__header{padding:36px 28px 28px}.jl__shopping{padding:0 28px;margin-top:36px}.jl .jl__heading{font-size:calc(var(--jl-heading-size)*.85)}.jl__cover img{height:80px}}
+@media(max-width:900px){
+ june-limited.jl{display:block}.jl__editorial{display:block}
+ .jl .jl__heading{font-size:var(--jl-heading-mobile);}
+.jl .jl__subheading{font-size:var(--jl-subheading-mobile);}
+.jl .jl__body{font-size:var(--jl-body-mobile);}
+.jl .jl__label{font-size:var(--jl-label-mobile);}
+.jl .jl__button{font-size:var(--jl-button-mobile);}
+ .jl__header{padding:30px 20px 24px}.jl__heading{margin:12px 0 14px!important}.jl__scenes{min-height:0}.jl__scene{position:relative;height:var(--jl-mobile-scene);min-height:0}.jl__scene img{object-position:50% 50%}.jl__stamp{top:18px;right:18px;max-width:130px;min-height:58px;padding:10px 16px}.jl__shopping{margin:0;padding:25px 20px 30px;border-left:0}.jl__product-heads{min-height:0}.jl__caption{margin-top:7px!important}.jl__price{margin-top:10px!important}.jl__choose{margin-top:18px;padding-top:16px}.jl__covers{gap:10px;margin:12px 0 20px}.jl__cover img{height:90px}.jl__note{margin-bottom:16px!important}.jl__gifts summary{min-height:54px}.jl__gifts li{padding:12px 0}.jl .jl__textlink{margin-top:16px}.jl__scene{max-height:520px}
+}
+@media(prefers-reduced-motion:reduce){.jl *{animation:none!important;transition:none!important;scroll-behavior:auto!important}.jl .jl__primary,.jl .jl__cover{transform:none!important}}
+.jl[data-motion=false] *{transition:none!important;animation:none!important}
+{% endstylesheet %}
+{% javascript %}
+if(!customElements.get('june-limited')){
+ customElements.define('june-limited',class extends HTMLElement{
+  connectedCallback(){
+   if(this.controller)return;
+   this.controller=new AbortController();
+   const options={signal:this.controller.signal};
+   this.buttons=[...this.querySelectorAll('[data-select]')];
+   this.selected=0;
+   this.mobile=matchMedia('(max-width:900px)');
+   this.querySelectorAll('details').forEach(d=>d.open=!this.mobile.matches);
+   this.addEventListener('click',event=>{
+    const button=event.target.closest('[data-select]');
+    if(button&&this.contains(button))this.select(Number(button.dataset.select));
+   },options);
+   this.addEventListener('keydown',event=>{
+    const button=event.target.closest('[data-select]');
+    if(!button)return;
+    const index=this.buttons.indexOf(button);
+    let next;
+    if(event.key==='ArrowRight')next=(index+1)%this.buttons.length;
+    if(event.key==='ArrowLeft')next=(index-1+this.buttons.length)%this.buttons.length;
+    if(event.key==='Home')next=0;
+    if(event.key==='End')next=this.buttons.length-1;
+    if(next===undefined)return;
+    event.preventDefault();this.select(next);this.buttons[next].focus();
+   },options);
+   this.addEventListener('shopify:block:select',event=>{
+    const button=this.buttons.find(b=>b.dataset.block===event.detail.blockId);
+    if(button)this.select(Number(button.dataset.select));
+   },options);
+  }
+  select(index){
+   if(!this.buttons[index])return;
+   this.selected=index;
+   this.buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));
+   ['scene','heading','buy','offer'].forEach(key=>{
+    this.querySelectorAll('[data-'+key+']').forEach(el=>el.hidden=Number(el.dataset[key])!==index);
+   });
+  }
+  disconnectedCallback(){this.controller?.abort();this.controller=null;}
+ });
+}
+{% endjavascript %}
+{% schema %}
+{
+  "name": "June · With extras",
+  "tag": "section",
+  "class": "june-limited-section",
+  "max_blocks": 7,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Limited Edition"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your planner."
+    },
+    {
+      "type": "text",
+      "id": "heading_second",
+      "label": "Heading second line",
+      "default": "With extras."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "intro",
+      "label": "Supporting copy",
+      "default": "An undated planner. <strong>A whole lot of joy.</strong>"
+    },
+    {
+      "type": "text",
+      "id": "product_caption",
+      "label": "Product description",
+      "default": "Limited Edition undated planner"
+    },
+    {
+      "type": "text",
+      "id": "offer_note",
+      "label": "Offer note",
+      "default": "Freebies vary by planner."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Limited Edition collection"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FFFBF1"
+    },
+    {
+      "type": "color",
+      "id": "ink",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent and button fill",
+      "default": "#D5FF46"
+    },
+    {
+      "type": "font_picker",
+      "id": "fallback_font",
+      "label": "Fallback font when typography block is removed",
+      "default": "poppins_n4"
+    },
+    {
+      "type": "range",
+      "id": "scene_height",
+      "label": "Desktop minimum scene height",
+      "min": 360,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Mobile scene height",
+      "min": 240,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 330
+    },
+    {
+      "type": "checkbox",
+      "id": "motion",
+      "label": "Enable selection and button motion",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Motion speed",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "planner",
+      "name": "Planner and gifts",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Planner"
+        },
+        {
+          "type": "text",
+          "id": "short_name",
+          "label": "Short display name"
+        },
+        {
+          "type": "image_picker",
+          "id": "cover",
+          "label": "Cover thumbnail override"
+        },
+        {
+          "type": "image_picker",
+          "id": "scene",
+          "label": "Desktop product and gifts photograph"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_scene",
+          "label": "Mobile photograph override"
+        },
+        {
+          "type": "range",
+          "id": "scene_number",
+          "label": "Catalog scene image number",
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "default": 3
+        },
+        {
+          "type": "text",
+          "id": "scene_alt",
+          "label": "Scene description"
+        },
+        {
+          "type": "header",
+          "content": "Included gifts"
+        },
+        {
+          "type": "paragraph",
+          "content": "List only the gifts included with this planner. Empty entries are omitted; the badge counts the entries. Recheck the offer when changing products."
+        },
+        {
+          "type": "text",
+          "id": "gift_1",
+          "label": "Gift 1"
+        },
+        {
+          "type": "text",
+          "id": "gift_note_1",
+          "label": "Gift 1 detail"
+        },
+        {
+          "type": "text",
+          "id": "gift_2",
+          "label": "Gift 2"
+        },
+        {
+          "type": "text",
+          "id": "gift_note_2",
+          "label": "Gift 2 detail"
+        },
+        {
+          "type": "text",
+          "id": "gift_3",
+          "label": "Gift 3"
+        },
+        {
+          "type": "text",
+          "id": "gift_note_3",
+          "label": "Gift 3 detail"
+        },
+        {
+          "type": "text",
+          "id": "gift_4",
+          "label": "Gift 4"
+        },
+        {
+          "type": "text",
+          "id": "gift_note_4",
+          "label": "Gift 4 detail"
+        },
+        {
+          "type": "text",
+          "id": "gift_5",
+          "label": "Gift 5"
+        },
+        {
+          "type": "text",
+          "id": "gift_note_5",
+          "label": "Gift 5 detail"
+        }
+      ]
+    },
+    {
+      "type": "typography",
+      "name": "Typography controls",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "font_picker",
+          "id": "heading_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "heading_weight",
+          "label": "Font weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 900
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Desktop font size",
+          "min": 8,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 62
+        },
+        {
+          "type": "range",
+          "id": "heading_mobile",
+          "label": "Mobile font size",
+          "min": 8,
+          "max": 70,
+          "step": 1,
+          "unit": "px",
+          "default": 42
+        },
+        {
+          "type": "range",
+          "id": "heading_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -4
+        },
+        {
+          "type": "range",
+          "id": "heading_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 105
+        },
+        {
+          "type": "header",
+          "content": "Product title"
+        },
+        {
+          "type": "font_picker",
+          "id": "subheading_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "subheading_weight",
+          "label": "Font weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "subheading_size",
+          "label": "Desktop font size",
+          "min": 8,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "subheading_mobile",
+          "label": "Mobile font size",
+          "min": 8,
+          "max": 70,
+          "step": 1,
+          "unit": "px",
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "subheading_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "subheading_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 120
+        },
+        {
+          "type": "header",
+          "content": "Supporting copy"
+        },
+        {
+          "type": "font_picker",
+          "id": "body_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "body_weight",
+          "label": "Font weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Desktop font size",
+          "min": 8,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_mobile",
+          "label": "Mobile font size",
+          "min": 8,
+          "max": 70,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "body_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "header",
+          "content": "Eyebrows and gift numbers"
+        },
+        {
+          "type": "font_picker",
+          "id": "label_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "label_weight",
+          "label": "Font weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 500
+        },
+        {
+          "type": "range",
+          "id": "label_size",
+          "label": "Desktop font size",
+          "min": 8,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 11
+        },
+        {
+          "type": "range",
+          "id": "label_mobile",
+          "label": "Mobile font size",
+          "min": 8,
+          "max": 70,
+          "step": 1,
+          "unit": "px",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "label_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "label_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "header",
+          "content": "Buttons and navigation"
+        },
+        {
+          "type": "font_picker",
+          "id": "button_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "button_weight",
+          "label": "Font weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Desktop font size",
+          "min": 8,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_mobile",
+          "label": "Mobile font size",
+          "min": 8,
+          "max": 70,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "button_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 130
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "June · With extras",
+      "blocks": [
+        {
+          "type": "planner"
+        },
+        {
+          "type": "planner"
+        },
+        {
+          "type": "planner"
+        },
+        {
+          "type": "planner"
+        },
+        {
+          "type": "typography"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

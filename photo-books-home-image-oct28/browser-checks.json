@@ -1,0 +1,32 @@
+[
+  {
+    "name": "desktop",
+    "viewport": "1440x1000",
+    "status": 200,
+    "section": { "width": 1440, "height": 711.09375 },
+    "image": {
+      "naturalWidth": 1536,
+      "naturalHeight": 1024,
+      "renderedWidth": 806.40625,
+      "renderedHeight": 709.09375,
+      "complete": true,
+      "objectFit": "cover"
+    },
+    "screenshot": "browser/desktop-photo-books-section.png"
+  },
+  {
+    "name": "mobile",
+    "viewport": "393x852",
+    "status": 200,
+    "section": { "width": 393, "height": 756.296875 },
+    "image": {
+      "naturalWidth": 1536,
+      "naturalHeight": 1024,
+      "renderedWidth": 393,
+      "renderedHeight": 262,
+      "complete": true,
+      "objectFit": "cover"
+    },
+    "screenshot": "browser/mobile-photo-books-section.png"
+  }
+]

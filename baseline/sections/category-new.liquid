@@ -1,0 +1,898 @@
+<!-- THE JUNE SHOP: LUXE CATEGORY RUNWAY -->
+<style>
+  #tjs-category-runway-{{ section.id }},
+  #tjs-category-runway-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #tjs-category-runway-{{ section.id }} {
+    --tjs-bg: {{ section.settings.bg_color }};
+    --tjs-ink: {{ section.settings.text_color }};
+    --tjs-muted: rgba(31, 25, 22, 0.62);
+    --tjs-card: {{ section.settings.card_color }};
+    --tjs-accent: {{ section.settings.accent_color }};
+    --tjs-gold: {{ section.settings.gold_color }};
+    --card-size: {{ section.settings.card_size }}px;
+    --mobile-card-size: {{ section.settings.mobile_card_size }}px;
+    --gap: {{ section.settings.gap }}px;
+    --speed: {{ section.settings.speed }}s;
+    --radius: {{ section.settings.radius }}px;
+    --item-count: {{ section.blocks.size }};
+
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 12% 12%, rgba(213, 141, 130, 0.11), transparent 30%),
+      radial-gradient(circle at 88% 90%, rgba(213, 162, 91, 0.12), transparent 30%),
+      linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,248,242,0.72)),
+      var(--tjs-bg);
+    color: var(--tjs-ink);
+    font-family: inherit;
+  }
+
+  #tjs-category-runway-{{ section.id }}::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(31,25,22,0.025) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(31,25,22,0.022) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  #tjs-category-runway-{{ section.id }}::after {
+    content: "THE JUNE SHOP";
+    position: absolute;
+    right: clamp(12px, 5vw, 70px);
+    top: 18px;
+    color: rgba(31,25,22,0.035);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(48px, 8vw, 132px);
+    line-height: 0.8;
+    letter-spacing: -5px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__luxeline {
+    position: absolute;
+    left: clamp(18px, 5vw, 82px);
+    right: clamp(18px, 5vw, 82px);
+    top: 22px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(184, 137, 60, 0.44), transparent);
+    pointer-events: none;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__head {
+    position: relative;
+    z-index: 2;
+    width: min(1180px, calc(100% - 28px));
+    margin: 0 auto 28px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 18px;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__eyebrow {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.42)),
+      rgba(255,255,255,0.54);
+    border: 1px solid rgba(255,255,255,0.72);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.78),
+      0 8px 24px rgba(31,25,22,0.06);
+    color: rgba(31,25,22,0.62);
+    font-size: 8.5px;
+    line-height: 1;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+    font-weight: 850;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__eyebrow::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--tjs-gold);
+    box-shadow: 0 0 0 5px rgba(184, 137, 60, 0.12);
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__head h2 {
+    margin: 0;
+    max-width: 720px;
+    color: var(--tjs-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(34px, 5.4vw, 72px);
+    line-height: 0.92;
+    letter-spacing: -2.8px;
+    font-weight: 400;
+    text-transform: none;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__head p {
+    position: relative;
+    max-width: 540px;
+    margin: 14px 0 0;
+    padding-left: 18px;
+    color: var(--tjs-muted);
+    font-size: 13.5px;
+    line-height: 1.65;
+    font-weight: 650;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__head p::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.45em;
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(180deg, var(--tjs-gold), transparent);
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__all {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 0 17px;
+    border-radius: 999px;
+    background: var(--tjs-ink);
+    color: #fff;
+    text-decoration: none;
+    font-size: 9.5px;
+    line-height: 1;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-weight: 900;
+    box-shadow:
+      5px 5px 0 rgba(213, 141, 130, 0.34),
+      0 12px 28px rgba(31,25,22,0.12);
+    white-space: nowrap;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__all span {
+    transition: transform 0.22s ease;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__all:hover span {
+    transform: translateX(3px);
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__viewport {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    user-select: none;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__track {
+    display: flex;
+    gap: var(--gap);
+    width: max-content;
+    padding: 18px 14px 26px;
+    animation: tjsRunwayScroll{{ section.id }} var(--speed) linear infinite;
+    will-change: transform;
+  }
+
+  #tjs-category-runway-{{ section.id }}:hover .tjs-runway__track {
+    animation-play-state: paused;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__card {
+    flex: 0 0 var(--card-size);
+    width: var(--card-size);
+    height: var(--card-size);
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.56), rgba(255,255,255,0.18)),
+      var(--tjs-card);
+    border: 1px solid rgba(255,255,255,0.72);
+    text-decoration: none;
+    color: var(--tjs-ink);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.85),
+      0 14px 38px rgba(31,25,22,0.08);
+    isolation: isolate;
+    transform: translateZ(0);
+    transition:
+      transform 0.35s cubic-bezier(.2,.9,.2,1),
+      box-shadow 0.35s ease,
+      border-color 0.35s ease;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background:
+      linear-gradient(180deg, transparent 34%, rgba(0,0,0,0.22) 100%),
+      radial-gradient(circle at 50% 14%, rgba(255,255,255,0.34), transparent 40%);
+    pointer-events: none;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__card::after {
+    content: "";
+    position: absolute;
+    top: -80%;
+    left: -55%;
+    z-index: 4;
+    width: 44px;
+    height: 260%;
+    background: linear-gradient(110deg, transparent, rgba(255,255,255,0.66), transparent);
+    transform: rotate(18deg);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: rgba(184,137,60,0.24);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.92),
+      0 24px 58px rgba(31,25,22,0.14);
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__card:hover::after {
+    animation: tjsRunwayShine{{ section.id }} 0.9s ease forwards;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__card img,
+  #tjs-category-runway-{{ section.id }} .tjs-runway__card svg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition:
+      transform 0.65s cubic-bezier(.2,.8,.2,1),
+      filter 0.65s ease;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__card:hover img,
+  #tjs-category-runway-{{ section.id }} .tjs-runway__card:hover svg {
+    transform: scale(1.085);
+    filter: saturate(1.04) contrast(1.03);
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__glass {
+    position: absolute;
+    left: 15px;
+    right: 15px;
+    bottom: 14px;
+    z-index: 5;
+    min-height: 50px;
+    display: grid;
+    align-content: center;
+    gap: 5px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.76), rgba(255,255,255,0.42)),
+      rgba(255,255,255,0.54);
+    border: 1px solid rgba(255,255,255,0.68);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.82),
+      0 9px 26px rgba(0,0,0,0.10);
+    backdrop-filter: blur(18px) saturate(145%);
+    -webkit-backdrop-filter: blur(18px) saturate(145%);
+    transition:
+      background 0.25s ease,
+      color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__card:hover .tjs-runway__glass {
+    transform: translateY(-2px);
+    background:
+      linear-gradient(180deg, rgba(26,26,26,0.88), rgba(26,26,26,0.74)),
+      rgba(26,26,26,0.78);
+    border-color: rgba(255,255,255,0.16);
+    color: #fff;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__name {
+    display: block;
+    max-width: 100%;
+    color: inherit;
+    font-size: 13px;
+    line-height: 1;
+    letter-spacing: 0.1px;
+    font-weight: 850;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__meta {
+    display: block;
+    color: rgba(26,26,26,0.56);
+    font-size: 7.8px;
+    line-height: 1;
+    letter-spacing: 1.05px;
+    text-transform: uppercase;
+    font-weight: 850;
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__card:hover .tjs-runway__meta {
+    color: rgba(255,255,255,0.64);
+  }
+
+  #tjs-category-runway-{{ section.id }} .tjs-runway__empty {
+    position: relative;
+    z-index: 2;
+    width: min(1180px, calc(100% - 28px));
+    min-height: 180px;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    border-radius: 26px;
+    background: rgba(255,255,255,0.58);
+    border: 1px solid rgba(26,26,26,0.08);
+    color: rgba(26,26,26,0.62);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  @keyframes tjsRunwayScroll{{ section.id }} {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-1 * (var(--card-size) + var(--gap)) * var(--item-count)));
+    }
+  }
+
+  @keyframes tjsRunwayShine{{ section.id }} {
+    0% {
+      left: -55%;
+      opacity: 0;
+    }
+    35% {
+      opacity: 0.82;
+    }
+    100% {
+      left: 128%;
+      opacity: 0;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    #tjs-category-runway-{{ section.id }} {
+      --card-size: var(--mobile-card-size);
+      padding: {{ section.settings.mobile_padding_top }}px 0 {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    #tjs-category-runway-{{ section.id }}::after {
+      top: 18px;
+      right: 8px;
+      font-size: 52px;
+      letter-spacing: -2px;
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__head {
+      grid-template-columns: 1fr;
+      margin-bottom: 18px;
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__eyebrow {
+      font-size: 8px;
+      margin-bottom: 10px;
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__head h2 {
+      font-size: clamp(32px, 10.5vw, 46px);
+      line-height: 0.94;
+      letter-spacing: -1.9px;
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__head p {
+      font-size: 12.5px;
+      margin-top: 10px;
+      padding-left: 14px;
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__head p::before {
+      height: 30px;
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__all {
+      width: fit-content;
+      min-height: 38px;
+      padding: 0 14px;
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__viewport {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      mask-image: none;
+      -webkit-mask-image: none;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__viewport::-webkit-scrollbar {
+      display: none;
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__track {
+      animation: {% if section.settings.mobile_autoplay %}tjsRunwayScroll{{ section.id }} var(--speed) linear infinite{% else %}none{% endif %};
+      padding: 10px 0 16px;
+    }
+
+    {% unless section.settings.mobile_autoplay %}
+      #tjs-category-runway-{{ section.id }} .tjs-runway__clone {
+        display: none;
+      }
+    {% endunless %}
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__card {
+      scroll-snap-align: start;
+      border-radius: calc(var(--radius) - 8px);
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__glass {
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      min-height: 42px;
+      padding: 8px 11px;
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__name {
+      font-size: 11.5px;
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__meta {
+      font-size: 7px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #tjs-category-runway-{{ section.id }} .tjs-runway__track,
+    #tjs-category-runway-{{ section.id }} .tjs-runway__card::after {
+      animation: none !important;
+    }
+
+    #tjs-category-runway-{{ section.id }} .tjs-runway__card,
+    #tjs-category-runway-{{ section.id }} .tjs-runway__card img,
+    #tjs-category-runway-{{ section.id }} .tjs-runway__glass {
+      transition: none !important;
+    }
+  }
+</style>
+
+<section id="tjs-category-runway-{{ section.id }}" class="tjs-category-runway">
+  <div class="tjs-runway__luxeline" aria-hidden="true"></div>
+
+  <div class="tjs-runway__head">
+    <div>
+      {% if section.settings.eyebrow != blank %}
+        <div class="tjs-runway__eyebrow">{{ section.settings.eyebrow }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <p>{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+
+    {% if section.settings.show_view_all %}
+      <a href="{{ section.settings.view_all_link | default: routes.all_products_collection_url }}" class="tjs-runway__all">
+        {{ section.settings.view_all_text }}
+        <span>→</span>
+      </a>
+    {% endif %}
+  </div>
+
+  {% if section.blocks.size > 0 %}
+    <div class="tjs-runway__viewport">
+      <div class="tjs-runway__track">
+        {% for block in section.blocks %}
+          {% liquid
+            assign collection = collections[block.settings.collection]
+            assign cat_url = block.settings.link | default: collection.url | default: routes.all_products_collection_url
+            assign cat_name = block.settings.title | default: collection.title | default: "Category"
+            assign cat_count = collection.products_count
+            assign source_choice = block.settings.image_source
+
+            if source_choice == 'inherit'
+              assign source_choice = section.settings.default_image_source
+            endif
+
+            assign display_img = blank
+            assign image_product = blank
+
+            if block.settings.image != blank
+              assign display_img = block.settings.image
+            else
+              if source_choice == 'second_product'
+                assign image_product = collection.products[1]
+              else
+                assign image_product = collection.products.first
+              endif
+
+              if image_product != blank and image_product.featured_image != blank
+                assign display_img = image_product.featured_image
+              elsif collection.products.first.featured_image != blank
+                assign display_img = collection.products.first.featured_image
+              endif
+            endif
+          %}
+
+          <a href="{{ cat_url }}" class="tjs-runway__card" {{ block.shopify_attributes }}>
+            {% if display_img != blank %}
+              <img
+                src="{{ display_img | image_url: width: 700, height: 700, crop: 'center' }}"
+                alt="{{ cat_name | escape }}"
+                loading="lazy"
+                width="700"
+                height="700"
+              >
+            {% else %}
+              {{ 'collection-1' | placeholder_svg_tag }}
+            {% endif %}
+
+            <div class="tjs-runway__glass">
+              <span class="tjs-runway__name">{{ cat_name }}</span>
+              {% if section.settings.show_count and cat_count != blank %}
+                <span class="tjs-runway__meta">{{ cat_count }} finds</span>
+              {% else %}
+                <span class="tjs-runway__meta">{{ block.settings.meta | default: 'Explore now' }}</span>
+              {% endif %}
+            </div>
+          </a>
+        {% endfor %}
+
+        {% for block in section.blocks %}
+          {% liquid
+            assign collection = collections[block.settings.collection]
+            assign cat_url = block.settings.link | default: collection.url | default: routes.all_products_collection_url
+            assign cat_name = block.settings.title | default: collection.title | default: "Category"
+            assign cat_count = collection.products_count
+            assign source_choice = block.settings.image_source
+
+            if source_choice == 'inherit'
+              assign source_choice = section.settings.default_image_source
+            endif
+
+            assign display_img = blank
+            assign image_product = blank
+
+            if block.settings.image != blank
+              assign display_img = block.settings.image
+            else
+              if source_choice == 'second_product'
+                assign image_product = collection.products[1]
+              else
+                assign image_product = collection.products.first
+              endif
+
+              if image_product != blank and image_product.featured_image != blank
+                assign display_img = image_product.featured_image
+              elsif collection.products.first.featured_image != blank
+                assign display_img = collection.products.first.featured_image
+              endif
+            endif
+          %}
+
+          <a href="{{ cat_url }}" class="tjs-runway__card tjs-runway__clone" aria-hidden="true" tabindex="-1">
+            {% if display_img != blank %}
+              <img
+                src="{{ display_img | image_url: width: 700, height: 700, crop: 'center' }}"
+                alt=""
+                loading="lazy"
+                width="700"
+                height="700"
+              >
+            {% else %}
+              {{ 'collection-1' | placeholder_svg_tag }}
+            {% endif %}
+
+            <div class="tjs-runway__glass">
+              <span class="tjs-runway__name">{{ cat_name }}</span>
+              {% if section.settings.show_count and cat_count != blank %}
+                <span class="tjs-runway__meta">{{ cat_count }} finds</span>
+              {% else %}
+                <span class="tjs-runway__meta">{{ block.settings.meta | default: 'Explore now' }}</span>
+              {% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="tjs-runway__empty">
+      Add category cards from the Theme Editor.
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "TJS Luxe Category Runway",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shop the mood"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Curated finds for every corner."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Tagline",
+      "default": "Discover customer-loved edits across home, table, desk and everyday style."
+    },
+    {
+      "type": "select",
+      "id": "default_image_source",
+      "label": "Default collection image source",
+      "options": [
+        {
+          "value": "first_product",
+          "label": "First product image"
+        },
+        {
+          "value": "second_product",
+          "label": "Second product image"
+        }
+      ],
+      "default": "first_product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All text",
+      "default": "Shop All"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count",
+      "label": "Show collection product count",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "card_size",
+      "label": "Desktop card size",
+      "min": 180,
+      "max": 330,
+      "step": 10,
+      "unit": "px",
+      "default": 250
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_size",
+      "label": "Mobile card size",
+      "min": 140,
+      "max": 230,
+      "step": 10,
+      "unit": "px",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Card gap",
+      "min": 10,
+      "max": 38,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Card corner radius",
+      "min": 14,
+      "max": 46,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Desktop slide speed in seconds",
+      "min": 10,
+      "max": 80,
+      "step": 1,
+      "default": 36
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_autoplay",
+      "label": "Autoplay on mobile",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop top padding",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop bottom padding",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile top padding",
+      "min": 12,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile bottom padding",
+      "min": 12,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#1f1916"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card fallback color",
+      "default": "#f8f4ef"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#d58d82"
+    },
+    {
+      "type": "color",
+      "id": "gold_color",
+      "label": "Luxury accent",
+      "default": "#b8893c"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category Card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select collection"
+        },
+        {
+          "type": "select",
+          "id": "image_source",
+          "label": "Auto image source",
+          "options": [
+            {
+              "value": "inherit",
+              "label": "Use section default"
+            },
+            {
+              "value": "first_product",
+              "label": "First product image"
+            },
+            {
+              "value": "second_product",
+              "label": "Second product image"
+            }
+          ],
+          "default": "inherit"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Manual image override"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Manual title"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Small label",
+          "default": "Explore now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Manual link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS Luxe Category Runway",
+      "blocks": [
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" }
+      ]
+    }
+  ]
+}
+{% endschema %}

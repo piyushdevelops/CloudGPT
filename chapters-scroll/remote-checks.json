@@ -1,0 +1,16 @@
+{
+  "role": "UNPUBLISHED",
+  "otherHomepageSettingsPreserved": true,
+  "checks": [
+    {
+      "filename": "sections/june-other-chapters.liquid",
+      "matches": true,
+      "checksumMd5": "05cf3215c276f7027bfef1cbac39bb7f"
+    },
+    {
+      "filename": "templates/index.json",
+      "matches": true,
+      "checksumMd5": "99f79c8cf3eed151f00f798f049cd3f0"
+    }
+  ]
+}

@@ -1,0 +1,611 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumb": {
+      "type": "brc-nav-product",
+      "settings": {
+        "back_next_pr": true,
+        "color_scheme": "scheme-4",
+        "padding_top": 10,
+        "padding_bottom": 10,
+        "padding_rate": 75
+      }
+    },
+    "main-product": {
+      "type": "main-product",
+      "blocks": {
+        "group_product_rjwCiM": {
+          "type": "_group-product",
+          "settings": {},
+          "blocks": {
+            "product_title_JjxmKw": {
+              "type": "_product-title",
+              "settings": {
+                "hdt_pr_title_size": "h5"
+              },
+              "blocks": {}
+            },
+            "custom_liquid_VXAn64": {
+              "type": "_custom-liquid",
+              "name": "Custom liquid",
+              "settings": {
+                "liquid": "Everything you need to feel <b>organised</b>, <b>inspired</b>, and <b>calm</b>.\n<br>Value-Packed with <b>8</b> Planner Must-Haves"
+              },
+              "blocks": {}
+            },
+            "custom_liquid_UAURjL": {
+              "type": "_custom-liquid",
+              "name": "Offer Spin",
+              "settings": {
+                "liquid": "<style>\n.tjs-game-box *{box-sizing:border-box;}\n\n.tjs-game-box{\n  width:100%;\n  max-width:600px;\n  margin:18px 0;\n  border-radius:18px;\n  overflow:hidden;\n  position:relative;\n  background:#171717;\n  border:2px solid #DADADA;\n  font-family:Arial,sans-serif;\n}\n\n.tjs-game-box::after{\n  content:\"\";\n  position:absolute;\n  inset:0;\n  background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.12) 45%,transparent 70%);\n  transform:translateX(-120%);\n  animation:tjs-game-shine 5.5s ease-in-out infinite;\n  pointer-events:none;\n}\n\n@keyframes tjs-game-shine{\n  0%,50%{transform:translateX(-120%);}\n  80%,100%{transform:translateX(120%);}\n}\n\n.tjs-game-inner{\n  display:grid;\n  grid-template-columns:minmax(0,1.35fr) minmax(130px,.65fr);\n  gap:14px;\n  padding:16px;\n  position:relative;\n  z-index:2;\n  align-items:center;\n}\n\n.tjs-game-eyebrow{\n  font-size:10px;\n  letter-spacing:.16em;\n  text-transform:uppercase;\n  color:rgba(255,255,255,.48);\n  margin-bottom:8px;\n  font-weight:800;\n}\n\n.tjs-game-title{\n  font-family:Impact,Arial Black,sans-serif;\n  font-size:clamp(24px,4vw,30px);\n  line-height:.95;\n  letter-spacing:.02em;\n  margin:0 0 10px;\n  text-transform:uppercase;\n}\n\n.tjs-game-title .pink{color:currentColor;}\n.tjs-game-title .yellow{color:currentColor;}\n\n.tjs-game-sub{\n  font-size:13px;\n  color:rgba(255,255,255,.68);\n  line-height:1.45;\n  margin-bottom:12px;\n  max-width:360px;\n}\n\n.tjs-game-points{\n  display:flex;\n  flex-wrap:wrap;\n  gap:6px;\n}\n\n.tjs-game-pill{\n  display:inline-flex;\n  align-items:center;\n  gap:5px;\n  background:#171717;\n  border-radius:999px;\n  padding:6px 9px;\n  font-size:11px;\n  color:#FFFFFF;\n  border:1px solid rgba(255,255,255,.08);\n}\n\n.tjs-game-right{\n  display:flex;\n  flex-direction:column;\n  align-items:center;\n  gap:10px;\n  position:relative;\n}\n\n/* PREMIUM POINTER */\n.tjs-game-pointer{\n  position:absolute;\n  top:-11px;\n  width:22px;\n  height:22px;\n  background:linear-gradient(135deg,#F5F5F3,#F5F5F3,#F5F5F3);\n  clip-path:polygon(50% 100%,0 0,100% 0);\n  z-index:5;\n  filter:drop-shadow(0 3px 3px rgba(0,0,0,.45));\n}\n\n/* PREMIUM WHEEL */\n.tjs-game-disc{\n  width:114px;\n  aspect-ratio:1/1;\n  border-radius:50%;\n  position:relative;\n  display:flex;\n  justify-content:center;\n  align-items:center;\n  cursor:pointer;\n  isolation:isolate;\n  background:\n    radial-gradient(circle at 32% 25%,rgba(255,255,255,.95) 0 7%,transparent 8%),\n    conic-gradient(\n      from -20deg,\n      #F5F5F3 0deg 45deg,\n      #F5F5F3 45deg 90deg,\n      #171717 90deg 135deg,\n      #F5F5F3 135deg 180deg,\n      #F5F5F3 180deg 225deg,\n      #F5F5F3 225deg 270deg,\n      #171717 270deg 315deg,\n      #F5F5F3 315deg 360deg\n    );\n  border:4px solid #DADADA;\n  box-shadow:\n    inset 0 0 0 5px rgba(0,0,0,.28),\n    inset 0 0 22px rgba(255,255,255,.16),\n    0 0 0 8px rgba(23,23,23,.1),\n    0 0 42px rgba(23,23,23,.28),\n    0 12px 24px rgba(0,0,0,.35);\n  transition:transform .2s ease, filter .2s ease;\n}\n\n.tjs-game-disc:hover{\n  transform:scale(1.05);\n  filter:brightness(1.08);\n}\n\n.tjs-game-disc::before{\n  content:\"\";\n  position:absolute;\n  inset:9px;\n  border-radius:50%;\n  border:1px dashed rgba(255,255,255,.45);\n  z-index:1;\n  opacity:.9;\n}\n\n.tjs-game-disc::after{\n  content:\"\";\n  position:absolute;\n  inset:0;\n  border-radius:50%;\n  background:\n    linear-gradient(135deg,rgba(255,255,255,.34),transparent 34%,transparent 62%,rgba(255,255,255,.12)),\n    radial-gradient(circle at 35% 25%,rgba(255,255,255,.45),transparent 24%);\n  z-index:3;\n  pointer-events:none;\n  mix-blend-mode:screen;\n}\n\n.tjs-game-disc.spin{\n  animation:tjs-disc-spin 1.1s cubic-bezier(.2,.8,.2,1) forwards;\n}\n\n@keyframes tjs-disc-spin{\n  0%{transform:rotate(0deg) scale(1);}\n  70%{transform:rotate(860deg) scale(1.08);}\n  100%{transform:rotate(1080deg) scale(1);}\n}\n\n.tjs-game-disc-inner{\n  width:72px;\n  aspect-ratio:1/1;\n  background:\n    radial-gradient(circle at 35% 22%,#F5F5F3 0 12%,transparent 13%),\n    linear-gradient(135deg,#F5F5F3,#F5F5F3 45%,#F5F5F3);\n  border-radius:50%;\n  display:flex;\n  flex-direction:column;\n  justify-content:center;\n  align-items:center;\n  text-align:center;\n  border:3px solid #171717;\n  z-index:4;\n  box-shadow:\n    inset 0 2px 8px rgba(255,255,255,.45),\n    inset 0 -8px 12px rgba(0,0,0,.22),\n    0 4px 10px rgba(0,0,0,.35);\n}\n\n.tjs-game-main{\n  font-family:Impact,Arial Black,sans-serif;\n  font-size:31px;\n  line-height:.85;\n  color:#171717;\n}\n\n.tjs-game-small{\n  font-family:Impact,Arial Black,sans-serif;\n  font-size:12px;\n  letter-spacing:.08em;\n  color:#171717;\n}\n\n/* BUTTON + SUBTEXT */\n.tjs-game-action{\n  width:100%;\n  max-width:145px;\n  text-align:center;\n}\n\n.tjs-game-btn{\n  width:100%;\n  text-align:center;\n  border:2px dashed rgba(23,23,23,.38);\n  color:currentColor;\n  padding:10px;\n  border-radius:10px;\n  font-family:Impact,Arial Black,sans-serif;\n  font-size:13px;\n  letter-spacing:.09em;\n  cursor:pointer;\n  background:transparent;\n  position:relative;\n  overflow:visible;\n}\n\n.tjs-game-btn.unlocked{\n  background:#F56A28;\n  color:#171717;\n  border-color:#DADADA;\n}\n\n.tjs-game-cart-note{\n  display:none;\n  margin-top:5px;\n  font-size:10px;\n  font-weight:800;\n  letter-spacing:.08em;\n  text-transform:uppercase;\n  color:rgba(255,255,255,.62);\n}\n\n.tjs-game-cart-note.show{\n  display:block;\n}\n\n.tjs-burst{\n  position:absolute;\n  left:50%;\n  top:50%;\n  transform:translate(-50%,-50%);\n  pointer-events:none;\n  font-size:11px;\n  font-weight:900;\n  color:currentColor;\n  background:#F5F5F3;\n  border-radius:999px;\n  padding:3px 7px;\n  white-space:nowrap;\n  animation:tjs-burst .9s ease-out forwards;\n  z-index:20;\n}\n\n@keyframes tjs-burst{\n  0%{opacity:0;transform:translate(-50%,-50%) scale(.5);}\n  20%{opacity:1;}\n  100%{\n    opacity:0;\n    transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1.2) rotate(8deg);\n  }\n}\n\n@media(max-width:768px){\n  .tjs-game-inner{\n    grid-template-columns:1fr;\n  }\n\n  .tjs-game-right{\n    flex-direction:row;\n    justify-content:space-between;\n    width:100%;\n    background:rgba(255,255,255,.04);\n    border:1px solid rgba(255,255,255,.07);\n    border-radius:14px;\n    padding:10px;\n  }\n\n  .tjs-game-disc{\n    width:92px;\n    flex-shrink:0;\n  }\n\n  .tjs-game-disc-inner{\n    width:60px;\n  }\n\n  .tjs-game-main{\n    font-size:25px;\n  }\n\n  .tjs-game-small{\n    font-size:10px;\n  }\n\n  .tjs-game-action{\n    flex:1;\n    max-width:none;\n    margin-left:12px;\n  }\n\n  .tjs-game-btn{\n    padding:13px 8px;\n  }\n\n  .tjs-game-pointer{\n    left:43px;\n    top:-8px;\n  }\n}\n\n@media(max-width:420px){\n  .tjs-game-inner{padding:13px;}\n  .tjs-game-title{font-size:26px;}\n  .tjs-game-sub{font-size:12px;}\n\n  .tjs-game-points{\n    display:grid;\n    grid-template-columns:1fr 1fr;\n  }\n\n  .tjs-game-pill{\n    justify-content:center;\n    text-align:center;\n    font-size:10.5px;\n  }\n\n  .tjs-game-pill:nth-child(3){\n    grid-column:1/-1;\n  }\n}\n</style>\n\n<div class=\"tjs-game-box\">\n  <div class=\"tjs-game-inner\">\n\n    <div>\n      <div class=\"tjs-game-eyebrow\">Tap To Unlock Your Deal</div>\n\n      <div class=\"tjs-game-title\">\n        <span class=\"pink\">SPIN IT.</span><br>\n        <span class=\"yellow\">UNLOCK 50% OFF.</span>\n      </div>\n\n      <div class=\"tjs-game-sub\">\n        Your clearance deal is already waiting — tap the disc to activate the fun.\n      </div>\n\n      <div class=\"tjs-game-points\">\n        <div class=\"tjs-game-pill\">🚚 Free Shipping</div>\n        <div class=\"tjs-game-pill\">⚡ Auto Applied</div>\n        <div class=\"tjs-game-pill\">🔒 Secure Checkout</div>\n      </div>\n    </div>\n\n    <div class=\"tjs-game-right\">\n\n      <div class=\"tjs-game-pointer\"></div>\n\n      <div class=\"tjs-game-disc\" id=\"tjs-spin-disc\">\n        <div class=\"tjs-game-disc-inner\">\n          <div class=\"tjs-game-main\">50%</div>\n          <div class=\"tjs-game-small\">OFF</div>\n        </div>\n      </div>\n\n      <div class=\"tjs-game-action\">\n        <button class=\"tjs-game-btn\" id=\"tjs-spin-btn\" type=\"button\">\n          TAP TO UNLOCK\n        </button>\n        <div class=\"tjs-game-cart-note\" id=\"tjs-cart-note\">\n          Just Add To Cart\n        </div>\n      </div>\n\n    </div>\n\n  </div>\n</div>\n\n<script>\n(function(){\n  var disc=document.getElementById('tjs-spin-disc');\n  var btn=document.getElementById('tjs-spin-btn');\n  var note=document.getElementById('tjs-cart-note');\n\n  if(!disc || !btn || !note) return;\n\n  function burst(){\n    var labels=['UNLOCKED','50% OFF','YAY','SAVED','ADDED'];\n    for(var i=0;i<40;i++){\n      var el=document.createElement('span');\n      el.className='tjs-burst';\n      el.innerText=labels[i%labels.length];\n\n      el.style.setProperty('--x',(Math.random()*500-205)+'px');\n      el.style.setProperty('--y',(-Math.random()*500-5)+'px');\n\n      btn.appendChild(el);\n\n      setTimeout(function(e){\n        if(e && e.parentNode) e.parentNode.removeChild(e);\n      },900,el);\n    }\n  }\n\n  function unlock(){\n    if(disc.classList.contains('spin')) return;\n\n    btn.innerText='SPINNING...';\n    btn.classList.remove('unlocked');\n    note.classList.remove('show');\n\n    disc.classList.add('spin');\n\n    setTimeout(function(){\n      btn.innerText='Activated✓';\n      btn.classList.add('unlocked');\n      note.classList.add('show');\n      burst();\n    },1050);\n\n    setTimeout(function(){\n      disc.classList.remove('spin');\n    },1250);\n  }\n\n  disc.addEventListener('click',unlock);\n  btn.addEventListener('click',unlock);\n})();\n</script>"
+              },
+              "blocks": {}
+            },
+            "product_badges_3qxfaW": {
+              "type": "_product-badges",
+              "settings": {
+                "special": "",
+                "min": 4,
+                "max": 80,
+                "content": "Selling fast! [count] people have this in their carts.",
+                "icon_svg": "flash",
+                "ani": "none"
+              },
+              "blocks": {}
+            },
+            "product_price_VhBaXe": {
+              "type": "_product-price",
+              "settings": {},
+              "blocks": {}
+            },
+            "product_countdown_kTqkaR": {
+              "type": "_product-countdown",
+              "settings": {
+                "color_scheme": "",
+                "icon": "none",
+                "svg_upload": "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"hdt-ani-tada is--infinite hdt-inine-block\" width=\"14\" height=\"14\" viewBox=\"0 0 14 14\"><path d=\"M6.7796 0.828412C3.1501 0.828412 0.193808 3.7847 0.193808 7.41421C0.193808 11.0437 3.1501 14 6.7796 14C10.4091 14 13.3654 11.0437 13.3654 7.41421C13.3654 3.7847 10.4091 0.828412 6.7796 0.828412ZM6.7796 12.5365C3.95503 12.5365 1.65732 10.2388 1.65732 7.41421C1.65732 4.58963 3.95503 2.29192 6.7796 2.29192C9.60418 2.29192 11.9019 4.58963 11.9019 7.41421C11.9019 10.2388 9.60418 12.5365 6.7796 12.5365ZM0.252349 2.65048C-0.0549885 2.38705 -0.0842587 1.91873 0.179173 1.61871C0.669449 1.05526 1.24754 0.550345 1.88416 0.125928C2.22077 -0.100916 2.67446 -0.0131058 2.9013 0.323501C3.12814 0.660109 3.04033 1.1138 2.70373 1.34064C2.17686 1.69188 1.70122 2.1163 1.29144 2.58462C1.14509 2.75293 0.947516 2.83342 0.742624 2.83342C0.564631 2.83384 0.392712 2.76872 0.259666 2.65048H0.252349ZM10.8555 1.34064C10.5189 1.1138 10.4311 0.660109 10.6579 0.323501C10.8847 -0.0131058 11.3384 -0.100916 11.675 0.125928C12.3117 0.550345 12.8824 1.05526 13.38 1.61871C13.6435 1.92604 13.6142 2.38705 13.3069 2.65048C13.2349 2.71418 13.1511 2.76303 13.0602 2.79421C12.9693 2.82539 12.8732 2.83829 12.7773 2.83217C12.6814 2.82605 12.5876 2.80102 12.5015 2.75854C12.4153 2.71606 12.3383 2.65695 12.2751 2.58462C11.859 2.1117 11.3844 1.69368 10.8628 1.34064H10.8555ZM8.71875 8.1606C9.01877 8.43135 9.04804 8.89235 8.77729 9.19237C8.63094 9.35336 8.43337 9.44117 8.22848 9.44117C8.05286 9.44117 7.88455 9.38263 7.74552 9.25823L6.28933 7.96302C6.13566 7.82399 6.04053 7.62642 6.04053 7.41421V4.48719C6.04053 4.08472 6.36982 3.75543 6.77228 3.75543C7.17475 3.75543 7.50404 4.08472 7.50404 4.48719V7.08492L8.71875 8.1606Z\"></path></svg>",
+                "ani": "hdt-ani-tada",
+                "content": "HURRY UP! SALE ENDS IN:",
+                "alignment": "center",
+                "effect_cd": "move_top"
+              },
+              "blocks": {}
+            },
+            "product_variant_picker_RJxUVf": {
+              "type": "_product-variant-picker",
+              "settings": {
+                "color_picker_type": "image_rounded",
+                "color_size": "small",
+                "picker_type": "block",
+                "size_chart_source": "page",
+                "size_chart_page": "",
+                "title": "Variant picker"
+              },
+              "blocks": {}
+            },
+            "product_item_property_9GFckP": {
+              "type": "_product-item-property",
+              "name": "t:sections.main-product.blocks.line_item_property.name",
+              "settings": {
+                "title": "Enter Name (Only Required For Name Customisation)",
+                "property_type": "text",
+                "use_required": false,
+                "show_at_ck_cart": true,
+                "type_text": "short",
+                "max_characters": 30,
+                "ck_value": "Yes",
+                "type_options": "select",
+                "options": "option1\noption2",
+                "visibility": "tag",
+                "collection_based": [],
+                "type_based": "",
+                "tag_based": "name_customisation",
+                "product_based": []
+              },
+              "blocks": {}
+            },
+            "custom_liquid_GTzLgx": {
+              "type": "_custom-liquid",
+              "name": "Custom liquid",
+              "settings": {
+                "liquid": "Want to buy this in bulk? <a href=\"https://wa.me/+917003079822?text=Hello\" target=\"_blank\"><u>Click Here</u></a>"
+              },
+              "blocks": {}
+            },
+            "quantity_selector_6zJAfX": {
+              "type": "_quantity-selector",
+              "settings": {},
+              "blocks": {}
+            },
+            "product_buy_button_9gRLMx": {
+              "type": "_product-buy-button",
+              "settings": {
+                "show_dynamic_checkout": true,
+                "show_gift_card_recipient": true,
+                "show_wishlist": true,
+                "show_compare": true,
+                "show_price_variant": true
+              },
+              "blocks": {}
+            },
+            "product_back_instock_qNYiT7": {
+              "type": "_product_back_instock",
+              "settings": {
+                "only_show_soldout": true
+              },
+              "blocks": {}
+            },
+            "product_order_CzRpci": {
+              "type": "_product-order",
+              "name": "t:sections.main-product.blocks.order.name",
+              "settings": {
+                "hide_pre": true,
+                "icon": "rocket",
+                "svg_upload": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M21.949 10.1118C22.1634 10.912 21.6886 11.7345 20.8884 11.9489L5.2218 16.1467C4.77856 16.2655 4.31138 16.0674 4.08866 15.6662L1.46582 10.9415L2.91471 10.5533L5.3825 12.9979L10.4778 11.6326L5.96728 4.55896L7.89913 4.04132L14.8505 10.4609L20.1119 9.05113C20.9121 8.83671 21.7346 9.31159 21.949 10.1118ZM4.00013 19H20.0001V21H4.00013V19Z\"></path></svg>",
+                "ani": "none",
+                "txt": "Order Now & get your Planner Within [date_start] and [date_end]",
+                "ds": 1,
+                "de": 3,
+                "mode": "2",
+                "cut_day": "SUN",
+                "off_days": "23/12/****\n24/12/****\n01/01/****",
+                "frm_day": "t44, DD t46",
+                "time": "15:00:00"
+              },
+              "blocks": {}
+            },
+            "product_extra_link_n7Vykn": {
+              "type": "_product-extra-link",
+              "settings": {},
+              "blocks": {
+                "compare_color_Lz6TAK": {
+                  "type": "_compare_color",
+                  "disabled": true,
+                  "settings": {
+                    "html": "<svg class=\"hdt-inline-block\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewbox=\"0 0 20 20\" fill=\"none\"><path d=\"M10 12.2903C13.3939 12.2903 16.1451 9.539 16.1451 6.14513C16.1451 2.75127 13.3939 0 10 0C6.60614 0 3.85487 2.75127 3.85487 6.14513C3.85487 9.539 6.60614 12.2903 10 12.2903Z\" fill=\"url(#paint0_radial_242_2855)\"></path><path d=\"M13.8549 20C17.2487 20 20 17.2487 20 13.8549C20 10.461 17.2487 7.70973 13.8549 7.70973C10.461 7.70973 7.70973 10.461 7.70973 13.8549C7.70973 17.2487 10.461 20 13.8549 20Z\" fill=\"url(#paint1_radial_242_2855)\"></path><path d=\"M6.14513 20C9.539 20 12.2903 17.2487 12.2903 13.8549C12.2903 10.461 9.539 7.70973 6.14513 7.70973C2.75127 7.70973 0 10.461 0 13.8549C0 17.2487 2.75127 20 6.14513 20Z\" fill=\"url(#paint2_radial_242_2855)\"></path><path d=\"M12.2902 13.8548C12.291 14.7731 12.0857 15.6799 11.6893 16.5083C11.2929 17.3366 10.7156 18.0654 10 18.6409C9.03122 17.8594 8.32217 16.8025 7.96643 15.6097C7.61069 14.4169 7.62498 13.1443 8.00741 11.9598C9.29929 12.4005 10.7008 12.4005 11.9927 11.9598C12.1905 12.572 12.2909 13.2114 12.2902 13.8548Z\" fill=\"url(#paint3_radial_242_2855)\"></path><path d=\"M15.8474 8.04018C15.5522 8.94737 15.0504 9.77362 14.3815 10.4538C13.7126 11.134 12.8948 11.6495 11.9927 11.9598C11.6232 10.8231 10.9309 9.81845 10.0003 9.06839C10.8091 8.4178 11.7693 7.98236 12.7917 7.80258C13.814 7.62281 14.8652 7.70454 15.8474 8.04018Z\" fill=\"url(#paint4_radial_242_2855)\"></path><path d=\"M10.0003 9.06857C9.06943 9.81853 8.37698 10.8232 8.00741 11.96C7.10526 11.6497 6.28749 11.1341 5.61856 10.4539C4.94963 9.77369 4.44782 8.9474 4.15268 8.04018C5.13503 7.70459 6.1863 7.62291 7.2087 7.80275C8.23109 7.98258 9.1914 8.41809 10.0003 9.06875V9.06857Z\" fill=\"url(#paint5_radial_242_2855)\"></path><path d=\"M11.9927 11.9598C10.7008 12.4005 9.29929 12.4005 8.00741 11.9598C8.37698 10.823 9.06943 9.81835 10.0003 9.06839C10.9309 9.81845 11.6232 10.8231 11.9927 11.9598Z\" fill=\"url(#paint6_radial_242_2855)\"></path><defs><radialgradient id=\"paint0_radial_242_2855\" cx=\"0\" cy=\"0\" r=\"1\" gradientunits=\"userSpaceOnUse\" gradienttransform=\"translate(6.40911 7.48269) scale(14.0721)\"><stop stop-color=\"#E85155\"></stop><stop offset=\"1\" stop-color=\"#C21D2C\"></stop></radialgradient><radialgradient id=\"paint1_radial_242_2855\" cx=\"0\" cy=\"0\" r=\"1\" gradientunits=\"userSpaceOnUse\" gradienttransform=\"translate(6.72106 6.70551) scale(14.288)\"><stop stop-color=\"#4793EB\"></stop><stop offset=\"1\" stop-color=\"#2367EC\"></stop></radialgradient><radialgradient id=\"paint2_radial_242_2855\" cx=\"0\" cy=\"0\" r=\"1\" gradientunits=\"userSpaceOnUse\" gradienttransform=\"translate(5.39669 6.84565) scale(15.3389)\"><stop stop-color=\"#FED200\"></stop><stop offset=\"1\" stop-color=\"#F59815\"></stop></radialgradient><radialgradient id=\"paint3_radial_242_2855\" cx=\"0\" cy=\"0\" r=\"1\" gradientunits=\"userSpaceOnUse\" gradienttransform=\"translate(19.1618 0.299752) scale(37.5697 25.7572)\"><stop stop-color=\"#34CA82\"></stop><stop offset=\"1\" stop-color=\"#37A477\"></stop></radialgradient><radialgradient id=\"paint4_radial_242_2855\" cx=\"0\" cy=\"0\" r=\"1\" gradientunits=\"userSpaceOnUse\" gradienttransform=\"translate(-6.9596 -14.6409) scale(29.3932 40.4368)\"><stop stop-color=\"#CE47C6\"></stop><stop offset=\"1\" stop-color=\"#651DC2\"></stop></radialgradient><radialgradient id=\"paint5_radial_242_2855\" cx=\"0\" cy=\"0\" r=\"1\" gradientunits=\"userSpaceOnUse\" gradienttransform=\"translate(14.0224 -14.9113) scale(28.6079 39.3588)\"><stop stop-color=\"#FD9B02\"></stop><stop offset=\"1\" stop-color=\"#FF7302\"></stop></radialgradient><radialgradient id=\"paint6_radial_242_2855\" cx=\"0\" cy=\"0\" r=\"1\" gradientunits=\"userSpaceOnUse\" gradienttransform=\"translate(8.22384 5.02871) scale(8.12464)\"><stop stop-color=\"#C2763E\"></stop><stop offset=\"1\" stop-color=\"#8A552E\"></stop></radialgradient></defs></svg>"
+                  },
+                  "blocks": {}
+                },
+                "product_ask_question_jVhieD": {
+                  "type": "_product-ask-question",
+                  "settings": {
+                    "show_phone": true
+                  },
+                  "blocks": {}
+                },
+                "product_delivery_return_YGMXYQ": {
+                  "type": "_product-delivery-return",
+                  "settings": {
+                    "page_delivery": "shipping-delivery"
+                  },
+                  "blocks": {}
+                },
+                "share_buttons_FAVCWk": {
+                  "type": "_share_buttons",
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "compare_color_Lz6TAK",
+                "product_ask_question_jVhieD",
+                "product_delivery_return_YGMXYQ",
+                "share_buttons_FAVCWk"
+              ]
+            },
+            "product_trust_badge_V8a7Hy": {
+              "type": "_product-trust-badge",
+              "settings": {
+                "show_icon": true,
+                "mess": "",
+                "source": "2",
+                "wimg": 350,
+                "svg": "visa,master,upi,paytm,paypal",
+                "height": 30
+              },
+              "blocks": {}
+            },
+            "product_item_property_JMp6Fp": {
+              "type": "_product-item-property",
+              "name": "t:sections.main-product.blocks.line_item_property.name",
+              "disabled": true,
+              "settings": {
+                "title": "Your label",
+                "property_type": "text",
+                "use_required": false,
+                "show_at_ck_cart": true,
+                "type_text": "short",
+                "ck_value": "Yes",
+                "type_options": "select",
+                "options": "option1\noption2",
+                "visibility": "all",
+                "collection_based": [],
+                "type_based": "",
+                "tag_based": "",
+                "product_based": []
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_title_JjxmKw",
+            "custom_liquid_VXAn64",
+            "custom_liquid_UAURjL",
+            "product_badges_3qxfaW",
+            "product_price_VhBaXe",
+            "product_countdown_kTqkaR",
+            "product_variant_picker_RJxUVf",
+            "product_item_property_9GFckP",
+            "custom_liquid_GTzLgx",
+            "quantity_selector_6zJAfX",
+            "product_buy_button_9gRLMx",
+            "product_back_instock_qNYiT7",
+            "product_order_CzRpci",
+            "product_extra_link_n7Vykn",
+            "product_trust_badge_V8a7Hy",
+            "product_item_property_JMp6Fp"
+          ]
+        },
+        "main-product": {
+          "type": "_product-medias",
+          "static": true,
+          "settings": {
+            "display_by_block": true,
+            "color_scheme": "scheme-1",
+            "desktop_media_layout": "2_columns",
+            "media_size": "small",
+            "mobile_media_layout": "thumbnails",
+            "enable_thumb_efect": false,
+            "show_first_media": true,
+            "use_select_varaint_change_media": true,
+            "enable_media_autoplay": true,
+            "enable_video_looping": true,
+            "image_ratio": "adapt_image",
+            "image_size": true,
+            "image_zoom": "lightbox",
+            "image_zoom_type": "inner",
+            "zoom_level": 2,
+            "max_zoom_lightbox": 3,
+            "navUI": true,
+            "nav_des": "default",
+            "nav_shape": "rounded"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "group_product_rjwCiM"
+      ],
+      "settings": {
+        "sticky_atc": true,
+        "product_list_fbt": [],
+        "fbt_color_scheme": "",
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 0,
+        "padding_bottom": 6,
+        "padding_rate": 24
+      }
+    },
+    "brands_EXFYkK": {
+      "type": "brands",
+      "blocks": {
+        "logo_item_TdfYkL": {
+          "type": "_logo-item",
+          "name": "USP 3",
+          "settings": {
+            "image": "shopify://shop_images/Title_3.jpg",
+            "url": ""
+          },
+          "blocks": {}
+        },
+        "logo_item_iNq37K": {
+          "type": "_logo-item",
+          "name": "USP 1",
+          "settings": {
+            "image": "shopify://shop_images/Title.jpg",
+            "url": ""
+          },
+          "blocks": {}
+        },
+        "logo_item_CQxCN3": {
+          "type": "_logo-item",
+          "name": "USP 2",
+          "settings": {
+            "image": "shopify://shop_images/Title_1.jpg",
+            "url": ""
+          },
+          "blocks": {}
+        },
+        "logo_item_m77Xrj": {
+          "type": "_logo-item",
+          "name": "USP 3",
+          "settings": {
+            "image": "shopify://shop_images/Title_2.jpg",
+            "url": ""
+          },
+          "blocks": {}
+        },
+        "logo-list-heading": {
+          "type": "section-heading",
+          "static": true,
+          "settings": {
+            "alignment": "center",
+            "row_gap": 15,
+            "margin_bottom": 30
+          },
+          "blocks": {
+            "heading_JckjaF": {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Designed to <strong>Inspire</strong> Every Day</p>",
+                "hidden_br_mobile": false,
+                "hidden_on_mobile": false,
+                "line_height": "hdt-lh-sm",
+                "heading_size": "h4",
+                "text_color": "hdt-s-text",
+                "font_size_heading_lg": 50,
+                "font_size_heading_md": 30,
+                "font_size_heading": 24,
+                "font_weight_heading": 600,
+                "letter_spacing_heading": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "heading_JckjaF"
+          ]
+        }
+      },
+      "block_order": [
+        "logo_item_TdfYkL",
+        "logo_item_iNq37K",
+        "logo_item_CQxCN3",
+        "logo_item_m77Xrj"
+      ],
+      "disabled": true,
+      "name": "USPs",
+      "settings": {
+        "color_scheme": "",
+        "border_item": true,
+        "url_target": "_self",
+        "navUI": false,
+        "dotUI": true,
+        "col_dk": "3",
+        "animated": "none",
+        "col_tb": "2",
+        "col_mb": "2",
+        "padding_top": 0,
+        "padding_bottom": 4,
+        "padding_rate": 16
+      }
+    },
+    "tabs": {
+      "type": "main-product-tabs",
+      "blocks": {
+        "tab_des_tKqkJj": {
+          "type": "tab_des",
+          "settings": {
+            "title": "Description"
+          }
+        },
+        "tab_html_QU9cMB": {
+          "type": "tab_html",
+          "disabled": true,
+          "settings": {
+            "title": "More Information",
+            "content": "",
+            "page": "more-info"
+          }
+        },
+        "tab_html_QDfnWe": {
+          "type": "tab_html",
+          "settings": {
+            "title": "What's Inside Each Box?",
+            "content": "<h3><strong>Inside The Feel-Good Planner Box™</strong></h3><ol><li><strong>Undated Planner</strong><br/>Start anytime, no wasted pages<br/>Flexible layouts for daily planning, goals & notes<br/></li><li><strong>Daily Planner – Tear-Off Diary</strong><br/>One day per page<br/>Ideal for to-do lists, priorities & quick planning<br/></li><li><strong> The Feel-Good Sticker Book (8 Pages, 250+ Stickers)</strong><br/>Functional + decorative stickers<br/>Perfect for planners, journaling & habit tracking<br/></li><li><strong>2026 Desk Calendar with Easel Stand</strong><br/>Compact, minimal design<br/>Easy monthly view for your desk<br/></li><li><strong>Canvas Pouch</strong><br/>Durable & travel-friendly<br/>Stores stationery, stickers & planner essentials<br/></li><li><strong>The Feel-Good Planning Kit</strong><br/>Mini Paper Cutter<br/>Fragrant Glue Stick<br/>Heart-Shaped Bookmark / Paper Clip<br/>Lipstick-Shaped Pen<br/></li></ol><p> </p>",
+            "page": ""
+          }
+        },
+        "tab_html_GUBKNW": {
+          "type": "tab_html",
+          "settings": {
+            "title": "Shipping & Delivery",
+            "content": "",
+            "page": "shipping-delivery"
+          }
+        },
+        "tab_html_fjtD4a": {
+          "type": "tab_html",
+          "settings": {
+            "title": "Return Policies",
+            "content": "",
+            "page": "return-and-refund-policy"
+          }
+        }
+      },
+      "block_order": [
+        "tab_des_tKqkJj",
+        "tab_html_QU9cMB",
+        "tab_html_QDfnWe",
+        "tab_html_GUBKNW",
+        "tab_html_fjtD4a"
+      ],
+      "settings": {
+        "tabs_design": "tab",
+        "enable_first_tab": false,
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_rate": 50
+      }
+    },
+    "sidebar": {
+      "type": "sidebar-product",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "space": 50
+      }
+    },
+    "featured_collection_carousel_jDP3Hf": {
+      "type": "featured-collection-carousel",
+      "blocks": {
+        "featured-collection-carousel": {
+          "type": "_collection_heading",
+          "static": true,
+          "settings": {
+            "one_line": false,
+            "alignment": "center",
+            "row_gap": 15,
+            "margin_bottom": 30
+          },
+          "blocks": {
+            "heading_B4wtGm": {
+              "type": "heading",
+              "settings": {
+                "heading": "<h4>Undated Yearly Planners</h4>",
+                "hidden_br_mobile": false,
+                "hidden_on_mobile": false,
+                "line_height": "",
+                "heading_size": "h4",
+                "text_color": "hdt-s-text",
+                "font_size_heading_lg": 50,
+                "font_size_heading_md": 30,
+                "font_size_heading": 24,
+                "font_weight_heading": 600,
+                "letter_spacing_heading": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "heading_B4wtGm"
+          ]
+        }
+      },
+      "name": "t:sections.collection_products.carousel_name",
+      "settings": {
+        "collection": "undated-yearly-planners",
+        "product_list": [],
+        "product_des": "1",
+        "image_ratio": "adapt_image",
+        "image_size": true,
+        "show_vendor": false,
+        "pr_border": "none",
+        "products_count": 8,
+        "col_dk": "4",
+        "col_tb": "3",
+        "col_mb": "2",
+        "half_item": false,
+        "navUI": false,
+        "btn_vi": "hover",
+        "nav_des": "default",
+        "nav_shape": "rounded",
+        "nav_size": "small",
+        "nav_pos": "on_border",
+        "nav_icon": "chrvon",
+        "dotUI": false,
+        "dots_des": "default",
+        "dots_align": "center",
+        "dot_distance": 30,
+        "section_fullwidth": false,
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 52,
+        "padding_rate": 75
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "sec_heading": "People Also Bought",
+        "heading_tag": "h3",
+        "heading_size": "h5",
+        "text_color": "hdt-s-text",
+        "heading_align": "center",
+        "sec_subheading": "",
+        "subheading_size": "lg",
+        "heading_reverse": false,
+        "heading_gap": 18,
+        "sec_heading_spacing": 50,
+        "limit": 10,
+        "product_des": "1",
+        "image_ratio": "asos",
+        "image_size": true,
+        "show_vendor": false,
+        "col_dk": "4",
+        "col_tb": "3",
+        "col_mb": "2",
+        "navUI": true,
+        "btn_vi": "hover",
+        "nav_des": "default",
+        "nav_shape": "rounded",
+        "nav_size": "small",
+        "nav_pos": "middle_in",
+        "nav_icon": "chrvon",
+        "dotUI": false,
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_rate": 75
+      }
+    },
+    "recently-products": {
+      "type": "recently-products",
+      "settings": {
+        "sec_heading": "Recently Viewed",
+        "heading_tag": "h3",
+        "heading_size": "h3",
+        "text_color": "hdt-s-text",
+        "heading_align": "center",
+        "sec_subheading": "",
+        "subheading_size": "lg",
+        "heading_reverse": false,
+        "heading_gap": 18,
+        "sec_heading_spacing": 50,
+        "limit": 10,
+        "product_des": "1",
+        "image_ratio": "custom-pr",
+        "image_size": true,
+        "show_vendor": false,
+        "col_dk": "4",
+        "col_tb": "3",
+        "col_mb": "2",
+        "navUI": true,
+        "btn_vi": "hover",
+        "nav_des": "default",
+        "nav_shape": "rounded",
+        "nav_size": "small",
+        "nav_pos": "middle_in",
+        "nav_icon": "chrvon",
+        "dotUI": false,
+        "color_scheme": "scheme-2",
+        "full_width": false,
+        "padding_top": 0,
+        "padding_bottom": 100,
+        "padding_rate": 75
+      }
+    }
+  },
+  "order": [
+    "breadcrumb",
+    "main-product",
+    "brands_EXFYkK",
+    "tabs",
+    "sidebar",
+    "featured_collection_carousel_jDP3Hf",
+    "related-products",
+    "recently-products"
+  ]
+}

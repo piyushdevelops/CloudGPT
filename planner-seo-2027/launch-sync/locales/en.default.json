@@ -1,0 +1,15 @@
+{
+  "general": {
+    "breadcrumb": {
+      "home": "Home"
+    },
+    "meta": {
+      "tag": "Tagged {{ tags }}"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Account"
+    }
+  }
+}

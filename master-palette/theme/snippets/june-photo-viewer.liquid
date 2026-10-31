@@ -1,0 +1,31 @@
+{% doc %}
+  Displays an inspectable original product image.
+  @param {image} image - Product or planner image
+  @param {string} title - Accessible image description
+  @param {string} type_class - Parent section typography role
+{% enddoc %}
+{% if image != blank %}
+<june-photo-viewer class="jphoto {{ type_class }}">
+ <a class="jphoto__open" href="{{ image | image_url: width: 2400 }}" aria-label="{{ 'june_audit.inspect' | t }}: {{ title | escape }}">
+ {{ image | image_url: width: 600 | image_tag: widths: '200,400,600', sizes: '(min-width:901px) 180px, 112px', loading: 'lazy', alt: title }}
+ <span>{{ 'june_audit.inspect' | t }} <span aria-hidden="true">+</span></span>
+ </a>
+ <dialog class="jphoto__dialog" aria-label="{{ title | escape }}">
+  <div class="jphoto__bar"><p>{{ title | escape }}</p><button type="button" data-close>{{ 'june_audit.close' | t }}</button></div>
+  <div class="jphoto__tools"><button type="button" data-zoom aria-pressed="false">{{ 'june_audit.zoom' | t }}</button><a href="{{ image | image_url: width: 2400 }}" target="_blank" rel="noopener">{{ 'june_audit.original' | t }}</a></div>
+  <div class="jphoto__frame" tabindex="0"><img data-src="{{ image | image_url: width: 2400 }}" alt="{{ title | escape }}" width="1200" height="1200"></div>
+ </dialog>
+</june-photo-viewer>
+{% endif %}
+{% stylesheet %}
+.jphoto{display:block;height:100%;font:inherit;letter-spacing:inherit;line-height:inherit}.jphoto__open{display:flex!important;flex-direction:column;height:100%;min-width:0;color:inherit;text-decoration:none!important}.jphoto__open>img{display:block;min-height:0;flex:1;width:100%;height:calc(100% - 44px);object-fit:contain}.jphoto__open>span{display:flex;min-height:44px;align-items:center;justify-content:center;gap:12px;text-decoration:underline;font-size:.85em}.jphoto__dialog{width:min(1100px,95vw);max-height:92dvh;padding:18px;background:var(--june-bg,#FFFFFF);color:var(--june-ink,#171717);border:1px solid color-mix(in srgb,var(--june-ink,#171717) 33.33%,transparent);font:inherit}.jphoto__dialog::backdrop{background:color-mix(in srgb,var(--june-dark,#171717) 60%,transparent)}.jphoto__bar,.jphoto__tools{display:flex;align-items:center;justify-content:space-between;gap:15px}.jphoto__bar p{margin:0}.jphoto__dialog button,.jphoto__tools a{font:inherit;color:inherit;min-height:44px;padding:8px 14px;display:inline-flex;align-items:center;border:1px solid color-mix(in srgb,var(--june-ink,#171717) 33.33%,transparent);border-radius:999px;background:transparent;cursor:pointer}.jphoto__tools{justify-content:flex-start;margin:12px 0}.jphoto__frame{overflow:auto;max-height:70dvh}.jphoto__frame img{display:block!important;width:100%!important;height:auto!important;max-height:none;object-fit:contain!important;transform:none!important}.jphoto__frame[data-zoomed=true] img{width:1600px!important;max-width:none!important}.jphoto :focus-visible{outline:3px solid currentColor;outline-offset:3px}
+
+@media(max-width:900px){.jphoto .jphoto__dialog[open]{position:fixed;inset:0;width:auto;height:100dvh;max-width:none;max-height:none;box-sizing:border-box;padding:max(12px,env(safe-area-inset-top)) 12px max(12px,env(safe-area-inset-bottom));margin:0;border:0;display:flex;flex-direction:column;overflow:hidden;font-size:14px}.jphoto__bar,.jphoto__tools{flex:none}.jphoto__bar{align-items:start}.jphoto__bar button{flex:none}.jphoto__tools{gap:8px;flex-wrap:wrap;margin:8px 0}.jphoto .jphoto__frame{flex:1;min-height:0;max-height:none;overscroll-behavior:contain}.jphoto__frame:not([data-zoomed=true]) img{height:100%!important;object-fit:contain!important}.jphoto__frame[data-zoomed=true] img{width:200%!important;min-width:200%!important;height:auto!important}.jphoto__open>span{font-size:inherit}}
+
+{% endstylesheet %}
+{% javascript %}
+if(!customElements.get('june-photo-viewer'))customElements.define('june-photo-viewer',class extends HTMLElement{
+ connectedCallback(){this.abort?.abort();this.abort=new AbortController();const o={signal:this.abort.signal},dialog=this.querySelector('dialog'),open=this.querySelector('a'),frame=this.querySelector('.jphoto__frame');open.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey)return;e.preventDefault();const img=dialog.querySelector('img');img.src=img.dataset.src;frame.dataset.zoomed='false';this.querySelector('[data-zoom]').setAttribute('aria-pressed','false');dialog.showModal();frame.scrollTo(0,0)},o);this.querySelector('[data-close]').addEventListener('click',()=>dialog.close(),o);this.querySelector('[data-zoom]').addEventListener('click',e=>{const active=frame.dataset.zoomed!=='true';frame.dataset.zoomed=String(active);e.currentTarget.setAttribute('aria-pressed',String(active));requestAnimationFrame(()=>{frame.scrollLeft=active?(frame.scrollWidth-frame.clientWidth)/2:0;frame.scrollTop=active?(frame.scrollHeight-frame.clientHeight)/2:0})},o);dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()}},o);dialog.addEventListener('close',()=>open.focus(),o)}
+ disconnectedCallback(){this.abort?.abort();this.querySelector('dialog')?.close()}
+});
+{% endjavascript %}

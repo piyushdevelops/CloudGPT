@@ -1,0 +1,123 @@
+{
+  "desktop": [
+    {
+      "nav": 464.75,
+      "overflow": false,
+      "panel": [
+        {
+          "height": 630,
+          "scroll": 630
+        }
+      ],
+      "stage": 630,
+      "tab": "limited"
+    },
+    {
+      "nav": 464.7708435058594,
+      "overflow": false,
+      "panel": [
+        {
+          "height": 630,
+          "scroll": 630
+        }
+      ],
+      "stage": 630,
+      "tab": "dated"
+    },
+    {
+      "nav": 464.7708435058594,
+      "overflow": false,
+      "panel": [
+        {
+          "height": 630,
+          "scroll": 630
+        }
+      ],
+      "stage": 630,
+      "tab": "life"
+    },
+    {
+      "nav": 464.7708435058594,
+      "overflow": false,
+      "panel": [
+        {
+          "height": 630,
+          "scroll": 630
+        }
+      ],
+      "stage": 630,
+      "tab": "undated"
+    }
+  ],
+  "mobile": [
+    {
+      "h": 852,
+      "nav": 780.375,
+      "overflow": false,
+      "panel": [
+        {
+          "height": 670,
+          "scroll": 670,
+          "scrollWidth": 373,
+          "width": 373
+        }
+      ],
+      "stage": 670.375,
+      "tab": "undated",
+      "w": 393
+    },
+    {
+      "h": 852,
+      "nav": 780.375,
+      "overflow": false,
+      "panel": [
+        {
+          "height": 670,
+          "scroll": 670,
+          "scrollWidth": 353,
+          "width": 353
+        }
+      ],
+      "stage": 670.375,
+      "tab": "limited",
+      "w": 393
+    },
+    {
+      "h": 852,
+      "nav": 780.375,
+      "overflow": false,
+      "panel": [
+        {
+          "height": 670,
+          "scroll": 670,
+          "scrollWidth": 353,
+          "width": 353
+        }
+      ],
+      "stage": 670.375,
+      "tab": "dated",
+      "w": 393
+    },
+    {
+      "h": 852,
+      "nav": 780.375,
+      "overflow": false,
+      "panel": [
+        {
+          "height": 670,
+          "scroll": 670,
+          "scrollWidth": 353,
+          "width": 353
+        }
+      ],
+      "stage": 670.375,
+      "tab": "life",
+      "w": 393
+    }
+  ],
+  "pauseButtonVerified": true,
+  "imagePickersVisible": true,
+  "outlinePreviewVerified": true,
+  "shadowPreviewVerified": true,
+  "restoredEffect": "fill"
+}

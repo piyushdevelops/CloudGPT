@@ -1,0 +1,139 @@
+/* Visual prototype only. Injected in a browser; not installed in Shopify. */
+tjs-final-collection {
+  --tjs-bg: #faf9f7 !important;
+  --tjs-surface: #f0eeeb !important;
+  --tjs-border: #dedbd6 !important;
+}
+tjs-final-collection .tjs-final-collection__section {
+  padding-top: 58px !important;
+}
+tjs-final-collection .tjs-final-collection__inner {
+  width: min(calc(100% - 64px), 1580px) !important;
+}
+tjs-final-collection .tjs-final-collection__header {
+  align-items: flex-end !important;
+  min-height: 135px;
+  margin-bottom: 34px !important;
+  padding-bottom: 25px;
+  border-bottom: 1px solid #dedbd6;
+}
+tjs-final-collection .tjs-final-collection__eyebrow {
+  margin-bottom: 13px !important;
+  color: #f56a28 !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: .13em !important;
+}
+tjs-final-collection .tjs-final-collection__heading {
+  font-size: clamp(48px, 5.1vw, 78px) !important;
+  font-weight: 800 !important;
+  letter-spacing: -.055em !important;
+  line-height: .98 !important;
+}
+tjs-final-collection .tjs-final-collection__controls {
+  gap: 7px !important;
+}
+tjs-final-collection .tjs-final-collection__filter-button,
+tjs-final-collection .tjs-final-collection__sort {
+  min-height: 42px !important;
+  padding-inline: 14px !important;
+  border-color: #d5d2cd !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+tjs-final-collection .tjs-final-collection__tabs {
+  gap: 30px !important;
+  margin-bottom: 28px !important;
+  padding-bottom: 1px;
+  border-bottom: 1px solid #dedbd6;
+}
+tjs-final-collection .tjs-final-collection__tab {
+  position: relative;
+  min-height: 42px !important;
+  padding: 0 0 13px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #73706c !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+tjs-final-collection .tjs-final-collection__tab.is-active {
+  color: #171717 !important;
+}
+tjs-final-collection .tjs-final-collection__tab.is-active::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: #f56a28;
+}
+tjs-final-collection .tjs-final-collection__grid {
+  gap: 38px 18px !important;
+}
+tjs-final-collection .tjs-product-card__media {
+  border-radius: 4px !important;
+}
+tjs-final-collection .tjs-product-card__content {
+  gap: 9px !important;
+  padding-top: 14px !important;
+}
+tjs-final-collection .tjs-product-card__meta-label {
+  font-size: 10px !important;
+  letter-spacing: .09em !important;
+}
+tjs-final-collection .tjs-product-card__saving {
+  top: 12px !important;
+  right: 12px !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+@media (max-width: 749px) {
+  tjs-final-collection .tjs-final-collection__section {
+    padding-top: 36px !important;
+  }
+  tjs-final-collection .tjs-final-collection__inner {
+    width: calc(100% - 28px) !important;
+  }
+  tjs-final-collection .tjs-final-collection__header {
+    min-height: 0;
+    align-items: flex-start !important;
+    flex-wrap: wrap;
+    gap: 20px !important;
+    margin-bottom: 22px !important;
+    padding-bottom: 20px;
+  }
+  tjs-final-collection .tjs-final-collection__heading {
+    font-size: 43px !important;
+  }
+  tjs-final-collection .tjs-final-collection__controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+  tjs-final-collection .tjs-final-collection__tabs {
+    gap: 22px !important;
+    margin-bottom: 18px !important;
+  }
+  tjs-final-collection .tjs-final-collection__tab {
+    min-height: 38px !important;
+    padding-bottom: 10px !important;
+    font-size: 11px !important;
+  }
+  tjs-final-collection .tjs-final-collection__grid {
+    gap: 30px 10px !important;
+  }
+  tjs-final-collection .tjs-product-card__content {
+    gap: 7px !important;
+    padding-top: 10px !important;
+  }
+  tjs-final-collection .tjs-product-card__meta-label {
+    font-size: 9px !important;
+  }
+}

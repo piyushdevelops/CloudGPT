@@ -1,0 +1,310 @@
+{
+  "product-1440": {
+    "overflow": false,
+    "scrollWidth": 1440,
+    "badImages": [],
+    "headerIcon": 34,
+    "productImageLoaded": 0,
+    "headingFont": "Poppins, serif",
+    "overflowElements": [
+      {
+        "tag": "DIV",
+        "class": "hdt-slider__slide hdt-product__media-item",
+        "right": 1884
+      },
+      {
+        "tag": "DIV",
+        "class": "hdt-ratio hdt-product__media",
+        "right": 1884
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "right": 1884
+      },
+      {
+        "tag": "DIV",
+        "class": "hdt-slider__slide hdt-product__media-item",
+        "right": 2474
+      },
+      {
+        "tag": "DIV",
+        "class": "hdt-ratio hdt-product__media",
+        "right": 2474
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "right": 2474
+      }
+    ],
+    "errors": []
+  },
+  "product-393": {
+    "overflow": true,
+    "scrollWidth": 397,
+    "badImages": [],
+    "headerIcon": 34,
+    "productImageLoaded": 0,
+    "headingFont": "Poppins, serif",
+    "overflowElements": [
+      {
+        "tag": "DIV",
+        "class": "hdt-slider__slide hdt-product__media-item",
+        "right": 741
+      },
+      {
+        "tag": "DIV",
+        "class": "hdt-ratio hdt-product__media",
+        "right": 741
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "right": 741
+      },
+      {
+        "tag": "DIV",
+        "class": "hdt-slider__slide hdt-product__media-item",
+        "right": 1104
+      },
+      {
+        "tag": "DIV",
+        "class": "hdt-ratio hdt-product__media",
+        "right": 1104
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "right": 1104
+      }
+    ],
+    "errors": []
+  },
+  "product-375": {
+    "overflow": true,
+    "scrollWidth": 379,
+    "badImages": [],
+    "headerIcon": 34,
+    "productImageLoaded": 0,
+    "headingFont": "Poppins, serif",
+    "overflowElements": [
+      {
+        "tag": "DIV",
+        "class": "hdt-slider__slide hdt-product__media-item",
+        "right": 705
+      },
+      {
+        "tag": "DIV",
+        "class": "hdt-ratio hdt-product__media",
+        "right": 705
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "right": 705
+      },
+      {
+        "tag": "DIV",
+        "class": "hdt-slider__slide hdt-product__media-item",
+        "right": 1050
+      },
+      {
+        "tag": "DIV",
+        "class": "hdt-ratio hdt-product__media",
+        "right": 1050
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "right": 1050
+      }
+    ],
+    "errors": []
+  },
+  "product-320": {
+    "overflow": true,
+    "scrollWidth": 324,
+    "badImages": [],
+    "headerIcon": 34,
+    "productImageLoaded": 0,
+    "headingFont": "Poppins, serif",
+    "overflowElements": [
+      {
+        "tag": "DIV",
+        "class": "hdt-slider__slide hdt-product__media-item",
+        "right": 595
+      },
+      {
+        "tag": "DIV",
+        "class": "hdt-ratio hdt-product__media",
+        "right": 595
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "right": 595
+      },
+      {
+        "tag": "DIV",
+        "class": "hdt-slider__slide hdt-product__media-item",
+        "right": 885
+      },
+      {
+        "tag": "DIV",
+        "class": "hdt-ratio hdt-product__media",
+        "right": 885
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "right": 885
+      }
+    ],
+    "errors": []
+  },
+  "collection-1440": {
+    "overflow": false,
+    "scrollWidth": 1440,
+    "badImages": [],
+    "headerIcon": 34,
+    "productImageLoaded": 0,
+    "headingFont": "Poppins, sans-serif",
+    "overflowElements": [
+      {
+        "tag": "A",
+        "class": "tjs-floating-type__chip",
+        "right": 1579
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "right": 1565
+      }
+    ],
+    "errors": []
+  },
+  "collection-393": {
+    "overflow": false,
+    "scrollWidth": 393,
+    "badImages": [],
+    "headerIcon": 34,
+    "productImageLoaded": 0,
+    "headingFont": "Poppins, sans-serif",
+    "overflowElements": [
+      {
+        "tag": "A",
+        "class": "tjs-final-collection__tab",
+        "right": 436
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "right": 432
+      },
+      {
+        "tag": "A",
+        "class": "tjs-final-collection__tab",
+        "right": 569
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "right": 565
+      },
+      {
+        "tag": "A",
+        "class": "tjs-final-collection__tab",
+        "right": 662
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "right": 658
+      }
+    ],
+    "errors": []
+  },
+  "collection-375": {
+    "overflow": false,
+    "scrollWidth": 375,
+    "badImages": [],
+    "headerIcon": 34,
+    "productImageLoaded": 0,
+    "headingFont": "Poppins, sans-serif",
+    "overflowElements": [
+      {
+        "tag": "A",
+        "class": "tjs-final-collection__tab",
+        "right": 436
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "right": 432
+      },
+      {
+        "tag": "A",
+        "class": "tjs-final-collection__tab",
+        "right": 569
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "right": 565
+      },
+      {
+        "tag": "A",
+        "class": "tjs-final-collection__tab",
+        "right": 662
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "right": 658
+      }
+    ],
+    "errors": []
+  },
+  "collection-320": {
+    "overflow": false,
+    "scrollWidth": 320,
+    "badImages": [],
+    "headerIcon": 34,
+    "productImageLoaded": 0,
+    "headingFont": "Poppins, sans-serif",
+    "overflowElements": [
+      {
+        "tag": "A",
+        "class": "tjs-final-collection__tab",
+        "right": 436
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "right": 432
+      },
+      {
+        "tag": "A",
+        "class": "tjs-final-collection__tab",
+        "right": 569
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "right": 565
+      },
+      {
+        "tag": "A",
+        "class": "tjs-final-collection__tab",
+        "right": 662
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "right": 658
+      }
+    ],
+    "errors": []
+  }
+}

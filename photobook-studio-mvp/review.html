@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family album preview · The June Shop</title>
+  <link rel="stylesheet" href="review.css">
+</head>
+<body>
+  <header><b>THE JUNE SHOP</b><span>Family album preview</span></header>
+  <main>
+    <section class="intro"><p class="eyebrow">A little look before the big reveal</p><h1 id="albumTitle">Loading the album…</h1><p id="albumDetails">This link is read-only. The final print proof follows purchase.</p></section>
+    <p id="reviewError" role="alert" hidden></p>
+    <div id="albumPages" class="album-pages"></div>
+    <section class="feedback" id="feedback" hidden><h2>What do you think?</h2><p>This is a layout preview for family feedback. Your response is not final print approval.</p><label for="reviewNote">Optional note</label><textarea id="reviewNote" maxlength="500" rows="3" placeholder="Anything you would change?"></textarea><div class="feedback-actions"><button data-decision="looks-good">Looks good</button><button data-decision="changes-requested">Suggest changes</button></div><p id="feedbackStatus" role="status"></p></section>
+  </main>
+  <script src="review.js" defer></script>
+</body>
+</html>

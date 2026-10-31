@@ -1,0 +1,20 @@
+[
+  "config/settings_data.json",
+  "sections/footer-group.json",
+  "sections/header-group.json",
+  "sections/june-a-little-curious.liquid",
+  "sections/june-find-your-glow.liquid",
+  "sections/june-footer.liquid",
+  "sections/june-inside-discovery.liquid",
+  "sections/june-layer-the-table.liquid",
+  "sections/june-make-room.liquid",
+  "sections/june-next-chapter.liquid",
+  "sections/june-other-chapters.liquid",
+  "sections/june-pick-your-pour.liquid",
+  "sections/june-shop-the-corner.liquid",
+  "sections/june-with-extras.liquid",
+  "sections/june-your-year.liquid",
+  "snippets/june-photo-viewer.liquid",
+  "templates/index.json",
+  "sections/my-header.liquid"
+]

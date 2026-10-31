@@ -1,0 +1,6 @@
+mutation CreateOurDays($input: ProductSetInput!) {
+  productSet(synchronous: true, input: $input) {
+    product { id handle status templateSuffix variants(first: 10) { nodes { id title price } } }
+    userErrors { code field message }
+  }
+}

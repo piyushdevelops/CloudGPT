@@ -1,0 +1,733 @@
+{% comment %}TJS Mystery Box V5 — Editorial Hero + Proven Buying Logic{% endcomment %}
+{{ 'tjs-mystery-v4.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'tjs-mystery-v4.js' | asset_url }}" defer="defer"></script>
+{% liquid
+  assign tier1_price = section.settings.tier1_price | default: 1499
+  assign tier2_price = section.settings.tier2_price | default: 1999
+  assign tier1_value = section.settings.tier1_value | default: 3000
+  assign tier2_value = section.settings.tier2_value | default: 5000
+  assign form_id = 'TjsMysteryForm-' | append: section.id
+  assign tier1_expected_cents = tier1_price | times: 100
+  assign tier2_expected_cents = tier2_price | times: 100
+
+  assign v1 = blank
+  assign v2 = blank
+  for mystery_variant in product.variants
+    if mystery_variant.price == tier1_expected_cents and v1 == blank
+      assign v1 = mystery_variant
+    endif
+    if mystery_variant.price == tier2_expected_cents and v2 == blank
+      assign v2 = mystery_variant
+    endif
+  endfor
+
+  if v1 == blank
+    assign v1 = product.variants[0]
+  endif
+  if v2 == blank
+    assign v2 = product.variants[1]
+  endif
+
+  assign hero_art = section.settings.hero_image
+  if hero_art == blank and product.featured_image != blank
+    assign hero_art = product.featured_image
+  endif
+%}
+<section id="TjsMysteryHero-{{ section.id }}" class="tjs-mv4 tjs-mv4-hero" data-mystery-hero-root data-mobile-slide-enabled="{{ section.settings.enable_mobile_slider }}" style="--tjs-mobile-media-h:{{ section.settings.mobile_media_height }}px;--tjs-desktop-h1:{{ section.settings.desktop_heading_size }}px;--tjs-tier-h:{{ section.settings.tier_card_height }}px;--tjs-mobile-tier-h:{{ section.settings.mobile_tier_height }}px;--tjs-mobile-h1:{{ section.settings.mobile_heading_size }}px;--tjs-mobile-hero-gap:{{ section.settings.mobile_hero_gap }}px;--tjs-mobile-buy-pad:{{ section.settings.mobile_buy_padding }}px;--tjs-mobile-hero-pb:{{ section.settings.mobile_hero_bottom }}px;--tjs-tape-angle:{{ section.settings.tape_angle }}deg;--tjs-hero-product-scale:{{ section.settings.product_scale | divided_by: 100.0 }};--tjs-hero-product-y:{{ section.settings.product_y }}%;--tjs-hero-desktop-height:{{ section.settings.desktop_media_height }}px;--tjs-trust-cols:{{ section.settings.trust_columns }};--tjs-tape-x:{{ section.settings.tape_x }}%;--tjs-tape-y:{{ section.settings.tape_y }}%;--tjs-hero-media-col:{{ section.settings.desktop_media_percent }}%;--tjs-desktop-buy-pad:{{ section.settings.desktop_buy_padding }}px;--tjs-commerce-bump:{{ section.settings.desktop_ui_bump }}px;--tjs-hero-radius:{{ section.settings.hero_outer_radius }}px;--tjs-hero-blend:{{ section.settings.hero_blend_width }}px;--tjs-slide-h:{{ section.settings.mobile_slider_height }}px;--tjs-slide-thumb:{{ section.settings.mobile_slider_thumb }}px;">
+  <div class="tjs-mv4__shell">
+    <div class="tjs-mv4-hero__grid">
+      <div class="tjs-mv4-hero__media">
+        {% if section.settings.drop_label != blank %}<div class="tjs-mv4-hero__drop">{{ section.settings.drop_label }}</div>{% endif %}
+        <div class="tjs-mv4-hero__product" data-mystery-tilt>
+          {% if hero_art != blank %}
+            <picture>
+              {% if section.settings.hero_mobile_image != blank %}
+                <source media="(max-width: 749px)" srcset="{{ section.settings.hero_mobile_image | image_url: width: 900 }}">
+              {% endif %}
+              {{ hero_art | image_url: width: 1600 | image_tag: class: 'tjs-mv4-hero__img', loading: 'eager', fetchpriority: 'high', alt: section.settings.hero_alt }}
+            </picture>
+          {% else %}
+            <div class="tjs-mv4-hero__fallback" role="img" aria-label="{{ section.settings.hero_alt | escape }}"></div>
+          {% endif %}
+          <span class="tjs-mv4-hero__glow" aria-hidden="true"></span>
+        </div>
+        {% if section.settings.show_tape %}<div class="tjs-mv4-hero__tape" aria-hidden="true">{{ section.settings.tape_text }}</div><span class="tjs-mv4-hero__impact" aria-hidden="true"></span>{% endif %}
+      </div>
+
+      <div class="tjs-mv4-hero__buy" data-reveal>
+        {% if section.settings.eyebrow != blank %}<div class="tjs-mv4__eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
+        <h1 class="tjs-mv4__display tjs-mv4-hero__h1 tjs-mv5-manual-heading">
+          <span class="tjs-mv5-hline tjs-mv5-manual-line">{{ section.settings.heading_line_1 }}</span>
+          <span class="tjs-mv5-hline tjs-mv5-manual-line">{% if section.settings.heading_line_2_prefix != blank %}<span>{{ section.settings.heading_line_2_prefix }}</span> {% endif %}<span class="tjs-mv4-highlight">{{ section.settings.highlight_word }}</span></span>
+          <span class="tjs-mv5-hline tjs-mv5-manual-line">{{ section.settings.heading_line_3 }}</span>
+          <span class="tjs-mv5-hline tjs-mv5-manual-line">{{ section.settings.heading_line_4 }}</span>
+        </h1>
+        {% if section.settings.body != blank %}<p class="tjs-mv4__body tjs-mv4-hero__copy">{{ section.settings.body }}</p>{% endif %}
+
+        <div class="tjs-mv4-tier-head"><strong class="tjs-mv4__eyebrow">{{ section.settings.selector_label }}</strong><small>{{ section.settings.selector_hint }}</small></div>
+        <div class="tjs-mv4-tiers" role="group" aria-label="{{ section.settings.selector_label | escape }}">
+          <button type="button" class="tjs-mv4-tier" data-mystery-tier data-tier-number="01" data-variant-id="{% if v1 %}{{ v1.id }}{% endif %}" aria-pressed="false" {% unless v1 %}disabled{% endunless %}>
+            <span class="tjs-mv5-tier-index" aria-hidden="true">01</span>
+            <span class="tjs-mv4-tier__check" aria-hidden="true">✓</span>
+            <div class="tjs-mv4-tier__kicker">{{ section.settings.tier1_label }}</div>
+            <div class="tjs-mv4-tier__price">₹{{ tier1_price | times: 100 | money_without_currency | replace: ".00", "" }}</div>
+            <div class="tjs-mv4-tier__value">₹{{ tier1_value | times: 100 | money_without_currency | replace: ".00", "" }}+ {{ section.settings.value_suffix }}</div>
+            <div class="tjs-mv4-tier__save">{{ section.settings.save_prefix }} ₹{{ tier1_value | minus: tier1_price | times: 100 | money_without_currency | replace: ".00", "" }}+</div>
+          </button>
+          <button type="button" class="tjs-mv4-tier" data-mystery-tier data-tier-number="02" data-variant-id="{% if v2 %}{{ v2.id }}{% endif %}" aria-pressed="false" {% unless v2 %}disabled{% endunless %}>
+            <span class="tjs-mv5-tier-index" aria-hidden="true">02</span>
+            {% if section.settings.tier2_badge != blank %}<span class="tjs-mv4-tier__badge">{{ section.settings.tier2_badge }}</span>{% endif %}
+            <span class="tjs-mv4-tier__check" aria-hidden="true">✓</span>
+            <div class="tjs-mv4-tier__kicker">{{ section.settings.tier2_label }}</div>
+            <div class="tjs-mv4-tier__price">₹{{ tier2_price | times: 100 | money_without_currency | replace: ".00", "" }}</div>
+            <div class="tjs-mv4-tier__value">₹{{ tier2_value | times: 100 | money_without_currency | replace: ".00", "" }}+ {{ section.settings.value_suffix }}</div>
+            <div class="tjs-mv4-tier__save">{{ section.settings.save_prefix }} ₹{{ tier2_value | minus: tier2_price | times: 100 | money_without_currency | replace: ".00", "" }}+</div>
+          </button>
+        </div>
+
+        <div class="tjs-mv4-summary" aria-live="polite">
+          <div class="tjs-mv4-summary__item"><div class="tjs-mv4-summary__label">{{ section.settings.pay_label }}</div><div class="tjs-mv4-summary__value tjs-mv4-value-swap" data-mystery-bind="price">₹{{ tier1_price | times: 100 | money_without_currency | replace: ".00", "" }}</div></div>
+          <div class="tjs-mv4-summary__item"><div class="tjs-mv4-summary__label">{{ section.settings.get_label }}</div><div class="tjs-mv4-summary__value tjs-mv4-value-swap" data-mystery-bind="value">₹{{ tier1_value | times: 100 | money_without_currency | replace: ".00", "" }}+</div></div>
+          <div class="tjs-mv4-summary__item"><div class="tjs-mv4-summary__label">{{ section.settings.save_label }}</div><div class="tjs-mv4-summary__value tjs-mv4-value-swap" data-mystery-bind="save">₹{{ tier1_value | minus: tier1_price | times: 100 | money_without_currency | replace: ".00", "" }}+</div></div>
+        </div>
+
+        {% form 'product', product, id: form_id, class: 'tjs-mv4-form' %}
+          <input type="hidden" name="id" value="{% if v1 %}{{ v1.id }}{% endif %}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="button" class="tjs-mv4-cta" data-mystery-primary-cta {% unless v1 %}disabled{% endunless %}>
+            <span data-cta-label>{{ section.settings.cta_text }}</span><span class="tjs-mv4-cta__arrow" aria-hidden="true">→</span>
+          </button>
+          {% if section.settings.enable_mobile_slider %}
+            <div class="tjs-mv5-slide-unlock{% if section.settings.mobile_slider_shimmer %} has-shimmer{% endif %}"
+              data-mystery-mobile-slider
+              role="button"
+              tabindex="0"
+              aria-label="{{ section.settings.mobile_slider_text | escape }}"
+              aria-disabled="false"
+              data-threshold="{{ section.settings.mobile_slider_threshold | divided_by: 100.0 }}">
+              <span class="tjs-mv5-slide-unlock__fill" data-slider-fill aria-hidden="true"></span>
+              <span class="tjs-mv5-slide-unlock__label" data-slider-label>{{ section.settings.mobile_slider_text }}</span>
+              <span class="tjs-mv5-slide-unlock__thumb" data-slider-thumb aria-hidden="true"><span>→</span></span>
+            </div>
+          {% endif %}
+        {% endform %}
+        <div class="tjs-mv4-cart-status" data-mystery-cart-status role="status" aria-live="polite" hidden></div>
+
+        {% if section.blocks.size > 0 %}
+          <div class="tjs-mv4-trust">
+            {% for block in section.blocks %}
+              <div class="tjs-mv4-trust__item" {{ block.shopify_attributes }}><div class="tjs-mv4-trust__title">{{ block.settings.title }}</div><div class="tjs-mv4-trust__copy">{{ block.settings.copy }}</div></div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if request.design_mode %}
+          {% unless v2 %}<div class="tjs-mv4-editor-note">Add a second product variant for the ₹{{ tier2_price | times: 100 | money_without_currency | replace: ".00", "" }} / ₹{{ tier2_value | times: 100 | money_without_currency | replace: ".00", "" }}+ tier. The card is intentionally disabled until the variant exists.</div>{% endunless %}
+          {% if v1 and v1.price != tier1_expected_cents %}<div class="tjs-mv4-editor-note">Tier 1 visual price is ₹{{ tier1_price | times: 100 | money_without_currency | replace: ".00", "" }}, but Shopify variant 1 currently charges {{ v1.price | money }}. Update the Shopify variant before launch.</div>{% endif %}
+          {% if v2 and v2.price != tier2_expected_cents %}<div class="tjs-mv4-editor-note">Tier 2 visual price is ₹{{ tier2_price | times: 100 | money_without_currency | replace: ".00", "" }}, but Shopify variant 2 currently charges {{ v2.price | money }}. Update the Shopify variant before launch.</div>{% endif %}
+          {% if section.settings.hero_image == blank and product.featured_image == blank %}<div class="tjs-mv4-editor-note">Upload final Mystery Box artwork in this section or add a product featured image. The CSS box is only a fallback.</div>{% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% if section.settings.enable_sticky %}
+    <div class="tjs-mv4-sticky" data-mystery-sticky>
+      <div><div class="tjs-mv4-sticky__price tjs-mv4-value-swap" data-mystery-bind="price">₹{{ tier1_price | times: 100 | money_without_currency | replace: ".00", "" }}</div><div class="tjs-mv4-sticky__sub"><span data-mystery-bind="value">₹{{ tier1_value | times: 100 | money_without_currency | replace: ".00", "" }}+</span> {{ section.settings.sticky_suffix }}</div></div>
+      <button type="button" class="tjs-mv4-sticky__button" data-mystery-sticky-button>{{ section.settings.sticky_cta }}</button>
+    </div>
+  {% endif %}
+
+  <script type="application/json" data-mystery-config>
+    {
+      "ctaText": {{ section.settings.cta_text | json }},
+      "addingText": {{ section.settings.adding_text | json }},
+      "addedText": {{ section.settings.added_text | json }},
+      "addedMessage": {{ section.settings.added_message | json }},
+      "inCartText": {{ section.settings.in_cart_text | json }},
+      "inCartMessage": {{ section.settings.in_cart_message | json }},
+      "soldOutText": {{ section.settings.sold_out_text | json }},
+      "mobileSliderEnabled": {{ section.settings.enable_mobile_slider | json }},
+      "mobileSliderText": {{ section.settings.mobile_slider_text | json }},
+      "mobileSliderSuccessText": {{ section.settings.mobile_slider_success | json }},
+      "mobileSliderThreshold": {{ section.settings.mobile_slider_threshold | divided_by: 100.0 | json }},
+      "stickyEnabled": {{ section.settings.enable_sticky | json }},
+      "tiers": [
+        {"variantId": {% if v1 %}{{ v1.id | json }}{% else %}null{% endif %}, "available": {% if v1 %}{{ v1.available | json }}{% else %}false{% endif %}, "price": {{ tier1_price | json }}, "guaranteedValue": {{ tier1_value | json }}, "label": {{ section.settings.tier1_label | json }}},
+        {"variantId": {% if v2 %}{{ v2.id | json }}{% else %}null{% endif %}, "available": {% if v2 %}{{ v2.available | json }}{% else %}false{% endif %}, "price": {{ tier2_price | json }}, "guaranteedValue": {{ tier2_value | json }}, "label": {{ section.settings.tier2_label | json }}}
+      ]
+    }
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "TJS Mystery Hero",
+  "tag": "section",
+  "class": "tjs-mystery-v4-hero-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Campaign copy"
+    },
+    {
+      "type": "text",
+      "id": "drop_label",
+      "label": "Media corner label",
+      "default": "DROP / 001"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "TJS / MYSTERY DROP / 001"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Headline line 1",
+      "default": "YOU KNOW"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2_prefix",
+      "label": "Headline line 2 prefix",
+      "default": "THE"
+    },
+    {
+      "type": "text",
+      "id": "highlight_word",
+      "label": "Highlighted word on line 2",
+      "default": "VALUE."
+    },
+    {
+      "type": "text",
+      "id": "heading_line_3",
+      "label": "Headline line 3",
+      "default": "NOT WHAT’S"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_4",
+      "label": "Headline line 4",
+      "default": "INSIDE."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Supporting copy",
+      "default": "A box of TJS favourites. What’s inside stays secret until you open it."
+    },
+    {
+      "type": "header",
+      "content": "Hero artwork"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Desktop / default Mystery Box image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_mobile_image",
+      "label": "Optional mobile Mystery Box image"
+    },
+    {
+      "type": "text",
+      "id": "hero_alt",
+      "label": "Hero image alt text",
+      "default": "The June Shop Mystery Box, sealed and ready to open"
+    },
+    {
+      "type": "range",
+      "id": "desktop_media_percent",
+      "label": "Desktop media column width",
+      "min": 44,
+      "max": 58,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "hero_outer_radius",
+      "label": "Hero outer corner radius",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "hero_blend_width",
+      "label": "Desktop media-to-commerce blend",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "desktop_buy_padding",
+      "label": "Desktop buying panel padding",
+      "min": 24,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "desktop_ui_bump",
+      "label": "Desktop commerce type boost",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "desktop_media_height",
+      "label": "Desktop media height",
+      "min": 520,
+      "max": 780,
+      "step": 10,
+      "unit": "px",
+      "default": 590
+    },
+    {
+      "type": "range",
+      "id": "mobile_media_height",
+      "label": "Mobile media height",
+      "min": 180,
+      "max": 340,
+      "step": 10,
+      "unit": "px",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "desktop_heading_size",
+      "label": "Desktop headline size",
+      "min": 56,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 82
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile headline size",
+      "min": 34,
+      "max": 54,
+      "step": 1,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "tier_card_height",
+      "label": "Desktop tier card height",
+      "min": 140,
+      "max": 220,
+      "step": 4,
+      "unit": "px",
+      "default": 168
+    },
+    {
+      "type": "range",
+      "id": "mobile_tier_height",
+      "label": "Mobile tier card height",
+      "min": 120,
+      "max": 180,
+      "step": 2,
+      "unit": "px",
+      "default": 142
+    },
+    {
+      "type": "range",
+      "id": "mobile_hero_gap",
+      "label": "Mobile media-to-buy gap",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "mobile_buy_padding",
+      "label": "Mobile buy panel padding",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_hero_bottom",
+      "label": "Mobile hero bottom spacing",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "product_scale",
+      "label": "Hero product scale",
+      "min": 55,
+      "max": 125,
+      "step": 1,
+      "unit": "%",
+      "default": 106
+    },
+    {
+      "type": "range",
+      "id": "product_y",
+      "label": "Hero product vertical shift",
+      "min": -20,
+      "max": 15,
+      "step": 1,
+      "unit": "%",
+      "default": -9
+    },
+    {
+      "type": "select",
+      "id": "trust_columns",
+      "label": "Desktop trust columns",
+      "default": "2",
+      "options": [
+        {"value":"2","label":"2 columns"},
+        {"value":"4","label":"4 columns"}
+      ]
+    },
+    {
+      "type": "range",
+      "id": "tape_x",
+      "label": "Tape horizontal position",
+      "min": 0,
+      "max": 70,
+      "step": 1,
+      "unit": "%",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "tape_y",
+      "label": "Tape vertical position",
+      "min": 35,
+      "max": 85,
+      "step": 1,
+      "unit": "%",
+      "default": 64
+    },
+    {
+      "type": "header",
+      "content": "Classified tape"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tape",
+      "label": "Show classified tape",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tape_text",
+      "label": "Tape text",
+      "default": "CONTENTS: CLASSIFIED"
+    },
+    {
+      "type": "range",
+      "id": "tape_angle",
+      "label": "Tape angle",
+      "min": -12,
+      "max": 12,
+      "step": 1,
+      "unit": "deg",
+      "default": -6
+    },
+    {
+      "type": "header",
+      "content": "Tier 1"
+    },
+    {
+      "type": "text",
+      "id": "tier1_label",
+      "label": "Tier 1 label",
+      "default": "THE MYSTERY BOX"
+    },
+    {
+      "type": "number",
+      "id": "tier1_price",
+      "label": "Tier 1 display price",
+      "default": 1499
+    },
+    {
+      "type": "number",
+      "id": "tier1_value",
+      "label": "Tier 1 guaranteed value",
+      "default": 3000
+    },
+    {
+      "type": "header",
+      "content": "Tier 2"
+    },
+    {
+      "type": "text",
+      "id": "tier2_label",
+      "label": "Tier 2 label",
+      "default": "BIGGER MYSTERY"
+    },
+    {
+      "type": "number",
+      "id": "tier2_price",
+      "label": "Tier 2 display price",
+      "default": 1999
+    },
+    {
+      "type": "number",
+      "id": "tier2_value",
+      "label": "Tier 2 guaranteed value",
+      "default": 5000
+    },
+    {
+      "type": "text",
+      "id": "tier2_badge",
+      "label": "Tier 2 badge",
+      "default": "MORE VALUE"
+    },
+    {
+      "type": "header",
+      "content": "Buying labels"
+    },
+    {
+      "type": "text",
+      "id": "selector_label",
+      "label": "Selector heading",
+      "default": "CHOOSE YOUR MYSTERY"
+    },
+    {
+      "type": "text",
+      "id": "selector_hint",
+      "label": "Selector hint",
+      "default": "Tap a box to select"
+    },
+    {
+      "type": "text",
+      "id": "value_suffix",
+      "label": "Value suffix",
+      "default": "VALUE"
+    },
+    {
+      "type": "text",
+      "id": "save_prefix",
+      "label": "Saving prefix",
+      "default": "SAVE"
+    },
+    {
+      "type": "text",
+      "id": "pay_label",
+      "label": "Summary: pay",
+      "default": "YOU PAY"
+    },
+    {
+      "type": "text",
+      "id": "get_label",
+      "label": "Summary: get",
+      "default": "YOU GET"
+    },
+    {
+      "type": "text",
+      "id": "save_label",
+      "label": "Summary: save",
+      "default": "YOU SAVE"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Primary CTA",
+      "default": "UNLOCK MY BOX"
+    },
+    {
+      "type": "text",
+      "id": "adding_text",
+      "label": "Adding state",
+      "default": "ADDING…"
+    },
+    {
+      "type": "text",
+      "id": "added_text",
+      "label": "Added state",
+      "default": "ADDED ✓"
+    },
+    {
+      "type": "text",
+      "id": "added_message",
+      "label": "Added confirmation",
+      "default": "Added to your cart."
+    },
+    {
+      "type": "text",
+      "id": "in_cart_text",
+      "label": "Already-in-cart button",
+      "default": "IN YOUR CART ✓"
+    },
+    {
+      "type": "text",
+      "id": "in_cart_message",
+      "label": "Already-in-cart message",
+      "default": "This Mystery Box is already in your cart."
+    },
+    {
+      "type": "text",
+      "id": "sold_out_text",
+      "label": "Sold-out CTA",
+      "default": "THIS MYSTERY IS SOLD OUT"
+    },
+    {
+      "type": "header",
+      "content": "Mobile slide to unlock"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_slider",
+      "label": "Use slide to unlock on mobile",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mobile_slider_text",
+      "label": "Slider text",
+      "default": "SLIDE TO UNLOCK"
+    },
+    {
+      "type": "text",
+      "id": "mobile_slider_success",
+      "label": "Slider success text",
+      "default": "UNLOCKED ✓"
+    },
+    {
+      "type": "range",
+      "id": "mobile_slider_threshold",
+      "label": "Unlock threshold",
+      "min": 65,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_slider_height",
+      "label": "Slider height",
+      "min": 52,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "mobile_slider_thumb",
+      "label": "Slider thumb size",
+      "min": 42,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_slider_shimmer",
+      "label": "Animate slider text sheen",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Mobile sticky CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky",
+      "label": "Enable sticky CTA on mobile",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sticky_cta",
+      "label": "Sticky CTA text",
+      "default": "UNLOCK →"
+    },
+    {
+      "type": "text",
+      "id": "sticky_suffix",
+      "label": "Sticky value suffix",
+      "default": "inside"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust",
+      "name": "Trust point",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "VALUE GUARANTEED"
+        },
+        {
+          "type": "text",
+          "id": "copy",
+          "label": "Supporting text",
+          "default": "Minimum stated box value."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS Mystery Hero",
+      "blocks": [
+        {
+          "type": "trust",
+          "settings": {
+            "title": "VALUE GUARANTEED",
+            "copy": "Minimum stated box value."
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "title": "100% THE JUNE SHOP",
+            "copy": "Products from our world."
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "title": "SEALED SURPRISE",
+            "copy": "No previews. No picking."
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "title": "PACKED WITH CARE",
+            "copy": "Securely packed for the reveal."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

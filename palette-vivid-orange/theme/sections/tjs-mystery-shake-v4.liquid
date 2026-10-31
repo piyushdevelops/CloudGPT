@@ -1,0 +1,132 @@
+<section id="TjsMysteryShake-{{ section.id }}" class="tjs-mv4 tjs-mv4-shake" style="--tjs-shake-pt:{{ section.settings.shake_pt }}px;--tjs-shake-pb:{{ section.settings.shake_pb }}px;--tjs-shake-box-size:{{ section.settings.box_size }}px;" data-mystery-shake-root>
+  <div class="tjs-mv4__shell"><div class="tjs-mv4__content">
+    <div data-reveal>
+      {% if section.settings.eyebrow != blank %}<div class="tjs-mv4__eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
+      <h2 class="tjs-mv4__display tjs-mv4-shake__heading">{{ section.settings.heading }}</h2>
+      {% if section.settings.body != blank %}<p class="tjs-mv4__body">{{ section.settings.body }}</p>{% endif %}
+    </div>
+    <div class="tjs-mv4-shake__stage"><span class="tjs-mv4-shake__halo" aria-hidden="true"></span>
+      {% if section.settings.image != blank %}
+        <button type="button" data-shake-box aria-label="{{ section.settings.tap_label | escape }}" style="border:0;background:transparent;padding:0;cursor:pointer">
+          {{ section.settings.image | image_url: width: 900 | image_tag: class: 'tjs-mv4-shake__img', loading: 'lazy', alt: section.settings.image_alt }}
+        </button>
+      {% else %}
+        <div class="tjs-mv4-shake__fallback" data-shake-box tabindex="0" role="button" aria-label="{{ section.settings.tap_label | escape }}"></div>
+      {% endif %}
+    </div>
+    <div class="tjs-mv4-shake__response" data-shake-response>{{ section.settings.response_1 }}</div>
+    <div class="tjs-mv4-shake__hint">{{ section.settings.tap_label }}</div>
+    <script type="application/json" data-shake-lines>[{{ section.settings.response_1 | json }},{{ section.settings.response_2 | json }},{{ section.settings.response_3 | json }},{{ section.settings.response_4 | json }}]</script>
+  </div></div>
+</section>
+{% schema %}
+{
+  "name": "TJS Shake Box",
+  "tag": "section",
+  "class": "tjs-mystery-v4-shake-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "shake_pt",
+      "label": "Top spacing",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "shake_pb",
+      "label": "Bottom spacing",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "TRY / TO GUESS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "THINK YOU CAN GUESS?"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Supporting copy",
+      "default": "Go on. Shake it. We’re still not telling."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Mystery Box image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "The June Shop Mystery Box"
+    },
+    {
+      "type": "text",
+      "id": "tap_label",
+      "label": "Tap instruction",
+      "default": "Tap the box."
+    },
+    {
+      "type": "range",
+      "id": "box_size",
+      "label": "Desktop box size",
+      "min": 260,
+      "max": 560,
+      "step": 10,
+      "unit": "px",
+      "default": 420
+    },
+    {
+      "type": "header",
+      "content": "Tap responses"
+    },
+    {
+      "type": "text",
+      "id": "response_1",
+      "label": "Response 1",
+      "default": "Still classified."
+    },
+    {
+      "type": "text",
+      "id": "response_2",
+      "label": "Response 2",
+      "default": "Nice try."
+    },
+    {
+      "type": "text",
+      "id": "response_3",
+      "label": "Response 3",
+      "default": "Not even close."
+    },
+    {
+      "type": "text",
+      "id": "response_4",
+      "label": "Response 4",
+      "default": "You’ll have to open it."
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS Shake Box"
+    }
+  ]
+}
+{% endschema %}

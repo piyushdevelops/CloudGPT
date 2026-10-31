@@ -1,0 +1,42 @@
+[
+  {
+    "file": "app.js",
+    "exact": true
+  },
+  {
+    "file": "cover-personalization.js",
+    "exact": true
+  },
+  {
+    "file": "index.html",
+    "exact": true
+  },
+  {
+    "file": "styles.css",
+    "exact": true
+  },
+  {
+    "file": "cover-catalog.js",
+    "exact": true
+  },
+  {
+    "file": "studio-v2.js",
+    "exact": true
+  },
+  {
+    "file": "auto-book.js",
+    "exact": true
+  },
+  {
+    "file": "production-server.cjs",
+    "exact": true
+  },
+  {
+    "file": "r2-storage.cjs",
+    "exact": true
+  },
+  {
+    "file": "package.json",
+    "exact": true
+  }
+]

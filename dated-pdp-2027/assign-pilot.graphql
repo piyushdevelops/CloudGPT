@@ -1,0 +1,15 @@
+mutation AssignDatedPilot($product: ProductUpdateInput!) {
+  productUpdate(product: $product) {
+    product {
+      id
+      title
+      templateSuffix
+      status
+      updatedAt
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

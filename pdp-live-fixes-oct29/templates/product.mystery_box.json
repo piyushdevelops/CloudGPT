@@ -1,0 +1,214 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumb": {
+      "type": "brc-nav-product",
+      "settings": {
+        "back_next_pr": true,
+        "color_scheme": "scheme-c9476b69-abc7-454f-a946-2d5a9f5f3a37",
+        "padding_top": 5,
+        "padding_bottom": 2,
+        "padding_rate": 50
+      }
+    },
+    "tjs_mystery_box_pdp_TnFWXd": {
+      "type": "tjs-mystery-box-pdp",
+      "name": "TJS Mystery Box PDP",
+      "settings": {
+        "eyebrow": "The June Shop · Limited Mystery Drop",
+        "heading": "You know the value. Not what's inside.",
+        "subheading": "A specially packed assortment of The June Shop favourites, with the combined value guaranteed to exceed what you pay.",
+        "media_tag": "Contents Classified",
+        "tier_1_value": 3000,
+        "tier_2_value": 5000,
+        "paper_color": "#F7F4EE",
+        "paper_alt_color": "#F5F5F3",
+        "ink_color": "#171717",
+        "muted_color": "#656565",
+        "accent_color": "#F56A28"
+      },
+      "disabled": true
+    },
+    "main-product": {
+      "type": "main-product",
+      "blocks": {
+        "group_product_rjwCiM": {
+          "type": "_group-product",
+          "disabled": true,
+          "settings": {},
+          "blocks": {}
+        },
+        "main-product": {
+          "type": "_product-medias",
+          "disabled": true,
+          "static": true,
+          "settings": {
+            "display_by_block": true,
+            "color_scheme": "scheme-1",
+            "desktop_media_layout": "thumbnail_bottom",
+            "media_size": "small",
+            "mobile_media_layout": "fraction",
+            "enable_thumb_efect": false,
+            "show_first_media": true,
+            "use_select_varaint_change_media": true,
+            "enable_media_autoplay": true,
+            "enable_video_looping": true,
+            "image_ratio": "adapt_image",
+            "image_size": true,
+            "image_zoom": "no",
+            "image_zoom_type": "external",
+            "zoom_level": 2,
+            "max_zoom_lightbox": 3,
+            "navUI": true,
+            "nav_des": "default",
+            "nav_shape": "rounded"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "group_product_rjwCiM"
+      ],
+      "disabled": true,
+      "custom_css": [],
+      "settings": {
+        "sticky_atc": true,
+        "product_list_fbt": [],
+        "fbt_color_scheme": "",
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 10,
+        "padding_bottom": 50,
+        "padding_rate": 50
+      }
+    },
+    "tabs": {
+      "type": "main-product-tabs",
+      "disabled": true,
+      "settings": {
+        "tabs_design": "tab",
+        "enable_first_tab": false,
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_rate": 50
+      }
+    },
+    "sidebar": {
+      "type": "sidebar-product",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "space": 50
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "sec_heading": "People Also Bought",
+        "heading_tag": "h3",
+        "heading_size": "h5",
+        "text_color": "hdt-s-text",
+        "heading_align": "center",
+        "sec_subheading": "",
+        "subheading_size": "lg",
+        "heading_reverse": false,
+        "heading_gap": 18,
+        "sec_heading_spacing": 50,
+        "limit": 10,
+        "product_des": "1",
+        "image_ratio": "asos",
+        "image_size": true,
+        "show_vendor": false,
+        "col_dk": "4",
+        "col_tb": "3",
+        "col_mb": "2",
+        "navUI": true,
+        "btn_vi": "hover",
+        "nav_des": "default",
+        "nav_shape": "rounded",
+        "nav_size": "small",
+        "nav_pos": "middle_in",
+        "nav_icon": "chrvon",
+        "dotUI": false,
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_rate": 75
+      }
+    },
+    "recently-products": {
+      "type": "recently-products",
+      "disabled": true,
+      "settings": {
+        "sec_heading": "Recently Viewed",
+        "heading_tag": "h3",
+        "heading_size": "h3",
+        "text_color": "hdt-s-text",
+        "heading_align": "center",
+        "sec_subheading": "",
+        "subheading_size": "lg",
+        "heading_reverse": false,
+        "heading_gap": 18,
+        "sec_heading_spacing": 50,
+        "limit": 10,
+        "product_des": "1",
+        "image_ratio": "custom-pr",
+        "image_size": true,
+        "show_vendor": false,
+        "col_dk": "4",
+        "col_tb": "3",
+        "col_mb": "2",
+        "navUI": true,
+        "btn_vi": "hover",
+        "nav_des": "default",
+        "nav_shape": "rounded",
+        "nav_size": "small",
+        "nav_pos": "middle_in",
+        "nav_icon": "chrvon",
+        "dotUI": false,
+        "color_scheme": "scheme-2",
+        "full_width": false,
+        "padding_top": 0,
+        "padding_bottom": 100,
+        "padding_rate": 75
+      }
+    },
+    "june_mobile_product": {
+      "type": "june-mobile-product",
+      "blocks": {
+        "typography": {
+          "type": "typography",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "typography"
+      ],
+      "settings": {
+        "show_discovery": true
+      }
+    }
+  },
+  "order": [
+    "breadcrumb",
+    "june_mobile_product",
+    "tjs_mystery_box_pdp_TnFWXd",
+    "main-product",
+    "tabs",
+    "sidebar",
+    "related-products",
+    "recently-products"
+  ]
+}

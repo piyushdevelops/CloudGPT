@@ -1,0 +1,40 @@
+{
+  "date": "2026-09-28",
+  "role": "UNPUBLISHED",
+  "files": [
+    {
+      "filename": "locales/en.default.json",
+      "md5": "9b43a08391603c8a03d6424475013f71"
+    },
+    {
+      "filename": "sections/june-make-room.liquid",
+      "md5": "bf79951765103d6e089af3d1d0d89d7d"
+    },
+    {
+      "filename": "sections/june-next-chapter.liquid",
+      "md5": "0a85f37894c1385f4b2716bdc12667bf"
+    },
+    {
+      "filename": "sections/june-with-extras.liquid",
+      "md5": "16ca9a61f1f724bee938a4bcaba582b1"
+    },
+    {
+      "filename": "sections/june-your-year.liquid",
+      "md5": "1c965a380520862a98b44c8162143a6e"
+    },
+    {
+      "filename": "templates/index.json",
+      "md5": "2b74d280a7ff1e89fd4fb0d2897ad076"
+    }
+  ],
+  "validation": "Liquid validator: both changed files passed revision 1",
+  "existingSectionSettingsPreserved": true,
+  "signup": {
+    "nativeCustomerForm": true,
+    "tag": "newsletter,2027-planner-launch",
+    "remoteSourceTagVerified": true,
+    "submitted": false,
+    "deliveryVerified": false
+  },
+  "browser": "browser-checks.json"
+}

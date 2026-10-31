@@ -1,0 +1,58 @@
+[
+  {
+    "closedExtras": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "decor": 828.609375,
+    "dining": 1033.484375,
+    "height": 667,
+    "overflow": false,
+    "story": 2000.5,
+    "width": 375
+  },
+  {
+    "closedExtras": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "decor": 801.171875,
+    "dining": 1013.984375,
+    "height": 852,
+    "overflow": false,
+    "story": 2019,
+    "width": 393
+  },
+  {
+    "closedExtras": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "decor": 801.171875,
+    "dining": 945.984375,
+    "height": 932,
+    "overflow": false,
+    "story": 2027,
+    "width": 430
+  },
+  {
+    "closedExtras": [
+      400,
+      0,
+      0,
+      0
+    ],
+    "decor": 660.234375,
+    "dining": 679.640625,
+    "height": 1000,
+    "overflow": false,
+    "story": 6962.375,
+    "width": 1440
+  }
+]

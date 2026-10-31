@@ -1,0 +1,365 @@
+{
+  "input": {
+    "title": "The June Photo Book",
+    "handle": "june-photo-book",
+    "descriptionHtml": "<p>A photo book made page by page for the memories you want to keep close.</p><ul><li>Regular 8 × 8 in from ₹2,799</li><li>Large 11 × 11 in from ₹3,099</li><li>20 pages included</li><li>Extra pages added in sets of four</li></ul>",
+    "vendor": "The June Shop",
+    "productType": "Photo Book",
+    "status": "DRAFT",
+    "templateSuffix": "photo-book",
+    "tags": [
+      "photo-book-studio",
+      "personalised",
+      "made-to-order"
+    ],
+    "productOptions": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          {
+            "name": "Regular"
+          },
+          {
+            "name": "Large"
+          }
+        ]
+      },
+      {
+        "name": "Pages",
+        "position": 2,
+        "values": [
+          {
+            "name": "20"
+          },
+          {
+            "name": "24"
+          },
+          {
+            "name": "28"
+          },
+          {
+            "name": "32"
+          },
+          {
+            "name": "36"
+          },
+          {
+            "name": "40"
+          },
+          {
+            "name": "44"
+          },
+          {
+            "name": "48"
+          },
+          {
+            "name": "52"
+          },
+          {
+            "name": "56"
+          },
+          {
+            "name": "60"
+          }
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Regular"
+          },
+          {
+            "optionName": "Pages",
+            "name": "20"
+          }
+        ],
+        "price": "2799.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Regular"
+          },
+          {
+            "optionName": "Pages",
+            "name": "24"
+          }
+        ],
+        "price": "3099.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Regular"
+          },
+          {
+            "optionName": "Pages",
+            "name": "28"
+          }
+        ],
+        "price": "3399.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Regular"
+          },
+          {
+            "optionName": "Pages",
+            "name": "32"
+          }
+        ],
+        "price": "3699.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Regular"
+          },
+          {
+            "optionName": "Pages",
+            "name": "36"
+          }
+        ],
+        "price": "3999.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Regular"
+          },
+          {
+            "optionName": "Pages",
+            "name": "40"
+          }
+        ],
+        "price": "4299.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Regular"
+          },
+          {
+            "optionName": "Pages",
+            "name": "44"
+          }
+        ],
+        "price": "4599.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Regular"
+          },
+          {
+            "optionName": "Pages",
+            "name": "48"
+          }
+        ],
+        "price": "4899.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Regular"
+          },
+          {
+            "optionName": "Pages",
+            "name": "52"
+          }
+        ],
+        "price": "5199.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Regular"
+          },
+          {
+            "optionName": "Pages",
+            "name": "56"
+          }
+        ],
+        "price": "5499.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Regular"
+          },
+          {
+            "optionName": "Pages",
+            "name": "60"
+          }
+        ],
+        "price": "5799.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Large"
+          },
+          {
+            "optionName": "Pages",
+            "name": "20"
+          }
+        ],
+        "price": "3099.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Large"
+          },
+          {
+            "optionName": "Pages",
+            "name": "24"
+          }
+        ],
+        "price": "3459.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Large"
+          },
+          {
+            "optionName": "Pages",
+            "name": "28"
+          }
+        ],
+        "price": "3819.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Large"
+          },
+          {
+            "optionName": "Pages",
+            "name": "32"
+          }
+        ],
+        "price": "4179.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Large"
+          },
+          {
+            "optionName": "Pages",
+            "name": "36"
+          }
+        ],
+        "price": "4539.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Large"
+          },
+          {
+            "optionName": "Pages",
+            "name": "40"
+          }
+        ],
+        "price": "4899.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Large"
+          },
+          {
+            "optionName": "Pages",
+            "name": "44"
+          }
+        ],
+        "price": "5259.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Large"
+          },
+          {
+            "optionName": "Pages",
+            "name": "48"
+          }
+        ],
+        "price": "5619.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Large"
+          },
+          {
+            "optionName": "Pages",
+            "name": "52"
+          }
+        ],
+        "price": "5979.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Large"
+          },
+          {
+            "optionName": "Pages",
+            "name": "56"
+          }
+        ],
+        "price": "6339.00"
+      },
+      {
+        "optionValues": [
+          {
+            "optionName": "Size",
+            "name": "Large"
+          },
+          {
+            "optionName": "Pages",
+            "name": "60"
+          }
+        ],
+        "price": "6699.00"
+      }
+    ],
+    "files": [
+      {
+        "originalSource": "https://address-jenny-munich-fonts.trycloudflare.com/assets/cover-3.jpg",
+        "filename": "june-photo-book-gilded-fan.jpg",
+        "alt": "The June Photo Book with a deep green Gilded Fan cover",
+        "contentType": "IMAGE"
+      }
+    ]
+  }
+}

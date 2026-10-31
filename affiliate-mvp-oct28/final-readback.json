@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-28",
+  "themeId": "187527266499",
+  "themeRole": "UNPUBLISHED",
+  "published": false,
+  "files": [
+    {
+      "filename": "sections/my-header.liquid",
+      "sha256": "1E0622D4581A9E058F5556DE7CE91355BA25761F05F4CC2EDFF20C1DB60D8909",
+      "exactReadback": true
+    },
+    {
+      "filename": "sections/june-footer.liquid",
+      "sha256": "1D6861A952218759663AEFEEA286316D70EAB65B85B1BFD64CAFBFC3B5B30EFB",
+      "exactReadback": true
+    }
+  ],
+  "previewChecks": {
+    "viewports": ["390x844", "1440x1000"],
+    "drawerImmediatelyAfterNavigation": true,
+    "drawerVisible": true,
+    "footerVisible": true,
+    "destinationStatus": 200,
+    "destinationTitle": "Create. Share. Earn. | The June Shop",
+    "horizontalOverflow": false,
+    "pageErrors": []
+  }
+}

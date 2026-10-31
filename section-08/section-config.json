@@ -1,0 +1,46 @@
+{
+  "type": "june-find-your-glow",
+  "blocks": {
+    "lamp0": {
+      "type": "piece",
+      "settings": {
+        "product": "vespera-luminous-tower-table-lamp",
+        "name": "Vespera tower lamp",
+        "label": "Vespera",
+        "scene": "shopify://shop_images/DSC0155_f865a7d4-8165-4729-83b6-a29bac0cbff5.jpg"
+      }
+    },
+    "lamp1": {
+      "type": "piece",
+      "settings": {
+        "product": "gilded-wave-radiance-luxe-table-lamp",
+        "name": "Gilded Wave lamp",
+        "label": "Gilded Wave",
+        "scene": "shopify://shop_images/DSC0140_3eccb207-707a-43e0-9b6e-39e5929fa7f9.jpg"
+      }
+    },
+    "lamp2": {
+      "type": "piece",
+      "settings": {
+        "product": "sovereign-flow-glow-table-lamp",
+        "name": "Sovereign Flow lamp",
+        "label": "Sovereign",
+        "scene": "shopify://shop_images/DSC0112_846dd4e6-1203-4729-8b7d-7c2e1971ca41.jpg"
+      }
+    },
+    "typography": {
+      "type": "typography",
+      "settings": {}
+    }
+  },
+  "block_order": [
+    "lamp0",
+    "lamp1",
+    "lamp2",
+    "typography"
+  ],
+  "settings": {
+    "collection": "lamps-lighting",
+    "accent": "#FFB790"
+  }
+}

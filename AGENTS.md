@@ -1,0 +1,52 @@
+Latest workflow update — 7 October 2026: User is designing the same theme in THREE simultaneous chats (Designer A/B/C). This supersedes the 28 September single-editor assumption. Do not overwrite other chats’ work or save stale whole files. Keep changes scoped to the current request and separate prototype files. Before every remote write, fetch the latest target file, merge only the intended change, and recheck remote content immediately before uploading; if it changed again, reconcile rather than overwrite. Upload only explicit changed files to unpublished 187527266499; exact readback afterward. Shared files (index/settings/layout/locales/shared CSS) need extra overlap checks. Chat-specific ownership is not established: do not infer it from old two-system ownership tables. If concurrent edits affect the same lines or section and cannot be safely merged, resolve ownership before writing. No automatic publishing. This does not authorize messaging other chats.
+Latest iPhone screenshot follow-up (6 October 2026): Five sections revised on unpublished 187527266499: final story scene held on mobile exit with 600px stage cap, closed extras leak and badge fixed, compact Dining/Decor buying cards, Mystery Box SVG arrows. 5/5 exact readback. Read iphone-followup/README.md and final-readback.json. Browser checks completed as recorded; physical Safari, editor and exhaustive visual gates remain incomplete. Nothing published.
+
+Latest mobile repair (6 October 2026): Mobile layout/content fixes installed on unpublished 187527266499; 15/15 exact readback. Read mobile-repair-oct06/README.md for per-section changes and remaining checks. Desktop compositions and palette preserved; incorrect Decor/Glassware product overrides corrected. Mobile GIF logo falls back to text until a static logo is selected. Screenshot checks completed across the page with supplementary phone widths; exhaustive device/editor regression remains pending. Nothing published.
+
+Latest approved typography (5 October 2026): User approved chunky prices, stronger small text, accent page tabs, quiet policy links and Zoom in controls. Rolled across all12 June homepage sections +header on unpublished187527266499. Theme settings > June typography / June typography utilities are the shared controls. Read home-type-rollout/README.md and final-readback.json. 19/19 exact readback; source and responsive interaction checks complete as documented; full screenshot/device comparison remains incomplete. Preserve headings/subheadings, palette and artwork. Nothing published.
+
+Latest homepage browsing audit and Lighting backdrop (1 October 2026): Installed on unpublished 187527266499. Story ~40% shorter desktop/~60% mobile, visible skip, mobile product grouping, visible Dining, neutral policy links. Lighting now supports full-section 2.3:1 backdrop and per-lamp images with crop/shading controls. Read browsing-audit/README.md for evidence and remaining verification gates; audit is not fully signed off. 11/11 final files reconciled. No publishing. Preserve fresh merchant palette.
+
+Latest master palette options: Added 12 Midnight & Copper, 13 Olive & Peach, 14 Graphite & Mint, 15 Aubergine & Chartreuse. Current selection preserved. See palette-options-12-15/README.md. Unpublished only.
+
+Latest year label: Rejected oval replaced with small rectangular accent label aligned to tilted year; replay moved clear. See year-label/README.md. Unpublished only.
+
+Latest slanted year (1 October 2026): User-approved hero 2027 refinement installed: tilt, tighter reels with landing bounce, accent sticker, discreet playback control and refined signup. Read slanted-year/README.md. Unpublished 187527266499 only.
+
+Latest rolling year (1 October 2026): Replaced rejected hero 2027 blinking with staggered vertical reels and one landing accent highlight. Editable controls under 2027 rolling year. Installed on unpublished 187527266499; desktop/mobile checked. Read rolling-year/README.md. Nothing published.
+
+Latest hero controls (1 October 2026): Life Journals image controls clarified; all hero tabs share Undated’s height; 2027 digit effects block added with sequential 2/3/4/5 blinks, colour/style/timing/repeat controls and reduced-motion handling. Installed on unpublished 187527266499, checked desktop and 393x852. Read hero-controls/README.md. Nothing published.
+
+Latest master palette (30 September 2026): Installed June master palette in Theme settings on unpublished theme 187527266499. Four presets plus Custom with nine colour roles; all June sections can opt out (hero toggle in Typography controls). Current selection remains 20 Vivid Orange. Read master-palette/README.md and remote-checks.json. New colours must consume these shared roles; preserve section fallbacks, typography and layouts. Nothing published.
+
+Latest palette (30 September 2026): User selected 20 Vivid Orange / Bold Minimal for the entire theme. Installed and 43/43 files reconciled on unpublished theme 187527266499. White #FFFFFF, ink #171717, orange #F56A28, surface #F5F5F3, muted #656565, border #DADADA; black footer. Supersedes Apricot & Lilac and cream gutters. Read palette-vivid-orange/README.md. Typography/layout/animations preserved. Nothing published.
+
+Latest gutters (30 September 2026): Homepage outer gutters set to #FFFBF1 in layout/theme.liquid, including the outer Other Chapters wrapper. Centred section backgrounds and widths preserved. See gutter-cream/README.md. Saved to unpublished theme 187527266499; nothing published.
+
+Latest Other Chapters (30 September 2026): Enabled the same pinned scroll stage in the theme editor, replacing its three stacked panels. Chapter block selection seeks the corresponding timeline beat. Sequence, pauses and visuals preserved. Read chapters-single-stage/README.md for verification and remaining visual review. Saved to unpublished theme 187527266499; nothing published.
+
+Latest Other Chapters (29 September 2026): User-requested empty-background scroll story installed on unpublished theme 187527266499. Flowers → wedding PNG/text → empty pause → rewritable PNG/text → duster wipe → baby footsteps → baby PNG/text → next section. Read chapters-scroll/README.md and remote-checks.json. Desktop and 375x667/430x932 checked; awaiting review. Previous chapter switcher/mobile audit behaviour superseded for this section only. Nothing published.
+
+Latest palette (29 September 2026): User chose 02 Apricot & Lilac and authorised application. Installed on unpublished theme 187527266499; awaiting visual review. Read palette-apricot-lilac/README.md. Ivory #FAF7EF, apricot #F5A477, ink #191816, lilac #E7E1F0, oat #EEE8DD, espresso #241C18. This supersedes earlier lime/peach default instructions; colours remain merchant-editable. Typography and layout approvals remain. Nothing published; MAIN unchanged.
+
+Latest: Mobile browsing improvements installed on unpublished theme 187527266499; awaiting review. Read mobile-fixes/README.md and remote-checks.json. Search, dialogs, category shortcuts and Sections 1/2/3/5/6/10 revised. All 10 uploaded files reconciled; current-theme synced. Tested at 375x667, 393x852, 430x932 and desktop 1440x1000; physical iPhone Safari/keyboard testing remains. Nothing published; MAIN unchanged.
+
+Local continuation: read START-HERE-LOCAL.md first, then its linked records and references before making changes. Latest user request authorised implementation of the entire page audit, explicitly including previously locked Section 1. The audit revision is installed and awaits review; see audit-implementation/README.md. This permission does not change the approved typography or permit publication. Historical snapshots are not necessarily current remote state.
+
+User update (28 September 2026): user is now the sole website editor and explicitly cancelled the teammate protocol. This project may perform requested section builds and shared-file integration without teammate pause confirmations. Read TWO-SYSTEM-WORKFLOW.md for the superseding single-editor status. Preserve fresh remote reconciliation, locked sections and the no-publication rule.
+
+# The June Shop custom sections
+
+User requirement (25 September 2026): every custom section built or revised must offer merchant-editable typography controls: font family, thickness/font weight, font size, letter spacing and line spacing. Provide separate desktop and mobile sizes. Group controls by text role (heading, supporting copy, buttons/navigation as applicable). Use section-scoped styles so one section's controls do not alter others. Load selected font weights where available. Respect Shopify's settings limits; Section 1 uses a dedicated Typography controls block. Include that block in new presets and configured section instances. Preserve sensible fallback styling if it is removed.
+
+Working theme 187527266499 is unpublished. Do not publish or modify MAIN without a user request.
+
+Typography reference implementation is documented in TYPOGRAPHY.md: Poppins heavy sentence-case headings, regular supporting copy with selective bold, capsule primary actions with black circular SVG arrows. Reuse these defaults for subsequent custom sections, scaled to each section's hierarchy. Preserve the merchant controls. Do not reintroduce horizontal font scaling.
+
+APPROVED / LOCKED by user: Poppins typography and the current Section 1 button style are the website-wide design standard until the user explicitly changes direction. Apply to new and revised website sections: heavy natural-width headings, regular supporting copy with selective bold, lime capsule primary buttons with black circular arrows, and underlined secondary actions. Follow TYPOGRAPHY.md for role values and responsive sizing. Keep merchant controls editable. This approval does not authorize publishing the theme or an unsolicited bulk rewrite of existing sections.
+
+Accent colour is selectable: lime is the default only. Keep button fills, accent arrows and word glows driven by the same merchant colour control. Section 1 text animation exposes enable, speed, total plays, continuous repeat and pause controls; do not hard-code those values in future revisions.
+
+User preference: retain the desktop hero gutters / centred 1680px stage. Full-bleed desktop treatment was tried and explicitly reverted. Do not remove these gutters without a new request.
+Hero category tabs and Mystery Box strip must match the banner's centred 1680px maximum width and desktop gutters.
+

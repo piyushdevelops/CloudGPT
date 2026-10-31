@@ -1,0 +1,23 @@
+mutation UpdateMemoryNavigation(
+  $id: ID!
+  $title: String!
+  $handle: String!
+  $items: [MenuItemUpdateInput!]!
+) {
+  menuUpdate(id: $id, title: $title, handle: $handle, items: $items) {
+    menu {
+      id
+      handle
+      title
+      items {
+        id
+        title
+        url
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

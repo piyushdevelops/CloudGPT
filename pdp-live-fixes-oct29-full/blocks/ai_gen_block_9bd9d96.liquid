@@ -1,0 +1,394 @@
+{% doc %}
+  @prompt
+    I want in announcement bar that has a button on the right that takes them to a different page, can we have 2-3 word divisions, so that each word can have different colour font or background colour that can switch colours or something to grab the attention, remove button
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-announcement-bar-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: {{ block.settings.text_alignment }};
+    padding: {{ block.settings.padding_vertical }}px {{ block.settings.padding_horizontal }}px;
+    background-color: {{ block.settings.background_color }};
+    width: 100%;
+  }
+
+  .ai-announcement-bar__content-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: {{ block.settings.text_alignment }};
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: {{ block.settings.text_size }}px;
+    line-height: 1.4;
+  }
+
+  .ai-announcement-bar__word-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: {{ block.settings.word_padding_vertical }}px {{ block.settings.word_padding_horizontal }}px;
+    border-radius: {{ block.settings.word_border_radius }}px;
+    font-weight: {{ block.settings.word_font_weight }};
+    transition: all 0.4s ease;
+  }
+
+  .ai-announcement-bar__word-1-{{ ai_gen_id }} {
+    color: {{ block.settings.word_1_text_color }};
+    background-color: {{ block.settings.word_1_background_color }};
+  }
+
+  .ai-announcement-bar__word-2-{{ ai_gen_id }} {
+    color: {{ block.settings.word_2_text_color }};
+    background-color: {{ block.settings.word_2_background_color }};
+  }
+
+  .ai-announcement-bar__word-3-{{ ai_gen_id }} {
+    color: {{ block.settings.word_3_text_color }};
+    background-color: {{ block.settings.word_3_background_color }};
+  }
+
+  {% if block.settings.enable_color_switch %}
+    @keyframes ai-word-switch-1-{{ ai_gen_id }} {
+      0%, 100% {
+        color: {{ block.settings.word_1_text_color }};
+        background-color: {{ block.settings.word_1_background_color }};
+      }
+      50% {
+        color: {{ block.settings.word_1_alt_text_color }};
+        background-color: {{ block.settings.word_1_alt_background_color }};
+      }
+    }
+
+    @keyframes ai-word-switch-2-{{ ai_gen_id }} {
+      0%, 100% {
+        color: {{ block.settings.word_2_text_color }};
+        background-color: {{ block.settings.word_2_background_color }};
+      }
+      50% {
+        color: {{ block.settings.word_2_alt_text_color }};
+        background-color: {{ block.settings.word_2_alt_background_color }};
+      }
+    }
+
+    @keyframes ai-word-switch-3-{{ ai_gen_id }} {
+      0%, 100% {
+        color: {{ block.settings.word_3_text_color }};
+        background-color: {{ block.settings.word_3_background_color }};
+      }
+      50% {
+        color: {{ block.settings.word_3_alt_text_color }};
+        background-color: {{ block.settings.word_3_alt_background_color }};
+      }
+    }
+
+    .ai-announcement-bar__word-1-{{ ai_gen_id }} {
+      animation: ai-word-switch-1-{{ ai_gen_id }} {{ block.settings.animation_speed }}s ease-in-out infinite;
+    }
+
+    .ai-announcement-bar__word-2-{{ ai_gen_id }} {
+      animation: ai-word-switch-2-{{ ai_gen_id }} {{ block.settings.animation_speed }}s ease-in-out infinite;
+      animation-delay: {{ block.settings.animation_delay }}s;
+    }
+
+    .ai-announcement-bar__word-3-{{ ai_gen_id }} {
+      animation: ai-word-switch-3-{{ ai_gen_id }} {{ block.settings.animation_speed }}s ease-in-out infinite;
+      animation-delay: calc({{ block.settings.animation_delay }}s * 2);
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    .ai-announcement-bar-{{ ai_gen_id }} {
+      text-align: center;
+    }
+
+    .ai-announcement-bar__content-{{ ai_gen_id }} {
+      justify-content: center;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-announcement-bar-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-announcement-bar__content-{{ ai_gen_id }}">
+    {% if block.settings.word_1 != blank %}
+      <span class="ai-announcement-bar__word-{{ ai_gen_id }} ai-announcement-bar__word-1-{{ ai_gen_id }}">
+        {{ block.settings.word_1 }}
+      </span>
+    {% endif %}
+
+    {% if block.settings.word_2 != blank %}
+      <span class="ai-announcement-bar__word-{{ ai_gen_id }} ai-announcement-bar__word-2-{{ ai_gen_id }}">
+        {{ block.settings.word_2 }}
+      </span>
+    {% endif %}
+
+    {% if block.settings.word_3 != blank %}
+      <span class="ai-announcement-bar__word-{{ ai_gen_id }} ai-announcement-bar__word-3-{{ ai_gen_id }}">
+        {{ block.settings.word_3 }}
+      </span>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Word 1"
+    },
+    {
+      "type": "text",
+      "id": "word_1",
+      "label": "Text",
+      "default": "Free"
+    },
+    {
+      "type": "color",
+      "id": "word_1_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "word_1_background_color",
+      "label": "Background color",
+      "default": "#db1215"
+    },
+    {
+      "type": "color",
+      "id": "word_1_alt_text_color",
+      "label": "Alternate text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "word_1_alt_background_color",
+      "label": "Alternate background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Word 2"
+    },
+    {
+      "type": "text",
+      "id": "word_2",
+      "label": "Text",
+      "default": "Shipping"
+    },
+    {
+      "type": "color",
+      "id": "word_2_text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "word_2_background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "word_2_alt_text_color",
+      "label": "Alternate text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "word_2_alt_background_color",
+      "label": "Alternate background color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Word 3"
+    },
+    {
+      "type": "text",
+      "id": "word_3",
+      "label": "Text",
+      "default": "Today!"
+    },
+    {
+      "type": "color",
+      "id": "word_3_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "word_3_background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "word_3_alt_text_color",
+      "label": "Alternate text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "word_3_alt_background_color",
+      "label": "Alternate background color",
+      "default": "#48d4bb"
+    },
+    {
+      "type": "header",
+      "content": "Word style"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "word_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "word_padding_vertical",
+      "label": "Word vertical padding",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "word_padding_horizontal",
+      "label": "Word horizontal padding",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "word_border_radius",
+      "label": "Word border radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_color_switch",
+      "label": "Enable color switching",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "label": "Animation speed",
+      "min": 1,
+      "max": 5,
+      "step": 0.5,
+      "unit": "s",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "animation_delay",
+      "label": "Animation delay between words",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "unit": "s",
+      "default": 0.3
+    },
+    {
+      "type": "header",
+      "content": "Bar settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Bar background",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Vertical padding",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar"
+    }
+  ],
+  "tag": null
+}
+{% endschema %}

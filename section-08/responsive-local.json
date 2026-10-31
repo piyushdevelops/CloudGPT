@@ -1,0 +1,38 @@
+[
+  {
+    "loaded": true,
+    "scrollWidth": 320,
+    "sectionWidth": 320,
+    "width": 320
+  },
+  {
+    "loaded": true,
+    "scrollWidth": 390,
+    "sectionWidth": 390,
+    "width": 390
+  },
+  {
+    "loaded": true,
+    "scrollWidth": 750,
+    "sectionWidth": 750,
+    "width": 750
+  },
+  {
+    "loaded": true,
+    "scrollWidth": 1051,
+    "sectionWidth": 1051,
+    "width": 1051
+  },
+  {
+    "loaded": true,
+    "scrollWidth": 1440,
+    "sectionWidth": 1440,
+    "width": 1440
+  },
+  {
+    "loaded": true,
+    "scrollWidth": 2560,
+    "sectionWidth": 1680,
+    "width": 2560
+  }
+]

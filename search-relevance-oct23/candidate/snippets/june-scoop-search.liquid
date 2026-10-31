@@ -1,0 +1,36 @@
+{% doc %}
+  Scoop search with editable geometry, motion and typography.
+  @param {section} section - Header section.
+  @param {block} block - Scoop search controls.
+{% enddoc %}
+{% assign s = block.settings %}
+{% assign cart_notice = section.blocks | where: 'type', 'scoop_cart_notice' | first %}
+{% assign input_font = s.input_font | font_modify: 'weight', s.input_weight %}
+{% assign result_font = s.result_font | font_modify: 'weight', s.result_weight %}
+{% style %}
+{{ s.input_font | font_face: font_display: 'swap' }}
+{{ input_font | font_face: font_display: 'swap' }}
+{{ s.result_font | font_face: font_display: 'swap' }}
+{{ result_font | font_face: font_display: 'swap' }}
+{% endstyle %}
+{{ 'june-scoop-search.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'june-scoop-search.js' | asset_url }}" defer="defer"></script>
+<june-scoop-search data-matches-asset="{{ 'june-search-matches.js' | asset_url }}" data-header="TjsPremiumHeader-{{ section.id }}" data-predictive="{{ routes.predictive_search_url }}" {{ block.shopify_attributes }} style="--jss-font:{{ s.input_font.family | escape }},{{ s.input_font.fallback_families | escape }};--jss-result-font:{{ s.result_font.family | escape }},{{ s.result_font.fallback_families | escape }};--jss-weight:{{ s.input_weight }};--jss-size:{{ s.input_size }}px;--jss-size-mobile:{{ s.input_size_mobile }}px;--jss-tracking:{{ s.input_tracking }}px;--jss-line:{{ s.input_line }};--jss-result-weight:{{ s.result_weight }};--jss-result-size:{{ s.result_size }}px;--jss-result-size-mobile:{{ s.result_size_mobile }}px;--jss-result-tracking:{{ s.result_tracking }}px;--jss-result-line:{{ s.result_line }};--jss-text:{{ s.text_color }};--jss-placeholder:{{ s.placeholder_color }};--jss-accent:{{ s.accent }};--jss-rim-color:{{ s.rim_color }};--jss-rim:{{ s.rim }}px;--jss-inset:{{ s.inset }}px;--jss-shadow:{{ s.shadow | divided_by: 100.0 }};--jss-icon:{{ s.icon }}px;--jss-stroke:{{ s.stroke }};--jss-results-height:{{ s.results_height }}px;--jss-results-radius:{{ s.results_radius }}px;">
+<script type="application/json" data-config>{"desktop":{{ s.desktop | json }},"mobile":{{ s.mobile | json }},"motion":{{ s.motion | json }},"duration":{{ s.duration | json }},"width_desktop":{{ s.width_desktop | json }},"width_mobile":{{ s.width_mobile | json }},"height_desktop":{{ s.height_desktop | json }},"height_mobile":{{ s.height_mobile | json }},"edge":{{ s.edge | json }},"drop":{{ s.drop | json }},"gap":{{ s.gap | json }},"radius":{{ s.radius | json }},"fill":{{ s.fill | json }},"outside_close":{{ s.outside_close | json }},"suggestions":{{ s.suggestions | json }},"images":{{ s.images | json }},"limit":{{ s.limit | json }},"min_chars":{{ s.min_chars | json }},"debounce":{{ s.debounce | json }},"all_label":{{ s.all_label | json }},"results_label":{{ s.results_label | json }},"empty_label":{{ s.empty_label | json }},"fallback_label":{{ s.fallback_label | json }}}</script>
+<script type="application/json" data-cart-config>{"enabled":{{ cart_notice.settings.enabled | default: false, allow_false: true | json }},"message":{{ cart_notice.settings.message | default: 'Added to your bag' | json }},"close_label":{{ cart_notice.settings.close_label | default: 'Dismiss cart confirmation' | json }},"hold":{{ cart_notice.settings.hold | default: 3 | json }},"count":{{ cart.item_count | json }}}</script>
+<template>
+<div id="JuneScoopSearch-{{ section.id }}" class="jss-overlay" hidden>
+  <svg class="jss-shape" preserveAspectRatio="none" aria-hidden="true"><path data-shape/><circle data-orb/></svg>
+  <form class="jss-form" action="{{ routes.search_url }}" method="get" role="search" aria-label="{{ s.search_label | escape }}">
+    <input type="hidden" name="type" value="product"><input type="hidden" name="options[prefix]" value="last">
+    <input class="jss-input" type="search" name="q" autocomplete="off" enterkeyhint="search" placeholder="{{ s.placeholder | escape }}" aria-label="{{ s.search_label | escape }}" aria-controls="JuneScoopResults-{{ section.id }}">
+    <button class="jss-close" type="button" data-close aria-label="{{ s.close_label | escape }}">×</button>
+    <button class="jss-submit" type="submit" aria-label="{{ s.search_label | escape }}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+  </form>
+  <div class="jss-results-wrap"><div class="jss-results" id="JuneScoopResults-{{ section.id }}" data-results hidden></div></div>
+  <span class="jss-status" role="status" data-status></span>
+</div>
+</template>
+</june-scoop-search>
+
+

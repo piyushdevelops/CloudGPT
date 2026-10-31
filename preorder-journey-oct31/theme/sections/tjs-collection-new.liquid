@@ -1,0 +1,770 @@
+{% comment %}
+  TJS Collection Worlds
+  Tabbed homepage mini-homepages for Home, Kitchen, Organise, Planners, Eyewear, Gifting, etc.
+  No custom cart controller. Product cards link to PDP.
+{% endcomment %}
+
+<section
+  id="TjsCollectionWorlds-{{ section.id }}"
+  class="tjs-worlds"
+  data-tjs-worlds
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-autoplay-speed="{{ section.settings.autoplay_speed | times: 1000 }}"
+  style="
+    --worlds-max: {{ section.settings.max_width }}px;
+    --worlds-tab-h: {{ section.settings.tab_height }}px;
+    --worlds-radius: {{ section.settings.radius }}px;
+    --worlds-sticky-top: {{ section.settings.sticky_top }}px;
+    --worlds-bg: {{ section.settings.base_background }};
+    --worlds-text: {{ section.settings.base_text }};
+    --worlds-muted: {{ section.settings.base_muted }};
+    --worlds-border: {{ section.settings.base_border }};
+  "
+>
+  <div class="tjs-worlds__sticky-wrap">
+    <div class="tjs-worlds__tabs-shell">
+      <div class="tjs-worlds__tabs" role="tablist" aria-label="Shop by category">
+        {% for block in section.blocks %}
+          {% if block.type == 'world' %}
+            <button
+              type="button"
+              class="tjs-worlds__tab{% if forloop.first %} is-active{% endif %}"
+              role="tab"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-controls="TjsWorldPanel-{{ block.id }}"
+              data-world-tab="{{ forloop.index0 }}"
+              style="--tab-accent: {{ block.settings.accent }};"
+              {{ block.shopify_attributes }}
+            >
+              <span class="tjs-worlds__tab-icon" aria-hidden="true">
+                {% if block.settings.custom_icon != blank %}
+                  {{ block.settings.custom_icon | image_url: width: 140 | image_tag: loading: 'lazy', widths: '48,72,96,120,140', sizes: '56px', class: 'tjs-worlds__tab-icon-image' }}
+                {% else %}
+                  {% case block.settings.icon %}
+                    {% when 'all' %}<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                    {% when 'home' %}<svg viewBox="0 0 24 24" fill="none"><path d="M3 10.5 12 3l9 7.5V21H6v-8h12v8"/><path d="M9 21v-6h6v6"/></svg>
+                    {% when 'kitchen' %}<svg viewBox="0 0 24 24" fill="none"><path d="M5 3v8M8 3v8M5 7h3M6.5 11v10"/><path d="M14 3v18M14 8c4 0 5-2 5-5v18"/></svg>
+                    {% when 'organise' %}<svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M6 7v13h12V7M8 4h8l1 3H7l1-3Z"/><path d="M9 11h6"/></svg>
+                    {% when 'planner' %}<svg viewBox="0 0 24 24" fill="none"><path d="M6 3h12v18H6z"/><path d="M9 3v18M12 7h3M12 11h3M12 15h3"/><path d="m16 5 3-3 2 2-3 3"/></svg>
+                    {% when 'eyewear' %}<svg viewBox="0 0 24 24" fill="none"><circle cx="7" cy="13" r="4"/><circle cx="17" cy="13" r="4"/><path d="M11 13h2M3 12 5 6M21 12l-2-6"/></svg>
+                    {% when 'gift' %}<svg viewBox="0 0 24 24" fill="none"><path d="M4 9h16v12H4zM3 6h18v3H3zM12 6v15"/><path d="M12 6C9 6 7 5 7 3.5S9 1 12 6Zm0 0c3 0 5-1 5-2.5S15 1 12 6Z"/></svg>
+                    {% else %}<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8"/><path d="M8 12h8M12 8v8"/></svg>
+                  {% endcase %}
+                {% endif %}
+              </span>
+              <span class="tjs-worlds__tab-label">{{ block.settings.title | escape }}</span>
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="tjs-worlds__panels">
+    {% for block in section.blocks %}
+      {% if block.type == 'world' %}
+        <article
+          id="TjsWorldPanel-{{ block.id }}"
+          class="tjs-worlds__panel{% if forloop.first %} is-active{% endif %}"
+          role="tabpanel"
+          data-world-panel="{{ forloop.index0 }}"
+          style="
+            --world-bg: {{ block.settings.background }};
+            --world-card: {{ block.settings.card_background }};
+            --world-text: {{ block.settings.text_color }};
+            --world-muted: {{ block.settings.muted_color }};
+            --world-accent: {{ block.settings.accent }};
+            --world-soft: {{ block.settings.soft_accent }};
+          "
+        >
+          <div class="tjs-worlds__panel-inner">
+            <div class="tjs-worlds__hero" data-world-hero>
+              <div class="tjs-worlds__hero-track" data-world-hero-track>
+                {% for i in (1..3) %}
+                  {% liquid
+                    assign image_key = 'banner_' | append: i
+                    assign heading_key = 'banner_' | append: i | append: '_heading'
+                    assign text_key = 'banner_' | append: i | append: '_text'
+                    assign link_key = 'banner_' | append: i | append: '_link'
+                    assign cta_key = 'banner_' | append: i | append: '_cta'
+                    assign image = block.settings[image_key]
+                    assign heading = block.settings[heading_key]
+                    assign body = block.settings[text_key]
+                    assign link = block.settings[link_key]
+                    assign cta = block.settings[cta_key]
+                  %}
+                  {% if image != blank %}
+                    <div class="tjs-worlds__hero-slide" data-world-hero-slide>
+                      {% if link != blank %}<a href="{{ link }}" class="tjs-worlds__hero-link">{% endif %}
+                        {{ image | image_url: width: 2200 | image_tag: loading: 'lazy', widths: '700,1000,1400,1800,2200', sizes: '(max-width: 749px) 92vw, 82vw', class: 'tjs-worlds__hero-image' }}
+                        {% if heading != blank or body != blank or cta != blank %}
+                          <div class="tjs-worlds__hero-overlay">
+                            {% if heading != blank %}<h3>{{ heading | escape }}</h3>{% endif %}
+                            {% if body != blank %}<p>{{ body | escape }}</p>{% endif %}
+                            {% if cta != blank %}<span>{{ cta | escape }} →</span>{% endif %}
+                          </div>
+                        {% endif %}
+                      {% if link != blank %}</a>{% endif %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+              <div class="tjs-worlds__hero-dots" data-world-hero-dots></div>
+            </div>
+
+            {% if block.settings.show_subcategories %}
+              <section class="tjs-worlds__section">
+                <div class="tjs-worlds__section-head">
+                  <h3>{{ block.settings.subcategory_heading | escape }}</h3>
+                  {% if block.settings.subcategory_link != blank %}<a href="{{ block.settings.subcategory_link }}">{{ block.settings.subcategory_cta | escape }} →</a>{% endif %}
+                </div>
+                <div class="tjs-worlds__subcats">
+                  {% for i in (1..6) %}
+                    {% assign collection_key = 'subcategory_' | append: i %}
+                    {% assign sub_collection = block.settings[collection_key] %}
+                    {% if sub_collection != blank %}
+                      <a href="{{ sub_collection.url }}" class="tjs-worlds__subcat">
+                        <span class="tjs-worlds__subcat-media">
+                          {% if sub_collection.featured_image != blank %}
+                            {{ sub_collection.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '220,320,480,600,700', sizes: '(max-width: 749px) 42vw, 220px', class: 'tjs-worlds__subcat-image' }}
+                          {% endif %}
+                        </span>
+                        <strong>{{ sub_collection.title | escape }}</strong><span aria-hidden="true">→</span>
+                      </a>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </section>
+            {% endif %}
+
+            {% if block.settings.bestsellers != blank %}
+              <section class="tjs-worlds__section">
+                <div class="tjs-worlds__section-head"><h3>{{ block.settings.bestsellers_heading | escape }}</h3><a href="{{ block.settings.bestsellers.url }}">View all →</a></div>
+                <div class="tjs-worlds__products">
+                  {% for product in block.settings.bestsellers.products limit: section.settings.products_per_row %}
+                    <a href="{{ product.url }}" class="tjs-worlds__product">
+                      <span class="tjs-worlds__product-media">
+                        {% if product.featured_image != blank %}{{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '220,320,480,640,900', sizes: '(max-width: 749px) 46vw, 260px', class: 'tjs-worlds__product-image' }}{% endif %}
+                        {% if product.compare_at_price_max > product.price %}<span class="tjs-worlds__sale">Save {{ product.compare_at_price_max | minus: product.price | money_without_trailing_zeros }}</span>{% endif %}
+                      </span>
+                      <span class="tjs-worlds__product-copy"><strong>{{ product.title | escape }}</strong><span><b>{{ product.price | money }}</b>{% if product.compare_at_price_max > product.price %}<s>{{ product.compare_at_price_max | money }}</s>{% endif %}</span></span>
+                    </a>
+                  {% endfor %}
+                </div>
+              </section>
+            {% endif %}
+
+            {% if block.settings.new_arrivals != blank %}
+              <section class="tjs-worlds__section">
+                <div class="tjs-worlds__section-head"><h3>{{ block.settings.new_heading | escape }}</h3><a href="{{ block.settings.new_arrivals.url }}">View all →</a></div>
+                <div class="tjs-worlds__products">
+                  {% for product in block.settings.new_arrivals.products limit: section.settings.products_per_row %}
+                    <a href="{{ product.url }}" class="tjs-worlds__product">
+                      <span class="tjs-worlds__product-media">{% if product.featured_image != blank %}{{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '220,320,480,640,900', sizes: '(max-width: 749px) 46vw, 260px', class: 'tjs-worlds__product-image' }}{% endif %}</span>
+                      <span class="tjs-worlds__product-copy"><strong>{{ product.title | escape }}</strong><span><b>{{ product.price | money }}</b></span></span>
+                    </a>
+                  {% endfor %}
+                </div>
+              </section>
+            {% endif %}
+
+            {% if block.settings.editorial_image != blank %}
+              <section class="tjs-worlds__editorial">
+                {% if block.settings.editorial_link != blank %}<a href="{{ block.settings.editorial_link }}">{% endif %}
+                  {{ block.settings.editorial_image | image_url: width: 2200 | image_tag: loading: 'lazy', widths: '700,1000,1400,1800,2200', sizes: '(max-width: 749px) 92vw, 82vw', class: 'tjs-worlds__editorial-image' }}
+                  {% if block.settings.editorial_heading != blank %}<div class="tjs-worlds__editorial-copy"><h3>{{ block.settings.editorial_heading | escape }}</h3>{% if block.settings.editorial_text != blank %}<p>{{ block.settings.editorial_text | escape }}</p>{% endif %}</div>{% endif %}
+                {% if block.settings.editorial_link != blank %}</a>{% endif %}
+              </section>
+            {% endif %}
+
+            {% if block.settings.featured_collection != blank %}
+              <section class="tjs-worlds__section">
+                <div class="tjs-worlds__section-head"><h3>{{ block.settings.featured_heading | escape }}</h3><a href="{{ block.settings.featured_collection.url }}">Explore →</a></div>
+                <div class="tjs-worlds__products">
+                  {% for product in block.settings.featured_collection.products limit: section.settings.products_per_row %}
+                    <a href="{{ product.url }}" class="tjs-worlds__product">
+                      <span class="tjs-worlds__product-media">{% if product.featured_image != blank %}{{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '220,320,480,640,900', sizes: '(max-width: 749px) 46vw, 260px', class: 'tjs-worlds__product-image' }}{% endif %}</span>
+                      <span class="tjs-worlds__product-copy"><strong>{{ product.title | escape }}</strong><span><b>{{ product.price | money }}</b></span></span>
+                    </a>
+                  {% endfor %}
+                </div>
+              </section>
+            {% endif %}
+          </div>
+        </article>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% style %}
+#TjsCollectionWorlds-{{ section.id }}{width:100%;background:var(--worlds-bg);color:var(--worlds-text);font-family:var(--font-body-family,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif)}
+#TjsCollectionWorlds-{{ section.id }} *{box-sizing:border-box}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__sticky-wrap{position:sticky;top:var(--worlds-sticky-top);z-index:40;background:color-mix(in srgb,var(--worlds-bg) 94%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--worlds-border)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tabs-shell{width:min(100%,var(--worlds-max));margin-inline:auto}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tabs{display:flex;align-items:stretch;min-height:var(--worlds-tab-h);overflow-x:auto;scrollbar-width:none}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tabs::-webkit-scrollbar{display:none}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tab{position:relative;min-width:124px;flex:1 0 124px;display:grid;place-items:center;align-content:center;gap:8px;padding:14px;border:0;background:transparent;color:var(--worlds-muted);cursor:pointer;font:inherit}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tab:after{content:"";position:absolute;right:0;bottom:0;left:0;height:4px;background:var(--tab-accent,var(--june-dark,#111111));transform:scaleX(0);transform-origin:center;transition:transform .2s ease}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tab.is-active{color:var(--worlds-text);background:rgba(255,255,255,.72)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tab.is-active:after{transform:scaleX(1)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tab-icon{width:42px;height:42px;display:grid;place-items:center}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tab-icon svg{width:34px;height:34px;stroke:currentColor;stroke-width:2.15;stroke-linecap:round;stroke-linejoin:round}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tab-icon-image{width:40px;height:40px;object-fit:contain}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tab-label{font-size:13px;font-weight:800;line-height:1}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__panel{display:none;background:var(--world-bg);color:var(--world-text)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__panel.is-active{display:block}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__panel-inner{width:min(calc(100% - 32px),var(--worlds-max));margin-inline:auto;padding:24px 0 54px}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero{position:relative;overflow:hidden;border-radius:var(--worlds-radius)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-track::-webkit-scrollbar{display:none}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-slide{position:relative;min-width:100%;scroll-snap-align:start}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-link{display:block;color:inherit;text-decoration:none}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-image{width:100%;aspect-ratio:16/7;display:block;object-fit:cover;border-radius:var(--worlds-radius)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-overlay{position:absolute;left:clamp(24px,4vw,62px);bottom:clamp(24px,4vw,58px);max-width:480px;padding:18px 20px;border-radius:18px;background:rgba(0,0,0,.66);color:var(--june-on-dark,#FFFFFF);backdrop-filter:blur(12px)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-overlay h3{margin:0;font-size:clamp(28px,3.4vw,52px);font-weight:900;line-height:.95;letter-spacing:-.045em}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-overlay p{margin:9px 0 0;font-size:12px;line-height:1.45;opacity:.82}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-overlay span{display:inline-block;margin-top:14px;font-size:10px;font-weight:850;letter-spacing:.06em;text-transform:uppercase}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-dots{display:flex;justify-content:center;gap:10px;margin-top:13px}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-dots button{width:8px;height:8px;padding:0;border:0;border-radius:999px;background:color-mix(in srgb,var(--world-text) 34%,transparent)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-dots button.is-active{width:34px;background:var(--world-accent)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__section{margin-top:42px}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:17px}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__section-head h3{margin:0;font-size:clamp(24px,2.2vw,34px);font-weight:900;letter-spacing:-.035em;line-height:1}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__section-head a{color:inherit;font-size:10px;font-weight:820;text-decoration:none;text-transform:uppercase;letter-spacing:.05em}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__subcats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__subcat{min-width:0;display:grid;grid-template-columns:1fr auto;align-items:end;gap:6px;color:inherit;text-decoration:none}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__subcat-media{grid-column:1/-1;aspect-ratio:1/1;overflow:hidden;border-radius:18px;background:var(--world-card)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__subcat-image{width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__subcat:hover .tjs-worlds__subcat-image{transform:scale(1.025)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__subcat strong{font-size:12px;font-weight:790;line-height:1.15}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__products{display:grid;grid-template-columns:repeat({{ section.settings.desktop_products }},minmax(0,1fr));gap:14px}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__product{color:inherit;text-decoration:none;min-width:0}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__product-media{position:relative;display:block;aspect-ratio:1/1;overflow:hidden;border-radius:20px;background:var(--world-card)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__product-image{width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__product:hover .tjs-worlds__product-image{transform:scale(1.025)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__sale{position:absolute;top:10px;right:10px;padding:7px 9px;border-radius:999px;background:#fff;color:#111;font-size:8px;font-weight:850}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__product-copy{display:grid;gap:7px;padding-top:10px}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__product-copy>strong{font-size:12px;font-weight:780;line-height:1.25}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__product-copy span{display:flex;gap:7px;align-items:baseline}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__product-copy b{font-size:14px;font-weight:900}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__product-copy s{font-size:10px;color:var(--world-muted)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__editorial{position:relative;margin-top:42px;border-radius:var(--worlds-radius);overflow:hidden}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__editorial a{display:block;color:inherit;text-decoration:none}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__editorial-image{width:100%;aspect-ratio:16/6;object-fit:cover;display:block}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__editorial-copy{position:absolute;left:26px;bottom:24px;max-width:430px;padding:16px 18px;border-radius:16px;background:rgba(0,0,0,.68);color:var(--june-on-dark,#FFFFFF)}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__editorial-copy h3{margin:0;font-size:30px;font-weight:900;letter-spacing:-.04em}
+#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__editorial-copy p{margin:7px 0 0;font-size:11px;line-height:1.4;opacity:.8}
+@media(max-width:989px){#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__subcats{grid-template-columns:repeat(3,minmax(0,1fr))}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__products{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:749px){#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tab{min-width:100px;flex:0 0 100px;padding:12px 8px 10px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tab-icon{width:40px;height:40px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tab-icon svg{width:31px;height:31px;stroke-width:2.2}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__tab-label{font-size:12px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__panel-inner{width:min(calc(100% - 18px),var(--worlds-max));padding:18px 0 38px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-image{aspect-ratio:4/3;border-radius:18px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-overlay{left:12px;right:12px;bottom:12px;max-width:none;padding:13px 14px;border-radius:14px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-overlay h3{font-size:25px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__hero-overlay p{font-size:9px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__section{margin-top:32px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__section-head{margin-bottom:13px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__section-head h3{font-size:24px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__subcats,#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__products{display:flex;gap:10px;overflow-x:auto;margin-right:-9px;padding-right:9px;scrollbar-width:none;scroll-snap-type:x mandatory}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__subcats::-webkit-scrollbar,#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__products::-webkit-scrollbar{display:none}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__subcat{min-width:42%;flex:0 0 42%;scroll-snap-align:start}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__product{min-width:46%;flex:0 0 46%;scroll-snap-align:start}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__subcat-media{border-radius:15px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__product-media{border-radius:16px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__editorial{margin-top:32px;border-radius:18px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__editorial-image{aspect-ratio:4/3}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__editorial-copy{left:12px;right:12px;bottom:12px;max-width:none;padding:13px}#TjsCollectionWorlds-{{ section.id }} .tjs-worlds__editorial-copy h3{font-size:24px}}
+{% endstyle %}
+
+<script>
+(() => {
+  const root = document.getElementById('TjsCollectionWorlds-{{ section.id }}');
+  if (!root || root.dataset.ready === 'true') return;
+  root.dataset.ready = 'true';
+  const tabs = [...root.querySelectorAll('[data-world-tab]')];
+  const panels = [...root.querySelectorAll('[data-world-panel]')];
+  const autoplay = root.dataset.autoplay === 'true';
+  const autoplaySpeed = Number(root.dataset.autoplaySpeed || 5000);
+
+  const activateWorld = index => {
+    tabs.forEach((tab, i) => {
+      const active = i === index;
+      tab.classList.toggle('is-active', active);
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    panels.forEach((panel, i) => panel.classList.toggle('is-active', i === index));
+    panels[index]?.querySelector('[data-world-hero]')?.dispatchEvent(new CustomEvent('tjs:hero:activate'));
+  };
+
+  tabs.forEach((tab, index) => tab.addEventListener('click', () => {
+    activateWorld(index);
+    tab.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'nearest', inline:'center'});
+  }));
+
+  panels.forEach(panel => {
+    const hero = panel.querySelector('[data-world-hero]');
+    if (!hero) return;
+    const track = hero.querySelector('[data-world-hero-track]');
+    const slides = [...hero.querySelectorAll('[data-world-hero-slide]')];
+    const dotsWrap = hero.querySelector('[data-world-hero-dots]');
+    if (!track || !slides.length || !dotsWrap) return;
+    let current = 0, timer = null;
+    slides.forEach((slide, index) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Go to banner ${index + 1}`);
+      if (index === 0) dot.classList.add('is-active');
+      dot.addEventListener('click', () => track.scrollTo({left: slide.offsetLeft, behavior:'smooth'}));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = [...dotsWrap.children];
+    const update = () => {
+      const width = track.clientWidth || 1;
+      current = Math.max(0, Math.min(slides.length - 1, Math.round(track.scrollLeft / width)));
+      dots.forEach((dot, i) => dot.classList.toggle('is-active', i === current));
+    };
+    const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+    const start = () => {
+      stop();
+      if (!autoplay || slides.length < 2) return;
+      timer = setInterval(() => {
+        const next = (current + 1) % slides.length;
+        track.scrollTo({left: slides[next].offsetLeft, behavior:'smooth'});
+      }, autoplaySpeed);
+    };
+    track.addEventListener('scroll', () => requestAnimationFrame(update), {passive:true});
+    hero.addEventListener('mouseenter', stop);
+    hero.addEventListener('mouseleave', start);
+    hero.addEventListener('touchstart', stop, {passive:true});
+    hero.addEventListener('touchend', start, {passive:true});
+    hero.addEventListener('tjs:hero:activate', start);
+    if (panel.classList.contains('is-active')) start();
+  });
+  activateWorld(0);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "TJS collection worlds",
+  "tag": "section",
+  "class": "section-tjs-collection-worlds",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum content width",
+      "min": 1100,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1500
+    },
+    {
+      "type": "range",
+      "id": "sticky_top",
+      "label": "Sticky tabs top offset",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "tab_height",
+      "label": "Tab bar height",
+      "min": 78,
+      "max": 150,
+      "step": 4,
+      "unit": "px",
+      "default": 106
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Large card radius",
+      "min": 10,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay hero banners",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Banner autoplay speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products loaded per row",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "desktop_products",
+      "label": "Desktop product columns",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "base_background",
+      "label": "Base background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "base_text",
+      "label": "Base text",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "base_muted",
+      "label": "Base muted text",
+      "default": "#656565"
+    },
+    {
+      "type": "color",
+      "id": "base_border",
+      "label": "Base border",
+      "default": "#DADADA"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "world",
+      "name": "Collection world",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab title",
+          "default": "Home"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Built-in icon",
+          "default": "home",
+          "options": [
+            {
+              "value": "all",
+              "label": "All"
+            },
+            {
+              "value": "home",
+              "label": "Home"
+            },
+            {
+              "value": "kitchen",
+              "label": "Kitchen"
+            },
+            {
+              "value": "organise",
+              "label": "Organise"
+            },
+            {
+              "value": "planner",
+              "label": "Planners"
+            },
+            {
+              "value": "eyewear",
+              "label": "Eyewear"
+            },
+            {
+              "value": "gift",
+              "label": "Gifting"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom icon image"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "World background",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "card_background",
+          "label": "Card background",
+          "default": "#F5F5F3"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text colour",
+          "default": "#171717"
+        },
+        {
+          "type": "color",
+          "id": "muted_color",
+          "label": "Muted text",
+          "default": "#656565"
+        },
+        {
+          "type": "color",
+          "id": "accent",
+          "label": "Accent colour",
+          "default": "#F56A28"
+        },
+        {
+          "type": "color",
+          "id": "soft_accent",
+          "label": "Soft accent",
+          "default": "#F56A28"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_1",
+          "label": "Banner 1 image"
+        },
+        {
+          "type": "text",
+          "id": "banner_1_heading",
+          "label": "Banner 1 heading"
+        },
+        {
+          "type": "text",
+          "id": "banner_1_text",
+          "label": "Banner 1 text"
+        },
+        {
+          "type": "text",
+          "id": "banner_1_cta",
+          "label": "Banner 1 CTA"
+        },
+        {
+          "type": "url",
+          "id": "banner_1_link",
+          "label": "Banner 1 link"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_2",
+          "label": "Banner 2 image"
+        },
+        {
+          "type": "text",
+          "id": "banner_2_heading",
+          "label": "Banner 2 heading"
+        },
+        {
+          "type": "text",
+          "id": "banner_2_text",
+          "label": "Banner 2 text"
+        },
+        {
+          "type": "text",
+          "id": "banner_2_cta",
+          "label": "Banner 2 CTA"
+        },
+        {
+          "type": "url",
+          "id": "banner_2_link",
+          "label": "Banner 2 link"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_3",
+          "label": "Banner 3 image"
+        },
+        {
+          "type": "text",
+          "id": "banner_3_heading",
+          "label": "Banner 3 heading"
+        },
+        {
+          "type": "text",
+          "id": "banner_3_text",
+          "label": "Banner 3 text"
+        },
+        {
+          "type": "text",
+          "id": "banner_3_cta",
+          "label": "Banner 3 CTA"
+        },
+        {
+          "type": "url",
+          "id": "banner_3_link",
+          "label": "Banner 3 link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_subcategories",
+          "label": "Show subcategories",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "subcategory_heading",
+          "label": "Subcategory heading",
+          "default": "Shop by category"
+        },
+        {
+          "type": "text",
+          "id": "subcategory_cta",
+          "label": "Subcategory CTA",
+          "default": "View all"
+        },
+        {
+          "type": "url",
+          "id": "subcategory_link",
+          "label": "Subcategory CTA link"
+        },
+        {
+          "type": "collection",
+          "id": "subcategory_1",
+          "label": "Subcategory 1"
+        },
+        {
+          "type": "collection",
+          "id": "subcategory_2",
+          "label": "Subcategory 2"
+        },
+        {
+          "type": "collection",
+          "id": "subcategory_3",
+          "label": "Subcategory 3"
+        },
+        {
+          "type": "collection",
+          "id": "subcategory_4",
+          "label": "Subcategory 4"
+        },
+        {
+          "type": "collection",
+          "id": "subcategory_5",
+          "label": "Subcategory 5"
+        },
+        {
+          "type": "collection",
+          "id": "subcategory_6",
+          "label": "Subcategory 6"
+        },
+        {
+          "type": "text",
+          "id": "bestsellers_heading",
+          "label": "Bestsellers heading",
+          "default": "Bestsellers"
+        },
+        {
+          "type": "collection",
+          "id": "bestsellers",
+          "label": "Bestsellers collection"
+        },
+        {
+          "type": "text",
+          "id": "new_heading",
+          "label": "New arrivals heading",
+          "default": "New arrivals"
+        },
+        {
+          "type": "collection",
+          "id": "new_arrivals",
+          "label": "New arrivals collection"
+        },
+        {
+          "type": "text",
+          "id": "featured_heading",
+          "label": "Featured row heading",
+          "default": "More to explore"
+        },
+        {
+          "type": "collection",
+          "id": "featured_collection",
+          "label": "Featured collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "editorial_image",
+          "label": "Editorial banner image"
+        },
+        {
+          "type": "text",
+          "id": "editorial_heading",
+          "label": "Editorial banner heading"
+        },
+        {
+          "type": "text",
+          "id": "editorial_text",
+          "label": "Editorial banner text"
+        },
+        {
+          "type": "url",
+          "id": "editorial_link",
+          "label": "Editorial banner link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS collection worlds",
+      "blocks": [
+        {
+          "type": "world",
+          "settings": {
+            "title": "Home",
+            "icon": "home",
+            "background": "#FFFFFF",
+            "accent": "#F56A28"
+          }
+        },
+        {
+          "type": "world",
+          "settings": {
+            "title": "Kitchen",
+            "icon": "kitchen",
+            "background": "#FFFFFF",
+            "accent": "#F56A28"
+          }
+        },
+        {
+          "type": "world",
+          "settings": {
+            "title": "Organise",
+            "icon": "organise",
+            "background": "#FFFFFF",
+            "accent": "#F56A28"
+          }
+        },
+        {
+          "type": "world",
+          "settings": {
+            "title": "Planners",
+            "icon": "planner",
+            "background": "#FFFFFF",
+            "accent": "#F56A28"
+          }
+        },
+        {
+          "type": "world",
+          "settings": {
+            "title": "Eyewear",
+            "icon": "eyewear",
+            "background": "#FFFFFF",
+            "accent": "#F56A28"
+          }
+        },
+        {
+          "type": "world",
+          "settings": {
+            "title": "Gifting",
+            "icon": "gift",
+            "background": "#FFFFFF",
+            "accent": "#F56A28"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

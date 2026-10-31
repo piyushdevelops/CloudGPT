@@ -1,0 +1,3 @@
+mutation CreateOurDaysCollection($input: CollectionCreateInput!) {
+  collectionCreate(collection: $input) { collection { id handle title templateSuffix } userErrors { field message } }
+}

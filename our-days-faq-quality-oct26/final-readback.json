@@ -1,0 +1,15 @@
+{
+  "service": "our-days-preview",
+  "url": "https://our-days-preview-production.up.railway.app",
+  "shopifyThemeChanged": false,
+  "shopifyThemePublished": false,
+  "changedFile": "our-days-landing/index.html",
+  "sha256": "D83C44ECDCE3DE8817E8D1A0EE32109F856506862508B2F0F81281613CAD5AF0",
+  "faqAdded": 3,
+  "viewports": [
+    "360x800",
+    "390x844",
+    "393x852",
+    "1440x1000"
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "theme": "187527266499",
+  "role": "UNPUBLISHED",
+  "files": [
+    {
+      "filename": "sections/header-group.json",
+      "checksumMd5": "263025dfa38146234b52ae23fa530b99",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-a-little-curious.liquid",
+      "checksumMd5": "a32fcbd139629b8777ed79fd6f2d4fd2",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-find-your-glow.liquid",
+      "checksumMd5": "e28c01d99e6f196dc1270fac1d9b3abc",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-footer.liquid",
+      "checksumMd5": "b70b676ff087eb2cd0c947bd40aade15",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-inside-discovery.liquid",
+      "checksumMd5": "f96397d19316a5986a9210c90d4350d9",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-layer-the-table.liquid",
+      "checksumMd5": "ac20ea83ecffb952c5f1406fecec9317",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-make-room.liquid",
+      "checksumMd5": "43f02d92e1c962ca4aa0a00ee046fbf9",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-next-chapter.liquid",
+      "checksumMd5": "b2b38c77360cca3fd8719c805d56bceb",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-other-chapters.liquid",
+      "checksumMd5": "c6120f74d1556d3b35a5370b727f7cf0",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-pick-your-pour.liquid",
+      "checksumMd5": "bbd86176d6d6b50398134aafbff101bf",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-shop-the-corner.liquid",
+      "checksumMd5": "a81bd8b563282a895d392c46f3400ebf",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-with-extras.liquid",
+      "checksumMd5": "0650df9a445d54cee27cc4a584592ab5",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-your-year.liquid",
+      "checksumMd5": "8eb04a527c93101a79bbb44ec0b639f5",
+      "exact": true
+    },
+    {
+      "filename": "sections/my-header.liquid",
+      "checksumMd5": "bdaa57f9d357fceb559a01ba884b283f",
+      "exact": true
+    },
+    {
+      "filename": "templates/index.json",
+      "checksumMd5": "60a935b99d1a28ab37dfa73c8dffb74f",
+      "exact": true
+    }
+  ]
+}

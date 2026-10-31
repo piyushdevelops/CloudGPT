@@ -1,0 +1,68 @@
+[
+  {
+    "brandHeight": 131.40625,
+    "groupsOpen": [
+      false,
+      false,
+      false
+    ],
+    "overflow": false,
+    "stage": 305,
+    "width": 320
+  },
+  {
+    "brandHeight": 149.375,
+    "groupsOpen": [
+      false,
+      false,
+      false
+    ],
+    "overflow": false,
+    "stage": 375,
+    "width": 390
+  },
+  {
+    "brandHeight": 121.890625,
+    "groupsOpen": [
+      true,
+      true,
+      true
+    ],
+    "overflow": false,
+    "stage": 735,
+    "width": 750
+  },
+  {
+    "brandHeight": 154.75,
+    "groupsOpen": [
+      true,
+      true,
+      true
+    ],
+    "overflow": false,
+    "stage": 1036,
+    "width": 1051
+  },
+  {
+    "brandHeight": 197.25,
+    "groupsOpen": [
+      true,
+      true,
+      true
+    ],
+    "overflow": false,
+    "stage": 1425,
+    "width": 1440
+  },
+  {
+    "brandHeight": 197.5,
+    "groupsOpen": [
+      true,
+      true,
+      true
+    ],
+    "overflow": false,
+    "stage": 1680,
+    "width": 2560
+  }
+]

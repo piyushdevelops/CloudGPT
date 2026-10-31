@@ -1,0 +1,50 @@
+[
+  {
+    "giftBottoms": [
+      -54,
+      -54,
+      -54,
+      -54,
+      -54
+    ],
+    "overflow": false,
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "giftBottoms": [
+      -329,
+      -68,
+      -340,
+      -86,
+      -59
+    ],
+    "overflow": false,
+    "viewport": 901,
+    "width": 886
+  },
+  {
+    "giftBottoms": [
+      -317,
+      -72,
+      -328,
+      -75,
+      -56
+    ],
+    "overflow": false,
+    "viewport": 1051,
+    "width": 1036
+  },
+  {
+    "giftBottoms": [
+      -261,
+      -18,
+      -273,
+      -14,
+      2
+    ],
+    "overflow": false,
+    "viewport": 2560,
+    "width": 1680
+  }
+]

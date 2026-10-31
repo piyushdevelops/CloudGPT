@@ -1,0 +1,255 @@
+{{ section.settings.heading_font | font_face: font_display: 'swap' }}
+{{ section.settings.body_font | font_face: font_display: 'swap' }}
+{{ section.settings.action_font | font_face: font_display: 'swap' }}
+
+{%- liquid
+  assign visible_count = collection.products_count
+  assign dispatch_date = section.settings.dispatch_date | default: '10 November 2026'
+-%}
+
+<section id="JuneDatedCollection-{{ section.id }}" class="jdc" aria-labelledby="JdcTitle-{{ section.id }}">
+  <div class="jdc__paper" aria-hidden="true"></div>
+  <div class="jdc__inner">
+    <header class="jdc__hero">
+      <div class="jdc__hero-copy">
+        <p class="jdc__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        <h1 id="JdcTitle-{{ section.id }}">{{ section.settings.heading | default: collection.title | escape }}</h1>
+        <div class="jdc__intro">{{ section.settings.intro }}</div>
+        <div class="jdc__status" role="list" aria-label="Pre-order details">
+          <span role="listitem"><b>Pre-order open</b></span>
+          <span role="listitem">Dispatch by {{ dispatch_date | escape }}</span>
+          <span role="listitem">Personalisation available</span>
+        </div>
+        <a class="jdc__primary" href="#JdcGrid-{{ section.id }}">
+          <span>{{ section.settings.cta_label | escape }}</span>
+          <i aria-hidden="true">↗</i>
+        </a>
+      </div>
+      <aside class="jdc__note" aria-label="2027 planner promise">
+        <span class="jdc__tape" aria-hidden="true"></span>
+        <p>{{ section.settings.note_kicker | escape }}</p>
+        <strong>{{ section.settings.note_heading | escape }}</strong>
+        <div>{{ section.settings.note_copy }}</div>
+      </aside>
+    </header>
+
+    <div class="jdc__proof" role="list" aria-label="Planner highlights">
+      <span role="listitem"><b>12</b> monthly chapters</span>
+      <span role="listitem"><b>52</b> weeks to make your own</span>
+      <span role="listitem"><b>2</b> ways to order</span>
+      <span role="listitem"><b>1</b> year designed around you</span>
+    </div>
+
+    <div class="jdc__shop-head" id="JdcGrid-{{ section.id }}">
+      <div>
+        <p class="jdc__eyebrow">{{ section.settings.grid_eyebrow | escape }}</p>
+        <h2>{{ section.settings.grid_heading | escape }}</h2>
+        <p>{{ visible_count }} planner designs</p>
+      </div>
+      <form class="jdc__sort" method="get">
+        <label for="JdcSort-{{ section.id }}">Sort by</label>
+        <select id="JdcSort-{{ section.id }}" name="sort_by" onchange="this.form.submit()">
+          {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+          {%- for option in collection.sort_options -%}
+            <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name | escape }}</option>
+          {%- endfor -%}
+        </select>
+      </form>
+    </div>
+
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      <div class="jdc__grid">
+        {%- for product in collection.products -%}
+          {%- assign card_variant = product.selected_or_first_available_variant -%}
+          <article class="jdc__card">
+            <a class="jdc__media" href="{{ product.url }}" aria-label="View {{ product.title | escape }}">
+              {%- if product.featured_image -%}
+                {{ product.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '320,480,640,800,1000', sizes: '(min-width: 990px) 25vw, (min-width: 600px) 50vw, 100vw', alt: product.featured_image.alt | default: product.title }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag }}
+              {%- endif -%}
+              <span class="jdc__badge">Pre-order · 2027</span>
+            </a>
+            <div class="jdc__card-copy">
+              <p>{{ product.type | default: '2027 dated planner' | escape }}</p>
+              <h3><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>
+              <div class="jdc__price">
+                <strong>{% if product.price_varies %}From {% endif %}{{ product.price_min | money }}</strong>
+                {%- if card_variant.compare_at_price > card_variant.price -%}<del>{{ card_variant.compare_at_price | money }}</del>{%- endif -%}
+              </div>
+              <div class="jdc__options">
+                {%- for variant in product.variants limit: 2 -%}<span>{{ variant.title | escape }}</span>{%- endfor -%}
+              </div>
+              <a class="jdc__card-link" href="{{ product.url }}">Choose this cover <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        {%- else -%}
+          <div class="jdc__empty">
+            <h3>The 2027 covers are being prepared.</h3>
+            <p>Preview products remain hidden until the launch is approved.</p>
+          </div>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="jdc__pagination" aria-label="Planner pages">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">← Previous</a>{%- endif -%}
+          <span>Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}">Next →</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+
+    <section class="jdc__inside" aria-labelledby="JdcInside-{{ section.id }}">
+      <div>
+        <p class="jdc__eyebrow">Inside every planner</p>
+        <h2 id="JdcInside-{{ section.id }}">A year with more intention—and more you.</h2>
+      </div>
+      <div class="jdc__inside-grid">
+        <article><b>01</b><h3>Dream bigger</h3><p>Vision board, yearly goals, bucket list and self-growth prompts.</p></article>
+        <article><b>02</b><h3>Plan the month</h3><p>Intentions, routines, calendar, meals, habits and expenses.</p></article>
+        <article><b>03</b><h3>Live the week</h3><p>Structured weekly spreads that keep plans clear without feeling rigid.</p></article>
+        <article><b>04</b><h3>Remember it all</h3><p>Monthly resets, reflections, yearly highlights and a future-self letter.</p></article>
+      </div>
+    </section>
+
+    <section class="jdc__seo-copy" aria-labelledby="JdcSeo-{{ section.id }}">
+      <h2 id="JdcSeo-{{ section.id }}">{{ section.settings.seo_heading | escape }}</h2>
+      <div>{{ section.settings.seo_copy }}</div>
+    </section>
+  </div>
+</section>
+
+<style>
+  #JuneDatedCollection-{{ section.id }}{
+    --bg:var(--june-bg,#fff);--surface:var(--june-surface,#f5f5f3);--ink:var(--june-ink,#171717);--muted:var(--june-muted,#656565);--accent:var(--june-accent,#f56a28);--on-accent:var(--june-on-accent,#171717);--border:var(--june-border,#dadada);
+    --heading-font:{{ section.settings.heading_font.family }},{{ section.settings.heading_font.fallback_families }};--body-font:{{ section.settings.body_font.family }},{{ section.settings.body_font.fallback_families }};--action-font:{{ section.settings.action_font.family }},{{ section.settings.action_font.fallback_families }};
+    position:relative;isolation:isolate;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--body-font);font-size:{{ section.settings.body_size }}px;line-height:{{ section.settings.body_line | divided_by: 100.0 }};letter-spacing:{{ section.settings.body_spacing | divided_by: 100.0 }}em
+  }
+  #JuneDatedCollection-{{ section.id }} *{box-sizing:border-box}
+  #JuneDatedCollection-{{ section.id }} .jdc__paper{position:absolute;inset:0;z-index:-1;opacity:.34;background-image:radial-gradient(circle,var(--border) 1px,transparent 1.2px);background-size:22px 22px;mask-image:linear-gradient(to bottom,#000 0 36%,transparent 72%)}
+  #JuneDatedCollection-{{ section.id }} .jdc__inner{width:min(1680px,calc(100% - 48px));margin:auto;padding:clamp(48px,6vw,94px) 0 90px}
+  #JuneDatedCollection-{{ section.id }} h1,#JuneDatedCollection-{{ section.id }} h2,#JuneDatedCollection-{{ section.id }} h3{font-family:var(--heading-font);font-weight:{{ section.settings.heading_weight }};letter-spacing:{{ section.settings.heading_spacing | divided_by: 100.0 }}em;line-height:{{ section.settings.heading_line | divided_by: 100.0 }};margin:0}
+  #JuneDatedCollection-{{ section.id }} h1{font-size:{{ section.settings.heading_size }}px;max-width:900px}
+  #JuneDatedCollection-{{ section.id }} h2{font-size:clamp(34px,4.4vw,64px)}
+  #JuneDatedCollection-{{ section.id }} .jdc__eyebrow{margin:0 0 14px;color:var(--accent);font:800 11px/1 var(--action-font);letter-spacing:.16em;text-transform:uppercase}
+  #JuneDatedCollection-{{ section.id }} .jdc__hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);gap:clamp(34px,7vw,110px);align-items:center;min-height:540px}
+  #JuneDatedCollection-{{ section.id }} .jdc__intro{max-width:760px;margin:24px 0 0;color:var(--muted);font-size:clamp(16px,1.45vw,21px)}
+  #JuneDatedCollection-{{ section.id }} .jdc__intro p{margin:0}
+  #JuneDatedCollection-{{ section.id }} .jdc__status{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0}
+  #JuneDatedCollection-{{ section.id }} .jdc__status span{padding:9px 12px;border:1px solid var(--ink);border-radius:999px;background:var(--bg);font:700 11px/1 var(--action-font)}
+  #JuneDatedCollection-{{ section.id }} .jdc__status span:first-child{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+  #JuneDatedCollection-{{ section.id }} .jdc__primary{display:inline-grid;grid-template-columns:1fr 44px;align-items:center;min-width:220px;min-height:54px;padding-left:20px;border-radius:999px;background:var(--accent);color:var(--on-accent);text-decoration:none;font-family:var(--action-font);font-size:{{ section.settings.action_size }}px;font-weight:{{ section.settings.action_weight }};letter-spacing:{{ section.settings.action_spacing | divided_by: 100.0 }}em;line-height:{{ section.settings.action_line | divided_by: 100.0 }};text-transform:uppercase;box-shadow:4px 5px 0 var(--ink)}
+  #JuneDatedCollection-{{ section.id }} .jdc__primary i{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;font-style:normal}
+  #JuneDatedCollection-{{ section.id }} .jdc__note{position:relative;transform:rotate(2.2deg);padding:42px 38px 38px;background:#fffdf8;border:1px solid color-mix(in srgb,var(--ink) 20%,transparent);box-shadow:12px 14px 0 color-mix(in srgb,var(--accent) 36%,var(--surface));background-image:linear-gradient(transparent 31px,color-mix(in srgb,var(--border) 60%,transparent) 32px);background-size:100% 32px}
+  #JuneDatedCollection-{{ section.id }} .jdc__tape{position:absolute;left:50%;top:-15px;width:120px;height:30px;transform:translateX(-50%) rotate(-3deg);background:color-mix(in srgb,var(--accent) 36%,#fff);opacity:.9}
+  #JuneDatedCollection-{{ section.id }} .jdc__note>p{margin:0 0 12px;color:var(--accent);font:800 10px/1 var(--action-font);letter-spacing:.15em;text-transform:uppercase}
+  #JuneDatedCollection-{{ section.id }} .jdc__note>strong{display:block;font:900 clamp(28px,3vw,44px)/1.02 var(--heading-font);letter-spacing:-.045em}
+  #JuneDatedCollection-{{ section.id }} .jdc__note>div{margin-top:22px;color:var(--muted)}
+  #JuneDatedCollection-{{ section.id }} .jdc__proof{display:grid;grid-template-columns:repeat(4,1fr);margin:10px 0 92px;border-block:1px solid var(--border)}
+  #JuneDatedCollection-{{ section.id }} .jdc__proof span{padding:20px;border-right:1px solid var(--border);text-align:center;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  #JuneDatedCollection-{{ section.id }} .jdc__proof span:last-child{border-right:0}
+  #JuneDatedCollection-{{ section.id }} .jdc__proof b{font-family:var(--heading-font);font-size:24px}
+  #JuneDatedCollection-{{ section.id }} .jdc__shop-head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:28px}
+  #JuneDatedCollection-{{ section.id }} .jdc__shop-head h2{font-size:clamp(34px,4vw,56px)}
+  #JuneDatedCollection-{{ section.id }} .jdc__shop-head>div>p:last-child{margin:8px 0 0;color:var(--muted)}
+  #JuneDatedCollection-{{ section.id }} .jdc__sort{display:flex;align-items:center;gap:10px;font-family:var(--action-font);font-weight:700}
+  #JuneDatedCollection-{{ section.id }} .jdc__sort select{min-height:46px;padding:0 40px 0 14px;border:1px solid var(--ink);border-radius:999px;background:var(--bg);color:var(--ink);font:inherit}
+  #JuneDatedCollection-{{ section.id }} .jdc__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:34px 12px}
+  #JuneDatedCollection-{{ section.id }} .jdc__card{min-width:0}
+  #JuneDatedCollection-{{ section.id }} .jdc__media{display:block;position:relative;overflow:hidden;aspect-ratio:4/5;border-radius:4px;background:var(--surface);color:var(--ink)}
+  #JuneDatedCollection-{{ section.id }} .jdc__media img,#JuneDatedCollection-{{ section.id }} .jdc__media svg{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+  #JuneDatedCollection-{{ section.id }} .jdc__card:hover .jdc__media img{transform:scale(1.025)}
+  #JuneDatedCollection-{{ section.id }} .jdc__badge{position:absolute;top:12px;left:12px;padding:8px 10px;border-radius:4px;background:var(--accent);color:var(--on-accent);font:800 10px/1 var(--action-font);letter-spacing:.08em;text-transform:uppercase;box-shadow:2px 3px 0 var(--ink)}
+  #JuneDatedCollection-{{ section.id }} .jdc__card-copy{padding:16px 2px 0}
+  #JuneDatedCollection-{{ section.id }} .jdc__card-copy>p{margin:0 0 7px;color:var(--muted);font:800 9px/1 var(--action-font);letter-spacing:.12em;text-transform:uppercase}
+  #JuneDatedCollection-{{ section.id }} .jdc__card h3{font-size:19px;line-height:1.12}
+  #JuneDatedCollection-{{ section.id }} .jdc__card h3 a{color:inherit;text-decoration:none}
+  #JuneDatedCollection-{{ section.id }} .jdc__price{display:flex;align-items:baseline;gap:8px;margin:13px 0}
+  #JuneDatedCollection-{{ section.id }} .jdc__price strong{font:900 23px/1 var(--heading-font);letter-spacing:-.04em}
+  #JuneDatedCollection-{{ section.id }} .jdc__price del{color:var(--muted);font-size:12px}
+  #JuneDatedCollection-{{ section.id }} .jdc__options{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:13px}
+  #JuneDatedCollection-{{ section.id }} .jdc__options span{padding:6px 8px;border:1px solid var(--border);border-radius:999px;font-size:9px;font-weight:700;text-transform:uppercase}
+  #JuneDatedCollection-{{ section.id }} .jdc__card-link{color:var(--ink);font:800 11px/1.2 var(--action-font);text-underline-offset:4px}
+  #JuneDatedCollection-{{ section.id }} .jdc__empty{grid-column:1/-1;padding:80px 20px;text-align:center;border:1px dashed var(--border);background:var(--surface)}
+  #JuneDatedCollection-{{ section.id }} .jdc__pagination{display:flex;justify-content:center;align-items:center;gap:24px;margin-top:46px;font:700 12px/1 var(--action-font)}
+  #JuneDatedCollection-{{ section.id }} .jdc__pagination a{color:inherit}
+  #JuneDatedCollection-{{ section.id }} .jdc__inside{margin-top:110px;padding:clamp(34px,5vw,72px);background:var(--ink);color:#fff;border-radius:4px}
+  #JuneDatedCollection-{{ section.id }} .jdc__inside>div:first-child{max-width:860px}
+  #JuneDatedCollection-{{ section.id }} .jdc__inside-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:48px;background:color-mix(in srgb,#fff 22%,transparent)}
+  #JuneDatedCollection-{{ section.id }} .jdc__inside article{padding:28px;background:var(--ink)}
+  #JuneDatedCollection-{{ section.id }} .jdc__inside article>b{color:var(--accent);font:900 13px/1 var(--action-font)}
+  #JuneDatedCollection-{{ section.id }} .jdc__inside h3{margin:18px 0 10px;font-size:22px}
+  #JuneDatedCollection-{{ section.id }} .jdc__inside p{margin:0;color:#ffffffb8;font-size:13px}
+  #JuneDatedCollection-{{ section.id }} .jdc__seo-copy{max-width:980px;margin:92px auto 0;text-align:center}
+  #JuneDatedCollection-{{ section.id }} .jdc__seo-copy h2{font-size:clamp(30px,3.5vw,48px)}
+  #JuneDatedCollection-{{ section.id }} .jdc__seo-copy>div{margin-top:20px;color:var(--muted)}
+  @media(max-width:989px){
+    #JuneDatedCollection-{{ section.id }}{font-size:{{ section.settings.body_size_mobile }}px}
+    #JuneDatedCollection-{{ section.id }} .jdc__inner{width:min(100% - 28px,760px);padding-top:36px}
+    #JuneDatedCollection-{{ section.id }} h1{font-size:{{ section.settings.heading_size_mobile }}px}
+    #JuneDatedCollection-{{ section.id }} .jdc__hero{grid-template-columns:1fr;min-height:0}
+    #JuneDatedCollection-{{ section.id }} .jdc__note{margin:12px 5px 26px;padding:36px 26px}
+    #JuneDatedCollection-{{ section.id }} .jdc__proof{grid-template-columns:1fr 1fr;margin-bottom:64px}
+    #JuneDatedCollection-{{ section.id }} .jdc__proof span:nth-child(2){border-right:0}
+    #JuneDatedCollection-{{ section.id }} .jdc__proof span:nth-child(-n+2){border-bottom:1px solid var(--border)}
+    #JuneDatedCollection-{{ section.id }} .jdc__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    #JuneDatedCollection-{{ section.id }} .jdc__inside-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:599px){
+    #JuneDatedCollection-{{ section.id }} .jdc__shop-head{align-items:flex-start;flex-direction:column}
+    #JuneDatedCollection-{{ section.id }} .jdc__sort{width:100%;justify-content:space-between}
+    #JuneDatedCollection-{{ section.id }} .jdc__sort select{max-width:190px}
+    #JuneDatedCollection-{{ section.id }} .jdc__grid{gap:30px 8px}
+    #JuneDatedCollection-{{ section.id }} .jdc__card h3{font-size:15px}
+    #JuneDatedCollection-{{ section.id }} .jdc__price strong{font-size:19px}
+    #JuneDatedCollection-{{ section.id }} .jdc__options span{padding:5px 6px;font-size:8px}
+    #JuneDatedCollection-{{ section.id }} .jdc__inside{margin-top:72px;padding:32px 22px}
+    #JuneDatedCollection-{{ section.id }} .jdc__inside-grid{grid-template-columns:1fr}
+  }
+</style>
+
+{% schema %}
+{
+  "name":"June · 2027 planners",
+  "tag":"section",
+  "settings":[
+    {"type":"header","content":"Hero"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"The 2027 collection"},
+    {"type":"text","id":"heading","label":"Heading","default":"Your year. Your plans. Your kind of magic."},
+    {"type":"richtext","id":"intro","label":"Introduction","default":"<p>Meet 25 dated planners designed to help you dream, organise and make 2027 feel unmistakably yours.</p>"},
+    {"type":"text","id":"cta_label","label":"Button label","default":"Choose your 2027 planner"},
+    {"type":"text","id":"dispatch_date","label":"Expected dispatch date","default":"10 November 2026"},
+    {"type":"text","id":"note_kicker","label":"Note label","default":"A note for your future self"},
+    {"type":"text","id":"note_heading","label":"Note heading","default":"Make room for what matters."},
+    {"type":"richtext","id":"note_copy","label":"Note copy","default":"<p>Pre-order your preferred cover now. Choose it as-is or add your name for a planner that feels even more personal.</p>"},
+    {"type":"header","content":"Product grid"},
+    {"type":"text","id":"grid_eyebrow","label":"Grid eyebrow","default":"Pick your cover"},
+    {"type":"text","id":"grid_heading","label":"Grid heading","default":"25 ways to begin 2027"},
+    {"type":"range","id":"products_per_page","label":"Products per page","min":8,"max":48,"step":1,"default":24},
+    {"type":"header","content":"Search copy"},
+    {"type":"text","id":"seo_heading","label":"SEO heading","default":"2027 dated planners for a year that feels more like you"},
+    {"type":"richtext","id":"seo_copy","label":"SEO copy","default":"<p>Shop The June Shop's 2027 dated planners in India, with thoughtful yearly, monthly and weekly planning pages, self-growth prompts and optional name personalisation. Pre-order your favourite cover for expected dispatch by 10 November 2026.</p>"},
+    {"type":"header","content":"Heading typography"},
+    {"type":"font_picker","id":"heading_font","label":"Font family","default":"poppins_n8"},
+    {"type":"range","id":"heading_weight","label":"Weight","min":400,"max":900,"step":100,"default":900},
+    {"type":"range","id":"heading_size","label":"Desktop size","min":42,"max":96,"step":1,"unit":"px","default":76},
+    {"type":"range","id":"heading_size_mobile","label":"Mobile size","min":32,"max":64,"step":1,"unit":"px","default":46},
+    {"type":"range","id":"heading_spacing","label":"Letter spacing","min":-8,"max":10,"step":1,"unit":"%","default":-5},
+    {"type":"range","id":"heading_line","label":"Line height","min":85,"max":135,"step":1,"unit":"%","default":96},
+    {"type":"header","content":"Supporting copy typography"},
+    {"type":"font_picker","id":"body_font","label":"Font family","default":"poppins_n4"},
+    {"type":"range","id":"body_size","label":"Desktop size","min":12,"max":22,"step":1,"unit":"px","default":15},
+    {"type":"range","id":"body_size_mobile","label":"Mobile size","min":12,"max":20,"step":1,"unit":"px","default":14},
+    {"type":"range","id":"body_spacing","label":"Letter spacing","min":-3,"max":8,"step":1,"unit":"%","default":0},
+    {"type":"range","id":"body_line","label":"Line height","min":120,"max":190,"step":5,"unit":"%","default":160},
+    {"type":"header","content":"Buttons and navigation typography"},
+    {"type":"font_picker","id":"action_font","label":"Font family","default":"poppins_n7"},
+    {"type":"range","id":"action_weight","label":"Weight","min":400,"max":900,"step":100,"default":800},
+    {"type":"range","id":"action_size","label":"Size","min":10,"max":18,"step":1,"unit":"px","default":12},
+    {"type":"range","id":"action_spacing","label":"Letter spacing","min":0,"max":18,"step":1,"unit":"%","default":8},
+    {"type":"range","id":"action_line","label":"Line height","min":90,"max":150,"step":5,"unit":"%","default":110}
+  ],
+  "presets":[{"name":"June · 2027 planners"}]
+}
+{% endschema %}
+

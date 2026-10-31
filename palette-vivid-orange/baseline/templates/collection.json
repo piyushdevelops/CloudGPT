@@ -1,0 +1,147 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "heading": {
+      "type": "heading-collection",
+      "blocks": {
+        "9a1347b4-da62-490d-9fd4-427a03686ac2": {
+          "type": "heading",
+          "settings": {
+            "heading": "",
+            "hidden_br_mobile": false,
+            "hidden_on_mobile": false,
+            "heading_size": "h4",
+            "text_color": "hdt-s-text",
+            "font_size_heading_lg": 50,
+            "font_size_heading_md": 30,
+            "font_size_heading": 24,
+            "font_weight_heading": 600,
+            "letter_spacing_heading": 0
+          }
+        },
+        "6df762d7-beda-4452-bcf6-1242b294077c": {
+          "type": "description",
+          "settings": {
+            "description": "",
+            "short_des": false,
+            "limit_words": 15
+          }
+        }
+      },
+      "block_order": [
+        "9a1347b4-da62-490d-9fd4-427a03686ac2",
+        "6df762d7-beda-4452-bcf6-1242b294077c"
+      ],
+      "disabled": true,
+      "settings": {
+        "spacing_hd": 10,
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_rate": 75
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "disabled": true,
+      "settings": {
+        "product_des": "1",
+        "image_ratio": "custom-pr",
+        "image_size": true,
+        "show_vendor": false,
+        "pr_border": "none",
+        "products_count": 12,
+        "col_dk": "4",
+        "col_tb": "3",
+        "col_mb": "2",
+        "pagination_type": "links",
+        "paginate_pos": "center",
+        "dis_pagination": 60,
+        "enable_sorting": true,
+        "enable_filtering": true,
+        "price_behavior": "auto",
+        "enable_num_cols_selector": true,
+        "widget_heading": "Product categories",
+        "cat_source": "1",
+        "cat_link_list": "",
+        "count": false,
+        "section_fullwidth": false,
+        "color_scheme": "scheme-2",
+        "sidebar_position": "left",
+        "sidebar_size": "medium",
+        "padding_top": 30,
+        "padding_bottom": 70,
+        "padding_rate": 75
+      }
+    },
+    "collection_new_G47bVN": {
+      "type": "collection-new",
+      "name": "TJS final collection",
+      "settings": {
+        "eyebrow": "The June Edit",
+        "dynamic_eyebrow": false,
+        "heading_size": 36,
+        "mobile_heading_size": 27,
+        "tabs_root_collection": "",
+        "tabs_label": "Shop by category",
+        "all_tab_label": "All",
+        "max_type_tabs": 8,
+        "filter_label": "Filters",
+        "sort_label": "Sort by",
+        "clear_label": "Clear",
+        "apply_label": "Apply filters",
+        "min_price_label": "Min price",
+        "max_price_label": "Max price",
+        "force_in_stock": true,
+        "show_bottom_type_bar": true,
+        "bottom_type_label": "Shop by type",
+        "desktop_columns": "4",
+        "products_per_page": 24,
+        "card_gap": 10,
+        "image_ratio": "square",
+        "image_fit": "cover",
+        "image_scale": 100,
+        "image_radius": 8,
+        "bestseller_label": "Best seller",
+        "new_label": "New in",
+        "limited_label": "Limited",
+        "editor_pick_label": "TJS pick",
+        "default_meta_label": "Curated by TJS",
+        "show_tjs_score": true,
+        "show_demo_rating_count": true,
+        "saving_display": "percentage",
+        "save_prefix": "Save",
+        "specification_label": "Specification",
+        "use_label": "Designed for",
+        "load_more_label": "Load more",
+        "empty_heading": "No products found",
+        "empty_text": "Try changing your filters or browse another category.",
+        "page_background": "#ffffff",
+        "text_color": "#171411",
+        "muted_text_color": "#77716a",
+        "image_surface": "#f4f3f1",
+        "accent_color": "#1D3769",
+        "accent_soft": "#F1F8FF",
+        "button_background": "#171411",
+        "button_text": "#ffffff",
+        "border_color": "#e5e1dc",
+        "max_width": 1560,
+        "padding_top": 32,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "heading",
+    "main",
+    "collection_new_G47bVN"
+  ]
+}

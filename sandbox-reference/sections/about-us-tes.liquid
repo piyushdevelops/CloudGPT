@@ -1,0 +1,388 @@
+{% comment %}
+TJS Planner Collection Story — production build.
+Compatibility replacement for the existing about-us-tes homepage section.
+{% endcomment %}
+
+{{ 'tjs-planner-story-production-final.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'tjs-planner-story-production-final.js' | asset_url }}" defer="defer"></script>
+
+{% liquid
+  assign image_count = 0
+  for block in section.blocks
+    if block.type == 'planner_image'
+      assign image_count = image_count | plus: 1
+    endif
+  endfor
+  assign story_scroll = section.settings.scroll_length | default: 80 | at_most: 80
+  assign story_word_opacity = section.settings.big_text_opacity | default: 25 | at_most: 25
+  assign story_word_size = section.settings.big_text_size | default: 11 | at_most: 11
+  assign story_mobile_word_size = section.settings.big_text_size_mobile | default: 26 | at_most: 26
+  assign story_shadow = section.settings.shadow_strength | default: 35 | at_most: 35
+%}
+
+<section
+  id="TjsPlannerStory-{{ section.id }}"
+  class="tjs-story"
+  data-tjs-story
+  style="
+    --word-opacity:{{ story_word_opacity | divided_by: 100.0 }};
+    --word-size:{{ story_word_size }}vw;
+    --word-mobile:{{ story_mobile_word_size }}vw;
+    --radius:{{ section.settings.corner_radius | default: 8 }}px;
+    --shadow:{{ story_shadow | divided_by: 100.0 }};
+  "
+>
+  {% if image_count > 0 %}
+    <div class="tjs-story__track" data-track style="height:calc(100svh + {{ image_count | times: story_scroll }}svh)">
+      <div class="tjs-story__sticky">
+        <div class="tjs-story__wash" data-wash></div>
+
+        <header class="tjs-story__header">
+          <div class="tjs-story__brand">
+            <span data-active-label>Dated planners</span>
+            <small data-chapter>01 / {{ image_count }}</small>
+          </div>
+
+          <nav class="tjs-story__nav" aria-label="Planner categories">
+            {% assign nav_index = 0 %}
+            {% for block in section.blocks %}
+              {% if block.type == 'planner_image' %}
+                {% case nav_index %}
+                  {% when 0 %}{% assign nav_label = 'Dated' %}
+                  {% when 1 %}{% assign nav_label = 'Wedding' %}
+                  {% when 2 %}{% assign nav_label = 'Self' %}
+                  {% when 3 %}{% assign nav_label = 'Baby' %}
+                  {% when 4 %}{% assign nav_label = 'Travel' %}
+                  {% else %}{% assign nav_label = 'Undated' %}
+                {% endcase %}
+                <button type="button" data-nav="{{ nav_index }}" class="{% if nav_index == 0 %}is-active{% endif %}">
+                  <small>0{{ nav_index | plus: 1 }}</small><span>{{ nav_label }}</span>
+                </button>
+                {% assign nav_index = nav_index | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+          </nav>
+        </header>
+
+        <div class="tjs-story__slides">
+          {% assign slide_index = 0 %}
+          {% for block in section.blocks %}
+            {% if block.type == 'planner_image' %}
+              {% liquid
+                assign side = slide_index | modulo: 2
+                assign img_scale = block.settings.image_scale | default: 100 | at_most: 110
+                assign mob_scale = block.settings.mobile_image_scale | default: 100 | at_most: 105
+                case slide_index
+                  when 0
+                    assign label = 'Dated planners'
+                    assign title = 'Plan the year your way'
+                    assign word = 'PLAN'
+                    assign bg = '#EFA58F'
+                  when 1
+                    assign label = 'Wedding planners'
+                    assign title = 'Plan the celebration'
+                    assign word = 'BRIDAL'
+                    assign bg = '#C994A6'
+                  when 2
+                    assign label = 'Personal planning'
+                    assign title = 'Make space for yourself'
+                    assign word = 'SELF'
+                    assign bg = '#9EB58F'
+                  when 3
+                    assign label = 'Baby record books'
+                    assign title = 'Hold onto every first'
+                    assign word = 'BABY'
+                    assign bg = '#B7ADD0'
+                  when 4
+                    assign label = 'Travel journals'
+                    assign title = 'Take your plans places'
+                    assign word = 'TRAVEL'
+                    assign bg = '#7FA7B3'
+                  else
+                    assign label = 'Undated planners'
+                    assign title = 'Made for everyday life'
+                    assign word = 'LOVE'
+                    assign bg = '#D9A57F'
+                endcase
+              %}
+              <article
+                class="tjs-story__slide {% if slide_index == 0 %}is-current{% endif %} {% if side == 0 %}is-left{% else %}is-right{% endif %}"
+                data-slide data-index="{{ slide_index }}" data-bg="{{ bg }}"
+                style="--bg:{{ bg }};--scale:{{ img_scale | divided_by: 100.0 }};--mob-scale:{{ mob_scale | divided_by: 100.0 }};--x:{{ block.settings.offset_x | default: 0 }}px;--y:{{ block.settings.offset_y | default: 0 }}px;--mx:{{ block.settings.mobile_offset_x | default: 0 }}px;--my:{{ block.settings.mobile_offset_y | default: 0 }}px;"
+                {{ block.shopify_attributes }}
+              >
+                <div class="tjs-story__bg"></div>
+                <div class="tjs-story__word" data-word aria-hidden="true">{{ word }}</div>
+                <div class="tjs-story__layout">
+                  <div class="tjs-story__media" data-media>
+                    <button type="button" data-expand aria-label="Enlarge planner image">
+                      {% if block.settings.image != blank %}
+                        {{
+                          block.settings.image
+                          | image_url: width: 1800
+                          | image_tag:
+                            loading: 'lazy',
+                            widths: '400,600,800,1000,1400,1800',
+                            sizes: '(max-width:749px) 78vw, 42vw',
+                            class: 'tjs-story__image'
+                        }}
+                      {% else %}
+                        {{ 'product-1' | placeholder_svg_tag: 'tjs-story__placeholder' }}
+                      {% endif %}
+                    </button>
+                  </div>
+                  <div class="tjs-story__copy" data-copy>
+                    <div>
+                      <p class="tjs-story__eyebrow"><i></i>{{ label }}</p>
+                      <h2>{{ title }}</h2>
+                      {% if block.settings.description != blank %}
+                        <div class="tjs-story__desc">{{ block.settings.description }}</div>
+                      {% endif %}
+                      {% if block.settings.button_text != blank and block.settings.button_link != blank %}
+                        <a href="{{ block.settings.button_link }}" class="tjs-story__cta">{{ block.settings.button_text | escape }} <span aria-hidden="true">↗</span></a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </article>
+              {% assign slide_index = slide_index | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="tjs-story__progress">
+          <div><span>Scroll to explore</span><span data-progress-number>01 / {{ image_count }}</span></div>
+          <b><i data-progress></i></b>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="tjs-story__modal" data-modal aria-hidden="true">
+    <button class="tjs-story__backdrop" type="button" data-close aria-label="Close image"></button>
+    <button class="tjs-story__close" type="button" data-close aria-label="Close image">×</button>
+    <img data-modal-image src="" alt="">
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "TJS planner story",
+  "tag": "section",
+  "class": "tjs-planner-story-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "desktop_image_width",
+      "label": "Desktop image width",
+      "min": 220,
+      "max": 760,
+      "step": 10,
+      "unit": "px",
+      "default": 490
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_width",
+      "label": "Mobile image width",
+      "min": 180,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 290
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Image corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "shadow_strength",
+      "label": "Image shadow",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "big_text_size",
+      "label": "Desktop word size",
+      "min": 6,
+      "max": 24,
+      "step": 1,
+      "unit": "vw",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "big_text_size_mobile",
+      "label": "Mobile word size",
+      "min": 16,
+      "max": 50,
+      "step": 1,
+      "unit": "vw",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "big_text_opacity",
+      "label": "Background word opacity",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "scroll_length",
+      "label": "Scroll distance per chapter",
+      "min": 45,
+      "max": 160,
+      "step": 5,
+      "unit": "vh",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "planner_image",
+      "name": "Planner chapter",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Planner image"
+        },
+        {
+          "type": "text",
+          "id": "nav_title",
+          "label": "Chapter name",
+          "default": "Daily"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background colour",
+          "default": "#EFA58F"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text colour",
+          "default": "#FFFDF9"
+        },
+        {
+          "type": "text",
+          "id": "background_text",
+          "label": "Large background word",
+          "default": "PLAN"
+        },
+        {
+          "type": "range",
+          "id": "image_scale",
+          "label": "Desktop image size",
+          "min": 70,
+          "max": 160,
+          "step": 5,
+          "unit": "%",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "offset_x",
+          "label": "Desktop horizontal position",
+          "min": -180,
+          "max": 180,
+          "step": 10,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "offset_y",
+          "label": "Desktop vertical position",
+          "min": -160,
+          "max": 160,
+          "step": 10,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "mobile_image_scale",
+          "label": "Mobile image size",
+          "min": 70,
+          "max": 150,
+          "step": 5,
+          "unit": "%",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "mobile_offset_x",
+          "label": "Mobile horizontal position",
+          "min": -80,
+          "max": 80,
+          "step": 5,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "mobile_offset_y",
+          "label": "Mobile vertical position",
+          "min": -120,
+          "max": 120,
+          "step": 5,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "Inside the planner"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Designed for your day"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Shop planner"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "TJS planner story"
+    }
+  ]
+}
+{% endschema %}
+

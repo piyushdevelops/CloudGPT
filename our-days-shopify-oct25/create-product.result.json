@@ -1,0 +1,30 @@
+{
+  "productSet": {
+    "product": {
+      "id": "gid://shopify/Product/14951706067139",
+      "handle": "our-days",
+      "status": "DRAFT",
+      "templateSuffix": "our-days",
+      "variants": {
+        "nodes": [
+          {
+            "id": "gid://shopify/ProductVariant/54106995622083",
+            "title": "3 months",
+            "price": "2999.00"
+          },
+          {
+            "id": "gid://shopify/ProductVariant/54106995654851",
+            "title": "6 months",
+            "price": "4299.00"
+          },
+          {
+            "id": "gid://shopify/ProductVariant/54106995687619",
+            "title": "12 months",
+            "price": "6499.00"
+          }
+        ]
+      }
+    },
+    "userErrors": []
+  }
+}

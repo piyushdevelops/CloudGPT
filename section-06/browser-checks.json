@@ -1,0 +1,82 @@
+{
+  "interactions": [
+    {
+      "active": "2",
+      "paused": "true"
+    },
+    {
+      "keyboardHome": "Wedding"
+    }
+  ],
+  "widths": [
+    {
+      "document": 305,
+      "pinned": "true",
+      "stageHeight": 850,
+      "viewport": 320,
+      "width": 305
+    },
+    {
+      "document": 375,
+      "pinned": "true",
+      "stageHeight": 850,
+      "viewport": 390,
+      "width": 375
+    },
+    {
+      "document": 735,
+      "pinned": "true",
+      "stageHeight": 850,
+      "viewport": 750,
+      "width": 735
+    },
+    {
+      "document": 1009,
+      "pinned": "true",
+      "stageHeight": 650,
+      "viewport": 1024,
+      "width": 1009
+    },
+    {
+      "document": 1425,
+      "pinned": "true",
+      "stageHeight": 650,
+      "viewport": 1440,
+      "width": 1425
+    },
+    {
+      "document": 2545,
+      "pinned": "true",
+      "stageHeight": 650,
+      "viewport": 2560,
+      "width": 1680
+    }
+  ],
+  "shortScreens": [
+    {
+      "copyHeight": 270,
+      "navHeight": 123,
+      "overflow": false,
+      "pinned": "true",
+      "scenePadding": "132px",
+      "viewport": [
+        320,
+        740
+      ]
+    },
+    {
+      "copyHeight": 246,
+      "navHeight": 123,
+      "overflow": false,
+      "pinned": "false",
+      "scenePadding": "132px",
+      "viewport": [
+        390,
+        667
+      ]
+    }
+  ],
+  "scrollTransition": "Wedding to rewritable verified; write1/wipe0.945 observed",
+  "babyLinks": 0,
+  "allImagesLoaded": true
+}

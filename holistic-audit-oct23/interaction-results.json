@@ -1,0 +1,260 @@
+{
+  "desktop:sort": {
+    "url": "https://thejuneshop.com/collections/new-arrivals?filter.v.availability=1&sort_by=price-ascending",
+    "selected": "price-ascending",
+    "firstThree": [
+      "Rs. 299",
+      "Rs. 299",
+      "Rs. 299"
+    ]
+  },
+  "desktop:filterBefore": {
+    "dialogs": [
+      {
+        "label": "Navigation menu",
+        "visible": false
+      },
+      {
+        "label": "Filters",
+        "visible": true
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      }
+    ]
+  },
+  "desktop:filterAfter": {
+    "dialogs": [
+      {
+        "label": "Navigation menu",
+        "visible": false
+      },
+      {
+        "label": "Filters",
+        "visible": true
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      }
+    ]
+  },
+  "desktop:addBtnVisible": true,
+  "desktop:afterAdd": {
+    "url": "https://thejuneshop.com/products/gold-rimmed-rose-heart-champagne-flute-stemware?variant=43881727983811",
+    "cartCount": [
+      "Cart, 2 items",
+      "Cart, 2 items"
+    ],
+    "notice": "n Instagram\nWhatsApp us\n\nFor your plans.\nAnd everything around them.\n\nBack to top\n↑\nNew finds & June Shop news\n+\nTHE JUNE SHOP.\n\nPay your way.\n\nUPI\nPaytm\nVisa\nMastercard\nNet banking\n\nAvailable options are shown at checkout.\n\nDeliver to\nBangladesh · INR\nCanada · INR\nChina · INR\nGermany · INR\nIndia · INR\nIreland · INR\nMalaysia · INR\nNew Zealand · INR\nSaudi Arabia · INR\nSingapore · INR\nUnited Arab Emirates · INR\nUnited Kingdom · INR\nUnited States · INR\nVietnam · INR\nApply\n\n© 2026 June Retail Private Limited\n\nPrivacy\nTerms\nSkip to content\nAdded to your bag.\nGold Rimmed Rose Heart Champagne Flute Stemware\n2\nRegular price\n₹2,399\nSale price\n₹999\nBundle: Set of 4\nChampagne Glasses\nDecrease quantity for Gold Rimmed Rose Heart Champagne Flute Stemware\nIncrease quantity for Gold Rimmed Rose Heart Champagne Flute Stemware\nRemove\nGold Rimmed Rose Heart Champagne Flute Stemware\n2\nRegular price\n₹999\nSale price\n₹799\nBundle: Set of 4\nChampagne Glasses\nDecrease quantity for Gold Rimmed Rose Heart Champagne Flute Stemware\nIncrease quantity for Gold Rimmed Rose Heart Champagne Flute Stemware\nRemove\nYou save\n₹3,000\nCompared with original prices\nSubtotal\n₹1,798\nView full cart\nCheckout\nAdded to your bag."
+  },
+  "desktop:cartApi": {
+    "status": 200,
+    "data": {
+      "count": 2,
+      "items": [
+        {
+          "title": "Gold Rimmed Rose Heart Champagne Flute Stemware - 2",
+          "quantity": 1,
+          "price": 99900,
+          "properties": {
+            "Bundle": "Set of 4"
+          }
+        },
+        {
+          "title": "Gold Rimmed Rose Heart Champagne Flute Stemware - 2",
+          "quantity": 1,
+          "price": 99900,
+          "properties": {
+            "Bundle": "Set of 4"
+          }
+        }
+      ]
+    }
+  },
+  "desktop:contactLinks": [],
+  "desktop:storyMedia": {
+    "images": [
+      {
+        "alt": "",
+        "src": "https://cdn.shopify.com/s/files/1/0177/5579/9606/files/1_b9e94644-d201-4141-a222-bcc1c886c6ec.jpg?v="
+      },
+      {
+        "alt": "",
+        "src": "https://cdn.shopify.com/s/files/1/0177/5579/9606/files/2_92ea9332-4f59-4dca-9899-36bc136aba01.jpg?v="
+      },
+      {
+        "alt": "",
+        "src": "https://cdn.shopify.com/s/files/1/0177/5579/9606/files/3_f8e21ac9-fda9-49d2-8948-2ae6f35c199f.jpg?v="
+      },
+      {
+        "alt": "",
+        "src": "https://cdn.shopify.com/s/files/1/0177/5579/9606/files/4_6ba61334-8312-4c16-ad80-13884f8fb10e.jpg?v="
+      }
+    ],
+    "links": 0,
+    "text": ""
+  },
+  "mobile:sort": {
+    "url": "https://thejuneshop.com/collections/new-arrivals?filter.v.availability=1&sort_by=price-ascending",
+    "selected": "price-ascending",
+    "firstThree": [
+      "Rs. 299",
+      "Rs. 299",
+      "Rs. 299"
+    ]
+  },
+  "mobile:filterBefore": {
+    "dialogs": [
+      {
+        "label": "Navigation menu",
+        "visible": false
+      },
+      {
+        "label": "Filters",
+        "visible": true
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      }
+    ]
+  },
+  "mobile:filterAfter": {
+    "dialogs": [
+      {
+        "label": "Navigation menu",
+        "visible": false
+      },
+      {
+        "label": "Filters",
+        "visible": true
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      },
+      {
+        "label": null,
+        "visible": false
+      }
+    ]
+  },
+  "mobile:addBtnVisible": true,
+  "mobile:afterAdd": {
+    "url": "https://thejuneshop.com/products/gold-rimmed-rose-heart-champagne-flute-stemware?variant=43881727983811",
+    "cartCount": [
+      "Cart, 2 items",
+      "Cart, 2 items"
+    ],
+    "notice": "ittle more June, every day.\nExplore\n+\nHere to help\n+\nAbout The June Shop\n+\nNew finds & June Shop news\n+\nInstagram\nBack to top\n↑\n\nPay your way.\n\nUPI\nPaytm\nVisa\nMastercard\nNet banking\n\nAvailable options are shown at checkout.\n\nDeliver to\nBangladesh · INR\nCanada · INR\nChina · INR\nGermany · INR\nIndia · INR\nIreland · INR\nMalaysia · INR\nNew Zealand · INR\nSaudi Arabia · INR\nSingapore · INR\nUnited Arab Emirates · INR\nUnited Kingdom · INR\nUnited States · INR\nVietnam · INR\nApply\n\n© 2026 June Retail Private Limited\n\nPrivacy\nTerms\nSkip to content\nAdded to your bag.\nGold Rimmed Rose Heart Champagne Flute Stemware\n2\nRegular price\n₹2,399\nSale price\n₹999\nBundle: Set of 4\nChampagne Glasses\nDecrease quantity for Gold Rimmed Rose Heart Champagne Flute Stemware\nIncrease quantity for Gold Rimmed Rose Heart Champagne Flute Stemware\nRemove\nGold Rimmed Rose Heart Champagne Flute Stemware\n2\nRegular price\n₹999\nSale price\n₹799\nBundle: Set of 4\nChampagne Glasses\nDecrease quantity for Gold Rimmed Rose Heart Champagne Flute Stemware\nIncrease quantity for Gold Rimmed Rose Heart Champagne Flute Stemware\nRemove\nYou save\n₹3,000\nCompared with original prices\nSubtotal\n₹1,798\nView full cart\nCheckout\nAdded to your bag."
+  },
+  "mobile:cartApi": {
+    "status": 200,
+    "data": {
+      "count": 2,
+      "items": [
+        {
+          "title": "Gold Rimmed Rose Heart Champagne Flute Stemware - 2",
+          "quantity": 1,
+          "price": 99900,
+          "properties": {
+            "Bundle": "Set of 4"
+          }
+        },
+        {
+          "title": "Gold Rimmed Rose Heart Champagne Flute Stemware - 2",
+          "quantity": 1,
+          "price": 99900,
+          "properties": {
+            "Bundle": "Set of 4"
+          }
+        }
+      ]
+    }
+  },
+  "mobile:contactLinks": [],
+  "mobile:storyMedia": {
+    "images": [
+      {
+        "alt": "",
+        "src": "https://cdn.shopify.com/s/files/1/0177/5579/9606/files/1_b9e94644-d201-4141-a222-bcc1c886c6ec.jpg?v="
+      },
+      {
+        "alt": "",
+        "src": "https://cdn.shopify.com/s/files/1/0177/5579/9606/files/2_92ea9332-4f59-4dca-9899-36bc136aba01.jpg?v="
+      },
+      {
+        "alt": "",
+        "src": "https://cdn.shopify.com/s/files/1/0177/5579/9606/files/3_f8e21ac9-fda9-49d2-8948-2ae6f35c199f.jpg?v="
+      },
+      {
+        "alt": "",
+        "src": "https://cdn.shopify.com/s/files/1/0177/5579/9606/files/4_6ba61334-8312-4c16-ad80-13884f8fb10e.jpg?v="
+      }
+    ],
+    "links": 0,
+    "text": ""
+  }
+}

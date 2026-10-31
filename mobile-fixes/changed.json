@@ -1,0 +1,12 @@
+[
+  "locales/en.default.json",
+  "sections/june-inside-discovery.liquid",
+  "sections/june-layer-the-table.liquid",
+  "sections/june-make-room.liquid",
+  "sections/june-other-chapters.liquid",
+  "sections/june-with-extras.liquid",
+  "sections/june-your-year.liquid",
+  "sections/my-header.liquid",
+  "snippets/june-photo-viewer.liquid",
+  "templates/index.json"
+]

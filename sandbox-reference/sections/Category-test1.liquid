@@ -1,0 +1,912 @@
+{% comment %}
+  Floating category carousel — standalone Shopify section.
+  Save as sections/floating-category-carousel.liquid, then add "Floating categories"
+  in the theme editor. Each Category block accepts a PNG and a collection.
+  No theme snippets, libraries, app installation, or separate assets are required.
+{% endcomment %}
+
+{%- liquid
+  assign carousel_label = section.settings.heading | default: 'Shop by category' | strip_html
+  assign image_loading = 'lazy'
+  if section.index != blank and section.index <= 2
+    assign image_loading = 'eager'
+  endif
+-%}
+{%- capture image_sizes -%}(max-width: 749px) {{ section.settings.card_width_mobile }}px, {{ section.settings.card_width }}px{%- endcapture -%}
+
+<floating-category-carousel
+  id="FloatingCategories-{{ section.id }}"
+  class="fcc"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="{{ carousel_label | escape }}"
+  data-layout="{{ section.settings.intro_layout }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-speed="{{ section.settings.scroll_speed }}"
+  data-direction="{{ section.settings.scroll_direction }}"
+  data-hover-pause="{{ section.settings.pause_on_hover }}"
+  data-float="{{ section.settings.enable_float }}"
+  data-shadow="{{ section.settings.show_shadow }}"
+  style="
+    --fcc-bg: {{ section.settings.background }};
+    --fcc-ink: {{ section.settings.text_color }};
+    --fcc-muted: {{ section.settings.muted_color }};
+    --fcc-max-width: {{ section.settings.max_width }}px;
+    --fcc-intro-width: {{ section.settings.intro_width }}px;
+    --fcc-card-width: {{ section.settings.card_width }}px;
+    --fcc-mobile-card-width: {{ section.settings.card_width_mobile }}px;
+    --fcc-image-height: {{ section.settings.image_height }}px;
+    --fcc-mobile-image-height: {{ section.settings.image_height_mobile }}px;
+    --fcc-gap: {{ section.settings.card_gap }}px;
+    --fcc-mobile-gap: {{ section.settings.card_gap_mobile }}px;
+    --fcc-float-distance: {{ section.settings.float_distance }}px;
+    --fcc-float-duration: {{ section.settings.float_duration }}s;
+    --fcc-heading-size: {{ section.settings.heading_size }}px;
+    --fcc-title-size: {{ section.settings.category_title_size }}px;
+    --fcc-pad-top: {{ section.settings.padding_top }}px;
+    --fcc-pad-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="fcc__layout">
+    <div class="fcc__intro">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="fcc__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="fcc__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <div class="fcc__description">{{ section.settings.description }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+        <a class="fcc__all-link" href="{{ section.settings.button_link | escape }}">
+          <span>{{ section.settings.button_label | escape }}</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M4 12h15m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      {%- endif -%}
+      <div class="fcc__controls" data-fcc-controls hidden>
+        {%- if section.settings.show_arrows -%}
+          <button type="button" class="fcc__arrow" data-fcc-prev aria-label="Previous categories" aria-controls="FloatingCategoryViewport-{{ section.id }}">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="fcc__arrow" data-fcc-next aria-label="Next categories" aria-controls="FloatingCategoryViewport-{{ section.id }}">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        {%- endif -%}
+        {%- if section.settings.autoplay or section.settings.enable_float -%}
+          <button type="button" class="fcc__pause" data-fcc-pause aria-label="Pause animation" aria-controls="FloatingCategoryViewport-{{ section.id }}">
+            <svg data-fcc-pause-icon viewBox="0 0 20 20" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M5 4h3v12H5zm7 0h3v12h-3z"/></svg>
+            <svg data-fcc-play-icon viewBox="0 0 20 20" width="14" height="14" fill="currentColor" aria-hidden="true" hidden><path d="m6 3 11 7-11 7z"/></svg>
+            <span data-fcc-pause-text>Pause</span>
+          </button>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="fcc__carousel">
+      <p id="FloatingCategoryHelp-{{ section.id }}" class="fcc__sr-only">Swipe or drag to browse. When focused, use the left and right arrow keys. Each category links to its collection.</p>
+      <div
+        id="FloatingCategoryViewport-{{ section.id }}"
+        class="fcc__viewport"
+        data-fcc-viewport
+        tabindex="0"
+        role="group"
+        aria-label="Categories"
+        aria-describedby="FloatingCategoryHelp-{{ section.id }}"
+        aria-live="off"
+      >
+        <div class="fcc__track" data-fcc-track>
+          <div class="fcc__group" data-fcc-source role="list">
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign category_collection = block.settings.collection
+                assign category_image = block.settings.image
+                if category_image == blank and category_collection != blank
+                  assign category_image = category_collection.featured_image
+                endif
+                assign category_title = block.settings.title | default: category_collection.title | default: 'Category'
+                assign category_url = block.settings.custom_link | default: category_collection.url
+                assign image_alt = category_image.alt | default: category_title
+                assign float_delay = forloop.index0 | times: 0.7
+                assign float_extra = forloop.index0 | modulo: 3 | times: 0.4
+              -%}
+              <div
+                class="fcc__card"
+                role="listitem"
+                data-fcc-index="{{ forloop.index0 }}"
+                data-fcc-block-id="{{ block.id }}"
+                style="--fcc-image-size: {{ block.settings.image_size }}%; --fcc-image-offset: {{ block.settings.image_offset }}px; --fcc-delay: -{{ float_delay }}s; --fcc-duration-extra: {{ float_extra }}s;"
+                {{ block.shopify_attributes }}
+              >
+                <a class="fcc__category" draggable="false" {% if category_url != blank %}href="{{ category_url | escape }}"{% else %}role="link" aria-disabled="true"{% endif %}>
+                  <div class="fcc__stage">
+                    <div class="fcc__float" data-fcc-float>
+                      {%- if category_image != blank -%}
+                        {{-
+                          category_image
+                          | image_url: width: 1200
+                          | image_tag:
+                            widths: '160, 240, 320, 480, 640, 800, 1000, 1200',
+                            sizes: image_sizes,
+                            loading: image_loading,
+                            class: 'fcc__image',
+                            alt: image_alt,
+                            draggable: 'false',
+                            style: 'object-position: center;'
+                        -}}
+                      {%- else -%}
+                        {{ 'collection-1' | placeholder_svg_tag: 'fcc__image fcc__placeholder' }}
+                      {%- endif -%}
+                    </div>
+                    <span class="fcc__shadow" data-fcc-shadow aria-hidden="true"></span>
+                  </div>
+                  <div class="fcc__caption">
+                    <span class="fcc__title">{{ category_title | escape }}</span>
+                    {%- if block.settings.subtitle != blank -%}
+                      <span class="fcc__subtitle">{{ block.settings.subtitle | escape }}</span>
+                    {%- endif -%}
+                  </div>
+                </a>
+              </div>
+            {%- else -%}
+              {%- if request.design_mode -%}
+                <p class="fcc__empty">Add a Category block, upload a product PNG, and select its collection.</p>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</floating-category-carousel>
+
+{% stylesheet %}
+  .fcc {
+    display: block;
+    width: 100%;
+    background: var(--fcc-bg);
+    color: var(--fcc-ink);
+    overflow: hidden;
+    font-family: var(--font-body-family, sans-serif);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .fcc, .fcc * { box-sizing: border-box; }
+  .fcc [hidden] { display: none !important; }
+  .fcc__layout {
+    display: grid;
+    grid-template-columns: var(--fcc-intro-width) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 64px);
+    width: 100%;
+    max-width: var(--fcc-max-width);
+    margin: 0 auto;
+    padding: var(--fcc-pad-top) clamp(20px, 3vw, 48px) var(--fcc-pad-bottom);
+  }
+  .fcc__intro { min-width: 0; position: relative; z-index: 1; }
+  .fcc__eyebrow {
+    margin: 0 0 12px;
+    font-size: 11px;
+    line-height: 1.5;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--fcc-muted);
+  }
+  .fcc__heading {
+    margin: 0;
+    color: var(--fcc-ink);
+    font-family: var(--font-heading-family, inherit);
+    font-style: var(--font-heading-style, normal);
+    font-weight: var(--font-heading-weight, 500);
+    font-size: var(--fcc-heading-size);
+    line-height: 1.18;
+    letter-spacing: -.025em;
+    overflow-wrap: anywhere;
+  }
+  .fcc__description {
+    margin-top: 16px;
+    color: var(--fcc-muted);
+    font-size: 14px;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+  .fcc__description > :first-child { margin-top: 0; }
+  .fcc__description > :last-child { margin-bottom: 0; }
+  .fcc__description a { color: inherit; text-underline-offset: 4px; }
+  .fcc__all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    color: var(--fcc-ink);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+    text-decoration: none;
+  }
+  .fcc__all-link:hover span { text-decoration: underline; text-underline-offset: 5px; }
+  .fcc__controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .fcc__arrow, .fcc__pause {
+    appearance: none;
+    -webkit-appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0;
+    min-width: 44px;
+    min-height: 44px;
+    background: transparent;
+    color: var(--fcc-ink);
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    box-shadow: none;
+    cursor: pointer;
+    font: inherit;
+    line-height: 1;
+  }
+  .fcc__arrow::before, .fcc__arrow::after, .fcc__pause::before, .fcc__pause::after { content: none; }
+  .fcc__arrow svg, .fcc__pause svg, .fcc__all-link svg { display: block; flex-shrink: 0; }
+  .fcc__arrow:disabled, .fcc__pause:disabled { opacity: .35; cursor: default; }
+  .fcc__pause { gap: 7px; padding: 0 8px; border: 0; border-radius: 0; font-size: 11px; }
+  .fcc__carousel { min-width: 0; width: 100%; }
+  .fcc__viewport {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .fcc[data-fcc-ready] .fcc__viewport { overflow: hidden; touch-action: pan-y pinch-zoom; cursor: grab; }
+  .fcc[data-fcc-dragging] .fcc__viewport, .fcc[data-fcc-dragging] .fcc__category { cursor: grabbing; }
+  .fcc__track { display: flex; position: relative; width: max-content; max-width: none; direction: ltr; }
+  .fcc[data-fcc-ready] .fcc__track { will-change: transform; }
+  .fcc__group {
+    display: flex;
+    position: relative;
+    flex: 0 0 auto;
+    align-items: flex-start;
+    gap: var(--fcc-gap);
+    padding: 0 var(--fcc-gap) 0 0;
+    margin: 0;
+    width: max-content;
+  }
+  .fcc__card { flex: 0 0 var(--fcc-card-width); width: var(--fcc-card-width); min-width: 0; margin: 0; }
+  .fcc__category {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: none;
+    color: var(--fcc-ink);
+    text-decoration: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .fcc__category[aria-disabled="true"] { cursor: inherit; }
+  .fcc__stage {
+    display: grid;
+    place-items: center;
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    height: calc(var(--fcc-image-height) + 96px);
+    padding: 48px 12px;
+    overflow: visible;
+  }
+  .fcc__float {
+    display: grid;
+    place-items: center;
+    position: relative;
+    z-index: 1;
+    width: var(--fcc-image-size);
+    height: var(--fcc-image-size);
+    min-width: 0;
+    min-height: 0;
+    transform: translateY(var(--fcc-image-offset));
+    pointer-events: none;
+  }
+  .fcc[data-fcc-ready][data-float="true"] .fcc__float {
+    animation: fcc-levitate calc(var(--fcc-float-duration) + var(--fcc-duration-extra)) ease-in-out var(--fcc-delay) infinite;
+  }
+  .fcc .fcc__image {
+    display: block;
+    position: static;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 0;
+    min-height: 0;
+    object-fit: contain;
+    object-position: center;
+    opacity: 1;
+    visibility: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    pointer-events: none;
+    -webkit-user-drag: none;
+  }
+  .fcc__placeholder { fill: currentColor; opacity: .22 !important; }
+  .fcc__shadow {
+    position: absolute;
+    bottom: 29px;
+    left: 24%;
+    width: 52%;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(0,0,0,.17) 0%, rgba(0,0,0,.065) 45%, transparent 74%);
+    filter: blur(4px);
+    pointer-events: none;
+    transform: scaleX(1);
+    opacity: .65;
+  }
+  .fcc[data-fcc-ready][data-float="true"] .fcc__shadow {
+    animation: fcc-ground-shadow calc(var(--fcc-float-duration) + var(--fcc-duration-extra)) ease-in-out var(--fcc-delay) infinite;
+  }
+  .fcc[data-shadow="false"] .fcc__shadow { display: none; }
+  .fcc[data-fcc-motion-paused="true"] .fcc__float, .fcc[data-fcc-motion-paused="true"] .fcc__shadow { animation-play-state: paused; }
+  .fcc__caption { padding: 0 10px 10px; text-align: center; }
+  .fcc__title { display: block; color: var(--fcc-ink); font-size: var(--fcc-title-size); line-height: 1.45; font-weight: 500; overflow-wrap: anywhere; }
+  .fcc__subtitle { display: block; margin-top: 5px; color: var(--fcc-muted); font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+  .fcc__category[href]:hover .fcc__title { text-decoration: underline; text-underline-offset: 5px; }
+  .fcc :is(a, button):focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+  .fcc__viewport:focus-visible { outline: 2px solid var(--fcc-ink); outline-offset: -2px; }
+  .fcc__sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .fcc__empty { max-width: 400px; padding: 40px 20px; font-size: 14px; line-height: 1.6; }
+  .fcc[data-fcc-single] .fcc__track { width: 100%; justify-content: center; }
+  .fcc[data-fcc-single] .fcc__group { padding-right: 0; }
+  .fcc[data-fcc-single] .fcc__viewport { cursor: default; }
+  .fcc[data-layout="top"] .fcc__layout { grid-template-columns: minmax(0,1fr); gap: 12px; }
+  .fcc[data-layout="top"] .fcc__intro { max-width: 580px; }
+  @keyframes fcc-levitate {
+    0%, 100% { transform: translateY(var(--fcc-image-offset)); }
+    50% { transform: translateY(calc(var(--fcc-image-offset) - var(--fcc-float-distance))); }
+  }
+  @keyframes fcc-ground-shadow {
+    0%, 100% { transform: scaleX(1); opacity: .65; }
+    50% { transform: scaleX(.82); opacity: .38; }
+  }
+  @media (max-width: 749px) {
+    .fcc {
+      --fcc-card-width: var(--fcc-mobile-card-width) !important;
+      --fcc-image-height: var(--fcc-mobile-image-height) !important;
+      --fcc-gap: var(--fcc-mobile-gap) !important;
+    }
+    .fcc__layout { grid-template-columns: minmax(0, 1fr); gap: 8px; padding-left: 20px; padding-right: 20px; }
+    .fcc__intro { max-width: 520px; }
+    .fcc__heading { font-size: min(var(--fcc-heading-size), 32px); }
+    .fcc__description { margin-top: 12px; max-width: 38em; }
+    .fcc__all-link { margin-top: 16px; }
+    .fcc__controls { margin-top: 16px; }
+    .fcc__stage { padding-left: 8px; padding-right: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fcc .fcc__float, .fcc .fcc__shadow { animation: none !important; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    if (customElements.get('floating-category-carousel')) return;
+
+    class FloatingCategoryCarousel extends HTMLElement {
+      connectedCallback() {
+        this.initFrame = requestAnimationFrame(() => this.init());
+      }
+
+      init() {
+        if (this.initialized || !this.isConnected) return;
+        this.viewport = this.querySelector('[data-fcc-viewport]');
+        this.track = this.querySelector('[data-fcc-track]');
+        this.source = this.querySelector('[data-fcc-source]');
+        if (!this.viewport || !this.track || !this.source) return;
+        this.initialized = true;
+        this.abort = new AbortController();
+        this.cards = Array.from(this.source.children).filter((el) => el.hasAttribute('data-fcc-index'));
+        this.pauseButton = this.querySelector('[data-fcc-pause]');
+        this.autoplay = this.dataset.autoplay === 'true';
+        this.speed = Number(this.dataset.speed) || 25;
+        this.direction = this.dataset.direction === 'right' ? -1 : 1;
+        this.reducedQuery = matchMedia('(prefers-reduced-motion: reduce)');
+        this.reduced = this.reducedQuery.matches;
+        this.visible = false;
+        this.userPaused = false;
+        this.hovered = false;
+        this.focusPaused = false;
+        this.editorPaused = false;
+        this.pinned = false;
+        this.offset = 0;
+        this.velocity = 0;
+        this.pointer = null;
+        this.tween = null;
+        this.suppressClickUntil = 0;
+        this.resumeAt = 0;
+        this.lastPointerTime = -Infinity;
+        this.frame = 0;
+        this.previousTime = 0;
+        this.tick = this.tick.bind(this);
+        this.onReduced = () => {
+          this.reduced = this.reducedQuery.matches;
+          this.velocity = 0;
+          this.tween = null;
+          this.syncMotion();
+          this.wake();
+        };
+        this.reducedQuery.addEventListener('change', this.onReduced);
+
+        const on = (target, type, fn, options = {}) => target.addEventListener(type, fn, { ...options, signal: this.abort.signal });
+        on(this, 'pointerdown', () => {
+          this.lastPointerTime = performance.now();
+          this.focusPaused = false;
+          if (!this.editorPaused) this.pinned = false;
+          this.syncMotion();
+        }, { capture: true });
+        on(this.viewport, 'pointerdown', (event) => this.pointerDown(event));
+        on(window, 'pointermove', (event) => this.pointerMove(event), { passive: false });
+        on(window, 'pointerup', (event) => this.pointerEnd(event));
+        on(window, 'pointercancel', (event) => this.pointerEnd(event, true));
+        on(this.viewport, 'lostpointercapture', (event) => {
+          // Touch starts with implicit capture on the tapped child. Its bubbled
+          // capture-loss event during transfer is NOT the end of the swipe.
+          if (event.target === this.viewport && !this.viewport.hasPointerCapture(event.pointerId)) {
+            this.pointerEnd(event, true);
+          }
+        });
+        on(this.viewport, 'dragstart', (event) => event.preventDefault());
+        on(this.viewport, 'mousedown', (event) => {
+          // Repeated visual cards must not steal keyboard focus from the original list.
+          if (event.target.closest('[data-fcc-clone]')) event.preventDefault();
+        });
+        on(this.viewport, 'click', (event) => {
+          if (performance.now() < (this.suppressClickUntil || 0)) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          }
+        }, { capture: true });
+        on(this.viewport, 'wheel', (event) => {
+          const delta = event.shiftKey ? event.deltaY : event.deltaX;
+          if (!this.looping || Math.abs(delta) < 1 || (!event.shiftKey && Math.abs(event.deltaY) > Math.abs(delta))) return;
+          event.preventDefault();
+          this.interact();
+          this.offset += delta * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? this.viewport.clientWidth : 1);
+          this.render();
+          this.wake();
+        }, { passive: false });
+        on(this.viewport, 'pointerenter', (event) => {
+          if (event.pointerType === 'mouse' && this.dataset.hoverPause === 'true') {
+            this.hovered = true;
+            this.syncMotion();
+          }
+        });
+        on(this.viewport, 'pointerleave', (event) => {
+          if (event.pointerType === 'mouse') {
+            this.hovered = false;
+            this.syncMotion();
+            this.wake();
+          }
+        });
+        on(this, 'focusin', (event) => this.focusIn(event));
+        on(this, 'focusout', () => {
+          queueMicrotask(() => {
+            if (!this.isConnected) return;
+            if (!this.contains(document.activeElement)) {
+              this.focusPaused = false;
+              this.pinned = this.editorPaused;
+              this.resumeAt = performance.now() + 1000;
+              this.syncMotion();
+              this.wake();
+            }
+          });
+        });
+        on(this.viewport, 'keydown', (event) => {
+          if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+          event.preventDefault();
+          this.focusPaused = true;
+          const direction = event.key === 'ArrowRight' ? 1 : -1;
+          const card = event.target.closest('[data-fcc-index]');
+          if (card && this.source.contains(card)) {
+            const index = (Number(card.dataset.fccIndex) + direction + this.cards.length) % this.cards.length;
+            const target = this.cards[index];
+            const link = target.querySelector('a[href]');
+            this.reveal(target);
+            if (link) link.focus({ preventScroll: true });
+          } else {
+            this.step(direction);
+          }
+          this.syncMotion();
+        });
+        on(document, 'visibilitychange', () => { this.syncMotion(); this.wake(); });
+        on(window, 'blur', () => {
+          if (this.pointer) this.pointerEnd({ pointerId: this.pointer.id }, true);
+        });
+        const previous = this.querySelector('[data-fcc-prev]');
+        const next = this.querySelector('[data-fcc-next]');
+        if (previous) on(previous, 'click', () => this.step(-1));
+        if (next) on(next, 'click', () => this.step(1));
+        if (this.pauseButton) on(this.pauseButton, 'click', () => {
+          this.userPaused = !this.userPaused;
+          this.velocity = 0;
+          this.tween = null;
+          this.syncMotion();
+          this.wake();
+        });
+
+        // Custom-element lifecycle handles section load/unload. Block selection pins
+        // the real (non-duplicated) block so image and collection editing stays usable.
+        on(this, 'shopify:block:select', (event) => {
+          const card = this.cards.find((item) => item.dataset.fccBlockId === event.detail.blockId);
+          if (!card) return;
+          this.editorPaused = true;
+          this.velocity = 0;
+          this.tween = null;
+          this.reveal(card);
+          this.syncMotion();
+        });
+        on(this, 'shopify:block:deselect', () => {
+          this.editorPaused = false;
+          this.pinned = this.focusPaused;
+          this.syncMotion();
+          this.wake();
+        });
+
+        this.resizeObserver = new ResizeObserver(() => {
+          cancelAnimationFrame(this.resizeFrame);
+          this.resizeFrame = requestAnimationFrame(() => this.measure());
+        });
+        this.resizeObserver.observe(this.viewport);
+        this.resizeObserver.observe(this.source);
+        this.intersectionObserver = new IntersectionObserver((entries) => {
+          this.visible = entries[0].isIntersecting;
+          if (this.visible) {
+            // Warm the small original image set before its repeated cards arrive.
+            this.source.querySelectorAll('img').forEach((image) => { image.loading = 'eager'; });
+          }
+          this.syncMotion();
+          this.wake();
+        }, { rootMargin: '100px 0px' });
+        this.intersectionObserver.observe(this);
+        const controls = this.querySelector('[data-fcc-controls]');
+        if (controls) controls.hidden = !this.cards.length;
+        this.measure();
+        this.syncMotion();
+      }
+
+      makeCopy() {
+        const copy = this.source.cloneNode(true);
+        copy.removeAttribute('data-fcc-source');
+        copy.setAttribute('data-fcc-clone', '');
+        copy.setAttribute('aria-hidden', 'true');
+        [copy, ...copy.querySelectorAll('*')].forEach((element) => {
+          element.removeAttribute('id');
+          element.removeAttribute('data-shopify-editor-block');
+          element.removeAttribute('data-fcc-block-id');
+          if (element.matches('a, button, input, select, textarea, [tabindex]')) element.tabIndex = -1;
+        });
+        return copy;
+      }
+
+      measure() {
+        if (!this.isConnected) return;
+        const width = this.viewport.clientWidth;
+        const cycle = this.source.getBoundingClientRect().width;
+        if (!width || !cycle) return;
+        if (this.measuredWidth === width && this.cycle === cycle) return;
+        const oldCycle = this.cycle;
+        this.measuredWidth = width;
+        this.cycle = cycle;
+        this.looping = this.cards.length > 1;
+        this.track.querySelectorAll('[data-fcc-clone]').forEach((copy) => copy.remove());
+        this.toggleAttribute('data-fcc-single', this.cards.length === 1);
+        this.velocity = 0;
+        this.tween = null;
+        if (this.looping) {
+          // Enough complete groups on BOTH sides to fill any supported viewport,
+          // even when the merchant has added only two categories.
+          const copies = Math.ceil(width / cycle) + 1;
+          const before = document.createDocumentFragment();
+          const after = document.createDocumentFragment();
+          for (let i = 0; i < copies; i += 1) {
+            before.appendChild(this.makeCopy());
+            after.appendChild(this.makeCopy());
+          }
+          this.track.prepend(before);
+          this.track.append(after);
+          this.base = this.source.offsetLeft;
+          this.offset = oldCycle ? (this.offset / oldCycle) * cycle : 0;
+          // Synchronize the levitation phase across the loop seam after a resize.
+          const originals = this.source.querySelectorAll('[data-fcc-float], [data-fcc-shadow]');
+          this.track.querySelectorAll('[data-fcc-clone]').forEach((copy) => {
+            copy.querySelectorAll('[data-fcc-float], [data-fcc-shadow]').forEach((element, index) => {
+              const originalAnimation = originals[index].getAnimations()[0];
+              const animation = element.getAnimations()[0];
+              if (animation && originalAnimation) animation.currentTime = originalAnimation.currentTime;
+            });
+          });
+        } else {
+          this.base = 0;
+          this.offset = 0;
+        }
+        this.setAttribute('data-fcc-ready', '');
+        this.viewport.scrollLeft = 0;
+        this.querySelectorAll('[data-fcc-prev], [data-fcc-next]').forEach((button) => { button.disabled = !this.looping; });
+        this.render();
+        const focused = document.activeElement && document.activeElement.closest('[data-fcc-index]');
+        if (focused && this.source.contains(focused)) this.reveal(focused);
+        this.syncMotion();
+        this.wake();
+      }
+
+      render() {
+        if (!this.looping) {
+          this.track.style.transform = '';
+          return;
+        }
+        if (!this.pinned) this.offset = ((this.offset % this.cycle) + this.cycle) % this.cycle;
+        this.track.style.transform = `translate3d(${-this.base - this.offset}px, 0, 0)`;
+      }
+
+      reveal(card) {
+        if (!this.looping) return;
+        this.pinned = true;
+        this.offset = card.offsetLeft - Math.max(0, (this.viewport.clientWidth - card.offsetWidth) / 2);
+        this.viewport.scrollLeft = 0;
+        this.render();
+      }
+
+      focusIn(event) {
+        const card = event.target.closest('[data-fcc-index]');
+        if (card && card.closest('[data-fcc-clone]')) {
+          // Defensive fallback for browsers that focus a repeated link on touch.
+          const original = this.cards[Number(card.dataset.fccIndex)];
+          if (original) {
+            this.reveal(original);
+            original.querySelector('a').focus({ preventScroll: true });
+          }
+          return;
+        }
+        const keyboardFocus = event.target.matches(':focus-visible') || performance.now() - this.lastPointerTime > 500;
+        if (!keyboardFocus) return;
+        this.focusPaused = true;
+        this.velocity = 0;
+        this.tween = null;
+        if (card && this.source.contains(card)) this.reveal(card);
+        this.syncMotion();
+      }
+
+      interact() {
+        this.velocity = 0;
+        this.tween = null;
+        this.pinned = false;
+        this.resumeAt = performance.now() + 2200;
+      }
+
+      pointerDown(event) {
+        if (!this.looping || event.isPrimary === false || (event.pointerType === 'mouse' && event.button !== 0)) return;
+        this.interact();
+        this.pointer = {
+          id: event.pointerId,
+          x: event.clientX,
+          y: event.clientY,
+          previousX: event.clientX,
+          previousTime: performance.now(),
+          dragging: false
+        };
+        this.syncMotion();
+      }
+
+      pointerMove(event) {
+        const pointer = this.pointer;
+        if (!pointer || event.pointerId !== pointer.id) return;
+        const dx = event.clientX - pointer.x;
+        const dy = event.clientY - pointer.y;
+        if (!pointer.dragging) {
+          if (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)) {
+            this.pointer = null; // Let normal vertical page scrolling continue.
+            this.syncMotion();
+            this.wake();
+            return;
+          }
+          if (Math.abs(dx) < 7) return;
+          pointer.dragging = true;
+          this.setAttribute('data-fcc-dragging', '');
+          try { this.viewport.setPointerCapture(event.pointerId); } catch (_) { /* Pointer may already have ended. */ }
+        }
+        if (event.cancelable) event.preventDefault();
+        const now = performance.now();
+        const elapsed = Math.max(8, now - pointer.previousTime) / 1000;
+        const delta = pointer.previousX - event.clientX;
+        this.offset += delta;
+        this.velocity = Math.max(-2200, Math.min(2200, this.velocity * .6 + (delta / elapsed) * .4));
+        pointer.previousX = event.clientX;
+        pointer.previousTime = now;
+        this.render();
+      }
+
+      pointerEnd(event, cancelled = false) {
+        const pointer = this.pointer;
+        if (!pointer || event.pointerId !== pointer.id) return;
+        this.pointer = null;
+        this.removeAttribute('data-fcc-dragging');
+        if (pointer.dragging) this.suppressClickUntil = performance.now() + 450;
+        if (cancelled || this.reduced || !pointer.dragging || performance.now() - pointer.previousTime > 100) this.velocity = 0;
+        this.resumeAt = performance.now() + 2200;
+        try {
+          if (this.viewport.hasPointerCapture(event.pointerId)) this.viewport.releasePointerCapture(event.pointerId);
+        } catch (_) { /* The browser can release capture before pointerup. */ }
+        this.syncMotion();
+        this.wake();
+      }
+
+      step(direction) {
+        if (!this.looping) return;
+        this.interact();
+        this.render();
+        const distance = (this.cards[1].offsetLeft - this.cards[0].offsetLeft) * direction;
+        if (this.reduced) {
+          this.offset += distance;
+          this.render();
+        } else {
+          this.tween = { start: performance.now(), from: this.offset, distance };
+        }
+        this.wake();
+      }
+
+      canAuto() {
+        return this.looping && this.autoplay && !this.reduced && !this.userPaused &&
+          !this.hovered && !this.focusPaused && !this.editorPaused && !this.pointer;
+      }
+
+      syncMotion() {
+        const paused = this.reduced || this.userPaused || this.hovered || this.focusPaused ||
+          this.editorPaused || !this.visible || document.hidden;
+        this.dataset.fccMotionPaused = String(paused);
+        if (this.pauseButton) {
+          this.pauseButton.disabled = this.reduced;
+          this.pauseButton.setAttribute('aria-label', this.reduced ? 'Animation disabled by reduced-motion preference' : this.userPaused ? 'Resume animation' : 'Pause animation');
+          this.pauseButton.querySelector('[data-fcc-pause-text]').textContent = this.userPaused ? 'Play' : 'Pause';
+          this.pauseButton.querySelector('[data-fcc-play-icon]').hidden = !this.userPaused;
+          this.pauseButton.querySelector('[data-fcc-pause-icon]').hidden = this.userPaused;
+        }
+      }
+
+      wake() {
+        if (!this.frame && this.isConnected && this.visible && !document.hidden) {
+          this.previousTime = 0;
+          this.frame = requestAnimationFrame(this.tick);
+        }
+      }
+
+      tick(now) {
+        this.frame = 0;
+        if (!this.isConnected || !this.visible || document.hidden) return;
+        const dt = this.previousTime ? Math.min((now - this.previousTime) / 1000, .04) : 0;
+        this.previousTime = now;
+        if (!this.pointer) {
+          if (this.tween) {
+            const progress = Math.min(1, (now - this.tween.start) / 380);
+            this.offset = this.tween.from + this.tween.distance * (1 - Math.pow(1 - progress, 3));
+            if (progress >= 1) this.tween = null;
+            this.render();
+          } else if (Math.abs(this.velocity) > 8) {
+            this.offset += this.velocity * dt;
+            this.velocity *= Math.exp(-6 * dt);
+            this.render();
+          } else if (this.canAuto() && now >= this.resumeAt) {
+            this.velocity = 0;
+            this.offset += this.speed * this.direction * dt;
+            this.render();
+          }
+        }
+        if (!this.pointer && (this.tween || Math.abs(this.velocity) > 8 || this.canAuto())) {
+          this.frame = requestAnimationFrame(this.tick);
+        }
+      }
+
+      disconnectedCallback() {
+        cancelAnimationFrame(this.initFrame);
+        cancelAnimationFrame(this.resizeFrame);
+        cancelAnimationFrame(this.frame);
+        if (this.abort) this.abort.abort();
+        if (this.resizeObserver) this.resizeObserver.disconnect();
+        if (this.intersectionObserver) this.intersectionObserver.disconnect();
+        if (this.reducedQuery && this.onReduced) this.reducedQuery.removeEventListener('change', this.onReduced);
+        if (this.track) {
+          this.track.querySelectorAll('[data-fcc-clone]').forEach((copy) => copy.remove());
+          this.track.style.transform = '';
+        }
+        this.removeAttribute('data-fcc-ready');
+        this.removeAttribute('data-fcc-dragging');
+        this.measuredWidth = null;
+        this.cycle = null;
+        this.initialized = false;
+      }
+    }
+
+    customElements.define('floating-category-carousel', FloatingCategoryCarousel);
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Floating categories",
+  "tag": "section",
+  "class": "section-floating-categories",
+  "max_blocks": 24,
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "header", "content": "Introduction" },
+    { "type": "text", "id": "eyebrow", "label": "Small label" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by category" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Thoughtful finds for every corner of your day.</p>" },
+    { "type": "text", "id": "button_label", "label": "View-all link label", "default": "Explore all" },
+    { "type": "url", "id": "button_link", "label": "View-all link", "default": "/collections" },
+    { "type": "select", "id": "intro_layout", "label": "Desktop introduction position", "default": "side", "options": [{ "value": "side", "label": "Left of carousel" }, { "value": "top", "label": "Above carousel" }] },
+    { "type": "range", "id": "intro_width", "label": "Desktop introduction width", "min": 160, "max": 360, "step": 10, "unit": "px", "default": 220 },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 20, "max": 56, "step": 2, "unit": "px", "default": 28 },
+    { "type": "header", "content": "Carousel movement" },
+    { "type": "checkbox", "id": "autoplay", "label": "Continuously scroll categories", "default": true },
+    { "type": "range", "id": "scroll_speed", "label": "Scroll speed (pixels per second)", "min": 5, "max": 80, "step": 5, "default": 25 },
+    { "type": "select", "id": "scroll_direction", "label": "Automatic scroll direction", "default": "left", "options": [{ "value": "left", "label": "Move left" }, { "value": "right", "label": "Move right" }] },
+    { "type": "checkbox", "id": "pause_on_hover", "label": "Pause while hovered", "default": false, "info": "Turn off for uninterrupted motion while the mouse is over the categories." },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show previous and next arrows", "default": true },
+    { "type": "paragraph", "content": "Swiping and dragging work in either direction. Scrolling resumes after interaction. Add at least two categories for horizontal movement. Repeated cards keep the loop full." },
+    { "type": "header", "content": "Floating product images" },
+    { "type": "checkbox", "id": "enable_float", "label": "Enable gentle levitation", "default": true },
+    { "type": "range", "id": "float_distance", "label": "Floating distance", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "float_duration", "label": "Floating cycle duration", "min": 3, "max": 10, "step": 1, "unit": "s", "default": 5 },
+    { "type": "checkbox", "id": "show_shadow", "label": "Show soft shadow below images", "default": true },
+    { "type": "paragraph", "content": "Use product PNGs with transparent backgrounds. Images are contained, not cropped. Each block has its own image size and vertical position controls. Reduced-motion device settings disable automatic animation." },
+    { "type": "header", "content": "Sizing and spacing" },
+    { "type": "range", "id": "max_width", "label": "Maximum section content width", "min": 1000, "max": 1800, "step": 20, "unit": "px", "default": 1440 },
+    { "type": "range", "id": "card_width", "label": "Desktop category width", "min": 160, "max": 360, "step": 10, "unit": "px", "default": 240 },
+    { "type": "range", "id": "card_width_mobile", "label": "Mobile category width", "min": 120, "max": 240, "step": 10, "unit": "px", "default": 160 },
+    { "type": "range", "id": "image_height", "label": "Desktop image area height", "min": 160, "max": 400, "step": 10, "unit": "px", "default": 260 },
+    { "type": "range", "id": "image_height_mobile", "label": "Mobile image area height", "min": 120, "max": 300, "step": 10, "unit": "px", "default": 190 },
+    { "type": "range", "id": "card_gap", "label": "Desktop category gap", "min": 8, "max": 80, "step": 2, "unit": "px", "default": 32 },
+    { "type": "range", "id": "card_gap_mobile", "label": "Mobile category gap", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "category_title_size", "label": "Category title size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 15 },
+    { "type": "header", "content": "Colors and padding" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#EAEBDD" },
+    { "type": "color", "id": "text_color", "label": "Heading and category text", "default": "#292D25" },
+    { "type": "color", "id": "muted_color", "label": "Description and secondary text", "default": "#595E52" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Product PNG image", "info": "Upload a transparent product image. This overrides the collection image and displays even before you select a collection." },
+        { "type": "collection", "id": "collection", "label": "Collection to link" },
+        { "type": "text", "id": "title", "label": "Category title", "info": "Leave blank to use the selected collection's title." },
+        { "type": "text", "id": "subtitle", "label": "Optional small text" },
+        { "type": "url", "id": "custom_link", "label": "Optional custom link", "info": "Overrides the selected collection link. Leave blank to link the collection." },
+        { "type": "range", "id": "image_size", "label": "Image size within its area", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 90 },
+        { "type": "range", "id": "image_offset", "label": "Image vertical position", "min": -20, "max": 20, "step": 2, "unit": "px", "default": 0 }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Floating categories",
+      "blocks": [
+        { "type": "category", "settings": { "title": "Serveware" } },
+        { "type": "category", "settings": { "title": "Dinnerware" } },
+        { "type": "category", "settings": { "title": "Home decor" } },
+        { "type": "category", "settings": { "title": "Lighting" } },
+        { "type": "category", "settings": { "title": "Lunchboxes" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

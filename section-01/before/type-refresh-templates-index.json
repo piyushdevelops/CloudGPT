@@ -1,0 +1,652 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "june_make_room": {
+      "type": "june-make-room",
+      "blocks": {
+        "wedding": {
+          "type": "life_link",
+          "settings": {
+            "label": "Wedding Planners",
+            "collection": "wedding-planners"
+          }
+        },
+        "rewrite": {
+          "type": "life_link",
+          "settings": {
+            "label": "Rewritable Planners",
+            "collection": "rewritable-planners"
+          }
+        },
+        "baby": {
+          "type": "life_link",
+          "settings": {
+            "label": "Baby Record Books",
+            "collection": "baby-record-book"
+          }
+        },
+        "typography": {
+          "type": "typography",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "typography",
+        "wedding",
+        "rewrite",
+        "baby"
+      ],
+      "settings": {
+        "eyebrow": "The planner edit",
+        "heading": "MAKE ROOM.",
+        "subheading": "For big plans. And\neveryday ones.",
+        "body": "Start any day. Make it yours.",
+        "hero_image": "shopify://shop_images/ChatGPT_Image_Sep_25_2026_04_46_21_PM.png",
+        "hero_image_mobile": "shopify://shop_images/home_page_image.png",
+        "hero_alt": "Undated planners and an open planner spread",
+        "cover_left_alt": "Serendipity undated planner",
+        "cover_right_alt": "Quiet The Mind undated planner",
+        "inside_alt": "Yearly goals pages inside an undated planner",
+        "crop_interior": true,
+        "undated_collection": "undated-yearly-planners",
+        "limited_collection": "limited-edition",
+        "life_collection": "planners-journals",
+        "mystery_product": "mystery-box-limited-drop",
+        "mystery_link": "",
+        "limited_heading": "A little extra. All yours.",
+        "limited_body": "Undated planners with thoughtful extras. Discover the gifts included with each design.",
+        "limited_alt": "Dolce Far Niente Limited Edition undated planner",
+        "dated_heading": "The next chapter is coming.",
+        "life_heading": "For the chapters that matter.",
+        "life_body": "Big days. Fresh starts. Little firsts.",
+        "desktop_height": 520,
+        "mobile_art_height": 250,
+        "background": "#f7f3eb",
+        "text_color": "#111111",
+        "left_product": "undated-yearly-planner-serendipity-ultimate-sticker-book",
+        "right_product": "undated-yearly-planner-quite-the-mind-ultimate-sticker-book",
+        "interior_number": 10,
+        "edition_product": "limited-edition-undated-planner-dolce-far-niente",
+        "title_font": "oswald_n7",
+        "heading_size": 140,
+        "heading_size_mobile": 88,
+        "desktop_scene": true
+      }
+    },
+    "home_banner_swiper_gPUxE8": {
+      "type": "Home-banner-swiper",
+      "blocks": {
+        "category_RPGpxw": {
+          "type": "category",
+          "settings": {
+            "collection": "drinkware",
+            "image": "shopify://shop_images/15_e1974d83-43b8-4175-a627-e6eaf20a6a35.png",
+            "image_alt": "",
+            "title": "",
+            "kicker": "",
+            "subtitle": "",
+            "badge": "",
+            "custom_link": ""
+          }
+        },
+        "category_PCpbgd": {
+          "type": "category",
+          "settings": {
+            "collection": "decor-objects",
+            "image": "shopify://shop_images/2_jpg.jpg",
+            "image_alt": "",
+            "title": "",
+            "kicker": "",
+            "subtitle": "",
+            "badge": "",
+            "custom_link": "https://thejuneshop.com/collections/decor-objects?filter.v.availability=1&filter.p.product_type=Vases"
+          }
+        },
+        "category_L4CJcV": {
+          "type": "category",
+          "settings": {
+            "collection": "lamps-lighting",
+            "image": "shopify://shop_images/1_jpg.jpg",
+            "image_alt": "",
+            "title": "",
+            "kicker": "",
+            "subtitle": "",
+            "badge": "",
+            "custom_link": ""
+          }
+        },
+        "category_KKFReh": {
+          "type": "category",
+          "settings": {
+            "collection": "serveware",
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_10_2026_02_27_34_PM.png",
+            "image_alt": "",
+            "title": "",
+            "kicker": "",
+            "subtitle": "",
+            "badge": "",
+            "custom_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_RPGpxw",
+        "category_PCpbgd",
+        "category_L4CJcV",
+        "category_KKFReh"
+      ],
+      "disabled": true,
+      "name": "TJS category hero",
+      "settings": {
+        "eyebrow": "Customer Satisfaction Is Our Priority",
+        "show_eyebrow_icon": true,
+        "heading_before": "Curated Pieces for",
+        "heading_accent": "Everyday Life",
+        "heading_after": "",
+        "heading_tag": "h1",
+        "heading_font_style": "theme",
+        "enable_accent_switch": true,
+        "accent_switch_delay": 1,
+        "body": "<p>Curated pieces for your home, table, routines and celebrations\u2014chosen to make everyday life feel more considered.</p>",
+        "primary_button_label": "Shop Bestsellers",
+        "primary_button_link": "shopify://collections/new-arrivals",
+        "secondary_button_label": "View All Products",
+        "secondary_button_link": "shopify://collections/all",
+        "show_reviews": true,
+        "google_reviews_url": "https://g.page/r/CUa2zqtTfiO9EAE/review",
+        "open_reviews_new_tab": true,
+        "rating_value": "4.58",
+        "review_heading": "Excellent",
+        "review_label": "Trusted by",
+        "review_count": ": 652,000+ customers",
+        "review_link_text": "Google Reviews",
+        "google_reviews_aria_label": "Read The June Shop reviews on Google",
+        "review_region_label": "Customer reviews",
+        "show_avatar_placeholders": true,
+        "avatar_1": "shopify://shop_images/unnamed_4.png",
+        "avatar_2": "shopify://shop_images/unnamed_3.png",
+        "avatar_3": "shopify://shop_images/unnamed_2.png",
+        "avatar_4": "shopify://shop_images/unnamed_1.png",
+        "avatar_5": "shopify://shop_images/unnamed.png",
+        "show_cx_badge": false,
+        "cx_title": "Need help?",
+        "cx_text": "Real support before and after purchase",
+        "cx_link": "",
+        "card_kicker_label": "Explore the edit",
+        "card_cta_label": "Shop",
+        "show_product_count": true,
+        "product_count_label": "products",
+        "cards_desktop": "1.5",
+        "cards_mobile": "1.5",
+        "card_gap": 16,
+        "show_slider_controls": true,
+        "swipe_hint": "Swipe to explore",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "slider_aria_label": "Shop featured categories",
+        "previous_label": "Previous category",
+        "next_label": "Next category",
+        "content_width": 1480,
+        "left_column_width": 40,
+        "section_min_height": 620,
+        "heading_size": 60,
+        "heading_size_mobile": 38,
+        "card_radius": 18,
+        "image_fit": "cover",
+        "show_top_pattern": true,
+        "background_color": "#ffffff",
+        "text_color": "#16221b",
+        "muted_text_color": "#667069",
+        "accent_color": "#ffca0b",
+        "accent_color_2": "#000000",
+        "button_background": "#ffc35b",
+        "button_text_color": "#000000",
+        "card_background": "#ffffff",
+        "card_text_color": "#172019",
+        "card_muted_color": "#737b75",
+        "border_color": "#dddcd6",
+        "padding_top": 24,
+        "padding_bottom": 24,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "collection_nav_2_wex36J": {
+      "type": "collection-nav-2",
+      "blocks": {
+        "category_xx4dpb": {
+          "type": "category",
+          "settings": {
+            "collection": "home-all",
+            "custom_url": "",
+            "label": "Home Decor",
+            "image_alt": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "hide_everywhere": false
+          }
+        },
+        "category_TWz7ET": {
+          "type": "category",
+          "settings": {
+            "collection": "dinnerware",
+            "custom_url": "",
+            "label": "Dinnerware",
+            "image_alt": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "hide_everywhere": false
+          }
+        },
+        "category_ADjMQd": {
+          "type": "category",
+          "settings": {
+            "collection": "serveware",
+            "custom_url": "",
+            "label": "Serveware",
+            "image_alt": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "hide_everywhere": false
+          }
+        },
+        "category_fmUMwC": {
+          "type": "category",
+          "settings": {
+            "collection": "lamps-lighting",
+            "custom_url": "",
+            "label": "Lighting",
+            "image_alt": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "hide_everywhere": false
+          }
+        },
+        "category_cWtRBB": {
+          "type": "category",
+          "settings": {
+            "collection": "lunch-bags-boxes",
+            "custom_url": "",
+            "label": "Lunch & More",
+            "image_alt": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "hide_everywhere": false
+          }
+        }
+      },
+      "block_order": [
+        "category_xx4dpb",
+        "category_TWz7ET",
+        "category_ADjMQd",
+        "category_fmUMwC",
+        "category_cWtRBB"
+      ],
+      "name": "TJS category navigation",
+      "settings": {
+        "heading": "Shop by Category",
+        "navigation_label": "Shop by category",
+        "heading_font": "serif",
+        "heading_size": 23,
+        "mobile_heading_size": 20,
+        "show_heading_mobile": true,
+        "show_ornaments": true,
+        "show_center_mark": true,
+        "ornament_width": 50,
+        "heading_gap": 18,
+        "mobile_heading_gap": 16,
+        "desktop_columns": 5,
+        "desktop_gap": 12,
+        "desktop_image_ratio": "square",
+        "image_fit": "cover",
+        "card_radius": 10,
+        "shadow_style": "strong",
+        "enable_hover": true,
+        "label_size": 12,
+        "mobile_item_size": 82,
+        "mobile_gap": 12,
+        "mobile_image_fit": "cover",
+        "mobile_circle_border": 1,
+        "mobile_shadow_style": "strong",
+        "mobile_label_size": 11,
+        "max_width": 1120,
+        "padding_top": 28,
+        "padding_bottom": 32,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 24,
+        "background": "#ffffff",
+        "heading_color": "#28201c",
+        "label_color": "#2f2723",
+        "ornament_color": "#5972ff",
+        "card_background": "#fffdfc",
+        "border_color": "#e9ded3",
+        "accent_color": "#c8834d"
+      }
+    },
+    "collection_mini_swipe_4MmHrQ": {
+      "type": "collection-mini-swipe",
+      "blocks": {
+        "heading_effect_7K3awa": {
+          "type": "heading_effect",
+          "settings": {
+            "enable_letter_switch": true,
+            "alternate_color": "#322e2a",
+            "switch_speed": 0.5,
+            "shadow_intensity": 30,
+            "shadow_color": "#000000"
+          }
+        },
+        "subcategory_bBEn4d": {
+          "type": "subcategory",
+          "settings": {
+            "collection": "2026-dated-planners",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_JxEVeG": {
+          "type": "subcategory",
+          "settings": {
+            "collection": "undated-yearly-planners",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_rypBNX": {
+          "type": "subcategory",
+          "settings": {
+            "collection": "wedding-planners",
+            "label": "Wedding Planners",
+            "link": ""
+          }
+        },
+        "subcategory_wAh9a4": {
+          "type": "subcategory",
+          "settings": {
+            "collection": "baby-record-book",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_YHpkgT": {
+          "type": "subcategory",
+          "settings": {
+            "collection": "travel-journals",
+            "label": "",
+            "link": ""
+          }
+        },
+        "subcategory_7N3ban": {
+          "type": "subcategory",
+          "settings": {
+            "collection": "financial-planners",
+            "label": "",
+            "link": ""
+          }
+        },
+        "product_slide_rKtfKe": {
+          "type": "product_slide",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_1_03ffe87c-a6c8-4fb4-b8dc-8e1943a99dcc.png",
+            "label": "",
+            "link": "shopify://collections/undated-yearly-planners",
+            "matching_collection": "undated-yearly-planners",
+            "alt_text": "",
+            "image_x": 0,
+            "image_y": 0,
+            "mobile_image_x": 28,
+            "mobile_image_y": 15,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_pQGGfK": {
+          "type": "product_slide",
+          "settings": {
+            "image": "shopify://shop_images/5_5.png",
+            "label": "",
+            "link": "shopify://collections/2026-dated-planners",
+            "matching_collection": "2026-dated-planners",
+            "alt_text": "",
+            "image_x": 0,
+            "image_y": 0,
+            "mobile_image_x": 28,
+            "mobile_image_y": 15,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_MhDTix": {
+          "type": "product_slide",
+          "settings": {
+            "image": "shopify://shop_images/4_3.png",
+            "label": "",
+            "link": "shopify://collections/financial-planners",
+            "matching_collection": "financial-planners",
+            "alt_text": "",
+            "image_x": 0,
+            "image_y": 0,
+            "mobile_image_x": 28,
+            "mobile_image_y": 15,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_kTxf9g": {
+          "type": "product_slide",
+          "settings": {
+            "image": "shopify://shop_images/1_4.png",
+            "label": "",
+            "link": "shopify://collections/wedding-planners",
+            "matching_collection": "wedding-planners",
+            "alt_text": "",
+            "image_x": 0,
+            "image_y": 0,
+            "mobile_image_x": 28,
+            "mobile_image_y": 15,
+            "mobile_image_rotate": 0
+          }
+        },
+        "product_slide_yEBTUc": {
+          "type": "product_slide",
+          "settings": {
+            "image": "shopify://shop_images/3_4.png",
+            "label": "",
+            "link": "shopify://collections/baby-record-book",
+            "matching_collection": "baby-record-book",
+            "alt_text": "",
+            "image_x": 0,
+            "image_y": 0,
+            "mobile_image_x": 22,
+            "mobile_image_y": 12,
+            "mobile_image_rotate": 4
+          }
+        },
+        "product_slide_tgWHNm": {
+          "type": "product_slide",
+          "settings": {
+            "image": "shopify://shop_images/2_3.png",
+            "label": "",
+            "link": "shopify://collections/travel-journals",
+            "matching_collection": "travel-journals",
+            "alt_text": "",
+            "image_x": 0,
+            "image_y": 0,
+            "mobile_image_x": 24,
+            "mobile_image_y": 15,
+            "mobile_image_rotate": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_effect_7K3awa",
+        "subcategory_bBEn4d",
+        "subcategory_JxEVeG",
+        "subcategory_rypBNX",
+        "subcategory_wAh9a4",
+        "subcategory_YHpkgT",
+        "subcategory_7N3ban",
+        "product_slide_rKtfKe",
+        "product_slide_pQGGfK",
+        "product_slide_MhDTix",
+        "product_slide_kTxf9g",
+        "product_slide_yEBTUc",
+        "product_slide_tgWHNm"
+      ],
+      "name": "Category Showcase Main",
+      "settings": {
+        "collection": "planners-journals",
+        "heading": "",
+        "description": "",
+        "eyebrow": "",
+        "show_count": false,
+        "count_override": "",
+        "show_plus": true,
+        "count_label": "items",
+        "show_subcategory_counts": false,
+        "show_button": true,
+        "button_label": "Explore the collection",
+        "button_link": "",
+        "heading_font_style": "body",
+        "heading_size": 48,
+        "heading_weight": "700",
+        "mobile_heading_size": 46,
+        "autoplay": true,
+        "autoplay_speed": 2.5,
+        "enable_float": true,
+        "product_scale_desktop": 83,
+        "product_scale_mobile": 110,
+        "product_shadow_strength": 100,
+        "ground_shadow_opacity": 25,
+        "spotlight_strength": 15,
+        "max_width": 1480,
+        "desktop_height": 440,
+        "content_width": 41,
+        "page_gutter": 32,
+        "mobile_ratio": "four-five",
+        "mobile_content_width": 50,
+        "mobile_scrim_strength": 100,
+        "mobile_description_lines": 2,
+        "mobile_links_limit": 8,
+        "mobile_gutter": 12,
+        "corner_radius": 6,
+        "background_color": "#ffffff",
+        "text_color": "#191715",
+        "muted_text_color": "#bebebe",
+        "accent_color": "#ffd1a3",
+        "shadow_opacity": 6,
+        "padding_top": 8,
+        "padding_bottom": 20
+      }
+    },
+    "carousel_focus_qkPVkN": {
+      "type": "carousel-focus",
+      "name": "TJS featured focus",
+      "settings": {
+        "collection": "new-arrivals",
+        "product_limit": 10,
+        "hide_sold_out": true,
+        "show_header": true,
+        "eyebrow": "",
+        "heading": "Fast Moving",
+        "description": "",
+        "heading_alignment": "left",
+        "heading_size": 54,
+        "mobile_heading_size": 42,
+        "show_view_all": true,
+        "view_all_label": "View all",
+        "show_arrows": false,
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "desktop_height": 420,
+        "mobile_center_width": 60,
+        "mobile_card_ratio": "four-five",
+        "card_gap": 6,
+        "image_fit": "cover",
+        "image_scale": 100,
+        "active_image_scale": 116,
+        "image_position": "center",
+        "card_style": "elevated",
+        "corner_radius": 8,
+        "shadow_strength": 15,
+        "show_vendor": false,
+        "show_sale_badge": false,
+        "actions_mode": "active",
+        "show_quick_add": false,
+        "show_quick_view": true,
+        "button_style": "accent",
+        "section_bg": "#ffffff",
+        "card_bg": "#ffffff",
+        "image_bg": "#f1eee8",
+        "text_color": "#191715",
+        "muted_color": "#565656",
+        "accent_color": "#262626",
+        "max_width": 1800,
+        "page_gutter": 28,
+        "mobile_gutter": 6,
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "card_deck_XggB3x": {
+      "type": "card-deck",
+      "name": "Card Deck (Fan)",
+      "settings": {
+        "collection": "lunch-bags-boxes",
+        "product_limit": 10,
+        "hide_sold_out": true,
+        "eyebrow": "",
+        "heading": "Grab Your Lunch!",
+        "description": "",
+        "enable_scroll_spread": true,
+        "scroll_depth_desktop": 135,
+        "spread_desktop": 180,
+        "spread_mobile": 64,
+        "rotation_step": 5,
+        "active_lift": 44,
+        "card_ratio": "five-seven",
+        "card_width_desktop": 390,
+        "card_width_mobile": 270,
+        "card_radius": 14,
+        "show_card_index": false,
+        "card_shadow_strength": 21,
+        "image_fit": "contain",
+        "image_padding": 0,
+        "image_scale": 108,
+        "image_shadow_strength": 35,
+        "show_price": true,
+        "show_quick_add": true,
+        "show_view_product": true,
+        "show_arrows": true,
+        "heading_size": 64,
+        "heading_weight": "700",
+        "mobile_heading_size": 32,
+        "section_background": "#ffffff",
+        "text_color": "#181614",
+        "muted_text_color": "#756e67",
+        "accent_color": "#000000",
+        "card_background": "#f9f6f0",
+        "card_text_color": "#171513",
+        "media_background": "#ece7de",
+        "max_width": 1480,
+        "page_gutter": 32,
+        "mobile_gutter": 12,
+        "padding_top": 28,
+        "padding_bottom": 16
+      }
+    }
+  },
+  "order": [
+    "june_make_room",
+    "home_banner_swiper_gPUxE8",
+    "collection_nav_2_wex36J",
+    "collection_mini_swipe_4MmHrQ",
+    "carousel_focus_qkPVkN",
+    "card_deck_XggB3x"
+  ]
+}

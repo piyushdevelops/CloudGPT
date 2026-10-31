@@ -1,0 +1,237 @@
+{
+  "createdOn": "2026-09-24",
+  "name": "TJS Website Rework â€” 24 Sep 2026",
+  "id": "gid://shopify/OnlineStoreTheme/187527266499",
+  "role": "UNPUBLISHED",
+  "sourceThemeId": "gid://shopify/OnlineStoreTheme/142259323075",
+  "sourceThemeName": "TJS August 2026 (Primary Theme)",
+  "referenceThemeId": "gid://shopify/OnlineStoreTheme/187467956419",
+  "previewUrl": "https://thejuneshop.com/?preview_theme_id=187527266499",
+  "filesVerified": 543,
+  "checksumDifferencesFromSource": 0,
+  "processing": false,
+  "processingFailed": false,
+  "implementationChanges": [
+    {
+      "section": 1,
+      "name": "June Â· Make Room",
+      "status": "mobile improvements installed; awaiting user review",
+      "files": [
+        "sections/june-make-room.liquid",
+        "locales/en.default.json",
+        "templates/index.json"
+      ],
+      "backup": "section-01/before",
+      "notes": "Live untouched. Prior homepage hero disabled, preserved. Launch email delivery not end-to-end tested.",
+      "lockedChecksumMd5": "bf79951765103d6e089af3d1d0d89d7d",
+      "lastVerifiedChecksumMd5": "e58a6bd10dad7203a4b2bcc9141edae7",
+      "limitedBackgroundUpdate": "User-requested 28 September 2026; installed and checked; awaiting review. See section-01/limited-background-2026-09-28/README.md. Original locked checksum is historical baseline."
+    },
+    {
+      "section": 2,
+      "name": "June Â· Your year",
+      "status": "mobile improvements installed; awaiting user review",
+      "files": [
+        "sections/june-your-year.liquid",
+        "templates/index.json",
+        "locales/en.default.json"
+      ],
+      "backup": "section-02/before",
+      "lastVerifiedChecksumMd5": "d182c927a37b2dbca8725c94440fbf5a"
+    },
+    {
+      "section": 3,
+      "name": "June Â· With extras",
+      "status": "mobile improvements installed; awaiting user review",
+      "files": [
+        "sections/june-with-extras.liquid",
+        "templates/index.json",
+        "locales/en.default.json"
+      ],
+      "backup": "section-03/before",
+      "notes": "Sections 1 and 2 code/settings unchanged. Four catalog offers; fourth has three verified gifts. No publication.",
+      "lastVerifiedChecksumMd5": "43e468fa6cbb45bdbb91b9caaab56240",
+      "unboxingRevision": "28 September 2026: interactive photo-card unboxing installed, desktop/mobile checked; awaiting review. See section-03/unboxing/README.md."
+    },
+    {
+      "section": 4,
+      "name": "June Â· Next chapter",
+      "status": "audit implementation installed; awaiting user review",
+      "files": [
+        "sections/june-next-chapter.liquid",
+        "templates/index.json"
+      ],
+      "backup": "section-04/before",
+      "notes": "Native customer signup; launch campaign/delivery not tested or configured. Sections 1â€“3 unchanged.",
+      "lastVerifiedChecksumMd5": "db7522ea863a6414caedc5b5a245ee64"
+    },
+    {
+      "section": 9,
+      "name": "June · Pick your pour",
+      "status": "audit implementation installed; awaiting user review",
+      "files": [
+        "sections/june-pick-your-pour.liquid",
+        "templates/index.json"
+      ],
+      "backup": "section-09/before",
+      "notes": "Temporarily after4; integrate after teammate Section8. Prior sections untouched.",
+      "lastVerifiedChecksumMd5": "0a4ec04b65befc2b613d8a1b7ee76366"
+    },
+    {
+      "section": 10,
+      "name": "June · Layer the table",
+      "status": "mobile improvements installed; awaiting user review",
+      "files": [
+        "sections/june-layer-the-table.liquid",
+        "assets/june-table-bowl.webp",
+        "assets/june-table-side.webp",
+        "assets/june-table-dinner.webp",
+        "templates/index.json"
+      ],
+      "backup": "section-10/before",
+      "notes": "After9; generated catalog-reference cutouts. Prior sections preserved. No publication.",
+      "lastVerifiedChecksumMd5": "234406abb8bc3bdd3f9a386657187f40"
+    },
+    {
+      "section": 5,
+      "name": "June · Inside discovery",
+      "status": "mobile improvements installed; awaiting user review",
+      "files": [
+        "sections/june-inside-discovery.liquid",
+        "templates/index.json"
+      ],
+      "backup": "section-05/before",
+      "notes": "User confirmed teammate paused. Four catalog interior views; enlarged viewer. Optional video unconfigured. Save window completed; teammate must pull current source before resuming.",
+      "lastVerifiedChecksumMd5": "61dfd1b4153cb9a8750ff5aa64e3ea15"
+    },
+    {
+      "section": 6,
+      "name": "June · Other chapters",
+      "status": "scroll story installed; awaiting visual review",
+      "files": [
+        "sections/june-other-chapters.liquid",
+        "templates/index.json"
+      ],
+      "backup": "section-06/before",
+      "notes": "User confirmed teammate pause. Three scroll chapters. Baby visible without shopping button per user. Save window completed; pull fresh source before teammate resumes.",
+      "lastVerifiedChecksumMd5": "05cf3215c276f7027bfef1cbac39bb7f",
+      "scrollStory": "chapters-scroll/README.md"
+    },
+    {
+      "section": 7,
+      "name": "June - Shop the corner",
+      "status": "audit implementation installed; awaiting user review",
+      "files": [
+        "sections/june-shop-the-corner.liquid",
+        "templates/index.json"
+      ],
+      "backup": "section-07/before",
+      "lastVerifiedChecksumMd5": "73046ffbea982199ff065d2a48267ad2",
+      "notes": "User-confirmed teammate save window completed. Styled scene of catalog products; see section-07/README.md. Nothing published."
+    },
+    {
+      "section": 8,
+      "name": "June · Find your glow",
+      "status": "audit implementation installed; awaiting user review",
+      "files": [
+        "sections/june-find-your-glow.liquid",
+        "templates/index.json"
+      ],
+      "backup": "section-08/before",
+      "lastVerifiedChecksumMd5": "182f999eece918b3710a6713b3bb347a",
+      "notes": "User cancelled teammate protocol; single editor. Real catalog photography, three lamp selections. Nothing published."
+    },
+    {
+      "section": 11,
+      "name": "June · A little curious",
+      "status": "audit implementation installed; awaiting user review",
+      "files": [
+        "sections/june-a-little-curious.liquid",
+        "templates/index.json"
+      ],
+      "backup": "section-11/before",
+      "lastVerifiedChecksumMd5": "ab2cba5405423be757f758434138de44",
+      "notes": "Actual Mystery Box catalog artwork; native peek disclosure, live price. Nothing published."
+    },
+    {
+      "section": 12,
+      "name": "June · The footer",
+      "status": "audit implementation installed; awaiting user review",
+      "files": [
+        "sections/june-footer.liquid",
+        "sections/footer-group.json"
+      ],
+      "backup": "section-12/before",
+      "lastVerifiedChecksumMd5": "fa3479b03409123a798abb53faeb52e7",
+      "notes": "Global unpublished footer group; old blocks disabled with settings retained. Newsletter not submitted. Nothing published."
+    }
+  ],
+  "lastLocalHandover": "2026-09-28",
+  "baselineVerificationNote": "filesVerified and checksumDifferencesFromSource describe theme creation on 24 September, not current equality to MAIN.",
+  "coordination": "Single editor per explicit user instruction 28 September 2026; teammate protocol superseded",
+  "auditImplementation": {
+    "date": "2026-09-28",
+    "authorisation": "Implement all including locked 1",
+    "report": "audit-implementation/README.md",
+    "remoteChecks": "audit-implementation/remote-checks.json",
+    "changedFiles": 18,
+    "role": "UNPUBLISHED",
+    "published": false,
+    "mainModified": false,
+    "pending": "Genuine asset upgrades, approved care/launch facts, email delivery and checkout/service-country verification"
+  },
+  "mobileFixes": {
+    "date": "2026-09-28",
+    "status": "installed; awaiting user review",
+    "report": "mobile-fixes/README.md",
+    "checks": "mobile-fixes/remote-checks.json",
+    "role": "UNPUBLISHED",
+    "files": [
+      "locales/en.default.json",
+      "sections/june-inside-discovery.liquid",
+      "sections/june-layer-the-table.liquid",
+      "sections/june-make-room.liquid",
+      "sections/june-other-chapters.liquid",
+      "sections/june-with-extras.liquid",
+      "sections/june-your-year.liquid",
+      "sections/my-header.liquid",
+      "snippets/june-photo-viewer.liquid",
+      "templates/index.json"
+    ]
+  },
+  "palette": {
+    "name": "Apricot & Lilac",
+    "approvedOn": "2026-09-29",
+    "status": "installed on unpublished theme; awaiting visual review",
+    "colours": {
+      "ivory": "#FAF7EF",
+      "apricot": "#F5A477",
+      "ink": "#191816",
+      "lilac": "#E7E1F0",
+      "oat": "#EEE8DD",
+      "espresso": "#241C18"
+    },
+    "report": "palette-apricot-lilac/README.md"
+  },
+  "otherChaptersScrollStory": {
+    "date": "2026-09-29",
+    "report": "chapters-scroll/README.md",
+    "checks": "chapters-scroll/remote-checks.json",
+    "status": "installed; awaiting visual review",
+    "themeRole": "UNPUBLISHED"
+  },
+  "masterPalette": {
+    "date": "2026-09-30",
+    "status": "Installed; ready for user experimentation",
+    "preset": "orange",
+    "enabled": true,
+    "record": "master-palette/README.md",
+    "verification": "master-palette/remote-checks.json"
+  },
+  "heroControls": {
+    "date": "2026-10-01",
+    "status": "Installed; awaiting user review",
+    "record": "hero-controls/README.md",
+    "verification": "hero-controls/remote-checks.json"
+  }
+}

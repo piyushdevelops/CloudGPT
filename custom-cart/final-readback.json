@@ -1,0 +1,23 @@
+{
+  "theme": "187527266499",
+  "role": "UNPUBLISHED",
+  "checks": [
+    {
+      "filename": "sections/cart-drawer.liquid",
+      "match": true
+    },
+    {
+      "filename": "sections/system-group.json",
+      "match": true
+    },
+    {
+      "filename": "snippets/june-cart-design.liquid",
+      "match": true
+    },
+    {
+      "filename": "snippets/item-cart.liquid",
+      "match": true
+    }
+  ],
+  "systemGroupComparison": "Semantic JSON equality; Liquid exact equality"
+}

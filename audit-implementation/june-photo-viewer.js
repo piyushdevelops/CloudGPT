@@ -1,0 +1,5 @@
+
+if(!customElements.get('june-photo-viewer'))customElements.define('june-photo-viewer',class extends HTMLElement{
+ connectedCallback(){this.abort?.abort();this.abort=new AbortController();const o={signal:this.abort.signal},dialog=this.querySelector('dialog'),open=this.querySelector('a'),frame=this.querySelector('.jphoto__frame');open.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey)return;e.preventDefault();const img=dialog.querySelector('img');img.src=img.dataset.src;dialog.showModal()},o);this.querySelector('[data-close]').addEventListener('click',()=>dialog.close(),o);this.querySelector('[data-zoom]').addEventListener('click',e=>{const active=frame.dataset.zoomed!=='true';frame.dataset.zoomed=String(active);e.currentTarget.setAttribute('aria-pressed',String(active))},o);dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()}},o);dialog.addEventListener('close',()=>open.focus(),o)}
+ disconnectedCallback(){this.abort?.abort();this.querySelector('dialog')?.close()}
+});

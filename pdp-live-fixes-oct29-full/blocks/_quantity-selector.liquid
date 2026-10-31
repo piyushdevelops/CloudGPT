@@ -1,0 +1,192 @@
+{%- liquid
+  unless product
+    assign product = section.settings.product
+  endunless
+  if product == blank 
+    continue
+  endif
+  unless product.available
+    continue
+  endunless
+  
+  if settings.pick_mode == 'no' and product.variants.size > 1
+    assign selected_variant = product.selected_variant
+  elsif settings.pick_mode == 'first' and settings.hide_sold_out == false
+    assign selected_variant = product.selected_variant | default: product.variants.first
+  else
+    assign selected_variant = product.selected_or_first_available_variant
+  endif
+
+  assign product_form_id = 'product-form-'| append: section.id | append: product.id
+
+  assign quantity_rule = selected_variant.quantity_rule
+  # theme-check-disable
+  assign cart_qty = cart | item_count_for_variant: selected_variant.id
+  # theme-check-enable
+
+  unless id
+    assign id = section.id
+  endunless
+
+  assign quantity_rule = selected_variant.quantity_rule
+
+  if selected_variant.inventory_management != null and selected_variant.inventory_quantity > 0 and selected_variant.inventory_policy != 'continue'
+    assign qty = selected_variant.inventory_quantity
+  else
+    assign qty = 9999
+  endif
+
+  assign qty_rule_max = quantity_rule.max | default: 0
+  assign max_qty = qty | at_least: qty_rule_max
+-%}
+
+<style>
+.tjs-premium-qty{
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:space-between;
+  width:124px;
+  height:44px;
+  padding:4px;
+  border-radius:999px;
+  background:#0b0b0b;
+  border:1px solid rgba(255,230,0,.7);
+  box-shadow:0 8px 22px rgba(0,0,0,.18);
+  position:relative !important;
+}
+
+.tjs-premium-qty .hdt-quantity__button{
+  position:static !important;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:#ffe600 !important;
+  color:#0b0b0b !important;
+  border:0 !important;
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  padding:0 !important;
+  cursor:pointer;
+  transition:.18s ease;
+}
+
+.tjs-premium-qty .hdt-quantity__button svg{
+  width:13px;
+  height:13px;
+}
+
+.tjs-premium-qty .hdt-quantity__button:hover{
+  transform:scale(1.07);
+  box-shadow:0 0 12px rgba(255,230,0,.45);
+}
+
+.tjs-premium-qty .hdt-quantity__button.disabled{
+  opacity:.35;
+  cursor:not-allowed;
+  transform:none;
+  box-shadow:none;
+}
+
+.tjs-premium-qty .hdt-quantity__input{
+  width:40px !important;
+  height:36px !important;
+  min-height:36px !important;
+  padding:0 !important;
+  margin:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  color:#fff !important;
+  font-size:18px !important;
+  font-weight:900 !important;
+  text-align:center !important;
+  box-shadow:none !important;
+  appearance:textfield;
+  -moz-appearance:textfield;
+}
+
+.tjs-premium-qty .hdt-quantity__input::-webkit-outer-spin-button,
+.tjs-premium-qty .hdt-quantity__input::-webkit-inner-spin-button{
+  -webkit-appearance:none;
+  margin:0;
+}
+
+.tjs-premium-rules{
+  margin-top:7px;
+  font-size:11px;
+  color:rgba(0,0,0,.45);
+}
+
+.tjs-premium-rules:empty{
+  display:none;
+}
+</style>
+
+<div class="hdt-product-info__item" data-type="{{ block.type }}" {{ block.shopify_attributes }}>
+  <div id="Quantity-Form-{{ id }}" class="hdt-product-info__item hdt-product-form__quantity">
+
+    <hdt-quantity-wrapp 
+      variant-id="{{ selected_variant.id }}" 
+      handle="{{ product.handle }}" 
+      class="hdt-quantity-wrapp hdt-product__form-qty hdt-s-text hdt-text-center hdt-relative hdt-inline-block tjs-premium-qty" 
+      section-id="{{ id }}"
+    >
+
+      <button class="hdt-quantity__button no-js-hidden disabled is--minus hdt-absolute hdt-p-0 hdt-top-0 hdt-left-0 hdt-text-start" name="minus" type="button">
+        <span class="sr-only">{{ 'products.product.quantity.decrease' | t: product: product.title }}</span>
+        {%- render 'icon' with 'minus' -%}
+      </button>
+
+      <input 
+        form="{{ product_form_id }}" 
+        class="hdt-quantity__input hdt-text-center hdt-text-lg hdt-font-semibold" 
+        type="number" 
+        name="quantity" 
+        id="Quantity-{{ id }}" 
+        data-cart-quantity="{{ cart_qty }}" 
+        min="{{ quantity_rule.min | default: 1 }}" 
+        data-max="{{ max_qty }}" 
+        max="{{ max_qty }}" 
+        step="{{ quantity_rule.increment }}" 
+        value="{{ quantity_rule.min | default: 1 }}"
+      >
+
+      <button class="hdt-quantity__button no-js-hidden is--plus hdt-absolute hdt-p-0 hdt-top-0 hdt-right-0 hdt-text-end" name="plus" type="button">
+        <span class="sr-only">{{ 'products.product.quantity.increase' | t: product: product.title }}</span>
+        {%- render 'icon' with 'plus' -%}
+      </button>
+
+    </hdt-quantity-wrapp>
+
+    <div class="hdt-quantity__rules no-js-hidden tjs-premium-rules" id="Quantity-Rules-{{ id }}">
+      {%- if quantity_rule.increment > 1 -%}
+        <span class="hdt-divider">{{- 'products.product.quantity.multiples_of' | t: quantity: quantity_rule.increment -}}</span>
+      {%- endif -%}
+      {%- if quantity_rule.min > 1 -%}
+        <span class="hdt-divider">{{- 'products.product.quantity.minimum_of' | t: quantity: quantity_rule.min -}}</span>
+      {%- endif -%}
+      {%- if quantity_rule.max != null -%}
+        <span class="hdt-divider">{{- 'products.product.quantity.maximum_of' | t: quantity: quantity_rule.max -}}</span>
+      {%- endif -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-product.blocks.quantity_selector.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:sections.main-product.blocks.quantity_selector.settings.info.content"
+    }
+  ],
+  "presets": [
+    { 
+      "name": "t:sections.main-product.blocks.quantity_selector.name"
+    }
+  ]
+}
+{% endschema %}

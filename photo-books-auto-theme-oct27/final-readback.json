@@ -1,0 +1,32 @@
+{
+  "verifiedAt": "2026-10-27T01:12:00+05:30",
+  "theme": {
+    "id": "187527266499",
+    "name": "TJS Website Rework — 24 Sep 2026",
+    "role": "UNPUBLISHED"
+  },
+  "files": [
+    {
+      "filename": "sections/june-photo-books-landing.liquid",
+      "beforeMd5": "2cc3a8ac25981c90244c673e2ddaeb50",
+      "afterMd5": "df12a1fc704c71eee6e0afa372bf4fbd",
+      "exactText": true
+    },
+    {
+      "filename": "sections/june-photo-book-product.liquid",
+      "beforeMd5": "768c71b4e86e81227b440d1d813e6473",
+      "afterMd5": "03761b189e5b4fabda42fe1a1ea54cc8",
+      "exactText": true
+    }
+  ],
+  "validation": {
+    "shopifyLiquid": "2/2 passed",
+    "targetThemeCheckFindings": 0,
+    "mobileOverflow": false,
+    "wideOverflow": false,
+    "productMobileOverflow": false,
+    "studioCtaLoaded": true,
+    "previewConsoleErrors": 0
+  },
+  "published": false
+}

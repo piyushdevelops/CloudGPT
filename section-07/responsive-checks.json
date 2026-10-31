@@ -1,0 +1,42 @@
+[
+  {
+    "overflow": false,
+    "spotSizes": [
+      44,
+      44,
+      44
+    ],
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "overflow": false,
+    "spotSizes": [
+      44,
+      44,
+      44
+    ],
+    "viewport": 750,
+    "width": 735
+  },
+  {
+    "overflow": false,
+    "spotSizes": [
+      48,
+      48,
+      48
+    ],
+    "viewport": 1051,
+    "width": 1036
+  },
+  {
+    "overflow": false,
+    "spotSizes": [
+      48,
+      48,
+      48
+    ],
+    "viewport": 2560,
+    "width": 1680
+  }
+]

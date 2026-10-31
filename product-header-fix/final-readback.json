@@ -1,0 +1,21 @@
+{
+  "theme": "187527266499",
+  "published": false,
+  "checks": [
+    {
+      "filename": "sections/my-header.liquid",
+      "exact": true,
+      "contentEquivalent": true
+    },
+    {
+      "filename": "sections/header-group.json",
+      "exact": false,
+      "contentEquivalent": true
+    },
+    {
+      "filename": "snippets/june-product-header.liquid",
+      "exact": true,
+      "contentEquivalent": true
+    }
+  ]
+}

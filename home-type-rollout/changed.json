@@ -1,0 +1,21 @@
+[
+  "config/settings_schema.json",
+  "snippets/june-home-typography.liquid",
+  "layout/theme.liquid",
+  "snippets/june-price.liquid",
+  "sections/june-make-room.liquid",
+  "sections/june-your-year.liquid",
+  "sections/june-with-extras.liquid",
+  "sections/june-next-chapter.liquid",
+  "sections/june-inside-discovery.liquid",
+  "sections/june-other-chapters.liquid",
+  "sections/june-shop-the-corner.liquid",
+  "sections/june-find-your-glow.liquid",
+  "sections/june-pick-your-pour.liquid",
+  "sections/june-layer-the-table.liquid",
+  "sections/june-a-little-curious.liquid",
+  "sections/june-footer.liquid",
+  "sections/my-header.liquid",
+  "snippets/june-photo-viewer.liquid",
+  "assets/june-home-typography.css"
+]

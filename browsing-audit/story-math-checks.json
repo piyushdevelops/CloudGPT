@@ -1,0 +1,62 @@
+[
+  {
+    "viewport": [
+      1440,
+      1000
+    ],
+    "reduced": false,
+    "pinned": true,
+    "height": 4642.2,
+    "blank": 180
+  },
+  {
+    "viewport": [
+      375,
+      667
+    ],
+    "reduced": false,
+    "pinned": true,
+    "height": 2053.95,
+    "blank": 66.7
+  },
+  {
+    "viewport": [
+      393,
+      852
+    ],
+    "reduced": false,
+    "pinned": true,
+    "height": 2680.18,
+    "blank": 85.2
+  },
+  {
+    "viewport": [
+      430,
+      932
+    ],
+    "reduced": false,
+    "pinned": true,
+    "height": 2950.98,
+    "blank": 93.2
+  },
+  {
+    "viewport": [
+      393,
+      852
+    ],
+    "reduced": true,
+    "pinned": false,
+    "height": 2680.18,
+    "blank": 85.2
+  },
+  {
+    "viewport": [
+      852,
+      393
+    ],
+    "reduced": false,
+    "pinned": false,
+    "height": 1126.47,
+    "blank": 39.3
+  }
+]

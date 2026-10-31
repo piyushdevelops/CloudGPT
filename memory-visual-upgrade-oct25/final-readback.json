@@ -1,0 +1,10 @@
+{
+  "themeId": "187527266499",
+  "published": false,
+  "files": [
+    {"path":"sections/june-memory-feature.liquid","sha256":"B644CB3F735B73D9479FD9899BD7C404214B21ED3606E2D70FE18015D8DEE395"},
+    {"path":"assets/june-our-days-family-v2.webp","sha256":"7495A402903C316E5907E36BBFF9AD2E45AA8B5F3ED4F77B5225345E2CC8679D"},
+    {"path":"assets/june-photo-book-travel-v2.webp","sha256":"6EAED8DB8423FBBD122B63C618402D281E7F2796A4F95651429131759B30A799"}
+  ],
+  "checks": ["fresh pre-push reconciliation", "exact remote readback", "Shopify Theme Check", "393x852 visual", "desktop visual"]
+}

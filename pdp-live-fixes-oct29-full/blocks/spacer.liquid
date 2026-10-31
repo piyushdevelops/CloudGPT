@@ -1,0 +1,50 @@
+<div id="block-{{ block.id }}" class="hdt-spacer-block {%- if block.settings.direction %}-hoz{% endif %}" style=" --space: {{ block.settings.space }}px; --space-md: {{ block.settings.space_md }}px; --space-lg: {{ block.settings.space_lg }}px;" {{ block.shopify_attributes }}> </div>
+
+{% schema %}
+{
+  "name": "Spacer",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "direction",
+      "label": "Horizontal space"
+    },
+    {
+      "type": "range",
+      "id": "space_lg",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Space",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "space_md",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Tablet space",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "space",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile space",
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "name": "Spacer"
+    }
+  ]
+}
+{% endschema %}

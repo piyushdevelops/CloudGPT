@@ -1,0 +1,149 @@
+{% doc %}
+Central colour roles and presets for the June theme.
+@example
+{% render 'june-master-palette' %}
+{% enddoc %}
+{% if settings.june_palette_enabled %}
+{% liquid
+  assign jp_bg = settings.june_palette_bg | default: '#FFFFFF'
+  assign jp_surface = settings.june_palette_surface | default: '#F5F5F3'
+  assign jp_ink = settings.june_palette_ink | default: '#171717'
+  assign jp_muted = settings.june_palette_muted | default: '#656565'
+  assign jp_accent = settings.june_palette_accent | default: '#F56A28'
+  assign jp_on_accent = settings.june_palette_on_accent | default: '#171717'
+  assign jp_border = settings.june_palette_border | default: '#DADADA'
+  assign jp_dark = settings.june_palette_dark | default: '#171717'
+  assign jp_on_dark = settings.june_palette_on_dark | default: '#FFFFFF'
+  case settings.june_palette_preset
+    when 'orange'
+      assign jp_bg = '#FFFFFF'
+      assign jp_surface = '#F5F5F3'
+      assign jp_ink = '#171717'
+      assign jp_muted = '#656565'
+      assign jp_accent = '#F56A28'
+      assign jp_on_accent = '#171717'
+      assign jp_border = '#DADADA'
+      assign jp_dark = '#171717'
+      assign jp_on_dark = '#FFFFFF'
+    when 'blue'
+      assign jp_bg = '#FFFFFF'
+      assign jp_surface = '#F5F5F3'
+      assign jp_ink = '#171717'
+      assign jp_muted = '#656565'
+      assign jp_accent = '#2455F5'
+      assign jp_on_accent = '#FFFFFF'
+      assign jp_border = '#DADADA'
+      assign jp_dark = '#171717'
+      assign jp_on_dark = '#FFFFFF'
+    when 'red'
+      assign jp_bg = '#FFFFFF'
+      assign jp_surface = '#F5F5F3'
+      assign jp_ink = '#171717'
+      assign jp_muted = '#656565'
+      assign jp_accent = '#D82B32'
+      assign jp_on_accent = '#FFFFFF'
+      assign jp_border = '#DADADA'
+      assign jp_dark = '#171717'
+      assign jp_on_dark = '#FFFFFF'
+    when 'apricot'
+      assign jp_bg = '#FAF7EF'
+      assign jp_surface = '#E7E1F0'
+      assign jp_ink = '#191816'
+      assign jp_muted = '#6B635D'
+      assign jp_accent = '#F5A477'
+      assign jp_on_accent = '#191816'
+      assign jp_border = '#D6CDC0'
+      assign jp_dark = '#241C18'
+      assign jp_on_dark = '#FAF7EF'
+    when 'midnight_copper'
+      assign jp_bg = '#F6F7F9'
+      assign jp_surface = '#E9E5E0'
+      assign jp_ink = '#202B40'
+      assign jp_muted = '#596273'
+      assign jp_accent = '#B56E48'
+      assign jp_on_accent = '#171717'
+      assign jp_border = '#CFD1D6'
+      assign jp_dark = '#202B40'
+      assign jp_on_dark = '#F6F7F9'
+    when 'olive_peach'
+      assign jp_bg = '#FCFAF4'
+      assign jp_surface = '#FBE3D2'
+      assign jp_ink = '#41452B'
+      assign jp_muted = '#666951'
+      assign jp_accent = '#EFB28C'
+      assign jp_on_accent = '#41452B'
+      assign jp_border = '#D9D8C9'
+      assign jp_dark = '#41452B'
+      assign jp_on_dark = '#FCFAF4'
+    when 'graphite_mint'
+      assign jp_bg = '#FFFFFF'
+      assign jp_surface = '#EAF4F0'
+      assign jp_ink = '#25292D'
+      assign jp_muted = '#62696A'
+      assign jp_accent = '#8EDFC1'
+      assign jp_on_accent = '#25292D'
+      assign jp_border = '#D3DFDA'
+      assign jp_dark = '#25292D'
+      assign jp_on_dark = '#FFFFFF'
+    when 'aubergine_chartreuse'
+      assign jp_bg = '#FCFAF7'
+      assign jp_surface = '#F0F2DA'
+      assign jp_ink = '#36253E'
+      assign jp_muted = '#6D6072'
+      assign jp_accent = '#CFD64B'
+      assign jp_on_accent = '#36253E'
+      assign jp_border = '#DCDACF'
+      assign jp_dark = '#36253E'
+      assign jp_on_dark = '#FCFAF7'
+  endcase
+%}
+{% style %}
+:root {
+ --june-bg:{{ jp_bg }};
+ --june-bg-rgb:{{ jp_bg | color_to_rgb | remove: 'rgb(' | remove: ')' | replace: ',', ' ' }};
+ --june-surface:{{ jp_surface }};
+ --june-surface-rgb:{{ jp_surface | color_to_rgb | remove: 'rgb(' | remove: ')' | replace: ',', ' ' }};
+ --june-ink:{{ jp_ink }};
+ --june-ink-rgb:{{ jp_ink | color_to_rgb | remove: 'rgb(' | remove: ')' | replace: ',', ' ' }};
+ --june-muted:{{ jp_muted }};
+ --june-muted-rgb:{{ jp_muted | color_to_rgb | remove: 'rgb(' | remove: ')' | replace: ',', ' ' }};
+ --june-accent:{{ jp_accent }};
+ --june-accent-rgb:{{ jp_accent | color_to_rgb | remove: 'rgb(' | remove: ')' | replace: ',', ' ' }};
+ --june-on-accent:{{ jp_on_accent }};
+ --june-on-accent-rgb:{{ jp_on_accent | color_to_rgb | remove: 'rgb(' | remove: ')' | replace: ',', ' ' }};
+ --june-border:{{ jp_border }};
+ --june-border-rgb:{{ jp_border | color_to_rgb | remove: 'rgb(' | remove: ')' | replace: ',', ' ' }};
+ --june-dark:{{ jp_dark }};
+ --june-dark-rgb:{{ jp_dark | color_to_rgb | remove: 'rgb(' | remove: ')' | replace: ',', ' ' }};
+ --june-on-dark:{{ jp_on_dark }};
+ --june-on-dark-rgb:{{ jp_on_dark | color_to_rgb | remove: 'rgb(' | remove: ')' | replace: ',', ' ' }};
+ --color-base-background:var(--june-bg-rgb); --color-base-text:var(--june-ink-rgb); --color-focus:var(--june-accent-rgb); --color-tooltip-background:var(--june-dark-rgb); --color-tooltip-text:var(--june-on-dark-rgb);
+}
+{% for scheme in settings.color_schemes %}
+{% assign jp_brightness = scheme.settings.background | color_brightness %}
+[color-scheme="{{ scheme.id }}"] {
+ --color-background:{% if jp_brightness < 70 %}var(--june-dark-rgb){% else %}var(--june-bg-rgb){% endif %};
+ --color-background2:{% if jp_brightness < 70 %}var(--june-dark-rgb){% else %}var(--june-surface-rgb){% endif %};
+ --color-foreground:{% if jp_brightness < 70 %}var(--june-on-dark-rgb){% else %}var(--june-ink-rgb){% endif %};
+ --color-foreground2:{% if jp_brightness < 70 %}var(--june-on-dark-rgb){% else %}var(--june-muted-rgb){% endif %};
+ --color-accent:{% if jp_brightness < 70 %}var(--june-accent-rgb){% else %}var(--june-accent-rgb){% endif %};
+ --color-button:{% if jp_brightness < 70 %}var(--june-accent-rgb){% else %}var(--june-accent-rgb){% endif %};
+ --color-button-text:{% if jp_brightness < 70 %}var(--june-on-accent-rgb){% else %}var(--june-on-accent-rgb){% endif %};
+ --color-button-border:{% if jp_brightness < 70 %}var(--june-on-dark-rgb){% else %}var(--june-ink-rgb){% endif %};
+ --color-secondary-button:{% if jp_brightness < 70 %}var(--june-dark-rgb){% else %}var(--june-bg-rgb){% endif %};
+ --color-secondary-button-text:{% if jp_brightness < 70 %}var(--june-on-dark-rgb){% else %}var(--june-ink-rgb){% endif %};
+ --color-link:{% if jp_brightness < 70 %}var(--june-on-dark-rgb){% else %}var(--june-ink-rgb){% endif %};
+ --color-line-border:{% if jp_brightness < 70 %}var(--june-border-rgb){% else %}var(--june-border-rgb){% endif %};
+ --color-overlay:{% if jp_brightness < 70 %}var(--june-dark-rgb){% else %}var(--june-dark-rgb){% endif %};
+ --color-pr-price:{% if jp_brightness < 70 %}var(--june-on-dark-rgb){% else %}var(--june-ink-rgb){% endif %};
+ --color-pr-text:{% if jp_brightness < 70 %}var(--june-on-dark-rgb){% else %}var(--june-ink-rgb){% endif %};
+ --color-input-primary:{% if jp_brightness < 70 %}var(--june-dark-rgb){% else %}var(--june-bg-rgb){% endif %};
+ --color-input-secondary:{% if jp_brightness < 70 %}var(--june-on-dark-rgb){% else %}var(--june-ink-rgb){% endif %};
+ --color-secondary:{% if jp_brightness < 70 %}var(--june-on-dark-rgb){% else %}var(--june-muted-rgb){% endif %};
+ --color-tertiary:{% if jp_brightness < 70 %}var(--june-on-dark-rgb){% else %}var(--june-muted-rgb){% endif %};
+ --gradient-background:{% if jp_brightness < 70 %}var(--june-dark){% else %}var(--june-bg){% endif %};
+ --payment-terms-background-color:rgb(var(--color-background));
+}
+{% endfor %}
+{% endstyle %}
+{% endif %}

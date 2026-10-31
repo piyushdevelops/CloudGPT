@@ -1,0 +1,441 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "june-dated-pdp",
+      "blocks": {
+        "highlight_2027": {
+          "type": "highlight",
+          "settings": {
+            "copy": "Dream, grow and map the year ahead.",
+            "heading": "Plan with intention"
+          }
+        },
+        "highlight_dividers": {
+          "type": "highlight",
+          "settings": {
+            "copy": "12 illustrated dividers, postcards and songs.",
+            "heading": "Celebrate women"
+          }
+        },
+        "highlight_everyday": {
+          "type": "highlight",
+          "settings": {
+            "copy": "Monthly tools for days that feel more like you.",
+            "heading": "Plan, reflect, reset"
+          }
+        },
+        "highlight_name": {
+          "type": "highlight",
+          "settings": {
+            "copy": "Choose a personalised name or no name.",
+            "heading": "Make it yours"
+          }
+        },
+        "type_controls": {
+          "type": "typography",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "highlight_2027",
+        "highlight_dividers",
+        "highlight_everyday",
+        "highlight_name",
+        "type_controls"
+      ],
+      "settings": {
+        "eyebrow": "The 2027 Dated Edit",
+        "intro": "A year to dream bigger, plan with intention and celebrate the people who make life richer.",
+        "option_label": "Choose your planner",
+        "name_label": "Name for your planner",
+        "name_placeholder": "Enter your name",
+        "name_hint": "Enter the name exactly as you want it.",
+        "button_label": "Add to cart",
+        "preorder_tag": "June-Preorder-2027",
+        "preorder_badge": "PRE-ORDER · 2027",
+        "preorder_heading": "Reserve yours from the first batch",
+        "preorder_message": "Order now to secure your preferred cover before dispatch begins.",
+        "preorder_dispatch": "Expected dispatch by 10 November 2026.",
+        "preorder_delivery": "Delivery follows dispatch and depends on your location.",
+        "preorder_button_label": "Pre-order now"
+      }
+    },
+    "details": {
+      "type": "june-dated-details",
+      "blocks": {
+        "feature_year": {
+          "type": "feature_group",
+          "settings": {
+            "content": "<ul><li>Bucket List</li><li>Vision Board</li><li>Goals for the Year</li><li>Misogi Challenge</li><li>My Ideal Self</li><li>Things That Give Me Life</li><li>75 Soft Challenge</li></ul>",
+            "eyebrow": "01 / Begin with you",
+            "heading": "Yearly planning & self-growth",
+            "image": "shopify://shop_images/2027-planner-month-at-a-glance.webp"
+          }
+        },
+        "feature_women": {
+          "type": "feature_group",
+          "settings": {
+            "content": "<ul><li>12 beautifully illustrated dividers, each celebrating a different quality</li><li>Detachable postcards to personalise and gift to the women in your life</li><li>Monthly Spotify song dedications</li></ul>",
+            "eyebrow": "02 / Celebrate her",
+            "heading": "12 monthly dividers celebrating women",
+            "image": "shopify://shop_images/2027-planner-monthly-calendar.webp"
+          }
+        },
+        "feature_monthly": {
+          "type": "feature_group",
+          "settings": {
+            "content": "<ul><li>Monthly Intention</li><li>Gratitude</li><li>Morning & Night Routines</li><li>Month View</li><li>Meal Planner</li><li>Habit Tracker</li><li>Weekly Spreads</li><li>Monthly Reset</li><li>Expense Tracker</li><li>Monthly Reflections</li><li>A Promise to Myself</li></ul>",
+            "eyebrow": "03 / Month by month",
+            "heading": "Monthly planning spreads",
+            "image": "shopify://shop_images/2027-planner-weekly-planning.webp"
+          }
+        },
+        "feature_year_end": {
+          "type": "feature_group",
+          "settings": {
+            "content": "<ul><li>Highlights of the Year</li><li>Travel Checklist</li><li>Letter to Your Future Self</li><li>Year-End Reflections</li></ul>",
+            "eyebrow": "04 / Look back",
+            "heading": "Year-end spreads",
+            "image": "shopify://shop_images/2027-planner-money-reflection.webp"
+          }
+        },
+        "divider_01": {
+          "settings": {
+            "quality": "",
+            "month": "January"
+          },
+          "type": "divider"
+        },
+        "divider_02": {
+          "settings": {
+            "quality": "",
+            "month": "February"
+          },
+          "type": "divider"
+        },
+        "divider_03": {
+          "settings": {
+            "quality": "",
+            "month": "March"
+          },
+          "type": "divider"
+        },
+        "divider_04": {
+          "settings": {
+            "quality": "",
+            "month": "April"
+          },
+          "type": "divider"
+        },
+        "divider_05": {
+          "settings": {
+            "quality": "",
+            "month": "May"
+          },
+          "type": "divider"
+        },
+        "divider_06": {
+          "settings": {
+            "quality": "",
+            "month": "June"
+          },
+          "type": "divider"
+        },
+        "divider_07": {
+          "settings": {
+            "quality": "",
+            "month": "July"
+          },
+          "type": "divider"
+        },
+        "divider_08": {
+          "settings": {
+            "quality": "",
+            "month": "August"
+          },
+          "type": "divider"
+        },
+        "divider_09": {
+          "settings": {
+            "quality": "",
+            "month": "September"
+          },
+          "type": "divider"
+        },
+        "divider_10": {
+          "settings": {
+            "quality": "",
+            "month": "October"
+          },
+          "type": "divider"
+        },
+        "divider_11": {
+          "settings": {
+            "quality": "",
+            "month": "November"
+          },
+          "type": "divider"
+        },
+        "divider_12": {
+          "settings": {
+            "quality": "",
+            "month": "December"
+          },
+          "type": "divider"
+        },
+        "inside_month": {
+          "type": "inside",
+          "settings": {
+            "image": "shopify://shop_images/2027-planner-month-at-a-glance.webp",
+            "title": "Start the month with intention",
+            "caption": "Set routines, intentions and a little more time for joy. March sample shown."
+          }
+        },
+        "inside_calendar": {
+          "type": "inside",
+          "settings": {
+            "image": "shopify://shop_images/2027-planner-monthly-calendar.webp",
+            "title": "See the whole month",
+            "caption": "A dated two-page calendar with dedicated notes space. March sample shown."
+          }
+        },
+        "inside_week": {
+          "type": "inside",
+          "settings": {
+            "image": "shopify://shop_images/2027-planner-weekly-planning.webp",
+            "title": "Give every day its place",
+            "caption": "Weekly space for priorities, gratitude and plans. March sample shown."
+          }
+        },
+        "inside_meals": {
+          "type": "inside",
+          "settings": {
+            "image": "shopify://shop_images/2027-planner-meal-planner.webp",
+            "title": "Plan meals without the scramble",
+            "caption": "Map breakfast, lunch, snacks and dinner across the week."
+          }
+        },
+        "inside_habits": {
+          "type": "inside",
+          "settings": {
+            "image": "shopify://shop_images/2027-planner-habit-tracker.webp",
+            "title": "Make consistency visible",
+            "caption": "Track habits and everyday wellbeing through the month."
+          }
+        },
+        "inside_reflect": {
+          "type": "inside",
+          "settings": {
+            "image": "shopify://shop_images/2027-planner-money-reflection.webp",
+            "title": "Review, reset and begin again",
+            "caption": "Track money, clear clutter and reflect before the next month."
+          }
+        },
+        "fact_year": {
+          "type": "fact",
+          "settings": {
+            "label": "Planning year",
+            "value": "2027"
+          }
+        },
+        "fact_format": {
+          "type": "fact",
+          "settings": {
+            "label": "Format",
+            "value": "Dated planner"
+          }
+        },
+        "fact_pages": {
+          "type": "fact",
+          "settings": {
+            "label": "Pages",
+            "value": "286 sides · 131 pages + 12 month dividers"
+          }
+        },
+        "fact_paper": {
+          "type": "fact",
+          "settings": {
+            "label": "Paper",
+            "value": "100 GSM pages · 200 GSM dividers"
+          }
+        },
+        "fact_size": {
+          "type": "fact",
+          "settings": {
+            "label": "Size",
+            "value": "19.5 × 23 × 3.2 cm"
+          }
+        },
+        "fact_binding": {
+          "type": "fact",
+          "settings": {
+            "label": "Binding",
+            "value": "Gold wiro binding"
+          }
+        },
+        "fact_cover": {
+          "type": "fact",
+          "settings": {
+            "label": "Cover",
+            "value": "Hardbound"
+          }
+        },
+        "fact_pocket": {
+          "type": "fact",
+          "settings": {
+            "label": "Back pocket",
+            "value": "Included"
+          }
+        },
+        "fact_stickers": {
+          "type": "fact",
+          "settings": {
+            "label": "Sticker book",
+            "value": "225 stickers · 6 pages"
+          }
+        },
+        "fact_views": {
+          "type": "fact",
+          "settings": {
+            "label": "Planning views",
+            "value": "Monthly + weekly"
+          }
+        },
+        "fact_tools": {
+          "type": "fact",
+          "settings": {
+            "label": "Guided tools",
+            "value": "Meals, habits, money + reflections"
+          }
+        },
+        "fact_name": {
+          "type": "fact",
+          "settings": {
+            "label": "Personalisation",
+            "value": "Add Name / Without Name"
+          }
+        },
+        "fact_origin": {
+          "type": "fact",
+          "settings": {
+            "label": "Country of origin",
+            "value": "India"
+          }
+        },
+        "faq_dated": {
+          "type": "faq",
+          "settings": {
+            "question": "Is this planner dated?",
+            "answer": "<p>Yes. This is the 2027 dated edition, designed around monthly and weekly planning.</p>"
+          }
+        },
+        "faq_name": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I add my name?",
+            "answer": "<p>Yes. Choose <strong>Add Name</strong> above and enter the name exactly as you want it to appear. Select <strong>Without Name</strong> if you prefer the cover without personalisation.</p>"
+          }
+        },
+        "faq_inside": {
+          "type": "faq",
+          "settings": {
+            "question": "What is included inside?",
+            "answer": "<p>It brings together yearly self-growth prompts, 12 monthly dividers celebrating women, monthly planning and reflection tools, and dedicated year-end spreads.</p>"
+          }
+        },
+        "faq_images": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the inside-page images from this planner?",
+            "answer": "<p>Yes. The previews on this page were exported from the supplied 2027 planner interior artwork. March is shown as the representative month.</p>"
+          }
+        },
+        "type_controls": {
+          "type": "typography",
+          "settings": {}
+        },
+        "faq_dividers": {
+          "type": "faq",
+          "settings": {
+            "answer": "<p>Each of the 12 illustrated dividers celebrates a different quality and includes a detachable postcard to personalise and gift. Every month also includes a Spotify song dedication.</p>",
+            "question": "What makes the monthly dividers special?"
+          }
+        }
+      },
+      "block_order": [
+        "feature_year",
+        "feature_women",
+        "feature_monthly",
+        "feature_year_end",
+        "divider_01",
+        "divider_02",
+        "divider_03",
+        "divider_04",
+        "divider_05",
+        "divider_06",
+        "divider_07",
+        "divider_08",
+        "divider_09",
+        "divider_10",
+        "divider_11",
+        "divider_12",
+        "inside_calendar",
+        "inside_month",
+        "inside_week",
+        "inside_meals",
+        "inside_habits",
+        "inside_reflect",
+        "fact_year",
+        "fact_format",
+        "fact_pages",
+        "fact_paper",
+        "fact_size",
+        "fact_binding",
+        "fact_cover",
+        "fact_pocket",
+        "fact_stickers",
+        "fact_views",
+        "fact_tools",
+        "fact_name",
+        "fact_origin",
+        "faq_dated",
+        "faq_name",
+        "faq_inside",
+        "faq_images",
+        "faq_dividers",
+        "type_controls"
+      ],
+      "settings": {
+        "heading": "The little luxuries of planning well.",
+        "inside_heading": "Inside your 2027",
+        "included_heading": "Everything that comes with it",
+        "facts_heading": "What we can confirm",
+        "faq_heading": "Before you choose",
+        "last_heading": "Ready to make 2027 yours?",
+        "last_link": "Choose your planner",
+        "buy_section_id": "main",
+        "features_heading": "Four chapters for a fuller year",
+        "show_divider_story": true,
+        "divider_heading": "A year of women, in full colour.",
+        "divider_copy": "Each month celebrates a different quality through an illustrated divider, a detachable postcard and a song dedication.",
+        "postcard_copy": "Detachable postcards to personalise and gift",
+        "song_copy": "A Spotify song dedication every month",
+        "quote": "A luxurious life is shaped by the moments you savour and the people you are lucky enough to have."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "details"
+  ]
+}
+

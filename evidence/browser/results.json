@@ -1,0 +1,362 @@
+[
+  {
+    "label": "live-home",
+    "mode": "desktop",
+    "status": 200,
+    "theme": {
+      "name": "TJS August 2026 (Primary Theme)",
+      "id": 142259323075,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "main",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "url": "https://thejuneshop.com/",
+    "title": "The June Shop - Lifestyle, Home Decor, Artifacts, Gifting and More",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "headings": [
+      "The June Shop - Lifestyle, Home Decor, Artifacts, Gifting and More",
+      "Curated Pieces for\nEveryday Life",
+      "Shop by Category",
+      "Planners & Journals",
+      "Fast Moving",
+      "Grab Your Lunch!",
+      "Home, lifestyle & gifting finds online"
+    ],
+    "errors": []
+  },
+  {
+    "label": "live-collection",
+    "mode": "desktop",
+    "status": 200,
+    "theme": {
+      "name": "TJS August 2026 (Primary Theme)",
+      "id": 142259323075,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "main",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "url": "https://thejuneshop.com/collections/new-arrivals?filter.v.availability=1",
+    "title": "New & Bestsellers | The June Shop",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "headings": [
+      "New & Bestsellers",
+      "Gold Rimmed Rose Heart Champagne Flute Stemware",
+      "Flat Oversized Midnight Hue Sunglasses",
+      "Voyage XL Heat Insulated Travel Coffee Mug",
+      "Dolce Far Niente — Limited Edition Undated Planner",
+      "Soul On Fleek — Limited Edition Undated Planner",
+      "ZenStone Ultra-Absorbent Bath Mat - Marble Grey | Secure Grip | Eco-Friendly",
+      "Knotted Elegance Ceramic Tissue Holder",
+      "Golden Cascade Drinkware (Set of 2)",
+      "Play It Cool Glass Can With Straw & Lid",
+      "StayFresh Thermal Lunch Carrier",
+      "Luxe Charms Jewellery Organiser",
+      "Oversized Flat & Square Ice Blue Sunglasses",
+      "Geometrical Ceramic Tea Cup",
+      "Gold Rimmed Clear Champagne Flute Stemware, Hammered Style",
+      "Remember Why You Started — Limited Edition Undated Planner",
+      "ThermaPod Insulated Lunch Box",
+      "Chic and Artsy Treasures Jewellery Organiser",
+      "Love - Neon Led Light",
+      "Everlasting Elegance Floral Sticks (Set of 2)",
+      "Tropical Radiance Glassware (Set of 2)",
+      "Leaf Imprint Modish Glass Vase",
+      "Pastel Crumple Texture Tea Cup & Saucer Set",
+      "Soft Hue Crumple Texture Coffee Mug",
+      "Saoirse Rustic Gold Photo Frame",
+      "Filters",
+      "Home, lifestyle & gifting finds online"
+    ],
+    "errors": []
+  },
+  {
+    "label": "live-product",
+    "mode": "desktop",
+    "status": 200,
+    "theme": {
+      "name": "TJS August 2026 (Primary Theme)",
+      "id": 142259323075,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "main",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "url": "https://thejuneshop.com/products/serene-teal-golden-edge-starter-plate",
+    "title": "Serene Teal Golden Edge Starter Plate — 7-Inch | The June Shop",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "headings": [
+      "Serene Teal Golden Edge Starter Plate — 7-Inch",
+      "Home, lifestyle & gifting finds online"
+    ],
+    "errors": []
+  },
+  {
+    "label": "live-cart",
+    "mode": "desktop",
+    "status": 200,
+    "theme": {
+      "name": "TJS August 2026 (Primary Theme)",
+      "id": 142259323075,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "main",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "url": "https://thejuneshop.com/cart",
+    "title": "Your Shopping Cart – The June Shop",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "headings": [
+      "Shopping Cart",
+      "Home, lifestyle & gifting finds online"
+    ],
+    "errors": []
+  },
+  {
+    "label": "sandbox-home",
+    "mode": "desktop",
+    "status": 200,
+    "theme": {
+      "name": "Krish Sandbox TJS August 2026 (Primary Theme)",
+      "id": 187467956419,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "unpublished",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "url": "https://thejuneshop.com/",
+    "title": "The June Shop - Lifestyle, Home Decor, Artifacts, Gifting and More",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "headings": [
+      "The June Shop - Lifestyle, Home Decor, Artifacts, Gifting and More",
+      "A toast, shaped differently.",
+      "Plan the year your way",
+      "From our Instagram",
+      "New Arrivals",
+      "Best Sellers",
+      "Gifting",
+      "New Arrivals",
+      "Best Sellers",
+      "Gifting",
+      "New Arrivals",
+      "Best Sellers",
+      "Gifting",
+      "New Arrivals",
+      "Best Sellers",
+      "Gifting",
+      "WHAT THEY'RE SAYING ABOUT US"
+    ],
+    "errors": []
+  },
+  {
+    "label": "live-home",
+    "mode": "mobile",
+    "status": 200,
+    "theme": {
+      "name": "TJS August 2026 (Primary Theme)",
+      "id": 142259323075,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "main",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "url": "https://thejuneshop.com/",
+    "title": "The June Shop - Lifestyle, Home Decor, Artifacts, Gifting and More",
+    "width": 390,
+    "scrollWidth": 390,
+    "headings": [
+      "The June Shop - Lifestyle, Home Decor, Artifacts, Gifting and More",
+      "Curated Pieces for\nEveryday Life",
+      "Shop by Category",
+      "Planners & Journals",
+      "Fast Moving",
+      "Grab Your Lunch!",
+      "Home, lifestyle & gifting finds online"
+    ],
+    "errors": []
+  },
+  {
+    "label": "live-collection",
+    "mode": "mobile",
+    "status": 200,
+    "theme": {
+      "name": "TJS August 2026 (Primary Theme)",
+      "id": 142259323075,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "main",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "url": "https://thejuneshop.com/collections/new-arrivals?filter.v.availability=1",
+    "title": "New & Bestsellers | The June Shop",
+    "width": 390,
+    "scrollWidth": 390,
+    "headings": [
+      "New & Bestsellers",
+      "Gold Rimmed Rose Heart Champagne Flute Stemware",
+      "Flat Oversized Midnight Hue Sunglasses",
+      "Voyage XL Heat Insulated Travel Coffee Mug",
+      "Dolce Far Niente — Limited Edition Undated Planner",
+      "Soul On Fleek — Limited Edition Undated Planner",
+      "ZenStone Ultra-Absorbent Bath Mat - Marble Grey | Secure Grip | Eco-Friendly",
+      "Knotted Elegance Ceramic Tissue Holder",
+      "Golden Cascade Drinkware (Set of 2)",
+      "Play It Cool Glass Can With Straw & Lid",
+      "StayFresh Thermal Lunch Carrier",
+      "Luxe Charms Jewellery Organiser",
+      "Oversized Flat & Square Ice Blue Sunglasses",
+      "Geometrical Ceramic Tea Cup",
+      "Gold Rimmed Clear Champagne Flute Stemware, Hammered Style",
+      "Remember Why You Started — Limited Edition Undated Planner",
+      "ThermaPod Insulated Lunch Box",
+      "Chic and Artsy Treasures Jewellery Organiser",
+      "Love - Neon Led Light",
+      "Everlasting Elegance Floral Sticks (Set of 2)",
+      "Tropical Radiance Glassware (Set of 2)",
+      "Leaf Imprint Modish Glass Vase",
+      "Pastel Crumple Texture Tea Cup & Saucer Set",
+      "Soft Hue Crumple Texture Coffee Mug",
+      "Saoirse Rustic Gold Photo Frame",
+      "Filters",
+      "Home, lifestyle & gifting finds online"
+    ],
+    "errors": []
+  },
+  {
+    "label": "live-product",
+    "mode": "mobile",
+    "status": 200,
+    "theme": {
+      "name": "TJS August 2026 (Primary Theme)",
+      "id": 142259323075,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "main",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "url": "https://thejuneshop.com/products/serene-teal-golden-edge-starter-plate",
+    "title": "Serene Teal Golden Edge Starter Plate — 7-Inch | The June Shop",
+    "width": 390,
+    "scrollWidth": 390,
+    "headings": [
+      "Serene Teal Golden Edge Starter Plate — 7-Inch",
+      "Home, lifestyle & gifting finds online"
+    ],
+    "errors": []
+  },
+  {
+    "label": "live-cart",
+    "mode": "mobile",
+    "status": 200,
+    "theme": {
+      "name": "TJS August 2026 (Primary Theme)",
+      "id": 142259323075,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "main",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "url": "https://thejuneshop.com/cart",
+    "title": "Your Shopping Cart – The June Shop",
+    "width": 390,
+    "scrollWidth": 390,
+    "headings": [
+      "Shopping Cart",
+      "Home, lifestyle & gifting finds online"
+    ],
+    "errors": []
+  },
+  {
+    "label": "sandbox-home",
+    "mode": "mobile",
+    "status": 200,
+    "theme": {
+      "name": "Krish Sandbox TJS August 2026 (Primary Theme)",
+      "id": 187467956419,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "unpublished",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "url": "https://thejuneshop.com/",
+    "title": "The June Shop - Lifestyle, Home Decor, Artifacts, Gifting and More",
+    "width": 390,
+    "scrollWidth": 390,
+    "headings": [
+      "The June Shop - Lifestyle, Home Decor, Artifacts, Gifting and More",
+      "A toast, shaped differently.",
+      "Plan the year your way",
+      "From our Instagram",
+      "New Arrivals",
+      "Best Sellers",
+      "Gifting",
+      "New Arrivals",
+      "Best Sellers",
+      "Gifting",
+      "New Arrivals",
+      "Best Sellers",
+      "Gifting",
+      "New Arrivals",
+      "Best Sellers",
+      "Gifting",
+      "WHAT THEY'RE SAYING ABOUT US"
+    ],
+    "errors": []
+  }
+]

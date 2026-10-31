@@ -1,0 +1,213 @@
+{
+  "type": "footer",
+  "name": "t:sections.name_group.footer",
+  "sections": {
+    "custom_liquid_3twLkB": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "section_fullwidth": true,
+        "custom_liquid": "<style>\n  .tjs-seo-footer {\n    margin: 34px 0 0;\n    padding: 34px 18px 30px;\n    font-family: inherit;\n    background: #ffffff;\n    border-top: 1px solid rgba(0, 0, 0, 0.08);\n    border-bottom: 1px solid rgba(0, 0, 0, 0.08);\n  }\n\n  .tjs-seo-footer * {\n    box-sizing: border-box;\n  }\n\n  .tjs-seo-footer__inner {\n    max-width: 1180px;\n    margin: 0 auto;\n  }\n\n  .tjs-seo-footer__top {\n    display: grid;\n    grid-template-columns: 1.25fr 1.75fr;\n    gap: 42px;\n    align-items: start;\n  }\n\n  .tjs-seo-footer__brand {\n    max-width: 430px;\n  }\n\n  .tjs-seo-footer__kicker {\n    margin-bottom: 10px;\n    color: #777;\n    font-size: 10px;\n    line-height: 1;\n    letter-spacing: 1.4px;\n    text-transform: uppercase;\n    font-weight: 800;\n  }\n\n  .tjs-seo-footer__title {\n    margin: 0;\n    color: #111;\n    font-size: clamp(24px, 2.6vw, 34px);\n    line-height: 1.08;\n    letter-spacing: -0.7px;\n    font-weight: 700;\n  }\n\n  .tjs-seo-footer__text {\n    margin-top: 14px;\n    color: #666;\n    font-size: 13px;\n    line-height: 1.72;\n    font-weight: 400;\n  }\n\n  .tjs-seo-footer__trust {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 10px 14px;\n    margin-top: 18px;\n  }\n\n  .tjs-seo-footer__trust span {\n    color: #333;\n    font-size: 12px;\n    line-height: 1;\n    font-weight: 600;\n  }\n\n  .tjs-seo-footer__links {\n    display: grid;\n    grid-template-columns: repeat(3, minmax(0, 1fr));\n    gap: 34px;\n  }\n\n  .tjs-seo-footer__group-title {\n    margin: 0 0 14px;\n    color: #111;\n    font-size: 11px;\n    line-height: 1;\n    letter-spacing: 1.1px;\n    text-transform: uppercase;\n    font-weight: 800;\n  }\n\n  .tjs-seo-footer__list {\n    display: grid;\n    gap: 9px;\n  }\n\n  .tjs-seo-footer__link {\n    color: #666;\n    text-decoration: none;\n    font-size: 13px;\n    line-height: 1.35;\n    font-weight: 400;\n    transition: color 0.18s ease, transform 0.18s ease;\n  }\n\n  .tjs-seo-footer__link:hover {\n    color: #111;\n    transform: translateX(2px);\n  }\n\n  .tjs-seo-footer__pills {\n    margin-top: 30px;\n    padding-top: 22px;\n    border-top: 1px solid rgba(0, 0, 0, 0.08);\n    display: flex;\n    flex-wrap: wrap;\n    gap: 10px 18px;\n  }\n\n  .tjs-seo-footer__pill {\n    color: #444;\n    text-decoration: none;\n    font-size: 12px;\n    line-height: 1;\n    font-weight: 500;\n  }\n\n  .tjs-seo-footer__pill:hover {\n    color: #111;\n    text-decoration: underline;\n    text-underline-offset: 3px;\n  }\n\n  .tjs-seo-footer__mobile-button {\n    display: none;\n  }\n\n  @media screen and (max-width: 989px) {\n    .tjs-seo-footer__top {\n      grid-template-columns: 1fr;\n      gap: 28px;\n    }\n\n    .tjs-seo-footer__brand {\n      max-width: 100%;\n    }\n\n    .tjs-seo-footer__links {\n      gap: 24px;\n    }\n  }\n\n  @media screen and (max-width: 749px) {\n    .tjs-seo-footer {\n      margin-top: 28px;\n      padding: 28px 16px 24px;\n    }\n\n    .tjs-seo-footer__top {\n      gap: 24px;\n    }\n\n    .tjs-seo-footer__title {\n      font-size: 25px;\n      line-height: 1.12;\n    }\n\n    .tjs-seo-footer__text {\n      font-size: 12.5px;\n      line-height: 1.68;\n    }\n\n    .tjs-seo-footer__trust {\n      gap: 9px 12px;\n    }\n\n    .tjs-seo-footer__trust span {\n      font-size: 11.5px;\n    }\n\n    .tjs-seo-footer__links {\n      grid-template-columns: 1fr;\n      gap: 0;\n      border-top: 1px solid rgba(0, 0, 0, 0.08);\n    }\n\n    .tjs-seo-footer__group {\n      border-bottom: 1px solid rgba(0, 0, 0, 0.08);\n    }\n\n    .tjs-seo-footer__mobile-button {\n      width: 100%;\n      min-height: 48px;\n      padding: 0;\n      border: 0;\n      background: transparent;\n      color: #111;\n      font-family: inherit;\n      font-size: 11px;\n      line-height: 1;\n      letter-spacing: 1.1px;\n      text-transform: uppercase;\n      font-weight: 800;\n      text-align: left;\n      display: flex;\n      align-items: center;\n      justify-content: space-between;\n      cursor: pointer;\n    }\n\n    .tjs-seo-footer__mobile-button::after {\n      content: \"+\";\n      color: #111;\n      font-size: 18px;\n      line-height: 1;\n      font-weight: 400;\n    }\n\n    .tjs-seo-footer__group.is-open .tjs-seo-footer__mobile-button::after {\n      content: \"\u00e2\u02c6\u2019\";\n    }\n\n    .tjs-seo-footer__group-title {\n      display: none;\n    }\n\n    .tjs-seo-footer__list {\n      display: none;\n      padding: 0 0 16px;\n      gap: 10px;\n    }\n\n    .tjs-seo-footer__group.is-open .tjs-seo-footer__list {\n      display: grid;\n    }\n\n    .tjs-seo-footer__link {\n      font-size: 12.5px;\n    }\n\n    .tjs-seo-footer__pills {\n      margin-top: 22px;\n      padding-top: 18px;\n      gap: 10px 14px;\n    }\n\n    .tjs-seo-footer__pill {\n      font-size: 11.5px;\n    }\n  }\n</style>\n\n<section class=\"tjs-seo-footer\" data-tjs-seo-footer>\n  <div class=\"tjs-seo-footer__inner\">\n    <div class=\"tjs-seo-footer__top\">\n      <div class=\"tjs-seo-footer__brand\">\n        <div class=\"tjs-seo-footer__kicker\">The June Shop</div>\n\n        <h2 class=\"tjs-seo-footer__title\">\n          Home, lifestyle & gifting finds online\n        </h2>\n\n        <div class=\"tjs-seo-footer__text\">\n          Discover curated home decor, glassware, planners, lunch boxes, dinnerware, organisers, eyewear and gifting essentials at The June Shop. From everyday utility to statement pieces, find products designed to make your home, table, routine and celebrations feel more put together.\n        </div>\n\n        <div class=\"tjs-seo-footer__trust\">\n          <span>Fast Shipping</span>\n          <span>Secure Checkout</span>\n          <span>Curated Finds</span>\n          <span>WhatsApp Support</span>\n        </div>\n      </div>\n\n      <div class=\"tjs-seo-footer__links\">\n        <div class=\"tjs-seo-footer__group is-open\">\n          <button class=\"tjs-seo-footer__mobile-button\" type=\"button\">\n            Popular Collections\n          </button>\n          <h3 class=\"tjs-seo-footer__group-title\">Popular Collections</h3>\n\n          <div class=\"tjs-seo-footer__list\">\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/champagne-glasses\">Champagne Glasses</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/glassware\">Glassware</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/eyewear\">Sunglasses & Eyewear</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/undated-yearly-planners\">Undated Planners</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/lunch-boxes\">Lunch Boxes</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/insulated-lunch-bags\">Insulated Lunch Bags</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/sippers\">Sippers</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/dinner-sets\">Dinner Sets</a>\n          </div>\n        </div>\n\n        <div class=\"tjs-seo-footer__group\">\n          <button class=\"tjs-seo-footer__mobile-button\" type=\"button\">\n            Shop By Need\n          </button>\n          <h3 class=\"tjs-seo-footer__group-title\">Shop By Need</h3>\n\n          <div class=\"tjs-seo-footer__list\">\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/glassware\">Hosting & Dining</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/planners\">Planning & Journaling</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/lunch-boxes\">Everyday Lunch Essentials</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/organisers\">Home Organisation</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/home-decor\">Home Styling</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/gifts\">Thoughtful Gifts</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/baby-record-books\">Baby Keepsakes</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/wedding-planners\">Wedding Planning</a>\n          </div>\n        </div>\n\n        <div class=\"tjs-seo-footer__group\">\n          <button class=\"tjs-seo-footer__mobile-button\" type=\"button\">\n            Customer Care\n          </button>\n          <h3 class=\"tjs-seo-footer__group-title\">Customer Care</h3>\n\n          <div class=\"tjs-seo-footer__list\">\n            <a class=\"tjs-seo-footer__link\" href=\"/pages/contact-us\">Contact Us</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/pages/track-order\">Track Order</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/policies/shipping-policy\">Shipping Policy</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/policies/refund-policy\">Return & Refund Policy</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/policies/privacy-policy\">Privacy Policy</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/policies/terms-of-service\">Terms of Service</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/pages/about-us\">About The June Shop</a>\n            <a class=\"tjs-seo-footer__link\" href=\"/collections/all\">Shop All Products</a>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"tjs-seo-footer__pills\">\n      <a class=\"tjs-seo-footer__pill\" href=\"/collections/champagne-glasses\">Host Beautifully</a>\n      <a class=\"tjs-seo-footer__pill\" href=\"/collections/undated-yearly-planners\">Plan Better</a>\n      <a class=\"tjs-seo-footer__pill\" href=\"/collections/lunch-boxes\">Pack Smarter</a>\n      <a class=\"tjs-seo-footer__pill\" href=\"/collections/eyewear\">Step Out Styled</a>\n      <a class=\"tjs-seo-footer__pill\" href=\"/collections/home-decor\">Style Your Home</a>\n      <a class=\"tjs-seo-footer__pill\" href=\"/collections/gifts\">Find A Gift</a>\n    </div>\n  </div>\n</section>\n\n<script>\n  document.addEventListener(\"DOMContentLoaded\", function () {\n    document.querySelectorAll(\"[data-tjs-seo-footer]\").forEach(function (section) {\n      const groups = section.querySelectorAll(\".tjs-seo-footer__group\");\n\n      groups.forEach(function (group) {\n        const button = group.querySelector(\".tjs-seo-footer__mobile-button\");\n\n        if (!button) return;\n\n        button.addEventListener(\"click\", function () {\n          group.classList.toggle(\"is-open\");\n        });\n      });\n    });\n  });\n</script>",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_rate": 27
+      },
+      "disabled": true
+    },
+    "8b1cf2b6-9e6b-4ace-85e5-e52ad96e7b43": {
+      "type": "footer",
+      "blocks": {
+        "sections--20958099472688__8b1cf2b6-9e6b-4ace-85e5-e52ad96e7b43-social-1": {
+          "type": "social",
+          "settings": {
+            "border-column": false,
+            "heading_sm": "",
+            "link_img": "",
+            "image_w": 136,
+            "html_content": "<p>Email Us: <strong>help@thejuneshop.com</strong></p><p>Whatsapp Us: <strong>+91</strong> <strong>70030 79822<br/></strong>Call Us: <strong>+91 70030 79822</strong></p>",
+            "adding_border": false,
+            "btn_label": "",
+            "btn_link": "shopify://pages/contact",
+            "btn_fw": "semibold",
+            "enable_social": true,
+            "socials_style": "outline",
+            "socials_size": "medium",
+            "padding_inner": "",
+            "custom_w_dk": "25"
+          }
+        },
+        "sections--20958099472688__8b1cf2b6-9e6b-4ace-85e5-e52ad96e7b43-menu-1": {
+          "type": "menu",
+          "settings": {
+            "border-column": false,
+            "heading_menu": "Decor & Furnishing",
+            "menu": "decor-furnishing",
+            "padding_inner": "",
+            "custom_w_dk": "25"
+          }
+        },
+        "sections--20958099472688__8b1cf2b6-9e6b-4ace-85e5-e52ad96e7b43-menu-2": {
+          "type": "menu",
+          "settings": {
+            "border-column": false,
+            "heading_menu": "Top Categories",
+            "menu": "new-navigation",
+            "padding_inner": "",
+            "custom_w_dk": "25"
+          }
+        },
+        "menu_WhbPCU": {
+          "type": "menu",
+          "settings": {
+            "border-column": false,
+            "heading_menu": "Quick Links",
+            "menu": "contact-us",
+            "padding_inner": "",
+            "custom_w_dk": "25"
+          }
+        },
+        "menu_RWVFYH": {
+          "type": "menu",
+          "settings": {
+            "border-column": false,
+            "heading_menu": "Help",
+            "menu": "footer",
+            "padding_inner": "30px",
+            "custom_w_dk": "25"
+          }
+        },
+        "sections--20958099472688__8b1cf2b6-9e6b-4ace-85e5-e52ad96e7b43-newsletter-1": {
+          "type": "newsletter",
+          "settings": {
+            "border-column": false,
+            "heading_newsletter": "Sign Up for Email",
+            "text_newsletter": "<p>Sign up to get first dibs on new arrivals, sales, exclusive content, events and more!</p>",
+            "button_lb": "Subscribe",
+            "show_icon": true,
+            "btn_fw": "semibold",
+            "agree_form": false,
+            "content": "I agree with the terms and conditions",
+            "padding_inner": "30px",
+            "custom_w_dk": "25"
+          }
+        }
+      },
+      "block_order": [
+        "sections--20958099472688__8b1cf2b6-9e6b-4ace-85e5-e52ad96e7b43-social-1",
+        "sections--20958099472688__8b1cf2b6-9e6b-4ace-85e5-e52ad96e7b43-menu-1",
+        "sections--20958099472688__8b1cf2b6-9e6b-4ace-85e5-e52ad96e7b43-menu-2",
+        "menu_WhbPCU",
+        "menu_RWVFYH",
+        "sections--20958099472688__8b1cf2b6-9e6b-4ace-85e5-e52ad96e7b43-newsletter-1"
+      ],
+      "settings": {
+        "collapse": true,
+        "border-f": "top-bottom",
+        "border-ps_main": "container",
+        "heading_fs": "hdt-text-xl",
+        "text_weight": "hdt-font-medium",
+        "spacing_bt_heading": 30,
+        "text_size": "hdt-text-base",
+        "padding-t-main": 40,
+        "padding-bt-main": 40,
+        "text_copR": "\u00c2\u00a9 [year] <span class=\"\">June Retail Private Limited</span>. All rights reserved.",
+        "svg": "visa,master,upi,netbanking,paytm,paypal",
+        "height": 30,
+        "width-image_list": 200,
+        "enable_follow_on_shop": false,
+        "show_currency": true,
+        "show_language": true,
+        "show_policy": false,
+        "section_fullwidth": false,
+        "color_scheme": "scheme-67a7ca9f-3333-4245-b79f-2e9849d7e615",
+        "spacing_top": 0,
+        "padding_top": 0,
+        "padding_bottom": 23,
+        "padding_rate": 100
+      },
+      "disabled": true
+    },
+    "june_footer": {
+      "type": "june-footer",
+      "blocks": {
+        "links0": {
+          "type": "links",
+          "settings": {
+            "heading": "Explore",
+            "label_1": "Planners",
+            "url_1": "/collections/undated-yearly-planners",
+            "label_2": "Wedding & memory planners",
+            "url_2": "/collections/wedding-planners",
+            "label_3": "Home d\u00e9cor",
+            "url_3": "/collections/home-all",
+            "label_4": "Lighting",
+            "url_4": "/collections/lamps-lighting",
+            "label_5": "Kitchen & dining",
+            "url_5": "/collections/dining",
+            "label_6": "Mystery Box",
+            "url_6": "/products/mystery-box-limited-drop"
+          }
+        },
+        "links1": {
+          "type": "links",
+          "settings": {
+            "heading": "Here to help",
+            "label_1": "Contact us",
+            "url_1": "/pages/contact-us",
+            "label_2": "FAQs",
+            "url_2": "/pages/faqs",
+            "label_3": "Shipping",
+            "url_3": "/pages/shipping-delivery",
+            "label_4": "Returns",
+            "url_4": "/pages/return-and-refund-policy",
+            "label_5": "Track order",
+            "url_5": "https://thejuneshop.shiprocket.co/",
+            "label_6": "Email us",
+            "url_6": "mailto:help@thejuneshop.com"
+          }
+        },
+        "links2": {
+          "type": "links",
+          "settings": {
+            "heading": "About The June Shop",
+            "label_1": "Our story",
+            "url_1": "/pages/our-story",
+            "label_2": "Follow on Instagram",
+            "url_2": "https://instagram.com/thejuneshopindia/",
+            "label_3": "WhatsApp us",
+            "url_3": "https://wa.me/917003079822"
+          }
+        },
+        "typography": {
+          "type": "typography",
+          "settings": {}
+        },
+        "brand_type": {
+          "type": "brand_type",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "links0",
+        "links1",
+        "links2",
+        "typography",
+        "brand_type"
+      ],
+      "settings": {
+        "instagram": "https://instagram.com/thejuneshopindia/",
+        "accent": "#FFB790",
+        "signup_heading": "New finds & June Shop news",
+        "signup_note": "Join our email list for new arrivals and June Shop updates. Unsubscribe anytime.",
+        "country_label": "Deliver to",
+        "update": "Apply"
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_3twLkB",
+    "8b1cf2b6-9e6b-4ace-85e5-e52ad96e7b43",
+    "june_footer"
+  ]
+}

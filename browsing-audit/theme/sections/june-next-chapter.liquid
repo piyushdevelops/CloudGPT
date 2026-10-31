@@ -1,0 +1,607 @@
+{% if section.settings.use_master_palette == false %}
+{% style %}#shopify-section-{{ section.id }}{--june-bg:initial;--june-surface:initial;--june-ink:initial;--june-muted:initial;--june-accent:initial;--june-on-accent:initial;--june-border:initial;--june-dark:initial;--june-on-dark:initial;}{% endstyle %}
+{% endif %}
+{% liquid
+ assign typography = section.blocks | where: 'type', 'typography' | first
+ assign type = typography.settings
+ assign form_id = 'JuneNextForm-' | append: section.id
+%}
+{% style %}
+#JuneNext-{{ section.id }}{--jn-bg:var(--june-bg,{{ section.settings.background }});--jn-ink:var(--june-ink,{{ section.settings.ink }});--jn-accent:var(--june-accent,{{ section.settings.accent }});--jn-pad:{{ section.settings.padding }}px;--jn-mobile-pad:{{ section.settings.mobile_padding }}px;--jn-duration:{{ 24000 | divided_by: section.settings.speed }}ms;}
+{% assign face = type.heading_font | default: section.settings.fallback_font %}{% assign weight = type.heading_weight | default: 900 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneNext-{{ section.id }}{--jn-heading-font:{{ face.family }},{{ face.fallback_families }};--jn-heading-weight:{{ type.heading_weight | default: 900 }};--jn-heading-size:{{ type.heading_size | default: 52 }}px;--jn-heading-mobile:{{ type.heading_mobile | default: 34 }}px;--jn-heading-tracking:{{ type.heading_tracking | default: -2 | divided_by: 100.0 }}em;--jn-heading-leading:{{ type.heading_leading | default: 105 | divided_by: 100.0 }};}
+{% assign face = type.year_font | default: section.settings.fallback_font %}{% assign weight = type.year_weight | default: 900 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneNext-{{ section.id }}{--jn-year-font:{{ face.family }},{{ face.fallback_families }};--jn-year-weight:{{ type.year_weight | default: 900 }};--jn-year-size:{{ type.year_size | default: 150 }}px;--jn-year-mobile:{{ type.year_mobile | default: 60 }}px;--jn-year-tracking:{{ type.year_tracking | default: -5 | divided_by: 100.0 }}em;--jn-year-leading:{{ type.year_leading | default: 100 | divided_by: 100.0 }};}
+{% assign face = type.signup_font | default: section.settings.fallback_font %}{% assign weight = type.signup_weight | default: 900 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneNext-{{ section.id }}{--jn-signup-font:{{ face.family }},{{ face.fallback_families }};--jn-signup-weight:{{ type.signup_weight | default: 900 }};--jn-signup-size:{{ type.signup_size | default: 38 }}px;--jn-signup-mobile:{{ type.signup_mobile | default: 32 }}px;--jn-signup-tracking:{{ type.signup_tracking | default: -2 | divided_by: 100.0 }}em;--jn-signup-leading:{{ type.signup_leading | default: 105 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign weight = type.body_weight | default: 400 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneNext-{{ section.id }}{--jn-body-font:{{ face.family }},{{ face.fallback_families }};--jn-body-weight:{{ type.body_weight | default: 400 }};--jn-body-size:{{ type.body_size | default: 16 }}px;--jn-body-mobile:{{ type.body_mobile | default: 16 }}px;--jn-body-tracking:{{ type.body_tracking | default: -1 | divided_by: 100.0 }}em;--jn-body-leading:{{ type.body_leading | default: 150 | divided_by: 100.0 }};}
+{% assign face = type.button_font | default: section.settings.fallback_font %}{% assign weight = type.button_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneNext-{{ section.id }}{--jn-button-font:{{ face.family }},{{ face.fallback_families }};--jn-button-weight:{{ type.button_weight | default: 600 }};--jn-button-size:{{ type.button_size | default: 14 }}px;--jn-button-mobile:{{ type.button_mobile | default: 14 }}px;--jn-button-tracking:{{ type.button_tracking | default: -1 | divided_by: 100.0 }}em;--jn-button-leading:{{ type.button_leading | default: 130 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign bold = face | font_modify: 'weight', '700' %}{{ bold | font_face: font_display: 'swap' }}
+{% endstyle %}
+<section id="JuneNext-{{ section.id }}" class="jn" data-motion="{{ section.settings.motion }}" aria-labelledby="JuneNextHeading-{{ section.id }}">
+ <div class="jn__teaser">
+  <header class="jn__copy">
+   <p class="jn__eyebrow jn__button-type">{{ section.settings.eyebrow | escape }}</p>
+   <h2 id="JuneNextHeading-{{ section.id }}" class="jn__heading">{{ section.settings.heading | escape }}<br>{{ section.settings.heading_second | escape }}</h2>
+   <p class="jn__caption jn__body">{{ section.settings.caption | escape }}</p>
+  </header>
+  <div class="jn__paper-wrap">
+   {% if section.settings.teaser != blank %}
+    {{ section.settings.teaser | image_url: width: 1000 | image_tag: widths: '300,500,750,1000', sizes: '(min-width: 901px) 30vw, 45vw', loading: 'lazy', alt: section.settings.teaser_alt }}
+   {% else %}
+    <div class="jn__paper">
+     <span class="jn__clip" aria-hidden="true"></span>
+     <span class="jn__badge jn__button-type">{{ section.settings.badge | escape }}</span>
+     <span class="jn__year">{{ section.settings.year | escape }}</span>
+     <span class="jn__paper-note jn__button-type">{{ section.settings.paper_note | escape }}</span>
+    </div>
+   {% endif %}
+  </div>
+ </div>
+ <div class="jn__ticket">
+  {% form 'customer', id: form_id, class: 'jn__form' %}
+   <input type="hidden" name="contact[tags]" value="newsletter,{{ section.settings.tag | escape }}">
+   {% if form.posted_successfully? %}
+    <div class="jn__success" role="status" tabindex="-1">
+     <span class="jn__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+     <h3 class="jn__signup">{{ section.settings.success_heading | escape }}</h3>
+     <p class="jn__body">{{ section.settings.success_body | escape }}</p>
+    </div>
+   {% else %}
+    <p class="jn__eyebrow jn__button-type">{{ section.settings.list_label | escape }}</p>
+    <h3 class="jn__signup">{{ section.settings.signup_heading | escape }}</h3>
+    <div class="jn__body jn__description">{{ section.settings.body }}</div>
+    <div class="jn__perforation" aria-hidden="true"></div>
+    {% if form.errors %}<div id="{{ form_id }}-error" class="jn__error jn__body" role="alert">{{ form.errors | default_errors }}</div>{% endif %}
+    <label class="jn__button-type" for="{{ form_id }}-email">{{ section.settings.email_label | escape }}</label>
+    <input class="jn__email jn__body" id="{{ form_id }}-email" type="email" name="contact[email]" value="{{ form.email | escape }}" autocomplete="email" autocapitalize="off" spellcheck="false" required placeholder="{{ section.settings.placeholder | escape }}" aria-describedby="{{ form_id }}-note{% if form.errors %} {{ form_id }}-error{% endif %}" {% if form.errors %}aria-invalid="true"{% endif %}>
+    <button class="jn__submit jn__button-type" type="submit">{{ section.settings.button | escape }}<span class="jn__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+    <p class="jn__note jn__body" id="{{ form_id }}-note">{{ section.settings.consent | escape }}</p>
+   {% endif %}
+  {% endform %}
+ </div>
+</section>
+{% stylesheet %}
+.jn{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(320px,1fr);gap:40px;max-width:1680px;margin:0 auto;padding:var(--jn-pad) 48px;background:var(--jn-bg);color:var(--jn-ink);border-bottom:1px solid color-mix(in srgb,var(--june-ink,#171717) 20%,transparent)}
+.jn *{box-sizing:border-box}.jn h2,.jn h3,.jn p{margin:0;color:inherit}.jn strong{font-weight:700}.jn__teaser{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.1fr);gap:24px;align-items:center;min-width:0}
+.jn .jn__heading{font-family:var(--jn-heading-font);font-weight:var(--jn-heading-weight);font-size:var(--jn-heading-size);letter-spacing:var(--jn-heading-tracking);line-height:var(--jn-heading-leading)}
+.jn .jn__year{font-family:var(--jn-year-font);font-weight:var(--jn-year-weight);font-size:var(--jn-year-size);letter-spacing:var(--jn-year-tracking);line-height:var(--jn-year-leading)}
+.jn .jn__signup{font-family:var(--jn-signup-font);font-weight:var(--jn-signup-weight);font-size:var(--jn-signup-size);letter-spacing:var(--jn-signup-tracking);line-height:var(--jn-signup-leading)}
+.jn .jn__body{font-family:var(--jn-body-font);font-weight:var(--jn-body-weight);font-size:var(--jn-body-size);letter-spacing:var(--jn-body-tracking);line-height:var(--jn-body-leading)}
+.jn .jn__button-type{font-family:var(--jn-button-font);font-weight:var(--jn-button-weight);font-size:var(--jn-button-size);letter-spacing:var(--jn-button-tracking);line-height:var(--jn-button-leading)}
+.jn__copy{min-width:0}.jn__eyebrow{text-transform:uppercase;letter-spacing:.08em!important}.jn .jn__heading{margin:18px 0 20px;overflow-wrap:break-word}.jn__caption{opacity:.8}
+.jn__paper-wrap{min-width:0;padding:20px 0;filter:drop-shadow(3px 14px 10px color-mix(in srgb,var(--june-ink,#111111) 13.33%,transparent))}.jn__paper-wrap>img{display:block;width:100%;height:auto;max-height:350px;object-fit:contain}
+.jn__paper{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:280px;padding:34px 14px 20px;background:linear-gradient(135deg,var(--june-bg,#FFFFFF),var(--june-surface,#F5F5F3));border:1px solid color-mix(in srgb,var(--june-ink,#171717) 13.33%,transparent);transform:rotate(-5deg)}
+.jn .jn__year{font-size:min(var(--jn-year-size),10vw);white-space:nowrap}.jn__badge{align-self:flex-end;background:var(--jn-accent);color:var(--june-on-accent,var(--june-ink,#171717));padding:6px 10px}.jn__paper-note{background:var(--jn-accent);color:var(--june-on-accent,var(--june-ink,#171717));padding:7px 10px;text-align:center}
+.jn__clip{position:absolute;top:-14px;left:46%;width:32px;height:28px;background:var(--june-dark,#171717);border-radius:3px;box-shadow:1px 3px 3px #17171744}.jn__clip:before{content:"";position:absolute;left:8px;bottom:19px;width:16px;height:26px;border:3px solid var(--june-border,#DADADA);border-radius:7px;background:transparent}
+.jn__ticket{position:relative;align-self:center;padding:28px;border:1px solid color-mix(in srgb,var(--june-ink,#171717) 13.33%,transparent);border-radius:14px;background:color-mix(in srgb,var(--jn-accent) 46%,var(--jn-bg));box-shadow:0 8px 18px #11112;min-width:0}
+.jn .jn__signup{margin:12px 0;overflow-wrap:break-word}.jn__description{margin-top:10px}.jn__perforation{position:relative;margin:22px -28px 20px;border-top:2px dashed color-mix(in srgb,var(--june-ink,#171717) 33.33%,transparent)}.jn__perforation:before,.jn__perforation:after{content:"";position:absolute;top:-11px;width:20px;height:20px;background:var(--jn-bg);border-radius:50%}.jn__perforation:before{left:-11px}.jn__perforation:after{right:-11px}
+.jn__form label{display:block;margin-bottom:8px}.jn .jn__email{display:block;width:100%;min-height:52px;padding:12px 14px;border:1px solid color-mix(in srgb,var(--june-ink,#171717) 46.67%,transparent);border-radius:6px;background:var(--june-bg,#FFFFFF);color:var(--june-ink,#171717);font-size:max(16px,var(--jn-body-size))}
+.jn .jn__submit{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 0;min-height:52px;padding:9px 10px 9px 20px;border:1px solid var(--june-ink,#171717);border-radius:999px;background:var(--jn-accent);color:var(--june-on-accent,var(--june-ink,#171717));box-shadow:-2px 1px 0 #171717;cursor:pointer;transition:transform var(--jn-duration) ease}
+.jn__arrow{display:grid;place-items:center;width:32px;height:32px;background:var(--june-dark,var(--june-dark,#171717));color:var(--june-on-dark,var(--jn-accent));border-radius:50%;flex:none}.jn__arrow svg{width:18px;height:18px}
+.jn .jn__note{margin-top:12px;opacity:.8;font-size:calc(var(--jn-body-size)*.8)}.jn input:focus-visible,.jn button:focus-visible{outline:2px solid currentColor;outline-offset:4px}.jn__error{margin-bottom:14px}.jn__error a{color:inherit;text-decoration:underline}.jn__check{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--june-dark,#171717);color:var(--jn-accent)}.jn__check svg{width:30px;height:30px}
+@media(hover:hover){.jn[data-motion=true] .jn__submit:hover{transform:translateY(-2px)}}
+@media(min-width:901px) and (max-width:1200px){.jn{gap:24px;padding-inline:28px;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr)}.jn__teaser{gap:12px}.jn .jn__heading{font-size:calc(var(--jn-heading-size)*.82)}.jn__paper{min-height:230px}.jn__ticket{padding:24px}.jn__perforation{margin-inline:-24px}.jn .jn__year{font-size:min(var(--jn-year-size),9vw)}}
+@media(max-width:900px){.jn{display:block;padding:var(--jn-mobile-pad) 20px}.jn__teaser{grid-template-columns:1fr 1fr;gap:16px;margin-bottom:26px}.jn__paper-wrap{padding:16px 0}.jn__paper{min-height:160px;padding:25px 8px 14px;gap:12px}.jn__clip{transform:scale(.7);transform-origin:bottom center}
+.jn .jn__heading{font-size:var(--jn-heading-mobile)}
+.jn .jn__year{font-size:var(--jn-year-mobile)}
+.jn .jn__signup{font-size:var(--jn-signup-mobile)}
+.jn .jn__body{font-size:var(--jn-body-mobile)}
+.jn .jn__button-type{font-size:var(--jn-button-mobile)}
+.jn .jn__heading{margin:12px 0;font-size:min(var(--jn-heading-mobile),8vw)}.jn .jn__year{font-size:min(var(--jn-year-mobile),12vw)}.jn .jn__badge,.jn .jn__paper-note{font-size:calc(var(--jn-button-mobile)*.72);padding:5px 7px}.jn .jn__eyebrow{font-size:calc(var(--jn-button-mobile)*.75)}.jn .jn__caption{font-size:calc(var(--jn-body-mobile)*.8)}.jn__ticket{max-width:520px;margin:auto;padding:24px}.jn__perforation{margin-inline:-24px}.jn .jn__note{font-size:calc(var(--jn-body-mobile)*.8)}.jn .jn__email{font-size:max(16px,var(--jn-body-mobile))}
+}
+@media(prefers-reduced-motion:reduce){.jn *{transition:none!important;animation:none!important}.jn .jn__submit{transform:none!important}}
+.jn[data-motion=false] *{transition:none!important}
+
+.jn{scroll-margin-top:110px}.jn__paper-note:empty{display:none}
+@media(max-width:749px){.jn__ticket{padding:22px!important}.jn__layout{gap:20px!important}.jn__paper{max-height:180px}.jn__signup{padding:0!important}}
+
+@media(max-width:900px){.jn__teaser{margin-bottom:12px}.jn__paper-wrap{padding:8px 0}.jn__paper{min-height:135px}.jn__perforation{margin-block:14px}.jn__ticket{padding:20px}.jn .jn__note{font-size:var(--jn-body-mobile)}}
+@media(max-width:900px){.jn{padding-block:calc(var(--jn-mobile-pad)*.65)}.jn__teaser{margin-bottom:8px;gap:12px}.jn__paper-wrap{padding-block:4px}.jn__ticket{padding:16px!important}.jn__perforation{margin-block:10px}.jn__submit{margin-top:10px!important}}
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "June · Next chapter",
+  "tag": "section",
+  "class": "june-next-section",
+  "max_blocks": 1,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_master_palette",
+      "label": "Use master palette",
+      "default": true,
+      "info": "Uses Theme settings > June master palette. Turn off to use this section’s individual colours."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The next chapter"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Next year."
+    },
+    {
+      "type": "text",
+      "id": "heading_second",
+      "label": "Heading second line",
+      "default": "Loading…"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Planner caption",
+      "default": "2027 dated planners"
+    },
+    {
+      "type": "text",
+      "id": "year",
+      "label": "Year",
+      "default": "2027"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Paper badge",
+      "default": "Coming soon"
+    },
+    {
+      "type": "text",
+      "id": "paper_note",
+      "label": "Paper note",
+      "default": "Plans in the making"
+    },
+    {
+      "type": "image_picker",
+      "id": "teaser",
+      "label": "Optional teaser artwork"
+    },
+    {
+      "type": "text",
+      "id": "teaser_alt",
+      "label": "Artwork description",
+      "default": "2027 dated planners — coming soon"
+    },
+    {
+      "type": "text",
+      "id": "list_label",
+      "label": "Signup eyebrow",
+      "default": "The 2027 launch list"
+    },
+    {
+      "type": "text",
+      "id": "signup_heading",
+      "label": "Signup heading",
+      "default": "Get the first look."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "body",
+      "label": "Signup description",
+      "default": "An email when our <strong>2027 planners</strong> launch."
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email label",
+      "default": "Email address"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email placeholder",
+      "default": "you@example.com"
+    },
+    {
+      "type": "text",
+      "id": "button",
+      "label": "Button label",
+      "default": "Notify me at launch"
+    },
+    {
+      "type": "text",
+      "id": "consent",
+      "label": "Email signup note",
+      "default": "Sign up for email updates. Unsubscribe anytime."
+    },
+    {
+      "type": "text",
+      "id": "success_heading",
+      "label": "Success heading",
+      "default": "You're on the list."
+    },
+    {
+      "type": "text",
+      "id": "success_body",
+      "label": "Success message",
+      "default": "Thanks for signing up. Watch your inbox for updates."
+    },
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Signup tag",
+      "default": "2027-planner-launch"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent and button fill",
+      "default": "#F56A28"
+    },
+    {
+      "type": "color",
+      "id": "ink",
+      "label": "Text",
+      "default": "#171717"
+    },
+    {
+      "type": "font_picker",
+      "id": "fallback_font",
+      "label": "Fallback font",
+      "default": "poppins_n4"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Desktop vertical padding",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding",
+      "label": "Mobile vertical padding",
+      "min": 16,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "motion",
+      "label": "Enable button hover motion",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Hover speed",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "typography",
+      "name": "Typography controls",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "font_picker",
+          "id": "heading_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "heading_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 900
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 52
+        },
+        {
+          "type": "range",
+          "id": "heading_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 34
+        },
+        {
+          "type": "range",
+          "id": "heading_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "heading_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 105
+        },
+        {
+          "type": "header",
+          "content": "Year numeral"
+        },
+        {
+          "type": "font_picker",
+          "id": "year_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "year_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 900
+        },
+        {
+          "type": "range",
+          "id": "year_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 200,
+          "step": 2,
+          "unit": "px",
+          "default": 150
+        },
+        {
+          "type": "range",
+          "id": "year_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 60
+        },
+        {
+          "type": "range",
+          "id": "year_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -5
+        },
+        {
+          "type": "range",
+          "id": "year_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 100
+        },
+        {
+          "type": "header",
+          "content": "Signup heading"
+        },
+        {
+          "type": "font_picker",
+          "id": "signup_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "signup_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 900
+        },
+        {
+          "type": "range",
+          "id": "signup_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 38
+        },
+        {
+          "type": "range",
+          "id": "signup_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "signup_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "signup_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 105
+        },
+        {
+          "type": "header",
+          "content": "Supporting copy"
+        },
+        {
+          "type": "font_picker",
+          "id": "body_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "body_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "body_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "header",
+          "content": "Buttons and labels"
+        },
+        {
+          "type": "font_picker",
+          "id": "button_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "button_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "button_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 130
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "June · Next chapter",
+      "blocks": [
+        {
+          "type": "typography"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

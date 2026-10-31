@@ -1,0 +1,1206 @@
+{% liquid
+  assign artwork_sizes = '(min-width: 750px) 60vw, 100vw'
+  if section.settings.desktop_scene
+    assign artwork_sizes = '(min-width: 1051px) 100vw, (min-width: 750px) 60vw, 100vw'
+  endif
+  assign emphasis = section.settings.subheading_emphasis | escape
+  capture emphasis_markup
+    echo '<strong>'
+    echo emphasis
+    echo '</strong>'
+  endcapture
+  assign subtitle_copy = section.settings.subheading | escape | newline_to_br
+  if emphasis != blank
+    assign subtitle_copy = subtitle_copy | replace: emphasis, emphasis_markup
+  endif
+  assign hero_id = 'JuneHero-' | append: section.id
+  assign primary_url = section.settings.undated_collection.url | default: routes.all_products_collection_url
+  assign limited_url = section.settings.limited_collection.url | default: primary_url
+  assign life_url = section.settings.life_collection.url | default: primary_url
+  assign mystery_url = section.settings.mystery_product.url | default: section.settings.mystery_link
+  assign left_image = section.settings.cover_left | default: section.settings.left_product.featured_image
+  assign right_image = section.settings.cover_right | default: section.settings.right_product.featured_image
+  assign image_index = section.settings.interior_number | minus: 1
+  assign spread_image = section.settings.inside_image | default: section.settings.left_product.images[image_index]
+  assign edition_image = section.settings.limited_image | default: section.settings.edition_product.featured_image
+  assign typography_block = section.blocks | where: 'type', 'typography' | first
+  assign typography = typography_block.settings
+  assign title_font = section.settings.title_font
+  assign heading_weight = typography.heading_weight | append: ''
+  assign title_variant = title_font | font_modify: 'weight', heading_weight
+  if title_variant.family != blank
+    assign title_font = title_variant
+  endif
+%}
+{% style %}
+  {{ title_font | font_face: font_display: 'swap' }}
+  #{{ hero_id }} {
+    --jh-bg: {{ section.settings.background }};
+    --jh-mobile-nav: {{ typography.nav_size_mobile | default: 13 }}px;
+    --jh-ink: {{ section.settings.text_color }};
+    --jh-height: {{ section.settings.desktop_height }}px;
+    --jh-mobile-art: {{ section.settings.mobile_art_height }}px;
+    --jh-title-size: {{ section.settings.heading_size }}px;
+    --jh-title-mobile: {{ section.settings.heading_size_mobile }}px;
+    --jh-font: {{ title_font.family }}, {{ title_font.fallback_families }};
+    --jh-weight: {{ title_font.weight }};
+    --jh-accent: {{ typography.button_accent | default: '#F5A477' }};
+  }
+
+{% if typography_block != blank %}
+{% if typography.custom_text_font %}
+{{ typography.text_font | font_face: font_display: 'swap' }}
+{% assign emphasis_font = typography.text_font | font_modify: 'weight', '700' %}{{ emphasis_font | font_face: font_display: 'swap' }}
+{% assign role_weight = typography.subtitle_weight | append: '' %}{% assign role_font = typography.text_font | font_modify: 'weight', role_weight %}{{ role_font | font_face: font_display: 'swap' }}
+{% assign role_weight = typography.body_weight | append: '' %}{% assign role_font = typography.text_font | font_modify: 'weight', role_weight %}{{ role_font | font_face: font_display: 'swap' }}
+{% assign role_weight = typography.eyebrow_weight | append: '' %}{% assign role_font = typography.text_font | font_modify: 'weight', role_weight %}{{ role_font | font_face: font_display: 'swap' }}
+{% assign role_weight = typography.button_weight | append: '' %}{% assign role_font = typography.text_font | font_modify: 'weight', role_weight %}{{ role_font | font_face: font_display: 'swap' }}
+{% assign role_weight = typography.nav_weight | append: '' %}{% assign role_font = typography.text_font | font_modify: 'weight', role_weight %}{{ role_font | font_face: font_display: 'swap' }}
+{% endif %}
+#{{ hero_id }} .jh__title, #{{ hero_id }} .jh__alternate-title, #{{ hero_id }} .jh__year { font-weight: {{ typography.heading_weight }}; letter-spacing: {{ typography.heading_tracking | divided_by: 100.0 }}em; line-height: {{ typography.heading_leading | divided_by: 100.0 }}; }
+#{{ hero_id }} .jh__subtitle { font-weight: {{ typography.subtitle_weight }}; letter-spacing: {{ typography.subtitle_tracking | divided_by: 100.0 }}em; line-height: {{ typography.subtitle_leading | divided_by: 100.0 }}; }
+#{{ hero_id }} .jh__subtitle { font-size: {{ typography.subtitle_size }}px; }
+@media(max-width:749px) { #{{ hero_id }} .jh__subtitle { font-size: {{ typography.subtitle_size_mobile }}px; } }
+#{{ hero_id }} .jh__body, #{{ hero_id }} .jh__form, #{{ hero_id }} .jh__life-list { font-weight: {{ typography.body_weight }}; letter-spacing: {{ typography.body_tracking | divided_by: 100.0 }}em; line-height: {{ typography.body_leading | divided_by: 100.0 }}; }
+#{{ hero_id }} .jh__body, #{{ hero_id }} .jh__form, #{{ hero_id }} .jh__life-list { font-size: {{ typography.body_size }}px; }
+@media(max-width:749px) { #{{ hero_id }} .jh__body, #{{ hero_id }} .jh__form, #{{ hero_id }} .jh__life-list { font-size: {{ typography.body_size_mobile }}px; } }
+#{{ hero_id }} .jh__eyebrow { font-weight: {{ typography.eyebrow_weight }}; letter-spacing: {{ typography.eyebrow_tracking | divided_by: 100.0 }}em; line-height: {{ typography.eyebrow_leading | divided_by: 100.0 }}; }
+#{{ hero_id }} .jh__eyebrow { font-size: {{ typography.eyebrow_size }}px; }
+@media(max-width:749px) { #{{ hero_id }} .jh__eyebrow { font-size: {{ typography.eyebrow_size_mobile }}px; } }
+#{{ hero_id }} .jh__button, #{{ hero_id }} .jh__text-link { font-weight: {{ typography.button_weight }}; letter-spacing: {{ typography.button_tracking | divided_by: 100.0 }}em; line-height: {{ typography.button_leading | divided_by: 100.0 }}; }
+#{{ hero_id }} .jh__button, #{{ hero_id }} .jh__text-link { font-size: {{ typography.button_size }}px; }
+@media(max-width:749px) { #{{ hero_id }} .jh__button, #{{ hero_id }} .jh__text-link { font-size: {{ typography.button_size_mobile }}px; } }
+#{{ hero_id }} .jh__tab, #{{ hero_id }} .jh__mystery { font-weight: {{ typography.nav_weight }}; letter-spacing: {{ typography.nav_tracking | divided_by: 100.0 }}em; line-height: {{ typography.nav_leading | divided_by: 100.0 }}; }
+#{{ hero_id }} .jh__tab, #{{ hero_id }} .jh__mystery { font-size: {{ typography.nav_size }}px; }
+@media(max-width:749px) { #{{ hero_id }} .jh__tab, #{{ hero_id }} .jh__mystery { font-size: {{ typography.nav_size_mobile }}px; } }
+#{{ hero_id }} { {% if typography.custom_text_font %}font-family: {{ typography.text_font.family }}, {{ typography.text_font.fallback_families }};{% endif %} }
+#{{ hero_id }} .jh__title { font-size: clamp(32px, {{ section.settings.heading_size | divided_by: 14.4 }}vw, {{ section.settings.heading_size }}px); }
+#{{ hero_id }} .jh__alternate-title { font-size: {{ section.settings.heading_size | times: 0.65 }}px; }
+@media(max-width:749px) { #{{ hero_id }} .jh__title { font-size: clamp(28px, {{ section.settings.heading_size_mobile | divided_by: 3.9 }}vw, {{ section.settings.heading_size_mobile }}px); line-height: {{ typography.heading_leading | divided_by: 100.0 }}; } #{{ hero_id }} .jh__alternate-title { font-size: {{ section.settings.heading_size_mobile | times: 0.7 }}px; } }
+@media(min-width:750px) and (max-width:1050px) { #{{ hero_id }} .jh__subtitle { font-size: {{ typography.subtitle_size | times: 2.0 | divided_by: 3.0 }}px; } }
+{% endif %}
+{% endstyle %}
+<june-make-room id="{{ hero_id }}" class="jh" data-text-motion="{{ typography.motion_enabled | default: true, allow_false: true }}" data-motion-speed="{{ typography.motion_speed | default: 100 }}" data-motion-plays="{{ typography.motion_plays | default: 1 }}" data-motion-loop="{{ typography.motion_loop | default: false }}" data-motion-gap="{{ typography.motion_gap | default: 4 }}" aria-label="{{ 'june_hero.labels.region' | t | escape }}">
+  {% assign quick_links = section.blocks | where: 'type', 'quick_link' %}{% if quick_links.size > 0 %}<details class="jh__browse"><summary>{{ 'june_audit.browse_categories' | t }}</summary><nav aria-label="{{ 'june_audit.browse_categories' | t }}">{% for block in quick_links %}<a href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label | escape }} <span aria-hidden="true">↗</span></a>{% endfor %}</nav></details>{% endif %}
+
+  <div class="jh__stage" {{ typography_block.shopify_attributes }}>
+    <div id="{{ hero_id }}-undated" class="jh__panel{% if section.settings.hero_image != blank %} jh__panel--artwork{% if section.settings.desktop_scene %} jh__panel--scene{% endif %}{% endif %}" data-panel="undated">
+      <div class="jh__copy">
+        <p class="jh__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        <h1 class="jh__title"><span class="jh__title-ink">{{ section.settings.heading | escape }}</span></h1>
+        <p class="jh__subtitle">{{ subtitle_copy }}</p>
+        <p class="jh__body">{{ section.settings.body | escape }}</p>
+      </div>
+      <div class="jh__art" aria-label="{{ 'june_hero.labels.planner_images' | t | escape }}">
+        {% if section.settings.hero_image != blank %}
+          <picture class="jh__full-art">
+            {% if section.settings.hero_image_mobile != blank %}
+              <source media="(max-width: 1050px)" width="{{ section.settings.hero_image_mobile.width }}" height="{{ section.settings.hero_image_mobile.height }}" srcset="{{ section.settings.hero_image_mobile | image_url: width: 600 }} 600w, {{ section.settings.hero_image_mobile | image_url: width: 1000 }} 1000w" sizes="100vw">
+            {% endif %}
+            {{ section.settings.hero_image | image_url: width: 2000 | image_tag: widths: '500,750,1000,1300,1600,2000', sizes: artwork_sizes, loading: 'eager', fetchpriority: 'high', alt: section.settings.hero_alt }}
+          </picture>
+        {% else %}
+          {% if left_image != blank %}
+            <div class="jh__cover jh__cover--left">{{ left_image | image_url: width: 800 | image_tag: widths: '300,500,800', sizes: '(min-width: 750px) 28vw, 48vw', loading: 'eager', alt: section.settings.cover_left_alt }}</div>
+          {% endif %}
+          {% if right_image != blank %}
+            <div class="jh__cover jh__cover--right">{{ right_image | image_url: width: 800 | image_tag: widths: '300,500,800', sizes: '(min-width: 750px) 28vw, 48vw', loading: 'eager', alt: section.settings.cover_right_alt }}</div>
+          {% endif %}
+          {% if spread_image != blank %}
+            <div class="jh__spread{% if section.settings.crop_interior %} jh__spread--crop{% endif %}">{{ spread_image | image_url: width: 1200 | image_tag: widths: '450,700,1000,1200', sizes: '(min-width: 750px) 43vw, 75vw', loading: 'eager', fetchpriority: 'high', alt: section.settings.inside_alt }}</div>
+          {% endif %}
+          {% if left_image == blank and right_image == blank and spread_image == blank %}
+            {{ 'product-1' | placeholder_svg_tag: 'jh__placeholder' }}
+          {% endif %}
+        {% endif %}
+      </div>
+      <div class="jh__actions">
+        <a class="jh__button" href="{{ primary_url }}">{{ 'june_hero.actions.shop_undated' | t }} <span class="jh__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></a>
+        <a class="jh__text-link" href="{{ limited_url }}">{{ 'june_hero.actions.explore_limited' | t }} <span class="jh__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></a>
+      </div>
+    </div>
+    <div id="{{ hero_id }}-limited" class="jh__panel jh__panel--alternate{% if section.settings.limited_scene and section.settings.limited_image != blank %} jh__panel--limited-scene{% endif %}" data-panel="limited" hidden>
+      <div class="jh__copy"><p class="jh__eyebrow">{{ 'june_hero.tabs.limited' | t }}</p><h2 class="jh__alternate-title">{{ section.settings.limited_heading | escape }}</h2><p class="jh__body">{{ section.settings.limited_body | escape }}</p></div>
+      {% if section.settings.limited_scene and section.settings.limited_image != blank %}
+        <div class="jh__limited-background">{{ section.settings.limited_image | image_url: width: 2400 | image_tag: widths: '600,900,1200,1600,2000,2400', sizes: '(min-width: 1680px) 1680px, 100vw', loading: 'lazy', alt: section.settings.limited_alt }}</div>
+      {% else %}
+        <div class="jh__art jh__art--single">{% if edition_image != blank %}{{ edition_image | image_url: width: 1000 | image_tag: widths: '400,650,1000', sizes: '(min-width: 750px) 45vw, 80vw', loading: 'lazy', alt: section.settings.limited_alt }}{% endif %}</div>
+      {% endif %}
+      <div class="jh__actions"><a class="jh__button" href="{{ limited_url }}">{{ 'june_hero.actions.shop_limited' | t }} <span class="jh__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></a></div>
+    </div>
+    <div id="{{ hero_id }}-dated" class="jh__panel jh__panel--dated" data-panel="dated" hidden>
+      <div class="jh__copy"><p class="jh__eyebrow">{{ 'june_hero.labels.coming_soon' | t }}</p><h2 class="jh__alternate-title">{{ section.settings.dated_heading | escape }}</h2><p class="jh__body">{{ 'june_hero.labels.launch_description' | t }}</p>
+        {% assign form_id = hero_id | append: '-launch' %}
+        {% form 'customer', id: form_id, class: 'jh__form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter,2027-planner-launch">
+          {% if form.posted_successfully? %}<p role="status" tabindex="-1" class="jh__success">{{ 'june_hero.form.success' | t }}</p>{% else %}
+            {% if form.errors %}<div id="{{ form_id }}-error" class="jh__error" role="alert">{{ form.errors | default_errors }}</div>{% endif %}
+            <label for="{{ form_id }}-email">{{ 'june_hero.form.email' | t }}</label>
+            <div class="jh__form-row"><input id="{{ form_id }}-email" type="email" name="contact[email]" autocomplete="email" required value="{{ form.email | escape }}" {% if form.errors %}aria-invalid="true" aria-describedby="{{ form_id }}-error"{% endif %}><button type="submit" class="jh__button">{{ 'june_hero.form.submit' | t }} <span class="jh__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></button></div>
+            <p class="jh__form-note">{{ 'june_hero.form.note' | t }}</p>
+          {% endif %}
+        {% endform %}
+      </div>
+      <div class="jh__year" aria-hidden="true">2027<span>{{ 'june_hero.labels.next_chapter' | t }}</span></div>
+    </div>
+    <div id="{{ hero_id }}-life" class="jh__panel jh__panel--life" data-panel="life" hidden>
+      <div class="jh__copy"><p class="jh__eyebrow">{{ 'june_hero.tabs.life' | t }}</p><h2 class="jh__alternate-title">{{ section.settings.life_heading | escape }}</h2><p class="jh__body">{{ section.settings.life_body | escape }}</p></div>
+      <div class="jh__life-list">
+        {% for block in section.blocks %}
+          {% if block.type == 'life_link' %}
+          <a class="jh__life-item" {% if block.settings.unavailable %}aria-disabled="true"{% else %}href="{{ block.settings.collection.url | default: life_url }}"{% endif %} {{ block.shopify_attributes }}>
+            {% assign life_image = block.settings.image | default: block.settings.collection.image %}
+            {% if life_image != blank %}{{ life_image | image_url: width: 240 | image_tag: widths: '120,240', sizes: '90px', loading: 'lazy', alt: '' }}{% endif %}
+            <span>{{ block.settings.label | escape }}{% if block.settings.unavailable %}<small>{{ block.settings.availability_note | escape }}</small>{% endif %}</span><span class="jh__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span>
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="jh__actions"><a class="jh__text-link" href="{{ life_url }}">{{ 'june_hero.actions.all_journals' | t }} <span class="jh__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></a></div>
+    </div>
+  </div>
+  <div class="jh__navigation">
+    <nav class="jh__tabs" aria-label="{{ 'june_hero.labels.categories' | t | escape }}">
+      <a class="jh__tab" href="{{ primary_url }}" data-target="undated" id="{{ hero_id }}-tab-undated"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="7" y="3" width="19" height="26" rx="2"/><path d="M11 3v26M4 8h6M4 14h6M4 20h6M4 26h6"/></svg><span>{{ 'june_hero.tabs.undated' | t }}</span></a>
+      <a class="jh__tab" href="{{ limited_url }}" data-target="limited" id="{{ hero_id }}-tab-limited"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 26C3 7 16 3 28 4c0 15-8 24-19 19M5 28L23 9M12 20v-8M12 20h8"/></svg><span>{{ 'june_hero.tabs.limited' | t }}</span></a>
+      <a class="jh__tab" href="#{{ hero_id }}-dated" data-target="dated" id="{{ hero_id }}-tab-dated"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="7" width="24" height="21" rx="2"/><path d="M4 13h24M10 3v8M22 3v8"/></svg><span>{{ 'june_hero.tabs.dated' | t }}<small>{{ 'june_hero.labels.coming_soon' | t }}</small></span></a>
+      <a class="jh__tab" href="{{ life_url }}" data-target="life" id="{{ hero_id }}-tab-life"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M16 7C12 3 6 3 3 5v22c5-3 9-2 13 1 4-3 8-4 13-1V5c-3-2-9-2-13 2ZM16 7v21"/></svg><span>{{ 'june_hero.tabs.life' | t }}</span></a>
+    </nav>
+    {% if mystery_url != blank %}<a class="jh__mystery" href="{{ mystery_url }}"><img class="jh__mystery-icon" src="https://cdn.shopify.com/s/files/1/0177/5579/9606/files/mystery-box-peeking-eyes-edge-to-edge.ico?v=1790337217" width="32" height="32" alt="" loading="eager"><span>{{ 'june_hero.actions.mystery' | t }}</span><span class="jh__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></a>{% endif %}
+  </div>
+</june-make-room>
+<noscript><style>#{{ hero_id }} [data-panel][hidden]{display:grid}#{{ hero_id }} .jh__panel{border-bottom:1px solid #DADADA}</style></noscript>
+{% stylesheet %}
+.jh{display:block;position:relative;background:var(--jh-bg,#FFFFFF);color:var(--jh-ink,#171717);font-family:Arial,sans-serif;isolation:isolate;overflow:clip}.jh *{box-sizing:border-box}.jh h1,.jh h2,.jh p{margin:0;color:inherit}.jh a{color:inherit;text-decoration:none}.jh button,.jh input{font:inherit}.jh a:focus-visible,.jh button:focus-visible,.jh input:focus-visible{outline:3px solid #DADADA;outline-offset:5px}.jh__stage{position:relative;max-width:1680px;margin:auto}.jh__stage:before{content:"";pointer-events:none;position:absolute;inset:8% -12% -35% 36%;border-radius:50%;background:linear-gradient(145deg,transparent 42%,#FFFFFF99 43%,#F5F5F32b 47%,transparent 63%);transform:rotate(-15deg)}.jh__panel{min-height:var(--jh-height,520px);display:grid;grid-template-columns:45% 55%;grid-template-rows:1fr auto;position:relative;padding:48px clamp(24px,4vw,72px) 44px;align-items:center}.jh__panel[hidden]{display:none!important}.jh__copy{grid-column:1;grid-row:1;z-index:2;align-self:center}.jh__eyebrow{font-size:11px;line-height:1.5;letter-spacing:.24em;text-transform:uppercase;font-weight:600;margin-bottom:20px!important}.jh__title{font-family:var(--jh-font),Impact,sans-serif;font-weight:var(--jh-weight,700);font-size:clamp(76px,9.2vw,var(--jh-title-size,144px));line-height:1.04;letter-spacing:-.045em;white-space:nowrap;position:relative;z-index:3;margin-left:-4px!important}.jh__subtitle{font-size:clamp(24px,2.7vw,39px);line-height:1.13;letter-spacing:-.035em;max-width:470px;margin-top:24px!important}.jh__body{font-size:15px;line-height:1.55;max-width:410px;margin-top:18px!important}.jh__art{grid-column:2;grid-row:1 / 3;position:relative;height:100%;min-height:400px;isolation:auto;align-self:stretch}.jh__cover{position:absolute;width:42%;aspect-ratio:.74;overflow:hidden;mix-blend-mode:multiply}.jh__cover img{display:block;width:145%;max-width:none;height:auto;margin-left:-22%;margin-top:-5%}.jh__cover--left{left:12%;top:0;transform:rotate(-9deg)}.jh__cover--right{right:-1%;top:0;transform:rotate(10deg)}.jh__spread{position:absolute;left:10%;bottom:0;width:79%;transform:rotate(-7deg);border-radius:7px;box-shadow:0 1px 0 #DADADA,0 2px 0 #DADADA,0 3px 0 #DADADA,0 4px 0 #DADADA,0 8px 10px -5px #17171738,0 23px 28px -15px #17171759}.jh__spread:after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 1px 0 #DADADA90,inset 0 0 0 1px #17171714;pointer-events:none}.jh__spread img{display:block;width:100%;height:auto;border-radius:inherit}.jh__spread--crop{aspect-ratio:1.62;overflow:hidden;border-radius:7px}.jh__spread--crop img{width:112%;max-width:none;margin-left:-6%;margin-top:-27%}.jh__full-art{display:block;width:100%;height:100%}.jh__full-art img{width:100%;height:100%;object-fit:contain}.jh__actions{grid-column:1;grid-row:2;display:flex;align-items:center;gap:24px;z-index:3;margin-top:28px;flex-wrap:wrap}.jh__button{border:1px solid var(--jh-ink);background:var(--jh-ink);color:var(--jh-bg)!important;display:inline-flex;align-items:center;justify-content:center;gap:16px;padding:14px 22px;min-height:48px;font-size:13px;font-weight:600;line-height:1.3;cursor:pointer;border-radius:6px;box-shadow:inset 0 1px 0 #DADADA26,0 2px 0 #171717,0 5px 9px -4px #17171740;transition:background .18s,box-shadow .18s,transform .18s}.jh__button:hover{background:#171717;transform:translateY(-1px);box-shadow:inset 0 1px 0 #DADADA30,0 3px 0 #171717,0 7px 12px -5px #1717174d}.jh__button:active{transform:translateY(1px);box-shadow:inset 0 1px 2px #17171733,0 1px 0 #171717}.jh__text-link{font-size:13px;min-height:44px;display:inline-flex;align-items:center;gap:10px;text-decoration:underline!important;text-underline-offset:5px}.jh__navigation{display:flex;border-top:1px solid #17171725;position:relative;z-index:4}.jh__tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));flex:1}.jh__tab{min-height:86px;display:flex;align-items:center;justify-content:center;gap:16px;padding:16px 10px;border-right:1px solid #17171720;position:relative;font-size:14px;line-height:1.3}.jh__tab[aria-selected=true]:after{content:"";position:absolute;bottom:0;left:0;right:0;height:4px;background:currentColor}.jh__tab:hover{background:#FFFFFF77}.jh__tab svg,.jh__mystery svg{width:29px;height:29px;flex-shrink:0}.jh__tab small{display:block;font-size:10px;margin-top:5px}.jh__mystery{width:23%;background:var(--jh-ink);color:var(--jh-bg)!important;display:flex;align-items:center;justify-content:center;gap:15px;padding:18px;font-size:14px}.jh__mystery:hover{background:#171717}.jh__alternate-title{font-family:var(--jh-font),Impact,sans-serif;font-weight:var(--jh-weight,700);font-size:clamp(45px,5.4vw,76px);line-height:1.04;letter-spacing:-.025em;max-width:540px}.jh__art--single{display:flex;justify-content:center;align-items:center;mix-blend-mode:multiply}.jh__art--single img{height:100%;max-height:450px;width:100%;object-fit:contain}.jh__panel--dated .jh__copy{grid-row:1 / 3}.jh__year{grid-column:2;grid-row:1 / 3;font-family:var(--jh-font);font-weight:var(--jh-weight);font-size:clamp(120px,21vw,310px);line-height:1;text-align:center;letter-spacing:-.07em;transform:rotate(-6deg)}.jh__year span{display:block;font:11px Arial;letter-spacing:.2em;text-transform:uppercase;margin-top:18px}.jh__form{margin-top:24px;max-width:460px}.jh__form label{display:block;font-size:12px;font-weight:600;margin-bottom:8px}.jh__form-row{display:flex;gap:8px}.jh__form input[type=email]{min-width:0;width:100%;border:1px solid #DADADA;border-radius:0;background:#FFFFFF99;color:#171717;min-height:48px;padding:12px;font-size:16px}.jh__form button{flex-shrink:0}.jh__form-note{font-size:11px;line-height:1.5;margin-top:8px!important}.jh__success,.jh__error{font-size:14px;line-height:1.5}.jh__life-list{grid-column:2;grid-row:1 / 3;padding-left:40px}.jh__life-item{display:flex;align-items:center;gap:18px;min-height:100px;padding:12px 0;border-bottom:1px solid #17171730;font-size:19px}.jh__life-item img{width:76px;height:76px;object-fit:cover}.jh__life-item span:last-child{margin-left:auto}.jh__placeholder{width:100%;height:100%;max-height:400px}
+@media(min-width:750px) and (max-width:1050px){.jh__panel{padding:35px 28px;grid-template-columns:47% 53%}.jh__actions{gap:12px}.jh__button{padding:13px 16px}.jh__tab{gap:8px;font-size:12px}.jh__mystery{font-size:12px;gap:8px}.jh__art{min-height:350px}.jh__life-list{padding-left:20px}}
+@media(max-width:749px){.jh__panel{display:flex;flex-direction:column;min-height:0;padding:28px 20px 22px;align-items:stretch}.jh__copy{align-self:stretch}.jh__eyebrow{font-size:10px;margin-bottom:12px!important;letter-spacing:.2em}.jh__title{font-size:clamp(68px,17vw,var(--jh-title-mobile,94px));line-height:1.02;letter-spacing:-.035em;margin-left:0!important}.jh__subtitle{font-size:25px;line-height:1.13;margin-top:12px!important;max-width:340px}.jh__body{font-size:14px;margin-top:10px!important}.jh__art{height:var(--jh-mobile-art,255px);min-height:0;margin:12px -10px 0;flex:none}.jh__cover{width:41%}.jh__cover--left{top:0;left:10%}.jh__cover--right{top:0;right:3%}.jh__spread{width:78%;left:12%;bottom:0}.jh__actions{display:flex;flex-direction:column;align-items:stretch;gap:10px;margin-top:16px}.jh__actions .jh__text-link{border:1px solid var(--jh-ink);justify-content:center;text-decoration:none!important;min-height:44px;border-radius:6px;background:#FFFFFF30;box-shadow:inset 0 1px 0 #DADADA99,0 2px 0 #DADADA,0 5px 9px -5px #17171730}.jh__button{min-height:46px;padding:12px 16px;font-size:12px}.jh__navigation{display:block}.jh__tab{min-height:90px;flex-direction:column;gap:8px;padding:12px 4px;font-size:11px;text-align:center}.jh__tab svg{width:24px;height:24px}.jh__tab small{font-size:9px;line-height:1.15;margin-top:3px}.jh__mystery{width:100%;min-height:54px;padding:12px;font-size:12px;gap:12px}.jh__mystery svg{height:25px;width:25px}.jh__alternate-title{font-size:44px;max-width:100%}.jh__art--single{height:290px}.jh__panel--dated{min-height:510px}.jh__panel--dated .jh__copy{order:2}.jh__year{order:1;font-size:130px;transform:rotate(-4deg);margin:8px 0 22px}.jh__year span{font-size:9px;margin-top:8px}.jh__panel--dated .jh__alternate-title{font-size:38px}.jh__form-row{flex-direction:column}.jh__life-list{padding-left:0;margin-top:14px}.jh__life-item{font-size:17px;min-height:90px}.jh__life-item img{height:65px;width:65px}}
+@media(prefers-reduced-motion:reduce){.jh *{transition:none!important;scroll-behavior:auto!important}}
+.jh__stage:before{inset:0;background:linear-gradient(116deg,#FFFFFF12 0 39%,#F5F5F34d 39.1%,#FFFFFF80 53%,transparent 70%);border-radius:0;transform:none}
+.jh__stage:after{content:"";position:absolute;pointer-events:none;inset:0;z-index:0;background:linear-gradient(19deg,transparent 0 14%,#F5F5F324 14.2%,#FFFFFF99 14.7%,transparent 19%);}
+.jh__panel{z-index:1}
+.jh__panel[data-panel=undated]{min-height:clamp(540px,48vw,calc(var(--jh-height,520px) + 190px));padding:62px 3vw 55px;grid-template-columns:43% 57%;grid-template-rows:auto 1fr;align-items:start}
+.jh__panel[data-panel=undated] .jh__copy{align-self:start;padding-top:40px}
+.jh__title{font-size:clamp(112px,13.3vw,calc(var(--jh-title-size,140px) * 1.386));line-height:1;letter-spacing:-.055em;transform:none;transform-origin:left center;width:130%;margin-left:-3px!important}
+.jh__eyebrow{margin-bottom:24px!important}
+.jh__subtitle{margin-top:24px!important;font-size:clamp(26px,3vw,42px)}
+.jh__panel[data-panel=undated] .jh__actions{align-self:start;margin-top:22px;gap:22px}
+.jh__panel[data-panel=undated] .jh__art{position:absolute;inset:0 1.5% 0 44%;min-height:0;height:auto}
+.jh__cover{width:44%;aspect-ratio:.74;overflow:hidden;mix-blend-mode:multiply;filter:drop-shadow(7px 10px 4px #45372928);border-radius:5px}
+.jh__cover--left{left:5%;top:7%;transform:perspective(1100px) rotateY(-9deg) rotate(-8deg)}
+.jh__cover--right{right:2%;top:5%;transform:perspective(1100px) rotateY(-12deg) rotate(8deg)}
+.jh__spread{width:93%;left:-7%;bottom:7%;transform:perspective(1200px) rotateX(31deg) rotateZ(8deg);transform-origin:center bottom;box-shadow:0 1px 0 #DADADA,0 3px 0 #DADADA,0 4px 0 #DADADA,0 6px 0 #DADADA,0 7px 0 #DADADA,0 9px 0 #DADADA,8px 16px 12px -7px #DADADA63,16px 36px 30px -13px #DADADA59}
+.jh__spread:after{background:linear-gradient(90deg,transparent 39%,#F5F5F319 47%,#FFFFFF99 49%,#F5F5F326 51%,transparent 58%);box-shadow:inset 0 1px 0 #DADADA99,inset 0 0 0 1px #17171714}
+.jh__button{text-transform:uppercase;letter-spacing:.01em;border-radius:5px}
+.jh__navigation{background:#FFFFFFc9}
+.jh__tab{min-height:78px}
+@media(min-width:750px) and (max-width:1050px){.jh__panel[data-panel=undated]{padding:40px 24px;min-height:560px}.jh__panel[data-panel=undated] .jh__copy{padding-top:25px}.jh__title{font-size:14vw;transform:none;width:143%}.jh__panel[data-panel=undated] .jh__art{left:44%;right:2%}.jh__cover{width:47%}.jh__cover--left{left:0;top:13%}.jh__cover--right{top:10%}.jh__spread{width:105%;left:-14%;bottom:8%}.jh__subtitle{font-size:28px}.jh__panel[data-panel=undated] .jh__actions{max-width:280px;gap:10px}}
+@media(max-width:749px){.jh__stage:before{background:linear-gradient(120deg,transparent 28%,#F5F5F333 28.2%,#FFFFFF77 51%,transparent 73%)}.jh__stage:after{background:linear-gradient(20deg,transparent 28%,#F5F5F320 28.2%,#FFFFFF77 28.7%,transparent 33%)}.jh__panel[data-panel=undated]{padding:25px 20px 22px;min-height:0;display:flex}.jh__panel[data-panel=undated] .jh__copy{padding-top:0}.jh__eyebrow{margin-bottom:12px!important}.jh__title{font-size:clamp(100px,27vw,calc(var(--jh-title-mobile,88px) * 1.59));line-height:.93;white-space:normal;width:3.7em;max-width:130%;transform:none;letter-spacing:-.055em}.jh__subtitle{font-size:27px;line-height:1.13;margin-top:14px!important;max-width:340px}.jh__body{font-size:13px;margin-top:12px!important}.jh__panel[data-panel=undated] .jh__art{position:relative;inset:auto;height:calc(var(--jh-mobile-art,250px) + 40px);min-height:0;margin:12px -14px 0}.jh__cover{width:44%}.jh__cover--left{left:8%;top:0;transform:perspective(700px) rotateY(-9deg) rotate(-8deg)}.jh__cover--right{right:3%;top:0}.jh__spread{width:91%;left:2%;bottom:4%;transform:perspective(800px) rotateX(33deg) rotateZ(6deg)}.jh__panel[data-panel=undated] .jh__actions{margin-top:8px;gap:10px;align-self:stretch}.jh__button{min-height:44px}.jh__actions .jh__text-link{min-height:42px}.jh__tab{min-height:82px}.jh__mystery{min-height:52px}}
+@media(max-width:359px){.jh__panel[data-panel=undated] .jh__art{height:250px}.jh__subtitle{font-size:24px}}
+.jh__panel[data-panel=undated] .jh__art{grid-column:auto;grid-row:auto}
+.jh__cover{aspect-ratio:.69}
+.jh__cover img{width:155%;margin-left:-27%;margin-top:-13%}
+@media(min-width:750px){.jh__cover--left{left:8%;top:8%}.jh__cover--right{right:2%;top:6%}.jh__spread{width:98%;left:-7%;bottom:7%}}
+@media(min-width:750px) and (max-width:1050px){.jh__cover--left{top:17%;left:1%}.jh__cover--right{top:14%}.jh__spread{bottom:8%;width:103%;left:-12%}}
+@media(min-width:1051px){.jh__title{transform:none}.jh__spread{width:92%;left:-5%;bottom:10%}.jh__cover--left{left:10%}}
+@media(min-width:750px) and (max-width:1050px){.jh__title{transform:none}.jh__panel[data-panel=undated] .jh__art{left:47%}.jh__cover--left{left:3%}.jh__spread{width:100%;left:-8%;bottom:10%}}
+
+.jh__cover{aspect-ratio:.77;filter:none}
+
+.jh__panel--artwork .jh__full-art{padding:18px 0 22px;filter:drop-shadow(9px 18px 12px #49382320)}
+.jh__panel--artwork .jh__full-art img{object-position:center bottom}
+@media(max-width:749px){.jh__panel--artwork[data-panel=undated] .jh__art{height:auto;margin:14px -10px 8px}.jh__panel--artwork .jh__full-art{height:auto;padding:0;filter:drop-shadow(4px 9px 7px #49382320)}.jh__panel--artwork .jh__full-art img{height:auto;display:block;width:100%}}
+
+@media(min-width:1051px){.jh__panel--scene[data-panel=undated]{min-height:calc(var(--jh-height,520px) + 100px);padding-top:32px;padding-bottom:32px}.jh__panel--scene[data-panel=undated] .jh__copy{padding-top:0}.jh__panel--scene[data-panel=undated] .jh__art{inset:0;z-index:0}.jh__panel--scene .jh__full-art{padding:0;filter:none}.jh__panel--scene .jh__full-art img{object-fit:cover;object-position:center center}}
+
+.jh__title{font-size:96px;transform:none!important;letter-spacing:-.04em;white-space:normal;width:auto;max-width:5.5em;line-height:1;margin-left:0!important;text-wrap:balance}
+.jh__alternate-title{transform:none;letter-spacing:-.04em;text-wrap:balance}
+.jh__subtitle{max-width:470px}.jh__subtitle strong{font-weight:700}.jh__body{max-width:430px}
+.jh__button{background:var(--jh-accent);color:var(--jh-ink)!important;border:1px solid var(--jh-ink);border-radius:999px;padding:7px 8px 7px 22px;min-height:50px;text-transform:none;gap:22px;box-shadow:-3px 0 0 var(--jh-ink),0 2px 0 #17171712}
+.jh__button:hover{background:var(--jh-accent);filter:brightness(.96);box-shadow:-3px 0 0 var(--jh-ink),0 4px 9px #17171718}
+.jh__button:active{box-shadow:-1px 0 0 var(--jh-ink);filter:brightness(.92)}
+.jh__arrow{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex:0 0 32px;background:var(--jh-ink);color:var(--jh-accent);border-radius:50%}
+.jh__arrow svg{width:18px;height:18px;transition:transform .18s}.jh__button:hover .jh__arrow svg,.jh__text-link:hover .jh__arrow svg{transform:translateX(2px)}
+.jh__text-link{gap:10px;min-height:48px}.jh__text-link .jh__arrow{width:26px;height:26px;flex-basis:26px;color:var(--jh-bg)}
+.jh__panel[data-panel=undated] .jh__actions{gap:20px}.jh__panel[data-panel=undated] .jh__copy{padding-top:16px}.jh__panel--scene[data-panel=undated]{padding-top:45px;padding-bottom:40px}.jh__eyebrow{margin-bottom:24px!important}
+@media(max-width:749px){.jh__title{font-size:64px;max-width:5.2em;width:auto;transform:none!important;line-height:1}.jh__panel[data-panel=undated] .jh__copy{padding-top:0}.jh__panel--scene[data-panel=undated]{padding-top:28px;padding-bottom:22px}.jh__eyebrow{margin-bottom:18px!important}.jh__subtitle{margin-top:18px!important}.jh__body{margin-top:12px!important}.jh__panel[data-panel=undated] .jh__actions{gap:12px}.jh__actions .jh__button{justify-content:space-between;padding-left:22px}.jh__actions .jh__text-link{border:0;border-radius:0;background:none;box-shadow:none;text-decoration:underline!important;min-height:44px}.jh__panel--artwork[data-panel=undated] .jh__art{margin-top:18px}}
+
+.jh__button{transition:transform 180ms ease,box-shadow 180ms ease,filter 180ms ease}
+.jh__button .jh__arrow{transition:transform 200ms cubic-bezier(.2,.8,.2,1)}
+.jh__button:hover .jh__arrow svg{transform:none}
+.jh__mystery{transition:background-color 180ms ease}
+.jh__mystery > .jh__mystery-icon{transform-origin:50% 75%;transition:transform 240ms cubic-bezier(.2,.8,.2,1)}
+.jh__mystery .jh__arrow{transition:transform 200ms ease}
+@media(hover:hover) and (pointer:fine){
+.jh__button:hover,.jh__button:focus-visible{transform:translateY(-2px)}
+.jh__button:hover .jh__arrow,.jh__button:focus-visible .jh__arrow{transform:translateX(3px)}
+.jh__mystery:hover > .jh__mystery-icon,.jh__mystery:focus-visible > .jh__mystery-icon{transform:rotate(-8deg)}
+.jh__mystery:hover .jh__arrow,.jh__mystery:focus-visible .jh__arrow{transform:translateX(4px)}
+}
+.jh__button:active{transform:translateY(1px) scale(.99)}
+.jh__button:active .jh__arrow{transform:translateX(1px)}
+.jh__mystery:active{background:#171717}
+@media(hover:none){.jh__button:hover:not(:active){transform:none}.jh__button:hover .jh__arrow svg{transform:none}}
+@media(prefers-reduced-motion:reduce){.jh__button,.jh__button .jh__arrow,.jh__button .jh__arrow svg,.jh__mystery > .jh__mystery-icon,.jh__mystery .jh__arrow{transform:none!important;transition:none!important}}
+.jh__mystery-icon{display:block;width:32px;height:32px;object-fit:contain;flex-shrink:0;filter:brightness(0) invert(1)}
+
+.jh__title-ink{display:inline-block;width:100%;transform-origin:left center}
+.jh__word-glow{border-radius:.2em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.jh__subtitle strong{display:inline-block;white-space:nowrap;transform-origin:left center}
+
+
+.jh__navigation{width:100%;max-width:1680px;margin-inline:auto}
+
+/* Limited Edition: merchant-selected full scene; other tabs retain their layout. */
+.jh .jh__panel--limited-scene{grid-template-columns:43% 57%;grid-template-rows:auto 1fr;align-items:start;min-height:calc(var(--jh-height,520px) + 100px);padding:45px 3vw 40px}
+.jh .jh__panel--limited-scene .jh__copy{align-self:start;padding-top:16px}
+.jh .jh__panel--limited-scene .jh__actions{align-self:start;margin-top:22px}
+.jh .jh__limited-background{position:absolute;inset:0;z-index:0;overflow:hidden}
+.jh .jh__limited-background img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+@media(max-width:1050px){
+  .jh .jh__panel--limited-scene{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding:28px 20px 22px;background:var(--jh-bg)}
+  .jh .jh__panel--limited-scene .jh__copy{align-self:stretch;padding-top:0}
+  .jh .jh__panel--limited-scene .jh__copy .jh__alternate-title{max-width:9em}
+  .jh .jh__panel--limited-scene .jh__copy .jh__body{max-width:32em}
+  .jh .jh__limited-background{position:relative;inset:auto;height:clamp(240px,70vw,480px);margin:20px -20px 0}
+  .jh .jh__limited-background img{object-fit:cover;object-position:right center}
+  .jh .jh__panel--limited-scene .jh__actions{align-self:stretch;margin-top:18px}
+}
+
+.jh{scroll-margin-top:110px}.jh__life-item small{display:block;font-size:.75em;font-weight:400}.jh__life-item:has(small){align-items:center}.jh__life-item[aria-disabled=true]{cursor:default}.jh__life-item[aria-disabled=true]>.jh__arrow{display:none}
+@media(max-width:749px){.jh .jh__panel[data-panel=undated] .jh__actions,.jh .jh__panel[data-panel=limited] .jh__actions{order:1;margin-top:16px}.jh .jh__copy{order:0}.jh .jh__panel[data-panel=undated] .jh__art,.jh .jh__panel[data-panel=limited] .jh__limited-background{order:2;height:260px;min-height:0;margin:12px -10px 0}.jh .jh__full-art,.jh .jh__full-art img{height:100%!important;object-fit:contain}.jh .jh__tab{min-height:68px;padding:8px 3px}.jh .jh__mystery{min-height:48px}.jh .jh__eyebrow{margin-bottom:12px!important}.jh .jh__subtitle{margin-top:12px!important}.jh .jh__body{margin-top:8px!important}.jh .jh__panel{padding-top:22px;padding-bottom:16px}}
+
+.jh__browse{display:none}@media(max-width:749px){.jh__browse{display:block;border-bottom:1px solid #17171722;padding:0 18px;font-size:var(--jh-mobile-nav,13px);font-weight:500}.jh__browse summary{min-height:44px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}.jh__browse summary:after{content:'+';font-size:20px}.jh__browse[open] summary:after{content:'−'}.jh__browse nav{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;padding-bottom:10px}.jh__browse a{display:flex;justify-content:space-between;align-items:center;min-height:44px;color:inherit;text-decoration:underline;text-underline-offset:4px}.jh .jh__tab{font-size:var(--jh-mobile-nav,13px)!important}.jh .jh__mystery{font-size:var(--jh-mobile-nav,13px)!important}}
+
+{% endstylesheet %}
+{% javascript %}
+if (!customElements.get('june-make-room')) {
+  customElements.define('june-make-room', class extends HTMLElement {
+    connectedCallback() {
+      if (this.ready) { document.addEventListener('shopify:block:select', this.editorHandler); this.setupTextSequence(); return; }
+      this.ready = true;
+      this.tabs = [...this.querySelectorAll('[data-target]')];
+      this.panels = [...this.querySelectorAll('[data-panel]')];
+      this.querySelector('.jh__tabs').setAttribute('role', 'tablist');
+      this.tabs.forEach(tab => {
+        tab.setAttribute('role', 'tab');
+        tab.setAttribute('aria-controls', this.id + '-' + tab.dataset.target);
+        tab.addEventListener('click', event => { event.preventDefault(); this.select(tab.dataset.target); });
+        tab.addEventListener('keydown', event => {
+          const index = this.tabs.indexOf(tab);
+          let next;
+          if (event.key === 'ArrowRight') next = (index + 1) % this.tabs.length;
+          if (event.key === 'ArrowLeft') next = (index + this.tabs.length - 1) % this.tabs.length;
+          if (event.key === 'Home') next = 0;
+          if (event.key === 'End') next = this.tabs.length - 1;
+          if (event.key === ' ') { event.preventDefault(); this.select(tab.dataset.target); }
+          if (next !== undefined) { event.preventDefault(); this.tabs[next].focus(); this.select(this.tabs[next].dataset.target); }
+        });
+      });
+      this.panels.forEach(panel => {
+        panel.setAttribute('role', 'tabpanel');
+        panel.setAttribute('aria-labelledby', this.id + '-tab-' + panel.dataset.panel);
+        panel.tabIndex = 0;
+      });
+      const launch = this.querySelector('.jh__form');
+      this.select(launch && (launch.querySelector('.jh__success, .jh__error') || location.hash.startsWith('#' + this.id + '-launch')) ? 'dated' : 'undated');
+      launch?.addEventListener('submit', () => { launch.action = launch.action.split('#')[0] + '#' + this.id + '-launch'; });
+      this.editorHandler = event => { if (this.contains(event.target) && event.target.closest('.jh__life-item')) this.select('life'); };
+      document.addEventListener('shopify:block:select', this.editorHandler);
+      this.setupTextSequence();
+    }
+    disconnectedCallback() {
+      document.removeEventListener('shopify:block:select', this.editorHandler);
+      this.textObserver?.disconnect();
+      this.motionPreference?.removeEventListener('change', this.motionHandler);
+      this.stopTextSequence();
+    }
+    setupTextSequence() {
+      this.motionSpeed = Math.max(.5, Math.min(2, Number(this.dataset.motionSpeed) / 100 || 1));
+      this.motionPlays = this.dataset.motionLoop === 'true' ? Infinity : Math.max(1, Math.min(10, Number(this.dataset.motionPlays) || 1));
+      this.motionGap = Math.max(1, Math.min(20, Number(this.dataset.motionGap) || 4)) * 1000;
+      if (this.dataset.textMotion === 'false') return;
+      this.motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+      this.motionHandler = () => { if (this.motionPreference.matches) this.stopTextSequence(); };
+      this.motionPreference.addEventListener('change', this.motionHandler);
+      const panel = this.querySelector('[data-panel="undated"]');
+      const body = panel.querySelector('.jh__body');
+      const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(node => {
+        if (node.parentElement.closest('[data-glow]')) return;
+        const pieces = node.textContent.split(/(\bany\b|\byours\b)/gi);
+        if (pieces.length < 2) return;
+        const fragment = document.createDocumentFragment();
+        pieces.forEach((part, index) => {
+          if (index % 2) {
+            const span = document.createElement('span');
+            span.className = 'jh__word-glow'; span.dataset.glow = part.toLowerCase(); span.textContent = part;
+            fragment.append(span);
+          } else fragment.append(document.createTextNode(part));
+        });
+        node.replaceWith(fragment);
+      });
+      document.fonts.ready.then(() => {
+        if (!this.isConnected || this.motionPreference.matches || !('IntersectionObserver' in window)) return;
+        this.textObserver = new IntersectionObserver(entries => {
+          const entry = entries[0];
+          if (entry.isIntersecting && entry.intersectionRatio >= .6 && !panel.hidden && !this.textPlayed) {
+            this.textPlayed = true; this.textStopped = false;
+            this.runTextSequence(panel);
+          } else if (!entry.isIntersecting && this.textPlayed) this.stopTextSequence();
+        }, { threshold: [0, .6] });
+        this.textObserver.observe(panel.querySelector('.jh__copy'));
+      });
+    }
+    stopTextSequence() {
+      this.textStopped = true;
+      this.textRun = (this.textRun || 0) + 1;
+      if (this.dataset.motionLoop === 'true') this.textPlayed = false;
+      this.textAnimation?.cancel();
+      clearTimeout(this.repeatTimer);
+      this.repeatResolve?.();
+      this.repeatResolve = null;
+    }
+    async textStep(element, frames, duration, delay = 100) {
+      if (!element || this.textStopped || this.motionPreference.matches || !this.isConnected) return;
+      this.textAnimation = element.animate(frames, { duration: duration / this.motionSpeed, delay: delay / this.motionSpeed, easing: 'ease-in-out', fill: 'none' });
+      await this.textAnimation.finished;
+    }
+    async runTextSequence(panel) {
+      const sequence = this.textRun || 0;
+      try {
+        for (let play = 0; play < this.motionPlays && !this.textStopped && sequence === (this.textRun || 0); play++) {
+        await this.textStep(panel.querySelector('.jh__title-ink'), [
+          { transform: 'scale(1)' }, { transform: 'scale(1.025)', offset: .48 }, { transform: 'scale(1)' }
+        ], 700, 180);
+        const plans = panel.querySelector('.jh__subtitle strong');
+        if (plans) {
+          const subtitle = plans.parentElement;
+          const base = parseFloat(getComputedStyle(plans).letterSpacing) || 0;
+          const peak = base + Math.min(.65, parseFloat(getComputedStyle(plans).fontSize) * .025);
+          const height = subtitle.getBoundingClientRect().height;
+          const savedSpacing = plans.style.letterSpacing;
+          plans.style.letterSpacing = peak + 'px';
+          const fits = subtitle.getBoundingClientRect().height <= height + 1 && subtitle.scrollWidth <= subtitle.clientWidth;
+          plans.style.letterSpacing = savedSpacing;
+          await this.textStep(plans, fits ? [
+            { letterSpacing: base + 'px' }, { letterSpacing: peak + 'px', offset: .5 }, { letterSpacing: base + 'px' }
+          ] : [{ opacity: 1 }, { opacity: .7, offset: .5 }, { opacity: 1 }], 750);
+        }
+        const accent = getComputedStyle(this).getPropertyValue('--jh-accent').trim() || '#F5A477';
+        const glow = [
+          { backgroundColor: `color-mix(in srgb, ${accent} 0%, transparent)`, boxShadow: `0 0 0 color-mix(in srgb, ${accent} 0%, transparent)` },
+          { backgroundColor: `color-mix(in srgb, ${accent} 45%, transparent)`, boxShadow: `0 0 12px color-mix(in srgb, ${accent} 60%, transparent)`, offset: .45 },
+          { backgroundColor: `color-mix(in srgb, ${accent} 0%, transparent)`, boxShadow: `0 0 0 color-mix(in srgb, ${accent} 0%, transparent)` }
+        ];
+        await this.textStep(panel.querySelector('[data-glow="any"]'), glow, 650);
+        await this.textStep(panel.querySelector('[data-glow="yours"]'), glow, 750);
+        if (!this.textStopped && play + 1 < this.motionPlays) {
+          await new Promise(resolve => { this.repeatResolve = resolve; this.repeatTimer = setTimeout(resolve, this.motionGap); });
+          this.repeatResolve = null;
+        }
+        }
+        if (this.dataset.motionLoop !== 'true') this.textObserver?.disconnect();
+      } catch (error) {
+        if (error.name !== 'AbortError') console.error('June text sequence:', error);
+      }
+    }
+    select(key) {
+      if (key !== 'undated' && this.textPlayed) this.stopTextSequence();
+      this.tabs.forEach(tab => { const active = tab.dataset.target === key; tab.setAttribute('aria-selected', String(active)); tab.tabIndex = active ? 0 : -1; });
+      this.panels.forEach(panel => { panel.hidden = panel.dataset.panel !== key; });
+    }
+  });
+}
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "June · Make Room",
+  "tag": "section",
+  "class": "june-make-room-section",
+  "enabled_on": {
+    "templates": [
+      "index"
+    ]
+  },
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The planner edit"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Make room."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "For big plans. And\neveryday ones."
+    },
+    {
+      "type": "text",
+      "id": "body",
+      "label": "Supporting text",
+      "default": "Start any day. Make it yours."
+    },
+    {
+      "type": "header",
+      "content": "Planner imagery"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Optional complete desktop artwork"
+    },
+    {
+      "type": "checkbox",
+      "id": "desktop_scene",
+      "label": "Desktop artwork includes full background",
+      "default": false,
+      "info": "Places wide artwork behind editable text on large screens. Use a portrait mobile image."
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_mobile",
+      "label": "Optional complete mobile artwork"
+    },
+    {
+      "type": "text",
+      "id": "hero_alt",
+      "label": "Complete artwork description",
+      "default": "Undated planners and an open planner spread"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_left",
+      "label": "Left cover"
+    },
+    {
+      "type": "text",
+      "id": "cover_left_alt",
+      "label": "Left cover description",
+      "default": "Serendipity undated planner"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_right",
+      "label": "Right cover"
+    },
+    {
+      "type": "text",
+      "id": "cover_right_alt",
+      "label": "Right cover description",
+      "default": "Quiet The Mind undated planner"
+    },
+    {
+      "type": "image_picker",
+      "id": "inside_image",
+      "label": "Open planner"
+    },
+    {
+      "type": "text",
+      "id": "inside_alt",
+      "label": "Open planner description",
+      "default": "Yearly goals pages inside an undated planner"
+    },
+    {
+      "type": "checkbox",
+      "id": "crop_interior",
+      "label": "Crop catalogue border from interior image",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Destinations"
+    },
+    {
+      "type": "collection",
+      "id": "undated_collection",
+      "label": "Undated collection"
+    },
+    {
+      "type": "collection",
+      "id": "limited_collection",
+      "label": "Limited Edition collection"
+    },
+    {
+      "type": "collection",
+      "id": "life_collection",
+      "label": "All planners and journals"
+    },
+    {
+      "type": "product",
+      "id": "mystery_product",
+      "label": "Mystery Box product"
+    },
+    {
+      "type": "url",
+      "id": "mystery_link",
+      "label": "Fallback Mystery Box link"
+    },
+    {
+      "type": "header",
+      "content": "Alternate tabs"
+    },
+    {
+      "type": "text",
+      "id": "limited_heading",
+      "label": "Limited Edition heading",
+      "default": "A little extra.\nAll yours."
+    },
+    {
+      "type": "textarea",
+      "id": "limited_body",
+      "label": "Limited Edition description",
+      "default": "Undated planners with thoughtful extras. Discover the gifts included with each design."
+    },
+    {
+      "type": "image_picker",
+      "id": "limited_image",
+      "label": "Limited Edition image"
+    },
+    {
+      "type": "checkbox",
+      "id": "limited_scene",
+      "label": "Limited image includes full background",
+      "default": false,
+      "info": "Uses the wide image behind text on desktop. On smaller screens the right side is shown beneath the text."
+    },
+    {
+      "type": "text",
+      "id": "limited_alt",
+      "label": "Limited Edition image description",
+      "default": "Dolce Far Niente Limited Edition undated planner"
+    },
+    {
+      "type": "text",
+      "id": "dated_heading",
+      "label": "2027 heading",
+      "default": "The next chapter is coming."
+    },
+    {
+      "type": "text",
+      "id": "life_heading",
+      "label": "Life Journals heading",
+      "default": "For the chapters that matter."
+    },
+    {
+      "type": "textarea",
+      "id": "life_body",
+      "label": "Life Journals description",
+      "default": "Big days. Fresh starts. Little firsts."
+    },
+    {
+      "type": "header",
+      "content": "Layout and colour"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Desktop stage minimum height",
+      "min": 420,
+      "max": 680,
+      "step": 10,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "mobile_art_height",
+      "label": "Mobile artwork height",
+      "min": 180,
+      "max": 340,
+      "step": 10,
+      "unit": "px",
+      "default": 250
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text and buttons",
+      "default": "#171717"
+    },
+    {
+      "type": "header",
+      "content": "Product image defaults"
+    },
+    {
+      "type": "product",
+      "id": "left_product",
+      "label": "Left planner / interior source"
+    },
+    {
+      "type": "product",
+      "id": "right_product",
+      "label": "Right planner"
+    },
+    {
+      "type": "range",
+      "id": "interior_number",
+      "label": "Interior image number in left product gallery",
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "product",
+      "id": "edition_product",
+      "label": "Limited Edition planner"
+    },
+    {
+      "type": "header",
+      "content": "Typography · Display font"
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Display font",
+      "default": "poppins_n9"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Desktop heading size",
+      "min": 48,
+      "max": 148,
+      "step": 2,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Mobile heading size",
+      "min": 32,
+      "max": 92,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "text",
+      "id": "subheading_emphasis",
+      "label": "Subheading words to bold",
+      "default": "big plans."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "life_link",
+      "name": "Life journal link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Wedding Planners"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Optional image override"
+        },
+        {
+          "type": "checkbox",
+          "id": "unavailable",
+          "label": "Show unavailable notice",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "availability_note",
+          "label": "Availability notice",
+          "default": "Currently unavailable"
+        }
+      ],
+      "limit": 3
+    },
+    {
+      "type": "typography",
+      "name": "Typography controls",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Typography · Font families"
+        },
+        {
+          "type": "checkbox",
+          "id": "custom_text_font",
+          "label": "Use custom text font (otherwise Arial)",
+          "default": true
+        },
+        {
+          "type": "font_picker",
+          "id": "text_font",
+          "label": "Text font",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "paragraph",
+          "content": "Display font applies to headings. Text font applies to descriptions, buttons and tabs. Weight availability depends on the selected font family."
+        },
+        {
+          "type": "header",
+          "content": "Typography · Headings"
+        },
+        {
+          "type": "range",
+          "id": "heading_weight",
+          "label": "Thickness (font weight)",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 900
+        },
+        {
+          "type": "range",
+          "id": "heading_tracking",
+          "label": "Letter spacing",
+          "min": -8,
+          "max": 30,
+          "step": 0.5,
+          "default": -2,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "heading_leading",
+          "label": "Line spacing",
+          "min": 90,
+          "max": 190,
+          "step": 1,
+          "default": 100,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Typography · Subheading"
+        },
+        {
+          "type": "range",
+          "id": "subtitle_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 26,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "subtitle_size_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 22,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "subtitle_weight",
+          "label": "Thickness (font weight)",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "subtitle_tracking",
+          "label": "Letter spacing",
+          "min": -8,
+          "max": 30,
+          "step": 0.5,
+          "default": -2,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "subtitle_leading",
+          "label": "Line spacing",
+          "min": 90,
+          "max": 190,
+          "step": 1,
+          "default": 135,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Typography · Supporting text"
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 18,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "body_size_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 16,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "body_weight",
+          "label": "Thickness (font weight)",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "body_tracking",
+          "label": "Letter spacing",
+          "min": -8,
+          "max": 30,
+          "step": 0.5,
+          "default": -1,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "body_leading",
+          "label": "Line spacing",
+          "min": 90,
+          "max": 190,
+          "step": 1,
+          "default": 150,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Typography · Eyebrow"
+        },
+        {
+          "type": "range",
+          "id": "eyebrow_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 11,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "eyebrow_size_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 10,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "eyebrow_weight",
+          "label": "Thickness (font weight)",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 500
+        },
+        {
+          "type": "range",
+          "id": "eyebrow_tracking",
+          "label": "Letter spacing",
+          "min": -8,
+          "max": 30,
+          "step": 0.5,
+          "default": 12,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "eyebrow_leading",
+          "label": "Line spacing",
+          "min": 90,
+          "max": 190,
+          "step": 1,
+          "default": 150,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Typography · Buttons and links"
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 14,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "button_size_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 14,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "button_weight",
+          "label": "Thickness (font weight)",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "button_tracking",
+          "label": "Letter spacing",
+          "min": -8,
+          "max": 30,
+          "step": 0.5,
+          "default": -1,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "button_leading",
+          "label": "Line spacing",
+          "min": 90,
+          "max": 190,
+          "step": 1,
+          "default": 130,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Typography · Tabs and navigation"
+        },
+        {
+          "type": "range",
+          "id": "nav_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 13,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "nav_size_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 10,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "nav_weight",
+          "label": "Thickness (font weight)",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 500
+        },
+        {
+          "type": "range",
+          "id": "nav_tracking",
+          "label": "Letter spacing",
+          "min": -8,
+          "max": 30,
+          "step": 0.5,
+          "default": -1,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "nav_leading",
+          "label": "Line spacing",
+          "min": 90,
+          "max": 190,
+          "step": 1,
+          "default": 130,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Buttons"
+        },
+        {
+          "type": "color",
+          "id": "button_accent",
+          "label": "Accent colour · buttons and glow",
+          "default": "#F56A28",
+          "info": "Any colour can replace the neon green. Applies to primary buttons, accent arrows and word glows."
+        },
+        {
+          "type": "header",
+          "content": "Text animation"
+        },
+        {
+          "type": "checkbox",
+          "id": "motion_enabled",
+          "label": "Enable text animation",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "motion_speed",
+          "label": "Sequence speed",
+          "min": 50,
+          "max": 200,
+          "step": 10,
+          "default": 100,
+          "unit": "%",
+          "info": "100% is normal. 50% is slower; 200% is twice as fast."
+        },
+        {
+          "type": "range",
+          "id": "motion_plays",
+          "label": "Total plays",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 1,
+          "info": "1 plays once; 3 plays the sequence three times."
+        },
+        {
+          "type": "checkbox",
+          "id": "motion_loop",
+          "label": "Repeat continuously while visible",
+          "default": false,
+          "info": "Overrides Total plays. Stops when the copy leaves view or another tab is selected."
+        },
+        {
+          "type": "range",
+          "id": "motion_gap",
+          "label": "Pause between repeats",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "default": 4,
+          "unit": "s"
+        }
+      ]
+    },
+    {
+      "type": "quick_link",
+      "name": "Mobile category shortcut",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Browse"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Destination"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "June · Make Room",
+      "blocks": [
+        {
+          "type": "typography"
+        },
+        {
+          "type": "life_link"
+        },
+        {
+          "type": "life_link",
+          "settings": {
+            "label": "Rewritable Planners"
+          }
+        },
+        {
+          "type": "life_link",
+          "settings": {
+            "label": "Baby Record Books"
+          }
+        },
+        {
+          "type": "quick_link",
+          "settings": {
+            "label": "Planners",
+            "url": "/collections/undated-yearly-planners"
+          }
+        },
+        {
+          "type": "quick_link",
+          "settings": {
+            "label": "Home décor",
+            "url": "/collections/home-all"
+          }
+        },
+        {
+          "type": "quick_link",
+          "settings": {
+            "label": "Lighting",
+            "url": "/collections/lamps-lighting"
+          }
+        },
+        {
+          "type": "quick_link",
+          "settings": {
+            "label": "Glassware",
+            "url": "/collections/glassware"
+          }
+        },
+        {
+          "type": "quick_link",
+          "settings": {
+            "label": "Tableware",
+            "url": "/collections/dining"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

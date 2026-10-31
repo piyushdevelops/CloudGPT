@@ -1,0 +1,66 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "mystery_style": {"type":"tjs-mystery-style-v4","settings":{}},
+    "mystery_hero": {
+      "type":"tjs-mystery-hero-v4",
+      "blocks": {
+        "trust_1":{"type":"trust","settings":{"title":"VALUE GUARANTEED","copy":"Minimum stated box value."}},
+        "trust_2":{"type":"trust","settings":{"title":"100% THE JUNE SHOP","copy":"Products from our world."}},
+        "trust_3":{"type":"trust","settings":{"title":"SEALED SURPRISE","copy":"No previews. No picking."}},
+        "trust_4":{"type":"trust","settings":{"title":"PACKED WITH CARE","copy":"Securely packed for the reveal."}}
+      },
+      "block_order":["trust_1","trust_2","trust_3","trust_4"],
+      "settings":{}
+    },
+    "mystery_guarantees": {
+      "type":"tjs-mystery-guarantees-v4",
+      "blocks": {
+        "g1":{"type":"guarantee","settings":{"title":"The value is guaranteed.","copy":"Your box meets or exceeds the value promised for your selected tier."}},
+        "g2":{"type":"guarantee","settings":{"title":"Everything is genuinely TJS.","copy":"No anonymous filler added just to make the numbers work."}},
+        "g3":{"type":"guarantee","settings":{"title":"The mystery stays intact.","copy":"No product previews. No choosing. No spoilers."}},
+        "g4":{"type":"guarantee","settings":{"title":"Every box is packed with care.","copy":"Your assortment is selected and secured for the reveal."}}
+      },
+      "block_order":["g1","g2","g3","g4"],
+      "settings":{}
+    },
+    "mystery_value":{"type":"tjs-mystery-value-v4","settings":{}},
+    "mystery_shake":{"type":"tjs-mystery-shake-v4","settings":{}},
+    "mystery_journey": {
+      "type":"tjs-mystery-journey-v4",
+      "blocks": {
+        "j1":{"type":"step","settings":{"title":"PICK YOUR MYSTERY","copy":"Choose the ₹1,499 or ₹1,999 tier."}},
+        "j2":{"type":"step","settings":{"title":"WE PACK THE SURPRISE","copy":"Your mystery assortment is selected and securely packed."}},
+        "j3":{"type":"step","settings":{"title":"YOU DO THE REVEAL","copy":"The mystery ends when the box reaches you."}}
+      },
+      "block_order":["j1","j2","j3"],
+      "settings":{}
+    },
+    "mystery_gift":{"type":"tjs-mystery-gift-v4","settings":{}},
+    "mystery_ugc":{"type":"tjs-mystery-ugc-v4","settings":{"enable":false}},
+    "mystery_faq": {
+      "type":"tjs-mystery-faq-v4",
+      "blocks": {
+        "f1":{"type":"faq","settings":{"question":"What exactly is inside my Mystery Box?","answer":"That part is intentionally kept secret. Each box contains a curated assortment of The June Shop products."}},
+        "f2":{"type":"faq","settings":{"question":"Can I choose what goes inside?","answer":"No. The surprise is part of the Mystery Box experience, so individual products cannot be selected."}},
+        "f3":{"type":"faq","settings":{"question":"Is the value guaranteed?","answer":"Yes. The combined listed value of the products will meet or exceed the value stated for your selected box."}},
+        "f4":{"type":"faq","settings":{"question":"Will every Mystery Box contain the same products?","answer":"Not necessarily. Assortments can vary, which means different customers may receive different combinations."}},
+        "f5":{"type":"faq","settings":{"question":"Can I buy more than one?","answer":"Yes. Product overlaps may occur when multiple boxes are ordered."}},
+        "f6":{"type":"faq","settings":{"question":"Can I send it as a gift?","answer":"Yes. A Mystery Box can be delivered directly to the recipient using their shipping address at checkout."}},
+        "f7":{"type":"faq","settings":{"question":"What happens if something arrives damaged?","answer":"Contact The June Shop support with your order details and the required unpacking evidence, and the team will review it under the applicable damage policy."}}
+      },
+      "block_order":["f1","f2","f3","f4","f5","f6","f7"],
+      "settings":{}
+    },
+    "mystery_final":{"type":"tjs-mystery-final-cta-v4","settings":{}}
+  },
+  "order":["mystery_style","mystery_hero","mystery_guarantees","mystery_value","mystery_shake","mystery_journey","mystery_gift","mystery_ugc","mystery_faq","mystery_final"]
+}

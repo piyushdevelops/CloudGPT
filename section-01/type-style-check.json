@@ -1,0 +1,11 @@
+{
+  "headingFont": "Poppins, sans-serif, Impact, sans-serif",
+  "headingTransform": "none",
+  "headingWeight": "900",
+  "buttonFill": "rgb(213, 255, 70)",
+  "buttonRadius": "999px",
+  "arrowSize": "32px",
+  "arrowFill": "rgb(17, 17, 17)",
+  "emphasis": "big plans.",
+  "fontLoaded": true
+}

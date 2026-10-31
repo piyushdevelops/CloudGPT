@@ -1,0 +1,29 @@
+{
+  "swipeSelected": 2,
+  "keyboardSelected": 1,
+  "transition": "0s",
+  "thumbCount": 3,
+  "selectedCount": 1,
+  "gutters": {
+    "section": {
+      "x": 440,
+      "y": 788,
+      "width": 1680,
+      "height": 914.078125,
+      "top": 788,
+      "right": 2120,
+      "bottom": 1702.078125,
+      "left": 440
+    },
+    "hero": {
+      "x": 440,
+      "y": 79,
+      "width": 1680,
+      "height": 630,
+      "top": 79,
+      "right": 2120,
+      "bottom": 709,
+      "left": 440
+    }
+  }
+}

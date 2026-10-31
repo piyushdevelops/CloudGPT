@@ -1,0 +1,979 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "june_make_room": {
+      "type": "june-make-room",
+      "blocks": {
+        "typography": {
+          "type": "typography",
+          "settings": {
+            "custom_text_font": true,
+            "text_font": "poppins_n4",
+            "heading_weight": 900,
+            "heading_tracking": -4,
+            "heading_leading": 100,
+            "subtitle_size": 26,
+            "subtitle_size_mobile": 22,
+            "subtitle_weight": 400,
+            "subtitle_tracking": -2,
+            "subtitle_leading": 135,
+            "body_size": 18,
+            "body_size_mobile": 16,
+            "body_weight": 400,
+            "body_tracking": -1,
+            "body_leading": 150,
+            "eyebrow_size": 11,
+            "eyebrow_size_mobile": 10,
+            "eyebrow_weight": 500,
+            "eyebrow_tracking": 12,
+            "eyebrow_leading": 150,
+            "button_size": 14,
+            "button_size_mobile": 14,
+            "button_weight": 600,
+            "button_tracking": -1,
+            "button_leading": 130,
+            "nav_size": 13,
+            "nav_size_mobile": 10,
+            "nav_weight": 500,
+            "nav_tracking": -1,
+            "nav_leading": 130,
+            "button_accent": "#ffb790",
+            "motion_enabled": true,
+            "motion_speed": 90,
+            "motion_plays": 2,
+            "motion_loop": true,
+            "motion_gap": 1
+          }
+        },
+        "wedding": {
+          "type": "life_link",
+          "settings": {
+            "label": "Wedding Planners",
+            "collection": "wedding-planners"
+          }
+        },
+        "rewrite": {
+          "type": "life_link",
+          "settings": {
+            "label": "Rewritable Planners",
+            "collection": "rewritable-planners"
+          }
+        },
+        "baby": {
+          "type": "life_link",
+          "settings": {
+            "label": "Baby Record Books",
+            "collection": "baby-record-book"
+          }
+        }
+      },
+      "block_order": [
+        "typography",
+        "wedding",
+        "rewrite",
+        "baby"
+      ],
+      "settings": {
+        "eyebrow": "The planner edit",
+        "heading": "Make room.",
+        "subheading": "For big plans. And\neveryday ones.",
+        "body": "Start any day. Make it yours.",
+        "hero_image": "shopify://shop_images/ChatGPT_Image_Sep_25_2026_04_46_21_PM.png",
+        "desktop_scene": true,
+        "hero_image_mobile": "shopify://shop_images/home_page_image.png",
+        "hero_alt": "Undated planners and an open planner spread",
+        "cover_left_alt": "Serendipity undated planner",
+        "cover_right_alt": "Quiet The Mind undated planner",
+        "inside_alt": "Yearly goals pages inside an undated planner",
+        "crop_interior": true,
+        "undated_collection": "undated-yearly-planners",
+        "limited_collection": "limited-edition",
+        "life_collection": "planners-journals",
+        "mystery_product": "mystery-box-limited-drop",
+        "mystery_link": "",
+        "limited_heading": "A little extra. All yours.",
+        "limited_body": "Undated planners with thoughtful extras. Discover the gifts included with each design.",
+        "limited_image": "shopify://shop_images/june-limited-edition-hero-background-20260928.png",
+        "limited_scene": true,
+        "limited_alt": "Soul on Fleek and floral Limited Edition planners with an open vision board spread",
+        "dated_heading": "The next chapter is coming.",
+        "life_heading": "For the chapters that matter.",
+        "life_body": "Big days. Fresh starts. Little firsts.",
+        "desktop_height": 530,
+        "mobile_art_height": 250,
+        "background": "#fffbf1",
+        "text_color": "#111111",
+        "left_product": "undated-yearly-planner-serendipity-ultimate-sticker-book",
+        "right_product": "undated-yearly-planner-quite-the-mind-ultimate-sticker-book",
+        "interior_number": 10,
+        "edition_product": "limited-edition-undated-planner-dolce-far-niente",
+        "title_font": "poppins_n9",
+        "heading_size": 96,
+        "heading_size_mobile": 64,
+        "subheading_emphasis": "big plans."
+      }
+    },
+    "june_your_year": {
+      "type": "june-your-year",
+      "blocks": {
+        "planner0": {
+          "type": "planner",
+          "settings": {
+            "product": "undated-yearly-planner-too-creative-for-9-to-5-ultimate-sticker-book",
+            "short_name": "Too creative for 9 to 5",
+            "inside_number": 10
+          }
+        },
+        "planner1": {
+          "type": "planner",
+          "settings": {
+            "product": "undated-yearly-planner-too-glam-to-give-a-damn-ultimate-sticker-book",
+            "short_name": "Too glam to give a damn",
+            "inside_number": 10
+          }
+        },
+        "planner2": {
+          "type": "planner",
+          "settings": {
+            "product": "undated-yearly-planner-current-state-on-a-mission-ultimate-sticker-book",
+            "short_name": "On a mission",
+            "inside_number": 8
+          }
+        },
+        "typography": {
+          "type": "typography",
+          "settings": {
+            "font": "poppins_n4",
+            "heading_size": 62,
+            "heading_mobile": 40,
+            "heading_weight": 900,
+            "heading_tracking": -4,
+            "heading_leading": 105,
+            "subheading_size": 26,
+            "subheading_mobile": 21,
+            "subheading_weight": 600,
+            "subheading_tracking": -2,
+            "subheading_leading": 120,
+            "body_size": 16,
+            "body_mobile": 14,
+            "body_weight": 400,
+            "body_tracking": -1,
+            "body_leading": 150,
+            "label_size": 11,
+            "label_mobile": 10,
+            "label_weight": 500,
+            "label_tracking": 12,
+            "label_leading": 150,
+            "button_size": 14,
+            "button_mobile": 13,
+            "button_weight": 600,
+            "button_tracking": -1,
+            "button_leading": 130
+          }
+        }
+      },
+      "block_order": [
+        "planner0",
+        "planner1",
+        "planner2",
+        "typography"
+      ],
+      "settings": {
+        "eyebrow": "Undated yearly planners",
+        "heading": "Your year. Your rules.",
+        "intro": "Three covers. One place to begin.",
+        "collection": "undated-yearly-planners",
+        "inside_heading": "Space for your kind of day.",
+        "inside_body": "Explore the layout before you choose.",
+        "background": "#fffbf1",
+        "ink": "#111111",
+        "accent": "#ffb790",
+        "cover_height": 390,
+        "mobile_height": 280,
+        "motion": true,
+        "speed": 100
+      }
+    },
+    "june_with_extras": {
+      "type": "june-with-extras",
+      "blocks": {
+        "planner0": {
+          "type": "planner",
+          "settings": {
+            "product": "limited-edition-undated-planner-dolce-far-niente",
+            "short_name": "Dolce Far Niente",
+            "scene_number": 3,
+            "scene_alt": "Dolce Far Niente planner with its coordinated accessories",
+            "gift_1": "Matching pocket notebook",
+            "gift_note_1": "",
+            "gift_2": "Personalised alphabet keychain",
+            "gift_note_2": "First letter of your shipping name",
+            "gift_3": "Ultimate Sticker Book · 200+ stickers",
+            "gift_note_3": "",
+            "gift_4": "Canvas bag",
+            "gift_note_4": "",
+            "gift_5": "Yearly calendar easel",
+            "gift_note_5": ""
+          }
+        },
+        "planner1": {
+          "type": "planner",
+          "settings": {
+            "product": "limited-edition-undated-planner-old-ways-dont-open-new-doors",
+            "short_name": "Old Ways Don't Open New Doors",
+            "scene_number": 3,
+            "scene_alt": "Old Ways Don't Open New Doors planner with its coordinated accessories",
+            "gift_1": "Matching pocket notebook",
+            "gift_note_1": "",
+            "gift_2": "Personalised alphabet keychain",
+            "gift_note_2": "First letter of your shipping name",
+            "gift_3": "Ultimate Sticker Book · 200+ stickers",
+            "gift_note_3": "",
+            "gift_4": "Canvas bag",
+            "gift_note_4": "",
+            "gift_5": "Yearly calendar easel",
+            "gift_note_5": ""
+          }
+        },
+        "planner2": {
+          "type": "planner",
+          "settings": {
+            "product": "limited-edition-undated-planner-soul-on-fleek",
+            "short_name": "Soul On Fleek",
+            "scene_number": 3,
+            "scene_alt": "Soul On Fleek planner with its coordinated accessories",
+            "gift_1": "Matching pocket notebook",
+            "gift_note_1": "",
+            "gift_2": "Personalised alphabet keychain",
+            "gift_note_2": "First letter of your shipping name",
+            "gift_3": "Ultimate Sticker Book · 200+ stickers",
+            "gift_note_3": "",
+            "gift_4": "Canvas bag",
+            "gift_note_4": "",
+            "gift_5": "Yearly calendar easel",
+            "gift_note_5": ""
+          }
+        },
+        "planner3": {
+          "type": "planner",
+          "settings": {
+            "product": "limited-edition-undated-planner-remember-why-you-started",
+            "short_name": "Remember Why You Started",
+            "scene_number": 3,
+            "scene_alt": "Remember Why You Started planner with its coordinated accessories",
+            "gift_1": "Matching pocket notebook",
+            "gift_note_1": "",
+            "gift_2": "Pair of quirky socks",
+            "gift_note_2": "",
+            "gift_3": "Ultimate Sticker Book",
+            "gift_note_3": "",
+            "gift_4": "",
+            "gift_note_4": "",
+            "gift_5": "",
+            "gift_note_5": ""
+          }
+        },
+        "typography": {
+          "type": "typography",
+          "settings": {
+            "heading_font": "poppins_n4",
+            "heading_weight": 900,
+            "heading_size": 62,
+            "heading_mobile": 42,
+            "heading_tracking": -4,
+            "heading_leading": 105,
+            "subheading_font": "poppins_n4",
+            "subheading_weight": 600,
+            "subheading_size": 30,
+            "subheading_mobile": 25,
+            "subheading_tracking": -2,
+            "subheading_leading": 120,
+            "body_font": "poppins_n4",
+            "body_weight": 400,
+            "body_size": 16,
+            "body_mobile": 16,
+            "body_tracking": -1,
+            "body_leading": 150,
+            "label_font": "poppins_n4",
+            "label_weight": 500,
+            "label_size": 11,
+            "label_mobile": 10,
+            "label_tracking": 12,
+            "label_leading": 150,
+            "button_font": "poppins_n4",
+            "button_weight": 600,
+            "button_size": 14,
+            "button_mobile": 14,
+            "button_tracking": -1,
+            "button_leading": 130
+          }
+        }
+      },
+      "block_order": [
+        "planner0",
+        "planner1",
+        "planner2",
+        "planner3",
+        "typography"
+      ],
+      "settings": {
+        "eyebrow": "Limited Edition",
+        "heading": "Your planner.",
+        "heading_second": "With extras.",
+        "intro": "An undated planner. <strong>A whole lot of joy.</strong>",
+        "product_caption": "Limited Edition undated planner",
+        "offer_note": "Freebies vary by planner.",
+        "collection": "limited-edition",
+        "background": "#fffbf1",
+        "ink": "#111111",
+        "accent": "#ffb790",
+        "fallback_font": "poppins_n4",
+        "scene_height": 520,
+        "mobile_height": 330,
+        "motion": true,
+        "speed": 100
+      }
+    },
+    "june_next_chapter": {
+      "type": "june-next-chapter",
+      "blocks": {
+        "typography": {
+          "type": "typography",
+          "settings": {
+            "heading_font": "poppins_n4",
+            "heading_weight": 900,
+            "heading_size": 52,
+            "heading_mobile": 34,
+            "heading_tracking": -4,
+            "heading_leading": 105,
+            "year_font": "poppins_n4",
+            "year_weight": 900,
+            "year_size": 150,
+            "year_mobile": 60,
+            "year_tracking": -5,
+            "year_leading": 100,
+            "signup_font": "poppins_n4",
+            "signup_weight": 900,
+            "signup_size": 38,
+            "signup_mobile": 32,
+            "signup_tracking": -4,
+            "signup_leading": 105,
+            "body_font": "poppins_n4",
+            "body_weight": 400,
+            "body_size": 16,
+            "body_mobile": 16,
+            "body_tracking": -1,
+            "body_leading": 150,
+            "button_font": "poppins_n4",
+            "button_weight": 600,
+            "button_size": 14,
+            "button_mobile": 14,
+            "button_tracking": -1,
+            "button_leading": 130
+          }
+        }
+      },
+      "block_order": [
+        "typography"
+      ],
+      "settings": {
+        "eyebrow": "The next chapter",
+        "heading": "Next year.",
+        "heading_second": "Loading…",
+        "caption": "2027 dated planners",
+        "year": "2027",
+        "badge": "Coming soon",
+        "paper_note": "Plans in the making",
+        "teaser_alt": "2027 dated planners — coming soon",
+        "list_label": "The 2027 launch list",
+        "signup_heading": "Get the first look.",
+        "body": "An email when our <strong>2027 planners</strong> launch.",
+        "email_label": "Email address",
+        "placeholder": "you@example.com",
+        "button": "Notify me at launch",
+        "consent": "Sign up for email updates. Unsubscribe anytime.",
+        "success_heading": "You're on the list.",
+        "success_body": "Thanks for signing up. Watch your inbox for updates.",
+        "tag": "2027-planner-launch",
+        "background": "#fffbf1",
+        "accent": "#ffb790",
+        "ink": "#111111",
+        "fallback_font": "poppins_n4",
+        "padding": 44,
+        "mobile_padding": 28,
+        "motion": true,
+        "speed": 100
+      }
+    },
+    "june_inside_discovery": {
+      "type": "june-inside-discovery",
+      "blocks": {
+        "goals": {
+          "type": "page",
+          "settings": {
+            "label": "Goals",
+            "description": "Break your goals into smaller steps.",
+            "image_number": 16,
+            "alt": "Dolce Far Niente planner: goals spread"
+          }
+        },
+        "weekly": {
+          "type": "page",
+          "settings": {
+            "label": "Weekly plans",
+            "description": "Priorities, daily to-dos, wins and lessons.",
+            "image_number": 19,
+            "alt": "Dolce Far Niente planner: weekly plans spread"
+          }
+        },
+        "habits": {
+          "type": "page",
+          "settings": {
+            "label": "Habits",
+            "description": "A little space to notice your everyday routines.",
+            "image_number": 17,
+            "alt": "Dolce Far Niente planner: habits spread"
+          }
+        },
+        "reflection": {
+          "type": "page",
+          "settings": {
+            "label": "Reflection",
+            "description": "Look back on the moments that made your year.",
+            "image_number": 22,
+            "alt": "Dolce Far Niente planner: reflection spread"
+          }
+        },
+        "typography": {
+          "type": "typography",
+          "settings": {
+            "heading_font": "poppins_n4",
+            "heading_weight": 900,
+            "heading_size": 54,
+            "heading_mobile": 40,
+            "heading_tracking": -4,
+            "heading_leading": 105,
+            "title_font": "poppins_n4",
+            "title_weight": 600,
+            "title_size": 22,
+            "title_mobile": 14,
+            "title_tracking": -2,
+            "title_leading": 120,
+            "body_font": "poppins_n4",
+            "body_weight": 400,
+            "body_size": 16,
+            "body_mobile": 16,
+            "body_tracking": -1,
+            "body_leading": 150,
+            "button_font": "poppins_n4",
+            "button_weight": 600,
+            "button_size": 14,
+            "button_mobile": 14,
+            "button_tracking": -1,
+            "button_leading": 130
+          }
+        }
+      },
+      "block_order": [
+        "goals",
+        "weekly",
+        "habits",
+        "reflection",
+        "typography"
+      ],
+      "settings": {
+        "eyebrow": "A look inside",
+        "heading": "Less perfect.",
+        "heading_second": "More personal.",
+        "body": "<p>Room for your plans, scribbles and <strong>everyday.</strong></p>",
+        "product": "limited-edition-undated-planner-dolce-far-niente",
+        "collection": "undated-yearly-planners",
+        "all": "Explore undated planners",
+        "look": "Take a closer look",
+        "shown": "Shown: Dolce Far Niente · Limited Edition undated planner.",
+        "watch": "Watch the flip-through",
+        "close": "Close viewer",
+        "previous": "Previous page",
+        "next": "Next page",
+        "background": "#fffbf1",
+        "ink": "#111111",
+        "accent": "#ffb790",
+        "fallback_font": "poppins_n4",
+        "height": 600,
+        "mobile_height": 330,
+        "motion": true,
+        "duration": 300,
+        "viewer_hint": "Scroll across the page to explore the details."
+      }
+    },
+    "june_other_chapters": {
+      "type": "june-other-chapters",
+      "blocks": {
+        "wedding": {
+          "type": "chapter",
+          "settings": {
+            "label": "Wedding",
+            "heading": "For your next",
+            "heading_second": "big yes.",
+            "body": "<p>Make room for <strong>every wedding detail.</strong></p>",
+            "product": "wedding-planner-we-are-getting-married",
+            "collection": "wedding-planners",
+            "show_shop": true,
+            "shop": "Explore wedding planners",
+            "note": "",
+            "image_number": 2,
+            "alt": "We Are Getting Married wedding planner open to its illustrated introductory spread",
+            "effect": "petals",
+            "write_number": 2,
+            "wipe_number": 3,
+            "background": "#f7e4dd",
+            "decoration": "#d9969b"
+          }
+        },
+        "rewritable": {
+          "type": "chapter",
+          "settings": {
+            "label": "Rewritable",
+            "heading": "Make room for",
+            "heading_second": "what’s next.",
+            "body": "<p>Write it. Wipe it. <strong>Begin again.</strong></p>",
+            "product": "you-got-this-daily-planner-re-writable-planner",
+            "collection": "re-writable-planners",
+            "show_shop": true,
+            "shop": "Explore rewritable planners",
+            "note": "",
+            "image_number": 1,
+            "alt": "Rewritable planning board with marker and duster",
+            "effect": "wipe",
+            "write_number": 2,
+            "wipe_number": 3,
+            "background": "#e8ebdc",
+            "decoration": "#789179"
+          }
+        },
+        "baby": {
+          "type": "chapter",
+          "settings": {
+            "label": "Baby",
+            "heading": "Little firsts.",
+            "heading_second": "Kept forever.",
+            "body": "<p>A place for the moments <strong>you’ll treasure.</strong></p>",
+            "product": "",
+            "collection": "",
+            "show_shop": false,
+            "shop": "Explore wedding planners",
+            "note": "Baby record books are currently unavailable.",
+            "image": "shopify://shop_images/9_716e9fca-5ed5-4327-9c9e-cd94f56c02df.jpg",
+            "image_number": 1,
+            "alt": "A Mother’s Touch baby record book cover showing tiny feet held in a parent’s hands",
+            "effect": "memories",
+            "write_number": 2,
+            "wipe_number": 3,
+            "background": "#f8edd9",
+            "decoration": "#d1a174"
+          }
+        },
+        "typography": {
+          "type": "typography",
+          "settings": {
+            "heading_font": "poppins_n4",
+            "heading_weight": 900,
+            "heading_size": 62,
+            "heading_mobile": 38,
+            "heading_tracking": -4,
+            "heading_leading": 105,
+            "title_font": "poppins_n4",
+            "title_weight": 600,
+            "title_size": 26,
+            "title_mobile": 23,
+            "title_tracking": -2,
+            "title_leading": 120,
+            "body_font": "poppins_n4",
+            "body_weight": 400,
+            "body_size": 18,
+            "body_mobile": 16,
+            "body_tracking": -1,
+            "body_leading": 150,
+            "button_font": "poppins_n4",
+            "button_weight": 600,
+            "button_size": 14,
+            "button_mobile": 14,
+            "button_tracking": -1,
+            "button_leading": 130
+          }
+        }
+      },
+      "block_order": [
+        "wedding",
+        "rewritable",
+        "baby",
+        "typography"
+      ],
+      "settings": {
+        "eyebrow": "Other chapters",
+        "navigation": "Choose your next chapter",
+        "hint": "Scroll to turn the chapter",
+        "pause": "Pause motion",
+        "resume": "Resume motion",
+        "skip": "Skip the story",
+        "scroll": true,
+        "motion": true,
+        "step": 350,
+        "offset": 85,
+        "height": 650,
+        "duration": 350,
+        "fallback_font": "poppins_n4",
+        "background": "#fffbf1",
+        "ink": "#111111",
+        "accent": "#ffb790"
+      }
+    },
+    "june_pick_your_pour": {
+      "type": "june-pick-your-pour",
+      "blocks": {
+        "everyday": {
+          "type": "pour",
+          "settings": {
+            "label": "Everyday",
+            "product": "alpine-timber-glass",
+            "name": "Alpine Timber Glass",
+            "detail": "300 ml · Single glass",
+            "image_number": 1,
+            "alt": "Alpine Timber Glass with a drink on a sunlit table",
+            "focus": 50
+          }
+        },
+        "morning": {
+          "type": "pour",
+          "settings": {
+            "label": "Slow mornings",
+            "product": "ripple-coffee-mug-with-lid-spoon",
+            "name": "Ripple Coffee Mug",
+            "detail": "425 ml · With lid & spoon",
+            "image_number": 1,
+            "alt": "Ripple glass coffee mug on a sunlit table",
+            "focus": 50
+          }
+        },
+        "celebrate": {
+          "type": "pour",
+          "settings": {
+            "label": "Celebrations",
+            "product": "gold-rimmed-clear-heart-champagne-flute-stemware-hammered-style",
+            "name": "Gold-rimmed champagne flutes",
+            "detail": "175 ml each · Set of 2",
+            "image_number": 3,
+            "alt": "A pair of gold-rimmed hammered champagne flutes",
+            "focus": 50
+          }
+        },
+        "typography": {
+          "type": "typography",
+          "settings": {
+            "heading_font": "poppins_n4",
+            "heading_weight": 900,
+            "heading_size": 62,
+            "heading_mobile": 42,
+            "heading_tracking": -4,
+            "heading_leading": 105,
+            "title_font": "poppins_n4",
+            "title_weight": 600,
+            "title_size": 26,
+            "title_mobile": 23,
+            "title_tracking": -2,
+            "title_leading": 120,
+            "body_font": "poppins_n4",
+            "body_weight": 400,
+            "body_size": 18,
+            "body_mobile": 16,
+            "body_tracking": -1,
+            "body_leading": 150,
+            "button_font": "poppins_n4",
+            "button_weight": 600,
+            "button_size": 14,
+            "button_mobile": 14,
+            "button_tracking": -1,
+            "button_leading": 130
+          }
+        }
+      },
+      "block_order": [
+        "everyday",
+        "morning",
+        "celebrate",
+        "typography"
+      ],
+      "settings": {
+        "eyebrow": "Glassware",
+        "heading": "A toast, shaped differently.",
+        "body": "Make the everyday <strong>a little more special.</strong>",
+        "choose": "Pick your pour",
+        "shop": "Shop this glass",
+        "view": "View this glass",
+        "all": "All glassware",
+        "collection": "glassware",
+        "from": "From",
+        "background": "#fffbf1",
+        "ink": "#111111",
+        "accent": "#ffb790",
+        "fallback_font": "poppins_n4",
+        "height": 500,
+        "mobile_height": 340,
+        "motion": true,
+        "speed": 100
+      }
+    },
+    "june_layer_the_table": {
+      "type": "june-layer-the-table",
+      "blocks": {
+        "bowl": {
+          "type": "piece",
+          "settings": {
+            "product": "glossy-finish-gold-rimmed-bowl",
+            "label": "Bowls",
+            "name": "",
+            "detail": "11 × 11 × 6 cm · Single ceramic bowl",
+            "art": "bowl",
+            "width": 51
+          }
+        },
+        "side": {
+          "type": "piece",
+          "settings": {
+            "product": "matte-finish-gold-rimmed-starter-plate",
+            "label": "Side plates",
+            "name": "",
+            "detail": "19 × 19 × 4 cm · Single ceramic plate",
+            "art": "side",
+            "width": 76
+          }
+        },
+        "dinner": {
+          "type": "piece",
+          "settings": {
+            "product": "matte-finish-gold-rimmed-dinner-plate",
+            "label": "Dinner plates",
+            "name": "",
+            "detail": "26 × 26 × 2 cm · Single ceramic plate",
+            "art": "dinner",
+            "width": 100
+          }
+        },
+        "typography": {
+          "type": "typography",
+          "settings": {
+            "heading_font": "poppins_n4",
+            "heading_weight": 900,
+            "heading_size": 54,
+            "heading_mobile": 40,
+            "heading_tracking": -4,
+            "heading_leading": 105,
+            "title_font": "poppins_n4",
+            "title_weight": 600,
+            "title_size": 26,
+            "title_mobile": 23,
+            "title_tracking": -2,
+            "title_leading": 120,
+            "body_font": "poppins_n4",
+            "body_weight": 400,
+            "body_size": 16,
+            "body_mobile": 16,
+            "body_tracking": -1,
+            "body_leading": 150,
+            "button_font": "poppins_n4",
+            "button_weight": 600,
+            "button_size": 14,
+            "button_mobile": 14,
+            "button_tracking": -1,
+            "button_leading": 130
+          }
+        }
+      },
+      "block_order": [
+        "bowl",
+        "side",
+        "dinner",
+        "typography"
+      ],
+      "settings": {
+        "eyebrow": "Kitchen & dining",
+        "heading": "Good taste. Layer by layer.",
+        "body": "<p>Discover the pieces behind <strong>a well-set table.</strong></p>",
+        "shop": "Explore this piece",
+        "all": "Shop the table edit",
+        "collection": "dining",
+        "stacked_label": "Stacked",
+        "open_label": "Unstacked",
+        "hint": "Three pieces. Your kind of table.",
+        "lunch": "lunch-bags-boxes",
+        "lunch_label": "Lunch essentials",
+        "organisation": "the-organised-kitchen",
+        "organisation_label": "Kitchen organisation",
+        "background": "#fffbf1",
+        "ink": "#111111",
+        "accent": "#ffb790",
+        "fallback_font": "poppins_n4",
+        "motion": true,
+        "duration": 500
+      }
+    },
+    "home_banner_swiper_gPUxE8": {
+      "type": "Home-banner-swiper",
+      "blocks": {
+        "category_RPGpxw": {
+          "type": "category",
+          "settings": {
+            "collection": "drinkware",
+            "image": "shopify://shop_images/15_e1974d83-43b8-4175-a627-e6eaf20a6a35.png",
+            "image_alt": "",
+            "title": "",
+            "kicker": "",
+            "subtitle": "",
+            "badge": "",
+            "custom_link": ""
+          }
+        },
+        "category_PCpbgd": {
+          "type": "category",
+          "settings": {
+            "collection": "decor-objects",
+            "image": "shopify://shop_images/2_jpg.jpg",
+            "image_alt": "",
+            "title": "",
+            "kicker": "",
+            "subtitle": "",
+            "badge": "",
+            "custom_link": "https://thejuneshop.com/collections/decor-objects?filter.v.availability=1&filter.p.product_type=Vases"
+          }
+        },
+        "category_L4CJcV": {
+          "type": "category",
+          "settings": {
+            "collection": "lamps-lighting",
+            "image": "shopify://shop_images/1_jpg.jpg",
+            "image_alt": "",
+            "title": "",
+            "kicker": "",
+            "subtitle": "",
+            "badge": "",
+            "custom_link": ""
+          }
+        },
+        "category_KKFReh": {
+          "type": "category",
+          "settings": {
+            "collection": "serveware",
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_10_2026_02_27_34_PM.png",
+            "image_alt": "",
+            "title": "",
+            "kicker": "",
+            "subtitle": "",
+            "badge": "",
+            "custom_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_RPGpxw",
+        "category_PCpbgd",
+        "category_L4CJcV",
+        "category_KKFReh"
+      ],
+      "disabled": true,
+      "name": "TJS category hero",
+      "settings": {
+        "eyebrow": "Customer Satisfaction Is Our Priority",
+        "show_eyebrow_icon": true,
+        "heading_before": "Curated Pieces for",
+        "heading_accent": "Everyday Life",
+        "heading_after": "",
+        "heading_tag": "h1",
+        "heading_font_style": "theme",
+        "enable_accent_switch": true,
+        "accent_switch_delay": 1,
+        "body": "<p>Curated pieces for your home, table, routines and celebrations—chosen to make everyday life feel more considered.</p>",
+        "primary_button_label": "Shop Bestsellers",
+        "primary_button_link": "shopify://collections/new-arrivals",
+        "secondary_button_label": "View All Products",
+        "secondary_button_link": "shopify://collections/all",
+        "show_reviews": true,
+        "google_reviews_url": "https://g.page/r/CUa2zqtTfiO9EAE/review",
+        "open_reviews_new_tab": true,
+        "rating_value": "4.58",
+        "review_heading": "Excellent",
+        "review_label": "Trusted by",
+        "review_count": ": 652,000+ customers",
+        "review_link_text": "Google Reviews",
+        "google_reviews_aria_label": "Read The June Shop reviews on Google",
+        "review_region_label": "Customer reviews",
+        "show_avatar_placeholders": true,
+        "avatar_1": "shopify://shop_images/unnamed_4.png",
+        "avatar_2": "shopify://shop_images/unnamed_3.png",
+        "avatar_3": "shopify://shop_images/unnamed_2.png",
+        "avatar_4": "shopify://shop_images/unnamed_1.png",
+        "avatar_5": "shopify://shop_images/unnamed.png",
+        "show_cx_badge": false,
+        "cx_title": "Need help?",
+        "cx_text": "Real support before and after purchase",
+        "cx_link": "",
+        "card_kicker_label": "Explore the edit",
+        "card_cta_label": "Shop",
+        "show_product_count": true,
+        "product_count_label": "products",
+        "cards_desktop": "1.5",
+        "cards_mobile": "1.5",
+        "card_gap": 16,
+        "show_slider_controls": true,
+        "swipe_hint": "Swipe to explore",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "slider_aria_label": "Shop featured categories",
+        "previous_label": "Previous category",
+        "next_label": "Next category",
+        "content_width": 1480,
+        "left_column_width": 40,
+        "section_min_height": 620,
+        "heading_size": 60,
+        "heading_size_mobile": 38,
+        "card_radius": 18,
+        "image_fit": "cover",
+        "show_top_pattern": true,
+        "background_color": "#ffffff",
+        "text_color": "#16221b",
+        "muted_text_color": "#667069",
+        "accent_color": "#ffca0b",
+        "accent_color_2": "#000000",
+        "button_background": "#ffc35b",
+        "button_text_color": "#000000",
+        "card_background": "#ffffff",
+        "card_text_color": "#172019",
+        "card_muted_color": "#737b75",
+        "border_color": "#dddcd6",
+        "padding_top": 24,
+        "padding_bottom": 24,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    }
+  },
+  "order": [
+    "june_make_room",
+    "june_your_year",
+    "june_with_extras",
+    "june_next_chapter",
+    "june_inside_discovery",
+    "june_other_chapters",
+    "june_pick_your_pour",
+    "june_layer_the_table",
+    "home_banner_swiper_gPUxE8"
+  ]
+}
+

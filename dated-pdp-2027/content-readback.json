@@ -1,0 +1,106 @@
+{
+  "date": "2026-10-25",
+  "themeId": "187527266499",
+  "themeRole": "UNPUBLISHED",
+  "template": "templates/product.june_dated_2027.json",
+  "templateChecksumMd5": "919e7866a2f2c2dedc034c634b971a19",
+  "templateStructuralReadback": true,
+  "productCount": 25,
+  "allProductsDraft": true,
+  "allProductsHaveFeaturedImage": true,
+  "allProductsTemplateSuffix": "june_dated_2027",
+  "variantsPerProduct": 2,
+  "variantPricesInr": {
+    "Add Name": "2099.00",
+    "Without Name": "1999.00"
+  },
+  "content": {
+    "highlights": 4,
+    "insidePageReferences": 6,
+    "verifiedFacts": 13,
+    "faqs": 5,
+    "featureGroups": 4,
+    "dividerCards": 12,
+    "storyQuotes": 1
+  },
+  "assets": [
+    "2027-planner-month-at-a-glance.webp",
+    "2027-planner-monthly-calendar.webp",
+    "2027-planner-weekly-planning.webp",
+    "2027-planner-meal-planner.webp",
+    "2027-planner-habit-tracker.webp",
+    "2027-planner-money-reflection.webp"
+  ],
+  "checks": {
+    "cdnAssetsHttp200": 6,
+    "previewWidths": [
+      1440,
+      393,
+      320
+    ],
+    "previewHttp200": true,
+    "horizontalOverflow": false,
+    "javascriptExceptions": 0,
+    "allInsideImagesLoaded": true,
+    "allFeatureImagesLoaded": true,
+    "themeCheckTargetErrors": 0
+  },
+  "publication": "none",
+  "verifiedSharedSpecifications": {
+    "pages": "286 sides · 131 pages + 12 month dividers",
+    "paper": "100 GSM pages · 200 GSM dividers",
+    "size": "19.5 × 23 × 3.2 cm",
+    "binding": "Gold wiro binding",
+    "cover": "Hardbound",
+    "backPocket": "Included",
+    "stickerBook": "225 stickers · 6 pages",
+    "countryOfOrigin": "India"
+  },
+  "sectionChecksumMd5": "8a4bc9dfa57675cda99173ca93b3641f",
+  "sectionExactReadback": true,
+  "productDescriptionExactReadback": true,
+  "heroSectionChecksumMd5": "b8930b39550095980d7dd45b2545d9e0",
+  "heroSectionExactReadback": true,
+  "premiumPaperPolish": {
+    "dotGrid": true,
+    "layeredShadows": true,
+    "mobileOverflowChecked": true
+  },
+  "preorderSetup": {
+    "activationTag": "June-Preorder-2027",
+    "taggedProducts": 25,
+    "productsRemainDraft": 25,
+    "variantsContinueSelling": 50,
+    "variantsAvailableForSale": 50,
+    "preorderPreviewVerified": true,
+    "preorderButtonEnabled": true,
+    "lineItemProperties": [
+      "Purchase type",
+      "_Pre-order campaign",
+      "Expected dispatch"
+    ],
+    "orderTagFlow": {
+      "status": "active",
+      "workflowId": "01a16f1a-2c5b-72c9-a00d-ea8e01b74d30",
+      "activatedAt": "2026-10-24T23:44:00+05:30",
+      "condition": "At least one order line-item product tag equals June-Preorder-2027",
+      "tagsToAdd": [
+        "Pre-order",
+        "Pre-order-2027"
+      ]
+    },
+    "functionalQa": {
+      "personalisedNameRequired": true,
+      "blankNameBlockedByBrowserValidation": true,
+      "personalisedPriceInr": "2099.00",
+      "standardPriceInr": "1999.00",
+      "standardVariantHidesNameField": true,
+      "phoneViewport": "390x844",
+      "phoneHorizontalOverflow": false,
+      "cartSubmission": "blocked_by_shopify_draft_product",
+      "cartError": "Cannot find variant",
+      "testOrderCreated": false
+    },
+    "expectedDispatch": "10 November 2026"
+  }
+}

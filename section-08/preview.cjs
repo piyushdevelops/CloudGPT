@@ -1,0 +1,14 @@
+const fs=require('node:fs');const {Liquid}=require('./preview-tools/node_modules/liquidjs');
+const engine=new Liquid();
+engine.registerFilter('font_modify',(font,key,weight)=>({...font,weight}));
+engine.registerFilter('font_face',font=>'');
+engine.registerFilter('image_url',url=>url);
+engine.registerFilter('image_tag',(url,...args)=>{const a=Object.fromEntries(args.filter(Array.isArray));return `<img src="${url}" alt="${a.alt||''}" loading="${a.loading||'lazy'}">`;});
+engine.registerFilter('money',n=>'Rs. '+Number(n/100).toLocaleString('en-IN'));
+let code=fs.readFileSync('section-08/june-find-your-glow.liquid','utf8');const schema=JSON.parse(code.split('{% schema %}')[1].split('{% endschema %}')[0]);
+const defaults=settings=>Object.fromEntries(settings.filter(s=>s.id&&s.default!==undefined).map(s=>[s.id,s.type==='font_picker'?{family:'Poppins',fallback_families:'sans-serif'}:s.default]));
+const config=JSON.parse(fs.readFileSync('section-08/section-config.json','utf8'));const products=JSON.parse(fs.readFileSync('section-08/products.json','utf8'));
+const settings={...defaults(schema.settings),...config.settings,collection:{url:'https://thejuneshop.com/collections/lamps-lighting'}};
+const blocks=config.block_order.map((id,i)=>{const block=config.blocks[id];return {id,type:block.type,settings:block.type==='typography'?defaults(schema.blocks.find(b=>b.type==='typography').settings):{...block.settings,scene:'product-'+i+'.jpg',product:{...products[i],price:Number(products[i].variants[0].price)*100,available:true,url:'https://thejuneshop.com/products/'+block.settings.product,featured_image:'product-'+i+'.jpg'}}};});
+code=code.replace(/{% schema %}[\s\S]*?{% endschema %}/,'').replace(/{% (?:style|stylesheet) %}/g,'<style>').replace(/{% end(?:style|stylesheet) %}/g,'</style>').replace('{% javascript %}','<script>').replace('{% endjavascript %}','</script>');
+engine.parseAndRender(code,{section:{id:'local',settings,blocks},request:{design_mode:false}}).then(html=>fs.writeFileSync('section-08/preview.html','<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet"><style>body{margin:0;background:#fffbf1}button{font:inherit}*{box-sizing:border-box}</style></head><body>'+html+'</body></html>'));

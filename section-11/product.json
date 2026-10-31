@@ -1,0 +1,38 @@
+{
+  "id": "gid://shopify/Product/14947746611395",
+  "title": "The June Shop Mystery Box",
+  "vendor": "The June Shop",
+  "status": "ACTIVE",
+  "productType": "Mystery Box",
+  "descriptionHtml": "<p dir=\"auto\" class=\"PDq2pG_selectionAnchorContainer\">You know the value. What’s inside stays a surprise.<span class=\"PDq2pG_selectionAnchor\"></span></p>\n<p dir=\"auto\">The June Shop Mystery Box is a specially curated assortment of TJS favourites, packed together to give you significantly more value than what you pay. Choose your mystery tier, leave the rest to us, and enjoy the reveal when your box arrives.</p>\n<p dir=\"auto\"><strong>Choose your Mystery Box:</strong></p>\n<ul>\n<li>\n<strong>₹1,499 Box</strong> — guaranteed value of <strong>₹3,000+</strong>\n</li>\n<li>\n<strong>₹1,999 Box</strong> — guaranteed value of <strong>₹5,000+</strong>\n</li>\n</ul>\n<p dir=\"auto\">Every box contains genuine The June Shop products selected from across our world of lifestyle, home, gifting, stationery and more. The exact combination is intentionally kept secret, and assortments may vary from box to box.</p>\n<p dir=\"auto\"><strong>What we guarantee:</strong></p>\n<ul>\n<li>Combined value meets or exceeds the stated box value</li>\n<li>100% genuine The June Shop products</li>\n<li>No product selection or previews</li>\n<li>Securely packed for the surprise</li>\n<li>Different boxes may contain different combinations</li>\n</ul>\n<p dir=\"auto\"><strong>Please note:</strong> Mystery Box contents cannot be customised or chosen. If multiple boxes are ordered, some product overlap may be possible.</p>\n<p dir=\"auto\"><strong>The value is guaranteed. The contents are classified.</strong></p>",
+  "tags": [
+    "new-arrivals"
+  ],
+  "totalInventory": 100,
+  "featuredImageUrl": "https://cdn.shopify.com/s/files/1/0177/5579/9606/files/Mysterybox3_0ec5a5ad-b515-4c85-bce7-533434ecc12c.png?v=1790166637",
+  "images": [
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0177/5579/9606/files/Mysterybox3_0ec5a5ad-b515-4c85-bce7-533434ecc12c.png?v=1790166637",
+      "altText": "",
+      "mediaId": "gid://shopify/MediaImage/48548459970755"
+    }
+  ],
+  "totalVariants": 2,
+  "variants": [
+    {
+      "id": "gid://shopify/ProductVariant/54088659075267",
+      "title": "3000",
+      "sku": null,
+      "price": "1499.00",
+      "inventoryQuantity": 50
+    },
+    {
+      "id": "gid://shopify/ProductVariant/54088659108035",
+      "title": "5000",
+      "sku": null,
+      "price": "1999.00",
+      "inventoryQuantity": 50
+    }
+  ],
+  "currencyCode": "INR"
+}

@@ -1,0 +1,28 @@
+mutation ExportProductTemplateAssignments {
+  bulkOperationRunQuery(
+    query: """
+      {
+        products {
+          edges {
+            node {
+              id
+              title
+              productType
+              templateSuffix
+              status
+            }
+          }
+        }
+      }
+    """
+  ) {
+    bulkOperation {
+      id
+      status
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

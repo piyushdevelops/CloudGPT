@@ -1,0 +1,1291 @@
+{
+  "meta": {
+    "themeId": "187527266499",
+    "date": "2026-10-23",
+    "pages": 19
+  },
+  "results": {
+    "desktop:home": {
+      "url": "https://thejuneshop.com/",
+      "status": 200,
+      "error": null,
+      "title": "The June Shop - Lifestyle, Home Decor, Artifacts, Gifting and More",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/",
+      "robots": null,
+      "h1": [
+        "Make room."
+      ],
+      "h1Font": "Poppins, sans-serif, Impact, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 108,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\n\nTHE PLANNER EDIT\n\nMake room.\n\nFor big plans. And\neveryday ones.\n\nStart any day. Make it yours.\n\nShop undated\nUndated\nLimited Edition\n2027 Dated\nComing soon\nLife Journals\nMystery Box\n\nUNDATED YEARLY PLANNERS\n\nYour year. Your rules.\n\nThree covers. One place to begin.\n\nView all undated planners\n01\nToo creative for 9 to 5\n02\nToo glam to give a damn\n03\nOn a mission\nZoom in\n\nINSIDE THE PLANNER\n\nBig plans. Little details.\n\nTake a closer look.\n\nCover\nInside pages\nToo glam to giv",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:newCollection": {
+      "url": "https://thejuneshop.com/collections/new-arrivals",
+      "status": 200,
+      "error": null,
+      "title": "New & Bestsellers | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/collections/new-arrivals",
+      "robots": null,
+      "h1": [
+        "New & Bestsellers"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [
+        {
+          "tag": "A",
+          "class": "tjs-floating-type__chip",
+          "right": 1579
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "right": 1565
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 67,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\n\nTHE JUNE EDIT\n\nNew & Bestsellers\n\nDiscover a rotating edit of recent launches and customer favourites across home, dining, organisation, planning, gifting and personal style.\n\n59\nproducts\nIn stock only\n\nFilters\nSort by\nFeatured\nMost relevant\nBest selling\nAlphabetically, A-Z\nAlphabetically, Z-A\nPrice, low to high\nPrice, high to low\nDate, old to new\nDate, new to old\nAll\nUndated Planners\nEveryday Glassware\nAdult Sunglasses\nCouple Notebooks\nWall Clocks\nDecorative LED Lights\n",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:plannerCollection": {
+      "url": "https://thejuneshop.com/collections/undated-yearly-planners",
+      "status": 200,
+      "error": null,
+      "title": "Undated Planners | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/collections/undated-yearly-planners",
+      "robots": null,
+      "h1": [
+        "Undated Planners"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 67,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\n\nTHE JUNE EDIT\n\nUndated Planners\n\nPlan at your own pace with undated planners for goals, routines, reflection and everyday organisation.\n\n80\nproducts\nIn stock only\n\nFilters\nSort by\nFeatured\nMost relevant\nBest selling\nAlphabetically, A-Z\nAlphabetically, Z-A\nPrice, low to high\nPrice, high to low\nDate, old to new\nDate, new to old\nAll\nUndated Planners\nSwipe for more\n33% off\nUNDATED PLANNERS\nBlessed, Thankful & Focused — Limited Edition Undated Planner\nRs. 1,999\nRs. 2,999\nSTYL",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:homeCollection": {
+      "url": "https://thejuneshop.com/collections/home-all",
+      "status": 200,
+      "error": null,
+      "title": "Home | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/collections/home-all",
+      "robots": null,
+      "h1": [
+        "Home"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 67,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\n\nTHE JUNE EDIT\n\nHome\n\nDiscover design-led pieces for lighting, décor, walls, soft furnishings, fragrance and everyday living—selected to make home feel more considered.\n\n355\nproducts\nIn stock only\n\nFilters\nSort by\nFeatured\nMost relevant\nBest selling\nAlphabetically, A-Z\nAlphabetically, Z-A\nPrice, low to high\nPrice, high to low\nDate, old to new\nDate, new to old\nAll\nVases\nRugs & Carpets\nPhoto Frames\nArtificial Flowers\nRunner Mats\nCushion Covers\nWall Clocks\nPlanters\nSwipe for",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:diningCollection": {
+      "url": "https://thejuneshop.com/collections/dining",
+      "status": 200,
+      "error": null,
+      "title": "Kitchen & Dining | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/collections/dining",
+      "robots": null,
+      "h1": [
+        "Kitchen & Dining"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 65,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\n\nTHE JUNE EDIT\n\nKitchen & Dining\n\nShop design-led pieces for serving, dining, drinks, lunch routines, kitchen storage and table styling.\n\n455\nproducts\nIn stock only\n\nFilters\nSort by\nFeatured\nMost relevant\nBest selling\nAlphabetically, A-Z\nAlphabetically, Z-A\nPrice, low to high\nPrice, high to low\nDate, old to new\nDate, new to old\nAll\nStarter & Snack Plates\nDinner Plates\nServing Platters\nServing Bowls\nBowls\nEveryday Glassware\nCoffee Mugs\nNapkin Rings & Holders\nSwipe for more",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:plannerProduct": {
+      "url": "https://thejuneshop.com/products/limited-edition-undated-planner-la-vie-est-belle",
+      "status": 200,
+      "error": null,
+      "title": "La Vie Est Belle — Limited Edition Undated Planner | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/products/limited-edition-undated-planner-la-vie-est-belle",
+      "robots": null,
+      "h1": [
+        "La Vie Est Belle — Limited Edition Undated Planner"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide hdt-product__media-item",
+          "right": 1884
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-ratio hdt-product__media",
+          "right": 1884
+        },
+        {
+          "tag": "IMG",
+          "class": "",
+          "right": 1884
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide hdt-product__media-item",
+          "right": 2474
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 129,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\nHome\nLa Vie Est Belle — Limited Edition Undated Planner\n★★★★★\n4.9/5\nloved by 175,000+ happy planners\nIndia’s Most Loved\nLa Vie Est Belle — Limited Edition Undated Planner\nCusom Design Specific Gifting Box\n5 Freebies\nFree Sticker Book\nThe planner that starts whenever you do.\nAn undated life planner made for goals, routines, dreams, affirmations, travel plans, reflections, and everyday main-character moments.\n₹2,999\n₹2,999\nPrice Drop\nCHOOSE YOUR COVER, TO MATCH YOUR VIBE\nSe",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:glassProduct": {
+      "url": "https://thejuneshop.com/products/gold-rimmed-rose-heart-champagne-flute-stemware",
+      "status": 200,
+      "error": null,
+      "title": "Gold Rimmed Rose Heart Champagne Flute Stemware | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/products/gold-rimmed-rose-heart-champagne-flute-stemware",
+      "robots": null,
+      "h1": [
+        "Gold Rimmed Rose Heart Champagne Flute Stemware"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide hdt-product__media-item",
+          "right": 2015
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-ratio hdt-product__media",
+          "right": 2015
+        },
+        {
+          "tag": "IMG",
+          "class": "",
+          "right": 2015
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide hdt-product__media-item",
+          "right": 2670
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 43,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\nHome\nGold Rimmed Rose Heart Champagne Flute Stemware\nGold Rimmed Rose Heart Champagne Flute Stemware\n₹2,399\n₹2,399\nPrice Drop\nSet Of\n2\n2\nSelected option qualifies for free shipping..\n2\nGLASSES\nSet of 2\nPerfect for two\n₹999\n₹2,399\n₹500 per glass\nMOST POPULAR\n4\nGLASSES\nSet of 4\nMade for sharing\n₹1,798\n₹4,798\n₹450 per glass\nBEST VALUE\n6\nGLASSES\nSet of 6\nBest for hosting\n₹2,398\n₹7,197\n₹400 per glass\nQuantity\n−\n+\nADD TO CART\nAdd now to unlock\nfree shipping\nNeed quick help befo",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:mysteryProduct": {
+      "url": "https://thejuneshop.com/products/mystery-box-limited-drop",
+      "status": 200,
+      "error": null,
+      "title": "The June Shop Mystery Box",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/products/mystery-box-limited-drop",
+      "robots": null,
+      "h1": [
+        "YOU KNOW\n          THE VALUE.\n          NOT WHAT’S\n          INSIDE."
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 20,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\nDROP / 001\nCONTENTS: CLASSIFIED\nTJS / MYSTERY DROP / 001\nYOU KNOW\nTHE VALUE.\nNOT WHAT’S\nINSIDE.\n\nA box of TJS favourites. What’s inside stays secret until you open it.\n\nCHOOSE YOUR MYSTERY\nTap a box to select\n01\n✓\nTHE MYSTERY BOX\n₹1,499\n₹3,000+ VALUE\nSAVE ₹1,501+\n02\nMORE VALUE\n✓\nBIGGER MYSTERY\n₹1,999\n₹5,000+ VALUE\nSAVE ₹3,001+\nYOU PAY\n₹1,499\nYOU GET\n₹3,000+\nYOU SAVE\n₹1,501+\nUNLOCK MY BOX\nVALUE GUARANTEED\nMinimum stated box value.\n100% THE JUNE SHOP\nProducts from our world",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:bathProduct": {
+      "url": "https://thejuneshop.com/products/grey-zenstone-ultra-absorbent-bath-mat-secure-grip-eco-friendly",
+      "status": 200,
+      "error": null,
+      "title": "ZenStone Ultra-Absorbent Bath Mat - Marble Grey | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/products/grey-zenstone-ultra-absorbent-bath-mat-secure-grip-eco-friendly",
+      "robots": null,
+      "h1": [
+        "ZenStone Ultra-Absorbent Bath Mat - Marble Grey | Secure Grip | Eco-Friendly"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide hdt-product__media-item",
+          "right": 2015
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-ratio hdt-product__media",
+          "right": 2015
+        },
+        {
+          "tag": "IMG",
+          "class": "",
+          "right": 2015
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide hdt-product__media-item",
+          "right": 2670
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 32,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\nHome\nZenStone Ultra-Absorbent Bath Mat - Marble Grey | Secure Grip | Eco-Friendly\nZenStone Ultra-Absorbent Bath Mat - Marble Grey | Secure Grip | Eco-Friendly\n₹3,399\n₹3,399\nPrice Drop\nQuantity\n−\n+\nADD TO CART\nAdd now to unlock\nfree shipping\nNeed quick help before you order?\nLIVE\nChat with us for product details, delivery timelines, offers or bulk gifting.\nCHAT ON WHATSAPP →\nUsually replies faster during\n9 AM–6 PM.\nZenStone Ultra-Absorbent Bath Mat - Marble Grey | Secure G",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:contact": {
+      "url": "https://thejuneshop.com/pages/contact-us",
+      "status": 200,
+      "error": null,
+      "title": "Contact Us – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/pages/contact-us",
+      "robots": null,
+      "h1": [],
+      "h1Font": null,
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 19,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\n\n\n\n\nRegistered Office\n\nJUNE RETAIL PRIVATE LIMITED\nEN-22, 1st Floor\nSalt Lake City, Sector 5\nKolkata - 700091\n\n\n\n\n\n\nPhone\n+917003079822\n\n\n\n\n\n\nEmail Address\nsales@thejuneshop.com\nA little more June, every day.\nFind us on Instagram\nExplore\nPlanners\nWedding & memory planners\nHome décor\nLighting\nKitchen & dining\nMystery Box\nHere to help\nContact us\nFAQs\nShipping\nReturns\nTrack order\nEmail us\nAbout The June Shop\nOur story\nFollow on Instagram\nWhatsApp us\n\nFor your plans.\nAnd ever",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:faq": {
+      "url": "https://thejuneshop.com/pages/faqs",
+      "status": 200,
+      "error": null,
+      "title": "Frequently Asked Questions – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/pages/faqs",
+      "robots": null,
+      "h1": [],
+      "h1Font": null,
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 19,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\nABOUT JUNE SHOP\n\nWhat products does June Shop sell?\nWe specialize in all day-to-day needs like coin purses, water bottles, character pens, neck pillows, coffee mugs, pencil pouches, notebooks, pencils, colour pencils, soap dispensers, flasks, scented candles, optical cases, shopper bags, eye masks, soft towels, humidifiers that have knowingly or unknowingly become a part of our daily lives at home, office, school or college. We make sure that you have plenty of variations",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:story": {
+      "url": "https://thejuneshop.com/pages/our-story",
+      "status": 200,
+      "error": null,
+      "title": "Our Story – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/pages/our-story",
+      "robots": null,
+      "h1": [],
+      "h1Font": null,
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 23,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\nA little more June, every day.\nFind us on Instagram\nExplore\nPlanners\nWedding & memory planners\nHome décor\nLighting\nKitchen & dining\nMystery Box\nHere to help\nContact us\nFAQs\nShipping\nReturns\nTrack order\nEmail us\nAbout The June Shop\nOur story\nFollow on Instagram\nWhatsApp us\n\nFor your plans.\nAnd everything around them.\n\nBack to top\n↑\nNew finds & June Shop news\n+\nTHE JUNE SHOP.\n\nPay your way.\n\nUPI\nPaytm\nVisa\nMastercard\nNet banking\n\nAvailable options are shown at checkout.\n\nDe",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:shipping": {
+      "url": "https://thejuneshop.com/pages/shipping-delivery",
+      "status": 200,
+      "error": null,
+      "title": "Shipping & Delivery – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/pages/shipping-delivery",
+      "robots": null,
+      "h1": [],
+      "h1Font": null,
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 19,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\n\nThe June Shop is currently shipping all over India. At TJS we understand how important it is to receive your purchased products in the finest condition, and on time. Know this - we work around the clock to try and get you your products as soon as possible.\n\n ** The customer should reach out within 48hrs of delivery along with the image (Post 48 hours we will not be able to entertain any complaints). If the damage is reported within 48 hours; TJS will take action accordin",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:returns": {
+      "url": "https://thejuneshop.com/pages/return-and-refund-policy",
+      "status": 200,
+      "error": null,
+      "title": "Returns & Refund – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/pages/return-and-refund-policy",
+      "robots": null,
+      "h1": [],
+      "h1Font": null,
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 19,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\n\nReturns & Refunds\n\nWe take the utmost care while packing your order & our quality check & processing teams check & dispatch your order carefully. In the unlikely event that your merchandise arrives damaged, please send us a photo of the damaged product and box within 2 Days of receiving your order to sales@thejuneshop.com. Our support team will resolve your issue with a replacement or store credit.\n\nYou may not be completely happy with your purchase & for such instances,",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:search": {
+      "url": "https://thejuneshop.com/search",
+      "status": 200,
+      "error": null,
+      "title": "Search: 357 results found for \"planner\" – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/search?q=planner&type=product",
+      "robots": null,
+      "h1": [
+        "“planner”"
+      ],
+      "h1Font": "Poppins, serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 67,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\n“planner”\nFilters\nSort by\nRelevance\nPrice, low to high\nPrice, high to low\nSave Rs. 2,100\nDATED PLANNERS\nCreate Your Own Sunshine — 2026 Dated Planner\nRs. 1,099\nRs. 3,199\nSTYLE\nCLASSIC\nNAME CUSTOMISATION\nSave Rs. 2,100\nDATED PLANNERS\nDo It For The Plot — 2026 Dated Planner\nRs. 1,099\nRs. 3,199\nSTYLE\nCLASSIC\nNAME CUSTOMISATION\nSave Rs. 1,500\nREUSABLE PLANNERS\nOne Day At A Time — Rewritable Planner\nRs. 699\nRs. 2,199\nDESIGNED FOR\nREUSABLE PLANNING\nSave Rs. 300\nUNDATED PLANNERS",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:cart": {
+      "url": "https://thejuneshop.com/cart",
+      "status": 200,
+      "error": null,
+      "title": "Your Shopping Cart – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/cart",
+      "robots": null,
+      "h1": [
+        "Shopping Cart"
+      ],
+      "h1Font": "Poppins, serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [
+        {
+          "tag": "HDT-CARD-PRODUCT",
+          "class": "hdt-card-product hdt-slider__slide hdt-pr-style1",
+          "right": 1731
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-card-product__wrapper",
+          "right": 1731
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-card-product__media hdt-relative hdt-oh",
+          "right": 1731
+        },
+        {
+          "tag": "A",
+          "class": "hdt-card-product__media-wrapp hdt-ratio",
+          "right": 1731
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 39,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\nShopping Cart\nYour cart is empty\nYou may check out all the available products and buy some in the shop\nReturn to shop\nYou may also like\nAdd to Wishlist\nQuick view\nCute Teddy Bear Plush Toy\nRegular price\nRs. 999\nSale price\nRs. 299\nChoose options\nAdd to Wishlist\nQuick view\nFun Expressive Teddy Bear\nRegular price\nRs. 799\nSale price\nRs. 299\nChoose options\nAdd to Wishlist\nQuick view\nThe Luxe Bear Wallet\nRegular price\nRs. 1,199\nSale price\nRs. 399\nBlack\nRed\nGreen\nBrown\nAdd to Wi",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:blog": {
+      "url": "https://thejuneshop.com/blogs/june-shop",
+      "status": 200,
+      "error": null,
+      "title": "TJS Blogs – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/blogs/june-shop",
+      "robots": null,
+      "h1": [
+        "Blog Grid"
+      ],
+      "h1Font": "Poppins, serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 69,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\nBlog Grid\nHome  TJS Blogs\nUnveiling The June Shop's Voyage Insulated Mugs\nRead more\nChoose the Perfect Lunch Box for Your Office Needs\nRead more\nOrganize Your Vanity in Style: 7 Versatile Solutions for Storing Your Makeup\nRead more\n8 Romantic Bedroom Decor Ideas For Couples\nRead more\n6 Creative Ways To Plan Your 2024 With A Yearly Planner\nRead more\nMeal Prep Ideas\nRead more\nGive Your Home A Cohesive Look This Year\nRead more\nBest Food Container To Pack Lunch\nRead more\nCutl",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:article": {
+      "url": "https://thejuneshop.com/blogs/june-shop/detailed-undated-yearly-planners-for-the-new-year",
+      "status": 200,
+      "error": null,
+      "title": "Detailed Undated Yearly Planners - for The New Year – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/blogs/june-shop/detailed-undated-yearly-planners-for-the-new-year",
+      "robots": null,
+      "h1": [
+        "Detailed Undated Yearly Planners - for The New Year"
+      ],
+      "h1Font": "Poppins, serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide",
+          "right": 1847
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-article hdt-article-style-1 hdt-reveal--offscreen",
+          "right": 1847
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-article-inner",
+          "right": 1847
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-article-thumb hdt-relative hdt-oh",
+          "right": 1847
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 33,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\nTJS Blogs\nDetailed Undated Yearly Planners - for The New Year\nby Piyush Jollyon Nov 20\n\nMost of us today are multi-taskers. From managing office meetings and deadlines to buying groceries, paying rent, looking after yourself and your loved ones, a lot of thoughts and tasks keep us engaged throughout the day. The real trick behind having a stress-free life lies in planning and scheduling your work as per your priority. This is where Daily Planners come in handy to plan imp",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "desktop:notFound": {
+      "url": "https://thejuneshop.com/pages/this-page-does-not-exist-tjs-audit",
+      "status": 404,
+      "error": null,
+      "title": "404 Not Found – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/404",
+      "robots": null,
+      "h1": [
+        "404"
+      ],
+      "h1Font": "Poppins, serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 1440,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 19,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "Explore\nTHE JUNE SHOP\n0\n404\n\nOops...That link is broken.\n\nSorry for the inconvenience. Go to our homepage or check out our latest collections.\n\nShop now\nA little more June, every day.\nFind us on Instagram\nExplore\nPlanners\nWedding & memory planners\nHome décor\nLighting\nKitchen & dining\nMystery Box\nHere to help\nContact us\nFAQs\nShipping\nReturns\nTrack order\nEmail us\nAbout The June Shop\nOur story\nFollow on Instagram\nWhatsApp us\n\nFor your plans.\nAnd everything around them.\n\nBack to top\n↑\nNew finds & Ju",
+      "jsErrors": [],
+      "networkErrors": [
+        {
+          "status": 404,
+          "url": "https://thejuneshop.com/pages/this-page-does-not-exist-tjs-audit"
+        }
+      ]
+    },
+    "mobile:home": {
+      "url": "https://thejuneshop.com/",
+      "status": 200,
+      "error": null,
+      "title": "The June Shop - Lifestyle, Home Decor, Artifacts, Gifting and More",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/",
+      "robots": null,
+      "h1": [
+        "Make room."
+      ],
+      "h1Font": "Poppins, sans-serif, Impact, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [
+        {
+          "tag": "BUTTON",
+          "class": "ju__cover",
+          "right": 597
+        },
+        {
+          "tag": "SPAN",
+          "class": "ju__cover-art",
+          "right": 582
+        },
+        {
+          "tag": "IMG",
+          "class": "",
+          "right": 582
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 108,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\nShop by category\n\nTHE PLANNER EDIT\n\nMake room.\n\nFor big plans. And\neveryday ones.\n\nStart any day. Make it yours.\n\nShop undated\nUndated\nLimited Edition\n2027 Dated\nComing soon\nLife Journals\nMystery Box\n\nUNDATED YEARLY PLANNERS\n\nYour year. Your rules.\nView all\nToo glam to give a damn\n\nFrom\n₹\n1,599\n\nExplore this planner\nCompare the three\nDelivery details\nReturns policy\nZoom in\n\nINSIDE THE PLANNER\n\nBig plans. Little details.\n\nTake a closer look.\n\nCover\nInside pages\n\nLIMITED EDITION\n\nYou",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:newCollection": {
+      "url": "https://thejuneshop.com/collections/new-arrivals",
+      "status": 200,
+      "error": null,
+      "title": "New & Bestsellers | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/collections/new-arrivals",
+      "robots": null,
+      "h1": [
+        "New & Bestsellers"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [
+        {
+          "tag": "A",
+          "class": "tjs-final-collection__tab",
+          "right": 436
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "right": 432
+        },
+        {
+          "tag": "A",
+          "class": "tjs-final-collection__tab",
+          "right": 569
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "right": 565
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 67,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\n\nTHE JUNE EDIT\n\nNew & Bestsellers\n\nDiscover a rotating edit of recent launches and customer favourites across home, dining, organisation, planning, gifting and personal style.\n\n59\nproducts\nIn stock only\n\nFilters\nSort by\nFeatured\nMost relevant\nBest selling\nAlphabetically, A-Z\nAlphabetically, Z-A\nPrice, low to high\nPrice, high to low\nDate, old to new\nDate, new to old\nAll\nUndated Planners\nEveryday Glassware\nAdult Sunglasses\nCouple Notebooks\nWall Clocks\nDecorative LED Lights\nWine & Cha",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:plannerCollection": {
+      "url": "https://thejuneshop.com/collections/undated-yearly-planners",
+      "status": 200,
+      "error": null,
+      "title": "Undated Planners | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/collections/undated-yearly-planners",
+      "robots": null,
+      "h1": [
+        "Undated Planners"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [
+        {
+          "tag": "SPAN",
+          "class": "tjs-product-card__image-slide tjs-product-card__image-slide--secondary",
+          "right": 568
+        },
+        {
+          "tag": "IMG",
+          "class": "tjs-product-card__image tjs-product-card__image--secondary",
+          "right": 568
+        },
+        {
+          "tag": "SPAN",
+          "class": "tjs-product-card__image-slide tjs-product-card__image-slide--secondary",
+          "right": 569
+        },
+        {
+          "tag": "IMG",
+          "class": "tjs-product-card__image tjs-product-card__image--secondary",
+          "right": 569
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 67,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\n\nTHE JUNE EDIT\n\nUndated Planners\n\nPlan at your own pace with undated planners for goals, routines, reflection and everyday organisation.\n\n80\nproducts\nIn stock only\n\nFilters\nSort by\nFeatured\nMost relevant\nBest selling\nAlphabetically, A-Z\nAlphabetically, Z-A\nPrice, low to high\nPrice, high to low\nDate, old to new\nDate, new to old\nAll\nUndated Planners\nSwipe for more\n33% off\nUNDATED PLANNERS\nBlessed, Thankful & Focused — Limited Edition Undated Planner\nRs. 1,999\nRs. 2,999\nSTYLE\nCLASSIC\n",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:homeCollection": {
+      "url": "https://thejuneshop.com/collections/home-all",
+      "status": 200,
+      "error": null,
+      "title": "Home | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/collections/home-all",
+      "robots": null,
+      "h1": [
+        "Home"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [
+        {
+          "tag": "A",
+          "class": "tjs-final-collection__tab",
+          "right": 435
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "right": 431
+        },
+        {
+          "tag": "A",
+          "class": "tjs-final-collection__tab",
+          "right": 534
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "right": 530
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 67,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\n\nTHE JUNE EDIT\n\nHome\n\nDiscover design-led pieces for lighting, décor, walls, soft furnishings, fragrance and everyday living—selected to make home feel more considered.\n\n355\nproducts\nIn stock only\n\nFilters\nSort by\nFeatured\nMost relevant\nBest selling\nAlphabetically, A-Z\nAlphabetically, Z-A\nPrice, low to high\nPrice, high to low\nDate, old to new\nDate, new to old\nAll\nVases\nRugs & Carpets\nPhoto Frames\nArtificial Flowers\nRunner Mats\nCushion Covers\nWall Clocks\nPlanters\nSwipe for more\n68% ",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:diningCollection": {
+      "url": "https://thejuneshop.com/collections/dining",
+      "status": 200,
+      "error": null,
+      "title": "Kitchen & Dining | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/collections/dining",
+      "robots": null,
+      "h1": [
+        "Kitchen & Dining"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [
+        {
+          "tag": "A",
+          "class": "tjs-final-collection__tab",
+          "right": 409
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "right": 405
+        },
+        {
+          "tag": "A",
+          "class": "tjs-final-collection__tab",
+          "right": 515
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "right": 511
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 65,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\n\nTHE JUNE EDIT\n\nKitchen & Dining\n\nShop design-led pieces for serving, dining, drinks, lunch routines, kitchen storage and table styling.\n\n455\nproducts\nIn stock only\n\nFilters\nSort by\nFeatured\nMost relevant\nBest selling\nAlphabetically, A-Z\nAlphabetically, Z-A\nPrice, low to high\nPrice, high to low\nDate, old to new\nDate, new to old\nAll\nStarter & Snack Plates\nDinner Plates\nServing Platters\nServing Bowls\nBowls\nEveryday Glassware\nCoffee Mugs\nNapkin Rings & Holders\nSwipe for more\n64% off\nG",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:plannerProduct": {
+      "url": "https://thejuneshop.com/products/limited-edition-undated-planner-la-vie-est-belle",
+      "status": 200,
+      "error": null,
+      "title": "La Vie Est Belle — Limited Edition Undated Planner | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/products/limited-edition-undated-planner-la-vie-est-belle",
+      "robots": null,
+      "h1": [
+        "La Vie Est Belle — Limited Edition Undated Planner"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": true,
+      "scrollWidth": 397,
+      "overflowCandidates": [
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide hdt-product__media-item",
+          "right": 741
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-ratio hdt-product__media",
+          "right": 741
+        },
+        {
+          "tag": "IMG",
+          "class": "",
+          "right": 741
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide hdt-product__media-item",
+          "right": 1104
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 129,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\nHome\nLa Vie Est Belle — Limited Edition Undated Planner\n1 / \nof\n44\n★★★★★\n4.9/5\nloved by 175,000+ happy planners\nIndia’s Most Loved\nLa Vie Est Belle — Limited Edition Undated Planner\nCusom Design Specific Gifting Box\n5 Freebies\nFree Sticker Book\nThe planner that starts whenever you do.\nAn undated life planner made for goals, routines, dreams, affirmations, travel plans, reflections, and everyday main-character moments.\n₹2,999\n₹2,999\nPrice Drop\nCHOOSE YOUR COVER, TO MATCH YOUR VIBE\nS",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:glassProduct": {
+      "url": "https://thejuneshop.com/products/gold-rimmed-rose-heart-champagne-flute-stemware",
+      "status": 200,
+      "error": null,
+      "title": "Gold Rimmed Rose Heart Champagne Flute Stemware | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/products/gold-rimmed-rose-heart-champagne-flute-stemware",
+      "robots": null,
+      "h1": [
+        "Gold Rimmed Rose Heart Champagne Flute Stemware"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide hdt-product__media-item",
+          "right": 741
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-ratio hdt-product__media",
+          "right": 741
+        },
+        {
+          "tag": "IMG",
+          "class": "",
+          "right": 741
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide hdt-product__media-item",
+          "right": 1104
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 43,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\nHome\nGold Rimmed Rose Heart Champagne Flute Stemware\n1 / \nof\n10\nGold Rimmed Rose Heart Champagne Flute Stemware\n₹2,399\n₹2,399\nPrice Drop\nSet Of\n2\n2\nSelected option qualifies for free shipping..\n2\nGLASSES\nSet of 2\nPerfect for two\n₹999\n₹2,399\n₹500 per glass\nMOST POPULAR\n4\nGLASSES\nSet of 4\nMade for sharing\n₹1,798\n₹4,798\n₹450 per glass\nBEST VALUE\n6\nGLASSES\nSet of 6\nBest for hosting\n₹2,398\n₹7,197\n₹400 per glass\nQuantity\n−\n+\nADD TO CART\nAdd now to unlock\nfree shipping\nNeed quick help bef",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:mysteryProduct": {
+      "url": "https://thejuneshop.com/products/mystery-box-limited-drop",
+      "status": 200,
+      "error": null,
+      "title": "The June Shop Mystery Box",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/products/mystery-box-limited-drop",
+      "robots": null,
+      "h1": [
+        "YOU KNOW\n          THE VALUE.\n          NOT WHAT’S\n          INSIDE."
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 20,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\nDROP / 001\nCONTENTS: CLASSIFIED\nTJS / MYSTERY DROP / 001\nYOU KNOW\nTHE VALUE.\nNOT WHAT’S\nINSIDE.\n\nA box of TJS favourites. What’s inside stays secret until you open it.\n\nCHOOSE YOUR MYSTERY\nTap a box to select\n01\n✓\nTHE MYSTERY BOX\n₹1,499\n₹3,000+ VALUE\nSAVE ₹1,501+\n02\nMORE VALUE\n✓\nBIGGER MYSTERY\n₹1,999\n₹5,000+ VALUE\nSAVE ₹3,001+\nYOU PAY\n₹1,499\nYOU GET\n₹3,000+\nYOU SAVE\n₹1,501+\nSLIDE TO UNLOCK\n→\nVALUE GUARANTEED\nMinimum stated box value.\n100% THE JUNE SHOP\nProducts from our world.\nSEAL",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:bathProduct": {
+      "url": "https://thejuneshop.com/products/grey-zenstone-ultra-absorbent-bath-mat-secure-grip-eco-friendly",
+      "status": 200,
+      "error": null,
+      "title": "ZenStone Ultra-Absorbent Bath Mat - Marble Grey | The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/products/grey-zenstone-ultra-absorbent-bath-mat-secure-grip-eco-friendly",
+      "robots": null,
+      "h1": [
+        "ZenStone Ultra-Absorbent Bath Mat - Marble Grey | Secure Grip | Eco-Friendly"
+      ],
+      "h1Font": "Poppins, sans-serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide hdt-product__media-item",
+          "right": 741
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-ratio hdt-product__media",
+          "right": 741
+        },
+        {
+          "tag": "IMG",
+          "class": "",
+          "right": 741
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide hdt-product__media-item",
+          "right": 1104
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 32,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\nHome\nZenStone Ultra-Absorbent Bath Mat - Marble Grey | Secure Grip | Eco-Friendly\n1 / \nof\n6\nZenStone Ultra-Absorbent Bath Mat - Marble Grey | Secure Grip | Eco-Friendly\n₹3,399\n₹3,399\nPrice Drop\nQuantity\n−\n+\nADD TO CART\nAdd now to unlock\nfree shipping\nNeed quick help before you order?\nLIVE\nChat with us for product details, delivery timelines, offers or bulk gifting.\nCHAT ON WHATSAPP →\nUsually replies faster during\n9 AM–6 PM.\nRs. 1,099\nI18n Error: Missing interpolation value \"product",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:contact": {
+      "url": "https://thejuneshop.com/pages/contact-us",
+      "status": 200,
+      "error": null,
+      "title": "Contact Us – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/pages/contact-us",
+      "robots": null,
+      "h1": [],
+      "h1Font": null,
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 19,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\n\n\n\n\nRegistered Office\n\nJUNE RETAIL PRIVATE LIMITED\nEN-22, 1st Floor\nSalt Lake City, Sector 5\nKolkata - 700091\n\n\n\n\n\n\nPhone\n+917003079822\n\n\n\n\n\n\nEmail Address\nsales@thejuneshop.com\nA little more June, every day.\nExplore\n+\nHere to help\n+\nAbout The June Shop\n+\nNew finds & June Shop news\n+\nInstagram\nBack to top\n↑\n\nPay your way.\n\nUPI\nPaytm\nVisa\nMastercard\nNet banking\n\nAvailable options are shown at checkout.\n\nDeliver to\nBangladesh · INR\nCanada · INR\nChina · INR\nGermany · INR\nIndia · INR\nI",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:faq": {
+      "url": "https://thejuneshop.com/pages/faqs",
+      "status": 200,
+      "error": null,
+      "title": "Frequently Asked Questions – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/pages/faqs",
+      "robots": null,
+      "h1": [],
+      "h1Font": null,
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 19,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\nABOUT JUNE SHOP\n\nWhat products does June Shop sell?\nWe specialize in all day-to-day needs like coin purses, water bottles, character pens, neck pillows, coffee mugs, pencil pouches, notebooks, pencils, colour pencils, soap dispensers, flasks, scented candles, optical cases, shopper bags, eye masks, soft towels, humidifiers that have knowingly or unknowingly become a part of our daily lives at home, office, school or college. We make sure that you have plenty of variations to choose",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:story": {
+      "url": "https://thejuneshop.com/pages/our-story",
+      "status": 200,
+      "error": null,
+      "title": "Our Story – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/pages/our-story",
+      "robots": null,
+      "h1": [],
+      "h1Font": null,
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 23,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\nA little more June, every day.\nExplore\n+\nHere to help\n+\nAbout The June Shop\n+\nNew finds & June Shop news\n+\nInstagram\nBack to top\n↑\n\nPay your way.\n\nUPI\nPaytm\nVisa\nMastercard\nNet banking\n\nAvailable options are shown at checkout.\n\nDeliver to\nBangladesh · INR\nCanada · INR\nChina · INR\nGermany · INR\nIndia · INR\nIreland · INR\nMalaysia · INR\nNew Zealand · INR\nSaudi Arabia · INR\nSingapore · INR\nUnited Arab Emirates · INR\nUnited Kingdom · INR\nUnited States · INR\nVietnam · INR\nApply\n\n© 2026 J",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:shipping": {
+      "url": "https://thejuneshop.com/pages/shipping-delivery",
+      "status": 200,
+      "error": null,
+      "title": "Shipping & Delivery – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/pages/shipping-delivery",
+      "robots": null,
+      "h1": [],
+      "h1Font": null,
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 19,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\n\nThe June Shop is currently shipping all over India. At TJS we understand how important it is to receive your purchased products in the finest condition, and on time. Know this - we work around the clock to try and get you your products as soon as possible.\n\n ** The customer should reach out within 48hrs of delivery along with the image (Post 48 hours we will not be able to entertain any complaints). If the damage is reported within 48 hours; TJS will take action accordingly.\n\n Tha",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:returns": {
+      "url": "https://thejuneshop.com/pages/return-and-refund-policy",
+      "status": 200,
+      "error": null,
+      "title": "Returns & Refund – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/pages/return-and-refund-policy",
+      "robots": null,
+      "h1": [],
+      "h1Font": null,
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 19,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\n\nReturns & Refunds\n\nWe take the utmost care while packing your order & our quality check & processing teams check & dispatch your order carefully. In the unlikely event that your merchandise arrives damaged, please send us a photo of the damaged product and box within 2 Days of receiving your order to sales@thejuneshop.com. Our support team will resolve your issue with a replacement or store credit.\n\nYou may not be completely happy with your purchase & for such instances, you can r",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:search": {
+      "url": "https://thejuneshop.com/search",
+      "status": 200,
+      "error": null,
+      "title": "Search: 357 results found for \"planner\" – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/search?q=planner&type=product",
+      "robots": null,
+      "h1": [
+        "“planner”"
+      ],
+      "h1Font": "Poppins, serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [
+        {
+          "tag": "SPAN",
+          "class": "tjs-product-card__image-slide tjs-product-card__image-slide--secondary",
+          "right": 569
+        },
+        {
+          "tag": "IMG",
+          "class": "tjs-product-card__image tjs-product-card__image--secondary",
+          "right": 569
+        },
+        {
+          "tag": "SPAN",
+          "class": "tjs-product-card__image-slide tjs-product-card__image-slide--secondary",
+          "right": 570
+        },
+        {
+          "tag": "IMG",
+          "class": "tjs-product-card__image tjs-product-card__image--secondary",
+          "right": 570
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 67,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\n“planner”\nFilters\nRelevance\nPrice, low to high\nPrice, high to low\nSave Rs. 2,100\nDATED PLANNERS\nCreate Your Own Sunshine — 2026 Dated Planner\nRs. 1,099\nRs. 3,199\nSTYLE\nCLASSIC\nNAME CUSTOMISATION\nSave Rs. 2,100\nDATED PLANNERS\nDo It For The Plot — 2026 Dated Planner\nRs. 1,099\nRs. 3,199\nSTYLE\nCLASSIC\nNAME CUSTOMISATION\nSave Rs. 1,500\nREUSABLE PLANNERS\nOne Day At A Time — Rewritable Planner\nRs. 699\nRs. 2,199\nDESIGNED FOR\nREUSABLE PLANNING\nSave Rs. 300\nUNDATED PLANNERS\n★\n4.0\n(1)\nNever A",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:cart": {
+      "url": "https://thejuneshop.com/cart",
+      "status": 200,
+      "error": null,
+      "title": "Your Shopping Cart – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/cart",
+      "robots": null,
+      "h1": [
+        "Shopping Cart"
+      ],
+      "h1Font": "Poppins, serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [
+        {
+          "tag": "HDT-CARD-PRODUCT",
+          "class": "hdt-card-product hdt-slider__slide hdt-pr-style1",
+          "right": 565
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-card-product__wrapper",
+          "right": 565
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-card-product__media hdt-relative hdt-oh",
+          "right": 565
+        },
+        {
+          "tag": "A",
+          "class": "hdt-card-product__media-wrapp hdt-ratio",
+          "right": 565
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 39,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\nShopping Cart\nYour cart is empty\nYou may check out all the available products and buy some in the shop\nReturn to shop\nYou may also like\nQuick view\nCute Teddy Bear Plush Toy\nRegular price\nRs. 999\nSale price\nRs. 299\nChoose options\nQuick view\nFun Expressive Teddy Bear\nRegular price\nRs. 799\nSale price\nRs. 299\nChoose options\nQuick view\nThe Luxe Bear Wallet\nRegular price\nRs. 1,199\nSale price\nRs. 399\nBlack\nRed\nGreen\nBrown\nQuick view\nBaby Soothing Rattle & Teether\nRegular price\nRs. 499\nSal",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:blog": {
+      "url": "https://thejuneshop.com/blogs/june-shop",
+      "status": 200,
+      "error": null,
+      "title": "TJS Blogs – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/blogs/june-shop",
+      "robots": null,
+      "h1": [
+        "Blog Grid"
+      ],
+      "h1Font": "Poppins, serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 69,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\nBlog Grid\nHome  TJS Blogs\nUnveiling The June Shop's Voyage Insulated Mugs\nRead more\nChoose the Perfect Lunch Box for Your Office Needs\nRead more\nOrganize Your Vanity in Style: 7 Versatile Solutions for Storing Your Makeup\nRead more\n8 Romantic Bedroom Decor Ideas For Couples\nRead more\n6 Creative Ways To Plan Your 2024 With A Yearly Planner\nRead more\nMeal Prep Ideas\nRead more\nGive Your Home A Cohesive Look This Year\nRead more\nBest Food Container To Pack Lunch\nRead more\nCutlery for Ev",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:article": {
+      "url": "https://thejuneshop.com/blogs/june-shop/detailed-undated-yearly-planners-for-the-new-year",
+      "status": 200,
+      "error": null,
+      "title": "Detailed Undated Yearly Planners - for The New Year – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/blogs/june-shop/detailed-undated-yearly-planners-for-the-new-year",
+      "robots": null,
+      "h1": [
+        "Detailed Undated Yearly Planners - for The New Year"
+      ],
+      "h1Font": "Poppins, serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [
+        {
+          "tag": "DIV",
+          "class": "hdt-slider__slide",
+          "right": 567
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-article hdt-article-style-1 hdt-reveal--offscreen",
+          "right": 567
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-article-inner",
+          "right": 567
+        },
+        {
+          "tag": "DIV",
+          "class": "hdt-article-thumb hdt-relative hdt-oh",
+          "right": 567
+        }
+      ],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 33,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\nTJS Blogs\nDetailed Undated Yearly Planners - for The New Year\nby Piyush Jollyon Nov 20\n\nMost of us today are multi-taskers. From managing office meetings and deadlines to buying groceries, paying rent, looking after yourself and your loved ones, a lot of thoughts and tasks keep us engaged throughout the day. The real trick behind having a stress-free life lies in planning and scheduling your work as per your priority. This is where Daily Planners come in handy to plan important tas",
+      "jsErrors": [],
+      "networkErrors": []
+    },
+    "mobile:notFound": {
+      "url": "https://thejuneshop.com/pages/this-page-does-not-exist-tjs-audit",
+      "status": 404,
+      "error": null,
+      "title": "404 Not Found – The June Shop",
+      "lang": "en",
+      "canonical": "https://thejuneshop.com/404",
+      "robots": null,
+      "h1": [
+        "404"
+      ],
+      "h1Font": "Poppins, serif",
+      "main": true,
+      "overflow": false,
+      "scrollWidth": 393,
+      "overflowCandidates": [],
+      "visibleBrokenImages": [],
+      "missingAltCount": 0,
+      "imageCount": 19,
+      "headerPresent": true,
+      "headerSearchAccessible": true,
+      "bodyText": "the june shop\n404\n\nOops...That link is broken.\n\nSorry for the inconvenience. Go to our homepage or check out our latest collections.\n\nShop now\nA little more June, every day.\nExplore\n+\nHere to help\n+\nAbout The June Shop\n+\nNew finds & June Shop news\n+\nInstagram\nBack to top\n↑\n\nPay your way.\n\nUPI\nPaytm\nVisa\nMastercard\nNet banking\n\nAvailable options are shown at checkout.\n\nDeliver to\nBangladesh · INR\nCanada · INR\nChina · INR\nGermany · INR\nIndia · INR\nIreland · INR\nMalaysia · INR\nNew Zealand · INR\nSau",
+      "jsErrors": [],
+      "networkErrors": [
+        {
+          "status": 404,
+          "url": "https://thejuneshop.com/pages/this-page-does-not-exist-tjs-audit"
+        }
+      ]
+    }
+  }
+}

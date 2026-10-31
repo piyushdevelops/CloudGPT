@@ -1,0 +1,1 @@
+mutation CreatePhotoBooksLanding($page: PageCreateInput!) { pageCreate(page: $page) { page { id title handle templateSuffix isPublished } userErrors { field message } } }

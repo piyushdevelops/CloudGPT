@@ -1,0 +1,38 @@
+{% liquid
+  assign studio_page = section.settings.studio_page
+  assign studio_url = studio_page.url | default: '/pages/photo-book-studio'
+%}
+<section class="jpb-product" style="--accent:{{ section.settings.accent }};--surface:{{ section.settings.surface }};--heading-size:{{ section.settings.heading_size }}px;--heading-size-mobile:{{ section.settings.heading_size_mobile }}px;--body-size:{{ section.settings.body_size }}px;--body-size-mobile:{{ section.settings.body_size_mobile }}px;--button-size:{{ section.settings.button_size }}px;--button-size-mobile:{{ section.settings.button_size_mobile }}px;--heading-weight:{{ section.settings.heading_weight }};--body-weight:{{ section.settings.body_weight }};--button-weight:{{ section.settings.button_weight }};--heading-spacing:{{ section.settings.heading_spacing | divided_by: 100.0 }}em;--body-spacing:{{ section.settings.body_spacing | divided_by: 100.0 }}em;--button-spacing:{{ section.settings.button_spacing | divided_by: 100.0 }}em;--heading-leading:{{ section.settings.heading_leading | divided_by: 100.0 }};--body-leading:{{ section.settings.body_leading | divided_by: 100.0 }}">
+  <div class="jpb-product__media">
+    {% if product.featured_image %}
+      {{ product.featured_image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '550, 800, 1100, 1400', sizes: '(min-width: 900px) 52vw, 100vw', alt: product.featured_image.alt | default: product.title }}
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {% endif %}
+  </div>
+  <div class="jpb-product__copy">
+    <p class="jpb-product__eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1>{{ product.title }}</h1>
+    <div class="jpb-product__description">{{ product.description }}</div>
+    <div class="jpb-product__prices">
+      <span><b>Regular · 8 × 8 in</b>From ₹2,799</span>
+      <span><b>Large · 11 × 11 in</b>From ₹3,099</span>
+    </div>
+    <ul class="jpb-product__facts">
+      <li>Regular 8 × 8 in starts at ₹2,799</li>
+      <li>Large 11 × 11 in starts at ₹3,099</li>
+      <li>20 pages included; add four pages at a time</li>
+      <li>Your work saves automatically while you design</li>
+    </ul>
+    <a class="jpb-product__start" href="{{ studio_url }}?product={{ product.handle }}">
+      <span>{{ section.settings.button_label }}</span><i aria-hidden="true">→</i>
+    </a>
+    <p class="jpb-product__note">Choose your size, build every page, review the final price, then add the finished album to your bag.</p>
+  </div>
+</section>
+{% stylesheet %}
+  .jpb-product{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);gap:clamp(34px,6vw,96px);align-items:center;max-width:1680px;margin:auto;padding:clamp(44px,7vw,110px) clamp(20px,5vw,80px);color:#171717}.jpb-product__media{min-height:580px;border-radius:32px;background:var(--surface);overflow:hidden}.jpb-product__media img,.jpb-product__media svg{display:block;width:100%;height:100%;min-height:580px;object-fit:cover}.jpb-product__eyebrow{margin:0 0 12px;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.jpb-product h1{margin:0;font-size:var(--heading-size);font-weight:var(--heading-weight);letter-spacing:var(--heading-spacing);line-height:var(--heading-leading)}.jpb-product__description{font-size:var(--body-size);font-weight:var(--body-weight);letter-spacing:var(--body-spacing);line-height:var(--body-leading)}.jpb-product__prices{display:flex;gap:10px;margin:26px 0}.jpb-product__prices span{padding:12px 15px;border:1px solid #dadada;border-radius:16px;background:var(--surface);font-size:14px}.jpb-product__prices b{display:block;margin-bottom:2px}.jpb-product__facts{display:grid;gap:9px;padding-left:20px;font-size:14px}.jpb-product__start{display:inline-flex;align-items:center;gap:28px;margin-top:24px;padding:8px 9px 8px 23px;border:2px solid #171717;border-radius:999px;background:var(--accent);color:#171717;font-size:var(--button-size);font-weight:var(--button-weight);letter-spacing:var(--button-spacing);text-decoration:none;box-shadow:0 5px 0 #171717}.jpb-product__start i{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#171717;color:#fff;font-style:normal}.jpb-product__note{max-width:520px;color:#656565;font-size:12px;line-height:1.5}@media(max-width:749px){.jpb-product{grid-template-columns:1fr;padding:28px 18px 54px}.jpb-product__media,.jpb-product__media img,.jpb-product__media svg{min-height:0;aspect-ratio:1}.jpb-product h1{font-size:var(--heading-size-mobile)}.jpb-product__description{font-size:var(--body-size-mobile)}.jpb-product__start{font-size:var(--button-size-mobile)}.jpb-product__prices{display:grid;grid-template-columns:1fr 1fr}}
+{% endstylesheet %}
+{% schema %}
+{"name":"June photo book product","settings":[{"type":"text","id":"eyebrow","label":"Eyebrow","default":"JUNE PHOTO STUDIO"},{"type":"text","id":"button_label","label":"Button label","default":"Start creating"},{"type":"page","id":"studio_page","label":"Photo studio page"},{"type":"color","id":"accent","label":"Accent","default":"#CBF36B"},{"type":"color","id":"surface","label":"Surface","default":"#F5F5F3"},{"type":"header","content":"Heading typography"},{"type":"range","id":"heading_size","label":"Desktop size","min":36,"max":96,"step":2,"unit":"px","default":72},{"type":"range","id":"heading_size_mobile","label":"Mobile size","min":30,"max":58,"step":1,"unit":"px","default":46},{"type":"range","id":"heading_weight","label":"Weight","min":500,"max":900,"step":100,"default":900},{"type":"range","id":"heading_spacing","label":"Letter spacing","min":-8,"max":8,"step":1,"default":-5},{"type":"range","id":"heading_leading","label":"Line height","min":85,"max":130,"step":5,"default":95},{"type":"header","content":"Body typography"},{"type":"range","id":"body_size","label":"Desktop size","min":14,"max":24,"step":1,"unit":"px","default":17},{"type":"range","id":"body_size_mobile","label":"Mobile size","min":13,"max":20,"step":1,"unit":"px","default":15},{"type":"range","id":"body_weight","label":"Weight","min":400,"max":700,"step":100,"default":400},{"type":"range","id":"body_spacing","label":"Letter spacing","min":-4,"max":8,"step":1,"default":0},{"type":"range","id":"body_leading","label":"Line height","min":120,"max":180,"step":5,"default":150},{"type":"header","content":"Button typography"},{"type":"range","id":"button_size","label":"Desktop size","min":13,"max":22,"step":1,"unit":"px","default":16},{"type":"range","id":"button_size_mobile","label":"Mobile size","min":12,"max":19,"step":1,"unit":"px","default":15},{"type":"range","id":"button_weight","label":"Weight","min":500,"max":900,"step":100,"default":800},{"type":"range","id":"button_spacing","label":"Letter spacing","min":-3,"max":8,"step":1,"default":0}],"presets":[{"name":"June photo book product"}]}
+{% endschema %}

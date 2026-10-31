@@ -1,0 +1,1381 @@
+{% comment %}
+  TJS Heartline Champagne Hero
+  Homepage storytelling section for three champagne-glass colour variants.
+  Upload the Rose, Aqua and Smoke splash images through the section blocks.
+{% endcomment %}
+
+{% liquid
+  assign tjs_variant_count = 0
+  for block in section.blocks
+    if block.type == 'variant'
+      assign tjs_variant_count = tjs_variant_count | plus: 1
+    endif
+  endfor
+%}
+
+{% style %}
+  #TjsHeartline-{{ section.id }} {
+    --tjs-hl-accent: {{ section.settings.frame_color }};
+    --tjs-hl-soft: {{ section.settings.soft_color }};
+    --tjs-hl-bg: {{ section.settings.background }};
+    --tjs-hl-text: {{ section.settings.text_color }};
+    --tjs-hl-muted: {{ section.settings.muted_color }};
+    --tjs-hl-border: {{ section.settings.border_color }};
+    --tjs-hl-button: {{ section.settings.button_color }};
+    --tjs-hl-button-text: {{ section.settings.button_text_color }};
+    --tjs-hl-radius: {{ section.settings.corner_radius }}px;
+    --tjs-hl-max: {{ section.settings.max_width }}px;
+    --tjs-hl-min-height: {{ section.settings.desktop_height }}px;
+    --tjs-hl-frame: {{ section.settings.frame_width }}px;
+    --tjs-hl-duration: {{ section.settings.rotation_interval }}s;
+
+    display: block;
+    width: 100%;
+    color: var(--tjs-hl-text);
+    font-family: var(--font-body-family, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #TjsHeartline-{{ section.id }} *,
+  #TjsHeartline-{{ section.id }} *::before,
+  #TjsHeartline-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #TjsHeartline-{{ section.id }} a {
+    color: inherit;
+  }
+
+  #TjsHeartline-{{ section.id }} button {
+    font: inherit;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__outer {
+    position: relative;
+    padding: var(--tjs-hl-frame);
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--tjs-hl-accent) 14%, white) 0%,
+        color-mix(in srgb, var(--tjs-hl-accent) 22%, white) 12%,
+        color-mix(in srgb, var(--tjs-hl-accent) 54%, white) 30%,
+        color-mix(in srgb, var(--tjs-hl-accent) 96%, white) 50%,
+        color-mix(in srgb, var(--tjs-hl-accent) 54%, white) 70%,
+        color-mix(in srgb, var(--tjs-hl-accent) 22%, white) 88%,
+        color-mix(in srgb, var(--tjs-hl-accent) 14%, white) 100%
+      );
+    transition: background-color .42s ease, background .42s ease;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__outer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,0) 22%, rgba(255,255,255,0) 78%, rgba(255,255,255,.82)),
+      radial-gradient(circle at 14% 18%, rgba(255,255,255,.32), transparent 26%),
+      radial-gradient(circle at 86% 82%, rgba(255,255,255,.18), transparent 28%);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__shell {
+    position: relative;
+    width: min(100%, var(--tjs-hl-max));
+    min-height: var(--tjs-hl-min-height);
+    margin-inline: auto;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.72);
+    border-radius: var(--tjs-hl-radius);
+    background:
+      linear-gradient(145deg, rgba(255,255,255,.76), rgba(255,255,255,.96) 46%),
+      var(--tjs-hl-bg);
+    box-shadow:
+      0 26px 80px color-mix(in srgb, var(--tjs-hl-accent) 17%, transparent),
+      inset 0 1px 0 rgba(255,255,255,.9);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: .82;
+    background:
+      radial-gradient(circle at 53% 48%, color-mix(in srgb, var(--tjs-hl-soft) 82%, transparent), transparent 34%),
+      linear-gradient(90deg, transparent 0 34%, color-mix(in srgb, var(--tjs-hl-soft) 20%, transparent) 49%, transparent 66%);
+    transition: background .42s ease;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__grid {
+    position: relative;
+    z-index: 2;
+    min-height: inherit;
+    display: grid;
+    grid-template-columns: minmax(230px, .88fr) minmax(360px, 1.42fr) minmax(230px, .76fr);
+    align-items: center;
+    gap: clamp(22px, 3vw, 58px);
+    padding: clamp(34px, 5vw, 76px);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__copy {
+    min-width: 0;
+    align-self: center;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 16px;
+    color: var(--tjs-hl-accent);
+    font-size: 8px;
+    font-weight: 820;
+    line-height: 1;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    transition: color .32s ease;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__eyebrow::before {
+    content: "";
+    width: 20px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__heading {
+    max-width: 520px;
+    margin: 0;
+    color: var(--tjs-hl-text);
+    font-family: var(--font-heading-family, Georgia, "Times New Roman", serif);
+    font-size: clamp(40px, 4.2vw, {{ section.settings.heading_size }}px);
+    font-weight: 470;
+    line-height: .94;
+    letter-spacing: -.052em;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__heading em {
+    position: relative;
+    color: var(--tjs-hl-accent);
+    font-style: normal;
+    transition: color .32s ease;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__heading em::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -.08em;
+    left: 0;
+    height: .12em;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--tjs-hl-accent) 38%, transparent);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__body {
+    max-width: 430px;
+    margin: 22px 0 0;
+    color: var(--tjs-hl-muted);
+    font-size: 12px;
+    font-weight: 520;
+    line-height: 1.65;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 26px;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__primary,
+  #TjsHeartline-{{ section.id }} .tjs-hl__secondary {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 0 17px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .035em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__primary {
+    border: 1px solid var(--tjs-hl-button);
+    background: var(--tjs-hl-button);
+    color: var(--tjs-hl-button-text);
+    box-shadow: 0 12px 26px rgba(22,17,13,.14);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__secondary {
+    border: 1px solid var(--tjs-hl-border);
+    background: rgba(255,255,255,.54);
+    color: var(--tjs-hl-text);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__primary:hover,
+  #TjsHeartline-{{ section.id }} .tjs-hl__secondary:hover {
+    transform: translateY(-2px);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__primary svg,
+  #TjsHeartline-{{ section.id }} .tjs-hl__secondary svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 18px;
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--tjs-hl-border);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__proof-item {
+    display: grid;
+    gap: 3px;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__proof-item strong {
+    color: var(--tjs-hl-text);
+    font-size: 9px;
+    font-weight: 780;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__proof-item span {
+    color: var(--tjs-hl-muted);
+    font-size: 7px;
+    font-weight: 600;
+    letter-spacing: .035em;
+    text-transform: uppercase;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__visual {
+    position: relative;
+    min-width: 0;
+    align-self: stretch;
+    display: grid;
+    place-items: center;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__visual::before {
+    content: "";
+    position: absolute;
+    width: min(92%, 570px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle, color-mix(in srgb, var(--tjs-hl-soft) 72%, transparent), transparent 66%);
+    filter: blur(4px);
+    opacity: .82;
+    transition: background .42s ease;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__media-stack {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 620px);
+    aspect-ratio: 1;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__media {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px) scale(.97);
+    transition:
+      opacity .5s ease,
+      visibility .5s ease,
+      transform .65s cubic-bezier(.22,.61,.36,1);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__media.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__media img,
+  #TjsHeartline-{{ section.id }} .tjs-hl__placeholder {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 18px;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__media.is-active img {
+    animation: tjs-hl-float-{{ section.id }} 5.8s ease-in-out infinite;
+  }
+
+  @keyframes tjs-hl-float-{{ section.id }} {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__visual-meta {
+    display: none !important;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__visual-meta small {
+    color: var(--tjs-hl-accent);
+    font-size: 7px;
+    font-weight: 820;
+    letter-spacing: .085em;
+    text-transform: uppercase;
+    transition: color .32s ease;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__visual-meta strong {
+    color: var(--tjs-hl-text);
+    font-family: var(--font-heading-family, Georgia, serif);
+    font-size: 17px;
+    font-weight: 560;
+    line-height: 1.05;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__visual-meta span {
+    color: var(--tjs-hl-muted);
+    font-size: 8px;
+    line-height: 1.4;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__dots {
+    position: absolute;
+    z-index: 6;
+    bottom: 4%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transform: translateX(-50%);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__dot {
+    position: relative;
+    width: 22px;
+    height: 4px;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--tjs-hl-muted) 20%, transparent);
+    cursor: pointer;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--tjs-hl-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__dot.is-active {
+    width: 42px;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__dot.is-active::after {
+    transform: scaleX(1);
+  }
+
+  #TjsHeartline-{{ section.id }}.is-playing .tjs-hl__dot.is-active::after {
+    animation: tjs-hl-progress-{{ section.id }} var(--tjs-hl-duration) linear forwards;
+  }
+
+  @keyframes tjs-hl-progress-{{ section.id }} {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__selector {
+    min-width: 0;
+    align-self: center;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__selector-label {
+    margin: 0 0 12px;
+    color: var(--tjs-hl-muted);
+    font-size: 7px;
+    font-weight: 820;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__variant-list {
+    display: grid;
+    gap: 9px;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__variant {
+    --variant-accent: var(--tjs-hl-accent);
+    --variant-soft: var(--tjs-hl-soft);
+
+    position: relative;
+    width: 100%;
+    min-height: 78px;
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr) 24px;
+    align-items: center;
+    gap: 11px;
+    padding: 12px 12px;
+    border: 1px solid var(--tjs-hl-border);
+    border-radius: 15px;
+    background: rgba(255,255,255,.46);
+    color: var(--tjs-hl-text);
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(22,17,13,.035);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition:
+      transform .2s ease,
+      border-color .2s ease,
+      background-color .2s ease,
+      box-shadow .2s ease;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__variant:hover {
+    transform: translateX(-3px);
+    border-color: color-mix(in srgb, var(--variant-accent) 42%, var(--tjs-hl-border));
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__variant.is-active {
+    border-color: color-mix(in srgb, var(--variant-accent) 58%, white);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--variant-soft) 78%, white), rgba(255,255,255,.78));
+    box-shadow:
+      0 14px 34px color-mix(in srgb, var(--variant-accent) 14%, transparent),
+      inset 0 1px 0 rgba(255,255,255,.8);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__swatch {
+    width: 34px;
+    height: 34px;
+    display: block;
+    border: 5px solid rgba(255,255,255,.76);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 22%, white, transparent 30%),
+      var(--variant-accent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--variant-accent) 48%, var(--tjs-hl-border)),
+      0 6px 14px color-mix(in srgb, var(--variant-accent) 18%, transparent);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__variant-copy {
+    min-width: 0;
+    display: grid;
+    gap: 4px;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__variant-copy strong {
+    color: var(--tjs-hl-text);
+    font-family: var(--font-heading-family, Georgia, serif);
+    font-size: 15px;
+    font-weight: 580;
+    line-height: 1.05;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__variant-copy small {
+    overflow: hidden;
+    color: var(--tjs-hl-muted);
+    font-size: 8px;
+    font-weight: 560;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__variant-arrow {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,.58);
+    color: var(--variant-accent);
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__variant-arrow svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__selector-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 14px;
+    color: var(--tjs-hl-muted);
+    font-size: 8px;
+    line-height: 1.45;
+  }
+
+  #TjsHeartline-{{ section.id }} .tjs-hl__selector-note svg {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+    color: var(--tjs-hl-accent);
+  }
+
+  @media (max-width: 1199px) {
+    #TjsHeartline-{{ section.id }} .tjs-hl__grid {
+      grid-template-columns: minmax(210px, .9fr) minmax(330px, 1.25fr);
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__selector {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__variant-list {
+      grid-template-columns: repeat({{ tjs_variant_count | at_least: 1 }}, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 749px) {
+    #TjsHeartline-{{ section.id }} {
+      --tjs-hl-frame: min({{ section.settings.frame_width }}px, 5px);
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__outer {
+      padding: var(--tjs-hl-frame);
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__shell {
+      min-height: 0;
+      border-radius: min(var(--tjs-hl-radius), 20px);
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 28px 14px 22px;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__copy {
+      width: 100%;
+      text-align: center;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__eyebrow {
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__heading {
+      margin-inline: auto;
+      font-size: {{ section.settings.mobile_heading_size }}px;
+      line-height: .98;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__body {
+      max-width: 540px;
+      margin: 15px auto 0;
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__actions {
+      justify-content: center;
+      margin-top: 19px;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__primary,
+    #TjsHeartline-{{ section.id }} .tjs-hl__secondary {
+      min-height: 43px;
+      padding-inline: 14px;
+      font-size: 8px;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__proof {
+      justify-content: center;
+      margin-top: 20px;
+      padding-top: 14px;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__visual {
+      width: 100%;
+      min-height: auto;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__media-stack {
+      width: min(100%, 520px);
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__visual-meta {
+      right: 4px;
+      bottom: 12px;
+      min-width: 130px;
+      max-width: 185px;
+      padding: 10px 11px;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__visual-meta strong {
+      font-size: 14px;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__dots {
+      bottom: 3px;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__selector {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__selector-label {
+      margin-left: 3px;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__variant-list {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(210px, 78%);
+      gap: 8px;
+      overflow-x: auto;
+      margin-inline: -14px;
+      padding: 0 14px 5px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__variant-list::-webkit-scrollbar {
+      display: none;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__variant {
+      min-height: 72px;
+      scroll-snap-align: center;
+    }
+
+    #TjsHeartline-{{ section.id }} .tjs-hl__selector-note {
+      margin-inline: 3px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #TjsHeartline-{{ section.id }} *,
+    #TjsHeartline-{{ section.id }} *::before,
+    #TjsHeartline-{{ section.id }} *::after {
+      scroll-behavior: auto !important;
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+  }
+{% endstyle %}
+
+<tjs-champagne-story
+  id="TjsHeartline-{{ section.id }}"
+  data-autoplay="{{ section.settings.auto_rotate }}"
+  data-interval="{{ section.settings.rotation_interval | times: 1000 }}"
+  data-pause-hover="{{ section.settings.pause_on_hover }}"
+>
+  <section class="tjs-hl__outer">
+    <div class="tjs-hl__shell">
+      <div class="tjs-hl__grid">
+        <div class="tjs-hl__copy">
+          {% if section.settings.eyebrow != blank %}
+            <p class="tjs-hl__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {% endif %}
+
+          {% if section.settings.heading != blank %}
+            <h2 class="tjs-hl__heading">{{ section.settings.heading }}</h2>
+          {% endif %}
+
+          {% if section.settings.body != blank %}
+            <div class="tjs-hl__body">{{ section.settings.body }}</div>
+          {% endif %}
+
+          <div class="tjs-hl__actions">
+            <a
+              class="tjs-hl__primary"
+              href="#"
+              data-tjs-primary
+            >
+              <span data-tjs-primary-label>{{ section.settings.primary_label | escape }}</span>
+              <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M3.5 9h10.5M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+
+            {% if section.settings.secondary_label != blank and section.settings.secondary_link != blank %}
+              <a class="tjs-hl__secondary" href="{{ section.settings.secondary_link }}">
+                <span>{{ section.settings.secondary_label | escape }}</span>
+                <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <path d="M9 3.5v11M3.5 9h11" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>
+                </svg>
+              </a>
+            {% endif %}
+          </div>
+
+          <div class="tjs-hl__proof" aria-label="Product highlights">
+            {% if section.settings.proof_1_title != blank %}
+              <div class="tjs-hl__proof-item">
+                <strong>{{ section.settings.proof_1_title | escape }}</strong>
+                <span>{{ section.settings.proof_1_text | escape }}</span>
+              </div>
+            {% endif %}
+            {% if section.settings.proof_2_title != blank %}
+              <div class="tjs-hl__proof-item">
+                <strong>{{ section.settings.proof_2_title | escape }}</strong>
+                <span>{{ section.settings.proof_2_text | escape }}</span>
+              </div>
+            {% endif %}
+            {% if section.settings.proof_3_title != blank %}
+              <div class="tjs-hl__proof-item">
+                <strong>{{ section.settings.proof_3_title | escape }}</strong>
+                <span>{{ section.settings.proof_3_text | escape }}</span>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="tjs-hl__visual">
+          <div class="tjs-hl__media-stack">
+            {% for block in section.blocks %}
+              {% if block.type == 'variant' %}
+                {% liquid
+                  assign tjs_image_loading = 'lazy'
+                  assign tjs_image_priority = 'auto'
+                  if forloop.first
+                    assign tjs_image_loading = 'eager'
+                    assign tjs_image_priority = 'high'
+                  endif
+                  assign tjs_image_alt = block.settings.image.alt | default: block.settings.name
+                  assign tjs_image_link = block.settings.link | default: section.settings.secondary_link | default: routes.root_url
+                %}
+
+                <a
+                  class="tjs-hl__media{% if forloop.first %} is-active{% endif %}"
+                  href="{{ tjs_image_link }}"
+                  data-tjs-media
+                  data-index="{{ forloop.index0 }}"
+                  {% unless forloop.first %}aria-hidden="true" tabindex="-1"{% endunless %}
+                  {{ block.shopify_attributes }}
+                >
+                  {% if block.settings.image != blank %}
+                    {{ block.settings.image
+                      | image_url: width: 1400
+                      | image_tag:
+                        class: 'tjs-hl__image',
+                        widths: '360,520,700,900,1100,1400',
+                        sizes: '(max-width: 749px) 94vw, (max-width: 1199px) 54vw, 38vw',
+                        loading: tjs_image_loading,
+                        fetchpriority: tjs_image_priority,
+                        decoding: 'async',
+                        alt: tjs_image_alt
+                    }}
+                  {% else %}
+                    {{ 'product-1' | placeholder_svg_tag: 'tjs-hl__placeholder' }}
+                  {% endif %}
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          <div class="tjs-hl__visual-meta" aria-live="polite">
+            <small data-tjs-current-kicker></small>
+            <strong data-tjs-current-name></strong>
+            <span data-tjs-current-description></span>
+          </div>
+
+          {% if tjs_variant_count > 1 %}
+            <div class="tjs-hl__dots" aria-label="Choose colour">
+              {% for block in section.blocks %}
+                {% if block.type == 'variant' %}
+                  <button
+                    class="tjs-hl__dot{% if forloop.first %} is-active{% endif %}"
+                    type="button"
+                    data-tjs-dot
+                    data-index="{{ forloop.index0 }}"
+                    aria-label="Show {{ block.settings.name | escape }}"
+                    aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+                  ></button>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <aside class="tjs-hl__selector">
+          {% if section.settings.selector_label != blank %}
+            <p class="tjs-hl__selector-label">{{ section.settings.selector_label | escape }}</p>
+          {% endif %}
+
+          <div class="tjs-hl__variant-list" role="tablist" aria-label="Champagne glass colours">
+            {% for block in section.blocks %}
+              {% if block.type == 'variant' %}
+                {% liquid
+                  assign tjs_variant_link = block.settings.link | default: section.settings.secondary_link | default: routes.root_url
+                  assign tjs_variant_cta = block.settings.button_label | default: section.settings.primary_label
+                %}
+
+                <button
+                  type="button"
+                  class="tjs-hl__variant{% if forloop.first %} is-active{% endif %}"
+                  role="tab"
+                  aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                  data-tjs-variant
+                  data-index="{{ forloop.index0 }}"
+                  data-name="{{ block.settings.name | escape }}"
+                  data-kicker="{{ block.settings.kicker | escape }}"
+                  data-description="{{ block.settings.description | escape }}"
+                  data-link="{{ tjs_variant_link }}"
+                  data-cta="{{ tjs_variant_cta | escape }}"
+                  data-accent="{{ block.settings.accent }}"
+                  data-soft="{{ block.settings.soft_color }}"
+                  style="--variant-accent: {{ block.settings.accent }}; --variant-soft: {{ block.settings.soft_color }};"
+                >
+                  <span class="tjs-hl__swatch" aria-hidden="true"></span>
+                  <span class="tjs-hl__variant-copy">
+                    <strong>{{ block.settings.name | escape }}</strong>
+                    <small>{{ block.settings.description | escape }}</small>
+                  </span>
+                  <span class="tjs-hl__variant-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none">
+                      <path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                </button>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          {% if section.settings.selector_note != blank %}
+            <div class="tjs-hl__selector-note">
+              <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M9 2.5 11 6l4 .6-2.9 2.8.7 4L9 11.5l-3.8 1.9.7-4L3 6.6 7 6l2-3.5Z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+              </svg>
+              <span>{{ section.settings.selector_note | escape }}</span>
+            </div>
+          {% endif %}
+        </aside>
+      </div>
+    </div>
+  </section>
+</tjs-champagne-story>
+
+<script>
+  (() => {
+    if (customElements.get('tjs-champagne-story')) return;
+
+    class TJSChampagneStory extends HTMLElement {
+      connectedCallback() {
+        if (this.dataset.ready === 'true') return;
+        this.dataset.ready = 'true';
+
+        this.variantButtons = [...this.querySelectorAll('[data-tjs-variant]')];
+        this.mediaItems = [...this.querySelectorAll('[data-tjs-media]')];
+        this.dots = [...this.querySelectorAll('[data-tjs-dot]')];
+        this.primary = this.querySelector('[data-tjs-primary]');
+        this.primaryLabel = this.querySelector('[data-tjs-primary-label]');
+        this.currentKicker = this.querySelector('[data-tjs-current-kicker]');
+        this.currentName = this.querySelector('[data-tjs-current-name]');
+        this.currentDescription = this.querySelector('[data-tjs-current-description]');
+
+        this.autoplay = this.dataset.autoplay === 'true';
+        this.pauseOnHover = this.dataset.pauseHover === 'true';
+        this.interval = Math.max(2500, Number(this.dataset.interval || 5000));
+        this.currentIndex = 0;
+        this.timer = null;
+        this.isVisible = true;
+        this.isHovering = false;
+
+        this.variantButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            this.setActive(Number(button.dataset.index), true);
+          });
+
+          button.addEventListener('keydown', event => {
+            if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+            event.preventDefault();
+            const direction = ['ArrowRight', 'ArrowDown'].includes(event.key) ? 1 : -1;
+            const nextIndex = (Number(button.dataset.index) + direction + this.variantButtons.length) % this.variantButtons.length;
+            this.variantButtons[nextIndex]?.focus();
+            this.setActive(nextIndex, true);
+          });
+        });
+
+        this.dots.forEach(dot => {
+          dot.addEventListener('click', () => {
+            this.setActive(Number(dot.dataset.index), true);
+          });
+        });
+
+        if (this.pauseOnHover) {
+          this.addEventListener('mouseenter', () => {
+            this.isHovering = true;
+            this.stopTimer();
+          });
+          this.addEventListener('mouseleave', () => {
+            this.isHovering = false;
+            this.scheduleNext();
+          });
+        }
+
+        if ('IntersectionObserver' in window) {
+          this.visibilityObserver = new IntersectionObserver(entries => {
+            const entry = entries[0];
+            this.isVisible = Boolean(entry?.isIntersecting);
+            if (this.isVisible) this.scheduleNext();
+            else this.stopTimer();
+          }, { threshold: .18 });
+          this.visibilityObserver.observe(this);
+        }
+
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) this.stopTimer();
+          else this.scheduleNext();
+        });
+
+        this.setActive(0, false);
+      }
+
+      disconnectedCallback() {
+        this.stopTimer();
+        this.visibilityObserver?.disconnect();
+      }
+
+      setActive(index, userInitiated = false) {
+        if (!this.variantButtons.length) return;
+
+        const safeIndex = ((index % this.variantButtons.length) + this.variantButtons.length) % this.variantButtons.length;
+        const button = this.variantButtons[safeIndex];
+        if (!button) return;
+
+        this.currentIndex = safeIndex;
+
+        this.variantButtons.forEach((item, itemIndex) => {
+          const active = itemIndex === safeIndex;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+
+        this.mediaItems.forEach((item, itemIndex) => {
+          const active = itemIndex === safeIndex;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-hidden', active ? 'false' : 'true');
+          item.tabIndex = active ? 0 : -1;
+        });
+
+        this.dots.forEach((dot, dotIndex) => {
+          const active = dotIndex === safeIndex;
+          dot.classList.toggle('is-active', active);
+          dot.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+
+        this.style.setProperty('--tjs-hl-accent', button.dataset.accent || '#E76C92');
+        this.style.setProperty('--tjs-hl-soft', button.dataset.soft || '#FBE5ED');
+
+        if (this.currentKicker) this.currentKicker.textContent = button.dataset.kicker || '';
+        if (this.currentName) this.currentName.textContent = button.dataset.name || '';
+        if (this.currentDescription) this.currentDescription.textContent = button.dataset.description || '';
+
+        if (this.primary) {
+          this.primary.href = button.dataset.link || '#';
+          this.primary.hidden = !button.dataset.link || button.dataset.link === '#';
+        }
+        if (this.primaryLabel) {
+          this.primaryLabel.textContent = button.dataset.cta || 'Shop this colour';
+        }
+
+        this.classList.remove('is-playing');
+        void this.offsetWidth;
+
+        if (this.autoplay && this.variantButtons.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          this.classList.add('is-playing');
+        }
+
+        if (userInitiated) {
+          this.variantButtons[safeIndex]?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+        }
+
+        this.scheduleNext();
+      }
+
+      scheduleNext() {
+        this.stopTimer();
+
+        if (
+          !this.autoplay ||
+          this.variantButtons.length < 2 ||
+          !this.isVisible ||
+          this.isHovering ||
+          document.hidden ||
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) return;
+
+        this.timer = window.setTimeout(() => {
+          this.setActive(this.currentIndex + 1, false);
+        }, this.interval);
+      }
+
+      stopTimer() {
+        if (this.timer) {
+          window.clearTimeout(this.timer);
+          this.timer = null;
+        }
+      }
+    }
+
+    customElements.define('tjs-champagne-story', TJSChampagneStory);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TJS champagne hero",
+  "tag": "section",
+  "class": "section-tjs-champagne-hero",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Editorial copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Heartline Edit"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A toast, shaped a little <em>differently.</em>"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Description",
+      "default": "<p>Heart-rimmed champagne flutes in rose, aqua and smoke—each finished with a fine gold edge and designed to make the table feel instantly more considered.</p>"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Default primary button label",
+      "default": "Shop the selected tone"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary button label",
+      "default": "Explore stemware"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Product proof"
+    },
+    {
+      "type": "text",
+      "id": "proof_1_title",
+      "label": "Proof 1 title",
+      "default": "Set of 2"
+    },
+    {
+      "type": "text",
+      "id": "proof_1_text",
+      "label": "Proof 1 caption",
+      "default": "Made for two"
+    },
+    {
+      "type": "text",
+      "id": "proof_2_title",
+      "label": "Proof 2 title",
+      "default": "Gold-edged"
+    },
+    {
+      "type": "text",
+      "id": "proof_2_text",
+      "label": "Proof 2 caption",
+      "default": "Fine rim detail"
+    },
+    {
+      "type": "text",
+      "id": "proof_3_title",
+      "label": "Proof 3 title",
+      "default": "Heart-shaped"
+    },
+    {
+      "type": "text",
+      "id": "proof_3_text",
+      "label": "Proof 3 caption",
+      "default": "A playful silhouette"
+    },
+    {
+      "type": "header",
+      "content": "Variant selector"
+    },
+    {
+      "type": "text",
+      "id": "selector_label",
+      "label": "Selector label",
+      "default": "Choose your tone"
+    },
+    {
+      "type": "text",
+      "id": "selector_note",
+      "label": "Selector note",
+      "default": "Three distinct moods, one signature heart-shaped silhouette."
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Auto-rotate colours",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "rotation_interval",
+      "label": "Rotation interval",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause rotation on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Desktop minimum height",
+      "min": 560,
+      "max": 920,
+      "step": 20,
+      "unit": "px",
+      "default": 720
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Maximum desktop heading size",
+      "min": 48,
+      "max": 92,
+      "step": 2,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile heading size",
+      "min": 30,
+      "max": 52,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum section width",
+      "min": 1100,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1560
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Panel corner radius",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "frame_width",
+      "label": "Accent frame width",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Panel background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#171411"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted text",
+      "default": "#746E67"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Borders",
+      "default": "#E8E0D8"
+    },
+    {
+      "type": "color",
+      "id": "frame_color",
+      "label": "Initial accent frame",
+      "default": "#E76C92"
+    },
+    {
+      "type": "color",
+      "id": "soft_color",
+      "label": "Initial soft glow",
+      "default": "#FBE5ED"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Primary button",
+      "default": "#171411"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Primary button text",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "variant",
+      "name": "Glass colour",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Splash image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Colour name",
+          "default": "Rose Bloom"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Small label",
+          "default": "Softly romantic"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Short description",
+          "default": "A blush-toned statement for celebratory tables."
+        },
+        {
+          "type": "color",
+          "id": "accent",
+          "label": "Accent colour",
+          "default": "#E76C92"
+        },
+        {
+          "type": "color",
+          "id": "soft_color",
+          "label": "Soft background colour",
+          "default": "#FBE5ED"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Product or variant link"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Shop Rose Bloom"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS champagne hero",
+      "blocks": [
+        {
+          "type": "variant",
+          "settings": {
+            "name": "Rose Bloom",
+            "kicker": "Softly romantic",
+            "description": "A blush-toned statement for celebratory tables.",
+            "accent": "#E76C92",
+            "soft_color": "#FBE5ED",
+            "button_label": "Shop Rose Bloom"
+          }
+        },
+        {
+          "type": "variant",
+          "settings": {
+            "name": "Aqua Glaze",
+            "kicker": "Freshly unexpected",
+            "description": "A clear aqua tone with playful, modern energy.",
+            "accent": "#21B8C4",
+            "soft_color": "#DDF7F7",
+            "button_label": "Shop Aqua Glaze"
+          }
+        },
+        {
+          "type": "variant",
+          "settings": {
+            "name": "Smoke Noir",
+            "kicker": "Quietly dramatic",
+            "description": "A smoky finish for refined, contemporary tables.",
+            "accent": "#4A4749",
+            "soft_color": "#E8E5E5",
+            "button_label": "Shop Smoke Noir"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

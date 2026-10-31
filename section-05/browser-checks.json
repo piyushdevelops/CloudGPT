@@ -1,0 +1,125 @@
+{
+  "interactions": [
+    {
+      "alt": "Dolce Far Niente planner: weekly plans spread",
+      "description": "Priorities, daily to-dos, wins and lessons.",
+      "loaded": true,
+      "src": "https://thejuneshop.com/cdn/shop/files/8ls_d286e639-4e33-452f-834b-9574dd2be709.jpg?v=1763466776&width=1600",
+      "tab": "02\nWeekly plans"
+    },
+    {
+      "alt": "Dolce Far Niente planner: habits spread",
+      "description": "A little space to notice your everyday routines.",
+      "loaded": true,
+      "src": "https://thejuneshop.com/cdn/shop/files/6ls_fcd79951-2fef-42f2-b64a-b9cb612952c0.jpg?v=1763466776&width=1600",
+      "tab": "03\nHabits"
+    },
+    {
+      "alt": "Dolce Far Niente planner: reflection spread",
+      "description": "Look back on the moments that made your year.",
+      "loaded": true,
+      "src": "https://thejuneshop.com/cdn/shop/files/12ls_5d976458-aaa5-45b8-ba6b-2110a956b3ae.jpg?v=1763466776&width=1600",
+      "tab": "04\nReflection"
+    },
+    {
+      "alt": "Dolce Far Niente planner: goals spread",
+      "description": "Break your goals into smaller steps.",
+      "loaded": true,
+      "src": "https://thejuneshop.com/cdn/shop/files/5ls_81ceffc2-e00a-4b27-8a38-fcd8b3613181.jpg?v=1763466776&width=1600",
+      "tab": "01\nGoals"
+    }
+  ],
+  "widths": [
+    {
+      "document": 305,
+      "font": "Poppins, sans-serif",
+      "section": {
+        "bottom": 5394.203125,
+        "height": 943.9375,
+        "left": 0,
+        "right": 305,
+        "top": 4450.265625,
+        "width": 305,
+        "x": 0,
+        "y": 4450.265625
+      },
+      "viewport": 320
+    },
+    {
+      "document": 375,
+      "font": "Poppins, sans-serif",
+      "section": {
+        "bottom": 5174.109375,
+        "height": 887.9375,
+        "left": 0,
+        "right": 375,
+        "top": 4286.171875,
+        "width": 375,
+        "x": 0,
+        "y": 4286.171875
+      },
+      "viewport": 390
+    },
+    {
+      "document": 735,
+      "font": "Poppins, sans-serif",
+      "section": {
+        "bottom": 3770.96875,
+        "height": 843.375,
+        "left": 0,
+        "right": 735,
+        "top": 2927.59375,
+        "width": 735,
+        "x": 0,
+        "y": 2927.59375
+      },
+      "viewport": 750
+    },
+    {
+      "document": 1009,
+      "font": "Poppins, sans-serif",
+      "section": {
+        "bottom": 1678.59375,
+        "height": 610.90625,
+        "left": 0,
+        "right": 1009,
+        "top": 1067.6875,
+        "width": 1009,
+        "x": 0,
+        "y": 1067.6875
+      },
+      "viewport": 1024
+    },
+    {
+      "document": 1425,
+      "font": "Poppins, sans-serif",
+      "section": {
+        "bottom": 1349.8125,
+        "height": 643.90625,
+        "left": 0,
+        "right": 1425,
+        "top": 705.90625,
+        "width": 1425,
+        "x": 0,
+        "y": 705.90625
+      },
+      "viewport": 1440
+    },
+    {
+      "document": 2545,
+      "font": "Poppins, sans-serif",
+      "section": {
+        "bottom": 1234.46875,
+        "height": 643.90625,
+        "left": 432.5,
+        "right": 2112.5,
+        "top": 590.5625,
+        "width": 1680,
+        "x": 432.5,
+        "y": 590.5625
+      },
+      "viewport": 2560
+    }
+  ],
+  "viewer": "Mobile 700px page in309px scroll frame; page remains1/4 during panning; next/Escape/focus return passed"
+}

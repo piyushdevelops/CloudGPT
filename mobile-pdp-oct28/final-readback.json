@@ -1,0 +1,41 @@
+{
+  "themeId": 187527266499,
+  "themeName": "TJS Website Rework — 24 Sep 2026",
+  "role": "UNPUBLISHED",
+  "published": false,
+  "verifiedAt": "2026-10-28T18:20:44Z",
+  "section": {
+    "filename": "sections/june-mobile-product.liquid",
+    "checksumMd5": "fb948da80db6b63a612294b316a00ebd",
+    "exactReadback": true,
+    "liquidValidation": "passed"
+  },
+  "templates": {
+    "fullPdpMigrated": 16,
+    "allContainShell": true,
+    "allOrdered": true,
+    "replacedPurchaseSectionsActive": 0,
+    "quickViewTemplateUntouched": true
+  },
+  "metafieldDefinition": {
+    "id": "gid://shopify/MetafieldDefinition/314624639171",
+    "namespace": "custom",
+    "key": "preorder_dispatch_date",
+    "type": "date"
+  },
+  "browser": {
+    "viewports": ["360x640", "393x852", "430x932", "1440x1000"],
+    "squareGallery": true,
+    "thumbnailSelection": true,
+    "stickyMobileCta": true,
+    "tabs": true,
+    "quantity": true,
+    "horizontalOverflow": false,
+    "consoleErrors": 0,
+    "cartPropertyPersistence": true,
+    "cartClearedAfterQa": true,
+    "preorderState": true,
+    "photoBookLivePreview": false,
+    "photoBookPreviewReason": "Product handle returned 404 because the product is not storefront-available."
+  }
+}

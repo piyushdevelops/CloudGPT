@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-28",
+  "role": "UNPUBLISHED",
+  "files": [
+    {
+      "filename": "locales/en.default.json",
+      "md5": "9b43a08391603c8a03d6424475013f71"
+    },
+    {
+      "filename": "sections/june-make-room.liquid",
+      "md5": "bf79951765103d6e089af3d1d0d89d7d"
+    },
+    {
+      "filename": "sections/june-with-extras.liquid",
+      "md5": "16ca9a61f1f724bee938a4bcaba582b1"
+    },
+    {
+      "filename": "sections/june-your-year.liquid",
+      "md5": "abdc92980f30bc15780a4152a05a7a15"
+    },
+    {
+      "filename": "templates/index.json",
+      "md5": "0491ec862ca96b3b3bff1dce9a9e3626"
+    }
+  ],
+  "validation": "Revision 4 passed",
+  "unchanged": [
+    "Section 1",
+    "Section 2",
+    "index.json",
+    "en.default.json"
+  ],
+  "browser": "revision-4-browser.json",
+  "photographyLimitation": "Source photo itself partially frames the canvas bag; CSS adds no crop."
+}

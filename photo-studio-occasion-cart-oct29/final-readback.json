@@ -1,0 +1,452 @@
+[
+  {
+    "file": "app.js",
+    "exact": true,
+    "sha256": "944c00c65f074993bc569e212dedbfa8fafc50e9d355a0a538a3c2f670fd18e4"
+  },
+  {
+    "file": "asset-manifest.json",
+    "exact": true,
+    "sha256": "9de44673592288a7a277a109dc512bd526bbfc9774c8ab4dfb698b6282b84117"
+  },
+  {
+    "file": "auto-book.js",
+    "exact": true,
+    "sha256": "906b668a347a9c40ae595f7231e3401b89e475e5e1a528183fb2ebb1c096e61c"
+  },
+  {
+    "file": "cover-catalog.js",
+    "exact": true,
+    "sha256": "bb60b348f18ea9a16f90f0b7264a9b60983d7fdec767a3d8408f91549f45928f"
+  },
+  {
+    "file": "cover-personalization.js",
+    "exact": true,
+    "sha256": "887d2aac0efda2916b7d85a280e1afdfdb50c6943d3328af8f8fc4da48268b00"
+  },
+  {
+    "file": "index.html",
+    "exact": true,
+    "sha256": "89af9c6f83fa60f4c7735b9e202937093ea1f469bdadc8543a3ac04e4ab0014b"
+  },
+  {
+    "file": "package-lock.json",
+    "exact": true,
+    "sha256": "0e495217b0d771ff46f01602a72565d73d3b4e122da12ddd87bc46e6adb9e67a"
+  },
+  {
+    "file": "package.json",
+    "exact": true,
+    "sha256": "edea0e7cd963e35f00520bf58cb379bc04953a39aba8ba9fd21b835dac212cc7"
+  },
+  {
+    "file": "production-server.cjs",
+    "exact": true,
+    "sha256": "248418e57d3dfc9c68adb884ab39dffc6c8d356a7e4ed323c17ae643f0d65666"
+  },
+  {
+    "file": "r2-storage.cjs",
+    "exact": true,
+    "sha256": "c0548c4b9705a36521f5a6e39f0af17a54b9ff338a26a1ba6682779c49e0b7b4"
+  },
+  {
+    "file": "studio-v2.js",
+    "exact": true,
+    "sha256": "31c8b8f3268382888acdd4f8373f3e34c5fd2df4fdcd0cf08c23194e6482c03f"
+  },
+  {
+    "file": "styles.css",
+    "exact": true,
+    "sha256": "667d86c261d9f4a3a7c33bdb1e11754022a00fdce656f4032dcbf0ed9826f6eb"
+  },
+  {
+    "file": "tab-options.html",
+    "exact": true,
+    "sha256": "fdac3dc45d39d4ce0a96bd5445e277fa87bc13cf870cdfc8b75edcdcf34a2ce9"
+  },
+  {
+    "file": "assets/occasions/anniversary.jpg",
+    "exact": true,
+    "sha256": "bc0196a4ba6dae1cbb120de738160fee3713f65a37e2f32be0ae10803a21fe3d"
+  },
+  {
+    "file": "assets/occasions/baby-first-year.jpg",
+    "exact": true,
+    "sha256": "bf0a34cc761bb996f86b6a1816157c2655f62142942b5b6235487c760165ba8a"
+  },
+  {
+    "file": "assets/occasions/birthday.jpg",
+    "exact": true,
+    "sha256": "81f658295f593ed5dcce9c93095d8d01d2a101b06dacd7934dcdee0ecd4ef112"
+  },
+  {
+    "file": "assets/occasions/couple.jpg",
+    "exact": true,
+    "sha256": "39879656579d4cb63852d2d232269509acc806817a7a674b816207453053fb43"
+  },
+  {
+    "file": "assets/occasions/festivals.jpg",
+    "exact": true,
+    "sha256": "be9aab587e72f8bbb1f713d7b1dbbf58cd546b75fda543e6cfa1aa34167d3ac5"
+  },
+  {
+    "file": "assets/occasions/kids.jpg",
+    "exact": true,
+    "sha256": "3e845c7787c80442d63364b165d71b83ef2aec041fb8d7311e44af8726ea4525"
+  },
+  {
+    "file": "assets/occasions/occasion-sheet-v1.png",
+    "exact": true,
+    "sha256": "679f3f3fdd117b16daea4359ed98de12108e3bb3daa075d5aca09b9f74bdaa5d"
+  },
+  {
+    "file": "assets/occasions/pets.jpg",
+    "exact": true,
+    "sha256": "478a295689a7a7371393545101b7ca3b7c2eb7e28d6ea5f188a73ea1e09777ee"
+  },
+  {
+    "file": "assets/occasions/pregnancy.jpg",
+    "exact": true,
+    "sha256": "ec4cc328c2dc818de526c4c8c4b2ad346b3bb448a4ede0b4aa26b8611f2f446d"
+  },
+  {
+    "file": "assets/occasions/travel.jpg",
+    "exact": true,
+    "sha256": "95efa51c1b3d0a32ac52ca291507cf9260968cf2f9984a28301e3f68a07b9d55"
+  },
+  {
+    "file": "assets/occasions/wedding.jpg",
+    "exact": true,
+    "sha256": "0e927b8fa863d8737241bd0924802938a1db47be5a226f9efbf250f559000676"
+  },
+  {
+    "file": "assets/ui/june-icon-sheet.png",
+    "exact": true,
+    "sha256": "f800133d8e0d7d3cfbe92b821818a544e6f37560ca570b618e7d02567646d65b"
+  },
+  {
+    "file": "assets/ui/june-illustrations-v2-clean.png",
+    "exact": true,
+    "sha256": "3732a9ff3477d6fa850de1b11b88f21e1f283b79e7ef5a9eb892ef7147c1e3e6"
+  },
+  {
+    "file": "assets/ui/june-illustrations-v2.png",
+    "exact": true,
+    "sha256": "b0af0ccb9f342cb8b3f302e7faeca592b0ef05182ce7c65298372a9c2377c3ef"
+  },
+  {
+    "file": "assets/ui/june-illustrations-v3-clean.png",
+    "exact": true,
+    "sha256": "76b32efb72e4349d5f620ea7cbf068606c861db1ccae467161fc9466ba36777f"
+  },
+  {
+    "file": "assets/occasion-covers/baby/before-we-met.jpg",
+    "exact": true,
+    "sha256": "edb4fcaacb6e5cc342d8170490d2f907484edf2297c2efb075215cd577b62003"
+  },
+  {
+    "file": "assets/occasion-covers/baby/from-bump-to-baby.jpg",
+    "exact": true,
+    "sha256": "e61faef1abac26e8f973d1fb72224fd3ec71cc9d765b30c0c871bd9ca4a6f093"
+  },
+  {
+    "file": "assets/occasion-covers/baby/hello-world-aarav.jpg",
+    "exact": true,
+    "sha256": "ad51746f6221b4459b012bc239cb258c165d0b69d8787f7e89cb39f16d1e88fa"
+  },
+  {
+    "file": "assets/occasion-covers/baby/my-pregnancy-story.jpg",
+    "exact": true,
+    "sha256": "6676fb3185a2ffc4b6392ff115341268e8583de5e587759025864904b0d21567"
+  },
+  {
+    "file": "assets/occasion-covers/baby/nine-months-of-you.jpg",
+    "exact": true,
+    "sha256": "f7b33b181c306ecab39fefc96f866c4a45389f5f09745b2491b2edcdc6bfee28"
+  },
+  {
+    "file": "assets/occasion-covers/baby/our-greatest-adventure.jpg",
+    "exact": true,
+    "sha256": "e585235072f041eb1cea39d02ea2dc7f5704e785a0e10cfeae847c540ee3315e"
+  },
+  {
+    "file": "assets/occasion-covers/baby/robin-little-one.jpg",
+    "exact": true,
+    "sha256": "7edf8bda5c3b4eda0e5cdab3c918e1b6c39fe5bf34edc49bd5379cbc4e9aa7a5"
+  },
+  {
+    "file": "assets/occasion-covers/baby/smallest-beginning-mira.jpg",
+    "exact": true,
+    "sha256": "5bd6887eed6821d57467ad564a455805e5735eef6eb82e85f60467515272fa09"
+  },
+  {
+    "file": "assets/occasion-covers/baby/soon-to-be-three.jpg",
+    "exact": true,
+    "sha256": "b444769e6ef7b71084499120953255131eda9f32ada6ad22687540c5b8e9ffd8"
+  },
+  {
+    "file": "assets/occasion-covers/baby/waiting-for-you.jpg",
+    "exact": true,
+    "sha256": "31ec60d8d6c4a7c89dbbd4995cce81f12111d127b5c2514796be1c043ebd5d7c"
+  },
+  {
+    "file": "assets/occasion-covers/birthday/birthday-edit-ananya.jpg",
+    "exact": true,
+    "sha256": "b6a905ee95d1ac870b41a75dae5ec1ef4069cb24036664f07c91749fb99a38be"
+  },
+  {
+    "file": "assets/occasion-covers/birthday/birthday-snapshots-alex.jpg",
+    "exact": true,
+    "sha256": "55bff92a5f67c847df62805e5e8f2a3a47469f7fa05f83a3cffd0a3f6ef4fe03"
+  },
+  {
+    "file": "assets/occasion-covers/birthday/eighteen-sophie.jpg",
+    "exact": true,
+    "sha256": "ab9340b9338dd8270da095a18b84d0ec63368518b05ba5e220a9fde72e43ee4a"
+  },
+  {
+    "file": "assets/occasion-covers/birthday/favourite-person-mum.jpg",
+    "exact": true,
+    "sha256": "e7a3412ef71a01e1f768f9b9ab9b2913d1b61c99617baf22fced748570f7db69"
+  },
+  {
+    "file": "assets/occasion-covers/birthday/make-a-wish-riya.jpg",
+    "exact": true,
+    "sha256": "b3602be70177aad4936df90ae56e91a0d8628db9d41a664cac99be7fb126f39b"
+  },
+  {
+    "file": "assets/occasion-covers/birthday/seventy-meera.jpg",
+    "exact": true,
+    "sha256": "182081099cc48ae4a65e8589c299659daac7ac587a876c56bfc1682454d17740"
+  },
+  {
+    "file": "assets/occasion-covers/birthday/sixty-good-years-rahul.jpg",
+    "exact": true,
+    "sha256": "217b0efb467b7a9d3f5ef2cdaa78adc95559d64dd948d3f02c152a5d800f833f"
+  },
+  {
+    "file": "assets/occasion-covers/birthday/then-and-now-arjun.jpg",
+    "exact": true,
+    "sha256": "e0d8fdaad7777a4d7ba98bd14d7b88e08eee87747202c5c022b030ff558cba80"
+  },
+  {
+    "file": "assets/occasion-covers/couples/all-the-ways-you-love-us.jpg",
+    "exact": true,
+    "sha256": "3466f3fd7348e5d641e03ed7134b1641611758ce83207ea5f1bcb8e01350bf6c"
+  },
+  {
+    "file": "assets/occasion-covers/couples/because-of-you.jpg",
+    "exact": true,
+    "sha256": "0682f529f2cf5b2e0af3e85d3693c532777abe00e6fd5814049ce209cb3c6b48"
+  },
+  {
+    "file": "assets/occasion-covers/couples/everything-in-between.jpg",
+    "exact": true,
+    "sha256": "b04943239eec227c514f1ce42619b408f303e2796468271438175c883538b321"
+  },
+  {
+    "file": "assets/occasion-covers/couples/love-like-this.jpg",
+    "exact": true,
+    "sha256": "4c0a030b6b434458f3f705067c07030f32220e5f0e3b33438694828d8f191fce"
+  },
+  {
+    "file": "assets/occasion-covers/couples/one-year-down.jpg",
+    "exact": true,
+    "sha256": "99a802d083e93489626bb12bdee4d44f1121a0c6eb60bbd8b1ca5f739f2be912"
+  },
+  {
+    "file": "assets/occasion-covers/couples/our-first-year.jpg",
+    "exact": true,
+    "sha256": "6c979d634a6d0b8f609aade94ee1524a0edd263d817bb9b54151cef09517d989"
+  },
+  {
+    "file": "assets/occasion-covers/couples/our-home-is-you.jpg",
+    "exact": true,
+    "sha256": "d618f8b852e391b908fd0bfff67c057f15cc07be2abedee26cad5c05be07b063"
+  },
+  {
+    "file": "assets/occasion-covers/couples/same-people-more-memories.jpg",
+    "exact": true,
+    "sha256": "aec47bd766bbc33be79fb396112f832514ad015c57787c056dab0015976440ea"
+  },
+  {
+    "file": "assets/occasion-covers/couples/the-chapters-weve-written.jpg",
+    "exact": true,
+    "sha256": "41436041b9e18d5e68c83e416cba9408c0fcfd2850dd2e00cda014a8952a795f"
+  },
+  {
+    "file": "assets/occasion-covers/couples/the-days-of-us.jpg",
+    "exact": true,
+    "sha256": "0b6bef7097e905ce4f4e73a48546c8fe1b8b878f7d7f497f7343e30fce8b6e44"
+  },
+  {
+    "file": "assets/occasion-covers/couples/the-heart-of-us.jpg",
+    "exact": true,
+    "sha256": "1382b1cba745bca7540e72466117e7c6bdf6e9f6945dddfb25e37db88c91415c"
+  },
+  {
+    "file": "assets/occasion-covers/couples/the-little-things.jpg",
+    "exact": true,
+    "sha256": "501d5f4a8c1bc870e1ca66425f30ba8853362db2f4d059f566ea73ed958f7100"
+  },
+  {
+    "file": "assets/occasion-covers/mum/everything-begins-with-her.jpg",
+    "exact": true,
+    "sha256": "402c2ac361b1b87528b6e5c77e7bf8b75bc5d985fd9e6dd3d55b9d42aca10995"
+  },
+  {
+    "file": "assets/occasion-covers/mum/love-you-mum.jpg",
+    "exact": true,
+    "sha256": "b72a5df7ba269f3119f17c71916d0c2517cc0713af34f00cd79e9734e7885f52"
+  },
+  {
+    "file": "assets/occasion-covers/mum/mama-always.jpg",
+    "exact": true,
+    "sha256": "aca80ce8d60d965270d2f29099c40533ee666f7e04085f0365ac6d0d29110c57"
+  },
+  {
+    "file": "assets/occasion-covers/mum/mum-and-me.jpg",
+    "exact": true,
+    "sha256": "a66670cfebfff591dc2a91364890efe2687964182ab26b9a5c11b03c8e33b653"
+  },
+  {
+    "file": "assets/occasion-covers/pets/charlie.jpg",
+    "exact": true,
+    "sha256": "ad0a7a0440060262f95f44f57aa60c5e3f68a033c045b1896e43ad13ceec1f3a"
+  },
+  {
+    "file": "assets/occasion-covers/pets/cleo.jpg",
+    "exact": true,
+    "sha256": "df259edcb4704544bf79c183d21163b9937533ad936575cbf01a8ee5030d034e"
+  },
+  {
+    "file": "assets/occasion-covers/pets/milo.jpg",
+    "exact": true,
+    "sha256": "51cd383be08c0eb398b96219655da5b72f2d3d250cc24ec35f8b351c30514c01"
+  },
+  {
+    "file": "assets/occasion-covers/pets/miso.jpg",
+    "exact": true,
+    "sha256": "f7656ba267578fed83b10637b7d02b2ffc2b1a0bc9422a2d5c8b8a77c18c03c2"
+  },
+  {
+    "file": "assets/occasion-covers/pets/olive.jpg",
+    "exact": true,
+    "sha256": "fa2ffdcc64c77493d50ce03bce7695c4e44ff013b7bdb148423da400b759436b"
+  },
+  {
+    "file": "assets/occasion-covers/pets/poppy.jpg",
+    "exact": true,
+    "sha256": "7bef1888bca20407a1ff1a933aa71c6b00e0cf35ab8270ea2ccfea3f39ed2e90"
+  },
+  {
+    "file": "assets/occasion-covers/pets/teddy.jpg",
+    "exact": true,
+    "sha256": "2b0faf60c1ddb0438f21e62cf8b28801013de7fa073d415b7ba626105af2d3dc"
+  },
+  {
+    "file": "assets/occasion-covers/travel/amsterdam-travel-book.jpg",
+    "exact": true,
+    "sha256": "1d4463b8f58a81b56ca438c6a461edb7650a46997e87c1bdbc19b729040e948f"
+  },
+  {
+    "file": "assets/occasion-covers/travel/bali-travel-book.jpg",
+    "exact": true,
+    "sha256": "7fac9910e23b980f1873cee5c866fee3459a386d1a9ffd2b98abc29007cd730c"
+  },
+  {
+    "file": "assets/occasion-covers/travel/departures-travel-book.jpg",
+    "exact": true,
+    "sha256": "e9abc664b05fd0c70c1216864fa9cc586ed26d2dee5b08314e09cf215912d869"
+  },
+  {
+    "file": "assets/occasion-covers/travel/istanbul-travel-book.jpg",
+    "exact": true,
+    "sha256": "ac17ec2daaf133630860f618cebfb87fc072bdb8ebf61c59975bbf68f987c6a9"
+  },
+  {
+    "file": "assets/occasion-covers/travel/new-york-travel-book.jpg",
+    "exact": true,
+    "sha256": "a201bc6d39679c33fb5ecb3c62721cf971ceba7f4d7ddf2e2573af61c924f609"
+  },
+  {
+    "file": "assets/occasion-covers/travel/roam-travel-book.jpg",
+    "exact": true,
+    "sha256": "9061c95f365c8073d19b95744517781e05946cf74f125fd8a8b41fd93edc7f56"
+  },
+  {
+    "file": "assets/occasion-covers/travel/the-places-we-went-travel-book.jpg",
+    "exact": true,
+    "sha256": "d58965d9ca348610b4b6c593aa0efa1ef3e5f3340fdf27d1db7835628bece159"
+  },
+  {
+    "file": "assets/occasion-covers/travel/tokyo-travel-book.jpg",
+    "exact": true,
+    "sha256": "3a2ab8215e1881063a05df2792c6291eb12cdaadc69433ffa0f87b19713a088a"
+  },
+  {
+    "file": "assets/occasion-covers/wedding/cinematic-wedding.jpg",
+    "exact": true,
+    "sha256": "7ddfa0b9b519e33b581ae8ad17efa8c72f83f442de604ed58d0725df28d442fd"
+  },
+  {
+    "file": "assets/occasion-covers/wedding/just-married.jpg",
+    "exact": true,
+    "sha256": "d8a066bc4eee714385f23d0d42bebf1ff7a366bf0fd878f2e319e04555f548c2"
+  },
+  {
+    "file": "assets/occasion-covers/wedding/our-wedding-in-moments.jpg",
+    "exact": true,
+    "sha256": "7b11004b246e68a53dbd56acb30feac749412ff3e90e071555fe411e3b43108b"
+  },
+  {
+    "file": "assets/occasion-covers/wedding/the-wedding-issue.jpg",
+    "exact": true,
+    "sha256": "8ef97ef82aa63bcd22538daecd84c7609e9ba4ee811db8ce6c964812f16fd491"
+  },
+  {
+    "file": "assets/occasion-covers/wedding/wedding-monogram.jpg",
+    "exact": true,
+    "sha256": "aada4f7192a209e8a901ab10d02e978628c1c606d7403b9ce5c66b3662a9a981"
+  },
+  {
+    "file": "assets/occasion-covers/year/365-days-of-us.jpg",
+    "exact": true,
+    "sha256": "198adb06bd4a7995bdda1f1523f30187099a85d677f5a04d1eca1af802ef317f"
+  },
+  {
+    "file": "assets/occasion-covers/year/a-year-well-lived.jpg",
+    "exact": true,
+    "sha256": "7a633461af15423f81acfe36bd921e40496ba3012c05107fb7121e847ce75739"
+  },
+  {
+    "file": "assets/occasion-covers/year/oh-what-a-year.jpg",
+    "exact": true,
+    "sha256": "60c4837b789141ac8a7f95091894aa23594d177686b792d1e480de790383d63f"
+  },
+  {
+    "file": "assets/occasion-covers/year/the-days-that-made-us.jpg",
+    "exact": true,
+    "sha256": "bdd8b265d07403fc6bc5ed41b21e7221de92ab4791191c7adb11af8e40b80f32"
+  },
+  {
+    "file": "assets/occasion-covers/year/the-places-the-people.jpg",
+    "exact": true,
+    "sha256": "a7892f8252159b2ff578dbe7f60df7256391602cebdbe01e4df7933da898f2c0"
+  },
+  {
+    "file": "assets/occasion-covers/year/the-year-in-frames.jpg",
+    "exact": true,
+    "sha256": "5810f282036347fb25450028b13e6e0bd0522095e600314fa00bb00399e3153f"
+  },
+  {
+    "file": "assets/occasion-covers/year/this-was-us.jpg",
+    "exact": true,
+    "sha256": "4acc392130682ff5ba95e75944512abd7e5a09fcbf283c383ba7be4c783439b5"
+  },
+  {
+    "file": "assets/occasion-covers/year/twenty-six.jpg",
+    "exact": true,
+    "sha256": "5b31981d3e52cc51e8ff4ce5092a8f9b5dfdaba8004fc99147ffa41220c67e33"
+  }
+]

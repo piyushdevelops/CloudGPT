@@ -1,0 +1,682 @@
+[
+  {
+    "q": "zzqaunfindable",
+    "status": 200,
+    "products": [
+      {
+        "id": 7245214679235,
+        "title": "Mr. & Mrs. Ceramic Square Starter Plate"
+      },
+      {
+        "id": 7922716704963,
+        "title": "Fun Expressive Teddy Bear"
+      },
+      {
+        "id": 7316144095427,
+        "title": "Glazed Ceramic Starter Plate - Coal Black — 7-Inch"
+      },
+      {
+        "id": 7922914427075,
+        "title": "Gentle Makeup Remover Wipes"
+      },
+      {
+        "id": 7615147901123,
+        "title": "Emory Curry Bowl"
+      },
+      {
+        "id": 7518453891267,
+        "title": "Aurulent Patch Rim Pasta Bowl"
+      },
+      {
+        "id": 7245217235139,
+        "title": "Grateful White Ceramic Serving Plate"
+      },
+      {
+        "id": 4657074241590,
+        "title": "Camera Shape Eraser (6 + 1)"
+      },
+      {
+        "id": 8006544064707,
+        "title": "Berry Blue Funky Oversized Kids' Sunglasses"
+      },
+      {
+        "id": 7278893170883,
+        "title": "Suave Grey Ceramic Plate"
+      }
+    ],
+    "queries": []
+  },
+  {
+    "q": "zzqaunfindable AND zzqaunfindable",
+    "status": 200,
+    "products": [
+      {
+        "id": 7008896909507,
+        "title": "Shine Like The Whole Universe Is Yours — Undated Planner"
+      },
+      {
+        "id": 7444083671235,
+        "title": "Conquer The World — Undated Planner + Ultimate Sticker Book"
+      },
+      {
+        "id": 7548192882883,
+        "title": "Mickey Inflatable Swim Ring For Kids"
+      },
+      {
+        "id": 7444062240963,
+        "title": "Sagittarius Watercolour Constellation — Undated Planner + Sticker Book"
+      },
+      {
+        "id": 7640988844227,
+        "title": "Sagittarius Celestial Emblem — Undated Planner + Sticker Book"
+      },
+      {
+        "id": 7540251099331,
+        "title": "Let's Go Beyond The Limit — Undated Planner"
+      },
+      {
+        "id": 7640988942531,
+        "title": "Aries Celestial Emblem — Undated Planner + Sticker Book"
+      },
+      {
+        "id": 7483234025667,
+        "title": "Blessed, Thankful & Focused — Limited Edition Undated Planner"
+      },
+      {
+        "id": 7640988680387,
+        "title": "Taurus Celestial Emblem — Undated Planner + Sticker Book"
+      },
+      {
+        "id": 7443983827139,
+        "title": "Alhamdulillah — Undated Planner + Ultimate Sticker Book"
+      }
+    ],
+    "queries": []
+  },
+  {
+    "q": "planner",
+    "status": 200,
+    "products": [
+      {
+        "id": 8223914754243,
+        "title": "Do It For The Plot — 2026 Dated Planner"
+      },
+      {
+        "id": 7765237301443,
+        "title": "One Day At A Time — Rewritable Planner"
+      },
+      {
+        "id": 7540246184131,
+        "title": "Adventures Over Things — Undated Planner"
+      },
+      {
+        "id": 8223905743043,
+        "title": "Create Your Own Sunshine — 2026 Dated Planner"
+      },
+      {
+        "id": 8223901647043,
+        "title": "Make The Days Count — 2026 Dated Planner"
+      },
+      {
+        "id": 7765236875459,
+        "title": "All We Have Is Now — Rewritable Planner"
+      },
+      {
+        "id": 7640990875843,
+        "title": "Rise & Slay — Undated Planner"
+      },
+      {
+        "id": 8223878217923,
+        "title": "One Step At A Time — 2026 Dated Planner"
+      },
+      {
+        "id": 7765234057411,
+        "title": "A New Era Of Me — Rewritable Planner"
+      },
+      {
+        "id": 7765230321859,
+        "title": "Remember Why You Started — Rewritable Planner"
+      }
+    ],
+    "queries": [
+      {
+        "url": "/search?q=planner&_pos=1&_psq=planner&_psid=ab6110fdc&_ss=e",
+        "text": "planner",
+        "styled_text": "<mark>planner</mark>"
+      },
+      {
+        "url": "/search?q=undated+planners+limited+edition&_pos=2&_psq=planner&_psid=ab6110fdc&_ss=e",
+        "text": "undated planners limited edition",
+        "styled_text": "<span>undated </span><mark>planner</mark><span>s limited edition</span>"
+      },
+      {
+        "url": "/search?q=hard+bound+planners&_pos=3&_psq=planner&_psid=ab6110fdc&_ss=e",
+        "text": "hard bound planners",
+        "styled_text": "<span>hard bound </span><mark>planner</mark><span>s</span>"
+      },
+      {
+        "url": "/search?q=undated+planner+sticker+book&_pos=4&_psq=planner&_psid=ab6110fdc&_ss=e",
+        "text": "undated planner sticker book",
+        "styled_text": "<span>undated </span><mark>planner</mark><span> sticker book</span>"
+      },
+      {
+        "url": "/search?q=undated+planner+ultimate+sticker+book&_pos=5&_psq=planner&_psid=ab6110fdc&_ss=e",
+        "text": "undated planner ultimate sticker book",
+        "styled_text": "<span>undated </span><mark>planner</mark><span> ultimate sticker book</span>"
+      },
+      {
+        "url": "/search?q=2026+dated+planner&_pos=6&_psq=planner&_psid=ab6110fdc&_ss=e",
+        "text": "2026 dated planner",
+        "styled_text": "<span>2026 dated </span><mark>planner</mark>"
+      },
+      {
+        "url": "/search?q=financial+planner&_pos=7&_psq=planner&_psid=ab6110fdc&_ss=e",
+        "text": "financial planner",
+        "styled_text": "<span>financial </span><mark>planner</mark>"
+      },
+      {
+        "url": "/search?q=planter&_pos=8&_psq=planner&_psid=ab6110fdc&_ss=e",
+        "text": "planter",
+        "styled_text": "<span>planter</span>"
+      },
+      {
+        "url": "/search?q=wedding+planner&_pos=9&_psq=planner&_psid=ab6110fdc&_ss=e",
+        "text": "wedding planner",
+        "styled_text": "<span>wedding </span><mark>planner</mark>"
+      },
+      {
+        "url": "/search?q=undated+planner&_pos=10&_psq=planner&_psid=ab6110fdc&_ss=e",
+        "text": "undated planner",
+        "styled_text": "<span>undated </span><mark>planner</mark>"
+      }
+    ]
+  },
+  {
+    "q": "planner AND planner",
+    "status": 200,
+    "products": [
+      {
+        "id": 8223914754243,
+        "title": "Do It For The Plot — 2026 Dated Planner"
+      },
+      {
+        "id": 7765237301443,
+        "title": "One Day At A Time — Rewritable Planner"
+      },
+      {
+        "id": 7765230321859,
+        "title": "Remember Why You Started — Rewritable Planner"
+      },
+      {
+        "id": 8223901647043,
+        "title": "Make The Days Count — 2026 Dated Planner"
+      },
+      {
+        "id": 7765234057411,
+        "title": "A New Era Of Me — Rewritable Planner"
+      },
+      {
+        "id": 7765200273603,
+        "title": "Do It For You — Weekly Rewritable Planner"
+      },
+      {
+        "id": 7765236875459,
+        "title": "All We Have Is Now — Rewritable Planner"
+      },
+      {
+        "id": 8223905743043,
+        "title": "Create Your Own Sunshine — 2026 Dated Planner"
+      },
+      {
+        "id": 8223878217923,
+        "title": "One Step At A Time — 2026 Dated Planner"
+      },
+      {
+        "id": 7540246184131,
+        "title": "Adventures Over Things — Undated Planner"
+      }
+    ],
+    "queries": [
+      {
+        "url": "/search?q=undated+planners+limited+edition&_pos=1&_psq=planner+AND+planner&_psid=ca68534d0&_ss=e",
+        "text": "undated planners limited edition",
+        "styled_text": "<span>undated planners limited edition</span>"
+      },
+      {
+        "url": "/search?q=hard+bound+planners&_pos=2&_psq=planner+AND+planner&_psid=ca68534d0&_ss=e",
+        "text": "hard bound planners",
+        "styled_text": "<span>hard bound planners</span>"
+      },
+      {
+        "url": "/search?q=undated+planner+sticker+book&_pos=3&_psq=planner+AND+planner&_psid=ca68534d0&_ss=e",
+        "text": "undated planner sticker book",
+        "styled_text": "<span>undated planner sticker book</span>"
+      },
+      {
+        "url": "/search?q=undated+planner+ultimate+sticker+book&_pos=4&_psq=planner+AND+planner&_psid=ca68534d0&_ss=e",
+        "text": "undated planner ultimate sticker book",
+        "styled_text": "<span>undated planner ultimate sticker book</span>"
+      },
+      {
+        "url": "/search?q=planner&_pos=5&_psq=planner+AND+planner&_psid=ca68534d0&_ss=e",
+        "text": "planner",
+        "styled_text": "<span>planner</span>"
+      },
+      {
+        "url": "/search?q=2026+dated+planner&_pos=6&_psq=planner+AND+planner&_psid=ca68534d0&_ss=e",
+        "text": "2026 dated planner",
+        "styled_text": "<span>2026 dated planner</span>"
+      },
+      {
+        "url": "/search?q=financial+planner&_pos=7&_psq=planner+AND+planner&_psid=ca68534d0&_ss=e",
+        "text": "financial planner",
+        "styled_text": "<span>financial planner</span>"
+      },
+      {
+        "url": "/search?q=planter&_pos=8&_psq=planner+AND+planner&_psid=ca68534d0&_ss=e",
+        "text": "planter",
+        "styled_text": "<span>planter</span>"
+      },
+      {
+        "url": "/search?q=wedding+planner&_pos=9&_psq=planner+AND+planner&_psid=ca68534d0&_ss=e",
+        "text": "wedding planner",
+        "styled_text": "<span>wedding planner</span>"
+      },
+      {
+        "url": "/search?q=undated+planner&_pos=10&_psq=planner+AND+planner&_psid=ca68534d0&_ss=e",
+        "text": "undated planner",
+        "styled_text": "<span>undated planner</span>"
+      }
+    ]
+  },
+  {
+    "q": "planer",
+    "status": 200,
+    "products": [
+      {
+        "id": 8223914754243,
+        "title": "Do It For The Plot — 2026 Dated Planner"
+      },
+      {
+        "id": 7640989663427,
+        "title": "Slay In Your Lane — Undated Planner + Ultimate Sticker Book"
+      },
+      {
+        "id": 7640990875843,
+        "title": "Rise & Slay — Undated Planner"
+      },
+      {
+        "id": 7640990351555,
+        "title": "Good Intentions — Limited Edition Undated Planner"
+      },
+      {
+        "id": 7765200273603,
+        "title": "Do It For You — Weekly Rewritable Planner"
+      },
+      {
+        "id": 8223915966659,
+        "title": "Make It Happen — 2026 Dated Planner"
+      },
+      {
+        "id": 7444139966659,
+        "title": "Sunshine & A Little Hurricane — Undated Planner + Ultimate Sticker Book"
+      },
+      {
+        "id": 7765207384259,
+        "title": "Run Your Day — Daily Rewritable Planner"
+      },
+      {
+        "id": 7765226782915,
+        "title": "If Not Now Then When — Rewritable Planner"
+      },
+      {
+        "id": 8223915507907,
+        "title": "Build Your Power — 2026 Dated Planner"
+      }
+    ],
+    "queries": []
+  },
+  {
+    "q": "planer AND planer",
+    "status": 200,
+    "products": [
+      {
+        "id": 8223914754243,
+        "title": "Do It For The Plot — 2026 Dated Planner"
+      },
+      {
+        "id": 7640989663427,
+        "title": "Slay In Your Lane — Undated Planner + Ultimate Sticker Book"
+      },
+      {
+        "id": 7765200273603,
+        "title": "Do It For You — Weekly Rewritable Planner"
+      },
+      {
+        "id": 7765207384259,
+        "title": "Run Your Day — Daily Rewritable Planner"
+      },
+      {
+        "id": 8223915966659,
+        "title": "Make It Happen — 2026 Dated Planner"
+      },
+      {
+        "id": 8223902892227,
+        "title": "Keep Moving Even Slow Counts — 2026 Dated Planner"
+      },
+      {
+        "id": 7640990875843,
+        "title": "Rise & Slay — Undated Planner"
+      },
+      {
+        "id": 7765237301443,
+        "title": "One Day At A Time — Rewritable Planner"
+      },
+      {
+        "id": 7444139966659,
+        "title": "Sunshine & A Little Hurricane — Undated Planner + Ultimate Sticker Book"
+      },
+      {
+        "id": 7765226782915,
+        "title": "If Not Now Then When — Rewritable Planner"
+      }
+    ],
+    "queries": []
+  },
+  {
+    "q": "mug",
+    "status": 200,
+    "products": [
+      {
+        "id": 7088656220355,
+        "title": "Trendy Ceramic Mug With Screw-On Lid"
+      },
+      {
+        "id": 7605204811971,
+        "title": "Seraphina Ribbed Coffee Mug"
+      },
+      {
+        "id": 7383180116163,
+        "title": "Knob Hammered Texture Ceramic Mug"
+      },
+      {
+        "id": 7501583417539,
+        "title": "Glazed Uneven Gold Accent Coffee Mug"
+      },
+      {
+        "id": 7407790653635,
+        "title": "Gold Marble Pattern Tea & Coffee Mug"
+      },
+      {
+        "id": 7480424595651,
+        "title": "Soft Hue Crumple Texture Coffee Mug"
+      },
+      {
+        "id": 8052382040259,
+        "title": "The Luxe Gold Accent Mug"
+      },
+      {
+        "id": 7124447822019,
+        "title": "Elegant Mr. & Mrs. Marble Coffee Mug With Lid"
+      },
+      {
+        "id": 7421459202243,
+        "title": "Ornate Accent Mug With Lid & Spoon"
+      },
+      {
+        "id": 4724696023094,
+        "title": "Pineapple Coffee Mug"
+      }
+    ],
+    "queries": [
+      {
+        "url": "/search?q=mug&_pos=1&_psq=mug&_psid=81984256c&_ss=e",
+        "text": "mug",
+        "styled_text": "<mark>mug</mark>"
+      },
+      {
+        "url": "/search?q=lassi+mug&_pos=2&_psq=mug&_psid=81984256c&_ss=e",
+        "text": "lassi mug",
+        "styled_text": "<span>lassi </span><mark>mug</mark>"
+      },
+      {
+        "url": "/search?q=terracotta+coffee+mug&_pos=3&_psq=mug&_psid=81984256c&_ss=e",
+        "text": "terracotta coffee mug",
+        "styled_text": "<span>terracotta coffee </span><mark>mug</mark>"
+      },
+      {
+        "url": "/search?q=mugs&_pos=4&_psq=mug&_psid=81984256c&_ss=e",
+        "text": "mugs",
+        "styled_text": "<mark>mug</mark><span>s</span>"
+      },
+      {
+        "url": "/search?q=marble+coffee+mug&_pos=5&_psq=mug&_psid=81984256c&_ss=e",
+        "text": "marble coffee mug",
+        "styled_text": "<span>marble coffee </span><mark>mug</mark>"
+      },
+      {
+        "url": "/search?q=mrs+mug&_pos=6&_psq=mug&_psid=81984256c&_ss=e",
+        "text": "mrs mug",
+        "styled_text": "<span>mrs </span><mark>mug</mark>"
+      },
+      {
+        "url": "/search?q=coffee+mug&_pos=7&_psq=mug&_psid=81984256c&_ss=e",
+        "text": "coffee mug",
+        "styled_text": "<span>coffee </span><mark>mug</mark>"
+      },
+      {
+        "url": "/search?q=ripple+coffee+mug&_pos=8&_psq=mug&_psid=81984256c&_ss=e",
+        "text": "ripple coffee mug",
+        "styled_text": "<span>ripple coffee </span><mark>mug</mark>"
+      },
+      {
+        "url": "/search?q=trendy+ceramic+mug&_pos=9&_psq=mug&_psid=81984256c&_ss=e",
+        "text": "trendy ceramic mug",
+        "styled_text": "<span>trendy ceramic </span><mark>mug</mark>"
+      },
+      {
+        "url": "/search?q=whimsical+coffee+mug&_pos=10&_psq=mug&_psid=81984256c&_ss=e",
+        "text": "whimsical coffee mug",
+        "styled_text": "<span>whimsical coffee </span><mark>mug</mark>"
+      }
+    ]
+  },
+  {
+    "q": "mug AND mug",
+    "status": 200,
+    "products": [
+      {
+        "id": 4724696023094,
+        "title": "Pineapple Coffee Mug"
+      },
+      {
+        "id": 7605204811971,
+        "title": "Seraphina Ribbed Coffee Mug"
+      },
+      {
+        "id": 7501583417539,
+        "title": "Glazed Uneven Gold Accent Coffee Mug"
+      },
+      {
+        "id": 7124447822019,
+        "title": "Elegant Mr. & Mrs. Marble Coffee Mug With Lid"
+      },
+      {
+        "id": 7480424595651,
+        "title": "Soft Hue Crumple Texture Coffee Mug"
+      },
+      {
+        "id": 7088656220355,
+        "title": "Trendy Ceramic Mug With Screw-On Lid"
+      },
+      {
+        "id": 7383180116163,
+        "title": "Knob Hammered Texture Ceramic Mug"
+      },
+      {
+        "id": 6248533000387,
+        "title": "Dreamy Flamingo Marble Coffee Mug"
+      },
+      {
+        "id": 7407790653635,
+        "title": "Gold Marble Pattern Tea & Coffee Mug"
+      },
+      {
+        "id": 8054952132803,
+        "title": "Chrome Sphere Coffee Mug"
+      }
+    ],
+    "queries": [
+      {
+        "url": "/search?q=mug&_pos=1&_psq=mug+AND+mug&_psid=94274500f&_ss=e",
+        "text": "mug",
+        "styled_text": "<span>mug</span>"
+      },
+      {
+        "url": "/search?q=lassi+mug&_pos=2&_psq=mug+AND+mug&_psid=94274500f&_ss=e",
+        "text": "lassi mug",
+        "styled_text": "<span>lassi mug</span>"
+      },
+      {
+        "url": "/search?q=terracotta+coffee+mug&_pos=3&_psq=mug+AND+mug&_psid=94274500f&_ss=e",
+        "text": "terracotta coffee mug",
+        "styled_text": "<span>terracotta coffee mug</span>"
+      },
+      {
+        "url": "/search?q=mugs&_pos=4&_psq=mug+AND+mug&_psid=94274500f&_ss=e",
+        "text": "mugs",
+        "styled_text": "<span>mugs</span>"
+      },
+      {
+        "url": "/search?q=marble+coffee+mug&_pos=5&_psq=mug+AND+mug&_psid=94274500f&_ss=e",
+        "text": "marble coffee mug",
+        "styled_text": "<span>marble coffee mug</span>"
+      },
+      {
+        "url": "/search?q=mrs+mug&_pos=6&_psq=mug+AND+mug&_psid=94274500f&_ss=e",
+        "text": "mrs mug",
+        "styled_text": "<span>mrs mug</span>"
+      },
+      {
+        "url": "/search?q=coffee+mug&_pos=7&_psq=mug+AND+mug&_psid=94274500f&_ss=e",
+        "text": "coffee mug",
+        "styled_text": "<span>coffee mug</span>"
+      },
+      {
+        "url": "/search?q=ripple+coffee+mug&_pos=8&_psq=mug+AND+mug&_psid=94274500f&_ss=e",
+        "text": "ripple coffee mug",
+        "styled_text": "<span>ripple coffee mug</span>"
+      },
+      {
+        "url": "/search?q=trendy+ceramic+mug&_pos=9&_psq=mug+AND+mug&_psid=94274500f&_ss=e",
+        "text": "trendy ceramic mug",
+        "styled_text": "<span>trendy ceramic mug</span>"
+      },
+      {
+        "url": "/search?q=whimsical+coffee+mug&_pos=10&_psq=mug+AND+mug&_psid=94274500f&_ss=e",
+        "text": "whimsical coffee mug",
+        "styled_text": "<span>whimsical coffee mug</span>"
+      }
+    ]
+  },
+  {
+    "q": "gifts for mom",
+    "status": 200,
+    "products": [
+      {
+        "id": 7241503736003,
+        "title": "Hug of Pure Love - Mother's Day Greeting Card"
+      },
+      {
+        "id": 6653329047747,
+        "title": "Protective Mother - Greeting Card"
+      },
+      {
+        "id": 7241502687427,
+        "title": "Held with Joy & Love - Mother's Day Greeting Card"
+      },
+      {
+        "id": 7241487843523,
+        "title": "Abstract Loving Mother - Mother's Day Greeting Card"
+      },
+      {
+        "id": 7241498099907,
+        "title": "Mother's Kiss of Love - Mother's Day Greeting Card"
+      },
+      {
+        "id": 7241508716739,
+        "title": "A Leap of Love - Mother's Day Greeting Card"
+      },
+      {
+        "id": 7241500721347,
+        "title": "Mother's Care - Mother's Day Greeting Card"
+      },
+      {
+        "id": 7241501769923,
+        "title": "Nestle of Care - Mother's Day Greeting Card"
+      },
+      {
+        "id": 6653328195779,
+        "title": "Caring Mother - Greeting Card"
+      },
+      {
+        "id": 6653324951747,
+        "title": "Happy Mother's Day - Greeting Card"
+      }
+    ],
+    "queries": []
+  },
+  {
+    "q": "gifts AND for AND mom",
+    "status": 200,
+    "products": [
+      {
+        "id": 7241503736003,
+        "title": "Hug of Pure Love - Mother's Day Greeting Card"
+      },
+      {
+        "id": 6653329047747,
+        "title": "Protective Mother - Greeting Card"
+      },
+      {
+        "id": 7241502687427,
+        "title": "Held with Joy & Love - Mother's Day Greeting Card"
+      },
+      {
+        "id": 7241487843523,
+        "title": "Abstract Loving Mother - Mother's Day Greeting Card"
+      },
+      {
+        "id": 7241498099907,
+        "title": "Mother's Kiss of Love - Mother's Day Greeting Card"
+      },
+      {
+        "id": 7241508716739,
+        "title": "A Leap of Love - Mother's Day Greeting Card"
+      },
+      {
+        "id": 7241500721347,
+        "title": "Mother's Care - Mother's Day Greeting Card"
+      },
+      {
+        "id": 7241501769923,
+        "title": "Nestle of Care - Mother's Day Greeting Card"
+      },
+      {
+        "id": 6653328195779,
+        "title": "Caring Mother - Greeting Card"
+      },
+      {
+        "id": 6653324951747,
+        "title": "Happy Mother's Day - Greeting Card"
+      }
+    ],
+    "queries": []
+  },
+  {
+    "q": "qzxwplmnzz",
+    "status": 200,
+    "products": [],
+    "queries": []
+  }
+]

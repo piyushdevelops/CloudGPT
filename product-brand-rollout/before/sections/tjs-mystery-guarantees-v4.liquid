@@ -1,0 +1,180 @@
+<section id="TjsMysteryGuarantees-{{ section.id }}" class="tjs-mv4 tjs-mv4-guarantees" style="--tjs-guarantees-pt:{{ section.settings.guarantees_pt }}px;--tjs-guarantees-pb:{{ section.settings.guarantees_pb }}px;padding-top:{{ section.settings.pad_top_desktop }}px;padding-bottom:{{ section.settings.pad_bottom_desktop }}px;">
+  <div class="tjs-mv4__shell"><div class="tjs-mv4__content tjs-mv4-guarantees__grid">
+    <div data-reveal>
+      {% if section.settings.eyebrow != blank %}<div class="tjs-mv4__eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
+      <h2 class="tjs-mv4__display tjs-mv4-guarantees__heading">{{ section.settings.heading }}</h2>
+      {% if section.settings.body != blank %}<p class="tjs-mv4__body">{{ section.settings.body }}</p>{% endif %}
+    </div>
+    <div class="tjs-mv4-guarantees__items">
+      {% for block in section.blocks %}
+        <article class="tjs-mv4-guarantee" data-reveal style="transition-delay:{{ forloop.index0 | times: 70 }}ms" {{ block.shopify_attributes }}>
+          {% if section.settings.show_numbers %}<div class="tjs-mv4-guarantee__num" aria-hidden="true">{{ forloop.index | prepend: '0' }}</div>{% endif %}
+          <h3>{{ block.settings.title }}</h3><p>{{ block.settings.copy }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div></div>
+</section>
+<style>@media(max-width:749px){#TjsMysteryGuarantees-{{ section.id }}{padding-top:{{ section.settings.pad_top_mobile }}px!important;padding-bottom:{{ section.settings.pad_bottom_mobile }}px!important}}</style>
+{% schema %}
+{
+  "name": "TJS Guarantees",
+  "tag": "section",
+  "class": "tjs-mystery-v4-guarantees-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "guarantees_pt",
+      "label": "Top spacing",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "guarantees_pb",
+      "label": "Bottom spacing",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 76
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "WHAT / WE GUARANTEE"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Enough certainty.\nZero spoilers."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Supporting copy",
+      "default": "The mystery stays intact. The value and quality promise do not."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_numbers",
+      "label": "Show large editorial numbers",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Desktop spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top_desktop",
+      "label": "Top spacing",
+      "min": 40,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom_desktop",
+      "label": "Bottom spacing",
+      "min": 40,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "header",
+      "content": "Mobile spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top_mobile",
+      "label": "Top spacing",
+      "min": 32,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom_mobile",
+      "label": "Bottom spacing",
+      "min": 32,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "guarantee",
+      "name": "Guarantee",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "The value is guaranteed."
+        },
+        {
+          "type": "textarea",
+          "id": "copy",
+          "label": "Copy",
+          "default": "Your box meets or exceeds the value promised for your selected tier."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS Guarantees",
+      "blocks": [
+        {
+          "type": "guarantee",
+          "settings": {
+            "title": "The value is guaranteed.",
+            "copy": "Your box meets or exceeds the value promised for your selected tier."
+          }
+        },
+        {
+          "type": "guarantee",
+          "settings": {
+            "title": "Everything is genuinely TJS.",
+            "copy": "No anonymous filler added just to make the numbers work."
+          }
+        },
+        {
+          "type": "guarantee",
+          "settings": {
+            "title": "The mystery stays intact.",
+            "copy": "No product previews. No choosing. No spoilers."
+          }
+        },
+        {
+          "type": "guarantee",
+          "settings": {
+            "title": "Every box is packed with care.",
+            "copy": "Your assortment is selected and secured for the reveal."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

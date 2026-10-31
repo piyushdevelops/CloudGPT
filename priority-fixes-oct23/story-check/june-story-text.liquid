@@ -1,0 +1,63 @@
+{% style %}
+{% assign story_font = section.settings.story_heading_font %}
+{{ story_font | font_face: font_display: 'swap' }}
+{% assign story_weight = section.settings.story_heading_weight | append: '' %}
+{% assign story_weight_font = story_font | font_modify: 'weight', story_weight %}
+{{ story_weight_font | font_face: font_display: 'swap' }}
+#shopify-section-{{ section.id }} .june-story-readable h1, #shopify-section-{{ section.id }} .june-story-readable h2{font-family:{{ story_font.family }},{{ story_font.fallback_families }};font-weight:{{ section.settings.story_heading_weight }};font-size:{{ section.settings.story_heading_desktop }}px;letter-spacing:{{ section.settings.story_heading_spacing }}px;line-height:{{ section.settings.story_heading_line }};}
+@media(max-width:749px){#shopify-section-{{ section.id }} .june-story-readable h1, #shopify-section-{{ section.id }} .june-story-readable h2{font-size:{{ section.settings.story_heading_mobile }}px;}}
+{% assign story_font = section.settings.story_body_font %}
+{{ story_font | font_face: font_display: 'swap' }}
+{% assign story_weight = section.settings.story_body_weight | append: '' %}
+{% assign story_weight_font = story_font | font_modify: 'weight', story_weight %}
+{{ story_weight_font | font_face: font_display: 'swap' }}
+#shopify-section-{{ section.id }} .june-story-readable p{font-family:{{ story_font.family }},{{ story_font.fallback_families }};font-weight:{{ section.settings.story_body_weight }};font-size:{{ section.settings.story_body_desktop }}px;letter-spacing:{{ section.settings.story_body_spacing }}px;line-height:{{ section.settings.story_body_line }};}
+@media(max-width:749px){#shopify-section-{{ section.id }} .june-story-readable p{font-size:{{ section.settings.story_body_mobile }}px;}}
+{% assign story_font = section.settings.story_control_font %}
+{{ story_font | font_face: font_display: 'swap' }}
+{% assign story_weight = section.settings.story_control_weight | append: '' %}
+{% assign story_weight_font = story_font | font_modify: 'weight', story_weight %}
+{{ story_weight_font | font_face: font_display: 'swap' }}
+#shopify-section-{{ section.id }} .june-story-readable summary{font-family:{{ story_font.family }},{{ story_font.fallback_families }};font-weight:{{ section.settings.story_control_weight }};font-size:{{ section.settings.story_control_desktop }}px;letter-spacing:{{ section.settings.story_control_spacing }}px;line-height:{{ section.settings.story_control_line }};}
+@media(max-width:749px){#shopify-section-{{ section.id }} .june-story-readable summary{font-size:{{ section.settings.story_control_mobile }}px;}}
+#shopify-section-{{ section.id }} .june-story-readable{max-width:760px;margin:0 auto 32px;color:var(--june-ink,inherit);}
+#shopify-section-{{ section.id }} .june-story-readable h1{margin:0 0 16px;}
+#shopify-section-{{ section.id }} .june-story-readable h2{margin:28px 0 12px;}
+#shopify-section-{{ section.id }} .june-story-readable p{margin:0 0 20px;}
+#shopify-section-{{ section.id }} .june-story-readable summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:48px;padding:12px 0;border-block:1px solid var(--june-border,#DADADA);cursor:pointer;list-style:none;}
+#shopify-section-{{ section.id }} .june-story-readable summary::-webkit-details-marker{display:none;}
+#shopify-section-{{ section.id }} .june-story-readable summary::after{content:'+';font-size:24px;flex:none;}
+#shopify-section-{{ section.id }} .june-story-readable details[open]>summary::after{content:'−';}
+#shopify-section-{{ section.id }} .june-story-readable summary:focus-visible{outline:2px solid currentColor;outline-offset:4px;}
+{% endstyle %}
+<div class="june-story-readable">
+{% doc %}
+  Readable equivalent of the existing Our Story artwork; original artwork is retained.
+{% enddoc %}
+<h1>Our story</h1>
+<details>
+  <summary>Read our story as text</summary>
+  <div>
+    <h2>About us</h2>
+    <p>At the heart of The June Shop's story lies an earnest passion and unwavering curiosity, driven by childhood friends Rishav and Pranav. Fuelled by their vision and a desire to elevate everyday spaces, they identified a significant gap in the home decor industry and set out to share their love for decor that's not just beautiful but incredibly functional. And that's how The June Shop came to be—a little gift shop that dared to dream big, all thanks to the entrepreneur duo's insatiable curiosity and their love for making spaces spectacular.</p>
+    <p>Adding a dynamic twist to this tale is our CEO, Vansikha Nahata Surana, a young and driven entrepreneur who's breaking new ground in the world of home decor. Her fresh perspective and dedication to quality perfectly complement the founding spirit of The June Shop. With Vansikha's leadership, we're not just transforming spaces; we're challenging industry norms and paving the way for a new era of stylish and functional decor.</p>
+    <h2>What's in a name?</h2>
+    <p>Why “The June Shop,” you ask? Well, it's not just a name; it's our vibe, our mojo, and our spirit all rolled into one. Every day with us feels like a sunny, carefree day in June—full of possibilities, warmth, and a touch of magic. Think of us as your trusty sidekick in the world of style and decor. Because when you shop at The June Shop, you're not just buying things; you're embracing a lifestyle, and you're doing it in style.</p>
+    <h2>The TJS collection</h2>
+    <p>At The June Shop, we're in the business of making spaces beautiful. But that's just the beginning of our story. We started off with a strong foothold in the home decor sector, where our collection breathes life into living spaces, infusing them with personality and charm. Every piece is thoughtfully chosen to blend seamlessly with your style, creating an atmosphere that's uniquely yours.</p>
+    <h2>Redefining living</h2>
+    <p>When it comes to dining, our range of premium tableware, from elegant dinnerware to trendy cutlery sets, sets the stage for memorable gatherings with your loved ones. Whether it's a casual breakfast or a festive dinner party, our dining products add that touch of sophistication and style to your table.</p>
+    <p>But our journey doesn't stop there. We've ventured far beyond home decor, exploring eight captivating categories that cater to your lifestyle needs. From home and living to dining and kitchen, personal care, stationery, fashion, accessories, and eyewear, there's something for everyone. In fact, newer collections like eyewear, planners, and phone covers have quickly become bestsellers, capturing hearts and style preferences in no time.</p>
+    <p>But there's more—much more. We take pride in crafting some of our products in-house, like our meticulously designed planners, where every detail is a labour of love. Countless hours of thought and design expertise go into each one, making them more than just tools—they're a statement of style and organisation.</p>
+    <h2>Packaging</h2>
+    <p>It's not just a box; it's a sneak peek into the magic you're about to experience. We've designed it with care to create unboxing moments that are just as delightful as the products themselves.</p>
+    <h2>The dream team</h2>
+    <p>Behind the scenes, our dream team comprises exceptionally talented individuals—designers who craft beauty, photographers who capture it, and client relationship managers who ensure you're always delighted. Together, they've moulded our brand into what it is today.</p>
+    <p>But we're more than just a brand; we're a community. Our customers and supporters are the heartbeat of The June Shop. Their genuine enthusiasm, shoutouts, and social media engagement are what fuel our passion for what we do.</p>
+    <p>In a nutshell, The June Shop is where style meets fun, and where every product has a purpose. Join us on this incredible journey, and let's make your home and lifestyle truly remarkable.</p>
+    <h2>Featured on</h2>
+    <p>The press collage shows coverage from YourStory, Indian Express Indulge, Entrepreneurs, Financial Express Tech Bytes, LuxeBook, Grazia, ETimes and Indian Retailer, featuring the brand's story, home decor, planners, eyewear and funding.</p>
+  </div>
+</details>
+</div>
+

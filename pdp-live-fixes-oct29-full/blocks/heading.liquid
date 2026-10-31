@@ -1,0 +1,196 @@
+{% liquid
+  assign effect = 'hdt-reveal="slide-in" timeline'
+  if section.id contains 'slideshow'
+    assign effect = 'reval'
+  endif   
+%}
+<div {{ effect }} id="block-{{ block.id }}" class="hdt-heading hdt-text-warry hdt-rte {{ block.settings.text_color }}{% if block.settings.hidden_br_mobile %} hdt-br-hidden{% endif %}{% if block.settings.hidden_on_mobile %} hdt-hide-mobile{% endif %} {{ block.settings.line_height }} hdt-{{ block.settings.heading_size }}" {{ block.shopify_attributes }}>{{ block.settings.heading }}</div>
+{%- if block.settings.heading_size == "h_custom" -%}
+  {%- style -%}
+    #block-{{ block.id }} {
+      --heading-fs-lg: {{ block.settings.font_size_heading_lg }}px; --heading-fs-md: {{ block.settings.font_size_heading_md }}px; --heading-fs-mb: {{ block.settings.font_size_heading }}px; --heading-fw: {{ block.settings.font_weight_heading }}; --heading-ls: {{ block.settings.letter_spacing_heading }}px; --heading-lh: {{ block.settings.line_height }};
+    }
+  {%- endstyle -%}
+{%- endif -%}
+{% schema %}
+{
+  "name": "Heading",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Heading</p>",
+      "info": "Shift + Enter to line break."
+    },
+    {
+      "type": "checkbox",
+      "id": "hidden_br_mobile",
+      "label": "Hidden <br> on mobile",
+      "default": false,
+      "visible_if": "{{ block.settings.heading != blank }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "hidden_on_mobile",
+      "label": "Hidden on mobile",
+      "default": false,
+      "visible_if": "{{ block.settings.heading != blank }}"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "Line height",
+      "options": [
+        {
+          "value": "",
+          "label": "Default"
+        },
+        {
+          "value": "hdt-lh-sm",
+          "label": "Small"
+        },
+        {
+          "value": "hdt-lh-1",
+          "label": "Fit"
+        }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Size",
+      "options": [
+        {
+          "value": "base",
+          "label": "Base size"
+        },
+        {
+          "value": "h6",
+          "label": "H6 size"
+        },
+        {
+          "value": "h5",
+          "label": "H5 size"
+        },
+        {
+          "value": "h4",
+          "label": "H4 size"
+        },
+        {
+          "value": "h3",
+          "label": "H3 size"
+        },
+        {
+          "value": "h2",
+          "label": "H2 size"
+        },
+        {
+          "value": "h1",
+          "label": "H1 size"
+        },
+        {
+          "value": "h0",
+          "label": "H0 size"
+        },
+        {
+          "value": "h_custom",
+          "label": "Custom size inline"
+        }
+      ],
+      "default": "h2",
+      "visible_if": "{{ block.settings.heading != blank }}"
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "options": [
+        {
+          "value": "hdt-s-text",
+          "label": "Default"
+        },
+        {
+          "value": "hdt-text-secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "hdt-text-body-tertiary",
+          "label": "Tertiary"
+        },
+        {
+          "value": "hdt-text-primary",
+          "label": "Accent"
+        }
+      ],
+      "label": "Text color",
+      "default": "hdt-s-text",
+      "visible_if": "{{ block.settings.heading != blank }}"
+    },
+    {
+      "type": "header",
+      "content": "Custom size options",
+      "visible_if": "{{ block.settings.heading_size == 'h_custom' and block.settings.heading != blank }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_heading_lg",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 50,
+      "visible_if": "{{ block.settings.heading_size == 'h_custom' and block.settings.heading != blank }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_heading_md",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Tablet font size",
+      "default": 30,
+      "visible_if": "{{ block.settings.heading_size == 'h_custom' and block.settings.heading != blank }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_heading",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile font size",
+      "default": 24,
+      "visible_if": "{{ block.settings.heading_size == 'h_custom' and block.settings.heading != blank }}"
+    },
+    {
+      "type": "range",
+      "id": "font_weight_heading",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Font weight",
+      "default": 600,
+      "visible_if": "{{ block.settings.heading_size == 'h_custom' and block.settings.heading != blank }}"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing_heading",
+      "min": -10,
+      "max": 10,
+      "step": 0.2,
+      "label": "Letter spacing (in pixel)",
+      "default": 0,
+      "visible_if": "{{ block.settings.heading_size == 'h_custom' and block.settings.heading != blank }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Heading",
+    }
+  ]
+}
+{% endschema %}

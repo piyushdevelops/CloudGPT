@@ -1,0 +1,2333 @@
+{% comment %}
+  TJS FEATURED FOCUS — 50% DISPLAY PRICE
+  This section visually shows half of each stored Shopify selling price.
+  Keep the matching 50% automatic product discount active for cart and checkout.
+{% endcomment %}
+
+{% liquid
+  assign featured_collection = section.settings.collection
+  assign section_heading = section.settings.heading
+  if section_heading == blank and featured_collection != blank
+    assign section_heading = featured_collection.title
+  endif
+
+  assign active_image_multiplier = section.settings.active_image_scale | times: 0.01
+  assign shadow_alpha = section.settings.shadow_strength | times: 0.01
+  assign shadow_mid_alpha = section.settings.shadow_strength | times: 0.0055
+  assign shadow_soft_alpha = section.settings.shadow_strength | times: 0.0038
+  assign border_alpha = 0.10
+
+  assign image_position = 'center center'
+  case section.settings.image_position
+    when 'top'
+      assign image_position = 'center top'
+    when 'bottom'
+      assign image_position = 'center bottom'
+    when 'left'
+      assign image_position = 'left center'
+    when 'right'
+      assign image_position = 'right center'
+  endcase
+
+  assign mobile_center_width = section.settings.mobile_center_width
+  assign mobile_side_width = 100 | minus: mobile_center_width | divided_by: 2
+  assign mobile_center_left = mobile_side_width
+  assign mobile_right_left = mobile_side_width | plus: mobile_center_width
+
+  assign mobile_height_factor = 1.25
+  case section.settings.mobile_card_ratio
+    when 'square'
+      assign mobile_height_factor = 1.0
+    when 'five-six'
+      assign mobile_height_factor = 1.2
+  endcase
+
+  assign mobile_viewport_vw = mobile_center_width | times: mobile_height_factor
+  assign mobile_gutter_total = section.settings.mobile_gutter | times: 2
+  assign mobile_gutter_adjust = mobile_gutter_total | times: mobile_viewport_vw | divided_by: 100.0
+  assign mobile_gap_adjust = section.settings.card_gap | times: mobile_height_factor
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --tjs-focus-space-top: {{ section.settings.padding_top }}px;
+    --tjs-focus-space-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus {
+    --tjs-focus-bg: {{ section.settings.section_bg }};
+    --tjs-focus-card-bg: {{ section.settings.card_bg }};
+    --tjs-focus-image-bg: {{ section.settings.image_bg }};
+    --tjs-focus-text: {{ section.settings.text_color }};
+    --tjs-focus-muted: {{ section.settings.muted_color }};
+    --tjs-focus-accent: {{ section.settings.accent_color }};
+    --tjs-focus-gap: {{ section.settings.card_gap }}px;
+    --tjs-focus-radius: {{ section.settings.corner_radius }}px;
+    --tjs-focus-height: {{ section.settings.desktop_height }}px;
+    --tjs-focus-image-scale: {{ section.settings.image_scale }}%;
+    --tjs-focus-active-image-scale: {{ active_image_multiplier }};
+    --tjs-focus-shadow-alpha: {{ shadow_alpha }};
+    --tjs-focus-shadow-mid-alpha: {{ shadow_mid_alpha }};
+    --tjs-focus-shadow-soft-alpha: {{ shadow_soft_alpha }};
+    --tjs-focus-border-alpha: {{ border_alpha }};
+    --tjs-focus-drag-x: 0px;
+    padding-block: var(--tjs-focus-space-top) var(--tjs-focus-space-bottom);
+    overflow: hidden;
+    background: var(--tjs-focus-bg);
+    color: var(--tjs-focus-text);
+    font-family: var(--font-body-family, Arial, sans-serif);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus,
+  #shopify-section-{{ section.id }} .tjs-featured-focus * {
+    box-sizing: border-box;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__outer {
+    width: min(100%, {{ section.settings.max_width }}px);
+    margin-inline: auto;
+    padding-inline: {{ section.settings.page_gutter }}px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 28px;
+    margin-bottom: clamp(22px, 3vw, 38px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__header[data-align='center'] {
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__heading-wrap {
+    max-width: 760px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__header[data-align='center'] .tjs-featured-focus__heading-wrap {
+    margin-inline: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+    color: var(--tjs-focus-accent);
+    font-size: 10px;
+    font-weight: 750;
+    line-height: 1;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__header[data-align='center'] .tjs-featured-focus__eyebrow {
+    justify-content: center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__heading {
+    margin: 0;
+    color: var(--tjs-focus-text);
+    font-family: var(--font-heading-family, var(--font-body-family, Arial, sans-serif));
+    font-size: clamp(38px, 4.6vw, {{ section.settings.heading_size }}px);
+    font-weight: 500;
+    line-height: .96;
+    letter-spacing: -.045em;
+    text-wrap: balance;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__description {
+    max-width: 52ch;
+    margin: 14px 0 0;
+    color: var(--tjs-focus-muted);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__header[data-align='center'] .tjs-featured-focus__description {
+    margin-inline: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__description > * {
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__header-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__view-all {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 42px;
+    padding: 11px 15px;
+    border: 1px solid color-mix(in srgb, var(--tjs-focus-text) 14%, transparent);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--tjs-focus-text);
+    font-size: 9px;
+    font-weight: 760;
+    line-height: 1;
+    letter-spacing: .12em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: transform .25s ease, border-color .25s ease, background-color .25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__view-all:hover,
+  #shopify-section-{{ section.id }} .tjs-featured-focus__view-all:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--tjs-focus-text);
+    background: color-mix(in srgb, var(--tjs-focus-text) 4%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__view-all svg {
+    width: 13px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__arrows {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__arrow {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--tjs-focus-text) 14%, transparent);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--tjs-focus-card-bg) 86%, transparent);
+    color: var(--tjs-focus-text);
+    cursor: pointer;
+    transition: transform .25s ease, background-color .25s ease, border-color .25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__arrow:hover,
+  #shopify-section-{{ section.id }} .tjs-featured-focus__arrow:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--tjs-focus-text);
+    background: var(--tjs-focus-card-bg);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__arrow svg {
+    width: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__viewport {
+    position: relative;
+    height: min(var(--tjs-focus-height), clamp(380px, 33vw, 500px));
+    margin-inline: calc(var(--tjs-focus-gap) / -2);
+    outline: none;
+    touch-action: pan-y;
+    user-select: none;
+    cursor: grab;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__viewport.is-dragging {
+    cursor: grabbing;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__viewport:focus-visible {
+    box-shadow: 0 0 0 2px var(--tjs-focus-accent) inset;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item {
+    --tjs-slot-left: 100%;
+    --tjs-slot-width: 18.75%;
+    --tjs-slot-opacity: 0;
+    --tjs-slot-scale: .94;
+    --tjs-slot-lift: 8px;
+    position: absolute;
+    top: 0;
+    left: var(--tjs-slot-left);
+    z-index: 1;
+    width: var(--tjs-slot-width);
+    height: 100%;
+    padding-inline: calc(var(--tjs-focus-gap) / 2);
+    opacity: var(--tjs-slot-opacity);
+    pointer-events: none;
+    transform: translate3d(var(--tjs-focus-drag-x), var(--tjs-slot-lift), 0) scale(var(--tjs-slot-scale));
+    transform-origin: center center;
+    will-change: left, width, transform, opacity;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus.is-ready .tjs-featured-focus__item {
+    transition:
+      left .66s cubic-bezier(.22, .8, .3, 1),
+      width .66s cubic-bezier(.22, .8, .3, 1),
+      transform .66s cubic-bezier(.22, .8, .3, 1),
+      opacity .35s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='-2'] {
+    --tjs-slot-left: 0%;
+    --tjs-slot-width: 18.75%;
+    --tjs-slot-opacity: .84;
+    --tjs-slot-scale: .975;
+    --tjs-slot-lift: 7px;
+    z-index: 2;
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='-1'] {
+    --tjs-slot-left: 18.75%;
+    --tjs-slot-width: 18.75%;
+    --tjs-slot-opacity: .92;
+    --tjs-slot-scale: .985;
+    --tjs-slot-lift: 4px;
+    z-index: 3;
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] {
+    --tjs-slot-left: 37.5%;
+    --tjs-slot-width: 25%;
+    --tjs-slot-opacity: 1;
+    --tjs-slot-scale: 1;
+    --tjs-slot-lift: -7px;
+    z-index: 5;
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='1'] {
+    --tjs-slot-left: 62.5%;
+    --tjs-slot-width: 18.75%;
+    --tjs-slot-opacity: .92;
+    --tjs-slot-scale: .985;
+    --tjs-slot-lift: 4px;
+    z-index: 3;
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='2'] {
+    --tjs-slot-left: 81.25%;
+    --tjs-slot-width: 18.75%;
+    --tjs-slot-opacity: .84;
+    --tjs-slot-scale: .975;
+    --tjs-slot-lift: 7px;
+    z-index: 2;
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='before'] {
+    --tjs-slot-left: -24%;
+    --tjs-slot-opacity: 0;
+    --tjs-slot-lift: 10px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='after'] {
+    --tjs-slot-left: 105%;
+    --tjs-slot-opacity: 0;
+    --tjs-slot-lift: 10px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__card {
+    position: relative;
+    display: flex;
+    height: 100%;
+    min-width: 0;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(25, 23, 21, var(--tjs-focus-border-alpha));
+    border-radius: var(--tjs-focus-radius);
+    background: var(--tjs-focus-card-bg);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, .72) inset,
+      0 14px 30px rgba(26, 21, 18, var(--tjs-focus-shadow-soft-alpha)),
+      0 28px 58px rgba(26, 21, 18, var(--tjs-focus-shadow-soft-alpha));
+    color: var(--tjs-focus-text);
+    transition: box-shadow .35s ease, border-color .35s ease, transform .35s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    border-radius: inherit;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, .72) inset,
+      0 0 0 1px rgba(255, 255, 255, .18) inset;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-card-style='minimal'] .tjs-featured-focus__card {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-card-style='outline'] .tjs-featured-focus__card {
+    box-shadow: none;
+    border-color: color-mix(in srgb, var(--tjs-focus-text) 18%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-card-style='soft'] .tjs-featured-focus__card {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, .65) inset,
+      0 12px 28px rgba(26, 21, 18, var(--tjs-focus-shadow-soft-alpha));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-card-style='elevated'] .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__card {
+    border-color: color-mix(in srgb, var(--tjs-focus-accent) 15%, rgba(25, 23, 21, var(--tjs-focus-border-alpha)));
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.76) inset,
+      0 24px 54px rgba(26, 21, 18, var(--tjs-focus-shadow-mid-alpha)),
+      0 38px 78px rgba(26, 21, 18, var(--tjs-focus-shadow-alpha));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__media-shell {
+    position: relative;
+    isolation: isolate;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 74% 18%, color-mix(in srgb, var(--tjs-focus-accent) 12%, transparent) 0, transparent 34%),
+      linear-gradient(145deg, color-mix(in srgb, var(--tjs-focus-image-bg) 97%, white) 0%, var(--tjs-focus-image-bg) 62%, color-mix(in srgb, var(--tjs-focus-image-bg) 91%, var(--tjs-focus-accent)) 100%);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__media-shell::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.22), transparent 24%, transparent 76%, rgba(26,21,18,.035)),
+      radial-gradient(circle at 50% 48%, rgba(255,255,255,.30), transparent 54%);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__media {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__media::before {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    z-index: 1;
+    border: 1px solid rgba(255,255,255,.24);
+    border-radius: max(calc(var(--tjs-focus-radius) - 8px), 4px);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__media::after {
+    content: '';
+    position: absolute;
+    right: 8%;
+    bottom: 4%;
+    left: 8%;
+    z-index: 0;
+    height: 13%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(23, 20, 18, .18) 0%, transparent 72%);
+    opacity: .42;
+    filter: blur(2px);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    display: block;
+    width: min(112%, calc(var(--tjs-focus-image-scale) + 12%));
+    height: min(112%, calc(var(--tjs-focus-image-scale) + 12%));
+    object-fit: {{ section.settings.image_fit }};
+    object-position: {{ image_position }};
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform .55s cubic-bezier(.22, .8, .3, 1), filter .35s ease;
+    filter:
+      drop-shadow(0 2px 2px rgba(24, 20, 18, .08))
+      drop-shadow(0 15px 22px rgba(24, 20, 18, .15))
+      drop-shadow(0 30px 42px rgba(24, 20, 18, .10));
+    -webkit-user-drag: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__image {
+    width: min(116%, calc(var(--tjs-focus-image-scale) + 16%));
+    height: min(116%, calc(var(--tjs-focus-image-scale) + 16%));
+    transform: translate(-50%, -50%) scale(var(--tjs-focus-active-image-scale));
+    filter:
+      drop-shadow(0 2px 1px rgba(24, 20, 18, .10))
+      drop-shadow(0 20px 28px rgba(24, 20, 18, .19))
+      drop-shadow(0 40px 54px rgba(24, 20, 18, .13));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, .76) inset,
+      0 20px 42px rgba(26, 21, 18, var(--tjs-focus-shadow-mid-alpha)),
+      0 34px 68px rgba(26, 21, 18, var(--tjs-focus-shadow-soft-alpha));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__card:hover .tjs-featured-focus__image {
+    transform: translate(-50%, -50%) scale(1.035);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__card:hover .tjs-featured-focus__image {
+    transform: translate(-50%, -50%) scale(calc(var(--tjs-focus-active-image-scale) + .03));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__badges {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 3;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 6px 8px;
+    border-radius: 7px;
+    background: var(--tjs-focus-text);
+    color: #FFFFFF;
+    font-size: 7px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: .10em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__badge--sold {
+    background: var(--tjs-focus-text);
+    color: var(--tjs-focus-card-bg);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__info {
+    position: relative;
+    z-index: 3;
+    flex: 0 0 auto;
+    min-height: 82px;
+    padding: 14px 14px 13px;
+    border-top: 1px solid color-mix(in srgb, var(--tjs-focus-text) 7%, transparent);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--tjs-focus-card-bg) 96%, transparent), var(--tjs-focus-card-bg));
+    box-shadow: 0 -10px 24px rgba(26, 21, 18, .035);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__info {
+    min-height: 86px;
+    padding-inline: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__vendor {
+    margin: 0 0 6px;
+    overflow: hidden;
+    color: var(--tjs-focus-muted);
+    font-size: 7px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: .12em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__title {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: var(--tjs-focus-text);
+    font-family: var(--font-body-family, Arial, sans-serif);
+    font-size: 12px;
+    font-weight: 620;
+    line-height: 1.3;
+    text-decoration: none;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__title {
+    font-size: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__price-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 5px;
+    margin-top: 8px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__price {
+    color: var(--tjs-focus-text);
+    font-size: 11px;
+    font-weight: 760;
+    line-height: 1;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__price {
+    font-size: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__compare {
+    color: var(--tjs-focus-muted);
+    font-size: 9px;
+    line-height: 1;
+    text-decoration: line-through;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__actions {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(7px);
+    transition: opacity .25s ease, transform .25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-actions-mode='active'] .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__actions,
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-actions-mode='hover'] .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__actions,
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-actions-mode='hover'] .tjs-featured-focus__card:hover .tjs-featured-focus__actions,
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-actions-mode='hover'] .tjs-featured-focus__card:focus-within .tjs-featured-focus__actions,
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-actions-mode='always'] .tjs-featured-focus__actions {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__action {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--tjs-focus-text) 10%, transparent);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--tjs-focus-card-bg) 92%, transparent);
+    color: var(--tjs-focus-text);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.62) inset,
+      0 8px 20px rgba(22, 19, 17, .16),
+      0 18px 34px rgba(22, 19, 17, .08);
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transition: transform .22s ease, background-color .22s ease, color .22s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-button-style='dark'] .tjs-featured-focus__action:first-child,
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-button-style='dark'] .tjs-featured-focus__action:only-child {
+    background: var(--tjs-focus-text);
+    color: var(--tjs-focus-card-bg);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-button-style='accent'] .tjs-featured-focus__action:first-child,
+  #shopify-section-{{ section.id }} .tjs-featured-focus[data-button-style='accent'] .tjs-featured-focus__action:only-child {
+    border-color: var(--tjs-focus-accent);
+    background: var(--tjs-focus-accent);
+    color: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__action:hover,
+  #shopify-section-{{ section.id }} .tjs-featured-focus__action:focus-visible {
+    transform: translateY(-2px) scale(1.03);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__action[disabled] {
+    cursor: not-allowed;
+    opacity: .42;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__action svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__empty {
+    display: grid;
+    min-height: 360px;
+    place-items: center;
+    border: 1px dashed color-mix(in srgb, var(--tjs-focus-text) 20%, transparent);
+    border-radius: var(--tjs-focus-radius);
+    color: var(--tjs-focus-muted);
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal[hidden] {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgba(18, 16, 14, .58);
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-panel {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    width: min(100%, 820px);
+    max-height: min(88vh, 680px);
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--tjs-focus-text) 9%, transparent);
+    border-radius: 20px;
+    background: var(--tjs-focus-card-bg);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.66) inset,
+      0 34px 90px rgba(18, 15, 13, .26),
+      0 70px 140px rgba(18, 15, 13, .16);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-media {
+    position: relative;
+    isolation: isolate;
+    min-height: 430px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 72% 18%, color-mix(in srgb, var(--tjs-focus-accent) 13%, transparent) 0, transparent 34%),
+      linear-gradient(145deg, color-mix(in srgb, var(--tjs-focus-image-bg) 97%, white), var(--tjs-focus-image-bg));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-media::after {
+    content: '';
+    position: absolute;
+    right: 13%;
+    bottom: 7%;
+    left: 13%;
+    z-index: 0;
+    height: 10%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(22, 19, 17, .17), transparent 72%);
+    filter: blur(3px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-image {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 24px;
+    filter:
+      drop-shadow(0 2px 2px rgba(24,20,18,.08))
+      drop-shadow(0 22px 34px rgba(24,20,18,.17))
+      drop-shadow(0 45px 60px rgba(24,20,18,.10));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-content {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
+    padding: clamp(28px, 4vw, 48px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-close {
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    z-index: 4;
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--tjs-focus-text) 10%, transparent);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--tjs-focus-card-bg) 92%, transparent);
+    color: var(--tjs-focus-text);
+    cursor: pointer;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-vendor {
+    margin: 0 0 9px;
+    color: var(--tjs-focus-accent);
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-title {
+    margin: 0;
+    color: var(--tjs-focus-text);
+    font-family: var(--font-heading-family, var(--font-body-family, Arial, sans-serif));
+    font-size: clamp(27px, 3.2vw, 38px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -.035em;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-price {
+    margin-top: 16px;
+    color: var(--tjs-focus-text);
+    font-size: 15px;
+    font-weight: 760;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-compare {
+    margin-left: 7px;
+    color: var(--tjs-focus-muted);
+    font-size: 11px;
+    text-decoration: line-through;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-description {
+    display: -webkit-box;
+    margin: 18px 0 0;
+    overflow: hidden;
+    color: var(--tjs-focus-muted);
+    font-size: 12px;
+    line-height: 1.55;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-field {
+    display: grid;
+    gap: 7px;
+    margin-top: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-field label {
+    color: var(--tjs-focus-muted);
+    font-size: 8px;
+    font-weight: 740;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-select,
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-quantity {
+    width: 100%;
+    min-height: 43px;
+    border: 1px solid color-mix(in srgb, var(--tjs-focus-text) 14%, transparent);
+    border-radius: 9px;
+    background: transparent;
+    color: var(--tjs-focus-text);
+    font: inherit;
+    font-size: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-select {
+    padding-inline: 12px 34px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-quantity {
+    max-width: 84px;
+    padding-inline: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 9px;
+    margin-top: 22px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-add,
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 45px;
+    border-radius: 9px;
+    font-size: 9px;
+    font-weight: 780;
+    letter-spacing: .11em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-add {
+    border: 1px solid var(--tjs-focus-text);
+    background: var(--tjs-focus-text);
+    color: var(--tjs-focus-card-bg);
+    cursor: pointer;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-add[disabled] {
+    cursor: not-allowed;
+    opacity: .46;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__modal-link {
+    padding-inline: 15px;
+    border: 1px solid color-mix(in srgb, var(--tjs-focus-text) 14%, transparent);
+    color: var(--tjs-focus-text);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__toast {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 10000;
+    max-width: min(340px, calc(100vw - 36px));
+    padding: 13px 15px;
+    border-radius: 10px;
+    background: var(--tjs-focus-text);
+    color: var(--tjs-focus-card-bg);
+    box-shadow: 0 18px 46px rgba(18, 15, 13, .22);
+    font-size: 11px;
+    line-height: 1.4;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity .25s ease, transform .25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-featured-focus__toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tjs-featured-focus__outer {
+      padding-inline: {{ section.settings.mobile_gutter }}px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__header {
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__header[data-align='center'] {
+      align-items: center;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__eyebrow {
+      margin-bottom: 9px;
+      font-size: 8px;
+      letter-spacing: .14em;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__eyebrow::before {
+      width: 21px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__heading {
+      font-size: clamp(26px, 7.4vw, 28px);
+      line-height: .98;
+      letter-spacing: -.038em;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__description {
+      display: -webkit-box;
+      max-width: 38ch;
+      margin-top: 9px;
+      overflow: hidden;
+      font-size: 10.5px;
+      line-height: 1.42;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__header-actions,
+    #shopify-section-{{ section.id }} .tjs-featured-focus__arrows,
+    #shopify-section-{{ section.id }} .tjs-featured-focus__view-all {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__viewport {
+      height: calc({{ mobile_viewport_vw }}vw - {{ mobile_gutter_adjust }}px - {{ mobile_gap_adjust }}px);
+      margin-inline: calc(var(--tjs-focus-gap) / -2);
+      overflow: hidden;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus.is-ready .tjs-featured-focus__item {
+      transition:
+        left .52s cubic-bezier(.22, .8, .3, 1),
+        width .52s cubic-bezier(.22, .8, .3, 1),
+        transform .52s cubic-bezier(.22, .8, .3, 1),
+        opacity .3s ease;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='-2'],
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='before'] {
+      --tjs-slot-left: -{{ mobile_side_width | plus: 6 }}%;
+      --tjs-slot-width: {{ mobile_side_width }}%;
+      --tjs-slot-opacity: 0;
+      --tjs-slot-scale: .94;
+      --tjs-slot-lift: 0px;
+      pointer-events: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='-1'] {
+      --tjs-slot-left: 0%;
+      --tjs-slot-width: {{ mobile_side_width }}%;
+      --tjs-slot-opacity: .74;
+      --tjs-slot-scale: .95;
+      --tjs-slot-lift: 0px;
+      z-index: 3;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] {
+      --tjs-slot-left: {{ mobile_center_left }}%;
+      --tjs-slot-width: {{ mobile_center_width }}%;
+      --tjs-slot-opacity: 1;
+      --tjs-slot-scale: 1.012;
+      --tjs-slot-lift: 0px;
+      z-index: 5;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='1'] {
+      --tjs-slot-left: {{ mobile_right_left }}%;
+      --tjs-slot-width: {{ mobile_side_width }}%;
+      --tjs-slot-opacity: .74;
+      --tjs-slot-scale: .95;
+      --tjs-slot-lift: 0px;
+      z-index: 3;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='2'],
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='after'] {
+      --tjs-slot-left: 106%;
+      --tjs-slot-width: {{ mobile_side_width }}%;
+      --tjs-slot-opacity: 0;
+      --tjs-slot-scale: .94;
+      --tjs-slot-lift: 0px;
+      pointer-events: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item {
+      padding-inline: calc(var(--tjs-focus-gap) / 2);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='-1'] .tjs-featured-focus__info,
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='1'] .tjs-featured-focus__info {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='-1'] .tjs-featured-focus__media-shell,
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='1'] .tjs-featured-focus__media-shell {
+      flex-basis: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='-1'] .tjs-featured-focus__image,
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='1'] .tjs-featured-focus__image {
+      width: 128%;
+      height: 104%;
+      object-fit: cover;
+      opacity: .88;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__card {
+      border-color: color-mix(in srgb, var(--tjs-focus-text) 7%, transparent);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,.72) inset,
+        0 8px 20px rgba(26,21,18,.055),
+        0 16px 32px rgba(26,21,18,.045);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__card,
+    #shopify-section-{{ section.id }} .tjs-featured-focus[data-card-style='elevated'] .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__card {
+      border-color: color-mix(in srgb, var(--tjs-focus-accent) 12%, color-mix(in srgb, var(--tjs-focus-text) 7%, transparent));
+      box-shadow:
+        0 1px 0 rgba(255,255,255,.78) inset,
+        0 12px 28px rgba(26,21,18,.11),
+        0 22px 42px rgba(26,21,18,.08);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__card:hover {
+      transform: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__media::before {
+      inset: 6px;
+      border-radius: max(calc(var(--tjs-focus-radius) - 6px), 4px);
+      opacity: .62;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__media::after {
+      right: 10%;
+      bottom: 3%;
+      left: 10%;
+      height: 11%;
+      opacity: .34;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__info,
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__info {
+      min-height: 58px;
+      padding: 8px 8px 7px;
+      border-top-color: color-mix(in srgb, var(--tjs-focus-text) 6%, transparent);
+      background: color-mix(in srgb, var(--tjs-focus-card-bg) 98%, var(--tjs-focus-image-bg));
+      box-shadow: 0 -7px 18px rgba(26,21,18,.025);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__info {
+      min-height: 62px;
+      padding: 9px 10px 8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__vendor {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__title {
+      font-size: 8.5px;
+      line-height: 1.22;
+      -webkit-line-clamp: 1;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__title {
+      font-size: 10px;
+      line-height: 1.24;
+      -webkit-line-clamp: 2;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__price-row {
+      gap: 3px;
+      margin-top: 5px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__price {
+      font-size: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__price {
+      font-size: 9px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__compare {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__image {
+      width: 104%;
+      height: 104%;
+      transform: translate(-50%, -50%) scale(.94);
+      filter:
+        drop-shadow(0 1px 1px rgba(24,20,18,.06))
+        drop-shadow(0 8px 13px rgba(24,20,18,.10))
+        drop-shadow(0 16px 24px rgba(24,20,18,.07));
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__image {
+      width: 112%;
+      height: 112%;
+      transform: translate(-50%, -50%) scale(1.08);
+      filter:
+        drop-shadow(0 1px 1px rgba(24,20,18,.08))
+        drop-shadow(0 12px 18px rgba(24,20,18,.16))
+        drop-shadow(0 24px 34px rgba(24,20,18,.10));
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='-1'] .tjs-featured-focus__image,
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='1'] .tjs-featured-focus__image {
+      width: 128%;
+      height: 104%;
+      object-fit: cover;
+      transform: translate(-50%, -50%) scale(.98);
+      filter:
+        drop-shadow(0 1px 1px rgba(24,20,18,.04))
+        drop-shadow(0 8px 14px rgba(24,20,18,.08));
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__card:hover .tjs-featured-focus__image {
+      transform: translate(-50%, -50%) scale(.94);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__card:hover .tjs-featured-focus__image {
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__badges {
+      top: 7px;
+      left: 7px;
+      opacity: 0;
+      transition: opacity .28s ease;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__badges {
+      opacity: 1;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__badge {
+      min-height: 18px;
+      padding: 5px 6px;
+      border-radius: 6px;
+      font-size: 5px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__actions,
+    #shopify-section-{{ section.id }} .tjs-featured-focus[data-actions-mode='always'] .tjs-featured-focus__actions,
+    #shopify-section-{{ section.id }} .tjs-featured-focus[data-actions-mode='hover'] .tjs-featured-focus__actions {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item[data-slot='0'] .tjs-featured-focus__actions {
+      right: 7px;
+      bottom: 7px;
+      display: flex;
+      gap: 5px;
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__action {
+      width: 29px;
+      height: 29px;
+      box-shadow:
+        0 1px 0 rgba(255,255,255,.66) inset,
+        0 7px 17px rgba(22,19,17,.15),
+        0 14px 28px rgba(22,19,17,.08);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__action svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__modal-panel {
+      grid-template-columns: 1fr;
+      width: min(100%, 460px);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__modal-media {
+      min-height: 250px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__modal-image {
+      padding: 22px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__modal-content {
+      padding: 24px 21px 23px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-featured-focus__modal-actions {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{ section.id }} .tjs-featured-focus__item,
+    #shopify-section-{{ section.id }} .tjs-featured-focus__image,
+    #shopify-section-{{ section.id }} .tjs-featured-focus__card,
+    #shopify-section-{{ section.id }} .tjs-featured-focus__action,
+    #shopify-section-{{ section.id }} .tjs-featured-focus__arrow,
+    #shopify-section-{{ section.id }} .tjs-featured-focus__toast {
+      transition-duration: .01ms !important;
+      animation: none !important;
+    }
+  }
+{% endstyle %}
+
+<section
+  class="tjs-featured-focus"
+  data-tjs-featured-focus="{{ section.id }}"
+  data-card-style="{{ section.settings.card_style }}"
+  data-actions-mode="{{ section.settings.actions_mode }}"
+  data-button-style="{{ section.settings.button_style }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-autoplay-speed="{{ section.settings.autoplay_speed | times: 1000 }}"
+  data-cart-add-url="{{ routes.cart_add_url }}.js"
+  data-cart-url="{{ routes.cart_url }}.js"
+>
+  <div class="tjs-featured-focus__outer">
+    {% if section.settings.show_header %}
+      <header class="tjs-featured-focus__header" data-align="{{ section.settings.heading_alignment }}">
+        <div class="tjs-featured-focus__heading-wrap">
+          {% if section.settings.eyebrow != blank %}
+            <p class="tjs-featured-focus__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {% endif %}
+
+          {% if section_heading != blank %}
+            <h2 class="tjs-featured-focus__heading">{{ section_heading | escape }}</h2>
+          {% endif %}
+
+          {% if section.settings.description != blank %}
+            <div class="tjs-featured-focus__description rte">{{ section.settings.description }}</div>
+          {% endif %}
+        </div>
+
+        <div class="tjs-featured-focus__header-actions">
+          {% if section.settings.show_view_all and featured_collection != blank and section.settings.view_all_label != blank %}
+            <a class="tjs-featured-focus__view-all" href="{{ featured_collection.url }}">
+              <span>{{ section.settings.view_all_label | escape }}</span>
+              <svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6h15M11 1l5 5-5 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          {% endif %}
+
+          {% if section.settings.show_arrows %}
+            <div class="tjs-featured-focus__arrows">
+              <button class="tjs-featured-focus__arrow" type="button" data-focus-prev aria-label="Previous product">
+                <svg viewBox="0 0 18 12" aria-hidden="true"><path d="M17 6H2M7 1 2 6l5 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="tjs-featured-focus__arrow" type="button" data-focus-next aria-label="Next product">
+                <svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6h15M11 1l5 5-5 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          {% endif %}
+        </div>
+      </header>
+    {% elsif section.settings.show_arrows %}
+      <div class="tjs-featured-focus__header-actions" style="justify-content:flex-end;margin-bottom:18px;">
+        <div class="tjs-featured-focus__arrows">
+          <button class="tjs-featured-focus__arrow" type="button" data-focus-prev aria-label="Previous product">
+            <svg viewBox="0 0 18 12" aria-hidden="true"><path d="M17 6H2M7 1 2 6l5 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="tjs-featured-focus__arrow" type="button" data-focus-next aria-label="Next product">
+            <svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6h15M11 1l5 5-5 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if featured_collection != blank %}
+      <div class="tjs-featured-focus__viewport" data-focus-viewport tabindex="0" aria-label="Swipe or use arrow keys to browse products">
+        {% assign rendered_count = 0 %}
+        {% for product in featured_collection.products limit: 50 %}
+          {% if section.settings.hide_sold_out and product.available == false %}
+            {% continue %}
+          {% endif %}
+          {% if rendered_count >= section.settings.product_limit %}
+            {% break %}
+          {% endif %}
+
+          {% liquid
+            assign initial_variant = product.selected_or_first_available_variant
+            if initial_variant == blank
+              assign initial_variant = product.variants.first
+            endif
+
+            assign tjs_display_price = product.price | times: 1 | round
+            assign has_discount = true
+            assign saving_percent = 50
+
+            assign image_loading = 'lazy'
+            assign image_priority = 'low'
+            if section.index != blank and section.index <= 2 and rendered_count < 3
+              assign image_loading = 'eager'
+              assign image_priority = 'high'
+            endif
+          %}
+
+          <article
+            class="tjs-featured-focus__item"
+            data-focus-item
+            data-index="{{ rendered_count }}"
+            data-product-id="{{ product.id }}"
+            data-slot="after"
+          >
+            <div class="tjs-featured-focus__card">
+              <div class="tjs-featured-focus__media-shell">
+                <a class="tjs-featured-focus__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+                  {% if product.featured_image != blank %}
+                    {{ product.featured_image
+                      | image_url: width: 1800
+                      | image_tag:
+                        class: 'tjs-featured-focus__image',
+                        loading: image_loading,
+                        fetchpriority: image_priority,
+                        decoding: 'async',
+                        widths: '240, 320, 420, 520, 680, 840, 1080, 1320, 1600, 1800',
+                        sizes: '(max-width: 749px) 44vw, 27vw',
+                        alt: product.featured_image.alt | default: product.title
+                    }}
+                  {% else %}
+                    {{ 'product-1' | placeholder_svg_tag: 'tjs-featured-focus__image placeholder-svg' }}
+                  {% endif %}
+
+                  <div class="tjs-featured-focus__badges">
+                    {% unless product.available %}
+                      <span class="tjs-featured-focus__badge tjs-featured-focus__badge--sold">Sold out</span>
+                    {% endunless %}
+                    {% if section.settings.show_sale_badge and has_discount %}
+                      <span class="tjs-featured-focus__badge">Save {{ saving_percent }}%</span>
+                    {% endif %}
+                  </div>
+                </a>
+
+                {% if section.settings.show_quick_add or section.settings.show_quick_view %}
+                  <div class="tjs-featured-focus__actions">
+                    {% if section.settings.show_quick_add %}
+                      <button
+                        class="tjs-featured-focus__action"
+                        type="button"
+                        data-quick-add
+                        data-product-id="{{ product.id }}"
+                        data-variant-id="{{ initial_variant.id }}"
+                        data-variant-count="{{ product.variants.size }}"
+                        data-product-url="{{ product.url }}"
+                        aria-label="{% if product.available %}Quick add {{ product.title | escape }}{% else %}{{ product.title | escape }} is sold out{% endif %}"
+                        {% unless product.available %}disabled{% endunless %}
+                      >
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 9V6a3 3 0 0 1 6 0v3M12 12v5M9.5 14.5h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                      </button>
+                    {% endif %}
+
+                    {% if section.settings.show_quick_view %}
+                      <button class="tjs-featured-focus__action" type="button" data-quick-view data-product-id="{{ product.id }}" aria-label="Quick view {{ product.title | escape }}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.8" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                      </button>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="tjs-featured-focus__info">
+                {% if section.settings.show_vendor and product.vendor != blank %}
+                  <p class="tjs-featured-focus__vendor">{{ product.vendor | escape }}</p>
+                {% endif %}
+
+                <a class="tjs-featured-focus__title" href="{{ product.url }}">{{ product.title | escape }}</a>
+
+                <div class="tjs-featured-focus__price-row">
+                  <span class="tjs-featured-focus__price">
+                    {% if product.price_varies %}From {% endif %}{{ tjs_display_price | money }}
+                  </span>
+                  <span class="tjs-featured-focus__compare">{{ product.price | money }}</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <script type="application/json" data-focus-product-json="{{ product.id }}">
+            {
+              "id": {{ product.id | json }},
+              "title": {{ product.title | json }},
+              "vendor": {{ product.vendor | json }},
+              "url": {{ product.url | json }},
+              "image": {% if product.featured_image != blank %}{{ product.featured_image | image_url: width: 1000 | json }}{% else %}""{% endif %},
+              "description": {{ product.description | strip_html | strip_newlines | truncate: 280 | json }},
+              "variants": [
+                {% for variant in product.variants %}
+                  {% assign tjs_variant_display_price = variant.price | times: 1 | round %}
+                  {
+                    "id": {{ variant.id | json }},
+                    "title": {{ variant.title | json }},
+                    "available": {{ variant.available | json }},
+                    "price": {{ tjs_variant_display_price | json }},
+                    "priceFormatted": {{ tjs_variant_display_price | money | json }},
+                    "compareAt": {{ variant.price | json }},
+                    "compareFormatted": {{ variant.price | money | json }},
+                    "image": {% if variant.featured_image != blank %}{{ variant.featured_image | image_url: width: 1000 | json }}{% elsif product.featured_image != blank %}{{ product.featured_image | image_url: width: 1000 | json }}{% else %}""{% endif %}
+                  }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+              ]
+            }
+          </script>
+
+          {% assign rendered_count = rendered_count | plus: 1 %}
+        {% endfor %}
+
+        {% if rendered_count == 0 %}
+          <div class="tjs-featured-focus__empty" style="position:absolute;inset:0;">
+            <p>No available products were found in this collection.</p>
+          </div>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="tjs-featured-focus__empty">
+        <p>Select a collection to display its first {{ section.settings.product_limit }} products.</p>
+      </div>
+    {% endif %}
+  </div>
+
+  {% if section.settings.show_quick_add or section.settings.show_quick_view %}
+    <div class="tjs-featured-focus__modal" data-focus-modal hidden aria-hidden="true">
+      <button class="tjs-featured-focus__modal-backdrop" type="button" data-modal-close aria-label="Close quick view"></button>
+      <div class="tjs-featured-focus__modal-panel" role="dialog" aria-modal="true" aria-labelledby="tjs-focus-modal-title-{{ section.id }}">
+        <button class="tjs-featured-focus__modal-close" type="button" data-modal-close aria-label="Close quick view">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+
+        <div class="tjs-featured-focus__modal-media">
+          <img class="tjs-featured-focus__modal-image" data-modal-image src="" alt="">
+        </div>
+
+        <div class="tjs-featured-focus__modal-content">
+          <p class="tjs-featured-focus__modal-vendor" data-modal-vendor></p>
+          <h3 class="tjs-featured-focus__modal-title" id="tjs-focus-modal-title-{{ section.id }}" data-modal-title></h3>
+          <div class="tjs-featured-focus__modal-price">
+            <span data-modal-price></span>
+            <span class="tjs-featured-focus__modal-compare" data-modal-compare></span>
+          </div>
+          <p class="tjs-featured-focus__modal-description" data-modal-description></p>
+
+          <div class="tjs-featured-focus__modal-field" data-modal-variant-field>
+            <label for="tjs-focus-variant-{{ section.id }}">Choose an option</label>
+            <select class="tjs-featured-focus__modal-select" id="tjs-focus-variant-{{ section.id }}" data-modal-variant></select>
+          </div>
+
+          <div class="tjs-featured-focus__modal-field">
+            <label for="tjs-focus-quantity-{{ section.id }}">Quantity</label>
+            <input class="tjs-featured-focus__modal-quantity" id="tjs-focus-quantity-{{ section.id }}" data-modal-quantity type="number" min="1" value="1" inputmode="numeric">
+          </div>
+
+          <div class="tjs-featured-focus__modal-actions">
+            <button class="tjs-featured-focus__modal-add" type="button" data-modal-add>Add to cart</button>
+            <a class="tjs-featured-focus__modal-link" data-modal-link href="#">View details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tjs-featured-focus__toast" data-focus-toast role="status" aria-live="polite"></div>
+  {% endif %}
+</section>
+
+<script>
+  (() => {
+    const selector = '[data-tjs-featured-focus="{{ section.id }}"]';
+
+    const initialise = (root) => {
+      if (!root || root.dataset.initialised === 'true') return;
+      root.dataset.initialised = 'true';
+
+      const controller = new AbortController();
+      const { signal } = controller;
+      const viewport = root.querySelector('[data-focus-viewport]');
+      const items = Array.from(root.querySelectorAll('[data-focus-item]'));
+      const previousButtons = Array.from(root.querySelectorAll('[data-focus-prev]'));
+      const nextButtons = Array.from(root.querySelectorAll('[data-focus-next]'));
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const mobileQuery = window.matchMedia('(max-width: 749px)');
+      const autoplayEnabled = root.dataset.autoplay === 'true';
+      const autoplaySpeed = Math.max(parseInt(root.dataset.autoplaySpeed, 10) || 4500, 2500);
+
+      const modal = root.querySelector('[data-focus-modal]');
+      const toast = root.querySelector('[data-focus-toast]');
+      const productData = new Map();
+
+      root.querySelectorAll('[data-focus-product-json]').forEach((node) => {
+        try {
+          productData.set(String(node.dataset.focusProductJson), JSON.parse(node.textContent));
+        } catch (error) {
+          console.warn('TJS featured focus: invalid product data', error);
+        }
+      });
+
+      let current = mobileQuery.matches ? Math.min(1, items.length - 1) : Math.min(2, items.length - 1);
+      let autoplayTimer = null;
+      let inViewport = true;
+      let pointerStart = null;
+      let pointerDelta = 0;
+      let observer = null;
+      let lastFocused = null;
+      let toastTimer = null;
+      let activeModalProduct = null;
+      let suppressClick = false;
+
+      const setSlot = (item, slot) => {
+        const hidden = ['before', 'after'].includes(slot);
+        const active = slot === '0';
+        const actionsMode = root.dataset.actionsMode || 'active';
+
+        item.dataset.slot = slot;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+
+        item.querySelectorAll('a, button').forEach((control) => {
+          const isAction = control.closest('.tjs-featured-focus__actions');
+          const actionAccessible = actionsMode === 'always' || actionsMode === 'hover' || active;
+          control.tabIndex = hidden || (isAction && !actionAccessible) ? -1 : 0;
+        });
+      };
+
+      const signedDistance = (index) => {
+        const count = items.length;
+        let distance = (index - current + count) % count;
+        if (distance > count / 2) distance -= count;
+        return distance;
+      };
+
+      const updateSlots = (animate = true) => {
+        if (!items.length) return;
+        if (!animate) root.classList.remove('is-ready');
+
+        items.forEach((item, index) => {
+          const distance = signedDistance(index);
+          if (distance < -2) setSlot(item, 'before');
+          else if (distance > 2) setSlot(item, 'after');
+          else setSlot(item, String(distance));
+        });
+
+        if (!animate) {
+          requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add('is-ready')));
+        }
+      };
+
+      const stopAutoplay = () => {
+        if (autoplayTimer) window.clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      };
+
+      const startAutoplay = () => {
+        stopAutoplay();
+        if (!autoplayEnabled || reduceMotion.matches || document.hidden || !inViewport || items.length < 2) return;
+        autoplayTimer = window.setInterval(() => move(1), autoplaySpeed);
+      };
+
+      const move = (direction, restart = false) => {
+        if (items.length < 2) return;
+        current = (current + direction + items.length) % items.length;
+        updateSlots(true);
+        if (restart) startAutoplay();
+      };
+
+      const showToast = (message, isError = false) => {
+        if (!toast) return;
+        if (toastTimer) window.clearTimeout(toastTimer);
+        toast.textContent = message;
+        toast.style.background = isError ? '#7A2626' : '';
+        toast.classList.add('is-visible');
+        toastTimer = window.setTimeout(() => toast.classList.remove('is-visible'), 3200);
+      };
+
+      const refreshCartSignals = async (addedItem) => {
+        try {
+          const response = await fetch(root.dataset.cartUrl, { headers: { Accept: 'application/json' } });
+          const cart = await response.json();
+
+          document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart, item: addedItem } }));
+          document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true, detail: { cart, item: addedItem } }));
+          document.documentElement.dispatchEvent(new CustomEvent('product:added', { bubbles: true, detail: { cart, item: addedItem } }));
+
+          document.querySelectorAll('[data-cart-count]').forEach((node) => {
+            node.textContent = cart.item_count;
+            node.hidden = cart.item_count === 0;
+          });
+        } catch (error) {
+          console.warn('TJS featured focus: cart refresh event failed', error);
+        }
+      };
+
+      const addVariant = async (variantId, quantity, button) => {
+        if (!variantId || !button) return;
+
+        const originalLabel = button.textContent;
+        button.disabled = true;
+        button.setAttribute('aria-busy', 'true');
+
+        if (button.matches('[data-modal-add]')) button.textContent = 'Adding…';
+
+        try {
+          const response = await fetch(root.dataset.cartAddUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json'
+            },
+            body: JSON.stringify({ items: [{ id: Number(variantId), quantity: Math.max(Number(quantity) || 1, 1) }] })
+          });
+
+          const payload = await response.json();
+          if (!response.ok) throw new Error(payload.description || payload.message || 'Unable to add this item.');
+
+          showToast('Added to cart.');
+          await refreshCartSignals(payload.items?.[0] || payload);
+
+          if (modal && !modal.hidden) closeModal();
+        } catch (error) {
+          showToast(error.message || 'Unable to add this item.', true);
+        } finally {
+          button.disabled = false;
+          button.removeAttribute('aria-busy');
+          if (button.matches('[data-modal-add]')) button.textContent = originalLabel || 'Add to cart';
+        }
+      };
+
+      const updateModalVariant = () => {
+        if (!modal || !activeModalProduct) return;
+
+        const select = modal.querySelector('[data-modal-variant]');
+        const variant = activeModalProduct.variants.find((entry) => String(entry.id) === String(select.value));
+
+        if (!variant) return;
+
+        modal.querySelector('[data-modal-price]').textContent = variant.priceFormatted;
+
+        const compare = modal.querySelector('[data-modal-compare]');
+        compare.textContent = variant.compareFormatted || '';
+        compare.hidden = !variant.compareFormatted;
+
+        const image = modal.querySelector('[data-modal-image]');
+        if (variant.image) image.src = variant.image;
+
+        const addButton = modal.querySelector('[data-modal-add]');
+        addButton.disabled = !variant.available;
+        addButton.textContent = variant.available ? 'Add to cart' : 'Sold out';
+      };
+
+      const openModal = (productId) => {
+        if (!modal) return;
+
+        const product = productData.get(String(productId));
+        if (!product) return;
+
+        activeModalProduct = product;
+        lastFocused = document.activeElement;
+
+        const image = modal.querySelector('[data-modal-image]');
+        image.src = product.image || '';
+        image.alt = product.title || '';
+
+        modal.querySelector('[data-modal-title]').textContent = product.title || '';
+        modal.querySelector('[data-modal-vendor]').textContent = product.vendor || '';
+        modal.querySelector('[data-modal-description]').textContent = product.description || '';
+        modal.querySelector('[data-modal-link]').href = product.url || '#';
+        modal.querySelector('[data-modal-quantity]').value = 1;
+
+        const select = modal.querySelector('[data-modal-variant]');
+        select.innerHTML = '';
+
+        let selectedAvailableVariant = false;
+
+        product.variants.forEach((variant) => {
+          const option = document.createElement('option');
+          option.value = variant.id;
+          option.textContent = `${variant.title}${variant.available ? '' : ' — Sold out'}`;
+          option.disabled = !variant.available;
+
+          if (variant.available && !selectedAvailableVariant) {
+            option.selected = true;
+            selectedAvailableVariant = true;
+          }
+
+          select.appendChild(option);
+        });
+
+        if (!selectedAvailableVariant && select.options.length) select.selectedIndex = 0;
+
+        const variantField = modal.querySelector('[data-modal-variant-field]');
+        variantField.hidden = product.variants.length <= 1;
+
+        modal.hidden = false;
+        modal.setAttribute('aria-hidden', 'false');
+        document.documentElement.style.overflow = '';
+
+        updateModalVariant();
+        modal.querySelector('[data-modal-close]').focus();
+      };
+
+      const closeModal = () => {
+        if (!modal) return;
+
+        modal.hidden = true;
+        modal.setAttribute('aria-hidden', 'true');
+        document.documentElement.style.overflow = '';
+        activeModalProduct = null;
+
+        if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+      };
+
+      previousButtons.forEach((button) => button.addEventListener('click', () => move(-1, true), { signal }));
+      nextButtons.forEach((button) => button.addEventListener('click', () => move(1, true), { signal }));
+
+      root.querySelectorAll('[data-quick-view]').forEach((button) => {
+        button.addEventListener('click', () => openModal(button.dataset.productId), { signal });
+      });
+
+      root.querySelectorAll('.tjs-featured-focus__media, .tjs-featured-focus__title, .tjs-featured-focus__view-all').forEach((link) => {
+        link.addEventListener('click', (event) => {
+          if (suppressClick) return;
+          if (event.defaultPrevented) return;
+          if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          if (event.button && event.button !== 0) return;
+
+          event.preventDefault();
+          window.location.href = link.href;
+        }, { signal });
+      });
+
+      root.querySelectorAll('[data-quick-add]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const variantCount = Number(button.dataset.variantCount || 0);
+          if (variantCount > 1) openModal(button.dataset.productId);
+          else addVariant(button.dataset.variantId, 1, button);
+        }, { signal });
+      });
+
+      if (modal) {
+        modal.querySelectorAll('[data-modal-close]').forEach((button) => button.addEventListener('click', closeModal, { signal }));
+
+        modal.querySelector('[data-modal-variant]').addEventListener('change', updateModalVariant, { signal });
+
+        modal.querySelector('[data-modal-add]').addEventListener('click', () => {
+          const variantId = modal.querySelector('[data-modal-variant]').value;
+          const quantity = modal.querySelector('[data-modal-quantity]').value;
+          addVariant(variantId, quantity, modal.querySelector('[data-modal-add]'));
+        }, { signal });
+      }
+
+      if (viewport) {
+        viewport.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            move(-1, true);
+          } else if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            move(1, true);
+          }
+        }, { signal });
+
+        viewport.addEventListener('pointerdown', (event) => {
+          const interactiveTarget = event.target.closest(
+            'a[href], button, input, select, textarea, label, summary, [role="button"]'
+          );
+
+          if (interactiveTarget) return;
+          if (event.pointerType === 'mouse' && event.button !== 0) return;
+
+          pointerStart = { x: event.clientX, y: event.clientY, time: performance.now() };
+          pointerDelta = 0;
+          viewport.classList.add('is-dragging');
+          viewport.setPointerCapture?.(event.pointerId);
+          stopAutoplay();
+        }, { passive: true, signal });
+
+        viewport.addEventListener('pointermove', (event) => {
+          if (!pointerStart) return;
+
+          pointerDelta = Math.max(-70, Math.min(70, event.clientX - pointerStart.x));
+          root.style.setProperty('--tjs-focus-drag-x', `${pointerDelta}px`);
+        }, { passive: true, signal });
+
+        const finishPointer = (event) => {
+          if (!pointerStart) return;
+
+          const deltaX = event.clientX - pointerStart.x;
+          const deltaY = event.clientY - pointerStart.y;
+          const elapsed = performance.now() - pointerStart.time;
+
+          pointerStart = null;
+          pointerDelta = 0;
+          root.style.setProperty('--tjs-focus-drag-x', '0px');
+          viewport.classList.remove('is-dragging');
+
+          const isSwipe = Math.abs(deltaX) > 38 && Math.abs(deltaX) > Math.abs(deltaY) * 1.12 && elapsed < 1000;
+
+          if (isSwipe) {
+            suppressClick = true;
+            move(deltaX < 0 ? 1 : -1, true);
+            window.setTimeout(() => { suppressClick = false; }, 80);
+          } else {
+            startAutoplay();
+          }
+        };
+
+        viewport.addEventListener('pointerup', finishPointer, { passive: true, signal });
+
+        viewport.addEventListener('click', (event) => {
+          if (!suppressClick) return;
+
+          event.preventDefault();
+          event.stopPropagation();
+          suppressClick = false;
+        }, { capture: true, signal });
+
+        viewport.addEventListener('pointercancel', () => {
+          if (!pointerStart) return;
+
+          pointerStart = null;
+          root.style.setProperty('--tjs-focus-drag-x', '0px');
+          viewport.classList.remove('is-dragging');
+          startAutoplay();
+        }, { signal });
+      }
+
+      root.addEventListener('mouseenter', stopAutoplay, { signal });
+      root.addEventListener('mouseleave', startAutoplay, { signal });
+      root.addEventListener('focusin', stopAutoplay, { signal });
+      root.addEventListener('focusout', (event) => {
+        if (!root.contains(event.relatedTarget)) startAutoplay();
+      }, { signal });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal && !modal.hidden) closeModal();
+      }, { signal });
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stopAutoplay();
+        else startAutoplay();
+      }, { signal });
+
+      if ('IntersectionObserver' in window) {
+        observer = new IntersectionObserver((entries) => {
+          inViewport = entries[0]?.isIntersecting ?? true;
+          if (inViewport) startAutoplay();
+          else stopAutoplay();
+        }, { threshold: 0.12 });
+
+        observer.observe(root);
+      }
+
+      document.addEventListener('shopify:block:select', stopAutoplay, { signal });
+
+      updateSlots(false);
+      startAutoplay();
+
+      root.tjsFeaturedFocusDestroy = () => {
+        stopAutoplay();
+        if (observer) observer.disconnect();
+        if (modal && !modal.hidden) closeModal();
+        controller.abort();
+      };
+    };
+
+    initialise(document.querySelector(selector));
+
+    document.addEventListener('shopify:section:load', (event) => {
+      initialise(event.target.querySelector(selector));
+    });
+
+    document.addEventListener('shopify:section:unload', (event) => {
+      const root = event.target.querySelector(selector);
+      if (root && typeof root.tjsFeaturedFocusDestroy === 'function') root.tjsFeaturedFocusDestroy();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TJS featured focus",
+  "tag": "section",
+  "class": "section-tjs-featured-focus",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Featured collection"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "min": 5,
+      "max": 10,
+      "step": 1,
+      "label": "Products in the loop",
+      "default": 10
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_sold_out",
+      "label": "Skip sold-out products",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Show section heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The June Edit"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Custom heading",
+      "info": "Leave blank to use the collection title."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>A curated selection designed to make everyday life feel more considered.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 42,
+      "max": 86,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop heading size",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "min": 32,
+      "max": 54,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile heading size",
+      "default": 42
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show collection link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "Collection link label",
+      "default": "View collection"
+    },
+    {
+      "type": "header",
+      "content": "Carousel"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show navigation arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate products",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 3,
+      "max": 8,
+      "step": 0.5,
+      "unit": "s",
+      "label": "Autoplay interval",
+      "default": 4.5
+    },
+    {
+      "type": "header",
+      "content": "Product cards"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "min": 420,
+      "max": 680,
+      "step": 10,
+      "unit": "px",
+      "label": "Maximum desktop card height",
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "mobile_center_width",
+      "min": 44,
+      "max": 60,
+      "step": 2,
+      "unit": "%",
+      "label": "Mobile centre-card width",
+      "info": "The remaining width is split equally between the two side previews. 60% creates a 20 / 60 / 20 layout.",
+      "default": 60
+    },
+    {
+      "type": "select",
+      "id": "mobile_card_ratio",
+      "label": "Mobile centre-card ratio",
+      "default": "four-five",
+      "options": [
+        { "value": "four-five", "label": "4:5 — recommended" },
+        { "value": "five-six", "label": "5:6 — closer to square" },
+        { "value": "square", "label": "1:1 — square" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 6,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Space between cards",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Product image fit",
+      "default": "contain",
+      "options": [
+        { "value": "contain", "label": "Contain — preserve full product" },
+        { "value": "cover", "label": "Cover — edge to edge" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "image_scale",
+      "min": 70,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Product image scale",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "active_image_scale",
+      "min": 100,
+      "max": 116,
+      "step": 1,
+      "unit": "%",
+      "label": "Main-card image emphasis",
+      "default": 108
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "default": "center",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" },
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Card style",
+      "default": "elevated",
+      "options": [
+        { "value": "minimal", "label": "Minimal" },
+        { "value": "outline", "label": "Outline" },
+        { "value": "soft", "label": "Soft shadow" },
+        { "value": "elevated", "label": "Elevated main card" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "min": 0,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Card corner radius",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "shadow_strength",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "%",
+      "label": "Card shadow strength",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Product information"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_badge",
+      "label": "Show percentage-saving badge",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "actions_mode",
+      "label": "Quick-action visibility",
+      "default": "active",
+      "options": [
+        { "value": "active", "label": "Main card only" },
+        { "value": "hover", "label": "Main card and card hover" },
+        { "value": "always", "label": "All visible cards" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show quick add",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_view",
+      "label": "Show quick view",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Quick-action style",
+      "default": "dark",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "dark", "label": "Dark" },
+        { "value": "accent", "label": "Accent" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#F7F5F1"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "image_bg",
+      "label": "Image area background",
+      "default": "#F1EEE8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Primary text",
+      "default": "#191715"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted text",
+      "default": "#706A64"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#B98D55"
+    },
+    {
+      "type": "header",
+      "content": "Section layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum section width",
+      "default": 1480
+    },
+    {
+      "type": "range",
+      "id": "page_gutter",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop side spacing",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_gutter",
+      "min": 0,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile side spacing",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top spacing",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom spacing",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS featured focus"
+    }
+  ]
+}
+{% endschema %}

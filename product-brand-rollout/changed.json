@@ -1,0 +1,6 @@
+[
+  "config/settings_schema.json",
+  "layout/theme.liquid",
+  "snippets/june-product-brand.liquid",
+  "assets/june-product-brand.css"
+]

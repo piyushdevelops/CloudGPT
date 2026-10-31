@@ -1,0 +1,8 @@
+{% doc %}
+ @param {section} section - Header section.
+ @param {block} block - Optional scroll island controls.
+{% enddoc %}
+{% if block != blank %}
+<script src="{{ 'june-scoop-scroll.js' | asset_url }}" defer="defer"></script>
+<june-scoop-scroll data-header="TjsPremiumHeader-{{ section.id }}" {{ block.shopify_attributes }} hidden><script type="application/json">{"desktop":{{ block.settings.desktop | json }},"mobile":{{ block.settings.mobile | json }},"motion":{{ block.settings.motion | json }},"threshold":{{ block.settings.threshold | json }},"duration":{{ block.settings.duration | json }},"width_desktop":{{ block.settings.width_desktop | json }},"width_mobile":{{ block.settings.width_mobile | json }},"height_desktop":{{ block.settings.height_desktop | json }},"height_mobile":{{ block.settings.height_mobile | json }},"offset":{{ block.settings.offset | json }},"radius":{{ block.settings.radius | json }},"font_desktop":{{ block.settings.font_desktop | json }},"font_mobile":{{ block.settings.font_mobile | json }}}</script></june-scoop-scroll>
+{% endif %}

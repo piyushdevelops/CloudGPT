@@ -1,0 +1,218 @@
+[
+  {
+    "theme": {
+      "name": "TJS Website Rework — 24 Sep 2026",
+      "id": 187527266499,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "unpublished",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "width": 1440,
+    "scrollWidth": 1440,
+    "heroHeight": 699,
+    "images": [
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/ChatGPT_Image_Sep_25_2026_04_46_21_PM.png?v=1790335005&width=1600",
+        "loaded": true
+      }
+    ],
+    "font": "Poppins, sans-serif, Impact, sans-serif",
+    "tabs": [
+      {
+        "key": "limited",
+        "visible": true,
+        "selected": "true"
+      },
+      {
+        "key": "dated",
+        "visible": true,
+        "selected": "true"
+      },
+      {
+        "key": "life",
+        "visible": true,
+        "selected": "true"
+      },
+      {
+        "key": "undated",
+        "visible": true,
+        "selected": "true"
+      }
+    ],
+    "keyboard": "true",
+    "form": {
+      "action": "https://thejuneshop.com/contact#JuneHero-template--27363580018883__june_make_room-launch",
+      "tags": "newsletter,2027-planner-launch",
+      "valid": false
+    },
+    "errors": []
+  },
+  {
+    "theme": {
+      "name": "TJS Website Rework — 24 Sep 2026",
+      "id": 187527266499,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "unpublished",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "width": 390,
+    "scrollWidth": 390,
+    "heroHeight": 996.53125,
+    "images": [
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/home_page_image.png?v=1790334222&width=600",
+        "loaded": true
+      }
+    ],
+    "font": "Poppins, sans-serif, Impact, sans-serif",
+    "tabs": [
+      {
+        "key": "limited",
+        "visible": true,
+        "selected": "true"
+      },
+      {
+        "key": "dated",
+        "visible": true,
+        "selected": "true"
+      },
+      {
+        "key": "life",
+        "visible": true,
+        "selected": "true"
+      },
+      {
+        "key": "undated",
+        "visible": true,
+        "selected": "true"
+      }
+    ],
+    "keyboard": "true",
+    "form": {
+      "action": "https://thejuneshop.com/contact#JuneHero-template--27363580018883__june_make_room-launch",
+      "tags": "newsletter,2027-planner-launch",
+      "valid": false
+    },
+    "errors": []
+  },
+  {
+    "theme": {
+      "name": "TJS Website Rework — 24 Sep 2026",
+      "id": 187527266499,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "unpublished",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "width": 750,
+    "scrollWidth": 750,
+    "heroHeight": 639,
+    "images": [
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/home_page_image.png?v=1790334222&width=1000",
+        "loaded": true
+      }
+    ],
+    "font": "Poppins, sans-serif, Impact, sans-serif",
+    "tabs": [
+      {
+        "key": "limited",
+        "visible": true,
+        "selected": "true"
+      },
+      {
+        "key": "dated",
+        "visible": true,
+        "selected": "true"
+      },
+      {
+        "key": "life",
+        "visible": true,
+        "selected": "true"
+      },
+      {
+        "key": "undated",
+        "visible": true,
+        "selected": "true"
+      }
+    ],
+    "keyboard": "true",
+    "form": {
+      "action": "https://thejuneshop.com/contact#JuneHero-template--27363580018883__june_make_room-launch",
+      "tags": "newsletter,2027-planner-launch",
+      "valid": false
+    },
+    "errors": []
+  },
+  {
+    "theme": {
+      "name": "TJS Website Rework — 24 Sep 2026",
+      "id": 187527266499,
+      "schema_name": "Ecomus",
+      "schema_version": "2.0.2.1",
+      "theme_store_id": null,
+      "role": "unpublished",
+      "handle": "null",
+      "style": {
+        "id": null,
+        "handle": null
+      }
+    },
+    "width": 320,
+    "scrollWidth": 320,
+    "heroHeight": 899.25,
+    "images": [
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/home_page_image.png?v=1790334222&width=600",
+        "loaded": true
+      }
+    ],
+    "font": "Poppins, sans-serif, Impact, sans-serif",
+    "tabs": [
+      {
+        "key": "limited",
+        "visible": true,
+        "selected": "true"
+      },
+      {
+        "key": "dated",
+        "visible": true,
+        "selected": "true"
+      },
+      {
+        "key": "life",
+        "visible": true,
+        "selected": "true"
+      },
+      {
+        "key": "undated",
+        "visible": true,
+        "selected": "true"
+      }
+    ],
+    "keyboard": "true",
+    "form": {
+      "action": "https://thejuneshop.com/contact#JuneHero-template--27363580018883__june_make_room-launch",
+      "tags": "newsletter,2027-planner-launch",
+      "valid": false
+    },
+    "errors": []
+  }
+]

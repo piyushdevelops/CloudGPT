@@ -1,0 +1,47 @@
+/* Reference-led composition. Keep this study isolated from the Shopify theme. */
+.preview-note{background:transparent;color:#71647e;justify-content:center;padding:9px;font-size:10px}
+.preview-note strong{display:none}
+.proof{max-width:760px;padding:18px 24px}
+h1 span:after,.intro,.halo,.orbit,.spark,.object-caption,.scene-label,.proof footer,.help{display:none}
+h1{font-family:Poppins,sans-serif;font-weight:900;letter-spacing:-.04em;line-height:1.06;font-size:clamp(32px,4vw,48px)}
+.eyebrow{font-weight:700;letter-spacing:.09em}
+.nav{margin:20px 0 16px}
+.canvas{width:100%;max-width:620px;background:radial-gradient(ellipse at 46% 38%,#d6c8ee 0%,#c2ade1 62%,#b39bd4 100%);border-radius:24px;aspect-ratio:1;isolation:isolate;perspective:none}
+.reviews{display:contents}
+.object-wrap{left:50%;top:67%;width:53%;height:67%;z-index:2}
+.object{filter:drop-shadow(0 16px 13px #31204726)}
+.object img{transform:rotate(-6deg)}
+.review,.review.placeholder{font-family:Poppins,sans-serif;width:43%;aspect-ratio:4.45/1;min-height:58px;padding:8px 10px;grid-template-columns:33% minmax(0,1fr);gap:8px;border:1.5px solid #9edbd2;border-radius:12px;background:#fff;box-shadow:0 0 4px #b9fff080,0 4px 9px #32223d16;z-index:3;transform:none!important}
+.review-person{gap:5px;min-width:0}
+.review-person .avatar{width:28px;height:28px}
+.review-person strong{font-family:Poppins,sans-serif;font-size:9px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.review .quote,.review.placeholder .quote{font-family:Poppins,sans-serif;font-size:10px;line-height:1.35;font-weight:600;-webkit-line-clamp:2}
+.review .rating{display:flex;gap:2px;color:#efbf12;margin-bottom:4px;line-height:1}
+.rating svg{width:13px;height:13px;display:block;fill:currentColor;flex:none}
+.pending-label{font:500 6px/1.2 Poppins,sans-serif;letter-spacing:.025em;margin-bottom:3px;color:#746b7b}
+.review:nth-child(1){left:39%;right:auto;top:10%;z-index:1}
+.review:nth-child(2){left:7%;right:auto;top:23%;z-index:1}
+.review:nth-child(3){left:auto;right:3%;top:36%;z-index:3}
+.review:nth-child(4){left:3%;right:auto;top:49%;z-index:3}
+.review:nth-child(5){left:auto;right:2%;top:62%;z-index:3}
+.review:nth-child(6){left:9%;right:auto;top:75%;z-index:3}
+.review:hover,.review:focus-visible{z-index:5;box-shadow:0 5px 14px #32223d20}
+.photo-editor{border:1px solid #d7cde3;background:#fff;max-width:700px}
+.modal-avatar .avatar-placeholder,.avatar-placeholder{display:grid;place-items:center;width:100%;height:100%;background:#e6dfef;color:#8b7d9b;border-radius:50%}
+.avatar-placeholder svg{width:75%;height:75%;fill:currentColor}
+@media(max-width:700px){
+ .proof{padding:16px 10px}.preview-note{font-size:9px;padding:8px 10px}
+ h1{font-size:34px}.nav{margin:16px 0 12px}
+ .canvas{aspect-ratio:1;border-radius:18px}
+ .object-wrap{width:54%;height:65%;top:68%}
+ .review,.review.placeholder{width:55%;min-height:44px;aspect-ratio:4.5/1;padding:5px 6px;gap:5px;border-radius:9px;grid-template-columns:32% minmax(0,1fr)}
+ .review-person{gap:3px}.review-person .avatar{width:21px;height:21px}
+ .review-person strong{font-size:7px}.review .quote,.review.placeholder .quote{font-size:7.5px;line-height:1.3}
+ .review .rating{gap:1px;margin-bottom:3px}.rating svg{width:10px;height:10px}.pending-label{font-size:5px;margin-bottom:2px}
+ .review:nth-child(1){left:38%!important;right:auto!important;top:8%!important}
+ .review:nth-child(2){left:3%!important;right:auto!important;top:22%!important}
+ .review:nth-child(3){left:auto!important;right:2%!important;top:36%!important}
+ .review:nth-child(4){left:2%!important;right:auto!important;top:50%!important}
+ .review:nth-child(5){left:auto!important;right:2%!important;top:64%!important}
+ .review:nth-child(6){left:7%!important;right:auto!important;top:78%!important}
+}

@@ -1,0 +1,23 @@
+{
+  "theme": "187527266499",
+  "role": "UNPUBLISHED",
+  "date": "2026-10-23T07:47:46.621Z",
+  "files": [
+    {
+      "filename": "assets/june-search-matches.js",
+      "exact": true
+    },
+    {
+      "filename": "assets/june-scoop-search.js",
+      "exact": true
+    },
+    {
+      "filename": "snippets/june-scoop-search.liquid",
+      "exact": true
+    },
+    {
+      "filename": "sections/main-search.liquid",
+      "exact": true
+    }
+  ]
+}

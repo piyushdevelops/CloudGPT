@@ -1,0 +1,550 @@
+{% doc %}
+  @prompt
+    a flashing offer section
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-flash-offer-{{ ai_gen_id }} {
+    position: relative;
+    padding: {{ block.settings.padding_top }}px {{ block.settings.padding_horizontal }}px {{ block.settings.padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .ai-flash-offer-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ai-flash-offer-badge-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: {{ block.settings.badge_color }};
+    color: {{ block.settings.badge_text_color }};
+    font-size: {{ block.settings.badge_font_size }}px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: {{ block.settings.badge_radius }}px;
+    margin-bottom: 16px;
+  }
+
+  .ai-flash-offer-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 12px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .ai-flash-offer-subheading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subheading_size }}px;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 24px;
+    opacity: 0.9;
+  }
+
+  .ai-flash-offer-timer-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .ai-flash-offer-time-block-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 70px;
+  }
+
+  .ai-flash-offer-time-value-{{ ai_gen_id }} {
+    font-size: {{ block.settings.timer_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.timer_color }};
+    background-color: {{ block.settings.timer_bg_color }};
+    padding: 12px 16px;
+    border-radius: {{ block.settings.timer_radius }}px;
+    min-width: 60px;
+    line-height: 1;
+  }
+
+  .ai-flash-offer-time-label-{{ ai_gen_id }} {
+    font-size: 12px;
+    color: {{ block.settings.text_color }};
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+  }
+
+  .ai-flash-offer-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 16px 40px;
+    background-color: {{ block.settings.button_color }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: 600;
+    border-radius: {{ block.settings.button_radius }}px;
+    transition: all 0.3s ease;
+    border: 2px solid {{ block.settings.button_color }};
+  }
+
+  .ai-flash-offer-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_color }};
+    border-color: {{ block.settings.button_hover_color }};
+    color: {{ block.settings.button_hover_text_color }};
+    transform: translateY(-2px);
+  }
+
+  {% if block.settings.enable_flash_animation %}
+    @keyframes ai-flash-pulse-{{ ai_gen_id }} {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.6;
+      }
+    }
+
+    .ai-flash-offer-badge-{{ ai_gen_id }} {
+      animation: ai-flash-pulse-{{ ai_gen_id }} {{ block.settings.flash_speed }}s ease-in-out infinite;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    .ai-flash-offer-{{ ai_gen_id }} {
+      padding: {{ block.settings.padding_top | times: 0.6 }}px {{ block.settings.padding_horizontal | times: 0.5 }}px {{ block.settings.padding_bottom | times: 0.6 }}px;
+    }
+
+    .ai-flash-offer-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.6 }}px;
+    }
+
+    .ai-flash-offer-subheading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.subheading_size | times: 0.8 }}px;
+    }
+
+    .ai-flash-offer-timer-{{ ai_gen_id }} {
+      gap: 12px;
+    }
+
+    .ai-flash-offer-time-block-{{ ai_gen_id }} {
+      min-width: 60px;
+    }
+
+    .ai-flash-offer-time-value-{{ ai_gen_id }} {
+      font-size: {{ block.settings.timer_size | times: 0.7 }}px;
+      padding: 10px 12px;
+      min-width: 50px;
+    }
+
+    .ai-flash-offer-button-{{ ai_gen_id }} {
+      padding: 14px 32px;
+      font-size: {{ block.settings.button_font_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<flash-offer-{{ ai_gen_id }} class="ai-flash-offer-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-flash-offer-container-{{ ai_gen_id }}">
+    {% if block.settings.badge_text != blank %}
+      <div class="ai-flash-offer-badge-{{ ai_gen_id }}">
+        {{ block.settings.badge_text }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-flash-offer-heading-{{ ai_gen_id }}">
+        {{ block.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if block.settings.subheading != blank %}
+      <div class="ai-flash-offer-subheading-{{ ai_gen_id }}">
+        {{ block.settings.subheading }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.show_timer %}
+      <div class="ai-flash-offer-timer-{{ ai_gen_id }}">
+        <div class="ai-flash-offer-time-block-{{ ai_gen_id }}">
+          <div class="ai-flash-offer-time-value-{{ ai_gen_id }}" data-days>00</div>
+          <div class="ai-flash-offer-time-label-{{ ai_gen_id }}">Days</div>
+        </div>
+        <div class="ai-flash-offer-time-block-{{ ai_gen_id }}">
+          <div class="ai-flash-offer-time-value-{{ ai_gen_id }}" data-hours>00</div>
+          <div class="ai-flash-offer-time-label-{{ ai_gen_id }}">Hours</div>
+        </div>
+        <div class="ai-flash-offer-time-block-{{ ai_gen_id }}">
+          <div class="ai-flash-offer-time-value-{{ ai_gen_id }}" data-minutes>00</div>
+          <div class="ai-flash-offer-time-label-{{ ai_gen_id }}">Minutes</div>
+        </div>
+        <div class="ai-flash-offer-time-block-{{ ai_gen_id }}">
+          <div class="ai-flash-offer-time-value-{{ ai_gen_id }}" data-seconds>00</div>
+          <div class="ai-flash-offer-time-label-{{ ai_gen_id }}">Seconds</div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if block.settings.button_text != blank %}
+      <a href="{{ block.settings.button_link }}" class="ai-flash-offer-button-{{ ai_gen_id }}">
+        {{ block.settings.button_text }}
+      </a>
+    {% endif %}
+  </div>
+</flash-offer-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class FlashOffer{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.endDate = '{{ block.settings.end_date }}';
+        this.endTime = '{{ block.settings.end_time }}';
+      }
+
+      connectedCallback() {
+        if (!this.endDate) return;
+
+        this.daysEl = this.querySelector('[data-days]');
+        this.hoursEl = this.querySelector('[data-hours]');
+        this.minutesEl = this.querySelector('[data-minutes]');
+        this.secondsEl = this.querySelector('[data-seconds]');
+
+        this.updateCountdown();
+        this.interval = setInterval(() => this.updateCountdown(), 1000);
+      }
+
+      disconnectedCallback() {
+        if (this.interval) {
+          clearInterval(this.interval);
+        }
+      }
+
+      updateCountdown() {
+        const dateTimeString = this.endTime ? 
+          `${this.endDate}T${this.endTime}` : 
+          `${this.endDate}T23:59:59`;
+        
+        const endDateTime = new Date(dateTimeString).getTime();
+        const now = new Date().getTime();
+        const distance = endDateTime - now;
+
+        if (distance < 0) {
+          this.daysEl.textContent = '00';
+          this.hoursEl.textContent = '00';
+          this.minutesEl.textContent = '00';
+          this.secondsEl.textContent = '00';
+          clearInterval(this.interval);
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        this.daysEl.textContent = String(days).padStart(2, '0');
+        this.hoursEl.textContent = String(hours).padStart(2, '0');
+        this.minutesEl.textContent = String(minutes).padStart(2, '0');
+        this.secondsEl.textContent = String(seconds).padStart(2, '0');
+      }
+    }
+
+    customElements.define('flash-offer-{{ ai_gen_id }}', FlashOffer{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Flashing offer",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "Flash Sale"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Limited Time Offer!"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Get up to 50% off on selected items"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Countdown timer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_timer",
+      "label": "Show countdown timer",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "End date",
+      "info": "Format: YYYY-MM-DD (e.g., 2025-12-31)",
+      "default": "2025-12-31"
+    },
+    {
+      "type": "text",
+      "id": "end_time",
+      "label": "End time",
+      "info": "Format: HH:MM:SS (e.g., 23:59:59). Leave blank for end of day"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#db1215"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Badge background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "timer_bg_color",
+      "label": "Timer background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "timer_color",
+      "label": "Timer text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button hover background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button hover text",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_flash_animation",
+      "label": "Enable flashing animation",
+      "info": "Adds a pulsing effect to the badge",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "flash_speed",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.5,
+      "unit": "s",
+      "label": "Flash speed",
+      "default": 1.5
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 400,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Subheading size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "timer_size",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Timer size",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Button font size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Border radius"
+    },
+    {
+      "type": "range",
+      "id": "badge_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Badge radius",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "timer_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Timer radius",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Button radius",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Flashing offer"
+    }
+  ]
+}
+{% endschema %}

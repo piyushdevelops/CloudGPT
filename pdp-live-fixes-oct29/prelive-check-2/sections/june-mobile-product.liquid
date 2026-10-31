@@ -1,0 +1,384 @@
+{%- liquid
+  assign variant = product.selected_or_first_available_variant | default: product.variants.first
+  assign form_id = 'JuneProductForm-' | append: section.id
+  assign name_enabled = product.metafields.custom.personalise_name.value
+  if product.tags contains 'name_customisation'
+    assign name_enabled = true
+  endif
+  unless name_enabled
+    for product_variant in product.variants
+      assign product_variant_title_down = product_variant.title | downcase
+      if product_variant_title_down contains 'name' or product_variant_title_down contains 'personal'
+        assign name_enabled = true
+        break
+      endif
+    endfor
+  endunless
+  assign variant_title_down = variant.title | downcase
+  assign name_active = false
+  if name_enabled
+    if product.has_only_default_variant or variant_title_down contains 'name' or variant_title_down contains 'personal'
+      assign name_active = true
+    endif
+  endif
+  assign preorder = false
+  if product.tags contains 'June-Preorder-2027' or product.tags contains 'Preorder' or product.tags contains 'preorder'
+    assign preorder = true
+  elsif variant.inventory_policy == 'continue' and variant.inventory_quantity <= 0
+    assign preorder = true
+  endif
+  assign dispatch_value = product.metafields.custom.preorder_dispatch_date.value
+  assign short_description = product.metafields.custom.short_description.value
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value
+  assign category_collection = product.collections.first
+  assign type_block = section.blocks | where: 'type', 'typography' | first
+  assign heading_font = type_block.settings.heading_font | default: 'poppins_n4'
+  assign copy_font = type_block.settings.copy_font | default: 'poppins_n4'
+  assign action_font = type_block.settings.action_font | default: 'poppins_n4'
+  assign action_is_link = false
+  if section.settings.action_mode == 'link' and section.settings.action_link != blank
+    assign action_is_link = true
+  endif
+  assign has_specs = false
+  if product.type != blank or product.has_only_default_variant == false or variant.sku != blank
+    assign has_specs = true
+  endif
+  if product.metafields.custom.dimensions_display.value != blank or product.metafields.custom.key_features.value != blank or product.metafields.custom.whats_in_box.value != blank or product.metafields.custom.care_instructions.value != blank
+    assign has_specs = true
+  endif
+-%}
+
+<style>
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ copy_font | font_face: font_display: 'swap' }}
+  {{ action_font | font_face: font_display: 'swap' }}
+</style>
+
+<section id="JuneProduct-{{ section.id }}" class="jmp{% if preorder %} jmp--preorder{% endif %}" data-jmp-root data-product-url="{{ product.url }}">
+  <div class="jmp__purchase">
+    <div class="jmp__gallery" data-jmp-gallery>
+      <div class="jmp__stage" data-jmp-stage aria-live="polite">
+        {%- for media in product.media -%}
+          <figure class="jmp__slide{% if forloop.first %} is-active{% endif %}" data-jmp-slide="{{ forloop.index0 }}" data-media-id="{{ media.id }}"{% unless forloop.first %} hidden{% endunless %}>
+            {%- if media.preview_image -%}
+              {%- if forloop.first -%}
+                {{ media.preview_image | image_url: width: 1600 | image_tag: widths: '360, 540, 720, 960, 1200, 1600', sizes: '(max-width: 749px) calc(100vw - 28px), 50vw', loading: 'eager', fetchpriority: 'high', alt: media.alt | default: product.title }}
+              {%- else -%}
+                {{ media.preview_image | image_url: width: 1600 | image_tag: widths: '360, 540, 720, 960, 1200, 1600', sizes: '(max-width: 749px) calc(100vw - 28px), 50vw', loading: 'lazy', alt: media.alt | default: product.title }}
+              {%- endif -%}
+            {%- endif -%}
+          </figure>
+        {%- else -%}
+          <div class="jmp__placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>
+        {%- endfor -%}
+        {%- if product.media.size > 1 -%}
+          <span class="jmp__count" data-jmp-count>1 / {{ product.media.size }}</span>
+        {%- endif -%}
+      </div>
+      {%- if product.media.size > 1 -%}
+        <div class="jmp__thumbs" role="list" aria-label="Product images">
+          {%- for media in product.media -%}
+            <button class="jmp__thumb{% if forloop.first %} is-active{% endif %}" type="button" data-jmp-thumb="{{ forloop.index0 }}" aria-label="View image {{ forloop.index }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+              {{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="jmp__summary">
+      {%- if preorder -%}<p class="jmp__eyebrow">{{ section.settings.preorder_badge }}</p>{%- endif -%}
+      <h1>{{ product.title }}</h1>
+      {%- if short_description != blank -%}<p class="jmp__subtitle">{{ short_description }}</p>{%- endif -%}
+      {%- if rating != blank and rating_count > 0 -%}
+        <a class="jmp__rating" href="#JuneProductInfo-{{ section.id }}" aria-label="Rated {{ rating.rating }} out of {{ rating.scale_max }} from {{ rating_count }} reviews">
+          <span aria-hidden="true">★★★★★</span> {{ rating.rating | default: rating }} · {{ rating_count }} reviews
+        </a>
+      {%- endif -%}
+      <div class="jmp__price" aria-live="polite">
+        <strong data-jmp-price>{{ variant.price | money }}</strong>
+        <del data-jmp-compare{% unless variant.compare_at_price > variant.price %} hidden{% endunless %}>{{ variant.compare_at_price | money }}</del>
+      </div>
+
+      {%- form 'product', product, id: form_id, class: 'hdt-main-product-form jmp__form' -%}
+        <input type="hidden" name="id" value="{{ variant.id }}" data-jmp-variant-id>
+        <input type="hidden" name="properties[Purchase type]" value="{% if preorder %}Pre-order{% else %}Standard order{% endif %}" data-jmp-purchase-type>
+        {%- if dispatch_value != blank -%}<input type="hidden" name="properties[Expected dispatch]" value="{{ dispatch_value | date: '%-d %b %Y' }}">{%- endif -%}
+
+        {%- unless action_is_link -%}
+        {%- unless product.has_only_default_variant -%}
+          <div class="jmp__options">
+            {%- for option in product.options_with_values -%}
+              <fieldset class="jmp__option" data-jmp-option data-option-index="{{ forloop.index0 }}">
+                <legend>{{ option.name }}</legend>
+                {%- if option.values.size > 8 -%}
+                  <select aria-label="{{ option.name }}" data-jmp-option-select>
+                    {%- for value in option.values -%}<option value="{{ value | escape }}"{% if value.selected %} selected{% endif %}>{{ value }}</option>{%- endfor -%}
+                  </select>
+                {%- else -%}
+                  <div class="jmp__choices">
+                    {%- for value in option.values -%}
+                      <button type="button" class="jmp__choice{% if value.selected %} is-active{% endif %}" data-jmp-option-value="{{ value | escape }}" aria-pressed="{% if value.selected %}true{% else %}false{% endif %}">{{ value }}</button>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              </fieldset>
+            {%- endfor -%}
+          </div>
+        {%- endunless -%}
+
+        {%- if name_enabled -%}
+          <div class="jmp__name" data-jmp-name{% unless name_active %} hidden{% endunless %}>
+            <label for="JuneName-{{ section.id }}">{{ section.settings.name_label }}</label>
+            <div class="jmp__name-field">
+              <span aria-hidden="true">✦</span>
+              <input id="JuneName-{{ section.id }}" name="properties[Name]" type="text" maxlength="{{ section.settings.name_limit }}" placeholder="{{ section.settings.name_placeholder }}" autocomplete="off"{% if name_active %} required{% else %} disabled{% endif %}>
+            </div>
+            <small>{{ section.settings.name_hint }} <span data-jmp-name-count>0</span>/{{ section.settings.name_limit }}</small>
+          </div>
+        {%- endif -%}
+
+        <div class="jmp__finish">
+          <label class="jmp__quantity" for="JuneQuantity-{{ section.id }}">Quantity
+            <span><button type="button" data-jmp-quantity="minus" aria-label="Decrease quantity">−</button><input id="JuneQuantity-{{ section.id }}" name="quantity" type="number" min="1" value="1" inputmode="numeric"><button type="button" data-jmp-quantity="plus" aria-label="Increase quantity">+</button></span>
+          </label>
+          <hdt-buy-buttons class="jmp__desktop-buy hdt-product-form__buttons" form="{{ form_id }}">
+            <button class="jmp__atc hdt-product-form__submit" type="submit" name="add"{% unless variant.available %} disabled{% endunless %}>
+              <span data-jmp-cta>{% if variant.available %}{% if preorder %}Pre-order{% else %}Add to bag{% endif %}{% else %}Sold out{% endif %}</span>
+              <small data-jmp-dispatch>{% if preorder %}{% if dispatch_value != blank %}Dispatches from {{ dispatch_value | date: '%-d %b %Y' }}{% else %}{{ section.settings.dispatch_fallback }}{% endif %}{% endif %}</small>
+            </button>
+          </hdt-buy-buttons>
+        </div>
+        {%- endunless -%}
+        <div class="jmp__message hdt-form__message-wrapper hdt-form-message--error" role="alert" hidden><span class="hdt-error-message"></span></div>
+      {%- endform -%}
+      {%- if action_is_link -%}
+        <a class="jmp__atc jmp__link-action" href="{{ section.settings.action_link }}">{{ section.settings.action_label }} <span aria-hidden="true">→</span></a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div id="JuneProductInfo-{{ section.id }}" class="jmp__info" data-jmp-tabs>
+    <div class="jmp__tablist" role="tablist" aria-label="Product information">
+      <button role="tab" aria-selected="true" aria-controls="JuneDescription-{{ section.id }}" id="JuneTabDescription-{{ section.id }}">Description</button>
+      <button role="tab" aria-selected="false" aria-controls="JuneSpecs-{{ section.id }}" id="JuneTabSpecs-{{ section.id }}" tabindex="-1">Specifications</button>
+      <button role="tab" aria-selected="false" aria-controls="JunePolicy-{{ section.id }}" id="JuneTabPolicy-{{ section.id }}" tabindex="-1">Delivery &amp; returns</button>
+    </div>
+    <div class="jmp__panels">
+      <div role="tabpanel" id="JuneDescription-{{ section.id }}" aria-labelledby="JuneTabDescription-{{ section.id }}" class="jmp__panel rte">{{ product.description }}</div>
+      <div role="tabpanel" id="JuneSpecs-{{ section.id }}" aria-labelledby="JuneTabSpecs-{{ section.id }}" class="jmp__panel" hidden>
+        <dl>
+          {%- if product.type != blank -%}<div><dt>Product type</dt><dd>{{ product.type }}</dd></div>{%- endif -%}
+          {%- unless product.has_only_default_variant -%}<div><dt>Available options</dt><dd>{{ product.options | join: ', ' }}</dd></div>{%- endunless -%}
+          {%- if product.metafields.custom.dimensions_display.value != blank -%}<div><dt>Dimensions</dt><dd>{{ product.metafields.custom.dimensions_display.value }}</dd></div>{%- endif -%}
+          {%- if product.metafields.custom.key_features.value != blank -%}<div><dt>Key features</dt><dd>{{ product.metafields.custom.key_features.value | newline_to_br }}</dd></div>{%- endif -%}
+          {%- if product.metafields.custom.whats_in_box.value != blank -%}<div><dt>What’s included</dt><dd>{{ product.metafields.custom.whats_in_box.value | newline_to_br }}</dd></div>{%- endif -%}
+          {%- if product.metafields.custom.care_instructions.value != blank -%}<div><dt>Care</dt><dd>{{ product.metafields.custom.care_instructions.value | newline_to_br }}</dd></div>{%- endif -%}
+          {%- if variant.sku != blank -%}<div><dt>SKU</dt><dd data-jmp-sku>{{ variant.sku }}</dd></div>{%- endif -%}
+        </dl>
+        {%- unless has_specs -%}<p>{{ section.settings.specs_fallback }}</p>{%- endunless -%}
+      </div>
+      <div role="tabpanel" id="JunePolicy-{{ section.id }}" aria-labelledby="JuneTabPolicy-{{ section.id }}" class="jmp__panel rte" hidden>
+        {%- if shop.shipping_policy.body != blank -%}{{ shop.shipping_policy.body }}{%- else -%}<p>{{ section.settings.shipping_fallback }}</p>{%- endif -%}
+        {%- if shop.refund_policy.body != blank -%}<h3>Returns</h3>{{ shop.refund_policy.body }}{%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.show_discovery -%}
+    <div id="JuneProductDiscovery-{{ section.id }}" class="jmp__discovery" data-jmp-discovery>
+      {%- assign discovery_products = product.metafields['shopify--discovery--product_recommendation'].related_products.value -%}
+      {%- if discovery_products != blank -%}
+        <div class="jmp__rail"><h2>More like this</h2><div class="jmp__cards">
+          {%- for item in discovery_products limit: 8 -%}{%- unless item.id == product.id -%}{% render 'june-pdp-card', product: item %}{%- endunless -%}{%- endfor -%}
+        </div></div>
+      {%- endif -%}
+      {%- if category_collection != blank and category_collection.products_count > 1 -%}
+        <div class="jmp__rail"><h2>More from {{ category_collection.title }}</h2><div class="jmp__cards">
+          {%- for item in category_collection.products limit: 9 -%}{%- unless item.id == product.id -%}{% render 'june-pdp-card', product: item %}{%- endunless -%}{%- endfor -%}
+        </div></div>
+      {%- endif -%}
+      {%- if section.settings.bestseller_collection != blank -%}
+        <div class="jmp__rail"><h2>{{ section.settings.bestseller_heading }}</h2><div class="jmp__cards">
+          {%- for item in section.settings.bestseller_collection.products limit: 8 -%}{%- unless item.id == product.id -%}{% render 'june-pdp-card', product: item %}{%- endunless -%}{%- endfor -%}
+        </div></div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="jmp__sticky is-hidden" data-jmp-sticky>
+    <div><strong data-jmp-sticky-price>{{ variant.price | money }}</strong></div>
+    {%- if action_is_link -%}
+      <a class="jmp__sticky-link" href="{{ section.settings.action_link }}"><span>{{ section.settings.action_label }}</span><span aria-hidden="true">→</span></a>
+    {%- else -%}
+      <button type="submit" name="add" form="{{ form_id }}"{% unless variant.available %} disabled{% endunless %}><span class="jmp__sticky-label"><b data-jmp-sticky-cta>{% if variant.available %}{% if preorder %}Pre-order{% else %}Add to bag{% endif %}{% else %}Sold out{% endif %}</b><small data-jmp-sticky-dispatch{% unless preorder %} hidden{% endunless %}>{% if dispatch_value != blank %}Dispatches from {{ dispatch_value | date: '%-d %b %Y' }}{% else %}{{ section.settings.dispatch_fallback }}{% endif %}</small></span><span aria-hidden="true">→</span></button>
+    {%- endif -%}
+  </div>
+  <div class="jmp__sticky-spacer" aria-hidden="true"></div>
+</section>
+
+<style>
+html.june-product-page,html.june-product-page body{overflow-x:clip}
+#JuneProduct-{{ section.id }}{--jmp-ink:#171717;--jmp-bg:#fff;--jmp-surface:#f5f5f3;--jmp-muted:#656565;--jmp-border:#dadada;--jmp-accent:#f56a28;color:var(--jmp-ink);background:var(--jmp-bg);font-family:{{ copy_font.family }},sans-serif}
+#JuneProduct-{{ section.id }} *{box-sizing:border-box}
+#JuneProduct-{{ section.id }} button,#JuneProduct-{{ section.id }} input,#JuneProduct-{{ section.id }} select{font:inherit}
+#JuneProduct-{{ section.id }} .jmp__purchase{width:min(1680px,calc(100% - 48px));margin:auto;padding:28px 0 54px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(380px,.72fr);gap:clamp(32px,5vw,88px);align-items:start}
+#JuneProduct-{{ section.id }} .jmp__stage{position:relative;aspect-ratio:1;background:var(--jmp-surface);overflow:hidden;border:1px solid var(--jmp-border)}
+#JuneProduct-{{ section.id }} .jmp__slide{position:absolute;inset:0;margin:0}
+#JuneProduct-{{ section.id }} .jmp__slide img{width:100%;height:100%;object-fit:contain;display:block}
+#JuneProduct-{{ section.id }} .jmp__count{position:absolute;right:12px;bottom:12px;padding:7px 11px;border:1px solid var(--jmp-border);border-radius:999px;background:#fffffff0;font-size:11px;font-weight:700}
+#JuneProduct-{{ section.id }} .jmp__thumbs{display:flex;gap:10px;overflow-x:auto;padding:12px 2px 4px;scrollbar-width:none}
+#JuneProduct-{{ section.id }} .jmp__thumb{flex:0 0 68px;width:68px;height:68px;padding:0;border:1px solid var(--jmp-border);border-radius:10px;background:var(--jmp-bg);overflow:hidden}
+#JuneProduct-{{ section.id }} .jmp__thumb img{width:100%;height:100%;object-fit:cover}
+#JuneProduct-{{ section.id }} .jmp__thumb.is-active{outline:2px solid var(--jmp-ink);outline-offset:2px}
+#JuneProduct-{{ section.id }} .jmp__summary{position:sticky;top:92px;padding-top:8px}
+#JuneProduct-{{ section.id }} .jmp__eyebrow{display:inline-flex;margin:0 0 10px;padding:6px 10px;border-radius:999px;background:var(--jmp-ink);color:#fff;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+#JuneProduct-{{ section.id }} h1{margin:0;font-family:{{ heading_font.family }},sans-serif;font-size:{{ type_block.settings.heading_size_desktop | default: 44 }}px;font-weight:{{ type_block.settings.heading_weight | default: 800 }};line-height:{{ type_block.settings.heading_line | default: 1.02 }};letter-spacing:{{ type_block.settings.heading_spacing | default: -0.04 }}em}
+#JuneProduct-{{ section.id }} .jmp__subtitle{margin:10px 0 0;color:var(--jmp-muted);font-size:15px;line-height:1.45}
+#JuneProduct-{{ section.id }} .jmp__rating{display:inline-flex;gap:7px;margin-top:10px;color:var(--jmp-ink);font-size:12px;text-decoration:none}
+#JuneProduct-{{ section.id }} .jmp__rating span{color:var(--jmp-accent);letter-spacing:.08em}
+#JuneProduct-{{ section.id }} .jmp__price{display:flex;align-items:baseline;gap:10px;margin:16px 0 18px}
+#JuneProduct-{{ section.id }} .jmp__price strong{font-size:30px;font-weight:900;letter-spacing:-.04em}
+#JuneProduct-{{ section.id }} .jmp__price del{color:var(--jmp-muted);font-size:14px}
+#JuneProduct-{{ section.id }} .jmp__option{margin:0 0 16px;padding:0;border:0}
+#JuneProduct-{{ section.id }} .jmp__option legend,#JuneProduct-{{ section.id }} .jmp__name label,#JuneProduct-{{ section.id }} .jmp__quantity{margin-bottom:8px;font-size:12px;font-weight:800}
+#JuneProduct-{{ section.id }} .jmp__choices{display:flex;flex-wrap:wrap;gap:8px}
+#JuneProduct-{{ section.id }} .jmp__choice,#JuneProduct-{{ section.id }} .jmp__option select{min-height:44px;padding:10px 14px;border:1.5px solid var(--jmp-border);border-radius:12px;background:var(--jmp-bg);color:var(--jmp-ink);font-size:12px;font-weight:700}
+#JuneProduct-{{ section.id }} .jmp__choice.is-active{border-color:var(--jmp-ink);background:var(--jmp-ink);color:#fff}
+#JuneProduct-{{ section.id }} .jmp__option select{width:100%}
+#JuneProduct-{{ section.id }} .jmp__name{margin:18px 0;padding:14px;border:1px solid color-mix(in srgb,var(--jmp-accent) 38%,var(--jmp-border));border-radius:16px;background:color-mix(in srgb,var(--jmp-accent) 7%,#fff);animation:jmp-reveal .38s ease both}
+#JuneProduct-{{ section.id }} .jmp__name-field{display:flex;align-items:center;gap:9px;margin-top:8px;padding:0 12px;border:1.5px solid var(--jmp-border);border-radius:12px;background:#fff}
+#JuneProduct-{{ section.id }} .jmp__name-field span{color:var(--jmp-accent);animation:jmp-spark 1.8s ease-in-out infinite}
+#JuneProduct-{{ section.id }} .jmp__name input{width:100%;height:46px;border:0;outline:0;background:transparent}
+#JuneProduct-{{ section.id }} .jmp__name small{display:block;margin-top:6px;color:var(--jmp-muted);font-size:10px;text-align:right}
+#JuneProduct-{{ section.id }} .jmp__finish{display:grid;grid-template-columns:112px 1fr;gap:10px;align-items:end;margin-top:18px}
+#JuneProduct-{{ section.id }} .jmp__quantity{display:block;margin:0}
+#JuneProduct-{{ section.id }} .jmp__quantity>span{display:grid;grid-template-columns:34px 1fr 34px;height:52px;margin-top:8px;border:1.5px solid var(--jmp-border);border-radius:14px;overflow:hidden}
+#JuneProduct-{{ section.id }} .jmp__quantity button,#JuneProduct-{{ section.id }} .jmp__quantity input{min-width:0;border:0;background:#fff;text-align:center;font-weight:800}
+#JuneProduct-{{ section.id }} .jmp__quantity input{width:100%;appearance:textfield}
+#JuneProduct-{{ section.id }} .jmp__atc{width:100%;min-height:52px;padding:8px 18px;border:1px solid var(--jmp-ink);border-radius:999px;background:var(--jmp-accent);color:var(--jmp-ink);font-family:{{ action_font.family }},sans-serif;font-weight:900;box-shadow:0 3px 0 var(--jmp-ink)}
+#JuneProduct-{{ section.id }} .jmp__link-action{display:flex;align-items:center;justify-content:space-between;margin-top:20px;text-decoration:none}
+#JuneProduct-{{ section.id }} .jmp__atc small{display:block;margin-top:2px;font-size:9px;font-weight:700}
+#JuneProduct-{{ section.id }} .jmp__atc:disabled,#JuneProduct-{{ section.id }} .jmp__sticky button:disabled{opacity:.45;cursor:not-allowed}
+#JuneProduct-{{ section.id }} .jmp__info{padding:58px max(24px,calc((100% - 1180px)/2));background:var(--jmp-surface)}
+#JuneProduct-{{ section.id }} .jmp__tablist{display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid var(--jmp-border)}
+#JuneProduct-{{ section.id }} .jmp__tablist button{padding:14px 16px;border:0;border-bottom:3px solid transparent;background:transparent;white-space:nowrap;font-weight:800}
+#JuneProduct-{{ section.id }} .jmp__tablist button[aria-selected=true]{border-color:var(--jmp-accent)}
+#JuneProduct-{{ section.id }} .jmp__panel{max-width:880px;padding:24px 4px 4px;font-size:14px;line-height:1.7}
+#JuneProduct-{{ section.id }} .jmp__panel.rte :is(h1,h2,h3){font-family:{{ heading_font.family }},sans-serif;line-height:1.08;letter-spacing:-.035em}
+#JuneProduct-{{ section.id }} .jmp__panel.rte :is(img,video,iframe){max-width:100%;height:auto}
+#JuneProduct-{{ section.id }} .jmp__panel dl{margin:0}
+#JuneProduct-{{ section.id }} .jmp__panel dl div{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:14px 0;border-bottom:1px solid var(--jmp-border)}
+#JuneProduct-{{ section.id }} .jmp__panel dt{font-weight:800}
+#JuneProduct-{{ section.id }} .jmp__panel dd{margin:0;color:var(--jmp-muted)}
+#JuneProductDiscovery-{{ section.id }}{--jmp-ink:#171717;--jmp-bg:#fff;--jmp-surface:#f5f5f3;--jmp-muted:#656565;--jmp-border:#dadada;--jmp-accent:#f56a28;width:min(1680px,calc(100% - 48px));margin:auto;padding:64px 0 112px;color:var(--jmp-ink);font-family:{{ copy_font.family }},sans-serif}
+#JuneProductDiscovery-{{ section.id }} .jmp__rail+ .jmp__rail{margin-top:64px}
+#JuneProductDiscovery-{{ section.id }} .jmp__rail h2{margin:0 0 22px;font:800 clamp(24px,3vw,38px)/1.05 {{ heading_font.family }},sans-serif;letter-spacing:-.04em}
+#JuneProductDiscovery-{{ section.id }} .jmp__cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+#JuneProductDiscovery-{{ section.id }} .jmp-card{min-width:0;color:inherit;text-decoration:none}
+#JuneProductDiscovery-{{ section.id }} .jmp-card__media{position:relative;aspect-ratio:1;margin:0;overflow:hidden;border:1px solid var(--jmp-border);border-radius:18px;background:var(--jmp-surface)}
+#JuneProductDiscovery-{{ section.id }} .jmp-card__media img,#JuneProductDiscovery-{{ section.id }} .jmp-card__media svg{display:block;width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+#JuneProductDiscovery-{{ section.id }} .jmp-card:hover .jmp-card__media img{transform:scale(1.025)}
+#JuneProductDiscovery-{{ section.id }} .jmp-card__copy{display:grid;gap:7px;padding:13px 3px 0}
+#JuneProductDiscovery-{{ section.id }} .jmp-card__copy strong{display:-webkit-box;min-height:2.8em;overflow:hidden;font-size:14px;line-height:1.4;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+#JuneProductDiscovery-{{ section.id }} .jmp-card__copy span{font-size:15px;font-weight:900}
+#JuneProduct-{{ section.id }} .jmp__sticky,#JuneProduct-{{ section.id }} .jmp__sticky-spacer{display:none}
+@keyframes jmp-reveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes jmp-spark{50%{transform:rotate(22deg) scale(1.22)}}
+@media(max-width:749px){
+ #JuneProduct-{{ section.id }} .jmp__purchase{width:100%;padding:0 0 28px;display:block}
+ #JuneProduct-{{ section.id }} .jmp__gallery{padding:0 14px}
+ #JuneProduct-{{ section.id }} .jmp__stage{aspect-ratio:1;border-width:0 0 1px;border-radius:0}
+ #JuneProduct-{{ section.id }} .jmp__thumbs{padding:10px 0 5px}
+ #JuneProduct-{{ section.id }} .jmp__thumb{flex-basis:58px;width:58px;height:58px;border-radius:9px}
+ #JuneProduct-{{ section.id }} .jmp__summary{position:static;padding:14px 16px 0}
+ #JuneProduct-{{ section.id }} h1{font-size:{{ type_block.settings.heading_size_mobile | default: 27 }}px;line-height:1.04}
+ #JuneProduct-{{ section.id }} .jmp__subtitle{display:-webkit-box;margin-top:7px;font-size:12px;line-height:1.4;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ #JuneProduct-{{ section.id }} .jmp__rating{margin-top:7px;font-size:11px}
+ #JuneProduct-{{ section.id }} .jmp__price{margin:10px 0 12px}
+ #JuneProduct-{{ section.id }} .jmp__price strong{font-size:23px}
+ #JuneProduct-{{ section.id }} .jmp__option{margin-bottom:11px}
+ #JuneProduct-{{ section.id }} .jmp__choice,#JuneProduct-{{ section.id }} .jmp__option select{min-height:40px;padding:8px 12px}
+ #JuneProduct-{{ section.id }} .jmp__name{margin:12px 0;padding:11px}
+ #JuneProduct-{{ section.id }} .jmp__name input{height:41px}
+ #JuneProduct-{{ section.id }} .jmp__finish{grid-template-columns:1fr;margin-top:12px}
+ #JuneProduct-{{ section.id }} .jmp__desktop-buy{display:none}
+ #JuneProduct-{{ section.id }} .jmp__quantity{width:118px}
+ #JuneProduct-{{ section.id }} .jmp__quantity>span{height:42px;margin-top:5px}
+ #JuneProduct-{{ section.id }} .jmp__info{padding:34px 16px 40px}
+ #JuneProduct-{{ section.id }} .jmp__tablist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:0 -16px;padding:0 12px;overflow:visible}
+ #JuneProduct-{{ section.id }} .jmp__tablist button{display:grid;min-width:0;min-height:52px;padding:9px 4px;place-items:center;white-space:normal;text-align:center;font-size:10.5px;line-height:1.15}
+ #JuneProduct-{{ section.id }} .jmp__panel{padding-top:18px;font-size:13px}
+ #JuneProduct-{{ section.id }} .jmp__panel dl div{grid-template-columns:1fr;gap:4px}
+ #JuneProductDiscovery-{{ section.id }}{width:100%;padding:48px 0 104px}
+ #JuneProductDiscovery-{{ section.id }} .jmp__rail+ .jmp__rail{margin-top:48px}
+ #JuneProductDiscovery-{{ section.id }} .jmp__rail h2{padding:0 16px;font-size:26px}
+ #JuneProductDiscovery-{{ section.id }} .jmp__cards{display:flex;gap:12px;overflow-x:auto;padding:0 16px 14px;scroll-snap-type:x mandatory;scrollbar-width:none}
+ #JuneProductDiscovery-{{ section.id }} .jmp-card{flex:0 0 min(72vw,285px);scroll-snap-align:start}
+ #JuneProductDiscovery-{{ section.id }} .jmp-card__media{border-radius:15px}
+ #JuneProductDiscovery-{{ section.id }} .jmp-card__copy{padding:11px 2px 0}
+ #JuneProductDiscovery-{{ section.id }} .jmp-card__copy strong{font-size:13px}
+ #JuneProduct-{{ section.id }} .jmp__sticky{position:fixed;left:0;right:0;bottom:0;z-index:48;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:10px 12px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--jmp-border);background:#ffffffee;box-shadow:0 -10px 30px #0002;backdrop-filter:blur(14px);transition:transform .25s ease}
+ #JuneProduct-{{ section.id }} .jmp__sticky.is-hidden{transform:translateY(110%)}
+ #JuneProduct-{{ section.id }} .jmp__sticky>div{min-width:82px}
+ #JuneProduct-{{ section.id }} .jmp__sticky strong,#JuneProduct-{{ section.id }} .jmp__sticky small{display:block}
+ #JuneProduct-{{ section.id }} .jmp__sticky strong{font-size:16px;font-weight:900}
+ #JuneProduct-{{ section.id }} .jmp__sticky button,#JuneProduct-{{ section.id }} .jmp__sticky-link{display:flex;min-height:50px;padding:7px 10px 7px 16px;align-items:center;justify-content:space-between;border:1px solid var(--jmp-ink);border-radius:999px;background:var(--jmp-accent);color:var(--jmp-ink);font:900 14px/1 {{ action_font.family }},sans-serif;box-shadow:0 3px 0 var(--jmp-ink);text-decoration:none}
+ #JuneProduct-{{ section.id }} .jmp__sticky-label{min-width:0;text-align:center;flex:1}
+ #JuneProduct-{{ section.id }} .jmp__sticky-label b{display:block;font:900 14px/1.05 {{ action_font.family }},sans-serif}
+ #JuneProduct-{{ section.id }} .jmp__sticky-label small{margin-top:3px;color:inherit;font-size:7.5px;font-weight:700;line-height:1.15}
+ #JuneProduct-{{ section.id }} .jmp__sticky button span:last-child,#JuneProduct-{{ section.id }} .jmp__sticky-link span:last-child{float:right;display:grid;width:28px;height:28px;margin-left:12px;place-items:center;border-radius:50%;background:var(--jmp-ink);color:#fff}
+ #JuneProduct-{{ section.id }} .jmp__sticky-spacer{display:block;height:76px}
+}
+@media(max-width:749px) and (min-height:820px){#JuneProduct-{{ section.id }} .jmp__summary{padding-top:16px}#JuneProduct-{{ section.id }} .jmp__stage{max-height:min(100vw,430px)}}
+@media(prefers-reduced-motion:reduce){#JuneProduct-{{ section.id }} *,#JuneProduct-{{ section.id }} *::before,#JuneProduct-{{ section.id }} *::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
+
+<script>
+(()=>{document.documentElement.classList.add('june-product-page');const root=document.getElementById('JuneProduct-{{ section.id }}');if(!root||root.dataset.ready)return;root.dataset.ready='true';
+const variants={{ product.variants | json }};const money={{ shop.money_format | json }};const fmt=c=>{if(window.Shopify&&Shopify.formatMoney)return Shopify.formatMoney(c,money);return (c/100).toLocaleString(undefined,{style:'currency',currency:{{ cart.currency.iso_code | default: shop.currency | json }}})};
+const slides=[...root.querySelectorAll('[data-jmp-slide]')],thumbs=[...root.querySelectorAll('[data-jmp-thumb]')],count=root.querySelector('[data-jmp-count]');let active=0;
+function show(i){active=Math.max(0,Math.min(i,slides.length-1));slides.forEach((s,n)=>{s.hidden=n!==active;s.classList.toggle('is-active',n===active)});thumbs.forEach((t,n)=>{const on=n===active;t.classList.toggle('is-active',on);t.setAttribute('aria-pressed',String(on))});if(count)count.textContent=`${active+1} / ${slides.length}`;const thumb=thumbs[active],track=thumb?.parentElement;if(thumb&&track){const left=thumb.offsetLeft-(track.clientWidth-thumb.offsetWidth)/2;track.scrollTo({left,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}}
+thumbs.forEach(t=>t.addEventListener('click',()=>show(Number(t.dataset.jmpThumb))));let sx=0;root.querySelector('[data-jmp-stage]')?.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});root.querySelector('[data-jmp-stage]')?.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>45)show(active+(dx<0?1:-1))},{passive:true});
+const optionGroups=[...root.querySelectorAll('[data-jmp-option]')];function values(){return optionGroups.map(g=>g.querySelector('[data-jmp-option-select]')?.value||g.querySelector('[data-jmp-option-value].is-active')?.dataset.jmpOptionValue)}
+function sync(){const selected=variants.find(v=>v.options.every((o,i)=>o===values()[i]))||variants[0];if(!selected)return;root.querySelector('[data-jmp-variant-id]').value=selected.id;const price=fmt(selected.price),compare=fmt(selected.compare_at_price||0);root.querySelector('[data-jmp-price]').textContent=price;root.querySelector('[data-jmp-sticky-price]').textContent=price;const del=root.querySelector('[data-jmp-compare]');del.hidden=!(selected.compare_at_price>selected.price);if(!del.hidden)del.textContent=compare;const preorder={{ preorder | json }}||(selected.inventory_policy==='continue'&&(selected.inventory_quantity||0)<=0);const label=selected.available?(preorder?'Pre-order':'Add to bag'):'Sold out';root.querySelectorAll('[data-jmp-cta],[data-jmp-sticky-cta]').forEach(el=>el.textContent=label);root.querySelectorAll('button[type=submit]').forEach(b=>b.disabled=!selected.available);root.querySelector('[data-jmp-purchase-type]').value=preorder?'Pre-order':'Standard order';const dispatch=root.querySelector('[data-jmp-sticky-dispatch]');if(dispatch)dispatch.hidden=!preorder;const sku=root.querySelector('[data-jmp-sku]');if(sku)sku.textContent=selected.sku||sku.textContent;const nameWrap=root.querySelector('[data-jmp-name]'),nameInput=nameWrap?.querySelector('input');if(nameWrap&&nameInput){const personalized={{ product.has_only_default_variant | json }}||/name|personal/i.test(selected.title);nameWrap.hidden=!personalized;nameInput.disabled=!personalized;nameInput.required=personalized;if(!personalized)nameInput.value=''}if(selected.featured_media){const mediaId=String(selected.featured_media.id);const i=slides.findIndex(s=>String(s.dataset.mediaId)===mediaId);if(i>=0)show(i)}}
+root.querySelectorAll('[data-jmp-option-value]').forEach(b=>b.addEventListener('click',()=>{const g=b.closest('[data-jmp-option]');g.querySelectorAll('[data-jmp-option-value]').forEach(x=>{const on=x===b;x.classList.toggle('is-active',on);x.setAttribute('aria-pressed',String(on))});sync()}));root.querySelectorAll('[data-jmp-option-select]').forEach(s=>s.addEventListener('change',sync));
+const qty=root.querySelector('[name=quantity]');root.querySelectorAll('[data-jmp-quantity]').forEach(b=>b.addEventListener('click',()=>{qty.value=Math.max(1,Number(qty.value||1)+(b.dataset.jmpQuantity==='plus'?1:-1));qty.dispatchEvent(new Event('change',{bubbles:true}))}));
+const name=root.querySelector('[name="properties[Name]"]'),nameCount=root.querySelector('[data-jmp-name-count]');name?.addEventListener('input',()=>nameCount.textContent=name.value.length);
+const tabs=[...root.querySelectorAll('[role=tab]')];tabs.forEach((tab,i)=>tab.addEventListener('click',()=>{tabs.forEach((t,n)=>{const on=n===i;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on})}));root.querySelector('[role=tablist]')?.addEventListener('keydown',e=>{const i=tabs.indexOf(document.activeElement);if(i<0||!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();tabs[(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length].click();tabs[(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length].focus()});
+const sticky=root.querySelector('[data-jmp-sticky]'),finish=root.querySelector('.jmp__finish,.jmp__link-action'),footer=document.querySelector('footer,.hdt-footer');let footerVisible=false,ticking=false;function updateSticky(){ticking=false;if(!sticky||!finish)return;const passed=finish.getBoundingClientRect().bottom<0;sticky.classList.toggle('is-hidden',!passed||footerVisible)}if(sticky&&finish){addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(updateSticky)}},{passive:true});addEventListener('resize',updateSticky,{passive:true});if(footer)new IntersectionObserver(entries=>{footerVisible=entries[0].isIntersecting;updateSticky()},{threshold:.01}).observe(footer);updateSticky()}const discovery=root.querySelector('[data-jmp-discovery]');const placeDiscovery=()=>{const main=root.closest('main')||document.querySelector('main');if(discovery&&main)main.append(discovery)};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',placeDiscovery,{once:true});else placeDiscovery();sync();})();
+</script>
+
+{% schema %}
+{
+  "name": "June mobile-first product",
+  "tag": "section",
+  "class": "section-june-mobile-product",
+  "settings": [
+    {"type":"text","id":"preorder_badge","label":"Pre-order badge","default":"Pre-order"},
+    {"type":"text","id":"dispatch_fallback","label":"Dispatch fallback","default":"Dispatch date shown after confirmation"},
+    {"type":"text","id":"name_label","label":"Personalisation label","default":"Add your name"},
+    {"type":"text","id":"name_placeholder","label":"Personalisation placeholder","default":"Type the name exactly as it should appear"},
+    {"type":"text","id":"name_hint","label":"Personalisation hint","default":"We’ll use this spelling for your order."},
+    {"type":"range","id":"name_limit","label":"Name character limit","min":8,"max":40,"step":1,"default":30},
+    {"type":"textarea","id":"specs_fallback","label":"Specifications fallback","default":"Additional product details are listed in the description. Contact us before ordering if you need a specific measurement confirmed."},
+    {"type":"textarea","id":"shipping_fallback","label":"Delivery fallback","default":"Delivery timing is shown at checkout. Personalised and made-to-order items may require additional preparation time."},
+    {"type":"checkbox","id":"show_discovery","label":"Show product discovery","default":true},
+    {"type":"collection","id":"bestseller_collection","label":"Bestseller collection"},
+    {"type":"text","id":"bestseller_heading","label":"Bestseller heading","default":"June favourites"}
+    ,{"type":"select","id":"action_mode","label":"Primary action","default":"product","options":[{"value":"product","label":"Add to cart"},{"value":"link","label":"Open configurator"}]}
+    ,{"type":"url","id":"action_link","label":"Configurator link"}
+    ,{"type":"text","id":"action_label","label":"Configurator button label","default":"Start designing"}
+  ],
+  "blocks": [
+    {"type":"typography","name":"Typography controls","limit":1,"settings":[
+      {"type":"header","content":"Heading"},{"type":"font_picker","id":"heading_font","label":"Font family","default":"poppins_n4"},{"type":"range","id":"heading_weight","label":"Weight","min":400,"max":900,"step":100,"default":800},{"type":"range","id":"heading_size_desktop","label":"Desktop size","min":30,"max":72,"step":1,"default":44},{"type":"range","id":"heading_size_mobile","label":"Mobile size","min":22,"max":40,"step":1,"default":27},{"type":"range","id":"heading_spacing","label":"Letter spacing","min":-0.1,"max":0.1,"step":0.1,"default":0},{"type":"range","id":"heading_line","label":"Line height","min":0.9,"max":1.4,"step":0.1,"default":1},
+      {"type":"header","content":"Supporting copy"},{"type":"font_picker","id":"copy_font","label":"Font family","default":"poppins_n4"},{"type":"range","id":"copy_weight","label":"Weight","min":300,"max":700,"step":100,"default":400},{"type":"range","id":"copy_size_desktop","label":"Desktop size","min":12,"max":22,"step":1,"default":15},{"type":"range","id":"copy_size_mobile","label":"Mobile size","min":11,"max":18,"step":1,"default":13},{"type":"range","id":"copy_spacing","label":"Letter spacing","min":-0.1,"max":0.1,"step":0.1,"default":0},{"type":"range","id":"copy_line","label":"Line height","min":1,"max":2,"step":0.1,"default":1.5},
+      {"type":"header","content":"Buttons"},{"type":"font_picker","id":"action_font","label":"Font family","default":"poppins_n4"},{"type":"range","id":"action_weight","label":"Weight","min":500,"max":900,"step":100,"default":800},{"type":"range","id":"action_size_desktop","label":"Desktop size","min":12,"max":20,"step":1,"default":15},{"type":"range","id":"action_size_mobile","label":"Mobile size","min":12,"max":18,"step":1,"default":14},{"type":"range","id":"action_spacing","label":"Letter spacing","min":-0.1,"max":0.1,"step":0.1,"default":0},{"type":"range","id":"action_line","label":"Line height","min":1,"max":1.6,"step":0.1,"default":1.2}
+    ]}
+  ],
+  "presets": [{"name":"June mobile-first product","blocks":[{"type":"typography"}]}]
+}
+{% endschema %}
+

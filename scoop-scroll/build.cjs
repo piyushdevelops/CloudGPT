@@ -1,0 +1,16 @@
+const fs=require('fs'),path=require('path');const root=__dirname;const read=p=>fs.readFileSync(path.join(root,p),'utf8');const write=(p,v)=>{fs.mkdirSync(path.dirname(path.join(root,p)),{recursive:true});fs.writeFileSync(path.join(root,p),v);};
+const range=(id,label,min,max,step,def,unit)=>({type:'range',id,label,min,max,step,default:def,...unit?{unit}:{}});
+const settings=[{type:'checkbox',id:'desktop',label:'Enable on desktop',default:true},{type:'checkbox',id:'mobile',label:'Enable on mobile',default:true},{type:'checkbox',id:'motion',label:'Animate shape transition',default:true},range('threshold','Scroll distance before compacting',30,250,10,70,'px'),range('duration','Transition duration',200,1200,20,640,'ms'),range('width_desktop','Desktop pill width',140,360,5,185,'px'),range('width_mobile','Mobile pill width',100,220,2,148,'px'),range('height_desktop','Desktop pill height',32,60,2,40,'px'),range('height_mobile','Mobile pill height',32,60,2,38,'px'),range('offset','Floating gap below original top',0,24,2,10,'px'),range('radius','Pill corner radius',12,30,2,24,'px'),range('font_desktop','Desktop compact logo size',12,24,1,17,'px'),range('font_mobile','Mobile compact logo size',10,20,1,13,'px'),{type:'paragraph',content:'Uses the existing logo, font family, colours and placement. At the top, your original scoop dimensions return. Search and cart retain their separate shared size. Mobile width is capped to leave room for the icons.'}];
+const block={type:'scoop_scroll',name:'Scoop scroll island',limit:1,settings};let h=read('before/sections/my-header.liquid');if(h.includes('"type": "scoop_scroll"'))throw Error('Already installed');const m=h.match(/{% schema %}([\s\S]*?){% endschema %}/);let schema=m[1].replace(/"max_blocks"\s*:\s*\d+/,'"max_blocks": 12').replace(/"blocks"\s*:\s*\[/,'"blocks": [\n'+JSON.stringify(block,null,2)+',').replace(/("presets"\s*:\s*\[[\s\S]*?"blocks"\s*:\s*\[)/,'$1\n{"type":"scoop_scroll"},');h=h.replace(m[0],'{% schema %}'+schema+'{% endschema %}');h=h.replace('</tjs-premium-header>',`</tjs-premium-header>
+{% assign scoop_scroll = section.blocks | where: 'type', 'scoop_scroll' | first %}
+{% render 'june-scoop-scroll', section: section, block: scoop_scroll %}`);write('theme/sections/my-header.liquid',h);
+const raw=read('before/sections/header-group.json'),i=raw.indexOf('{'),g=JSON.parse(raw.slice(i)),header=Object.values(g.sections).find(s=>s.type==='my-header');header.blocks.june_scoop_scroll={type:block.type,settings:Object.fromEntries(settings.filter(s=>'default'in s).map(s=>[s.id,s.default]))};header.block_order.push('june_scoop_scroll');write('theme/sections/header-group.json',raw.slice(0,i)+JSON.stringify(g,null,2)+'\n');
+write('theme/snippets/june-scoop-scroll.liquid',`{% doc %}
+ @param {section} section - Header section.
+ @param {block} block - Optional scroll island controls.
+{% enddoc %}
+{% if block != blank %}
+<script src="{{ 'june-scoop-scroll.js' | asset_url }}" defer="defer"></script>
+<june-scoop-scroll data-header="TjsPremiumHeader-{{ section.id }}" {{ block.shopify_attributes }} hidden><script type="application/json">{${settings.filter(s=>'default'in s).map(s=>`"${s.id}":{{ block.settings.${s.id} | json }}`).join(',')}}</script></june-scoop-scroll>
+{% endif %}
+`);console.log('Scroll island configured.');

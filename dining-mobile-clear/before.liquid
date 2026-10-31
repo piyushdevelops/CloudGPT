@@ -1,0 +1,898 @@
+{% if section.settings.use_master_palette == false %}
+{% style %}#shopify-section-{{ section.id }}{--june-bg:initial;--june-surface:initial;--june-ink:initial;--june-muted:initial;--june-accent:initial;--june-on-accent:initial;--june-border:initial;--june-dark:initial;--june-on-dark:initial;}{% endstyle %}
+{% endif %}
+{% liquid
+ assign typography = section.blocks | where: 'type', 'typography' | first
+ assign type = typography.settings
+ assign pieces = section.blocks | where: 'type', 'piece'
+ assign count = 0
+ for block in pieces
+  if block.settings.product != blank
+   assign count = count | plus: 1
+  endif
+ endfor
+%}
+{% style %}
+#JuneTable-{{ section.id }}{--jt-bg:var(--june-bg,{{ section.settings.background }});--jt-ink:var(--june-ink,{{ section.settings.ink }});--jt-accent:var(--june-accent,{{ section.settings.accent }});--jt-duration:{{ section.settings.duration }}ms;}
+{% assign face = type.heading_font | default: section.settings.fallback_font %}{% assign weight = type.heading_weight | default: 900 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneTable-{{ section.id }}{--jt-heading-font:{{ face.family }},{{ face.fallback_families }};--jt-heading-weight:{{ type.heading_weight | default: 900 }};--jt-heading-size:{{ type.heading_size | default: 62 }}px;--jt-heading-mobile:{{ type.heading_mobile | default: 42 }}px;--jt-heading-tracking:{{ type.heading_tracking | default: -2 | divided_by: 100.0 }}em;--jt-heading-leading:{{ type.heading_leading | default: 105 | divided_by: 100.0 }};}
+{% assign face = type.title_font | default: section.settings.fallback_font %}{% assign weight = type.title_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneTable-{{ section.id }}{--jt-title-font:{{ face.family }},{{ face.fallback_families }};--jt-title-weight:{{ type.title_weight | default: 600 }};--jt-title-size:{{ type.title_size | default: 26 }}px;--jt-title-mobile:{{ type.title_mobile | default: 23 }}px;--jt-title-tracking:{{ type.title_tracking | default: -2 | divided_by: 100.0 }}em;--jt-title-leading:{{ type.title_leading | default: 120 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign weight = type.body_weight | default: 400 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneTable-{{ section.id }}{--jt-body-font:{{ face.family }},{{ face.fallback_families }};--jt-body-weight:{{ type.body_weight | default: 400 }};--jt-body-size:{{ type.body_size | default: 18 }}px;--jt-body-mobile:{{ type.body_mobile | default: 16 }}px;--jt-body-tracking:{{ type.body_tracking | default: -1 | divided_by: 100.0 }}em;--jt-body-leading:{{ type.body_leading | default: 150 | divided_by: 100.0 }};}
+{% assign face = type.button_font | default: section.settings.fallback_font %}{% assign weight = type.button_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneTable-{{ section.id }}{--jt-button-font:{{ face.family }},{{ face.fallback_families }};--jt-button-weight:{{ type.button_weight | default: 600 }};--jt-button-size:{{ type.button_size | default: 14 }}px;--jt-button-mobile:{{ type.button_mobile | default: 14 }}px;--jt-button-tracking:{{ type.button_tracking | default: -1 | divided_by: 100.0 }}em;--jt-button-leading:{{ type.button_leading | default: 130 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign bold = face | font_modify: 'weight', '700' %}{{ bold | font_face: font_display: 'swap' }}
+{% endstyle %}
+
+{% assign scenes = section.blocks | where: 'type', 'scene' %}
+{% assign fallback = pieces[1].settings.product %}
+{% assign base_image = section.settings.scene_image | default: fallback.featured_image %}
+<june-dining-scene id="JuneTable-{{ section.id }}" class="jds" data-autoplay="{{ section.settings.autoplay }}" data-interval="{{ section.settings.interval | default: 4 | times: 1000 }}" data-editor="{{ request.design_mode }}" style="--jd-white:{{ section.settings.scene_ink }};--jd-shade:{{ section.settings.scene_shade | divided_by: 100.0 }}">
+{% assign visible_count = 0 %}
+{% for scene_index in (0..scenes.size) %}
+ {% assign valid = false %}
+ {% if scene_index == 0 %}
+  {% assign scene_image = base_image %}{% assign mobile_image = section.settings.scene_mobile %}{% assign initial = section.settings.initial | minus: 1 %}{% assign scene_title = 'The table edit' %}{% assign scene_id = 'base' %}
+  {% if count > 0 and scene_image != blank %}{% assign valid = true %}{% endif %}
+ {% else %}
+  {% assign block_index = scene_index | minus: 1 %}{% assign scene = scenes[block_index] %}{% assign scene_image = scene.settings.image %}{% assign mobile_image = scene.settings.mobile %}{% assign initial = scene.settings.initial | minus: 1 %}{% assign scene_title = scene.settings.title %}{% assign scene_id = scene.id %}
+  {% if scene_image != blank %}{% if scene.settings.product_1 != blank or scene.settings.product_2 != blank or scene.settings.product_3 != blank %}{% assign valid = true %}{% endif %}{% endif %}
+ {% endif %}
+ {% if valid %}
+ <article class="jds__stage" data-scene data-initial="{{ initial }}" data-block="{{ scene_id }}" data-title="{{ scene_title | escape }}" aria-label="{{ scene_title | escape }}" {% if visible_count > 0 %}hidden{% endif %} {% if scene_index > 0 %}{{ scene.shopify_attributes }}{% endif %}>
+  <header class="jds__header"><p class="jds__eyebrow">{{ section.settings.eyebrow | escape }}</p><h2 class="jds__heading">{{ section.settings.heading | escape | replace: '. ', '.<br>' }}</h2><div class="jds__intro">{{ section.settings.body }}</div></header>
+  <div class="jds__photo">
+   <picture>{% if mobile_image != blank %}<source media="(max-width:700px)" srcset="{{ mobile_image | image_url: width: 900 }}">{% endif %}{{ scene_image | image_url: width: 1800 | image_tag: widths: '500,900,1400,1800', sizes: '(max-width:700px) 100vw, 56vw', loading: 'lazy', class: 'jds__image' }}</picture>
+   <span class="jds__cue">{{ section.settings.scene_hint | escape }}</span>
+   {% for n in (1..3) %}
+    {% assign pi = n | minus: 1 %}
+    {% if scene_index == 0 %}
+     {% assign piece = pieces[pi] %}{% assign product = piece.settings.product %}{% assign label = piece.settings.label %}
+     {% case n %}{% when 1 %}{% assign dx = 18 %}{% assign dy = 88 %}{% assign dmy = 88 %}{% when 2 %}{% assign dx = 47 %}{% assign dy = 50 %}{% assign dmy = 50 %}{% when 3 %}{% assign dx = 22 %}{% assign dy = 26 %}{% assign dmy = 33 %}{% endcase %}
+     {% assign x = dx %}{% assign y = dy %}{% assign mx = dx %}{% assign my = dmy %}{% if piece.settings.custom_position %}{% assign x = piece.settings.x %}{% assign y = piece.settings.y %}{% assign mx = piece.settings.mx %}{% assign my = piece.settings.my %}{% endif %}
+    {% else %}
+     {% assign key = 'product_' | append: n %}{% assign product = scene.settings[key] %}{% assign key = 'label_' | append: n %}{% assign label = scene.settings[key] | default: product.title %}
+     {% assign key = 'x_' | append: n %}{% assign x = scene.settings[key] %}{% assign key = 'y_' | append: n %}{% assign y = scene.settings[key] %}{% assign key = 'mx_' | append: n %}{% assign mx = scene.settings[key] %}{% assign key = 'my_' | append: n %}{% assign my = scene.settings[key] %}
+    {% endif %}
+    {% if product != blank %}<button type="button" class="jds__spot" data-product-select="{{ pi }}" style="--x:{{ x }}%;--y:{{ y }}%;--mx:{{ mx }}%;--my:{{ my }}%" aria-label="{{ label | escape }}" aria-controls="DiningProduct-{{ section.id }}-{{ scene_index }}-{{ pi }}" aria-pressed="false" {% if scene_index == 0 %}data-piece-block="{{ piece.id }}" {{ piece.shopify_attributes }}{% endif %}><span aria-hidden="true">+</span><span class="jds__label">{{ label | escape }}</span></button>{% endif %}
+   {% endfor %}
+  </div>
+  <div class="jds__buying" aria-live="off">
+  {% for n in (1..3) %}{% assign pi = n | minus: 1 %}
+   {% if scene_index == 0 %}{% assign piece = pieces[pi] %}{% assign product = piece.settings.product %}{% assign product_name = piece.settings.name | default: product.title %}
+   {% else %}{% assign key = 'product_' | append: n %}{% assign product = scene.settings[key] %}{% assign product_name = product.title %}{% endif %}
+   {% if product != blank %}<div class="jds__product" data-product="{{ pi }}" id="DiningProduct-{{ section.id }}-{{ scene_index }}-{{ pi }}" {% unless pi == initial %}hidden{% endunless %}>
+    <h3>{{ product_name | escape }}</h3><p class="jds__price">{% if product.price_varies %}<small>From </small>{% endif %}{% render 'june-price', amount: product.price %}</p>
+    <a class="jds__buy" href="{{ product.url }}">{{ section.settings.shop | escape }}<span class="jds__arrow" aria-hidden="true">→</span></a><p class="jds__note">{% unless product.available %}Sold out. {% endunless %}Sold separately.</p>
+   </div>{% endif %}
+  {% endfor %}
+  </div>
+ </article>{% assign visible_count = visible_count | plus: 1 %}
+ {% endif %}
+{% endfor %}
+{% if visible_count == 0 and request.design_mode %}<p>Add an image and products to a Table scene block.</p>{% endif %}
+<div class="jds__footer">{% if section.settings.collection != blank %}<a class="jds__all" href="{{ section.settings.collection.url }}">{{ section.settings.all | escape }} ↗</a>{% endif %}
+{% if visible_count > 1 %}<div class="jds__controls" role="group" aria-label="Table scenes"><button type="button" data-prev aria-label="Previous scene">←</button><span data-count>1 / {{ visible_count }}</span><button type="button" data-next aria-label="Next scene">→</button><button type="button" data-play aria-label="Play slideshow">Play</button></div>{% endif %}</div>
+</june-dining-scene>
+
+{% stylesheet %}
+.jds{display:block;max-width:1680px;margin:auto;color:var(--jt-ink);background:var(--jt-bg);font-family:var(--jt-body-font);font-weight:var(--jt-body-weight);font-size:var(--jt-body-size);letter-spacing:var(--jt-body-tracking);line-height:var(--jt-body-leading)}.jds *{box-sizing:border-box}.jds [hidden]{display:none!important}.jds h2,.jds h3,.jds p{margin:0;color:inherit}.jds a{color:inherit}.jds button,.jds a{-webkit-tap-highlight-color:transparent}.jds button{cursor:pointer;font:inherit}.jds :focus-visible{outline:3px solid var(--jt-accent);outline-offset:4px}.jds__stage{display:grid;grid-template-columns:44% 56%;grid-template-rows:1fr 1fr;aspect-ratio:16/9;position:relative}.jds__header{grid-column:1;grid-row:1;padding:7% 12% 0 7%}.jds__eyebrow{font:700 12px var(--jt-button-font);text-transform:uppercase;letter-spacing:.08em}.jds .jds__heading{font-family:var(--jt-heading-font);font-weight:var(--jt-heading-weight);font-size:var(--jt-heading-size);line-height:var(--jt-heading-leading);letter-spacing:var(--jt-heading-tracking);margin:20px 0}.jds__intro{font-size:var(--jt-body-size)}.jds__photo{grid-column:2;grid-row:1/3;position:relative;min-width:0;min-height:0}.jds__photo picture,.jds__image{width:100%;height:100%;display:block}.jds__image{object-fit:cover}.jds__cue{position:absolute;top:18px;left:18px;padding:8px 13px;background:var(--jt-bg);border-radius:30px;font-size:12px;font-weight:600}.jds__spot{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);width:44px;height:44px;padding:0;border:1px solid #ffffffaa;border-radius:50%;background:#ffffff33;color:#fff;display:grid;place-items:center;z-index:2;transition:background .2s,box-shadow .2s}.jds__spot>span:first-child{font-size:23px;line-height:1}.jds__spot[aria-pressed=true]{background:var(--jt-accent);color:var(--june-on-accent,var(--jt-ink));box-shadow:0 0 0 6px #ffffff44}.jds__label{position:absolute;bottom:50px;white-space:nowrap;background:var(--jt-bg);color:var(--jt-ink);padding:5px 9px;border-radius:20px;font:600 11px var(--jt-button-font);opacity:0;pointer-events:none}.jds__spot[aria-pressed=true] .jds__label,.jds__spot:focus-visible .jds__label,.jds__spot:hover .jds__label{opacity:1}.jds__buying{grid-column:1;grid-row:2;align-self:end;padding:20px 12% 7% 7%;min-width:0}.jds__product h3{font:var(--jt-title-weight) calc(var(--jt-title-size)*.8)/var(--jt-title-leading) var(--jt-title-font);letter-spacing:var(--jt-title-tracking)}.jds .jds__price{font-size:34px;font-weight:900;line-height:1.2;margin:12px 0 18px}.jds__price small{font-size:12px;font-weight:400}.jds__buy{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:8px 10px 8px 18px;border:1.5px solid var(--jt-ink);border-radius:40px;background:var(--jt-accent);text-decoration:none;box-shadow:-2px 1px var(--jt-ink);font-family:var(--jt-button-font);font-weight:var(--jt-button-weight);font-size:var(--jt-button-size);letter-spacing:var(--jt-button-tracking);line-height:var(--jt-button-leading);color:var(--june-on-accent,var(--jt-ink))!important}.jds__arrow{flex:none;display:grid;place-items:center;background:var(--jt-ink);color:var(--jt-bg);border-radius:50%;width:30px;height:30px;font-size:20px}.jds .jds__note{font-size:12px;opacity:.8;margin-top:9px}.jds__footer{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 24px;border-bottom:1px solid var(--june-border,#ddd)}.jds__all{min-height:44px;display:inline-flex;align-items:center;text-underline-offset:5px;font:600 13px var(--jt-button-font)}.jds__controls{display:flex;align-items:center;font-size:12px;gap:2px}.jds__controls button{border:0;background:transparent;color:inherit;min-width:44px;min-height:44px;padding:5px}.jds__controls button[data-play]{font-size:11px}.jds__controls [data-count]{white-space:nowrap}.jds__stage{animation:jds-enter .3s ease-out}@keyframes jds-enter{from{opacity:.4}to{opacity:1}}
+@media(min-width:701px) and (max-width:1000px){.jds .jds__heading{font-size:calc(var(--jt-heading-size)*.7)}.jds__intro{font-size:14px}.jds__product h3{font-size:18px}.jds .jds__price{margin:8px 0;font-size:28px}}
+@media(max-width:700px){.jds__stage{display:block;width:100%;aspect-ratio:1;isolation:isolate;overflow:hidden}.jds__photo{position:absolute;inset:0;height:100%;z-index:-1}.jds__photo:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgb(0 0 0 / var(--jd-shade)),transparent 36%)}.jds__header{padding:16px;color:var(--jd-white);pointer-events:none}.jds .jds__eyebrow{font-size:9px;margin-bottom:6px}.jds .jds__heading{font-size:calc(var(--jt-heading-mobile)*.75);max-width:80%;margin:0;line-height:var(--jt-heading-leading)}.jds__intro,.jds__cue{display:none}.jds__spot{left:var(--mx);top:var(--my)}.jds__label{font-size:10px}.jds__spot[data-product-select="2"] .jds__label{bottom:auto;top:8px;left:50px}.jds__buying{position:absolute;right:12px;bottom:12px;width:68%;padding:12px;background:var(--jt-bg);border-radius:12px;box-shadow:0 5px 22px #0002;z-index:3}.jds__product{display:grid;grid-template-columns:auto minmax(0,1fr);gap:5px 8px}.jds__product h3{grid-column:1/-1;font-size:calc(var(--jt-title-mobile)*.61);min-height:35px}.jds .jds__price{font-size:26px;margin:0;align-self:center;white-space:nowrap}.jds__price .jmoney-prefix{display:none}.jds__buy{min-height:44px;padding:5px 7px 5px 10px;font-size:calc(var(--jt-button-mobile)*.79);gap:7px;box-shadow:none}.jds__arrow{width:24px;height:24px;font-size:17px}.jds .jds__note{grid-column:1/-1;font-size:10px;line-height:1.35;margin:1px 0 0}.jds__footer{padding:0 12px;flex-wrap:wrap;gap:0}.jds__all{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.jds *{animation:none!important;transition:none!important}}
+@media(max-width:700px){.jds__price>small{display:block;font-size:9px;line-height:1;margin-bottom:2px}}
+
+{% endstylesheet %}
+{% javascript %}
+if(!customElements.get('june-dining-scene'))customElements.define('june-dining-scene',class extends HTMLElement{
+connectedCallback(){this.abort?.abort();this.abort=new AbortController();const o={signal:this.abort.signal};this.slides=[...this.querySelectorAll('[data-scene]')];this.index=0;this.timer=null;this.hover=false;this.visible=false;this.reduced=matchMedia('(prefers-reduced-motion: reduce)');this.playing=this.dataset.autoplay==='true'&&!this.reduced.matches&&this.dataset.editor!=='true';this.slides.forEach(s=>this.product(s,Number(s.dataset.initial)));this.show(0);this.addEventListener('click',e=>{const spot=e.target.closest('[data-product-select]');if(spot){this.pause();this.product(spot.closest('[data-scene]'),Number(spot.dataset.productSelect),true)}if(e.target.closest('[data-prev]')){this.pause();this.show(this.index-1)}if(e.target.closest('[data-next]')){this.pause();this.show(this.index+1)}if(e.target.closest('[data-play]')){this.playing=!this.playing;this.schedule()}},o);this.addEventListener('focusin',e=>{if(!e.target.closest('[data-play]'))this.pause()},o);this.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'){this.hover=true;this.schedule()}},o);this.addEventListener('pointerleave',()=>{this.hover=false;this.schedule()},o);document.addEventListener('visibilitychange',()=>this.schedule(),o);this.reduced.addEventListener('change',()=>{if(this.reduced.matches)this.pause()},o);this.addEventListener('shopify:block:select',e=>{this.pause();const i=this.slides.findIndex(s=>s.dataset.block===e.detail.blockId||s.querySelector(`[data-piece-block="${e.detail.blockId}"]`));if(i>=0){this.show(i);const spot=this.slides[i].querySelector(`[data-piece-block="${e.detail.blockId}"]`);if(spot)this.product(this.slides[i],Number(spot.dataset.productSelect))}},o);this.observer=new IntersectionObserver(entries=>{this.visible=entries[0].isIntersecting;this.schedule()},{threshold:.25});this.observer.observe(this);this.schedule()}
+product(slide,index,announce=false){const spots=[...slide.querySelectorAll('[data-product-select]')];if(!spots.some(b=>Number(b.dataset.productSelect)===index))index=Number(spots[0]?.dataset.productSelect);spots.forEach(b=>{const active=Number(b.dataset.productSelect)===index;b.setAttribute('aria-pressed',String(active));b.firstElementChild.textContent=active?'−':'+'});slide.querySelector('.jds__buying').setAttribute('aria-live',announce?'polite':'off');slide.querySelectorAll('[data-product]').forEach(p=>p.hidden=Number(p.dataset.product)!==index)}
+show(index){if(!this.slides.length)return;this.index=(index+this.slides.length)%this.slides.length;this.slides.forEach((s,i)=>s.hidden=i!==this.index);this.product(this.slides[this.index],Number(this.slides[this.index].dataset.initial));const count=this.querySelector('[data-count]');if(count)count.textContent=`${this.index+1} / ${this.slides.length}`;this.schedule()}
+pause(){this.playing=false;this.schedule()}
+schedule(){clearTimeout(this.timer);const button=this.querySelector('[data-play]');if(button){button.textContent=this.playing?'Pause':'Play';button.setAttribute('aria-label',this.playing?'Pause slideshow':'Play slideshow')}if(this.playing&&this.visible&&!this.hover&&!document.hidden&&this.slides.length>1)this.timer=setTimeout(()=>this.show(this.index+1),Number(this.dataset.interval)||4000)}
+disconnectedCallback(){clearTimeout(this.timer);this.abort?.abort();this.observer?.disconnect()}
+});
+
+{% endjavascript %}
+{% schema %}
+{
+  "name": "June \u00b7 Layer the table",
+  "tag": "section",
+  "class": "june-table-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_master_typography",
+      "label": "Use approved master typography",
+      "default": true,
+      "info": "Homepage small text and prices use Theme settings > June typography. Turn off for section typography."
+    },
+    {
+      "type": "checkbox",
+      "id": "use_master_palette",
+      "label": "Use master palette",
+      "default": true,
+      "info": "Uses Theme settings > June master palette. Turn off to use this section\u2019s individual colours."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Kitchen & dining"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Good taste. Layer by layer."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Supporting copy",
+      "default": "<p>Discover the pieces behind <strong>a well-set table.</strong></p>"
+    },
+    {
+      "type": "text",
+      "id": "shop",
+      "label": "Product button",
+      "default": "Explore this piece"
+    },
+    {
+      "type": "text",
+      "id": "all",
+      "label": "Collection link",
+      "default": "Shop the table edit"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Dining collection"
+    },
+    {
+      "type": "text",
+      "id": "stacked_label",
+      "label": "Stacked label",
+      "default": "Stacked"
+    },
+    {
+      "type": "text",
+      "id": "open_label",
+      "label": "Separated label",
+      "default": "Unstacked"
+    },
+    {
+      "type": "text",
+      "id": "hint",
+      "label": "Interaction hint",
+      "default": "Three pieces. Your kind of table."
+    },
+    {
+      "type": "collection",
+      "id": "lunch",
+      "label": "Lunch collection"
+    },
+    {
+      "type": "text",
+      "id": "lunch_label",
+      "label": "Lunch link",
+      "default": "Lunch essentials"
+    },
+    {
+      "type": "collection",
+      "id": "organisation",
+      "label": "Organisation collection"
+    },
+    {
+      "type": "text",
+      "id": "organisation_label",
+      "label": "Organisation link",
+      "default": "Kitchen organisation"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "ink",
+      "label": "Text",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent",
+      "default": "#F56A28"
+    },
+    {
+      "type": "font_picker",
+      "id": "fallback_font",
+      "label": "Fallback font",
+      "default": "poppins_n4"
+    },
+    {
+      "type": "checkbox",
+      "id": "motion",
+      "label": "Enable transition",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "duration",
+      "label": "Transition duration",
+      "min": 100,
+      "max": 1000,
+      "step": 50,
+      "unit": "ms",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "initial",
+      "label": "Initially selected piece",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "text",
+      "id": "arrangement_label",
+      "label": "Mobile arrangement disclosure",
+      "default": "See the table arrangement"
+    },
+    {
+      "type": "header",
+      "content": "Photographic scenes"
+    },
+    {
+      "type": "image_picker",
+      "id": "scene_image",
+      "label": "First scene image"
+    },
+    {
+      "type": "image_picker",
+      "id": "scene_mobile",
+      "label": "First scene mobile image"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-slide scenes",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "interval",
+      "label": "Seconds between scenes",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "scene_hint",
+      "label": "Scene instruction",
+      "default": "Tap a piece. Make it yours."
+    },
+    {
+      "type": "color",
+      "id": "scene_ink",
+      "label": "Mobile heading colour",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "scene_shade",
+      "label": "Mobile heading shading",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 55
+    }
+  ],
+  "blocks": [
+    {
+      "type": "piece",
+      "name": "First scene product",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Category",
+          "default": "Bowls"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Short product name"
+        },
+        {
+          "type": "text",
+          "id": "detail",
+          "label": "Details"
+        },
+        {
+          "type": "select",
+          "id": "art",
+          "label": "Included artwork",
+          "options": [
+            {
+              "value": "bowl",
+              "label": "Pink gold-rimmed bowl"
+            },
+            {
+              "value": "side",
+              "label": "Pink gold-rimmed starter plate"
+            },
+            {
+              "value": "dinner",
+              "label": "Pink gold-rimmed dinner plate"
+            }
+          ],
+          "default": "bowl"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Transparent artwork override"
+        },
+        {
+          "type": "paragraph",
+          "content": "Included artwork depicts the pink gold-rimmed range. If changing the product, supply matching transparent artwork."
+        },
+        {
+          "type": "range",
+          "id": "width",
+          "label": "Artwork width",
+          "min": 35,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 70
+        },
+        {
+          "type": "paragraph",
+          "content": "Enable custom positions when replacing the first scene photograph. Mobile artwork must show the same products."
+        },
+        {
+          "type": "checkbox",
+          "id": "custom_position",
+          "label": "Use custom hotspot position",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "x",
+          "label": "Horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "y",
+          "label": "Vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "mx",
+          "label": "Mobile horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "my",
+          "label": "Mobile vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        }
+      ]
+    },
+    {
+      "type": "typography",
+      "name": "Typography controls",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "font_picker",
+          "id": "heading_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "heading_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 900
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 54
+        },
+        {
+          "type": "range",
+          "id": "heading_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 40
+        },
+        {
+          "type": "range",
+          "id": "heading_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "heading_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 105
+        },
+        {
+          "type": "header",
+          "content": "Product title"
+        },
+        {
+          "type": "font_picker",
+          "id": "title_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "title_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 26
+        },
+        {
+          "type": "range",
+          "id": "title_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 23
+        },
+        {
+          "type": "range",
+          "id": "title_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "title_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 120
+        },
+        {
+          "type": "header",
+          "content": "Supporting copy"
+        },
+        {
+          "type": "font_picker",
+          "id": "body_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "body_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "body_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "header",
+          "content": "Actions and navigation"
+        },
+        {
+          "type": "font_picker",
+          "id": "button_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "button_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "button_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 130
+        }
+      ]
+    },
+    {
+      "type": "scene",
+      "name": "Table scene",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Scene name",
+          "default": "Table scene"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop scene image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile",
+          "label": "Mobile scene image"
+        },
+        {
+          "type": "paragraph",
+          "content": "Add the exact products visible in this photograph. Position each hotspot separately on desktop and mobile. Scenes without an image and at least one product stay hidden."
+        },
+        {
+          "type": "range",
+          "id": "initial",
+          "label": "Starting product",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "header",
+          "content": "Product 1"
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "label_1",
+          "label": "Short hotspot label"
+        },
+        {
+          "type": "range",
+          "id": "x_1",
+          "label": "Horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 35
+        },
+        {
+          "type": "range",
+          "id": "y_1",
+          "label": "Vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 40
+        },
+        {
+          "type": "range",
+          "id": "mx_1",
+          "label": "Mobile horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 35
+        },
+        {
+          "type": "range",
+          "id": "my_1",
+          "label": "Mobile vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 40
+        },
+        {
+          "type": "header",
+          "content": "Product 2"
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "label_2",
+          "label": "Short hotspot label"
+        },
+        {
+          "type": "range",
+          "id": "x_2",
+          "label": "Horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "y_2",
+          "label": "Vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 55
+        },
+        {
+          "type": "range",
+          "id": "mx_2",
+          "label": "Mobile horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "my_2",
+          "label": "Mobile vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 55
+        },
+        {
+          "type": "header",
+          "content": "Product 3"
+        },
+        {
+          "type": "product",
+          "id": "product_3",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "label_3",
+          "label": "Short hotspot label"
+        },
+        {
+          "type": "range",
+          "id": "x_3",
+          "label": "Horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 65
+        },
+        {
+          "type": "range",
+          "id": "y_3",
+          "label": "Vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 70
+        },
+        {
+          "type": "range",
+          "id": "mx_3",
+          "label": "Mobile horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 65
+        },
+        {
+          "type": "range",
+          "id": "my_3",
+          "label": "Mobile vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 70
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "June \u00b7 Layer the table",
+      "blocks": [
+        {
+          "type": "piece",
+          "settings": {
+            "label": "Bowls",
+            "art": "bowl",
+            "width": 51
+          }
+        },
+        {
+          "type": "piece",
+          "settings": {
+            "label": "Side plates",
+            "art": "side",
+            "width": 76
+          }
+        },
+        {
+          "type": "piece",
+          "settings": {
+            "label": "Dinner plates",
+            "art": "dinner",
+            "width": 100
+          }
+        },
+        {
+          "type": "typography"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+

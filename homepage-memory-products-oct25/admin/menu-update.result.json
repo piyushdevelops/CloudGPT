@@ -1,0 +1,57 @@
+{
+  "menuUpdate": {
+    "menu": {
+      "id": "gid://shopify/Menu/304161587395",
+      "handle": "tjs-redesign-navigation",
+      "title": "TJS Redesign Navigation",
+      "items": [
+        {
+          "id": "gid://shopify/MenuItem/767841370307",
+          "title": "New & Bestsellers",
+          "url": "/collections/new-arrivals"
+        },
+        {
+          "id": "gid://shopify/MenuItem/767841403075",
+          "title": "Home",
+          "url": "/collections/home-all"
+        },
+        {
+          "id": "gid://shopify/MenuItem/767841599683",
+          "title": "Kitchen & Dining",
+          "url": "/collections/dining"
+        },
+        {
+          "id": "gid://shopify/MenuItem/767841927363",
+          "title": "Organise",
+          "url": "/collections/home-organizers"
+        },
+        {
+          "id": "gid://shopify/MenuItem/767842123971",
+          "title": "Planners & Journals",
+          "url": "/collections/planners-journals"
+        },
+        {
+          "id": "gid://shopify/MenuItem/768679346371",
+          "title": "Our Days",
+          "url": "/collections/our-days-memory-books"
+        },
+        {
+          "id": "gid://shopify/MenuItem/768679379139",
+          "title": "Photo Books",
+          "url": "/collections/photo-books"
+        },
+        {
+          "id": "gid://shopify/MenuItem/767842386115",
+          "title": "Eyewear",
+          "url": "/collections/eyewear-sunglasses"
+        },
+        {
+          "id": "gid://shopify/MenuItem/767842549955",
+          "title": "Gifting",
+          "url": "/collections/gifting"
+        }
+      ]
+    },
+    "userErrors": []
+  }
+}

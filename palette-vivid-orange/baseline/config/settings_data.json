@@ -1,0 +1,572 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "purchase_code": "df86b354-ba9f-4e97-88f4-a70635e8373b",
+    "color_scheme_dialog": "scheme-1",
+    "color_text": "#191816",
+    "color_focus": "#191816",
+    "badge_sale": "#190101",
+    "badge_new": "#48d4bb",
+    "badge_soldout": "#db1215",
+    "badge_preorder": "#00b112",
+    "badge_custom": "#6424ff",
+    "color_error": "#db1215",
+    "tooltip_bg": "#241C18",
+    "library_font": "google",
+    "embed_google_font": "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"\">\n<link href=\"https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap\" rel=\"stylesheet\">",
+    "rules_google_font": "font-family: \"Albert Sans\", serif;\nfont-family: \"Playfair Display\", serif;\nfont-family: \"Poppins\", serif;",
+    "font_custom_heading": "'Albert Sans', sans-serif",
+    "hd_fweight": 400,
+    "heading_scale": 100,
+    "font_base": "--f_family_3",
+    "bd_fweight": 300,
+    "body_size": 11,
+    "body_size_md": 12,
+    "h3_size": 42,
+    "h5_size": 28,
+    "thickness_btn": 2,
+    "page_width": 1440,
+    "spacing_sections": 0,
+    "spacing_grid_horizontal": 30,
+    "spacing_grid_vertical": 30,
+    "button_radius": 3,
+    "input_radius": 3,
+    "block_radius": 20,
+    "pr_card_radius": 10,
+    "pr_media_radius": 10,
+    "collection_card_radius": 10,
+    "blog_card_radius": 10,
+    "enable_scroll_badge": false,
+    "scroll_badge_sale_text": false,
+    "badge_shape": "round",
+    "use_onsale_badge": false,
+    "label_onsale_style": "text",
+    "use_new_badge": false,
+    "use_soldout_badge": false,
+    "wishlist_mode": "1",
+    "wis_atc_added": "1",
+    "compare_mode": "0",
+    "enable_compare_popup": false,
+    "use_url_collection_vendor": false,
+    "effect_secondary_image": "zoom",
+    "show_quick_add": false,
+    "show_qty": true,
+    "color_mode": "color",
+    "color_shape": "cricle",
+    "color_event": "hover",
+    "remove_collection_url": true,
+    "hidden_quickview": false,
+    "pick_mode": "first",
+    "hide_sold_out": true,
+    "empty_cart_link": "shopify://collections/all",
+    "free_ship_pr": "100-organic-cold-pressed-oil",
+    "gift_wrap_pr": "gift-card",
+    "animations_reveal_on_scroll": true,
+    "animations_hover_elements": "light_skew",
+    "social_facebook_link": "https://www.facebook.com/thejuneshopindia/",
+    "social_twitter_link": "https://twitter.com/thejuneshopind",
+    "social_instagram_link": "https://www.instagram.com/thejuneshopindia/",
+    "social_youtube_link": "https://www.youtube.com/channel/UClkC-h8QK3TDcSMhKO7Vj-A",
+    "social_tiktok_link": "",
+    "social_pinterest_link": "https://pinterest.com/shopify",
+    "social_tumblr_link": "",
+    "social_vimeo_link": "",
+    "social_snapchat_link": "",
+    "social_whatsapp_link": "https://wa.me/+917003079822",
+    "social_linked_in_link": "https://www.linkedin.com/company/thejuneshop",
+    "predictive_search_enabled": true,
+    "predictive_search_show_vendor": false,
+    "predictive_search_show_price": true,
+    "search_fullwidth": true,
+    "search_quick_link": "quick-link-1",
+    "search_quick_search": "",
+    "products_suggest": [],
+    "currency_type": "1",
+    "currency_code_enabled": false,
+    "auto_currency": false,
+    "favicon": "shopify://shop_images/Untitled_design_5_255cf918-dc33-4f50-b2ba-283730ad879d.png",
+    "login_sidebar": false,
+    "mid": "19g6jlm0bdgcd",
+    "envType": "production",
+    "fbpixel": "891445037922083",
+    "priClr": "#191816",
+    "secClr": "#FAF7EF",
+    "goEnable": true,
+    "main-titile": "Checkout",
+    "goBuynowEnable": false,
+    "buynow-titile": "Buy Now",
+    "btnBClr": "#F5A477",
+    "type_header_font": "assistant_n4",
+    "type_body_font": "assistant_n4",
+    "embed_custom_font": "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n<link href=\"https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\" rel=\"stylesheet\">",
+    "font_custom_body": "'Albert Sans', sans-serif",
+    "color_accent": "#191816",
+    "enable_compare": true,
+    "only_search_prs": false,
+    "body_scale": 100,
+    "logo_width": 90,
+    "buttons_border_thickness": 1,
+    "buttons_border_opacity": 100,
+    "buttons_radius": 0,
+    "buttons_shadow_opacity": 0,
+    "buttons_shadow_horizontal_offset": 0,
+    "buttons_shadow_vertical_offset": 4,
+    "buttons_shadow_blur": 5,
+    "variant_pills_border_thickness": 1,
+    "variant_pills_border_opacity": 55,
+    "variant_pills_radius": 40,
+    "variant_pills_shadow_opacity": 0,
+    "variant_pills_shadow_horizontal_offset": 0,
+    "variant_pills_shadow_vertical_offset": 4,
+    "variant_pills_shadow_blur": 5,
+    "inputs_border_thickness": 1,
+    "inputs_border_opacity": 55,
+    "inputs_radius": 0,
+    "inputs_shadow_opacity": 0,
+    "inputs_shadow_horizontal_offset": 0,
+    "inputs_shadow_vertical_offset": 4,
+    "inputs_shadow_blur": 5,
+    "card_style": "standard",
+    "card_image_padding": 0,
+    "card_text_alignment": "left",
+    "card_color_scheme": "background-2",
+    "card_border_thickness": 0,
+    "card_border_opacity": 10,
+    "card_corner_radius": 0,
+    "card_shadow_opacity": 0,
+    "card_shadow_horizontal_offset": 0,
+    "card_shadow_vertical_offset": 4,
+    "card_shadow_blur": 5,
+    "collection_card_style": "standard",
+    "collection_card_image_padding": 0,
+    "collection_card_text_alignment": "left",
+    "collection_card_color_scheme": "background-2",
+    "collection_card_border_thickness": 0,
+    "collection_card_border_opacity": 10,
+    "collection_card_corner_radius": 0,
+    "collection_card_shadow_opacity": 0,
+    "collection_card_shadow_horizontal_offset": 0,
+    "collection_card_shadow_vertical_offset": 4,
+    "collection_card_shadow_blur": 5,
+    "blog_card_style": "standard",
+    "blog_card_image_padding": 0,
+    "blog_card_text_alignment": "left",
+    "blog_card_color_scheme": "background-2",
+    "blog_card_border_thickness": 0,
+    "blog_card_border_opacity": 10,
+    "blog_card_corner_radius": 0,
+    "blog_card_shadow_opacity": 0,
+    "blog_card_shadow_horizontal_offset": 0,
+    "blog_card_shadow_vertical_offset": 4,
+    "blog_card_shadow_blur": 5,
+    "text_boxes_border_thickness": 0,
+    "text_boxes_border_opacity": 10,
+    "text_boxes_radius": 0,
+    "text_boxes_shadow_opacity": 0,
+    "text_boxes_shadow_horizontal_offset": 0,
+    "text_boxes_shadow_vertical_offset": 4,
+    "text_boxes_shadow_blur": 5,
+    "media_border_thickness": 1,
+    "media_border_opacity": 5,
+    "media_radius": 0,
+    "media_shadow_opacity": 0,
+    "media_shadow_horizontal_offset": 0,
+    "media_shadow_vertical_offset": 4,
+    "media_shadow_blur": 5,
+    "popup_border_thickness": 1,
+    "popup_border_opacity": 10,
+    "popup_corner_radius": 0,
+    "popup_shadow_opacity": 0,
+    "popup_shadow_horizontal_offset": 0,
+    "popup_shadow_vertical_offset": 4,
+    "popup_shadow_blur": 5,
+    "drawer_border_thickness": 1,
+    "drawer_border_opacity": 10,
+    "drawer_shadow_opacity": 0,
+    "drawer_shadow_horizontal_offset": 0,
+    "drawer_shadow_vertical_offset": 4,
+    "drawer_shadow_blur": 5,
+    "badge_position": "bottom left",
+    "badge_corner_radius": 40,
+    "sale_badge_color_scheme": "accent-2",
+    "sold_out_badge_color_scheme": "inverse",
+    "brand_headline": "",
+    "brand_description": "<p></p>",
+    "brand_image_width": 100,
+    "cart_type": "notification",
+    "show_vendor": false,
+    "show_cart_note": false,
+    "cart_drawer_collection": "",
+    "sections": {
+      "toolbar-mobile": {
+        "type": "toolbar-mobile",
+        "settings": {
+          "color_scheme": "",
+          "show_txt": true
+        }
+      },
+      "main-heading": {
+        "type": "main-heading",
+        "blocks": {
+          "a2b9d1bd-89e6-4e78-be44-a308d6472156": {
+            "type": "1",
+            "settings": {
+              "heading": "<p>Mix and Match</p>",
+              "heading_size": "h4"
+            }
+          },
+          "ae2f8f42-c195-4bd9-99c3-d52095ce0902": {
+            "type": "2",
+            "settings": {}
+          }
+        },
+        "block_order": [
+          "a2b9d1bd-89e6-4e78-be44-a308d6472156",
+          "ae2f8f42-c195-4bd9-99c3-d52095ce0902"
+        ],
+        "settings": {
+          "image": "shopify://shop_images/Mask_group_5.png",
+          "color_scheme": "scheme-2",
+          "spacing_hd": 5
+        }
+      },
+      "main-password-header": {
+        "type": "main-password-header",
+        "settings": {
+          "logo": "shopify://shop_images/logo-black.svg",
+          "logo_width": 100,
+          "color_scheme": ""
+        }
+      },
+      "main-compare": {
+        "type": "main-compare",
+        "blocks": {
+          "cb3a1a9a-4fd5-4372-aef2-be6126703c9c": {
+            "type": "basic",
+            "settings": {}
+          },
+          "cc33d131-be49-46d9-bb5f-0b5fc20f5f1d": {
+            "type": "availability",
+            "settings": {
+              "title": "Availability"
+            }
+          },
+          "f20eb206-53d5-4ed0-aeb1-ef0c00d9b787": {
+            "type": "vendor",
+            "settings": {
+              "title": "Vendor"
+            }
+          },
+          "a39b6b64-3be8-4273-aae6-7dd91b82d89c": {
+            "type": "variants",
+            "settings": {
+              "title": "Color"
+            }
+          }
+        },
+        "block_order": [
+          "cb3a1a9a-4fd5-4372-aef2-be6126703c9c",
+          "cc33d131-be49-46d9-bb5f-0b5fc20f5f1d",
+          "f20eb206-53d5-4ed0-aeb1-ef0c00d9b787",
+          "a39b6b64-3be8-4273-aae6-7dd91b82d89c"
+        ],
+        "settings": {
+          "product_list": [
+            "2-hearts-interlock-pendant-necklace",
+            "2-hearts-interlock-pendant-necklace-1-option-soldout",
+            "316l-surgical-steel-high-polished-multi-use-horseshoe-with-ball-ends",
+            "art-of-flowers-custom-iphone-xs-max-bumper-case",
+            "copy-of-2-hearts-interlock-pendant-necklace"
+          ],
+          "image_ratio": "adapt_image",
+          "image_size": true,
+          "color_scheme": ""
+        }
+      }
+    },
+    "content_for_index": [],
+    "color_schemes": {
+      "scheme-1": {
+        "settings": {
+          "text": "#191816",
+          "text2": "#625C57",
+          "background": "#FAF7EF",
+          "background_gradient": "",
+          "background2": "#EEE8DD",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#191816",
+          "accent_color": "#191816",
+          "line_border": "#000000",
+          "overlay": "#000000",
+          "pr_text": "#191816",
+          "price": "#191816",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      },
+      "scheme-2": {
+        "settings": {
+          "text": "#191816",
+          "text2": "#625C57",
+          "background": "#FAF7EF",
+          "background_gradient": "",
+          "background2": "#EEE8DD",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#191816",
+          "accent_color": "#191816",
+          "line_border": "#eeeeee",
+          "overlay": "#000000",
+          "pr_text": "#191816",
+          "price": "#191816",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      },
+      "scheme-3": {
+        "settings": {
+          "text": "#191816",
+          "text2": "#625C57",
+          "background": "#FAF7EF",
+          "background_gradient": "",
+          "background2": "#EEE8DD",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#191816",
+          "accent_color": "#191816",
+          "line_border": "#eeeeee",
+          "overlay": "#000000",
+          "pr_text": "#191816",
+          "price": "#191816",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      },
+      "scheme-4": {
+        "settings": {
+          "text": "#191816",
+          "text2": "#625C57",
+          "background": "#FAF7EF",
+          "background_gradient": "",
+          "background2": "#EEE8DD",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#191816",
+          "accent_color": "#191816",
+          "line_border": "#ebebeb",
+          "overlay": "#000000",
+          "pr_text": "#191816",
+          "price": "#191816",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      },
+      "scheme-5": {
+        "settings": {
+          "text": "#191816",
+          "text2": "#625C57",
+          "background": "#FAF7EF",
+          "background_gradient": "",
+          "background2": "#EEE8DD",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#191816",
+          "accent_color": "#191816",
+          "line_border": "#000000",
+          "overlay": "#000000",
+          "pr_text": "#191816",
+          "price": "#191816",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      },
+      "scheme-67a7ca9f-3333-4245-b79f-2e9849d7e615": {
+        "settings": {
+          "text": "#FAF7EF",
+          "text2": "#EEE8DD",
+          "background": "#241C18",
+          "background_gradient": "",
+          "background2": "#241C18",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#FAF7EF",
+          "accent_color": "#F5A477",
+          "line_border": "#444444",
+          "overlay": "#000000",
+          "pr_text": "#FAF7EF",
+          "price": "#FAF7EF",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      },
+      "scheme-4f7d5921-8567-40ac-8211-ef87792674d6": {
+        "settings": {
+          "text": "#191816",
+          "text2": "#625C57",
+          "background": "#FAF7EF",
+          "background_gradient": "",
+          "background2": "#EEE8DD",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#191816",
+          "accent_color": "#191816",
+          "line_border": "#eeeeee",
+          "overlay": "#ffffff",
+          "pr_text": "#191816",
+          "price": "#191816",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      },
+      "scheme-4f7d5921-8567-40ac-8211-ef87792674d3": {
+        "settings": {
+          "text": "#191816",
+          "text2": "#625C57",
+          "background": "#FAF7EF",
+          "background_gradient": "",
+          "background2": "#EEE8DD",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#191816",
+          "accent_color": "#191816",
+          "line_border": "#ebebeb",
+          "overlay": "#000000",
+          "pr_text": "#191816",
+          "price": "#191816",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      },
+      "scheme-d3d44db8-3bcf-499e-a2ed-d652eaa913f1": {
+        "settings": {
+          "text": "#191816",
+          "text2": "#625C57",
+          "background": "#FAF7EF",
+          "background_gradient": "",
+          "background2": "#EEE8DD",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#191816",
+          "accent_color": "#191816",
+          "line_border": "#ebebeb",
+          "overlay": "#000000",
+          "pr_text": "#191816",
+          "price": "#191816",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      },
+      "scheme-3fd2c3d1-d752-42b9-a4d2-17bfc10b6555": {
+        "settings": {
+          "text": "#191816",
+          "text2": "#625C57",
+          "background": "#FAF7EF",
+          "background_gradient": "",
+          "background2": "#EEE8DD",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#191816",
+          "accent_color": "#191816",
+          "line_border": "#ebebeb",
+          "overlay": "#000000",
+          "pr_text": "#191816",
+          "price": "#191816",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      },
+      "scheme-8fdd877f-5baf-4d4e-b881-1af3d95440a0": {
+        "settings": {
+          "text": "#191816",
+          "text2": "#625C57",
+          "background": "#FAF7EF",
+          "background_gradient": "",
+          "background2": "#EEE8DD",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#191816",
+          "accent_color": "#191816",
+          "line_border": "#ebebeb",
+          "overlay": "#000000",
+          "pr_text": "#191816",
+          "price": "#191816",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      },
+      "scheme-e8b59789-1990-48eb-9849-9823c4aee9e2": {
+        "settings": {
+          "text": "#191816",
+          "text2": "#625C57",
+          "background": "#FAF7EF",
+          "background_gradient": "",
+          "background2": "#EEE8DD",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#191816",
+          "accent_color": "#191816",
+          "line_border": "#ebebeb",
+          "overlay": "#000000",
+          "pr_text": "#191816",
+          "price": "#191816",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      },
+      "scheme-d817a918-e3b3-4c57-9e99-e021c8bffea4": {
+        "settings": {
+          "text": "#191816",
+          "text2": "#625C57",
+          "background": "#FAF7EF",
+          "background_gradient": "",
+          "background2": "#EEE8DD",
+          "button": "#F5A477",
+          "button_label": "#191816",
+          "button_border": "#191816",
+          "secondary_button_label": "#191816",
+          "accent_color": "#191816",
+          "line_border": "#000000",
+          "overlay": "#000000",
+          "pr_text": "#191816",
+          "price": "#191816",
+          "sale_price": "#db1215",
+          "input_primary": "#FAF7EF",
+          "input_secondary": "#191816"
+        }
+      }
+    }
+  }
+}

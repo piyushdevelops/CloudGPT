@@ -1,0 +1,142 @@
+[
+  {
+    "copy": {
+      "bottom": 394.390625,
+      "height": 251.390625,
+      "left": 20,
+      "right": 285,
+      "top": 143,
+      "width": 265,
+      "x": 20,
+      "y": 143
+    },
+    "imageLoaded": true,
+    "nav": {
+      "bottom": 883.734375,
+      "height": 139.34375,
+      "left": 0,
+      "right": 305,
+      "top": 744.390625,
+      "width": 305,
+      "x": 0,
+      "y": 744.390625
+    },
+    "overflow": false,
+    "stage": {
+      "bottom": 744.390625,
+      "height": 629.390625,
+      "left": 0,
+      "right": 305,
+      "top": 115,
+      "width": 305,
+      "x": 0,
+      "y": 115
+    },
+    "viewport": 320
+  },
+  {
+    "copy": {
+      "bottom": 388.3125,
+      "height": 237.3125,
+      "left": 20,
+      "right": 715,
+      "top": 151,
+      "width": 695,
+      "x": 20,
+      "y": 151
+    },
+    "imageLoaded": true,
+    "nav": {
+      "bottom": 1057.3125,
+      "height": 79,
+      "left": 0,
+      "right": 735,
+      "top": 978.3125,
+      "width": 735,
+      "x": 0,
+      "y": 978.3125
+    },
+    "overflow": false,
+    "stage": {
+      "bottom": 978.3125,
+      "height": 855.3125,
+      "left": 0,
+      "right": 735,
+      "top": 123,
+      "width": 735,
+      "x": 0,
+      "y": 123
+    },
+    "viewport": 750
+  },
+  {
+    "copy": {
+      "bottom": 421.3125,
+      "height": 253.3125,
+      "left": 31.515625,
+      "right": 449.890625,
+      "top": 168,
+      "width": 418.375,
+      "x": 31.515625,
+      "y": 168
+    },
+    "imageLoaded": true,
+    "nav": {
+      "bottom": 832,
+      "height": 79,
+      "left": 0,
+      "right": 1036,
+      "top": 753,
+      "width": 1036,
+      "x": 0,
+      "y": 753
+    },
+    "overflow": false,
+    "stage": {
+      "bottom": 753,
+      "height": 630,
+      "left": 0,
+      "right": 1036,
+      "top": 123,
+      "width": 1036,
+      "x": 0,
+      "y": 123
+    },
+    "viewport": 1051
+  },
+  {
+    "copy": {
+      "bottom": 377.3125,
+      "height": 253.3125,
+      "left": 509.296875,
+      "right": 1165.640625,
+      "top": 124,
+      "width": 656.34375,
+      "x": 509.296875,
+      "y": 124
+    },
+    "imageLoaded": false,
+    "nav": {
+      "bottom": 788,
+      "height": 79,
+      "left": 432.5,
+      "right": 2112.5,
+      "top": 709,
+      "width": 1680,
+      "x": 432.5,
+      "y": 709
+    },
+    "overflow": false,
+    "stage": {
+      "bottom": 709,
+      "height": 630,
+      "left": 432.5,
+      "right": 2112.5,
+      "top": 79,
+      "width": 1680,
+      "x": 432.5,
+      "y": 79
+    },
+    "viewport": 2560
+  }
+]

@@ -1,0 +1,594 @@
+{% doc %}
+  @prompt
+    announcement bar with timer for time sensitve offer, add a tagline message option also
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-announcement-bar-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    padding: {{ block.settings.padding_vertical }}px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ai-announcement-bar__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.desktop_width_percent }}%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .ai-announcement-bar__tagline-{{ ai_gen_id }} {
+    font-size: {{ block.settings.tagline_font_size }}px;
+    font-weight: {{ block.settings.tagline_font_weight }};
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+  }
+
+  .ai-announcement-bar__message-{{ ai_gen_id }} {
+    font-size: {{ block.settings.message_font_size }}px;
+    font-weight: {{ block.settings.message_font_weight }};
+    margin: 0;
+  }
+
+  .ai-announcement-bar__timer-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ai-announcement-bar__time-unit-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 40px;
+  }
+
+  .ai-announcement-bar__time-value-{{ ai_gen_id }} {
+    font-size: {{ block.settings.timer_font_size }}px;
+    font-weight: {{ block.settings.timer_font_weight }};
+    background-color: {{ block.settings.timer_background_color }};
+    color: {{ block.settings.timer_text_color }};
+    padding: 8px 12px;
+    border-radius: {{ block.settings.timer_border_radius }}px;
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-announcement-bar__time-label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.label_font_size }}px;
+    margin-top: 4px;
+    opacity: 0.8;
+  }
+
+  .ai-announcement-bar__separator-{{ ai_gen_id }} {
+    font-size: {{ block.settings.timer_font_size }}px;
+    font-weight: {{ block.settings.timer_font_weight }};
+    opacity: 0.6;
+  }
+
+  .ai-announcement-bar__cta-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: {{ block.settings.cta_background_color }};
+    color: {{ block.settings.cta_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.cta_border_radius }}px;
+    font-size: {{ block.settings.cta_font_size }}px;
+    font-weight: {{ block.settings.cta_font_weight }};
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-announcement-bar__cta-{{ ai_gen_id }}:hover {
+    opacity: 0.8;
+  }
+
+  .ai-announcement-bar__expired-{{ ai_gen_id }} {
+    display: none;
+    font-size: {{ block.settings.message_font_size }}px;
+  }
+
+  .ai-announcement-bar__expired-{{ ai_gen_id }}.active {
+    display: block;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-announcement-bar__container-{{ ai_gen_id }} {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ai-announcement-bar__time-value-{{ ai_gen_id }} {
+      padding: 6px 10px;
+      min-width: 45px;
+    }
+  }
+{% endstyle %}
+
+<announcement-timer-{{ ai_gen_id }}
+  class="ai-announcement-bar-{{ ai_gen_id }}"
+  data-end-date="{{ block.settings.end_date }}"
+  data-end-time="{{ block.settings.end_time }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-announcement-bar__container-{{ ai_gen_id }}">
+    {% if block.settings.tagline != blank %}
+      <div class="ai-announcement-bar__tagline-{{ ai_gen_id }}">
+        {{ block.settings.tagline }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.message != blank %}
+      <div class="ai-announcement-bar__message-{{ ai_gen_id }}">
+        {{ block.settings.message }}
+      </div>
+    {% endif %}
+
+    <div class="ai-announcement-bar__timer-{{ ai_gen_id }}" data-timer>
+      {% if block.settings.show_days %}
+        <div class="ai-announcement-bar__time-unit-{{ ai_gen_id }}">
+          <div class="ai-announcement-bar__time-value-{{ ai_gen_id }}" data-days>00</div>
+          <div class="ai-announcement-bar__time-label-{{ ai_gen_id }}">{{ block.settings.days_label }}</div>
+        </div>
+        <span class="ai-announcement-bar__separator-{{ ai_gen_id }}">:</span>
+      {% endif %}
+
+      <div class="ai-announcement-bar__time-unit-{{ ai_gen_id }}">
+        <div class="ai-announcement-bar__time-value-{{ ai_gen_id }}" data-hours>00</div>
+        <div class="ai-announcement-bar__time-label-{{ ai_gen_id }}">{{ block.settings.hours_label }}</div>
+      </div>
+      <span class="ai-announcement-bar__separator-{{ ai_gen_id }}">:</span>
+
+      <div class="ai-announcement-bar__time-unit-{{ ai_gen_id }}">
+        <div class="ai-announcement-bar__time-value-{{ ai_gen_id }}" data-minutes>00</div>
+        <div class="ai-announcement-bar__time-label-{{ ai_gen_id }}">{{ block.settings.minutes_label }}</div>
+      </div>
+      <span class="ai-announcement-bar__separator-{{ ai_gen_id }}">:</span>
+
+      <div class="ai-announcement-bar__time-unit-{{ ai_gen_id }}">
+        <div class="ai-announcement-bar__time-value-{{ ai_gen_id }}" data-seconds>00</div>
+        <div class="ai-announcement-bar__time-label-{{ ai_gen_id }}">{{ block.settings.seconds_label }}</div>
+      </div>
+    </div>
+
+    {% if block.settings.cta_text != blank and block.settings.cta_link != blank %}
+      <a href="{{ block.settings.cta_link }}" class="ai-announcement-bar__cta-{{ ai_gen_id }}">
+        {{ block.settings.cta_text }}
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="ai-announcement-bar__expired-{{ ai_gen_id }}" data-expired>
+    {{ block.settings.expired_message }}
+  </div>
+</announcement-timer-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AnnouncementTimer{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.endDate = this.dataset.endDate;
+        this.endTime = this.dataset.endTime;
+        this.timerElement = this.querySelector('[data-timer]');
+        this.expiredElement = this.querySelector('[data-expired]');
+        this.daysElement = this.querySelector('[data-days]');
+        this.hoursElement = this.querySelector('[data-hours]');
+        this.minutesElement = this.querySelector('[data-minutes]');
+        this.secondsElement = this.querySelector('[data-seconds]');
+        this.interval = null;
+      }
+
+      connectedCallback() {
+        if (!this.endDate || !this.endTime) {
+          return;
+        }
+
+        this.startCountdown();
+      }
+
+      disconnectedCallback() {
+        if (this.interval) {
+          clearInterval(this.interval);
+        }
+      }
+
+      startCountdown() {
+        this.updateCountdown();
+        this.interval = setInterval(() => {
+          this.updateCountdown();
+        }, 1000);
+      }
+
+      updateCountdown() {
+        const endDateTime = new Date(this.endDate + 'T' + this.endTime).getTime();
+        const now = new Date().getTime();
+        const distance = endDateTime - now;
+
+        if (distance < 0) {
+          clearInterval(this.interval);
+          this.showExpired();
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (this.daysElement) {
+          this.daysElement.textContent = String(days).padStart(2, '0');
+        }
+        if (this.hoursElement) {
+          this.hoursElement.textContent = String(hours).padStart(2, '0');
+        }
+        if (this.minutesElement) {
+          this.minutesElement.textContent = String(minutes).padStart(2, '0');
+        }
+        if (this.secondsElement) {
+          this.secondsElement.textContent = String(seconds).padStart(2, '0');
+        }
+      }
+
+      showExpired() {
+        if (this.timerElement) {
+          this.timerElement.style.display = 'none';
+        }
+        if (this.expiredElement) {
+          this.expiredElement.classList.add('active');
+        }
+      }
+    }
+
+    customElements.define('announcement-timer-{{ ai_gen_id }}', AnnouncementTimer{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Announcement timer",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Flash Sale"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message",
+      "label": "Announcement message",
+      "default": "Limited time offer - Sale ends soon!"
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "End date",
+      "info": "Format: YYYY-MM-DD (e.g., 2026-02-15)",
+      "default": "2026-02-15"
+    },
+    {
+      "type": "text",
+      "id": "end_time",
+      "label": "End time",
+      "info": "Format: HH:MM:SS (e.g., 23:59:59)",
+      "default": "23:59:59"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "expired_message",
+      "label": "Expired message",
+      "default": "Offer has ended. Stay tuned for more deals!"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Timer settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_days",
+      "label": "Show days",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "days_label",
+      "label": "Days label",
+      "default": "Days"
+    },
+    {
+      "type": "text",
+      "id": "hours_label",
+      "label": "Hours label",
+      "default": "Hours"
+    },
+    {
+      "type": "text",
+      "id": "minutes_label",
+      "label": "Minutes label",
+      "default": "Mins"
+    },
+    {
+      "type": "text",
+      "id": "seconds_label",
+      "label": "Seconds label",
+      "default": "Secs"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Vertical padding",
+      "min": 5,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "timer_background_color",
+      "label": "Timer background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "timer_text_color",
+      "label": "Timer text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "cta_background_color",
+      "label": "Button background",
+      "default": "#db1215"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "tagline_font_size",
+      "label": "Tagline font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "tagline_font_weight",
+      "label": "Tagline font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "message_font_size",
+      "label": "Message font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "message_font_weight",
+      "label": "Message font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "timer_font_size",
+      "label": "Timer font size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "timer_font_weight",
+      "label": "Timer font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size",
+      "label": "Label font size",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "cta_font_size",
+      "label": "Button font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "cta_font_weight",
+      "label": "Button font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "timer_border_radius",
+      "label": "Timer border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "cta_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement timer"
+    }
+  ]
+}
+{% endschema %}

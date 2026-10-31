@@ -1,0 +1,1295 @@
+{% liquid
+  assign selected_collection = section.settings.collection
+  assign collection_count = 0
+
+  if selected_collection != blank
+    assign collection_count = selected_collection.products_count | default: 0 | plus: 0
+  endif
+
+  assign product_limit = section.settings.products_to_show | default: 8
+  assign preselect_count = section.settings.preselected_count | default: 2
+  assign discount_code = section.settings.discount_code | strip
+%}
+
+<section id="tjs-bogo-sunnies-{{ section.id }}" class="tjs-bogo-sunnies" data-tjs-bogo-sunnies>
+  <div class="tjs-bogo-sunnies__bg" aria-hidden="true">
+    BOGO / SUNGLASSES / THE JUNE SHOP /
+  </div>
+
+  <div class="tjs-bogo-sunnies__head">
+    <div>
+      <div class="tjs-bogo-sunnies__kicker">
+        {{ section.settings.kicker | default: 'Sunglass BOGO Drop' }}
+      </div>
+
+      <h2>
+        {{ section.settings.heading | default: 'Buy one. Flex two.' }}
+      </h2>
+
+      <p>
+        {{ section.settings.subheading | default: 'Pick any two sunglasses and unlock the BOGO deal. One for the outfit, one for the mood.' }}
+      </p>
+    </div>
+
+    <div class="tjs-bogo-sunnies__badge">
+      <span>Offer</span>
+      <b>BOGO</b>
+      <em>Buy 1 Get 1</em>
+    </div>
+  </div>
+
+  {% if selected_collection != blank and collection_count > 0 %}
+    <div class="tjs-bogo-sunnies__bar">
+      <button type="button" class="tjs-bogo-sunnies__mini" data-tjs-bogo-select-pair>
+        Select 2
+      </button>
+
+      <button type="button" class="tjs-bogo-sunnies__mini" data-tjs-bogo-clear>
+        Clear
+      </button>
+
+      {% if discount_code != blank %}
+        <span class="tjs-bogo-sunnies__code">Code: {{ discount_code }}</span>
+      {% endif %}
+    </div>
+
+    <div class="tjs-bogo-sunnies__layout">
+      <div class="tjs-bogo-sunnies__grid">
+        {% for product in selected_collection.products limit: product_limit %}
+          {% assign v = product.selected_or_first_available_variant %}
+          {% assign should_check = false %}
+
+          {% if forloop.index <= preselect_count and product.available %}
+            {% assign should_check = true %}
+          {% endif %}
+
+          <article
+            class="tjs-sunny-card{% if should_check %} is-picked{% endif %}{% unless product.available %} is-sold{% endunless %}"
+            data-tjs-bogo-card
+            data-price="{{ v.price }}"
+            data-variant-id="{{ v.id }}"
+            data-available="{% if product.available %}true{% else %}false{% endif %}"
+          >
+            <label class="tjs-sunny-card__pick">
+              <input
+                type="checkbox"
+                data-tjs-bogo-pick
+                {% if should_check %}checked{% endif %}
+                {% unless product.available %}disabled{% endunless %}
+              >
+              <span></span>
+            </label>
+
+            <a href="{{ product.url }}" class="tjs-sunny-card__media">
+              <span class="tjs-sunny-card__shine"></span>
+
+              {% if product.featured_image != blank %}
+                <img
+                  src="{{ product.featured_image | image_url: width: 760 }}"
+                  alt="{{ product.title | escape }}"
+                  loading="lazy"
+                >
+              {% endif %}
+
+              {% unless product.available %}
+                <div class="tjs-sunny-card__sold">Sold Out</div>
+              {% endunless %}
+
+              <div class="tjs-sunny-card__tag">
+                Pair Me
+              </div>
+            </a>
+
+            <div class="tjs-sunny-card__info">
+              <a href="{{ product.url }}" class="tjs-sunny-card__title">
+                {{ product.title }}
+              </a>
+
+              <div class="tjs-sunny-card__price">
+                <span>Website Price</span>
+                <b>{{ v.price | money_without_trailing_zeros }}</b>
+              </div>
+
+              <button
+                type="button"
+                class="tjs-sunny-card__plus"
+                data-tjs-bogo-toggle
+                {% unless product.available %}disabled{% endunless %}
+              >
+                <span>{% if should_check %}✓{% else %}+{% endif %}</span>
+              </button>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      <aside class="tjs-bogo-sunnies__summary">
+        <div class="tjs-bogo-sunnies__summary-inner">
+          <div class="tjs-bogo-sunnies__summary-kicker">
+            Your BOGO Pair
+          </div>
+
+          <h3>
+            Pair it. Save it.
+          </h3>
+
+          <div class="tjs-bogo-sunnies__status" data-tjs-bogo-status>
+            Select 2 sunglasses to unlock BOGO.
+          </div>
+
+          <div class="tjs-bogo-sunnies__stats">
+            <div>
+              <span>Selected</span>
+              <b data-tjs-bogo-count>0</b>
+            </div>
+
+            <div>
+              <span>Full Value</span>
+              <b data-tjs-bogo-total>₹0</b>
+            </div>
+
+            <div class="is-highlight">
+              <span>BOGO Estimate</span>
+              <b data-tjs-bogo-deal>₹0</b>
+            </div>
+
+            <div>
+              <span>You Unlock</span>
+              <b data-tjs-bogo-save>₹0</b>
+            </div>
+          </div>
+
+          <button type="button" class="tjs-bogo-sunnies__cart" data-tjs-bogo-add>
+            Add BOGO Pair To Cart
+          </button>
+
+          <button type="button" class="tjs-bogo-sunnies__buy" data-tjs-bogo-buy>
+            Buy BOGO Pair
+          </button>
+
+          <p>
+            BOGO estimate assumes the lower-priced item goes free. Keep your Shopify BOGO discount active for checkout pricing.
+          </p>
+        </div>
+      </aside>
+    </div>
+  {% else %}
+    <div class="tjs-bogo-sunnies__empty">
+      <span>No sunnies on the rack yet.</span>
+      <p>Select a sunglass collection with products to activate this section.</p>
+    </div>
+  {% endif %}
+</section>
+
+<style>
+  #tjs-bogo-sunnies-{{ section.id }},
+  #tjs-bogo-sunnies-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} {
+    --ink: #17110f;
+    --paper: #fff8f1;
+    --cream: #fffdf8;
+    --rose: #d58d82;
+    --gold: #d5a25b;
+    --mint: #dff6a4;
+    --lens: #161616;
+    --line: rgba(23, 17, 15, 0.14);
+
+    position: relative;
+    overflow: hidden;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding: 54px 14px;
+    background:
+      radial-gradient(circle at 16% 16%, rgba(213,141,130,0.24), transparent 30%),
+      radial-gradient(circle at 86% 80%, rgba(213,162,91,0.20), transparent 28%),
+      linear-gradient(90deg, rgba(23,17,15,0.035) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(23,17,15,0.03) 1px, transparent 1px),
+      var(--paper);
+    background-size: auto, auto, 22px 22px, 22px 22px, auto;
+    color: var(--ink);
+    font-family: inherit;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__bg {
+    position: absolute;
+    left: -20px;
+    right: -20px;
+    top: 42%;
+    transform: rotate(-4deg);
+    color: rgba(23,17,15,0.04);
+    font-size: clamp(58px, 10vw, 140px);
+    line-height: .8;
+    letter-spacing: -5px;
+    text-transform: uppercase;
+    font-weight: 950;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__head,
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__bar,
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__layout,
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__empty {
+    position: relative;
+    z-index: 1;
+    width: min(1180px, 100%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__head {
+    display: grid;
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__kicker {
+    width: fit-content;
+    margin-bottom: 12px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #ffffff;
+    font-size: 8.5px;
+    line-height: 1;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} h2 {
+    margin: 0;
+    max-width: 760px;
+    color: var(--ink);
+    font-size: clamp(42px, 7vw, 86px);
+    line-height: .82;
+    letter-spacing: -3.5px;
+    text-transform: uppercase;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__head p {
+    max-width: 560px;
+    margin: 14px 0 0;
+    color: rgba(23,17,15,0.68);
+    font-size: 14px;
+    line-height: 1.55;
+    font-weight: 700;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__badge {
+    width: fit-content;
+    align-self: end;
+    justify-self: start;
+    padding: 14px 16px;
+    border-radius: 22px;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    box-shadow: 7px 7px 0 var(--rose);
+    transform: rotate(3deg);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__badge span,
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__price span,
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__stats span {
+    display: block;
+    color: rgba(23,17,15,0.52);
+    font-size: 8px;
+    line-height: 1;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__badge b {
+    display: block;
+    margin-top: 5px;
+    color: var(--ink);
+    font-size: 38px;
+    line-height: .78;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__badge em {
+    display: block;
+    margin-top: 7px;
+    color: rgba(23,17,15,.62);
+    font-style: normal;
+    font-size: 9px;
+    line-height: 1;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-bottom: 18px;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__mini,
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__code {
+    flex: 0 0 auto;
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--cream);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 9px;
+    line-height: 1;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__mini {
+    cursor: pointer;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__mini:hover {
+    background: var(--ink);
+    color: #ffffff;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__layout {
+    display: grid;
+    gap: 18px;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    box-shadow: 0 14px 24px rgba(23,17,15,0.08);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card.is-picked {
+    border-color: var(--ink);
+    box-shadow:
+      0 0 0 2px var(--ink),
+      6px 6px 0 rgba(213,141,130,0.45),
+      0 16px 26px rgba(23,17,15,0.12);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card:hover {
+    transform: translateY(-2px);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__pick {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 6;
+    cursor: pointer;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__pick input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__pick span {
+    width: 31px;
+    height: 31px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1.5px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--rose);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__pick span::before {
+    content: "+";
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__pick input:checked + span {
+    background: var(--ink);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__pick input:checked + span::before {
+    content: "✓";
+    color: #ffffff;
+    font-size: 15px;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 1.08 / 1;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 38%, rgba(213,162,91,0.18), transparent 42%),
+      linear-gradient(135deg, #fff6ed 0%, #f8e9dd 100%);
+    text-decoration: none;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__media::before {
+    content: "";
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    top: 50%;
+    height: 36%;
+    transform: translateY(-50%) rotate(-8deg);
+    border-radius: 999px;
+    background: rgba(23,17,15,.055);
+    filter: blur(7px);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__shine {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: linear-gradient(
+      110deg,
+      transparent 0%,
+      transparent 40%,
+      rgba(255,255,255,.78) 47%,
+      transparent 55%,
+      transparent 100%
+    );
+    transform: translateX(-120%);
+    pointer-events: none;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card:hover .tjs-sunny-card__shine {
+    animation: tjsSunniesShine .95s ease forwards;
+  }
+
+  @keyframes tjsSunniesShine {
+    from {
+      transform: translateX(-120%);
+    }
+
+    to {
+      transform: translateX(120%);
+    }
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__media img {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    padding: 16px;
+    transform: scale(1.02) rotate(-1deg);
+    transition: transform .35s ease;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card:hover .tjs-sunny-card__media img {
+    transform: scale(1.09) rotate(1deg);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__tag {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 4;
+    padding: 7px 9px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #ffffff;
+    font-size: 8px;
+    line-height: 1;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__sold {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: grid;
+    place-items: center;
+    background: rgba(23,17,15,.58);
+    color: #ffffff;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__info {
+    position: relative;
+    padding: 13px;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__title {
+    display: block;
+    min-height: 34px;
+    padding-right: 42px;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 1.15;
+    letter-spacing: -0.2px;
+    text-transform: uppercase;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__price {
+    margin-top: 10px;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__price b {
+    display: block;
+    margin-top: 4px;
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: -0.7px;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__plus {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--rose);
+    transition: transform .2s ease, background .2s ease, color .2s ease;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__plus span {
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__plus:hover {
+    transform: rotate(8deg) scale(1.06);
+    background: #ffffff;
+    color: var(--ink);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__plus:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__summary-inner {
+    position: sticky;
+    top: 88px;
+    border-radius: 24px;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(255,255,255,.045) 1px, transparent 1px),
+      var(--ink);
+    background-size: 18px 18px;
+    color: #ffffff;
+    padding: 18px;
+    box-shadow: 8px 8px 0 rgba(213,141,130,0.32);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__summary-kicker {
+    width: fit-content;
+    margin-bottom: 12px;
+    padding: 7px 9px;
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--ink);
+    font-size: 8px;
+    line-height: 1;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__summary h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 34px;
+    line-height: .86;
+    letter-spacing: -1.6px;
+    text-transform: uppercase;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__status {
+    margin-top: 12px;
+    padding: 10px 11px;
+    border-radius: 15px;
+    background: rgba(255,255,255,.08);
+    color: rgba(255,255,255,.72);
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+    font-weight: 850;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-top: 14px;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__stats div {
+    min-height: 70px;
+    display: grid;
+    align-content: center;
+    gap: 7px;
+    padding: 11px;
+    border-radius: 16px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.12);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__stats div.is-highlight {
+    background: #ffffff;
+    color: var(--ink);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__stats div.is-highlight span {
+    color: rgba(23,17,15,.52);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__stats span {
+    color: rgba(255,255,255,.48);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__stats b {
+    color: inherit;
+    font-size: 17px;
+    line-height: 1;
+    letter-spacing: -0.4px;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__cart,
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__buy {
+    width: 100%;
+    min-height: 48px;
+    margin-top: 12px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 950;
+    cursor: pointer;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__cart {
+    border: 1.5px solid #ffffff;
+    background: #ffffff;
+    color: var(--ink);
+    box-shadow: 5px 5px 0 var(--rose);
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__buy {
+    border: 1.5px solid rgba(255,255,255,.35);
+    background: transparent;
+    color: #ffffff;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__cart:disabled,
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__buy:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__summary p {
+    margin: 12px 0 0;
+    color: rgba(255,255,255,.54);
+    font-size: 10px;
+    line-height: 1.4;
+    font-weight: 700;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__empty {
+    min-height: 260px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    border-radius: 26px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    padding: 28px;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__empty span {
+    color: var(--ink);
+    font-size: 34px;
+    line-height: .9;
+    letter-spacing: -1.5px;
+    text-transform: uppercase;
+    font-weight: 950;
+  }
+
+  #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__empty p {
+    margin: 10px 0 0;
+    color: rgba(23,17,15,.6);
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 700;
+  }
+
+  @media screen and (min-width: 750px) {
+    #tjs-bogo-sunnies-{{ section.id }} {
+      padding: 72px max(28px, calc((100vw - 1180px) / 2));
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__head {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__layout {
+      grid-template-columns: minmax(0, 1fr) 330px;
+      align-items: start;
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+  }
+
+  @media screen and (min-width: 1100px) {
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #tjs-bogo-sunnies-{{ section.id }} {
+      padding: 46px 10px;
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} h2 {
+      font-size: 43px;
+      letter-spacing: -2px;
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__head p {
+      font-size: 12.5px;
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__badge {
+      transform: rotate(-2deg);
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__grid {
+      gap: 9px;
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card {
+      border-radius: 18px;
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__media img {
+      padding: 11px;
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__title {
+      font-size: 10.5px;
+      min-height: 32px;
+      padding-right: 36px;
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__price b {
+      font-size: 15px;
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__plus {
+      width: 32px;
+      height: 32px;
+    }
+
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-bogo-sunnies__summary-inner {
+      position: relative;
+      top: auto;
+      border-radius: 22px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card,
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__media img,
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__shine,
+    #tjs-bogo-sunnies-{{ section.id }} .tjs-sunny-card__plus {
+      transition: none;
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    function initSunniesBogo() {
+      const root = document.getElementById("tjs-bogo-sunnies-{{ section.id }}");
+      if (!root || root.dataset.ready === "true") return;
+      root.dataset.ready = "true";
+
+      const cards = Array.from(root.querySelectorAll("[data-tjs-bogo-card]"));
+      const picks = Array.from(root.querySelectorAll("[data-tjs-bogo-pick]"));
+      const countEl = root.querySelector("[data-tjs-bogo-count]");
+      const totalEl = root.querySelector("[data-tjs-bogo-total]");
+      const dealEl = root.querySelector("[data-tjs-bogo-deal]");
+      const saveEl = root.querySelector("[data-tjs-bogo-save]");
+      const statusEl = root.querySelector("[data-tjs-bogo-status]");
+      const addBtn = root.querySelector("[data-tjs-bogo-add]");
+      const buyBtn = root.querySelector("[data-tjs-bogo-buy]");
+      const selectPairBtn = root.querySelector("[data-tjs-bogo-select-pair]");
+      const clearBtn = root.querySelector("[data-tjs-bogo-clear]");
+      const discountCode = {{ discount_code | json }};
+
+      function money(cents) {
+        const value = Number(cents || 0) / 100;
+        return "₹" + new Intl.NumberFormat("en-IN", {
+          maximumFractionDigits: 0
+        }).format(value);
+      }
+
+      function selectedCards() {
+        return cards.filter(function (card) {
+          const pick = card.querySelector("[data-tjs-bogo-pick]");
+          return pick && pick.checked && card.dataset.available === "true";
+        });
+      }
+
+      function calcBogo(selected) {
+        const prices = selected
+          .map(function (card) {
+            return Number(card.dataset.price || 0);
+          })
+          .sort(function (a, b) {
+            return a - b;
+          });
+
+        const count = prices.length;
+        const total = prices.reduce(function (sum, price) {
+          return sum + price;
+        }, 0);
+
+        const freeCount = Math.floor(count / 2);
+        const savings = prices.slice(0, freeCount).reduce(function (sum, price) {
+          return sum + price;
+        }, 0);
+
+        return {
+          count: count,
+          total: total,
+          savings: savings,
+          deal: total - savings,
+          needsOne: count % 2 !== 0
+        };
+      }
+
+      function updateSummary() {
+        cards.forEach(function (card) {
+          const pick = card.querySelector("[data-tjs-bogo-pick]");
+          const isPicked = pick && pick.checked;
+          card.classList.toggle("is-picked", isPicked);
+
+          const plus = card.querySelector("[data-tjs-bogo-toggle] span");
+          if (plus) plus.textContent = isPicked ? "✓" : "+";
+        });
+
+        const selected = selectedCards();
+        const result = calcBogo(selected);
+
+        if (countEl) countEl.textContent = result.count;
+        if (totalEl) totalEl.textContent = money(result.total);
+        if (dealEl) dealEl.textContent = money(result.deal);
+        if (saveEl) saveEl.textContent = money(result.savings);
+
+        if (statusEl) {
+          if (result.count === 0) {
+            statusEl.textContent = "Select 2 sunglasses to unlock BOGO.";
+          } else if (result.count === 1) {
+            statusEl.textContent = "Add 1 more sunglass. Your second pair unlocks the deal.";
+          } else if (result.needsOne) {
+            statusEl.textContent = "Nice haul. Add 1 more to complete another BOGO pair.";
+          } else {
+            statusEl.textContent = "BOGO unlocked. Every pair is working harder.";
+          }
+        }
+
+        if (addBtn) addBtn.disabled = result.count < 2;
+        if (buyBtn) buyBtn.disabled = result.count < 2;
+      }
+
+      function getCartSectionIds() {
+        const hardcoded = ["cart-drawer", "cart-icon-bubble", "cart-notification", "header"];
+
+        const detected = Array.from(document.querySelectorAll('[id^="shopify-section-"]'))
+          .map(function (el) {
+            return el.id.replace("shopify-section-", "");
+          })
+          .filter(function (id) {
+            return /cart|drawer|header/i.test(id);
+          });
+
+        return Array.from(new Set(hardcoded.concat(detected))).slice(0, 8);
+      }
+
+      function renderSections(sections) {
+        if (!sections) return Promise.resolve();
+
+        Object.keys(sections).forEach(function (id) {
+          const html = sections[id];
+          if (!html) return;
+
+          const currentSection = document.getElementById("shopify-section-" + id);
+
+          if (currentSection) {
+            const doc = new DOMParser().parseFromString(html, "text/html");
+            const nextSection = doc.getElementById("shopify-section-" + id);
+            currentSection.innerHTML = nextSection ? nextSection.innerHTML : html;
+            return;
+          }
+
+          const currentDrawer = document.querySelector("cart-drawer-component, cart-drawer");
+
+          if (currentDrawer && /cart|drawer/i.test(id)) {
+            const doc = new DOMParser().parseFromString(html, "text/html");
+            const nextDrawer = doc.querySelector("cart-drawer-component, cart-drawer");
+            if (nextDrawer) currentDrawer.replaceWith(nextDrawer);
+          }
+        });
+
+        return Promise.resolve();
+      }
+
+      function fetchCart() {
+        return fetch("/cart.js?tjs=" + Date.now(), {
+          headers: {
+            "Accept": "application/json"
+          }
+        }).then(function (res) {
+          return res.json();
+        });
+      }
+
+      function updateCartBubble(cart) {
+        const count = Number(cart.item_count || 0);
+
+        document.querySelectorAll("[data-cart-count]").forEach(function (el) {
+          el.textContent = count;
+        });
+
+        document.querySelectorAll(".cart-bubble__text, .cart-count-bubble span[aria-hidden='true']").forEach(function (el) {
+          el.textContent = count;
+        });
+
+        document.querySelectorAll("cart-icon").forEach(function (icon) {
+          icon.classList.toggle("header-actions__cart-icon--has-cart", count > 0);
+          icon.classList.toggle("pf-header-cart-icon--has-cart", count > 0);
+        });
+      }
+
+      function broadcastCart(cart) {
+        ["cart:refresh", "cart:updated", "cart:change", "cart-drawer:refresh", "ajaxCart:updated", "product:added"].forEach(function (eventName) {
+          document.dispatchEvent(new CustomEvent(eventName, {
+            bubbles: true,
+            detail: { cart: cart }
+          }));
+        });
+      }
+
+      function openCartDrawer() {
+        const drawer = document.querySelector("cart-drawer-component, cart-drawer");
+
+        if (drawer && typeof drawer.open === "function") {
+          drawer.open();
+          return;
+        }
+
+        const trigger = document.querySelector('[data-testid="cart-drawer-trigger"], button[aria-label*="cart" i], button[aria-label*="Cart" i]');
+        if (trigger) trigger.click();
+      }
+
+      function cartAddPayload(items) {
+        const payload = { items: items };
+        const sectionIds = getCartSectionIds();
+
+        if (sectionIds.length) {
+          payload.sections = sectionIds;
+          payload.sections_url = window.location.pathname;
+        }
+
+        return payload;
+      }
+
+      function afterCartAdd(responseData, openDrawer) {
+        const sections = responseData && responseData.sections ? responseData.sections : null;
+        const sectionIds = getCartSectionIds();
+        let sectionPromise = Promise.resolve();
+
+        if (sections) {
+          sectionPromise = renderSections(sections);
+        } else if (sectionIds.length) {
+          sectionPromise = fetch(window.location.pathname + "?sections=" + sectionIds.join(","))
+            .then(function (res) { return res.json(); })
+            .then(renderSections)
+            .catch(function () {});
+        }
+
+        return sectionPromise
+          .then(fetchCart)
+          .then(function (cart) {
+            updateCartBubble(cart);
+            broadcastCart(cart);
+
+            if (openDrawer) {
+              setTimeout(openCartDrawer, 120);
+            }
+
+            return cart;
+          });
+      }
+
+      function addToCart(items, options) {
+        const openDrawer = options && options.openDrawer;
+        const redirectAfter = options && options.redirectAfter;
+
+        return fetch("/cart/add.js", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(cartAddPayload(items))
+        })
+        .then(function (response) {
+          if (!response.ok) throw new Error("Could not add items");
+          return response.json();
+        })
+        .then(function (responseData) {
+          return afterCartAdd(responseData, openDrawer).then(function () {
+            if (redirectAfter) {
+              if (discountCode) {
+                window.location.href = "/discount/" + encodeURIComponent(discountCode) + "?redirect=/cart";
+              } else {
+                window.location.href = "/cart";
+              }
+            }
+          });
+        });
+      }
+
+      function addSelected(redirectAfter) {
+        const selected = selectedCards();
+
+        if (selected.length < 2) return;
+
+        const items = selected.map(function (card) {
+          return {
+            id: Number(card.dataset.variantId),
+            quantity: 1
+          };
+        });
+
+        const addOriginal = addBtn ? addBtn.textContent : "";
+        const buyOriginal = buyBtn ? buyBtn.textContent : "";
+
+        if (addBtn) {
+          addBtn.disabled = true;
+          addBtn.textContent = "Adding...";
+        }
+
+        if (buyBtn) {
+          buyBtn.disabled = true;
+          buyBtn.textContent = "Adding...";
+        }
+
+        addToCart(items, {
+          openDrawer: !redirectAfter,
+          redirectAfter: redirectAfter
+        })
+        .then(function () {
+          if (!redirectAfter && addBtn) addBtn.textContent = "Added ✓";
+
+          setTimeout(function () {
+            if (addBtn) addBtn.textContent = addOriginal || "Add BOGO Pair To Cart";
+            if (buyBtn) buyBtn.textContent = buyOriginal || "Buy BOGO Pair";
+            updateSummary();
+          }, 1300);
+        })
+        .catch(function () {
+          if (addBtn) addBtn.textContent = "Try Again";
+          if (buyBtn) buyBtn.textContent = "Try Again";
+
+          setTimeout(function () {
+            if (addBtn) addBtn.textContent = addOriginal || "Add BOGO Pair To Cart";
+            if (buyBtn) buyBtn.textContent = buyOriginal || "Buy BOGO Pair";
+            updateSummary();
+          }, 1400);
+        });
+      }
+
+      function toggleCard(card) {
+        const pick = card.querySelector("[data-tjs-bogo-pick]");
+        if (!pick || pick.disabled) return;
+
+        pick.checked = !pick.checked;
+        updateSummary();
+      }
+
+      picks.forEach(function (pick) {
+        pick.addEventListener("change", updateSummary);
+      });
+
+      cards.forEach(function (card) {
+        const toggle = card.querySelector("[data-tjs-bogo-toggle]");
+
+        if (toggle) {
+          toggle.addEventListener("click", function () {
+            toggleCard(card);
+          });
+        }
+      });
+
+      if (selectPairBtn) {
+        selectPairBtn.addEventListener("click", function () {
+          let selected = selectedCards().length;
+
+          cards.forEach(function (card) {
+            if (selected >= 2) return;
+
+            const pick = card.querySelector("[data-tjs-bogo-pick]");
+            if (pick && !pick.disabled && !pick.checked) {
+              pick.checked = true;
+              selected += 1;
+            }
+          });
+
+          updateSummary();
+        });
+      }
+
+      if (clearBtn) {
+        clearBtn.addEventListener("click", function () {
+          picks.forEach(function (pick) {
+            pick.checked = false;
+          });
+
+          updateSummary();
+        });
+      }
+
+      if (addBtn) {
+        addBtn.addEventListener("click", function () {
+          addSelected(false);
+        });
+      }
+
+      if (buyBtn) {
+        buyBtn.addEventListener("click", function () {
+          addSelected(true);
+        });
+      }
+
+      updateSummary();
+    }
+
+    document.addEventListener("DOMContentLoaded", initSunniesBogo);
+    document.addEventListener("shopify:section:load", initSunniesBogo);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TJS Sunglass BOGO Drop",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Sunglass collection"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Sunglass BOGO Drop"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Buy one. Flex two."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Pick any two sunglasses and unlock the BOGO deal. One for the outfit, one for the mood."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "preselected_count",
+      "label": "Products preselected",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "BOGO discount code",
+      "default": "SUNBOGO"
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS Sunglass BOGO Drop"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,140 @@
+[
+  {
+    "viewport": {
+      "name": "mobile",
+      "width": 393,
+      "height": 852
+    },
+    "url": "https://thejuneshop.com/products/create-your-magic-2027-dated-planner?insideqa=oct29",
+    "metrics": {
+      "scrollWidth": 393,
+      "clientWidth": 393,
+      "heading": "Inside your 2027",
+      "cards": 6
+    },
+    "images": [
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/june-2027-inside-monthly-overview.jpg?v=1793218237&width=400",
+        "alt": "See the whole month",
+        "complete": true,
+        "naturalWidth": 334,
+        "naturalHeight": 250
+      },
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/june-2027-inside-monthly-memory-page.jpg?v=1793218243&width=400",
+        "alt": "Make space for monthly memories",
+        "complete": true,
+        "naturalWidth": 334,
+        "naturalHeight": 445
+      },
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/june-2027-inside-celebration-page.jpg?v=1793218249&width=400",
+        "alt": "Celebrate every chapter",
+        "complete": true,
+        "naturalWidth": 334,
+        "naturalHeight": 445
+      },
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/june-2027-inside-monthly-intentions.jpg?v=1793218255&width=400",
+        "alt": "Start the month with intention",
+        "complete": true,
+        "naturalWidth": 334,
+        "naturalHeight": 445
+      },
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/june-2027-inside-monthly-reflections.jpg?v=1793218262&width=400",
+        "alt": "Reflect, reset and grow",
+        "complete": true,
+        "naturalWidth": 334,
+        "naturalHeight": 445
+      },
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/june-2027-inside-daily-priorities.jpg?v=1793218268&width=400",
+        "alt": "Give every day its place",
+        "complete": true,
+        "naturalWidth": 334,
+        "naturalHeight": 445
+      }
+    ],
+    "expectedFound": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "allLoaded": true,
+    "noHorizontalOverflow": true,
+    "consoleErrors": []
+  },
+  {
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1000
+    },
+    "url": "https://thejuneshop.com/products/create-your-magic-2027-dated-planner?insideqa=oct29",
+    "metrics": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "heading": "Inside your 2027",
+      "cards": 6
+    },
+    "images": [
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/june-2027-inside-monthly-overview.jpg?v=1793218237&width=600",
+        "alt": "See the whole month",
+        "complete": true,
+        "naturalWidth": 576,
+        "naturalHeight": 432
+      },
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/june-2027-inside-monthly-memory-page.jpg?v=1793218243&width=600",
+        "alt": "Make space for monthly memories",
+        "complete": true,
+        "naturalWidth": 576,
+        "naturalHeight": 768
+      },
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/june-2027-inside-celebration-page.jpg?v=1793218249&width=600",
+        "alt": "Celebrate every chapter",
+        "complete": true,
+        "naturalWidth": 576,
+        "naturalHeight": 768
+      },
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/june-2027-inside-monthly-intentions.jpg?v=1793218255&width=600",
+        "alt": "Start the month with intention",
+        "complete": true,
+        "naturalWidth": 576,
+        "naturalHeight": 768
+      },
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/june-2027-inside-monthly-reflections.jpg?v=1793218262&width=600",
+        "alt": "Reflect, reset and grow",
+        "complete": true,
+        "naturalWidth": 576,
+        "naturalHeight": 768
+      },
+      {
+        "src": "https://thejuneshop.com/cdn/shop/files/june-2027-inside-daily-priorities.jpg?v=1793218268&width=600",
+        "alt": "Give every day its place",
+        "complete": true,
+        "naturalWidth": 576,
+        "naturalHeight": 768
+      }
+    ],
+    "expectedFound": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "allLoaded": true,
+    "noHorizontalOverflow": true,
+    "consoleErrors": []
+  }
+]

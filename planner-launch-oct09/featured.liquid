@@ -1,0 +1,17 @@
+{% assign featured_tabs = section.blocks | where: 'type', 'drawer_featured' %}
+{% if featured_tabs.size > 0 %}
+  <nav class="june-featured" aria-label="Featured planners">
+    {% for planner in featured_tabs %}
+      {% if planner.settings.title != blank and planner.settings.link != blank %}
+        <a class="june-featured__tab june-featured__tab--{{ planner.settings.style }}" href="{{ planner.settings.link }}" {{ planner.shopify_attributes }}>
+          <span class="june-featured__content">
+            {% if planner.settings.badge != blank %}<span class="june-featured__badge">{{ planner.settings.badge | escape }}</span>{% endif %}
+            <strong class="june-featured__title">{{ planner.settings.title | escape }}</strong>
+            {% if planner.settings.subtitle != blank %}<span class="june-featured__copy">{{ planner.settings.subtitle | escape }}</span>{% endif %}
+          </span>
+          <span class="june-featured__arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </nav>
+{% endif %}

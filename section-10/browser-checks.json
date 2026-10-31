@@ -1,0 +1,117 @@
+{
+  "interactions": [
+    {
+      "link": "/products/glossy-finish-gold-rimmed-bowl",
+      "product": "Glossy Finish Gold Rimmed Bowl\n\n11 × 11 × 6 cm · Single ceramic bowl\n\nRs. 299\n\nExplore this piece",
+      "selected": "01\nBowls\n↗"
+    },
+    {
+      "link": "/products/matte-finish-gold-rimmed-starter-plate",
+      "product": "Matte Finish Gold Rimmed Starter Plate\n\n19 × 19 × 4 cm · Single ceramic plate\n\nRs. 799\n\nExplore this piece",
+      "selected": "02\nSide plates\n↗"
+    },
+    {
+      "link": "/products/matte-finish-gold-rimmed-dinner-plate",
+      "product": "Matte Finish Gold Rimmed Dinner Plate\n\n26 × 26 × 2 cm · Single ceramic plate\n\nRs. 1,599\n\nExplore this piece",
+      "selected": "03\nDinner plates\n↗"
+    },
+    {
+      "keyboardHome": "01\nBowls\n↗"
+    },
+    {
+      "keyboardEnd": "03\nDinner plates\n↗"
+    }
+  ],
+  "widths": [
+    {
+      "document": 305,
+      "font": "Poppins, sans-serif",
+      "section": {
+        "bottom": 1583.65625,
+        "height": 1266.140625,
+        "left": 0,
+        "right": 305,
+        "top": 317.515625,
+        "width": 305,
+        "x": 0,
+        "y": 317.515625
+      },
+      "viewport": 320
+    },
+    {
+      "document": 375,
+      "font": "Poppins, sans-serif",
+      "section": {
+        "bottom": 1435.078125,
+        "height": 1181.953125,
+        "left": 0,
+        "right": 375,
+        "top": 253.125,
+        "width": 375,
+        "x": 0,
+        "y": 253.125
+      },
+      "viewport": 390
+    },
+    {
+      "document": 735,
+      "font": "Poppins, sans-serif",
+      "section": {
+        "bottom": 1251.8125,
+        "height": 1055.953125,
+        "left": 0,
+        "right": 735,
+        "top": 195.859375,
+        "width": 735,
+        "x": 0,
+        "y": 195.859375
+      },
+      "viewport": 750
+    },
+    {
+      "document": 1009,
+      "font": "Poppins, sans-serif",
+      "section": {
+        "bottom": 719.0625,
+        "height": 647.1875,
+        "left": 0,
+        "right": 1009,
+        "top": 71.875,
+        "width": 1009,
+        "x": 0,
+        "y": 71.875
+      },
+      "viewport": 1024
+    },
+    {
+      "document": 1425,
+      "font": "Poppins, sans-serif",
+      "section": {
+        "bottom": 741.28125,
+        "height": 679.1875,
+        "left": 0,
+        "right": 1425,
+        "top": 62.09375,
+        "width": 1425,
+        "x": 0,
+        "y": 62.09375
+      },
+      "viewport": 1440
+    },
+    {
+      "document": 2545,
+      "font": "Poppins, sans-serif",
+      "section": {
+        "bottom": 741.28125,
+        "height": 679.1875,
+        "left": 432.5,
+        "right": 2112.5,
+        "top": 62.09375,
+        "width": 1680,
+        "x": 432.5,
+        "y": 62.09375
+      },
+      "viewport": 2560
+    }
+  ]
+}

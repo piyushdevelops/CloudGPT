@@ -1,0 +1,1754 @@
+{% liquid
+  assign card_shadow_alpha = section.settings.shadow_opacity | times: 0.01
+  assign product_shadow_contact = section.settings.product_shadow_strength | times: 0.0026
+  assign product_shadow_mid = section.settings.product_shadow_strength | times: 0.0018
+  assign product_shadow_soft = section.settings.product_shadow_strength | times: 0.00125
+  assign ground_shadow_alpha = section.settings.ground_shadow_opacity | times: 0.0027
+
+  assign first_image_is_critical = false
+  if section.index != blank and section.index <= 2
+    assign first_image_is_critical = true
+  endif
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --tjs-duo-space-top: {{ section.settings.padding_top }}px;
+    --tjs-duo-space-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo {
+    --tjs-gap: {{ section.settings.card_gap }}px;
+    --tjs-radius: {{ section.settings.corner_radius }}px;
+    --tjs-card-shadow-alpha: {{ card_shadow_alpha }};
+    --tjs-product-shadow-contact: {{ product_shadow_contact }};
+    --tjs-product-shadow-mid: {{ product_shadow_mid }};
+    --tjs-product-shadow-soft: {{ product_shadow_soft }};
+    --tjs-ground-shadow-alpha: {{ ground_shadow_alpha }};
+    --tjs-autoplay-duration: {{ section.settings.autoplay_speed }}s;
+    --tjs-title-font: {% if section.settings.heading_font_style == 'body' %}var(--font-body-family, Arial, sans-serif){% else %}var(--font-heading-family, var(--font-body-family, Arial, sans-serif)){% endif %};
+    padding-block: var(--tjs-duo-space-top) var(--tjs-duo-space-bottom);
+    color: #171614;
+    font-family: var(--font-body-family, Arial, sans-serif);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo,
+  #shopify-section-{{ section.id }} .tjs-category-duo * {
+    box-sizing: border-box;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__outer {
+    width: min(100%, {{ section.settings.max_width }}px);
+    margin-inline: auto;
+    padding-inline: {{ section.settings.page_gutter }}px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__layout {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--tjs-gap);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__card {
+    --card-bg: #F3F1ED;
+    --card-text: #191715;
+    --card-muted: #6F6963;
+    --card-accent: #B98D55;
+    --card-product-scale-desktop: {{ section.settings.product_scale_desktop }}%;
+    --card-product-scale-mobile: {{ section.settings.product_scale_mobile }}%;
+    --card-desktop-content-width: {{ section.settings.desktop_content_width }}%;
+    --card-mobile-content-width: {{ section.settings.mobile_content_width }}%;
+    --card-mobile-scrim: {{ section.settings.mobile_scrim }}%;
+    position: relative;
+    isolation: isolate;
+    min-width: 0;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--card-text) 8%, transparent);
+    border-radius: var(--tjs-radius);
+    background-color: var(--card-bg);
+    background-image:
+      radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--card-accent) 16%, transparent) 0, transparent 31%),
+      linear-gradient(132deg, color-mix(in srgb, var(--card-bg) 98%, white) 0%, var(--card-bg) 63%, color-mix(in srgb, var(--card-bg) 92%, var(--card-accent)) 100%);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, .62) inset,
+      0 20px 54px rgba(31, 26, 22, var(--tjs-card-shadow-alpha));
+    color: var(--card-text);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__card::before {
+    content: '';
+    position: absolute;
+    inset: 9px;
+    z-index: 8;
+    border: 1px solid color-mix(in srgb, var(--card-text) 5%, transparent);
+    border-radius: max(calc(var(--tjs-radius) - 7px), 0px);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__card::after {
+    content: '';
+    position: absolute;
+    right: -9%;
+    top: -31%;
+    z-index: 0;
+    width: 40%;
+    aspect-ratio: 1;
+    border: 1px solid color-mix(in srgb, var(--card-accent) 22%, transparent);
+    border-radius: 50%;
+    opacity: .72;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__content {
+    position: absolute;
+    inset: 0 auto 0 0;
+    z-index: 5;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: var(--card-desktop-content-width);
+    padding: clamp(24px, 3vw, 42px) 0 clamp(22px, 3vw, 38px) clamp(24px, 3vw, 42px);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__content > * {
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 14px;
+    color: var(--card-accent);
+    font-size: 10px;
+    font-weight: 720;
+    line-height: 1;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__heading {
+    margin: 0;
+    width: min(100%, 9.5ch);
+    color: var(--card-text);
+    font-family: var(--tjs-title-font);
+    font-size: clamp(31px, 3.15vw, {{ section.settings.heading_size }}px);
+    font-weight: {{ section.settings.heading_weight }};
+    font-style: normal;
+    font-synthesis: none;
+    line-height: .94;
+    letter-spacing: -.046em;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    text-wrap: balance;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__heading--medium,
+  #shopify-section-{{ section.id }} .tjs-category-duo__heading--long {
+    width: min(100%, 11.5ch);
+    font-size: clamp(28px, 2.85vw, calc({{ section.settings.heading_size }}px * .88));
+    line-height: .96;
+  }
+
+
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    #shopify-section-{{ section.id }} .tjs-category-duo__heading {
+      background-image:
+        linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--card-text) 54%, white) 0%,
+          color-mix(in srgb, var(--card-text) 86%, white) 28%,
+          var(--card-text) 46%,
+          color-mix(in srgb, var(--card-text) 78%, var(--card-accent)) 68%,
+          color-mix(in srgb, var(--card-text) 90%, white) 100%
+        ),
+        linear-gradient(
+          108deg,
+          transparent 0%,
+          transparent 40%,
+          rgba(255, 255, 255, 0.08) 45%,
+          rgba(255, 255, 255, 0.82) 49%,
+          rgba(255, 255, 255, 0.16) 54%,
+          transparent 60%,
+          transparent 100%
+        );
+      background-size: 100% 100%, 240% 100%;
+      background-position: 0 0, 135% 0;
+      background-blend-mode: normal, screen;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      filter:
+        drop-shadow(0 1px 0 rgba(255, 255, 255, .34))
+        drop-shadow(0 7px 14px color-mix(in srgb, var(--card-accent) 12%, transparent));
+      animation: tjs-duo-heading-gloss-{{ section.id }} 8.5s ease-in-out infinite;
+    }
+  }
+
+  @keyframes tjs-duo-heading-gloss-{{ section.id }} {
+    0%, 58% { background-position: 0 0, 135% 0; }
+    86%, 100% { background-position: 0 0, -45% 0; }
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__description {
+    display: -webkit-box;
+    max-width: 28ch;
+    margin: 12px 0 0;
+    overflow: hidden;
+    color: var(--card-muted);
+    font-size: 11px;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: {{ section.settings.desktop_description_lines }};
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__description > * {
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__links {
+    display: grid;
+    gap: 0;
+    width: 100%;
+    margin: 17px 0 0;
+    padding: 0 8px 0 0;
+    list-style: none;
+    border-top: 1px solid color-mix(in srgb, var(--card-text) 10%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__links > li {
+    min-width: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--card-text) 10%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__link {
+    position: relative;
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px;
+    min-height: 29px;
+    border-radius: 7px;
+    color: var(--card-text);
+    font-size: 10.5px;
+    font-weight: 540;
+    line-height: 1.2;
+    text-decoration: none;
+    transition:
+      padding .28s cubic-bezier(.22, .8, .3, 1),
+      background-color .28s ease,
+      box-shadow .28s ease,
+      color .28s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__link.is-active {
+    padding-inline: 9px 7px;
+    background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+    box-shadow: inset 2px 0 0 var(--card-accent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__link.is-active .tjs-category-duo__link-index {
+    color: var(--card-accent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__link.is-active .tjs-category-duo__link-label {
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__link.is-active .tjs-category-duo__link-arrow {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
+
+  #shopify-section-{{ section.id }} a.tjs-category-duo__link:hover,
+  #shopify-section-{{ section.id }} a.tjs-category-duo__link:focus-visible {
+    padding-left: 5px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__link-index {
+    color: color-mix(in srgb, var(--card-muted) 74%, transparent);
+    font-size: 8px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .08em;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__link-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__link-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__link-count {
+    color: var(--card-muted);
+    font-size: 9px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .05em;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__link-arrow {
+    width: 11px;
+    height: 11px;
+    opacity: .48;
+    transition: opacity .24s ease, transform .24s ease;
+  }
+
+  #shopify-section-{{ section.id }} a.tjs-category-duo__link:hover .tjs-category-duo__link-arrow,
+  #shopify-section-{{ section.id }} a.tjs-category-duo__link:focus-visible .tjs-category-duo__link-arrow {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__button {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    justify-content: center;
+    gap: 9px;
+    min-height: 34px;
+    margin-top: auto;
+    padding: 9px 11px;
+    border: 1px solid var(--card-text);
+    border-radius: 9px;
+    background: var(--card-text);
+    color: var(--card-bg);
+    font-size: 7.5px;
+    font-weight: 760;
+    line-height: 1;
+    letter-spacing: .11em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__button svg {
+    width: 13px;
+    transition: transform .25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__button:hover,
+  #shopify-section-{{ section.id }} .tjs-category-duo__button:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(24, 20, 18, .14);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__button:hover svg,
+  #shopify-section-{{ section.id }} .tjs-category-duo__button:focus-visible svg {
+    transform: translateX(3px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__media {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    min-width: 0;
+    overflow: hidden;
+    outline: none;
+    touch-action: pan-y;
+    contain: layout paint;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__media:focus-visible {
+    box-shadow: 0 0 0 2px var(--card-accent) inset;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__slides {
+    position: absolute;
+    inset: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__slide {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(7%, 0, 0) scale(.975);
+    transition:
+      opacity .56s cubic-bezier(.22, .8, .3, 1),
+      transform .7s cubic-bezier(.22, .8, .3, 1);
+    will-change: opacity, transform;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__slide.is-active {
+    z-index: 2;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__slide-link {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__product-stage {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    transform:
+      translate3d(var(--tjs-image-x-desktop, 0%), var(--tjs-image-y-desktop, 0%), 0)
+      rotate(var(--tjs-image-rotate-desktop, 0deg));
+    transform-origin: 50% 72%;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__product-stage::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 8%;
+    z-index: 0;
+    width: 58%;
+    height: 10%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(26, 21, 18, var(--tjs-ground-shadow-alpha)) 0%, rgba(26, 21, 18, 0) 72%);
+    transform: translateX(-50%) scaleX(.92);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__product-stage::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 0;
+    width: 77%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--card-accent) {{ section.settings.spotlight_strength }}%, transparent) 0%, transparent 68%);
+    transform: translate(-50%, -50%);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__image {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: var(--card-product-scale-desktop);
+    max-height: var(--card-product-scale-desktop);
+    object-fit: contain;
+    object-position: center;
+    image-rendering: auto;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    filter:
+      drop-shadow(0 2px 1px rgba(24, 20, 18, var(--tjs-product-shadow-contact)))
+      drop-shadow(0 16px 21px rgba(24, 20, 18, var(--tjs-product-shadow-mid)))
+      drop-shadow(0 38px 48px rgba(24, 20, 18, var(--tjs-product-shadow-soft)));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo[data-float='true'] .tjs-category-duo__slide.is-active .tjs-category-duo__image {
+    animation: tjs-duo-float-{{ section.id }} 6.4s ease-in-out infinite;
+  }
+
+  @keyframes tjs-duo-float-{{ section.id }} {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -6px, 0); }
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__slide-label {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 5;
+    margin: 0;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: var(--card-text);
+    color: var(--card-bg);
+    font-size: 6.5px;
+    font-weight: 750;
+    line-height: 1;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__controls {
+    position: absolute;
+    right: 13px;
+    bottom: 13px;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 25px;
+    padding: 5px 6px;
+    border: 1px solid color-mix(in srgb, var(--card-text) 10%, transparent);
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--card-bg) 91%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__dots {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__dot {
+    position: relative;
+    width: 11px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__dot::before,
+  #shopify-section-{{ section.id }} .tjs-category-duo__dot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
+    transform-origin: left center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__dot::before {
+    background: var(--card-text);
+    opacity: .18;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__dot::after {
+    background: var(--card-text);
+    transform: translateY(-50%) scaleX(0);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__dot.is-active::after {
+    transform: translateY(-50%) scaleX(1);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__card[data-playing='true'] .tjs-category-duo__dot.is-active::after {
+    animation: tjs-duo-progress-{{ section.id }} var(--tjs-autoplay-duration) linear forwards;
+  }
+
+  @keyframes tjs-duo-progress-{{ section.id }} {
+    from { transform: translateY(-50%) scaleX(0); }
+    to { transform: translateY(-50%) scaleX(1); }
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__counter {
+    min-width: 24px;
+    color: var(--card-muted);
+    font-size: 6.5px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .08em;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-category-duo__empty {
+    display: grid;
+    min-height: 100%;
+    place-items: center;
+    padding: 30px;
+    color: var(--card-muted);
+    text-align: center;
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tjs-category-duo {
+      --tjs-mobile-ratio: {% case section.settings.mobile_ratio %}{% when 'three-two' %}3 / 2{% when 'seven-five' %}7 / 5{% else %}16 / 10{% endcase %};
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__outer {
+      padding-inline: {{ section.settings.mobile_gutter }}px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__layout {
+      grid-template-columns: 1fr;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__card {
+      aspect-ratio: var(--tjs-mobile-ratio);
+      border-radius: min(var(--tjs-radius), 18px);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, .62) inset,
+        0 14px 36px rgba(31, 26, 22, var(--tjs-card-shadow-alpha));
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__card::before {
+      inset: 7px;
+      border-radius: max(calc(min(var(--tjs-radius), 18px) - 6px), 0px);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__card::after {
+      inset: 0;
+      z-index: 3;
+      width: auto;
+      aspect-ratio: auto;
+      border: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--card-bg) var(--card-mobile-scrim), transparent) 0%,
+        color-mix(in srgb, var(--card-bg) calc(var(--card-mobile-scrim) - 9%), transparent) 35%,
+        color-mix(in srgb, var(--card-bg) 43%, transparent) 59%,
+        transparent 79%
+      );
+      opacity: 1;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__content {
+      width: var(--card-mobile-content-width);
+      padding: 18px 0 16px 18px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__eyebrow {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__heading {
+      width: min(52vw, 11ch);
+      max-width: none;
+      font-size: clamp(24px, 7.4vw, {{ section.settings.mobile_heading_size }}px);
+      line-height: .94;
+      letter-spacing: -.041em;
+      text-wrap: pretty;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__heading--medium,
+    #shopify-section-{{ section.id }} .tjs-category-duo__heading--long {
+      width: min(54vw, 12ch);
+      font-size: clamp(21px, 6.6vw, calc({{ section.settings.mobile_heading_size }}px * .84));
+      line-height: .97;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__description {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__links {
+      margin-top: 11px;
+      padding-right: 6px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__links > li:nth-child(n+{{ section.settings.mobile_links_limit | plus: 1 }}) {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__link {
+      grid-template-columns: 17px minmax(0, 1fr) auto;
+      min-height: 23px;
+      font-size: 9px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__link.is-active {
+      margin-left: -6px;
+      padding-inline: 7px 5px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__link-index {
+      font-size: 6.5px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__link-count {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__link-arrow {
+      width: 8px;
+      height: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__button {
+      min-height: 30px;
+      padding: 8px 10px;
+      font-size: 6.5px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__slide {
+      padding: 9px;
+      transform: translate3d(9%, 0, 0) scale(.97);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__product-stage {
+      transform:
+        translate3d(var(--tjs-image-x-mobile, 18%), var(--tjs-image-y-mobile, 6%), 0)
+        rotate(var(--tjs-image-rotate-mobile, 0deg));
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__product-stage::before {
+      bottom: 7%;
+      width: 56%;
+      height: 9%;
+      transform: translateX(-50%) scaleX(.88);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__product-stage::after {
+      width: 82%;
+      opacity: .84;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__image {
+      max-width: var(--card-product-scale-mobile);
+      max-height: var(--card-product-scale-mobile);
+      filter:
+        drop-shadow(0 1px 1px rgba(24, 20, 18, var(--tjs-product-shadow-contact)))
+        drop-shadow(0 9px 13px rgba(24, 20, 18, var(--tjs-product-shadow-mid)))
+        drop-shadow(0 19px 25px rgba(24, 20, 18, var(--tjs-product-shadow-soft)));
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__controls {
+      right: 9px;
+      bottom: 9px;
+      min-height: 22px;
+      padding: 4px 5px;
+    }
+  }
+
+  @media screen and (max-width: 389px) {
+    #shopify-section-{{ section.id }} .tjs-category-duo__content {
+      padding: 15px 0 13px 15px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__heading {
+      font-size: clamp(21px, 6.9vw, {{ section.settings.mobile_heading_size }}px);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-category-duo__link {
+      min-height: 21px;
+      font-size: 8.5px;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    #shopify-section-{{ section.id }} .tjs-category-duo__slide-link:hover .tjs-category-duo__image {
+      transform: translate3d(0, -4px, 0) scale(1.012);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{ section.id }} .tjs-category-duo__heading,
+    #shopify-section-{{ section.id }} .tjs-category-duo__slide,
+    #shopify-section-{{ section.id }} .tjs-category-duo__image,
+    #shopify-section-{{ section.id }} .tjs-category-duo__button,
+    #shopify-section-{{ section.id }} .tjs-category-duo__button svg,
+    #shopify-section-{{ section.id }} .tjs-category-duo__link,
+    #shopify-section-{{ section.id }} .tjs-category-duo__link-arrow,
+    #shopify-section-{{ section.id }} .tjs-category-duo__dot::after {
+      animation: none !important;
+      transition-duration: .01ms !important;
+    }
+  }
+{% endstyle %}
+
+<section
+  class="tjs-category-duo"
+  data-tjs-category-duo="{{ section.id }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-interval="{{ section.settings.autoplay_speed | times: 1000 }}"
+  data-float="{{ section.settings.enable_float }}"
+>
+  <div class="tjs-category-duo__outer">
+    <div class="tjs-category-duo__layout">
+      {% for panel_index in (1..2) %}
+        {% liquid
+          assign collection_key = 'panel_' | append: panel_index | append: '_collection'
+          assign heading_key = 'panel_' | append: panel_index | append: '_heading'
+          assign button_link_key = 'panel_' | append: panel_index | append: '_button_link'
+          assign background_key = 'panel_' | append: panel_index | append: '_background'
+          assign accent_key = 'panel_' | append: panel_index | append: '_accent'
+
+          assign panel_collection = section.settings[collection_key]
+          assign panel_heading = section.settings[heading_key]
+          if panel_heading == blank and panel_collection != blank
+            assign panel_heading = panel_collection.title
+          endif
+
+          assign panel_heading_class = ''
+          assign panel_heading_length = panel_heading | size
+          if panel_heading_length > 26
+            assign panel_heading_class = ' tjs-category-duo__heading--long'
+          elsif panel_heading_length > 16
+            assign panel_heading_class = ' tjs-category-duo__heading--medium'
+          endif
+
+          assign panel_index_string = panel_index | append: ''
+          assign panel_item_count = blank
+          if panel_collection != blank
+            assign panel_item_count = panel_collection.all_products_count
+          endif
+
+          assign panel_button_link = section.settings[button_link_key]
+          if panel_button_link == blank and panel_collection != blank
+            assign panel_button_link = panel_collection.url
+          endif
+
+          assign panel_slide_count = 0
+          assign panel_subcategory_count = 0
+          assign panel_first_matched_handle = ''
+          for block in section.blocks
+            if block.settings.panel == panel_index_string
+              if block.type == 'product_slide' and block.settings.image != blank
+                assign panel_slide_count = panel_slide_count | plus: 1
+                if panel_slide_count == 1 and block.settings.matching_collection != blank
+                  assign panel_first_matched_handle = block.settings.matching_collection.handle
+                endif
+              elsif block.type == 'subcategory'
+                assign panel_subcategory_count = panel_subcategory_count | plus: 1
+              endif
+            endif
+          endfor
+        %}
+
+        <article
+          class="tjs-category-duo__card"
+          data-duo-card="{{ panel_index }}"
+          data-playing="false"
+          style="
+            --card-bg: {{ section.settings[background_key] }};
+            --card-text: {{ section.settings.text_color }};
+            --card-muted: {{ section.settings.muted_text_color }};
+            --card-accent: {{ section.settings[accent_key] }};
+          "
+        >
+          <div class="tjs-category-duo__content">
+            {% if section.settings.show_counts and panel_item_count != blank %}
+              <p class="tjs-category-duo__eyebrow"><span>{{ panel_item_count }}+ items</span></p>
+            {% else %}
+              <p class="tjs-category-duo__eyebrow"><span>The June Edit</span></p>
+            {% endif %}
+
+            {% if panel_heading != blank %}
+              <h2 class="tjs-category-duo__heading{{ panel_heading_class }}">{{ panel_heading | escape }}</h2>
+            {% endif %}
+
+            {% if panel_subcategory_count > 0 %}
+              <ul class="tjs-category-duo__links" role="list">
+                {% assign panel_subcategory_index = 0 %}
+                {% for block in section.blocks %}
+                  {% if block.type == 'subcategory' and block.settings.panel == panel_index_string %}
+                    {% assign panel_subcategory_index = panel_subcategory_index | plus: 1 %}
+                    {% liquid
+                      assign sub_collection = block.settings.collection
+                      assign sub_label = block.settings.label
+                      assign sub_url = block.settings.link
+
+                      if sub_label == blank and sub_collection != blank
+                        assign sub_label = sub_collection.title
+                      endif
+
+                      if sub_url == blank and sub_collection != blank
+                        assign sub_url = sub_collection.url
+                      endif
+
+                      assign subcategory_handle = ''
+                      if sub_collection != blank
+                        assign subcategory_handle = sub_collection.handle
+                      endif
+
+                      assign subcategory_is_active = false
+                      if subcategory_handle != blank and subcategory_handle == panel_first_matched_handle
+                        assign subcategory_is_active = true
+                      endif
+                    %}
+
+                    {% if sub_label != blank %}
+                      <li {{ block.shopify_attributes }}>
+                        {% if sub_url != blank %}
+                          <a class="tjs-category-duo__link{% if subcategory_is_active %} is-active{% endif %}" href="{{ sub_url }}" {% if subcategory_handle != blank %}data-subcategory-handle="{{ subcategory_handle | escape }}"{% endif %}>
+                        {% else %}
+                          <span class="tjs-category-duo__link{% if subcategory_is_active %} is-active{% endif %}" {% if subcategory_handle != blank %}data-subcategory-handle="{{ subcategory_handle | escape }}"{% endif %}>
+                        {% endif %}
+                            <span class="tjs-category-duo__link-index" aria-hidden="true">{% if panel_subcategory_index < 10 %}0{% endif %}{{ panel_subcategory_index }}</span>
+                            <span class="tjs-category-duo__link-label">{{ sub_label | escape }}</span>
+                            <span class="tjs-category-duo__link-meta">
+                              {% if section.settings.show_subcategory_counts and sub_collection != blank %}
+                                <span class="tjs-category-duo__link-count">{{ sub_collection.all_products_count }}</span>
+                              {% endif %}
+                              <svg class="tjs-category-duo__link-arrow" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+                                <path d="M2 10 10 2M4 2h6v6" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                            </span>
+                        {% if sub_url != blank %}
+                          </a>
+                        {% else %}
+                          </span>
+                        {% endif %}
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% endif %}
+
+            {% if section.settings.show_buttons and panel_button_link != blank and section.settings.button_label != blank %}
+              <a class="tjs-category-duo__button" href="{{ panel_button_link }}">
+                <span>{{ section.settings.button_label | escape }}</span>
+                <svg viewBox="0 0 18 12" aria-hidden="true" focusable="false">
+                  <path d="M1 6h15M11 1l5 5-5 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            {% endif %}
+          </div>
+
+          <div class="tjs-category-duo__media" aria-roledescription="carousel" aria-label="{{ panel_heading | default: 'Featured products' | escape }}" {% if panel_slide_count > 1 %}tabindex="0"{% endif %}>
+            {% if panel_slide_count > 0 %}
+              <div class="tjs-category-duo__slides" aria-live="off">
+                {% assign panel_slide_index = 0 %}
+                {% for block in section.blocks %}
+                  {% if block.type == 'product_slide' and block.settings.panel == panel_index_string and block.settings.image != blank %}
+                    {% assign panel_slide_index = panel_slide_index | plus: 1 %}
+                    {% liquid
+                      assign image_alt = block.settings.alt_text
+                      if image_alt == blank
+                        assign image_alt = block.settings.image.alt
+                      endif
+                      if image_alt == blank
+                        assign image_alt = block.settings.label
+                      endif
+                      if image_alt == blank
+                        assign image_alt = panel_heading
+                      endif
+
+                      assign image_loading = 'lazy'
+                      assign image_priority = 'low'
+                      if panel_index == 1 and panel_slide_index == 1 and first_image_is_critical
+                        assign image_loading = 'eager'
+                        assign image_priority = 'high'
+                      endif
+                    %}
+
+                    <div
+                      class="tjs-category-duo__slide{% if panel_slide_index == 1 %} is-active{% endif %}"
+                      data-slide-index="{{ panel_slide_index | minus: 1 }}"
+                      data-linked-subcategory="{% if block.settings.matching_collection != blank %}{{ block.settings.matching_collection.handle | escape }}{% endif %}"
+                      aria-hidden="{% if panel_slide_index == 1 %}false{% else %}true{% endif %}"
+                      style="
+                        --tjs-image-x-desktop: {{ block.settings.image_x }}%;
+                        --tjs-image-y-desktop: {{ block.settings.image_y }}%;
+                        --tjs-image-rotate-desktop: {{ block.settings.image_rotate }}deg;
+                        --tjs-image-x-mobile: {{ block.settings.mobile_image_x }}%;
+                        --tjs-image-y-mobile: {{ block.settings.mobile_image_y }}%;
+                        --tjs-image-rotate-mobile: {{ block.settings.mobile_image_rotate }}deg;
+                      "
+                      {{ block.shopify_attributes }}
+                    >
+                      {% if block.settings.label != blank %}
+                        <p class="tjs-category-duo__slide-label">{{ block.settings.label | escape }}</p>
+                      {% endif %}
+
+                      {% if block.settings.link != blank %}
+                        <a class="tjs-category-duo__slide-link" href="{{ block.settings.link }}" aria-label="{{ block.settings.label | default: image_alt | escape }}" {% unless panel_slide_index == 1 %}tabindex="-1"{% endunless %}>
+                      {% else %}
+                        <div class="tjs-category-duo__slide-link">
+                      {% endif %}
+
+                        <div class="tjs-category-duo__product-stage">
+                          {{ block.settings.image
+                            | image_url: width: 2400
+                            | image_tag:
+                              class: 'tjs-category-duo__image',
+                              loading: image_loading,
+                              fetchpriority: image_priority,
+                              decoding: 'async',
+                              widths: '360, 480, 620, 760, 900, 1100, 1400, 1800, 2200, 2400',
+                              sizes: '(max-width: 749px) 72vw, (max-width: 1199px) 48vw, 720px',
+                              alt: image_alt
+                          }}
+                        </div>
+
+                      {% if block.settings.link != blank %}
+                        </a>
+                      {% else %}
+                        </div>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+            {% else %}
+              <div class="tjs-category-duo__empty">Add “Product slide” blocks and assign them to Card {{ panel_index }}.</div>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const selector = '[data-tjs-category-duo="{{ section.id }}"]';
+
+    const initialise = (root) => {
+      if (!root || root.dataset.initialised === 'true') return;
+      root.dataset.initialised = 'true';
+
+      const controller = new AbortController();
+      const { signal } = controller;
+      const cards = Array.from(root.querySelectorAll('[data-duo-card]'));
+      const autoplayEnabled = root.dataset.autoplay === 'true';
+      const interval = Math.max(parseInt(root.dataset.interval, 10) || 3500, 2000);
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+      const instances = [];
+
+      cards.forEach((card, cardPosition) => {
+        const slides = Array.from(card.querySelectorAll('[data-slide-index]'));
+        const dots = Array.from(card.querySelectorAll('[data-go-to]'));
+        const media = card.querySelector('.tjs-category-duo__media');
+        const currentOutput = card.querySelector('[data-current-slide]');
+        const subcategoryLinks = Array.from(card.querySelectorAll('[data-subcategory-handle]'));
+
+        let current = 0;
+        let timer = null;
+        let delayedStart = null;
+        let inViewport = true;
+        let pointerStart = null;
+        let observer = null;
+
+        const twoDigits = (number) => String(number).padStart(2, '0');
+
+        const preloadSlide = (index) => {
+          if (slides.length < 2) return;
+          const target = slides[(index + slides.length) % slides.length];
+          const image = target?.querySelector('img');
+          if (!image) return;
+          image.loading = 'eager';
+          if (typeof image.decode === 'function') image.decode().catch(() => {});
+        };
+
+        const syncSubcategoryHighlight = (slide) => {
+          const matchingHandle = slide?.dataset.linkedSubcategory || '';
+          subcategoryLinks.forEach((link) => {
+            const active = Boolean(matchingHandle) && link.dataset.subcategoryHandle === matchingHandle;
+            link.classList.toggle('is-active', active);
+          });
+        };
+
+        const stopAutoplay = () => {
+          if (timer) window.clearInterval(timer);
+          if (delayedStart) window.clearTimeout(delayedStart);
+          timer = null;
+          delayedStart = null;
+          card.dataset.playing = 'false';
+        };
+
+        const showSlide = (nextIndex, restart = false) => {
+          if (!slides.length) return;
+          current = (nextIndex + slides.length) % slides.length;
+
+          slides.forEach((slide, index) => {
+            const active = index === current;
+            slide.classList.toggle('is-active', active);
+            slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+            const link = slide.querySelector('a');
+            if (link) link.tabIndex = active ? 0 : -1;
+          });
+
+          dots.forEach((dot, index) => {
+            const active = index === current;
+            dot.classList.toggle('is-active', active);
+            dot.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+
+          if (currentOutput) currentOutput.textContent = twoDigits(current + 1);
+          syncSubcategoryHighlight(slides[current]);
+          preloadSlide(current + 1);
+          if (restart) startAutoplay(false);
+        };
+
+        const startAutoplay = (useStagger = true) => {
+          stopAutoplay();
+          if (slides.length < 2 || !autoplayEnabled || reduceMotion.matches || document.hidden || !inViewport) return;
+
+          const launch = () => {
+            card.dataset.playing = 'true';
+            timer = window.setInterval(() => showSlide(current + 1), interval);
+          };
+
+          if (useStagger && cardPosition > 0) {
+            delayedStart = window.setTimeout(launch, cardPosition * 420);
+          } else {
+            launch();
+          }
+        };
+
+        dots.forEach((dot) => {
+          dot.addEventListener('click', () => {
+            showSlide(parseInt(dot.dataset.goTo, 10), true);
+          }, { signal });
+        });
+
+        if (hasHover.matches) {
+          card.addEventListener('mouseenter', stopAutoplay, { signal });
+          card.addEventListener('mouseleave', () => startAutoplay(false), { signal });
+        }
+
+        card.addEventListener('focusin', stopAutoplay, { signal });
+        card.addEventListener('focusout', (event) => {
+          if (!card.contains(event.relatedTarget)) startAutoplay(false);
+        }, { signal });
+
+        if (media) {
+          media.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+              event.preventDefault();
+              showSlide(current + 1, true);
+            } else if (event.key === 'ArrowLeft') {
+              event.preventDefault();
+              showSlide(current - 1, true);
+            }
+          }, { signal });
+
+          media.addEventListener('pointerdown', (event) => {
+            if (event.pointerType === 'mouse' && event.button !== 0) return;
+            pointerStart = { x: event.clientX, y: event.clientY, time: performance.now() };
+            stopAutoplay();
+          }, { passive: true, signal });
+
+          media.addEventListener('pointerup', (event) => {
+            if (!pointerStart) return;
+            const deltaX = event.clientX - pointerStart.x;
+            const deltaY = event.clientY - pointerStart.y;
+            const elapsed = performance.now() - pointerStart.time;
+            pointerStart = null;
+
+            const isHorizontalSwipe = Math.abs(deltaX) > 38 && Math.abs(deltaX) > Math.abs(deltaY) * 1.15 && elapsed < 900;
+            if (isHorizontalSwipe) {
+              showSlide(deltaX < 0 ? current + 1 : current - 1, true);
+            } else {
+              startAutoplay(false);
+            }
+          }, { passive: true, signal });
+
+          media.addEventListener('pointercancel', () => {
+            pointerStart = null;
+            startAutoplay(false);
+          }, { signal });
+        }
+
+        if ('IntersectionObserver' in window) {
+          observer = new IntersectionObserver((entries) => {
+            inViewport = entries[0]?.isIntersecting ?? true;
+            if (inViewport) startAutoplay(true);
+            else stopAutoplay();
+          }, { threshold: 0.12 });
+          observer.observe(card);
+        }
+
+        syncSubcategoryHighlight(slides[current]);
+        preloadSlide(1);
+        startAutoplay(true);
+
+        instances.push({ stopAutoplay, startAutoplay, showSlide, observer });
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        instances.forEach((instance) => {
+          if (document.hidden) instance.stopAutoplay();
+          else instance.startAutoplay(true);
+        });
+      }, { signal });
+
+      document.addEventListener('shopify:block:select', (event) => {
+        const selectedSlide = event.target.closest(`${selector} [data-slide-index]`);
+        if (!selectedSlide) return;
+        const selectedCard = selectedSlide.closest('[data-duo-card]');
+        const selectedCardIndex = cards.indexOf(selectedCard);
+        if (selectedCardIndex < 0) return;
+        instances[selectedCardIndex].showSlide(parseInt(selectedSlide.dataset.slideIndex, 10));
+        instances[selectedCardIndex].stopAutoplay();
+      }, { signal });
+
+      root.tjsCategoryDuoDestroy = () => {
+        instances.forEach((instance) => {
+          instance.stopAutoplay();
+          if (instance.observer) instance.observer.disconnect();
+        });
+        controller.abort();
+      };
+    };
+
+    initialise(document.querySelector(selector));
+
+    document.addEventListener('shopify:section:load', (event) => {
+      initialise(event.target.querySelector(selector));
+    });
+
+    document.addEventListener('shopify:section:unload', (event) => {
+      const root = event.target.querySelector(selector);
+      if (root && typeof root.tjsCategoryDuoDestroy === 'function') {
+        root.tjsCategoryDuoDestroy();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TJS category duo",
+  "tag": "section",
+  "class": "section-tjs-category-duo",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_counts",
+      "label": "Show collection product counts",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subcategory_counts",
+      "label": "Show counts beside subcategories on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_buttons",
+      "label": "Show explore buttons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore the collection"
+    },
+    {
+      "type": "header",
+      "content": "Card 1"
+    },
+    {
+      "type": "collection",
+      "id": "panel_1_collection",
+      "label": "Card 1 collection"
+    },
+    {
+      "type": "text",
+      "id": "panel_1_heading",
+      "label": "Card 1 custom heading"
+    },
+    {
+      "type": "url",
+      "id": "panel_1_button_link",
+      "label": "Card 1 custom button link"
+    },
+    {
+      "type": "color",
+      "id": "panel_1_background",
+      "label": "Card 1 background",
+      "default": "#F3F1ED"
+    },
+    {
+      "type": "color",
+      "id": "panel_1_accent",
+      "label": "Card 1 accent",
+      "default": "#B98D55"
+    },
+    {
+      "type": "header",
+      "content": "Card 2"
+    },
+    {
+      "type": "collection",
+      "id": "panel_2_collection",
+      "label": "Card 2 collection"
+    },
+    {
+      "type": "text",
+      "id": "panel_2_heading",
+      "label": "Card 2 custom heading"
+    },
+    {
+      "type": "url",
+      "id": "panel_2_button_link",
+      "label": "Card 2 custom button link"
+    },
+    {
+      "type": "color",
+      "id": "panel_2_background",
+      "label": "Card 2 background",
+      "default": "#F3F1ED"
+    },
+    {
+      "type": "color",
+      "id": "panel_2_accent",
+      "label": "Card 2 accent",
+      "default": "#9C7550"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_style",
+      "label": "Heading font source",
+      "default": "body",
+      "options": [
+        { "value": "body", "label": "Modern — theme body font" },
+        { "value": "heading", "label": "Editorial — theme heading font" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 36,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop heading size",
+      "default": 42
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "default": "600",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "min": 24,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile heading size",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "desktop_description_lines",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "label": "Desktop description lines",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Product slideshow"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-slide products",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 8,
+      "step": 0.5,
+      "unit": "s",
+      "label": "Time per product",
+      "default": 3.5
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_float",
+      "label": "Enable subtle product motion",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "product_scale_desktop",
+      "min": 65,
+      "max": 120,
+      "step": 1,
+      "unit": "%",
+      "label": "Product scale — desktop",
+      "default": 92
+    },
+    {
+      "type": "range",
+      "id": "product_scale_mobile",
+      "min": 60,
+      "max": 120,
+      "step": 1,
+      "unit": "%",
+      "label": "Product scale — mobile",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "product_shadow_strength",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "PNG depth shadow",
+      "default": 65
+    },
+    {
+      "type": "range",
+      "id": "ground_shadow_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Ground shadow strength",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "spotlight_strength",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "%",
+      "label": "Product spotlight strength",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 900,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum section width",
+      "default": 1480
+    },
+    {
+      "type": "range",
+      "id": "desktop_content_width",
+      "min": 40,
+      "max": 68,
+      "step": 1,
+      "unit": "%",
+      "label": "Desktop text area width",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "mobile_content_width",
+      "min": 42,
+      "max": 68,
+      "step": 1,
+      "unit": "%",
+      "label": "Mobile text area width",
+      "default": 52
+    },
+    {
+      "type": "select",
+      "id": "mobile_ratio",
+      "label": "Mobile card ratio",
+      "default": "landscape",
+      "options": [
+        { "value": "landscape", "label": "16:10 — recommended" },
+        { "value": "three-two", "label": "3:2 — wider" },
+        { "value": "seven-five", "label": "7:5 — slightly taller" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "mobile_scrim",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Mobile text background protection",
+      "default": 85
+    },
+    {
+      "type": "range",
+      "id": "mobile_links_limit",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Subcategories visible on mobile",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between cards",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "page_gutter",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop side spacing",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_gutter",
+      "min": 0,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile side spacing",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Card styling"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "label": "Corner radius",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Primary text",
+      "default": "#191715"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Muted text",
+      "default": "#6F6963"
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "%",
+      "label": "Card shadow strength",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top spacing",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom spacing",
+      "default": 44
+    }
+  ],
+  "blocks": [
+    {
+      "type": "subcategory",
+      "name": "Subcategory link",
+      "settings": [
+        {
+          "type": "select",
+          "id": "panel",
+          "label": "Assign to card",
+          "default": "1",
+          "options": [
+            { "value": "1", "label": "Card 1 — left / top" },
+            { "value": "2", "label": "Card 2 — right / bottom" }
+          ]
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Subcategory collection"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Custom label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Custom link"
+        }
+      ]
+    },
+    {
+      "type": "product_slide",
+      "name": "Product slide",
+      "settings": [
+        {
+          "type": "select",
+          "id": "panel",
+          "label": "Assign to card",
+          "default": "1",
+          "options": [
+            { "value": "1", "label": "Card 1 — left / top" },
+            { "value": "2", "label": "Card 2 — right / bottom" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Transparent PNG product image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Small product label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Product or collection link"
+        },
+        {
+          "type": "collection",
+          "id": "matching_collection",
+          "label": "Matching subcategory to highlight"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Image alt text"
+        },
+        {
+          "type": "header",
+          "content": "Desktop product position"
+        },
+        {
+          "type": "range",
+          "id": "image_x",
+          "min": -35,
+          "max": 35,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "image_y",
+          "min": -35,
+          "max": 35,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "image_rotate",
+          "min": -8,
+          "max": 8,
+          "step": 1,
+          "unit": "deg",
+          "label": "Subtle rotation",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Mobile product position"
+        },
+        {
+          "type": "range",
+          "id": "mobile_image_x",
+          "min": -30,
+          "max": 45,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "mobile_image_y",
+          "min": -30,
+          "max": 35,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 6
+        },
+        {
+          "type": "range",
+          "id": "mobile_image_rotate",
+          "min": -8,
+          "max": 8,
+          "step": 1,
+          "unit": "deg",
+          "label": "Subtle rotation",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS category duo",
+      "blocks": [
+        { "type": "subcategory" },
+        { "type": "subcategory" },
+        { "type": "subcategory" },
+        { "type": "product_slide" },
+        { "type": "product_slide" },
+        { "type": "subcategory", "settings": { "panel": "2" } },
+        { "type": "subcategory", "settings": { "panel": "2" } },
+        { "type": "subcategory", "settings": { "panel": "2" } },
+        { "type": "product_slide", "settings": { "panel": "2" } },
+        { "type": "product_slide", "settings": { "panel": "2" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

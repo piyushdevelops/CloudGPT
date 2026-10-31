@@ -1,0 +1,12 @@
+{
+  "pageCreate": {
+    "page": {
+      "id": "gid://shopify/Page/706649063619",
+      "handle": "our-days",
+      "title": "Our Days",
+      "templateSuffix": "our-days",
+      "isPublished": false
+    },
+    "userErrors": []
+  }
+}

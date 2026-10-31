@@ -1,0 +1,45 @@
+{
+  "responsive": [
+    {
+      "button": 234.375,
+      "fit": "contain",
+      "overflow": false,
+      "stage": 305,
+      "width": 320
+    },
+    {
+      "button": 234.375,
+      "fit": "contain",
+      "overflow": false,
+      "stage": 375,
+      "width": 390
+    },
+    {
+      "button": 234.375,
+      "fit": "contain",
+      "overflow": false,
+      "stage": 735,
+      "width": 750
+    },
+    {
+      "button": 234.375,
+      "fit": "contain",
+      "overflow": false,
+      "stage": 1425,
+      "width": 1440
+    },
+    {
+      "button": 234.375,
+      "fit": "contain",
+      "overflow": false,
+      "stage": 1680,
+      "width": 2560
+    }
+  ],
+  "mobile": {
+    "height": 1197.4375,
+    "width": 390,
+    "y": 1941.8125
+  },
+  "accordionAndHomePassed": true
+}

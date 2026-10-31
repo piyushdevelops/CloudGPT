@@ -1,0 +1,9 @@
+{
+  "page": {
+    "title": "Photo Book Studio",
+    "handle": "photo-book-studio",
+    "body": "<p>Create your June photo book, save your progress and return whenever you are ready.</p>",
+    "isPublished": false,
+    "templateSuffix": "photo-book-studio"
+  }
+}

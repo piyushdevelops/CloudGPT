@@ -1,0 +1,25 @@
+import playwright from '../tools/node_modules/playwright/index.js';
+const { chromium } = playwright;
+const browser = await chromium.launch({ headless: true, executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
+const context = await browser.newContext({ viewport: { width: 393, height: 852 }, hasTouch: true });
+const page = await context.newPage();
+const errors = [];
+page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+await page.goto('https://thejuneshop.com/products/undated-yearly-planner-sassy-girl?preview_theme_id=187527266499&cartqa=1', { waitUntil: 'domcontentloaded', timeout: 60000 });
+await page.waitForTimeout(1800);
+const classicHidden = await page.locator('[data-jmp-name]').isHidden();
+const nameChoice = page.locator('[data-jmp-option-value]', { hasText: /Name Customisation/i }).first();
+await nameChoice.click();
+const nameVisible = await page.locator('[data-jmp-name]').isVisible();
+await page.locator('[name="properties[Name]"]').fill('June QA');
+const payload = await page.evaluate(async () => {
+  const id = Number(document.querySelector('[data-jmp-variant-id]').value);
+  const add = await fetch('/cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: [{ id, quantity: 1, properties: { Name: 'June QA', 'Purchase type': 'Standard order' } }] }) });
+  const added = await add.json();
+  const cart = await fetch('/cart.js').then(r => r.json());
+  await fetch('/cart/clear.js', { method: 'POST' });
+  const cleared = await fetch('/cart.js').then(r => r.json());
+  return { addStatus: add.status, addedVariant: added.items?.[0]?.variant_id, cartCount: cart.item_count, properties: cart.items?.[0]?.properties, clearedCount: cleared.item_count };
+});
+console.log(JSON.stringify({ classicHidden, nameVisible, payload, errors }, null, 2));
+await browser.close();

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="34" height="24" viewBox="0 0 34 24" role="img" aria-labelledby="title"><title id="title">Search, years passing from 2020 to 2027</title>
+<style>
+.reel{animation:year-roll 9s cubic-bezier(.22,.68,.25,1) forwards;transform-box:view-box}
+.landing{transform-box:view-box;animation:year-settle 9s linear forwards}
+.lilac{opacity:0;animation:year-accent 9s ease forwards}
+@keyframes year-roll{0%,9%{transform:translateY(0)}13%,17%{transform:translateY(11px)}21%,25%{transform:translateY(22px)}29%,33%{transform:translateY(33px)}37%,41%{transform:translateY(44px)}46%,51%{transform:translateY(55px)}60%,73%{transform:translateY(66px)}85%,100%{transform:translateY(77px)}}
+@keyframes year-settle{0%,84%,93%,100%{transform:translateY(0)}87%{transform:translateY(.5px)}90%{transform:translateY(-.18px)}}
+@keyframes year-accent{0%,81%{opacity:0}87%,92%{opacity:.55}100%{opacity:.08}}
+@media(prefers-reduced-motion:reduce){.reel{animation:none;transform:translateY(77px)}.landing{animation:none}.lilac{animation:none;opacity:.35}}
+
+.year-colour{animation:year-ink 9s ease forwards}
+.reel.year-colour{animation:year-roll 9s cubic-bezier(.22,.68,.25,1) forwards,year-ink 9s ease forwards}
+.icon-pop{transform-box:view-box;transform-origin:17.8px 10px;animation:sticker-pop 9s linear forwards}
+.sparkle{opacity:0;transform-box:view-box;transform-origin:29px 5px;animation:one-sparkle 9s ease forwards}
+@keyframes year-ink{0%,84%{stroke:#17151B}90%,100%{stroke:#8C68C3}}
+@keyframes sticker-pop{0%,83%,96%,100%{transform:scale(1)}85%{transform:scale(1.035,.96)}88%{transform:scale(.98,1.055)}92%{transform:scale(1.015,.99)}}
+@keyframes one-sparkle{0%,86%{opacity:0;transform:scale(.25) rotate(-15deg)}90%{opacity:1;transform:scale(1) rotate(0)}95%,100%{opacity:0;transform:scale(.7) rotate(10deg)}}
+@media(prefers-reduced-motion:reduce){.year-colour{animation:none;stroke:#8C68C3}.reel.year-colour{animation:none;transform:translateY(77px)}.icon-pop,.sparkle{animation:none}.sparkle{opacity:0}.lilac{opacity:.08}}
+</style>
+<defs>
+<clipPath id="digit"><rect x="16.55" y="5.15" width="5.75" height="8.8" rx=".4"/></clipPath>
+<linearGradient id="metal" gradientUnits="userSpaceOnUse" x1="12" y1="3" x2="24" y2="16"><stop stop-color="#69666D"/><stop offset=".3" stop-color="#27252C"/><stop offset=".65" stop-color="#0E0D11"/><stop offset="1" stop-color="#454149"/></linearGradient>
+<linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#ECE8F1" stop-opacity=".35"/></linearGradient>
+</defs>
+<g class="icon-pop">
+<circle cx="17.8" cy="9.8" r="7.2" fill="url(#glass)"/>
+<circle class="lilac" cx="17.8" cy="9.8" r="6.9" fill="#CEBBEC"/>
+<g fill="none" stroke="#17151B" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
+<path d="M0 1.3C.3-.3 3.6-.6 3.6 1.6 3.6 3 .8 4.5 0 6.8h3.6" transform="translate(1 6.3)"/><path d="M1.8 0C.5 0 0 1.2 0 3.4S.5 6.8 1.8 6.8 3.6 5.6 3.6 3.4 3.1 0 1.8 0Z" transform="translate(6.1 6.3)"/><path d="M0 1.3C.3-.3 3.6-.6 3.6 1.6 3.6 3 .8 4.5 0 6.8h3.6" class="year-colour" transform="translate(11.9 6.3)"/>
+<g clip-path="url(#digit)"><g class="landing"><g class="reel year-colour"><path d="M1.8 0C.5 0 0 1.2 0 3.4S.5 6.8 1.8 6.8 3.6 5.6 3.6 3.4 3.1 0 1.8 0Z" transform="translate(17.5 6.3)"/><path d="M.4 1.4 2.1 0v6.8M.5 6.8h3.1" transform="translate(17.5 -4.7)"/><path d="M0 1.3C.3-.3 3.6-.6 3.6 1.6 3.6 3 .8 4.5 0 6.8h3.6" transform="translate(17.5 -15.7)"/><path d="M0 .6C1.7-.7 3.6.1 3.6 1.6c0 1.3-1.1 1.8-2.2 1.8 1.4 0 2.4.5 2.4 1.7C3.8 7.1 1.3 7.3 0 6.2" transform="translate(17.5 -26.7)"/><path d="M2.9 6.8V0L0 4.7h4" transform="translate(17.5 -37.7)"/><path d="M3.6 0H.3L0 3.4c1.5-1 3.8-.5 3.8 1.3 0 2.2-2.5 2.6-3.8 1.6" transform="translate(17.5 -48.7)"/><path d="M3.3 .4C.6-1.1-.2 2.1 0 4.6c.2 3.3 3.8 2.6 3.8.3 0-2.2-2.7-2.8-3.8-.7" transform="translate(17.5 -59.7)"/><path d="M0 0h3.8L1 6.8" transform="translate(17.5 -70.7)"/></g></g></g>
+</g>
+<path d="m23 15 1.6 1.6" stroke="#25212C" stroke-width="2.5" stroke-linecap="round"/>
+<path d="m24.6 16.6 4.8 4.8" stroke="#17151B" stroke-width="4.4" stroke-linecap="round"/>
+<path d="m25.3 17.3 3.5 3.5" stroke="#BFAEE9" stroke-width="2.65" stroke-linecap="round"/>
+<path d="m25.4 17 3.5 3.5" stroke="#E6DCF5" stroke-width=".45" stroke-linecap="round"/>
+<circle cx="17.8" cy="9.8" r="7.2" fill="none" stroke="#17151B" stroke-width="2.05"/>
+<circle cx="17.8" cy="9.8" r="7.2" fill="none" stroke="url(#metal)" stroke-width="1.5"/>
+<path d="M12.2 6.6a6.45 6.45 0 0 1 7.2-3" fill="none" stroke="#DDD8E4" stroke-width=".48" stroke-linecap="round"/>
+</g><path class="sparkle" d="m29 2 .7 2.3L32 5l-2.3.7L29 8l-.7-2.3L26 5l2.3-.7Z" fill="#BFAEE9" stroke="#17151B" stroke-width=".55" stroke-linejoin="round"/></svg>
+

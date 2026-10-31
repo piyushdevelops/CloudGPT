@@ -1,0 +1,11 @@
+const fs=require('fs'),path=require('path');
+const dir=__dirname;
+let page=fs.readFileSync(path.join(dir,'../cart-static-options/index.html'),'utf8');
+const start=page.indexOf('<div class="grid">')+'<div class="grid">'.length,end=page.indexOf('</div></main>',start);
+page=page.slice(0,start)+fs.readFileSync(path.join(dir,'cards.html'),'utf8')+page.slice(end);
+page=page.replaceAll('cart-','search-').replaceAll('Everyday tote','Soft classic').replace('June — 15 static cart options','June — 15 search directions').replace('Shape first. Motion later.','Find your search icon.').replace('15 static cart directions. Compare the small icons, then tap a card to see it in the header.','15 static options: bold essentials, softer shapes and planner-inspired details. Judge the 24px version first. Tap any card to compare it beside your bag.');
+page=page.replace('<span class="badge">1</span></span></div>','</span><span class="target"><img src="../happy-full-cart/bag-1.svg" width="24" height="24" alt="Approved cart"><span class="badge">1</span></span></div>');
+page=page.replace('</style>','.header-demo{gap:2px;min-width:340px;padding:8px}.header-demo strong{font-size:18px;white-space:nowrap}.target{flex:none}@media(max-width:640px){.header-demo{min-width:0}.header-demo strong{font-size:16px}} </style>');
+new Function(page.split('<script>')[1].split('</script>')[0]);
+fs.writeFileSync(path.join(dir,'index.html'),page);
+console.log('15 static options and selectable header preview generated.');

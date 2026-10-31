@@ -1,0 +1,69 @@
+<div {% if block.settings.colors_by_block %}color-scheme="{{ block.settings.color_scheme }}"{% endif %} class="hdt-group-block {% if block.settings.colors_by_block %}hdt-s-gradient{% endif %} hdt-group-block--{{ block.id }} {{ block.settings.group_rounded }} hdt-oh" {{ block.shopify_attributes }}>
+  {% content_for "blocks" %}
+</div>
+
+{% schema %}
+{
+  "name": "Group",
+  "tag": null,
+  "blocks": [{ "type": "group" },{ "type": "text" },{ "type": "paragraph" },{"type": "button"},{"type": "heading"},{"type": "spacer"},{"type": "_image"},{"type": "_menu"},{"type": "_newsletter"},{"type": "_socials"},{"type": "_icon"} ,{"type": "_banner-item"}, {"type": "_countdown"}],
+  "settings": [
+
+    {
+      "type": "checkbox",
+      "id": "colors_by_block",
+      "label": "Display color by blocks",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.colors_by_block }}"
+    },
+
+    {
+      "type": "select",
+      "id": "group_rounded",
+      "label": "Rounded",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "hdt-radius-2xs",
+          "label": "Smallest"
+        },
+        {
+          "value": "hdt-radius-xs",
+          "label": "Extra small"
+        },
+        {
+          "value": "hdt-radius-sm",
+          "label": "Small"
+        },
+        {
+          "value": "hdt-radius",
+          "label": "Medium"
+        },
+        {
+          "value": "hdt-radius-lg",
+          "label": "Large"
+        },
+        {
+          "value": "hdt-radius-full",
+          "label": "Pill"
+        }
+      ],
+      "default": ""
+    },
+  ],
+  "presets": [
+    {
+      "name": "Group"
+    }
+  ]
+}
+{% endschema %}

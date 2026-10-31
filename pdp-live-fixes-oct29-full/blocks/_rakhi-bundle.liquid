@@ -1,0 +1,1491 @@
+{% comment %}
+  TJS Rakhi PDP Bundle Block
+  Add this theme block below the product buy-button block.
+  The displayed discount must be backed by a Shopify automatic discount
+  or by the discount code entered in this block's settings.
+{% endcomment %}
+
+{% liquid
+  assign rb_discount_multiplier = 100 | minus: block.settings.discount_percent
+  assign rb_genders = 'her,him,baby' | split: ','
+  assign rb_has_any_products = false
+
+  for rb_gender in rb_genders
+    for rb_index in (1..5)
+      assign rb_products_key = rb_gender | append: '_persona_' | append: rb_index | append: '_products'
+      if block.settings[rb_products_key] != blank
+        assign rb_has_any_products = true
+        break
+      endif
+    endfor
+
+    if rb_has_any_products
+      break
+    endif
+  endfor
+%}
+
+{% if rb_has_any_products %}
+  <rakhi-pdp-bundle
+    id="RakhiPdpBundle-{{ block.id }}"
+    class="rb-pdp"
+    data-main-product-id="{{ product.id }}"
+    data-main-product-title="{{ product.title | escape }}"
+    data-require-main="{{ block.settings.require_main_product }}"
+    data-discount-code="{{ block.settings.discount_code | escape }}"
+    data-after-add="{{ block.settings.after_add }}"
+    data-money-format="{{ shop.money_format | escape }}"
+    data-currency="{{ cart.currency.iso_code | default: shop.currency | escape }}"
+    {{ block.shopify_attributes }}
+    style="
+      --rb-bg: {{ block.settings.background }};
+      --rb-card: {{ block.settings.card_background }};
+      --rb-text: {{ block.settings.text_color }};
+      --rb-muted: color-mix(in srgb, {{ block.settings.text_color }} 58%, transparent);
+      --rb-accent: {{ block.settings.accent }};
+      --rb-soft: color-mix(in srgb, {{ block.settings.accent }} 11%, {{ block.settings.card_background }});
+      --rb-border: {{ block.settings.border_color }};
+      --rb-radius: {{ block.settings.radius }}px;
+    "
+  >
+    <div class="rb-pdp__header">
+      <div>
+        <small>Build a Rakhi gift</small>
+        <h3>{{ block.settings.heading | escape }}</h3>
+        {% if block.settings.intro != blank %}
+          <div class="rb-pdp__intro">{{ block.settings.intro }}</div>
+        {% endif %}
+      </div>
+
+      <div class="rb-pdp__offer">
+        <strong>{{ block.settings.discount_percent }}%</strong>
+        <span>extra off</span>
+      </div>
+    </div>
+
+    <div class="rb-pdp__layer">
+      <div class="rb-pdp__layer-title">
+        <span>01</span>
+        <strong>Who are you gifting?</strong>
+      </div>
+
+      <div class="rb-pdp__genders" role="tablist" aria-label="Choose who you are gifting">
+        {% for rb_gender in rb_genders %}
+          {% liquid
+            assign rb_gender_has_products = false
+
+            for rb_index in (1..5)
+              assign rb_products_key = rb_gender | append: '_persona_' | append: rb_index | append: '_products'
+              if block.settings[rb_products_key] != blank
+                assign rb_gender_has_products = true
+                break
+              endif
+            endfor
+
+            case rb_gender
+              when 'her'
+                assign rb_gender_label = block.settings.her_label
+              when 'him'
+                assign rb_gender_label = block.settings.him_label
+              else
+                assign rb_gender_label = block.settings.baby_label
+            endcase
+          %}
+
+          {% if rb_gender_has_products %}
+            <button
+              type="button"
+              class="rb-pdp__gender"
+              data-rb-gender="{{ rb_gender }}"
+              aria-selected="false"
+              role="tab"
+            >
+              {{ rb_gender_label | escape }}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="rb-pdp__layer">
+      <div class="rb-pdp__layer-title">
+        <span>02</span>
+        <strong>Pick their personality</strong>
+      </div>
+
+      <div class="rb-pdp__personas" data-rb-personas>
+        {% for rb_gender in rb_genders %}
+          {% for rb_index in (1..5) %}
+            {% liquid
+              assign rb_title_key = rb_gender | append: '_persona_' | append: rb_index | append: '_title'
+              assign rb_products_key = rb_gender | append: '_persona_' | append: rb_index | append: '_products'
+              assign rb_persona_title = block.settings[rb_title_key]
+              assign rb_persona_products = block.settings[rb_products_key]
+              assign rb_persona_id = rb_gender | append: '-' | append: rb_index
+            %}
+
+            {% if rb_persona_products != blank %}
+              <button
+                type="button"
+                class="rb-pdp__persona"
+                data-rb-persona="{{ rb_persona_id }}"
+                data-rb-persona-gender="{{ rb_gender }}"
+                aria-pressed="false"
+                hidden
+              >
+                <span>{{ rb_persona_title | escape }}</span>
+                <i aria-hidden="true">✓</i>
+              </button>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="rb-pdp__layer rb-pdp__layer--products">
+      <div class="rb-pdp__layer-title">
+        <span>03</span>
+        <strong>Choose their add-ons</strong>
+      </div>
+
+      {% for rb_gender in rb_genders %}
+        {% for rb_index in (1..5) %}
+          {% liquid
+            assign rb_title_key = rb_gender | append: '_persona_' | append: rb_index | append: '_title'
+            assign rb_products_key = rb_gender | append: '_persona_' | append: rb_index | append: '_products'
+            assign rb_persona_title = block.settings[rb_title_key]
+            assign rb_persona_products = block.settings[rb_products_key]
+            assign rb_persona_id = rb_gender | append: '-' | append: rb_index
+          %}
+
+          {% if rb_persona_products != blank %}
+            <div
+              class="rb-pdp__panel"
+              data-rb-panel="{{ rb_persona_id }}"
+              data-rb-persona-title="{{ rb_persona_title | escape }}"
+              hidden
+            >
+              <div class="rb-pdp__panel-head">
+                <div>
+                  <small>Curated for</small>
+                  <h4>{{ rb_persona_title | escape }}</h4>
+                </div>
+
+                <button type="button" data-rb-select-all>Select all</button>
+              </div>
+
+              <div class="rb-pdp__products">
+                {% for rb_product in rb_persona_products limit: 5 %}
+                  {% assign rb_variant = rb_product.selected_or_first_available_variant %}
+
+                  {% if rb_product.available and rb_variant != blank %}
+                    {% assign rb_discounted_price = rb_variant.price | times: rb_discount_multiplier | divided_by: 100 %}
+                    {% assign rb_product_image = rb_variant.featured_image | default: rb_product.featured_image %}
+
+                    <article
+                      class="rb-pdp-product"
+                      data-rb-product
+                      data-selected="false"
+                      data-variant-id="{{ rb_variant.id }}"
+                      data-price="{{ rb_variant.price }}"
+                      data-discounted-price="{{ rb_discounted_price }}"
+                    >
+                      <script type="application/json" data-rb-variants>
+                        [
+                          {% assign rb_rendered_variant = false %}
+                          {% for rb_available_variant in rb_product.variants %}
+                            {% if rb_available_variant.available %}
+                              {% if rb_rendered_variant %},{% endif %}
+                              {
+                                "id": {{ rb_available_variant.id | json }},
+                                "price": {{ rb_available_variant.price | json }},
+                                "discountedPrice": {{ rb_available_variant.price | times: rb_discount_multiplier | divided_by: 100 | json }},
+                                "image": {% if rb_available_variant.featured_image != blank %}{{ rb_available_variant.featured_image | image_url: width: 720 | json }}{% else %}null{% endif %}
+                              }
+                              {% assign rb_rendered_variant = true %}
+                            {% endif %}
+                          {% endfor %}
+                        ]
+                      </script>
+
+                      <button
+                        type="button"
+                        class="rb-pdp-product__select"
+                        data-rb-select-product
+                        aria-label="Select {{ rb_product.title | escape }}"
+                        aria-pressed="false"
+                      >
+                        ✓
+                      </button>
+
+                      <a class="rb-pdp-product__media" href="{{ rb_product.url }}">
+                        {% if rb_product_image != blank %}
+                          {{ rb_product_image
+                            | image_url: width: 720
+                            | image_tag:
+                              class: 'rb-pdp-product__image',
+                              widths: '180, 260, 360, 520, 720',
+                              sizes: '(max-width: 749px) 43vw, 210px',
+                              loading: 'lazy',
+                              alt: rb_product_image.alt | default: rb_product.title
+                          }}
+                        {% else %}
+                          {{ 'product-1' | placeholder_svg_tag: 'rb-pdp-product__image rb-pdp-product__placeholder' }}
+                        {% endif %}
+
+                        <span>{{ block.settings.discount_percent }}% off</span>
+                      </a>
+
+                      <div class="rb-pdp-product__body">
+                        <h5>
+                          <a href="{{ rb_product.url }}">{{ rb_product.title | escape }}</a>
+                        </h5>
+
+                        <div class="rb-pdp-product__price">
+                          <strong data-rb-sale-price>{{ rb_discounted_price | money }}</strong>
+                          <s data-rb-original-price>{{ rb_variant.price | money }}</s>
+                        </div>
+
+                        {% unless rb_product.has_only_default_variant %}
+                          <label class="rb-pdp-product__variant">
+                            <span>Choose option</span>
+                            <select data-rb-variant-select>
+                              {% for rb_available_variant in rb_product.variants %}
+                                {% if rb_available_variant.available %}
+                                  <option
+                                    value="{{ rb_available_variant.id }}"
+                                    {% if rb_available_variant.id == rb_variant.id %}selected{% endif %}
+                                  >
+                                    {{ rb_available_variant.title | escape }}
+                                  </option>
+                                {% endif %}
+                              {% endfor %}
+                            </select>
+                          </label>
+                        {% endunless %}
+                      </div>
+                    </article>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+
+    <div class="rb-pdp__summary">
+      <div>
+        <small data-rb-count>0 items selected</small>
+        <strong data-rb-total>{{ 0 | money }}</strong>
+        <span>
+          {% if block.settings.discount_code != blank %}
+            Code applies automatically in cart.
+          {% else %}
+            Bundle discount applies in cart.
+          {% endif %}
+        </span>
+      </div>
+
+      <button type="button" data-rb-add disabled>
+        <span>{{ block.settings.add_button_label | escape }}</span>
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M4 6h12l-1 10H5L4 6Z" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M7 7V5a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="rb-pdp__toast" data-rb-toast role="status" aria-live="polite"></div>
+  </rakhi-pdp-bundle>
+{% elsif request.design_mode %}
+  <div class="rb-pdp rb-pdp--empty" {{ block.shopify_attributes }}>
+    Add at least one product list inside the Rakhi bundle block.
+  </div>
+{% endif %}
+
+{% style %}
+  #RakhiPdpBundle-{{ block.id }} {
+    display: block;
+    width: 100%;
+    margin-block: 18px;
+    padding: 16px;
+    border: 1px solid var(--rb-border);
+    border-radius: var(--rb-radius);
+    background: var(--rb-bg);
+    color: var(--rb-text);
+    font-family: var(--font-body-family, Arial, sans-serif);
+    box-shadow: 0 12px 34px rgba(28, 21, 17, .06);
+  }
+
+  #RakhiPdpBundle-{{ block.id }} *,
+  #RakhiPdpBundle-{{ block.id }} *::before,
+  #RakhiPdpBundle-{{ block.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 14px;
+    padding-bottom: 14px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__header small,
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__panel-head small {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--rb-accent);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__header h3 {
+    margin: 0;
+    font-family: var(--font-heading-family, var(--font-body-family, Arial, sans-serif));
+    font-size: 24px;
+    font-weight: 560;
+    line-height: 1.05;
+    letter-spacing: -.035em;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__intro {
+    margin-top: 8px;
+    color: var(--rb-muted);
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__intro p {
+    margin: 0;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__offer {
+    width: 64px;
+    height: 64px;
+    display: grid;
+    place-content: center;
+    gap: 1px;
+    border: 1px solid color-mix(in srgb, var(--rb-accent) 28%, var(--rb-border));
+    border-radius: 50%;
+    background: var(--rb-soft);
+    text-align: center;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__offer strong {
+    color: var(--rb-accent);
+    font-size: 15px;
+    font-weight: 850;
+    line-height: 1;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__offer span {
+    color: var(--rb-muted);
+    font-size: 6px;
+    font-weight: 760;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__layer {
+    padding: 14px 0;
+    border-top: 1px solid var(--rb-border);
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__layer-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__layer-title > span {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--rb-border);
+    border-radius: 50%;
+    color: var(--rb-accent);
+    font-size: 7px;
+    font-weight: 820;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__layer-title strong {
+    font-size: 12px;
+    font-weight: 760;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__genders {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__gender {
+    min-height: 42px;
+    padding: 0 8px;
+    border: 1px solid var(--rb-border);
+    border-radius: max(4px, calc(var(--rb-radius) - 2px));
+    background: var(--rb-card);
+    color: var(--rb-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 760;
+    transition: border-color .18s ease, background-color .18s ease, color .18s ease;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__gender.is-active {
+    border-color: var(--rb-accent);
+    background: var(--rb-accent);
+    color: #fff;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__personas {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__personas::-webkit-scrollbar,
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__products::-webkit-scrollbar {
+    display: none;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__persona {
+    min-width: max-content;
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 10px;
+    border: 1px solid var(--rb-border);
+    border-radius: 999px;
+    background: var(--rb-card);
+    color: var(--rb-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 9px;
+    font-weight: 720;
+    scroll-snap-align: start;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__persona[hidden] {
+    display: none;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__persona i {
+    width: 17px;
+    height: 17px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--rb-border);
+    border-radius: 50%;
+    color: transparent;
+    font-size: 8px;
+    font-style: normal;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__persona.is-active {
+    border-color: var(--rb-accent);
+    background: var(--rb-soft);
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__persona.is-active i {
+    border-color: var(--rb-accent);
+    background: var(--rb-accent);
+    color: #fff;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__panel[hidden] {
+    display: none;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__panel-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 9px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__panel-head h4 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 780;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__panel-head button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--rb-accent);
+    cursor: pointer;
+    font: inherit;
+    font-size: 8px;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-transform: uppercase;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__products {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 2px 7px;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product {
+    position: relative;
+    min-width: 43%;
+    flex: 0 0 43%;
+    overflow: hidden;
+    border: 1px solid var(--rb-border);
+    border-radius: max(4px, calc(var(--rb-radius) - 2px));
+    background: var(--rb-card);
+    scroll-snap-align: start;
+    transition: border-color .18s ease, box-shadow .18s ease;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product.is-selected {
+    border-color: var(--rb-accent);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--rb-accent) 13%, transparent);
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__select {
+    position: absolute;
+    z-index: 3;
+    top: 7px;
+    left: 7px;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    border: 1px solid rgba(255,255,255,.8);
+    border-radius: 50%;
+    background: rgba(255,255,255,.96);
+    color: transparent;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(22,17,14,.12);
+    font-size: 10px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product.is-selected .rb-pdp-product__select {
+    background: var(--rb-accent);
+    color: #fff;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    display: block;
+    overflow: hidden;
+    background: #f7f5f2;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    padding: 6px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__placeholder {
+    padding: 22%;
+    color: var(--rb-muted);
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__media > span {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    min-height: 21px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 7px;
+    border-radius: 5px;
+    background: rgba(255,255,255,.95);
+    color: var(--rb-accent);
+    font-size: 7px;
+    font-weight: 850;
+    text-transform: uppercase;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__body {
+    display: grid;
+    gap: 6px;
+    padding: 8px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__body h5 {
+    min-height: 2.4em;
+    margin: 0;
+    font-size: 9px;
+    font-weight: 720;
+    line-height: 1.2;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__body h5 a {
+    display: -webkit-box;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__price strong {
+    font-size: 11px;
+    font-weight: 840;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__price s {
+    color: var(--rb-muted);
+    font-size: 8px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__variant {
+    display: grid;
+    gap: 3px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__variant > span {
+    color: var(--rb-muted);
+    font-size: 6px;
+    font-weight: 760;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp-product__variant select {
+    width: 100%;
+    min-height: 28px;
+    padding: 0 6px;
+    border: 1px solid var(--rb-border);
+    border-radius: 5px;
+    background: #fff;
+    color: var(--rb-text);
+    font: inherit;
+    font-size: 7px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    padding-top: 13px;
+    border-top: 1px solid var(--rb-border);
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__summary > div {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: baseline;
+    justify-content: start;
+    gap: 2px 7px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__summary small {
+    color: var(--rb-muted);
+    font-size: 7px;
+    font-weight: 760;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__summary strong {
+    font-size: 15px;
+    font-weight: 850;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__summary > div > span {
+    grid-column: 1 / -1;
+    color: var(--rb-muted);
+    font-size: 7px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__summary > button {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--rb-text);
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 8px;
+    font-weight: 820;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__summary > button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__summary svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__toast {
+    position: fixed;
+    z-index: 9999;
+    right: 16px;
+    bottom: 16px;
+    max-width: min(340px, calc(100% - 32px));
+    padding: 11px 14px;
+    border-radius: 6px;
+    background: var(--rb-text);
+    color: #fff;
+    font-size: 10px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity .18s ease, transform .18s ease;
+  }
+
+  #RakhiPdpBundle-{{ block.id }} .rb-pdp__toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .rb-pdp--empty {
+    margin-block: 14px;
+    padding: 14px;
+    border: 1px dashed #cfc7c0;
+    color: #746c65;
+    font-size: 12px;
+  }
+
+  @media (min-width: 990px) {
+    #RakhiPdpBundle-{{ block.id }} .rb-pdp-product {
+      min-width: 39%;
+      flex-basis: 39%;
+    }
+  }
+
+  @media (max-width: 749px) {
+    #RakhiPdpBundle-{{ block.id }} {
+      margin-block: 14px;
+      padding: 13px;
+    }
+
+    #RakhiPdpBundle-{{ block.id }} .rb-pdp__header h3 {
+      font-size: 22px;
+    }
+
+    #RakhiPdpBundle-{{ block.id }} .rb-pdp-product {
+      min-width: 44%;
+      flex-basis: 44%;
+    }
+
+    #RakhiPdpBundle-{{ block.id }} .rb-pdp__summary > button {
+      padding-inline: 10px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #RakhiPdpBundle-{{ block.id }} *,
+    #RakhiPdpBundle-{{ block.id }} *::before,
+    #RakhiPdpBundle-{{ block.id }} *::after {
+      transition-duration: .01ms !important;
+      animation-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (() => {
+    if (customElements.get('rakhi-pdp-bundle')) return;
+
+    class RakhiPdpBundle extends HTMLElement {
+      connectedCallback() {
+        if (this.dataset.ready === 'true') return;
+        this.dataset.ready = 'true';
+
+        this.mainProductId = Number(this.dataset.mainProductId || 0);
+        this.requireMain = this.dataset.requireMain === 'true';
+        this.discountCode = (this.dataset.discountCode || '').trim();
+        this.afterAdd = this.dataset.afterAdd || 'cart';
+        this.moneyFormat = this.dataset.moneyFormat || '${{amount}}';
+        this.currency = this.dataset.currency || 'INR';
+
+        this.addButton = this.querySelector('[data-rb-add]');
+        this.countNode = this.querySelector('[data-rb-count]');
+        this.totalNode = this.querySelector('[data-rb-total]');
+        this.toast = this.querySelector('[data-rb-toast]');
+        this.activeGender = '';
+        this.activePersona = '';
+
+        this.addEventListener('click', event => this.handleClick(event));
+        this.addEventListener('change', event => this.handleChange(event));
+
+        const firstGender = this.querySelector('[data-rb-gender]');
+        if (firstGender) this.selectGender(firstGender.dataset.rbGender);
+      }
+
+      handleClick(event) {
+        const gender = event.target.closest('[data-rb-gender]');
+        if (gender) {
+          this.selectGender(gender.dataset.rbGender);
+          return;
+        }
+
+        const persona = event.target.closest('[data-rb-persona]');
+        if (persona) {
+          this.selectPersona(persona.dataset.rbPersona);
+          return;
+        }
+
+        const product = event.target.closest('[data-rb-select-product]');
+        if (product) {
+          this.toggleProduct(product.closest('[data-rb-product]'));
+          return;
+        }
+
+        const selectAll = event.target.closest('[data-rb-select-all]');
+        if (selectAll) {
+          this.toggleAll(selectAll.closest('[data-rb-panel]'));
+          return;
+        }
+
+        if (event.target.closest('[data-rb-add]')) {
+          this.addSelected();
+        }
+      }
+
+      handleChange(event) {
+        const select = event.target.closest('[data-rb-variant-select]');
+        if (!select) return;
+
+        this.changeVariant(select.closest('[data-rb-product]'), Number(select.value));
+      }
+
+      selectGender(gender) {
+        this.activeGender = gender;
+
+        this.querySelectorAll('[data-rb-gender]').forEach(button => {
+          const active = button.dataset.rbGender === gender;
+          button.classList.toggle('is-active', active);
+          button.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+
+        let firstPersona = null;
+
+        this.querySelectorAll('[data-rb-persona]').forEach(button => {
+          const visible = button.dataset.rbPersonaGender === gender;
+          button.hidden = !visible;
+          if (visible && !firstPersona) firstPersona = button;
+        });
+
+        if (firstPersona) this.selectPersona(firstPersona.dataset.rbPersona);
+      }
+
+      selectPersona(personaId) {
+        this.activePersona = personaId;
+
+        this.querySelectorAll('[data-rb-persona]').forEach(button => {
+          const active = button.dataset.rbPersona === personaId;
+          button.classList.toggle('is-active', active);
+          button.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+
+        this.querySelectorAll('[data-rb-panel]').forEach(panel => {
+          panel.hidden = panel.dataset.rbPanel !== personaId;
+        });
+
+        this.updateSummary();
+      }
+
+      currentPanel() {
+        return this.querySelector(`[data-rb-panel="${CSS.escape(this.activePersona)}"]`);
+      }
+
+      toggleProduct(card, forcedState = null) {
+        if (!card) return;
+
+        const selected = forcedState === null
+          ? card.dataset.selected !== 'true'
+          : Boolean(forcedState);
+
+        card.dataset.selected = selected ? 'true' : 'false';
+        card.classList.toggle('is-selected', selected);
+        card.querySelector('[data-rb-select-product]')
+          ?.setAttribute('aria-pressed', selected ? 'true' : 'false');
+
+        this.updateSummary();
+      }
+
+      toggleAll(panel) {
+        if (!panel) return;
+
+        const cards = [...panel.querySelectorAll('[data-rb-product]')];
+        const shouldSelect = cards.some(card => card.dataset.selected !== 'true');
+
+        cards.forEach(card => this.toggleProduct(card, shouldSelect));
+
+        const control = panel.querySelector('[data-rb-select-all]');
+        if (control) control.textContent = shouldSelect ? 'Clear selection' : 'Select all';
+      }
+
+      variantsFor(card) {
+        if (card._rbVariants) return card._rbVariants;
+
+        try {
+          card._rbVariants = JSON.parse(
+            card.querySelector('[data-rb-variants]')?.textContent || '[]'
+          );
+        } catch (error) {
+          card._rbVariants = [];
+        }
+
+        return card._rbVariants;
+      }
+
+      changeVariant(card, variantId) {
+        const variant = this.variantsFor(card)
+          .find(item => Number(item.id) === Number(variantId));
+
+        if (!variant) return;
+
+        card.dataset.variantId = String(variant.id);
+        card.dataset.price = String(variant.price);
+        card.dataset.discountedPrice = String(variant.discountedPrice);
+
+        const salePrice = card.querySelector('[data-rb-sale-price]');
+        const originalPrice = card.querySelector('[data-rb-original-price]');
+
+        if (salePrice) salePrice.textContent = this.formatMoney(variant.discountedPrice);
+        if (originalPrice) originalPrice.textContent = this.formatMoney(variant.price);
+
+        if (variant.image) {
+          const image = card.querySelector('.rb-pdp-product__image');
+          const preloader = new Image();
+
+          preloader.onload = () => {
+            image.src = variant.image;
+            image.removeAttribute('srcset');
+          };
+
+          preloader.src = variant.image;
+        }
+
+        this.updateSummary();
+      }
+
+      selectedCards() {
+        return [
+          ...(this.currentPanel()
+            ?.querySelectorAll('[data-rb-product][data-selected="true"]') || [])
+        ];
+      }
+
+      updateSummary() {
+        const cards = this.selectedCards();
+        const total = cards.reduce(
+          (sum, card) => sum + Number(card.dataset.discountedPrice || 0),
+          0
+        );
+
+        if (this.countNode) {
+          this.countNode.textContent =
+            `${cards.length} item${cards.length === 1 ? '' : 's'} selected`;
+        }
+
+        if (this.totalNode) this.totalNode.textContent = this.formatMoney(total);
+        if (this.addButton) this.addButton.disabled = cards.length === 0;
+      }
+
+      async mainProductIsInCart() {
+        if (!this.requireMain || !this.mainProductId) return true;
+
+        try {
+          const response = await fetch(
+            `${window.Shopify?.routes?.root || '/'}cart.js`,
+            { headers: { Accept: 'application/json' } }
+          );
+
+          if (!response.ok) return false;
+
+          const cart = await response.json();
+
+          return Array.isArray(cart.items) &&
+            cart.items.some(item => Number(item.product_id) === this.mainProductId);
+        } catch (error) {
+          return false;
+        }
+      }
+
+      async addSelected() {
+        const cards = this.selectedCards();
+        if (!cards.length || !this.addButton) return;
+
+        if (!(await this.mainProductIsInCart())) {
+          this.showToast('Add the Rakhi to cart first, then add the gift bundle.');
+          return;
+        }
+
+        const panel = this.currentPanel();
+        const personaTitle = panel?.dataset.rbPersonaTitle || '';
+        const genderTitle =
+          this.querySelector(`[data-rb-gender="${CSS.escape(this.activeGender)}"]`)
+            ?.textContent?.trim() || this.activeGender;
+
+        const items = cards.map(card => ({
+          id: Number(card.dataset.variantId),
+          quantity: 1,
+          properties: {
+            '_rakhi_bundle': 'true',
+            '_rakhi_bundle_gender': genderTitle,
+            '_rakhi_bundle_persona': personaTitle,
+            '_rakhi_main_product': this.dataset.mainProductTitle || ''
+          }
+        }));
+
+        const label = this.addButton.querySelector('span');
+        const originalLabel = label?.textContent || 'Add selected gifts';
+
+        this.addButton.disabled = true;
+        if (label) label.textContent = 'Adding…';
+
+        try {
+          const response = await fetch(
+            `${window.Shopify?.routes?.root || '/'}cart/add.js`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json'
+              },
+              body: JSON.stringify({ items })
+            }
+          );
+
+          const payload = await response.json();
+
+          if (!response.ok) {
+            throw new Error(
+              payload.description || payload.message || 'Unable to add the bundle.'
+            );
+          }
+
+          document.dispatchEvent(
+            new CustomEvent('cart:refresh', { bubbles: true })
+          );
+
+          document.dispatchEvent(
+            new CustomEvent('cart:updated', {
+              bubbles: true,
+              detail: payload
+            })
+          );
+
+          if (this.discountCode) {
+            const redirect = this.afterAdd === 'stay'
+              ? window.location.pathname + window.location.search
+              : '/cart';
+
+            window.location.href =
+              `/discount/${encodeURIComponent(this.discountCode)}` +
+              `?redirect=${encodeURIComponent(redirect)}`;
+            return;
+          }
+
+          if (this.afterAdd === 'cart') {
+            window.location.href = '/cart';
+            return;
+          }
+
+          cards.forEach(card => this.toggleProduct(card, false));
+          this.showToast('The selected gifts were added to cart.');
+        } catch (error) {
+          this.showToast(error.message || 'Unable to add the selected gifts.');
+        } finally {
+          if (label) label.textContent = originalLabel;
+          this.addButton.disabled = this.selectedCards().length === 0;
+        }
+      }
+
+      formatMoney(cents) {
+        if (window.Shopify?.formatMoney) {
+          try {
+            return window.Shopify.formatMoney(
+              Number(cents || 0),
+              this.moneyFormat
+            );
+          } catch (error) {}
+        }
+
+        return new Intl.NumberFormat(undefined, {
+          style: 'currency',
+          currency: this.currency,
+          maximumFractionDigits: 0
+        }).format(Number(cents || 0) / 100);
+      }
+
+      showToast(message) {
+        if (!this.toast) return;
+
+        this.toast.textContent = message;
+        this.toast.classList.add('is-visible');
+
+        clearTimeout(this.toast._rbTimer);
+        this.toast._rbTimer = setTimeout(() => {
+          this.toast.classList.remove('is-visible');
+        }, 3000);
+      }
+    }
+
+    customElements.define('rakhi-pdp-bundle', RakhiPdpBundle);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Rakhi gift bundle",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Build a gift around their personality"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "<p>Choose who you are gifting, pick their personality, and add curated favourites at an extra bundle discount.</p>"
+    },
+    {
+      "type": "range",
+      "id": "discount_percent",
+      "label": "Displayed discount",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "unit": "%",
+      "default": 30
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Optional discount code",
+      "info": "The code is applied after the selected products are added."
+    },
+    {
+      "type": "checkbox",
+      "id": "require_main_product",
+      "label": "Require this Rakhi in cart",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "after_add",
+      "label": "After adding gifts",
+      "default": "cart",
+      "options": [
+        {
+          "value": "cart",
+          "label": "Open cart"
+        },
+        {
+          "value": "stay",
+          "label": "Stay on product page"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "add_button_label",
+      "label": "Add button label",
+      "default": "Add selected gifts"
+    },
+    {
+      "type": "text",
+      "id": "her_label",
+      "label": "Girl or her label",
+      "default": "For Her"
+    },
+    {
+      "type": "text",
+      "id": "him_label",
+      "label": "Boy or him label",
+      "default": "For Him"
+    },
+    {
+      "type": "text",
+      "id": "baby_label",
+      "label": "Baby label",
+      "default": "For Baby"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent",
+      "default": "#B8463F"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Block background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#171411"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Borders",
+      "default": "#E7E1DC"
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 18,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+
+    {
+      "type": "header",
+      "content": "For Her: five personalities"
+    },
+    {
+      "type": "text",
+      "id": "her_persona_1_title",
+      "label": "Her option 1",
+      "default": "The Gen Z Sister"
+    },
+    {
+      "type": "product_list",
+      "id": "her_persona_1_products",
+      "label": "Her option 1 products",
+      "limit": 5
+    },
+    {
+      "type": "text",
+      "id": "her_persona_2_title",
+      "label": "Her option 2",
+      "default": "The Hosting Sister"
+    },
+    {
+      "type": "product_list",
+      "id": "her_persona_2_products",
+      "label": "Her option 2 products",
+      "limit": 5
+    },
+    {
+      "type": "text",
+      "id": "her_persona_3_title",
+      "label": "Her option 3",
+      "default": "The Coffee Sister"
+    },
+    {
+      "type": "product_list",
+      "id": "her_persona_3_products",
+      "label": "Her option 3 products",
+      "limit": 5
+    },
+    {
+      "type": "text",
+      "id": "her_persona_4_title",
+      "label": "Her option 4",
+      "default": "The Wellness Sister"
+    },
+    {
+      "type": "product_list",
+      "id": "her_persona_4_products",
+      "label": "Her option 4 products",
+      "limit": 5
+    },
+    {
+      "type": "text",
+      "id": "her_persona_5_title",
+      "label": "Her option 5",
+      "default": "The Creative Sister"
+    },
+    {
+      "type": "product_list",
+      "id": "her_persona_5_products",
+      "label": "Her option 5 products",
+      "limit": 5
+    },
+
+    {
+      "type": "header",
+      "content": "For Him: five personalities"
+    },
+    {
+      "type": "text",
+      "id": "him_persona_1_title",
+      "label": "Him option 1",
+      "default": "The Gamer Brother"
+    },
+    {
+      "type": "product_list",
+      "id": "him_persona_1_products",
+      "label": "Him option 1 products",
+      "limit": 5
+    },
+    {
+      "type": "text",
+      "id": "him_persona_2_title",
+      "label": "Him option 2",
+      "default": "The Workaholic Brother"
+    },
+    {
+      "type": "product_list",
+      "id": "him_persona_2_products",
+      "label": "Him option 2 products",
+      "limit": 5
+    },
+    {
+      "type": "text",
+      "id": "him_persona_3_title",
+      "label": "Him option 3",
+      "default": "The Fitness Brother"
+    },
+    {
+      "type": "product_list",
+      "id": "him_persona_3_products",
+      "label": "Him option 3 products",
+      "limit": 5
+    },
+    {
+      "type": "text",
+      "id": "him_persona_4_title",
+      "label": "Him option 4",
+      "default": "The Traveller Brother"
+    },
+    {
+      "type": "product_list",
+      "id": "him_persona_4_products",
+      "label": "Him option 4 products",
+      "limit": 5
+    },
+    {
+      "type": "text",
+      "id": "him_persona_5_title",
+      "label": "Him option 5",
+      "default": "The Foodie Brother"
+    },
+    {
+      "type": "product_list",
+      "id": "him_persona_5_products",
+      "label": "Him option 5 products",
+      "limit": 5
+    },
+
+    {
+      "type": "header",
+      "content": "For Baby: five personalities"
+    },
+    {
+      "type": "text",
+      "id": "baby_persona_1_title",
+      "label": "Baby option 1",
+      "default": "The Tiny Explorer"
+    },
+    {
+      "type": "product_list",
+      "id": "baby_persona_1_products",
+      "label": "Baby option 1 products",
+      "limit": 5
+    },
+    {
+      "type": "text",
+      "id": "baby_persona_2_title",
+      "label": "Baby option 2",
+      "default": "The Playtime Baby"
+    },
+    {
+      "type": "product_list",
+      "id": "baby_persona_2_products",
+      "label": "Baby option 2 products",
+      "limit": 5
+    },
+    {
+      "type": "text",
+      "id": "baby_persona_3_title",
+      "label": "Baby option 3",
+      "default": "The Little Dreamer"
+    },
+    {
+      "type": "product_list",
+      "id": "baby_persona_3_products",
+      "label": "Baby option 3 products",
+      "limit": 5
+    },
+    {
+      "type": "text",
+      "id": "baby_persona_4_title",
+      "label": "Baby option 4",
+      "default": "The Mealtime Baby"
+    },
+    {
+      "type": "product_list",
+      "id": "baby_persona_4_products",
+      "label": "Baby option 4 products",
+      "limit": 5
+    },
+    {
+      "type": "text",
+      "id": "baby_persona_5_title",
+      "label": "Baby option 5",
+      "default": "The New Arrival"
+    },
+    {
+      "type": "product_list",
+      "id": "baby_persona_5_products",
+      "label": "Baby option 5 products",
+      "limit": 5
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rakhi gift bundle"
+    }
+  ]
+}
+{% endschema %}

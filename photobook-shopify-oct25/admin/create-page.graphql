@@ -1,0 +1,6 @@
+mutation CreatePhotoBookStudioPage($page: PageCreateInput!) {
+  pageCreate(page: $page) {
+    page { id handle title isPublished }
+    userErrors { code field message }
+  }
+}

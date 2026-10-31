@@ -1,0 +1,13 @@
+# Section 3 — Unboxing revision, 28 September 2026
+
+User approved the interactive unboxing direction. Replaced the previous split photo/details layout with a large central planner and physical photo-card arrangement. Click See what's inside to spread the actual gift photos around the planner; Pack it back up returns to a compact stack. No continuous animation. Mobile reveals a native horizontal snap-scrolling strip. Cover selection updates planner, gift photographs, count, title, price and product link; open/closed state is retained. Merchant motion/speed controls and reduced-motion CSS apply.
+
+All existing typography role controls preserved. Added editable reveal/close/swipe labels and five optional gift image pickers per planner (22 planner inputs). Existing scene/photo settings are retained as historical references but aren't used in this composition. Main cover override also drives the central planner. No-JavaScript fallback shows first set and direct links to all products.
+
+Photos come from the current catalog, not generated products. Original source GIF first frame was losslessly converted to sticker-book-still.png and uploaded as june-sticker-book-still-20260928.png (MediaImage 48565917515971). CDN format=pjpg alone did not stop the GIF; the static PNG does. Gift counts remain 5/5/5/3. Remember Why You Started uses a text-only socks card because no separate socks photograph exists. Its notebook is shown in a catalog composition rather than an isolated cutout. Merchant image pickers allow better assets later.
+
+Validation passed for section and index, revision 3. Desktop/mobile visual inspection, all four product selections and images, price/link/count synchronization, keyboard Home, reveal/close, and mobile keyboard horizontal scroll (scrollLeft 229) passed. Responsive bounds at 320/390/901/1051/1440/2560 had no page overflow; max width1680. Added 28px below scene to keep tilted cards clear of shopping strip. Reduced-motion/no-JS fallbacks inspected in source, not dynamically emulated.
+
+Backups are in before/. A merchant save occurred during implementation; fresh index was reconciled and preserved, including its shorter order and materialized settings. Only Section 3 settings were merged into that current index. All other section sources unchanged, including locked Section1.
+
+Current code is june-with-extras.liquid here and ../../current-theme/sections/june-with-extras.liquid. build.py records initial construction only; later refinements are in final source. Source MD5 87bb4678edbe49c081801db868a070f0; index MD5 ed2d0ffd3f06e82752909bcf665f0e76. Theme187527266499 remains UNPUBLISHED. Awaiting review; MAIN untouched.

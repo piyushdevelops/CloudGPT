@@ -1,0 +1,9 @@
+const fs=require('fs'),base=__dirname+'/theme/sections/';
+for(const [file,prefix] of [['june-your-year','ju'],['june-with-extras','jl']]){
+ const p=base+file+'.liquid';let s=fs.readFileSync(p,'utf8');
+ const links=`{% if section.settings.show_policy_links %}<div class="${prefix}__policies ${prefix}__body"><a href="{{ section.settings.shipping_link }}">{{ section.settings.shipping_label | escape }}</a><a href="{{ section.settings.returns_link }}">{{ section.settings.returns_label | escape }}</a></div>{% endif %}`;
+ if(prefix==='ju')s=s.replace('<button type="button" class="ju__textlink" data-compare>',links+'<button type="button" class="ju__textlink" data-compare>');
+ else s=s.replace('   {% if section.settings.collection != blank %}<a class="jl__textlink',links+'\n   {% if section.settings.collection != blank %}<a class="jl__textlink');
+ s=s.replace('{% endstylesheet %}',`.${prefix} .${prefix}__policies{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:var(--${prefix}-body-mobile)}.${prefix} .${prefix}__policies a{display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-underline-offset:4px}\n{% endstylesheet %}`);
+ const m=s.match(/{% schema %}([\s\S]*?){% endschema %}/),j=JSON.parse(m[1]);j.settings.push({type:'header',content:'Policy reassurance'},{type:'checkbox',id:'show_policy_links',label:'Show policy links',default:true},{type:'url',id:'shipping_link',label:'Delivery policy link',default:'/pages/shipping-delivery'},{type:'text',id:'shipping_label',label:'Delivery link label',default:'Delivery details'},{type:'url',id:'returns_link',label:'Returns policy link',default:'/pages/return-and-refund-policy'},{type:'text',id:'returns_label',label:'Returns link label',default:'Returns policy'});s=s.replace(m[0],'{% schema %}\n'+JSON.stringify(j,null,2)+'\n{% endschema %}');fs.writeFileSync(p,s);
+}

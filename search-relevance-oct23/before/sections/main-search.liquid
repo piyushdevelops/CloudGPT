@@ -1,0 +1,4843 @@
+{% comment %}
+  TJS Collection Grid — corrected clean build
+  - No hero or banner
+  - Edge-to-edge product media
+  - Single-select tabs with removable active state
+  - Meaningful badges only
+  - Dynamic collection title after AJAX category changes
+  - Selected variant specifications beneath each product
+  - No collection-page Add to Cart action
+  - Smart colour/text variant presentation with expandable values
+  - Editorial curtain reveal on desktop hover and mobile swipe
+  - Animated variant-image transitions and one-time scroll settling
+  - Compact mobile-first layout
+{% endcomment %}
+
+{% comment %}
+  TJS Search Results — collection-style build
+  - Matches the TJS collection page product data and interactions
+  - Product-first search results
+  - Search metadata filters, product-type tabs and active filter chips
+  - Edge-to-edge product media with mobile image swipe
+  - Selling price, MRP, savings, metadata and available variants
+  - AJAX sorting, filtering and load more
+  - No Add to Cart action inside product cards
+{% endcomment %}
+
+{% liquid
+  assign current_sort = search.sort_by | default: 'relevance'
+  assign search_query = search.terms | strip
+  assign recovery_searches = section.settings.recovery_searches | split: ','
+
+  assign product_type_filter = nil
+  assign availability_filter = nil
+  assign availability_param = blank
+  assign availability_value = blank
+
+  for filter in search.filters
+    if filter.param_name contains 'product_type'
+      assign product_type_filter = filter
+    elsif filter.param_name contains 'availability'
+      assign availability_filter = filter
+      for value in filter.values
+        assign availability_label_downcase = value.label | downcase
+        if availability_value == blank and value.count > 0
+          if value.value == '1' or availability_label_downcase contains 'in stock'
+            assign availability_param = value.param_name
+            assign availability_value = value.value
+          endif
+        endif
+      endfor
+    endif
+  endfor
+
+  assign automatic_type_active = false
+  if product_type_filter != nil and product_type_filter.active_values.size > 0
+    assign automatic_type_active = true
+  endif
+
+  assign active_type_title = blank
+  if automatic_type_active
+    assign active_type_title = product_type_filter.active_values.first.label
+  endif
+
+  assign smart_filter_count = 0
+  assign active_filter_count = 0
+
+  for filter in search.filters
+    unless filter.param_name contains 'availability'
+      assign filter_has_available_values = false
+
+      if filter.type == 'price_range'
+        assign filter_has_available_values = true
+        if filter.min_value.value != blank or filter.max_value.value != blank
+          assign active_filter_count = active_filter_count | plus: 1
+        endif
+      else
+        for value in filter.values
+          if value.count > 0 or value.active
+            assign filter_has_available_values = true
+            break
+          endif
+        endfor
+        assign active_filter_count = active_filter_count | plus: filter.active_values.size
+      endif
+
+      if filter_has_available_values
+        assign smart_filter_count = smart_filter_count | plus: 1
+      endif
+    endunless
+  endfor
+%}
+
+{% capture tjs_search_focus_panel %}
+  <div class="tjs-search-suggest__body" data-suggest-default>
+    <div class="tjs-search-suggest__discovery">
+      <section class="tjs-search-suggest__group" data-suggest-recent-group hidden>
+        <div class="tjs-search-suggest__group-head">
+          <h2>Recent searches</h2>
+          <button type="button" data-clear-recent>Clear</button>
+        </div>
+        <div class="tjs-search-suggest__term-list" data-suggest-recent></div>
+      </section>
+
+      {% if section.settings.recovery_searches != blank %}
+        <section class="tjs-search-suggest__group">
+          <div class="tjs-search-suggest__group-head">
+            <h2>Recommended searches</h2>
+          </div>
+
+          <div class="tjs-search-suggest__term-list">
+            {% for term in recovery_searches limit: 7 %}
+              {% assign suggested_term = term | strip %}
+              {% if suggested_term != blank %}
+                <a
+                  class="tjs-search-suggest__term"
+                  href="{{ routes.search_url }}?q={{ suggested_term | url_encode }}&type=product&options%5Bprefix%5D=last&options%5Bunavailable_products%5D=last"
+                  data-suggest-search-link
+                >
+                  <span class="tjs-search-suggest__term-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <circle cx="10.5" cy="10.5" r="6.4" stroke="currentColor" stroke-width="1.5"/>
+                      <path d="m15.3 15.3 4.2 4.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                  <span>{{ suggested_term | escape }}</span>
+                  <svg class="tjs-search-suggest__arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+    </div>
+
+    {% if settings.products_suggest != blank %}
+      <section class="tjs-search-suggest__group tjs-search-suggest__products-group">
+        <div class="tjs-search-suggest__group-head">
+          <h2>Top products</h2>
+          <a href="{{ routes.search_url }}?q=&type=product">View all</a>
+        </div>
+
+        <div class="tjs-search-suggest__products">
+          {% for suggested_product in settings.products_suggest limit: 4 %}
+            {% liquid
+              assign suggested_variant = suggested_product.selected_or_first_available_variant
+              assign suggested_image = suggested_variant.featured_image | default: suggested_product.featured_image
+              assign suggested_image_alt = suggested_image.alt | default: suggested_product.title
+              assign suggested_compare = suggested_variant.compare_at_price
+              assign suggested_on_sale = false
+
+              if suggested_compare != blank and suggested_compare > suggested_variant.price
+                assign suggested_on_sale = true
+              endif
+            %}
+
+            <a
+              class="tjs-search-suggest__product"
+              href="{{ suggested_product.url }}"
+              data-suggest-product-link
+            >
+              <span class="tjs-search-suggest__product-image">
+                {% if suggested_image != blank %}
+                  {{ suggested_image
+                    | image_url: width: 180
+                    | image_tag:
+                      widths: '72,96,120,150,180',
+                      sizes: '64px',
+                      loading: 'lazy',
+                      alt: suggested_image_alt
+                  }}
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag: 'tjs-search-suggest__placeholder' }}
+                {% endif %}
+              </span>
+
+              <span class="tjs-search-suggest__product-copy">
+                <strong>{{ suggested_product.title | escape }}</strong>
+                <small>{{ suggested_product.type | default: 'The June Shop' | escape }}</small>
+                <span class="tjs-search-suggest__product-price">
+                  <b>{{ suggested_variant.price | money }}</b>
+                  {% if suggested_on_sale %}
+                    <s>{{ suggested_compare | money }}</s>
+                  {% endif %}
+                </span>
+              </span>
+
+              <svg class="tjs-search-suggest__product-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+  </div>
+{% endcapture %}
+
+<tjs-final-search
+  id="TjsFinalSearch-{{ section.id }}"
+  class="tjs-final-collection"
+  data-section-id="{{ section.id }}"
+  data-search-performed="{{ search.performed }}"
+  data-search-query="{{ search_query | escape }}"
+  data-predictive-url="{{ routes.predictive_search_url }}"
+  data-search-url="{{ routes.search_url }}"
+  data-currency="{{ cart.currency.iso_code | default: shop.currency | escape }}"
+  data-force-in-stock="{{ section.settings.force_in_stock }}"
+  data-availability-param="{{ availability_param | escape }}"
+  data-availability-value="{{ availability_value | escape }}"
+  style="
+    --tjs-bg: {{ section.settings.page_background }};
+    --tjs-text: {{ section.settings.text_color }};
+    --tjs-muted: {{ section.settings.muted_text_color }};
+    --tjs-surface: {{ section.settings.image_surface }};
+    --tjs-accent: {{ section.settings.accent_color }};
+    --tjs-accent-soft: {{ section.settings.accent_soft }};
+    --tjs-button: {{ section.settings.button_background }};
+    --tjs-button-text: {{ section.settings.button_text }};
+    --tjs-border: {{ section.settings.border_color }};
+    --tjs-max: {{ section.settings.max_width }}px;
+    --tjs-columns: {{ section.settings.desktop_columns }};
+    --tjs-gap: {{ section.settings.card_gap }}px;
+    --tjs-radius: {{ section.settings.image_radius }}px;
+    --tjs-image-ratio: {% case section.settings.image_ratio %}{% when 'square' %}1 / 1{% when 'three-four' %}3 / 4{% else %}4 / 5{% endcase %};
+    --tjs-image-fit: {{ section.settings.image_fit }};
+    --tjs-image-scale: {{ section.settings.image_scale | times: 0.01 }};
+    --tjs-top: {{ section.settings.padding_top }}px;
+    --tjs-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <script type="application/json" data-tjs-search-exact-routes>
+    {{ section.settings.exact_search_routes | json }}
+  </script>
+
+  <script type="application/json" data-tjs-search-synonyms>
+    {{ section.settings.search_synonyms | json }}
+  </script>
+
+  <section class="tjs-final-collection__section">
+    <div class="tjs-final-collection__inner">
+      {% if search.performed %}
+      <header class="tjs-final-collection__header tjs-final-search__header">
+        <div class="tjs-final-collection__heading-wrap">
+          <h1 class="tjs-final-collection__heading">
+            <span>“{{ search_query | escape }}”</span>
+          </h1>
+        </div>
+
+        <div class="tjs-final-collection__controls">
+          {% if smart_filter_count > 0 %}
+            <button class="tjs-final-collection__filter-button" type="button" data-open-filters>
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M3 5h14M6 10h8M8.5 15h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span>{{ section.settings.filter_label | escape }}</span>
+              {% if active_filter_count > 0 %}<b>{{ active_filter_count }}</b>{% endif %}
+            </button>
+          {% endif %}
+
+          <label class="tjs-final-collection__sort">
+            <span>{{ section.settings.sort_label | escape }}</span>
+            <select data-sort aria-label="{{ section.settings.sort_label | escape }}">
+              {% for option in search.sort_options %}
+                <option value="{{ option.value | escape }}" {% if option.value == current_sort %}selected{% endif %}>{{ option.name | escape }}</option>
+              {% endfor %}
+            </select>
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="m6 8 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </label>
+        </div>
+      </header>
+
+      {% if active_filter_count > 0 %}
+        <div class="tjs-final-collection__active-filters" aria-label="Selected filters">
+          <div class="tjs-final-collection__active-filter-rail">
+            {% for filter in search.filters %}
+              {% unless filter.param_name contains 'availability' or filter.param_name contains 'product_type' %}
+                {% for value in filter.active_values %}
+                  <a
+                    class="tjs-final-collection__active-filter"
+                    href="{{ value.url_to_remove }}"
+                    data-ajax-link
+                    data-preserve-scroll
+                  >
+                    <small>{{ filter.label | escape }}</small>
+                    <strong>{{ value.label | escape }}</strong>
+                    <span aria-hidden="true">×</span>
+                  </a>
+                {% endfor %}
+
+                {% if filter.type == 'price_range' %}
+                  {% if filter.min_value.value != blank or filter.max_value.value != blank %}
+                    <a
+                      class="tjs-final-collection__active-filter"
+                      href="{{ filter.url_to_remove }}"
+                      data-ajax-link
+                      data-preserve-scroll
+                    >
+                      <small>{{ filter.label | escape }}</small>
+                      <strong>
+                        {% if filter.min_value.value != blank %}
+                          {{ filter.min_value.value | money_without_trailing_zeros }}
+                        {% else %}
+                          {{ 0 | money_without_trailing_zeros }}
+                        {% endif %}
+                        –
+                        {% if filter.max_value.value != blank %}
+                          {{ filter.max_value.value | money_without_trailing_zeros }}
+                        {% else %}
+                          {{ filter.range_max | money_without_trailing_zeros }}
+                        {% endif %}
+                      </strong>
+                      <span aria-hidden="true">×</span>
+                    </a>
+                  {% endif %}
+                {% endif %}
+              {% endunless %}
+            {% endfor %}
+          </div>
+
+          <button class="tjs-final-collection__clear-active" type="button" data-clear-filters>
+            {{ section.settings.clear_all_label | escape }}
+          </button>
+        </div>
+      {% endif %}
+
+      <div class="tjs-final-collection__status" data-status role="status" aria-live="polite"></div>
+
+      {% paginate search.results by section.settings.products_per_page %}
+        <div class="tjs-final-collection__grid" data-grid aria-busy="false">
+          {% assign shown_count = 0 %}
+          {% for result in search.results %}
+            {% if result.object_type == 'product' %}
+              {% assign product = result %}
+              {% assign shown_count = shown_count | plus: 1 %}
+              {% liquid
+                assign selected_variant = product.selected_or_first_available_variant
+                assign selling_price = selected_variant.price
+                assign compare_price = selected_variant.compare_at_price
+                assign on_sale = false
+                assign saving_amount = 0
+                assign saving_percent = 0
+                if compare_price != blank and compare_price > selling_price
+                  assign on_sale = true
+                  assign saving_amount = compare_price | minus: selling_price
+                  assign saving_percent = saving_amount | times: 100.0 | divided_by: compare_price | round
+                endif
+
+                assign badge_text = blank
+                if product.available == false
+                  assign badge_text = 'Sold out'
+                elsif product.tags contains 'merch-bestseller' or product.tags contains 'bestseller'
+                  assign badge_text = section.settings.bestseller_label
+                elsif product.tags contains 'merch-new' or product.tags contains 'new'
+                  assign badge_text = section.settings.new_label
+                elsif product.tags contains 'limited' or product.tags contains 'limited-stock'
+                  assign badge_text = section.settings.limited_label
+                elsif product.tags contains 'editor-pick' or product.tags contains 'merch-editor-pick'
+                  assign badge_text = section.settings.editor_pick_label
+                endif
+
+                assign rating_value = blank
+                assign rating_count = blank
+                assign rating_meta = product.metafields.reviews.rating.value
+
+                if section.settings.show_ratings and rating_meta != blank
+                  if rating_meta.rating != blank
+                    assign rating_value = rating_meta.rating | round: 1
+                  else
+                    assign rating_value = rating_meta | round: 1
+                  endif
+                endif
+
+                if product.metafields.reviews.rating_count.value != blank
+                  assign rating_count = product.metafields.reviews.rating_count.value
+                endif
+
+                assign material_meta = product.metafields.custom.material
+                assign material_text = blank
+                if material_meta != blank
+                  if material_meta.type contains 'list.'
+                    assign material_text = material_meta.value | join: ', '
+                  else
+                    assign material_text = material_meta.value
+                  endif
+                endif
+
+                assign capacity_meta = product.metafields.custom.capacity
+                assign chip_1 = blank
+                if capacity_meta != blank
+                  if capacity_meta.type contains 'list.'
+                    assign chip_1 = capacity_meta.value | join: ', '
+                  else
+                    assign chip_1 = capacity_meta.value
+                  endif
+                elsif selected_variant.option1 != blank and selected_variant.option1 != 'Default Title'
+                  assign chip_1 = selected_variant.option1
+                endif
+
+                assign use_meta = product.metafields.custom.primary_use
+                assign recipient_meta = product.metafields.custom.recipient
+                assign chip_2 = blank
+                if use_meta != blank
+                  if use_meta.type contains 'list.'
+                    assign chip_2 = use_meta.value | join: ', '
+                  else
+                    assign chip_2 = use_meta.value
+                  endif
+                elsif recipient_meta != blank
+                  if recipient_meta.type contains 'list.'
+                    assign chip_2 = recipient_meta.value | join: ', '
+                  else
+                    assign chip_2 = recipient_meta.value
+                  endif
+                elsif selected_variant.option2 != blank and selected_variant.option2 != 'Default Title'
+                  assign chip_2 = selected_variant.option2
+                endif
+
+                assign chip_1 = chip_1 | replace: '[', '' | replace: ']', '' | replace: '"', '' | replace: "'", '' | replace: '_', ' ' | strip
+                assign chip_2 = chip_2 | replace: '[', '' | replace: ']', '' | replace: '"', '' | replace: "'", '' | replace: '_', ' ' | strip
+
+                assign meta_label = product.type
+                if badge_text != blank
+                  assign meta_label = badge_text
+                elsif material_text != blank
+                  assign meta_label = material_text
+                elsif product.type == blank
+                  assign meta_label = section.settings.default_meta_label
+                endif
+
+                assign image_loading = 'lazy'
+                assign image_priority = 'auto'
+                if shown_count <= 3
+                  assign image_loading = 'eager'
+                  assign image_priority = 'high'
+                endif
+
+                assign secondary_image = blank
+                if product.images.size > 1
+                  assign secondary_image = product.images[1]
+                endif
+
+                assign product_image_alt = product.featured_image.alt | default: product.title
+                assign secondary_image_alt = secondary_image.alt | default: product.title
+              %}
+
+              <article
+                class="tjs-product-card"
+                data-reveal
+                data-card-product
+                data-product-title="{{ product.title | escape }}"
+                data-selected-options='{{ selected_variant.options | json | escape }}'
+              >
+                <script type="application/json" data-card-variants>{{ product.variants | json }}</script>
+                <div class="tjs-product-card__media">
+                  {% if badge_text != blank %}<span class="tjs-product-card__badge">{{ badge_text | escape }}</span>{% endif %}
+
+                  <a
+                    class="tjs-product-card__image-link"
+                    href="{{ product.url }}"
+                    aria-label="{{ product.title | escape }}"
+                    data-card-media-link
+                  >
+                    <span class="tjs-product-card__image-track" data-card-media-track>
+                      <span class="tjs-product-card__image-slide tjs-product-card__image-slide--primary" data-card-media-slide>
+                        {% if product.featured_image != blank %}
+                          {{ product.featured_image
+                            | image_url: width: 1000
+                            | image_tag:
+                              class: 'tjs-product-card__image tjs-product-card__image--primary',
+                              widths: '220, 320, 420, 560, 720, 900, 1000',
+                              sizes: '(max-width: 749px) 49vw, (max-width: 1099px) 32vw, 24vw',
+                              loading: image_loading,
+                              fetchpriority: image_priority,
+                              decoding: 'async',
+                              alt: product_image_alt
+                          }}
+                        {% else %}
+                          {{ 'product-1' | placeholder_svg_tag: 'tjs-product-card__image tjs-product-card__image--primary tjs-product-card__placeholder' }}
+                        {% endif %}
+                      </span>
+
+                      {% if secondary_image != blank %}
+                        <span class="tjs-product-card__image-slide tjs-product-card__image-slide--secondary" data-card-media-slide>
+                          {{ secondary_image
+                            | image_url: width: 1000
+                            | image_tag:
+                              class: 'tjs-product-card__image tjs-product-card__image--secondary',
+                              widths: '220, 320, 420, 560, 720, 900, 1000',
+                              sizes: '(max-width: 749px) 49vw, (max-width: 1099px) 32vw, 24vw',
+                              loading: 'lazy',
+                              decoding: 'async',
+                              alt: secondary_image_alt
+                          }}
+                        </span>
+                      {% endif %}
+                    </span>
+                  </a>
+
+                  {% if secondary_image != blank %}
+                    <div class="tjs-product-card__image-dots" data-card-media-dots aria-hidden="true">
+                      <span class="is-active" data-card-media-dot></span>
+                      <span data-card-media-dot></span>
+                    </div>
+                  {% endif %}
+
+                  {% if on_sale %}
+                    <span class="tjs-product-card__saving">
+                      {% case section.settings.saving_display %}
+                        {% when 'percentage' %}
+                          <strong>{{ saving_percent }}% off</strong>
+                        {% when 'both' %}
+                          <strong>{{ section.settings.save_prefix | escape }} {{ saving_amount | money_without_trailing_zeros }}</strong>
+                          <small>{{ saving_percent }}%</small>
+                        {% else %}
+                          <strong>{{ section.settings.save_prefix | escape }} {{ saving_amount | money_without_trailing_zeros }}</strong>
+                      {% endcase %}
+                    </span>
+                  {% endif %}
+                </div>
+
+                <div class="tjs-product-card__content">
+                  <div class="tjs-product-card__meta">
+                    <span class="tjs-product-card__meta-label">{{ meta_label | escape }}</span>
+                    {% if rating_value != blank %}
+                      <span class="tjs-product-card__rating" aria-label="{{ rating_value }} out of 5{% if rating_count != blank %}, {{ rating_count }} reviews{% endif %}">
+                        <span class="tjs-product-card__stars" aria-hidden="true">★</span>
+                        <strong>{{ rating_value }}</strong>
+                        {% if rating_count != blank %}<small>({{ rating_count }})</small>{% endif %}
+                      </span>
+                    {% endif %}
+                  </div>
+
+                  <h2 class="tjs-product-card__title"><a href="{{ product.url }}">{{ product.title | escape }}</a></h2>
+
+                  <div class="tjs-product-card__price">
+                    <strong data-card-price>{{ selling_price | money }}</strong>
+                    <s data-card-compare{% unless on_sale %} hidden{% endunless %}>{% if on_sale %}{{ compare_price | money }}{% endif %}</s>
+                  </div>
+
+                  {% unless product.has_only_default_variant %}
+                    <div class="tjs-product-card__variant-groups" data-card-option-groups aria-label="Available product variants">
+                      {% for option in product.options_with_values %}
+                        {% liquid
+                          assign option_index = forloop.index0
+                          assign selected_value = selected_variant.options[option_index]
+                          assign option_name_downcase = option.name | downcase
+                          assign is_colour_option = false
+                          if option_name_downcase contains 'color' or option_name_downcase contains 'colour' or option_name_downcase contains 'shade' or option_name_downcase contains 'finish'
+                            assign is_colour_option = true
+                          endif
+
+                          assign available_value_count = 0
+                          assign selected_position = 0
+
+                          for value in option.values
+                            assign value_text = value.name | default: value
+                            assign value_available = false
+
+                            for variant in product.variants
+                              if variant.available
+                                case option_index
+                                  when 0
+                                    if variant.option1 == value_text
+                                      assign value_available = true
+                                    endif
+                                  when 1
+                                    if variant.option2 == value_text
+                                      assign value_available = true
+                                    endif
+                                  when 2
+                                    if variant.option3 == value_text
+                                      assign value_available = true
+                                    endif
+                                endcase
+                              endif
+
+                              if value_available
+                                break
+                              endif
+                            endfor
+
+                            if value_available
+                              assign available_value_count = available_value_count | plus: 1
+                              if selected_value == value_text
+                                assign selected_position = available_value_count
+                              endif
+                            endif
+                          endfor
+
+                          assign hidden_value_count = available_value_count | minus: 4
+                          if selected_position > 4
+                            assign hidden_value_count = hidden_value_count | minus: 1
+                          endif
+                          if hidden_value_count < 0
+                            assign hidden_value_count = 0
+                          endif
+                        %}
+
+                        {% if available_value_count > 0 %}
+                          <div
+                            class="tjs-product-card__variant-group{% if is_colour_option %} is-colour-option{% endif %}"
+                            data-card-option-group
+                            data-option-index="{{ option_index }}"
+                          >
+                            <span class="tjs-product-card__variant-name">{{ option.name | escape }}</span>
+
+                            <div class="tjs-product-card__variant-values" role="group" aria-label="{{ option.name | escape }}">
+                              {% assign available_position = 0 %}
+
+                              {% for value in option.values %}
+                                {% liquid
+                                  assign value_text = value.name | default: value
+                                  assign value_available = false
+
+                                  for variant in product.variants
+                                    if variant.available
+                                      case option_index
+                                        when 0
+                                          if variant.option1 == value_text
+                                            assign value_available = true
+                                          endif
+                                        when 1
+                                          if variant.option2 == value_text
+                                            assign value_available = true
+                                          endif
+                                        when 2
+                                          if variant.option3 == value_text
+                                            assign value_available = true
+                                          endif
+                                      endcase
+                                    endif
+
+                                    if value_available
+                                      break
+                                    endif
+                                  endfor
+                                %}
+
+                                {% if value_available %}
+                                  {% assign available_position = available_position | plus: 1 %}
+                                  {% assign hide_value = false %}
+                                  {% if available_position > 4 and selected_value != value_text %}
+                                    {% assign hide_value = true %}
+                                  {% endif %}
+
+                                  {% liquid
+                                    assign swatch_key = value_text | downcase | replace: '_', ' ' | replace: '-', ' ' | strip
+                                    assign swatch_color = '#D9D5CF'
+                                    assign swatch_image = blank
+
+                                    if swatch_key contains 'multi' or swatch_key contains 'rainbow' or swatch_key contains 'assorted'
+                                      assign swatch_image = 'conic-gradient(#E15B64, #F3C969, #58A66C, #4AA7C8, #7B61A8, #E15B64)'
+                                    elsif swatch_key contains 'leopard'
+                                      assign swatch_image = 'radial-gradient(circle at 28% 32%, #2B2118 0 12%, transparent 13%), radial-gradient(circle at 72% 68%, #2B2118 0 12%, transparent 13%), radial-gradient(circle at 68% 24%, #6B4327 0 10%, transparent 11%), #C99A5B'
+                                    elsif swatch_key contains 'black' and swatch_key contains 'gold'
+                                      assign swatch_image = 'linear-gradient(135deg, #151515 0 50%, #D4AF37 50% 100%)'
+                                    elsif swatch_key contains 'white' and swatch_key contains 'gold'
+                                      assign swatch_image = 'linear-gradient(135deg, #FFFFFF 0 50%, #D4AF37 50% 100%)'
+                                    elsif swatch_key contains 'blue' and swatch_key contains 'gold'
+                                      assign swatch_image = 'linear-gradient(135deg, #365F9D 0 50%, #D4AF37 50% 100%)'
+                                    elsif swatch_key contains 'cyan' and swatch_key contains 'purple'
+                                      assign swatch_image = 'linear-gradient(135deg, #31B7D7 0 50%, #7E57A2 50% 100%)'
+                                    elsif swatch_key contains 'blue' and swatch_key contains 'purple'
+                                      assign swatch_image = 'linear-gradient(135deg, #3F6FB5 0 50%, #7E57A2 50% 100%)'
+                                    elsif swatch_key contains 'pink' and swatch_key contains 'purple'
+                                      assign swatch_image = 'linear-gradient(135deg, #F2A7C2 0 50%, #7E57A2 50% 100%)'
+                                    elsif swatch_key contains 'clear' or swatch_key contains 'transparent'
+                                      assign swatch_image = 'linear-gradient(135deg, #FFFFFF 0 44%, #D8D8D8 45% 55%, #FFFFFF 56% 100%)'
+                                    elsif swatch_key contains 'rose gold'
+                                      assign swatch_color = '#B76E79'
+                                    elsif swatch_key contains 'navy'
+                                      assign swatch_color = '#1F3155'
+                                    elsif swatch_key contains 'sky blue'
+                                      assign swatch_color = '#87CEEB'
+                                    elsif swatch_key contains 'royal blue'
+                                      assign swatch_color = '#3157A4'
+                                    elsif swatch_key contains 'turquoise'
+                                      assign swatch_color = '#35B6B4'
+                                    elsif swatch_key contains 'cyan'
+                                      assign swatch_color = '#31B7D7'
+                                    elsif swatch_key contains 'teal'
+                                      assign swatch_color = '#267A78'
+                                    elsif swatch_key contains 'blue'
+                                      assign swatch_color = '#3F6FB5'
+                                    elsif swatch_key contains 'lavender'
+                                      assign swatch_color = '#B7A1D6'
+                                    elsif swatch_key contains 'lilac'
+                                      assign swatch_color = '#C8A2C8'
+                                    elsif swatch_key contains 'violet'
+                                      assign swatch_color = '#7F56A6'
+                                    elsif swatch_key contains 'purple'
+                                      assign swatch_color = '#7E57A2'
+                                    elsif swatch_key contains 'magenta'
+                                      assign swatch_color = '#C13A8D'
+                                    elsif swatch_key contains 'burgundy' or swatch_key contains 'wine'
+                                      assign swatch_color = '#722F37'
+                                    elsif swatch_key contains 'maroon'
+                                      assign swatch_color = '#800000'
+                                    elsif swatch_key contains 'coral'
+                                      assign swatch_color = '#F07F73'
+                                    elsif swatch_key contains 'peach'
+                                      assign swatch_color = '#F6B58D'
+                                    elsif swatch_key contains 'rose'
+                                      assign swatch_color = '#D98CA3'
+                                    elsif swatch_key contains 'pink'
+                                      assign swatch_color = '#F2A7C2'
+                                    elsif swatch_key contains 'red'
+                                      assign swatch_color = '#C53B38'
+                                    elsif swatch_key contains 'mustard'
+                                      assign swatch_color = '#D4A017'
+                                    elsif swatch_key contains 'orange'
+                                      assign swatch_color = '#E87822'
+                                    elsif swatch_key contains 'yellow'
+                                      assign swatch_color = '#F2CF3A'
+                                    elsif swatch_key contains 'sage'
+                                      assign swatch_color = '#A8B89A'
+                                    elsif swatch_key contains 'mint'
+                                      assign swatch_color = '#A8E6CF'
+                                    elsif swatch_key contains 'olive'
+                                      assign swatch_color = '#7C833A'
+                                    elsif swatch_key contains 'green'
+                                      assign swatch_color = '#3F7D4A'
+                                    elsif swatch_key contains 'rosewood'
+                                      assign swatch_color = '#6E3B3B'
+                                    elsif swatch_key contains 'wood' or swatch_key contains 'natural'
+                                      assign swatch_color = '#A67C52'
+                                    elsif swatch_key contains 'camel'
+                                      assign swatch_color = '#C19A6B'
+                                    elsif swatch_key contains 'khaki'
+                                      assign swatch_color = '#BDB76B'
+                                    elsif swatch_key contains 'tan'
+                                      assign swatch_color = '#C49A6C'
+                                    elsif swatch_key contains 'brown'
+                                      assign swatch_color = '#7A4E2D'
+                                    elsif swatch_key contains 'beige'
+                                      assign swatch_color = '#D8C3A5'
+                                    elsif swatch_key contains 'cream'
+                                      assign swatch_color = '#FFF3D6'
+                                    elsif swatch_key contains 'ivory'
+                                      assign swatch_color = '#FFF8E7'
+                                    elsif swatch_key contains 'silver'
+                                      assign swatch_color = '#C0C0C0'
+                                    elsif swatch_key contains 'gold'
+                                      assign swatch_color = '#D4AF37'
+                                    elsif swatch_key contains 'charcoal'
+                                      assign swatch_color = '#4A4A4A'
+                                    elsif swatch_key contains 'grey' or swatch_key contains 'gray'
+                                      assign swatch_color = '#9A9A9A'
+                                    elsif swatch_key contains 'white'
+                                      assign swatch_color = '#FFFFFF'
+                                    elsif swatch_key contains 'black'
+                                      assign swatch_color = '#161616'
+                                    endif
+                                  %}
+
+                                  <button
+                                    type="button"
+                                    class="tjs-product-card__variant-value{% if is_colour_option %} tjs-product-card__variant-value--swatch{% endif %}{% if selected_value == value_text %} is-active{% endif %}"
+                                    data-card-option-value
+                                    data-option-index="{{ option_index }}"
+                                    data-option-value="{{ value_text | escape }}"
+                                    aria-label="{{ option.name | escape }}: {{ value_text | escape }}"
+                                    aria-pressed="{% if selected_value == value_text %}true{% else %}false{% endif %}"
+                                    {% if hide_value %}hidden{% endif %}
+                                  >
+                                    {% if is_colour_option %}
+                                      <span
+                                        class="tjs-product-card__swatch"
+                                        {% if value.swatch.image != blank %}
+                                          style="--tjs-swatch-image: url('{{ value.swatch.image | image_url: width: 48 }}');"
+                                        {% elsif value.swatch.color != blank %}
+                                          style="--tjs-swatch: {{ value.swatch.color }};"
+                                        {% elsif swatch_image != blank %}
+                                          style="--tjs-swatch-image: {{ swatch_image }};"
+                                        {% else %}
+                                          style="--tjs-swatch: {{ swatch_color }};"
+                                        {% endif %}
+                                        aria-hidden="true"
+                                      ></span>
+                                    {% endif %}
+                                    <span>{{ value_text | replace: '[', '' | replace: ']', '' | replace: '"', '' | replace: "'", '' | replace: '_', ' ' | strip | escape }}</span>
+                                  </button>
+                                {% endif %}
+                              {% endfor %}
+
+                              {% if hidden_value_count > 0 %}
+                                <button
+                                  type="button"
+                                  class="tjs-product-card__variant-more"
+                                  data-card-option-more
+                                  data-more-count="{{ hidden_value_count }}"
+                                  aria-expanded="false"
+                                >
+                                  +{{ hidden_value_count }} more
+                                </button>
+                              {% endif %}
+                            </div>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% elsif chip_1 != blank or chip_2 != blank %}
+                    <div class="tjs-product-card__variant-specs" aria-label="Product specifications">
+                      {% if chip_1 != blank %}<span class="tjs-product-card__variant-spec"><small>{{ section.settings.specification_label | escape }}</small><strong>{{ chip_1 | escape }}</strong></span>{% endif %}
+                      {% if chip_2 != blank %}<span class="tjs-product-card__variant-spec"><small>{{ section.settings.use_label | escape }}</small><strong>{{ chip_2 | escape }}</strong></span>{% endif %}
+                    </div>
+                  {% endunless %}
+                </div>
+              </article>
+            {% endif %}
+          {% endfor %}
+
+          {% if shown_count == 0 %}
+            <div class="tjs-final-collection__empty">
+              <span class="tjs-final-search__empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="m8.5 8.5 4 4m0-4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <h2>No matching products found</h2>
+              <p>{{ section.settings.empty_text | escape }}</p>
+
+              {% if section.settings.recovery_searches != blank %}
+                <div class="tjs-final-search__recovery" aria-label="Suggested searches">
+                  {% for term in recovery_searches %}
+                    {% assign recovery_term = term | strip %}
+                    {% if recovery_term != blank %}
+                      <a href="{{ routes.search_url }}?q={{ recovery_term | url_encode }}&type=product&options%5Bprefix%5D=last">
+                        {{ recovery_term | escape }}
+                      </a>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+
+        {% if paginate.next %}
+          <div class="tjs-final-collection__load-wrap">
+            <button class="tjs-final-collection__load" type="button" data-load-more data-next-url="{{ paginate.next.url }}">{{ section.settings.load_more_label | escape }}</button>
+          </div>
+        {% endif %}
+      {% endpaginate %}
+      {% else %}
+        <div class="tjs-final-search__landing">
+          <p class="tjs-final-collection__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          <h1>Find something you’ll love</h1>
+          <p>Search across home décor, kitchen, organisers, planners, eyewear and gifting.</p>
+
+          <form
+            class="tjs-final-search__landing-form tjs-search-suggest-root"
+            data-search-suggest-root
+            action="{{ routes.search_url }}"
+            method="get"
+            role="search"
+            data-frm-search
+          >
+            <input type="hidden" name="type" value="product">
+            <input type="hidden" name="options[prefix]" value="last">
+            <input type="hidden" name="options[unavailable_products]" value="last">
+            <label>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="10.8" cy="10.8" r="6.7" stroke="currentColor" stroke-width="1.7"/>
+                <path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+              <input
+                type="search"
+                name="q"
+                autocomplete="off"
+                enterkeyhint="search"
+                data-input-search
+                placeholder="Search mugs, planners, lamps, gifts…"
+                autofocus
+              >
+            </label>
+            <button type="submit">Search</button>
+
+            <div
+              class="tjs-search-suggest"
+              data-search-suggest
+              role="dialog"
+              aria-label="Search suggestions"
+              hidden
+            >
+              {{ tjs_search_focus_panel }}
+            </div>
+          </form>
+
+          {% if section.settings.recovery_searches != blank %}
+            <div class="tjs-final-search__landing-links">
+              <small>Popular searches</small>
+              <div>
+                {% for term in recovery_searches %}
+                  {% assign recovery_term = term | strip %}
+                  {% if recovery_term != blank %}
+                    <a href="{{ routes.search_url }}?q={{ recovery_term | url_encode }}&type=product&options%5Bprefix%5D=last">
+                      {{ recovery_term | escape }}
+                    </a>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  {% if search.performed %}
+  <div class="tjs-filter-drawer" data-filter-drawer hidden>
+    <button class="tjs-filter-drawer__backdrop" type="button" data-close-filters aria-label="Close filters"></button>
+    <aside class="tjs-filter-drawer__panel" role="dialog" aria-modal="true" aria-label="{{ section.settings.filter_label | escape }}">
+      <div class="tjs-filter-drawer__header">
+        <div class="tjs-filter-drawer__heading">
+          <small>{{ section.settings.filter_eyebrow | escape }}</small>
+          <h2>{{ section.settings.filter_label | escape }}</h2>
+          <p>{{ search.results_count }} products</p>
+        </div>
+        <button type="button" data-close-filters aria-label="Close filters">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <form class="tjs-filter-drawer__form" data-filter-form>
+        <input type="hidden" name="q" value="{{ search_query | escape }}">
+        <input type="hidden" name="type" value="product">
+        <input type="hidden" name="options[prefix]" value="last">
+        <input type="hidden" name="options[unavailable_products]" value="last">
+        {% if section.settings.force_in_stock and availability_param != blank and availability_value != blank %}
+          <input type="hidden" name="{{ availability_param }}" value="{{ availability_value }}">
+        {% endif %}
+
+        {% for filter in search.filters %}
+          {% unless filter.param_name contains 'availability' or filter.param_name contains 'product_type' %}
+            {% liquid
+              assign filter_has_available_values = false
+              assign filter_available_value_count = 0
+
+              if filter.type == 'price_range'
+                assign filter_has_available_values = true
+              else
+                for value in filter.values
+                  if value.count > 0 or value.active
+                    assign filter_has_available_values = true
+                    assign filter_available_value_count = filter_available_value_count | plus: 1
+                  endif
+                endfor
+              endif
+            %}
+
+            {% if filter_has_available_values %}
+              <details
+                class="tjs-filter-group"
+                data-filter-group
+                data-filter-param="{{ filter.param_name | escape }}"
+                {% if filter.active_values.size > 0 or filter.min_value.value != blank or filter.max_value.value != blank %}open{% endif %}
+              >
+                <summary>
+                  <span>
+                    {{ filter.label | escape }}
+                    {% if filter.active_values.size > 0 %}
+                      <b>{{ filter.active_values.size }}</b>
+                    {% endif %}
+                  </span>
+                  <span class="tjs-filter-group__summary-meta">
+                    {% unless filter.type == 'price_range' %}
+                      <small>{{ filter_available_value_count }}</small>
+                    {% endunless %}
+                    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                      <path d="m6 8 4 4 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                </summary>
+
+                <div class="tjs-filter-group__content">
+                  {% case filter.type %}
+                    {% when 'boolean', 'list' %}
+                      {% assign filter_label_downcase = filter.label | downcase %}
+                      {% assign is_colour_filter = false %}
+                      {% if filter_label_downcase contains 'color' or filter_label_downcase contains 'colour' or filter_label_downcase contains 'shade' %}
+                        {% assign is_colour_filter = true %}
+                      {% endif %}
+
+                      {% for value in filter.values %}
+                        {% if value.count > 0 or value.active %}
+                          <label class="tjs-filter-option{% if value.active %} is-selected{% endif %}">
+                            <input
+                              type="checkbox"
+                              name="{{ value.param_name }}"
+                              value="{{ value.value }}"
+                              {% if value.active %}checked{% endif %}
+                            >
+
+                            <span class="tjs-filter-option__check" aria-hidden="true">
+                              <svg viewBox="0 0 16 16" fill="none">
+                                <path d="m3.5 8.2 2.6 2.6 6-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                            </span>
+
+                            {% if value.swatch != blank %}
+                              <span
+                                class="tjs-filter-option__swatch"
+                                {% if value.swatch.image != blank %}
+                                  style="background-image:url('{{ value.swatch.image | image_url: width: 48 }}');"
+                                {% elsif value.swatch.color != blank %}
+                                  style="background-color:{{ value.swatch.color }};"
+                                {% endif %}
+                                aria-hidden="true"
+                              ></span>
+                            {% elsif is_colour_filter %}
+                              <span
+                                class="tjs-filter-option__swatch"
+                                data-filter-colour="{{ value.label | escape }}"
+                                aria-hidden="true"
+                              ></span>
+                            {% endif %}
+
+                            <span class="tjs-filter-option__label">{{ value.label | escape }}</span>
+                            <small>{{ value.count }}</small>
+                          </label>
+                        {% endif %}
+                      {% endfor %}
+
+                    {% when 'price_range' %}
+                      <div class="tjs-filter-price">
+                        <label>
+                          <span>Min price</span>
+                          <div>
+                            <small>{{ cart.currency.symbol }}</small>
+                            <input
+                              type="number"
+                              inputmode="numeric"
+                              name="{{ filter.min_value.param_name }}"
+                              value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                              min="0"
+                              max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                              placeholder="0"
+                            >
+                          </div>
+                        </label>
+                        <label>
+                          <span>Max price</span>
+                          <div>
+                            <small>{{ cart.currency.symbol }}</small>
+                            <input
+                              type="number"
+                              inputmode="numeric"
+                              name="{{ filter.max_value.param_name }}"
+                              value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                              min="0"
+                              max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                              placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                            >
+                          </div>
+                        </label>
+                      </div>
+                  {% endcase %}
+                </div>
+              </details>
+            {% endif %}
+          {% endunless %}
+        {% endfor %}
+
+        <input type="hidden" name="sort_by" value="{{ current_sort }}">
+        <div class="tjs-filter-drawer__actions">
+          <button type="button" class="tjs-filter-drawer__clear" data-clear-filters>{{ section.settings.clear_label | escape }}</button>
+          <button type="submit">
+            {{ section.settings.apply_label | escape }}
+            {% if active_filter_count > 0 %}<span>{{ active_filter_count }}</span>{% endif %}
+          </button>
+        </div>
+      </form>
+    </aside>
+  </div>
+
+  <div class="tjs-final-collection__toast" data-toast role="status" aria-live="polite"></div>
+  {% endif %}
+</tjs-final-search>
+
+{% style %}
+  #TjsFinalSearch-{{ section.id }} {
+    display: block;
+    background: var(--tjs-bg);
+    color: var(--tjs-text);
+    font-family: var(--font-body-family, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #TjsFinalSearch-{{ section.id }} *,
+  #TjsFinalSearch-{{ section.id }} *::before,
+  #TjsFinalSearch-{{ section.id }} *::after { box-sizing: border-box; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__section { padding: var(--tjs-top) 0 var(--tjs-bottom); }
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__inner { width: min(calc(100% - 32px), var(--tjs-max)); margin-inline: auto; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 16px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__eyebrow {
+    margin: 0 0 6px;
+    color: var(--tjs-accent);
+    font-size: 10px;
+    font-weight: 750;
+    line-height: 1;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__heading {
+    margin: 0;
+    font-family: var(--font-heading-family, var(--font-body-family, sans-serif));
+    font-size: clamp(28px, 3vw, {{ section.settings.heading_size }}px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -.035em;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__controls { display: flex; align-items: center; gap: 10px; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__filter-button,
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    border: 1px solid var(--tjs-border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--tjs-text);
+    font-size: 11px;
+    font-weight: 650;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__filter-button { cursor: pointer; }
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__filter-button svg,
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort svg { width: 16px; height: 16px; }
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__filter-button b { min-width: 18px; height: 18px; display: inline-grid; place-items: center; border-radius: 50%; background: var(--tjs-accent); color: #fff; font-size: 9px; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort { position: relative; }
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort select { min-width: 128px; padding: 0 20px 0 0; border: 0; outline: 0; background: transparent; color: inherit; font: inherit; appearance: none; cursor: pointer; }
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort svg { position: absolute; right: 9px; pointer-events: none; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__tabs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 22px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__tabs::-webkit-scrollbar { display: none; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__tab {
+    flex: 0 0 auto;
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 14px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    background: #fff;
+    color: var(--tjs-muted);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 650;
+    scroll-snap-align: start;
+    transition: background-color .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__tab:hover { color: var(--tjs-text); transform: translateY(-1px); }
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__tab.is-active { background: var(--tjs-accent); color: #fff; box-shadow: 0 8px 20px color-mix(in srgb, var(--tjs-accent) 24%, transparent); }
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__tab small { width: 16px; height: 16px; display: inline-grid; place-items: center; border-radius: 50%; background: rgba(255,255,255,.18); font-size: 11px; line-height: 1; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__active-filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: -8px 0 18px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__active-filter-rail {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__active-filter-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__active-filter {
+    min-height: 32px;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 7px 0 10px;
+    border: 1px solid color-mix(in srgb, var(--tjs-accent) 22%, var(--tjs-border));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--tjs-accent-soft) 52%, #fff);
+    color: var(--tjs-text);
+    text-decoration: none;
+    scroll-snap-align: start;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__active-filter small {
+    color: var(--tjs-muted);
+    font-size: 7px;
+    font-weight: 760;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__active-filter strong {
+    font-size: 9px;
+    font-weight: 780;
+    white-space: nowrap;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__active-filter > span {
+    width: 18px;
+    height: 18px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--tjs-muted);
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__clear-active {
+    flex: 0 0 auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--tjs-muted);
+    cursor: pointer;
+    font-size: 9px;
+    font-weight: 760;
+    letter-spacing: .05em;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-transform: uppercase;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__status { min-height: 1px; color: var(--tjs-muted); font-size: 12px; }
+  #TjsFinalSearch-{{ section.id }}.has-floating-type .tjs-final-collection__section {
+    padding-bottom: calc(var(--tjs-bottom) + var(--tjs-floating-space, 88px));
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--tjs-columns), minmax(0, 1fr));
+    gap: 22px var(--tjs-gap);
+    align-items: stretch;
+    transition: opacity .2s ease;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__grid[aria-busy="true"] { opacity: .45; pointer-events: none; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card {
+    min-width: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity .42s cubic-bezier(.22,.61,.36,1) var(--tjs-reveal-delay, 0ms),
+      transform .52s cubic-bezier(.22,.61,.36,1) var(--tjs-reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__media {
+    position: relative;
+    aspect-ratio: var(--tjs-image-ratio);
+    overflow: hidden;
+    border-radius: var(--tjs-radius);
+    background: var(--tjs-surface);
+    transform: scale(1.018);
+    transition:
+      transform .7s cubic-bezier(.22,.61,.36,1) calc(var(--tjs-reveal-delay, 0ms) + 20ms),
+      background-color .28s ease;
+    will-change: transform;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card.is-visible .tjs-product-card__media {
+    transform: scale(1);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-link {
+    position: absolute;
+    inset: 0;
+    display: block;
+    overflow: hidden;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-track {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-slide {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-slide--primary {
+    z-index: 1;
+    opacity: 1;
+    transform: translateX(0);
+    transition:
+      opacity .18s ease,
+      transform .24s cubic-bezier(.22,.61,.36,1);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-slide--secondary {
+    z-index: 2;
+    opacity: 1;
+    clip-path: inset(100% 0 0 0);
+    transform: translateY(8px);
+    transition:
+      clip-path .42s cubic-bezier(.22,.61,.36,1),
+      transform .42s cubic-bezier(.22,.61,.36,1);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: var(--tjs-image-fit);
+    object-position: center;
+    transform: scale(var(--tjs-image-scale));
+    transition:
+      transform .42s cubic-bezier(.22,.61,.36,1),
+      filter .28s ease;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__media::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 68%, rgba(20,15,11,.05));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card:hover .tjs-product-card__media {
+      background: color-mix(in srgb, var(--tjs-surface) 96%, var(--tjs-accent-soft));
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card:hover .tjs-product-card__media::after {
+      opacity: 1;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card:hover .tjs-product-card__image-slide--secondary {
+      clip-path: inset(0 0 0 0);
+      transform: translateY(0);
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card:hover .tjs-product-card__image {
+      transform: scale(calc(var(--tjs-image-scale) + .022)) translateY(-2px);
+    }
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card.is-variant-exiting .tjs-product-card__image-slide--primary {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card.is-variant-entering .tjs-product-card__image-slide--primary {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-dots {
+    display: none;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__placeholder {
+    padding: 18%;
+    color: color-mix(in srgb, var(--tjs-muted) 40%, transparent);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__badge {
+    position: absolute;
+    z-index: 3;
+    top: 9px;
+    left: 9px;
+    min-height: 20px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 7px;
+    border-radius: 5px;
+    background: var(--tjs-accent);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__saving {
+    position: absolute;
+    z-index: 3;
+    top: 9px;
+    right: 9px;
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    max-width: calc(100% - 18px);
+    padding: 0 9px;
+    border: 1px solid rgba(255,255,255,.76);
+    border-radius: 6px;
+    background: rgba(255,255,255,.96);
+    color: var(--tjs-text);
+    box-shadow: 0 8px 20px rgba(24,20,18,.13);
+    font-size: 8px;
+    font-weight: 720;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__saving strong {
+    color: var(--tjs-accent);
+    font-size: 11.5px;
+    font-weight: 820;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__saving small {
+    color: var(--tjs-muted);
+    font-size: 8.5px;
+    font-weight: 700;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding-top: 10px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity .38s ease calc(var(--tjs-reveal-delay, 0ms) + 80ms),
+      transform .46s cubic-bezier(.22,.61,.36,1) calc(var(--tjs-reveal-delay, 0ms) + 80ms);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card.is-visible .tjs-product-card__content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; }
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__meta-label { min-width: 0; overflow: hidden; color: var(--tjs-muted); font-size: 9px; font-weight: 700; letter-spacing: .05em; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__rating {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--tjs-text);
+    font-size: 9px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__stars {
+    color: #E7A823;
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__rating strong { font-size: 9.5px; font-weight: 780; }
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__rating small { color: var(--tjs-muted); font-size: 8.5px; font-weight: 650; letter-spacing: 0; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__title {
+    min-height: calc(2 * 1.25em);
+    margin: 0;
+    font-size: 13px;
+    font-weight: 650;
+    line-height: 1.25;
+    letter-spacing: -.01em;
+  }
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__title a { display: -webkit-box; overflow: hidden; color: inherit; text-decoration: none; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__price {
+    min-height: 25px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__price strong {
+    color: var(--tjs-text);
+    font-size: 18px;
+    font-weight: 820;
+    line-height: 1;
+    letter-spacing: -.025em;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__price s {
+    color: var(--tjs-muted);
+    font-size: 13px;
+    font-weight: 560;
+    line-height: 1;
+    text-decoration-thickness: 1.25px;
+    text-decoration-color: color-mix(in srgb, var(--tjs-muted) 72%, transparent);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-specs { display: flex; flex-wrap: wrap; gap: 5px; }
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-spec { min-height: 22px; display: inline-flex; align-items: center; gap: 4px; max-width: 100%; padding: 0 8px; border: 1px solid color-mix(in srgb, var(--tjs-accent) 16%, var(--tjs-border)); border-radius: 999px; background: color-mix(in srgb, var(--tjs-accent-soft) 72%, #fff); color: var(--tjs-text); line-height: 1; }
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-spec small { color: var(--tjs-muted); font-size: 7px; font-weight: 700; letter-spacing: .035em; text-transform: uppercase; }
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-spec strong { min-width: 0; overflow: hidden; font-size: 8px; font-weight: 750; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-groups {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-group {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-name {
+    color: var(--tjs-muted);
+    font-size: 7px;
+    font-weight: 780;
+    line-height: 1;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-values {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-value,
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-more {
+    min-height: 26px;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 9px;
+    border: 1px solid color-mix(in srgb, var(--tjs-border) 88%, transparent);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--tjs-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 7.5px;
+    font-weight: 740;
+    line-height: 1;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    transition: border-color .18s ease, background-color .18s ease, color .18s ease, box-shadow .18s ease;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-value--swatch {
+    padding-left: 5px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__swatch {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+    border: 1px solid rgba(23,20,17,.15);
+    border-radius: 50%;
+    background-color: var(--tjs-swatch, #E8E3DC);
+    background-image: var(--tjs-swatch-image, none);
+    background-position: center;
+    background-size: cover;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.55);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-value:hover,
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-value:focus-visible,
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-more:hover,
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-more:focus-visible {
+    border-color: var(--tjs-accent);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-value.is-active {
+    border-color: var(--tjs-accent);
+    background: var(--tjs-accent);
+    color: #fff;
+    box-shadow: 0 5px 13px color-mix(in srgb, var(--tjs-accent) 20%, transparent);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-value.is-active .tjs-product-card__swatch {
+    border-color: rgba(255,255,255,.72);
+    box-shadow: 0 0 0 1px rgba(255,255,255,.32);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-more {
+    border-style: dashed;
+    background: color-mix(in srgb, var(--tjs-accent-soft) 54%, #fff);
+    color: var(--tjs-accent);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-value[hidden],
+  #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-more[hidden] {
+    display: none !important;
+  }
+
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__empty { grid-column: 1/-1; padding: 60px 20px; text-align: center; }
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__empty h2 { margin: 0 0 8px; font-size: 22px; }
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__empty p { margin: 0; color: var(--tjs-muted); }
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__load-wrap { display: flex; justify-content: center; margin-top: 30px; }
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__load { min-height: 42px; padding: 0 22px; border: 1px solid var(--tjs-text); border-radius: 6px; background: transparent; color: var(--tjs-text); cursor: pointer; font-size: 10px; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer[hidden] { display: none; }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer { position: fixed; inset: 0; z-index: 999; }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__backdrop { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: rgba(15,13,11,.42); }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__panel { position: absolute; top: 0; right: 0; width: min(420px,92vw); height: 100%; display: flex; flex-direction: column; background: #fff; box-shadow: -24px 0 60px rgba(18,14,11,.18); }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--tjs-border);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__heading {
+    display: grid;
+    gap: 3px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__heading > small {
+    color: var(--tjs-accent);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 680;
+    letter-spacing: -.02em;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__heading p {
+    margin: 0;
+    color: var(--tjs-muted);
+    font-size: 10px;
+    font-weight: 650;
+  }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__header button { width: 38px; height: 38px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; background: var(--tjs-accent-soft); color: var(--tjs-text); cursor: pointer; }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__header svg { width: 17px; height: 17px; }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__form { flex: 1 1 auto; overflow-y: auto; padding: 8px 18px 90px; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-group { border-bottom: 1px solid var(--tjs-border); }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-group summary {
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-group summary > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-group summary b {
+    min-width: 18px;
+    height: 18px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--tjs-accent);
+    color: #fff;
+    font-size: 8px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-group__summary-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--tjs-muted);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-group__summary-meta small {
+    font-size: 9px;
+    font-weight: 650;
+  }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-group summary::-webkit-details-marker { display: none; }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-group summary svg { width: 16px; height: 16px; transition: transform .2s ease; }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-group[open] summary svg { transform: rotate(180deg); }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-group__content { display: grid; gap: 9px; padding: 0 0 16px; }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-option {
+    min-height: 38px;
+    display: grid;
+    grid-template-columns: auto auto minmax(0,1fr) auto;
+    align-items: center;
+    gap: 9px;
+    padding: 0 9px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    transition: border-color .18s ease, background-color .18s ease;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-option:hover {
+    border-color: var(--tjs-border);
+    background: color-mix(in srgb, var(--tjs-accent-soft) 24%, #fff);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-option.is-selected {
+    border-color: color-mix(in srgb, var(--tjs-accent) 34%, var(--tjs-border));
+    background: color-mix(in srgb, var(--tjs-accent-soft) 54%, #fff);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-option input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-option__check {
+    width: 18px;
+    height: 18px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--tjs-border);
+    border-radius: 5px;
+    background: #fff;
+    color: transparent;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-option input:checked + .tjs-filter-option__check {
+    border-color: var(--tjs-accent);
+    background: var(--tjs-accent);
+    color: #fff;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-option__check svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-option__label {
+    min-width: 0;
+    overflow: hidden;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-option > small {
+    color: var(--tjs-muted);
+    font-size: 9px;
+    font-weight: 650;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-option__swatch {
+    width: 21px;
+    height: 21px;
+    border: 1px solid rgba(23,20,17,.14);
+    border-radius: 50%;
+    background-color: #D9D5CF;
+    background-position: center;
+    background-size: cover;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.6);
+  }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-price {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-price label {
+    display: grid;
+    gap: 6px;
+    color: var(--tjs-muted);
+    font-size: 9px;
+    font-weight: 720;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-price label > div {
+    min-height: 42px;
+    display: grid;
+    grid-template-columns: auto minmax(0,1fr);
+    align-items: center;
+    gap: 4px;
+    padding: 0 10px;
+    border: 1px solid var(--tjs-border);
+    border-radius: 7px;
+    background: #fff;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-price label > div > small {
+    color: var(--tjs-muted);
+    font-size: 11px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-price input {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--tjs-text);
+    font: inherit;
+    font-size: 12px;
+  }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__actions { position: absolute; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: .8fr 1.2fr; gap: 8px; padding: 12px 18px; border-top: 1px solid var(--tjs-border); background: #fff; }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__actions button { min-height: 42px; border-radius: 6px; font-size: 10px; font-weight: 750; text-transform: uppercase; }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__clear { border: 1px solid var(--tjs-border); background: #fff; color: var(--tjs-text); }
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__actions button[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: 0;
+    background: var(--tjs-button);
+    color: var(--tjs-button-text);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__actions button[type="submit"] span {
+    min-width: 18px;
+    height: 18px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,.16);
+    font-size: 8px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__toast { position: fixed; right: 18px; bottom: 18px; z-index: 1100; max-width: min(340px,calc(100% - 36px)); padding: 12px 15px; border-radius: 7px; background: var(--tjs-text); color: #fff; font-size: 12px; opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .22s ease, transform .22s ease; }
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__toast.is-visible { opacity: 1; transform: none; }
+  #TjsFinalSearch-{{ section.id }}.has-floating-type .tjs-final-collection__toast { bottom: calc(var(--tjs-floating-space, 88px) + 16px + env(safe-area-inset-bottom)); }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type {
+    position: fixed;
+    right: 50%;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    z-index: 998;
+    width: min(780px, calc(100vw - 32px));
+    color: var(--tjs-text);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(50%, calc(100% + 24px), 0);
+    transition: opacity .24s ease, transform .24s ease;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate3d(50%, 0, 0);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type__inner {
+    min-height: 58px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 8px 9px 8px 16px;
+    border: 1px solid color-mix(in srgb, var(--tjs-accent) 26%, var(--tjs-border));
+    border-radius: 999px;
+    background: color-mix(in srgb, #fff 92%, var(--tjs-accent-soft));
+    box-shadow: 0 18px 52px rgba(20, 15, 11, .2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type__label {
+    min-width: 112px;
+    display: grid;
+    gap: 2px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type__label span {
+    color: var(--tjs-muted);
+    font-size: 9px;
+    font-weight: 760;
+    letter-spacing: .09em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type__label strong {
+    max-width: 150px;
+    overflow: hidden;
+    color: var(--tjs-text);
+    font-size: 12px;
+    font-weight: 760;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type__rail {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    overflow-x: auto;
+    scroll-padding-inline: 10px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type__rail::-webkit-scrollbar { display: none; }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type__chip {
+    min-height: 38px;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 13px;
+    border: 1px solid color-mix(in srgb, var(--tjs-border) 86%, transparent);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--tjs-text);
+    font-size: 11px;
+    font-weight: 760;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    transition: background-color .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type__chip:hover {
+    border-color: var(--tjs-accent);
+    transform: translateY(-1px);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type__chip.is-active {
+    border-color: var(--tjs-accent);
+    background: var(--tjs-accent);
+    color: #fff;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type__chip small {
+    width: 16px;
+    height: 16px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,.2);
+    font-size: 11px;
+    line-height: 1;
+  }
+
+  @media screen and (max-width: 989px) {
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  }
+
+  @media screen and (max-width: 749px) {
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__inner { width: min(calc(100% - 18px),var(--tjs-max)); }
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__header { align-items: flex-start; gap: 10px; margin-bottom: 11px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__heading { font-size: {{ section.settings.mobile_heading_size }}px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__controls { gap: 5px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__filter-button,
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort { min-height: 36px; padding-inline: 9px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__filter-button > span,
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort > span { display: none; }
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort select { min-width: 90px; font-size: 10px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__tabs { margin-right: -9px; margin-bottom: 15px; padding-right: 9px; }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__active-filters {
+      align-items: flex-start;
+      gap: 9px;
+      margin: -3px 0 14px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__active-filter {
+      min-height: 29px;
+      padding-left: 8px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__active-filter small {
+      display: none;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__clear-active {
+      padding-top: 8px;
+      font-size: 7.5px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__panel {
+      top: auto;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: min(82vh, 720px);
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 -20px 60px rgba(18,14,11,.2);
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__panel::before {
+      content: "";
+      width: 38px;
+      height: 4px;
+      position: absolute;
+      top: 7px;
+      right: 50%;
+      border-radius: 999px;
+      background: var(--tjs-border);
+      transform: translateX(50%);
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-filter-drawer__header {
+      padding-top: 22px;
+    }
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__tab { min-height: 32px; padding-inline: 12px; font-size: 10px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px 8px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__media { border-radius: min(var(--tjs-radius),8px); }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-track {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x pan-y;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-slide .tjs-product-card__image {
+      width: 100%;
+      height: 100%;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-slide {
+      position: relative;
+      inset: auto;
+      width: 100%;
+      min-width: 100%;
+      height: 100%;
+      flex: 0 0 100%;
+      opacity: 1;
+      clip-path: none;
+      transform: none;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-slide--primary,
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-slide--secondary {
+      opacity: 1;
+      clip-path: none;
+      transform: none;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-dots {
+      position: absolute;
+      z-index: 4;
+      right: 50%;
+      bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 6px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 4px 12px rgba(23,20,17,.08);
+      transform: translateX(50%);
+      pointer-events: none;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--tjs-text) 24%, transparent);
+      opacity: .72;
+      transform: scale(.9);
+      transition:
+        width .24s cubic-bezier(.34,1.56,.64,1),
+        transform .24s cubic-bezier(.34,1.56,.64,1),
+        opacity .2s ease,
+        background-color .2s ease;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-dots span.is-active {
+      width: 12px;
+      border-radius: 999px;
+      background: var(--tjs-accent);
+      opacity: 1;
+      transform: scale(1);
+    }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__badge { top: 6px; left: 6px; min-height: 18px; padding-inline: 5px; font-size: 6.5px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__saving {
+      top: 6px;
+      right: 6px;
+      min-height: 23px;
+      max-width: calc(100% - 12px);
+      padding-inline: 7px;
+      border-radius: 5px;
+    }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__saving strong { font-size: 9.5px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__saving small { font-size: 7px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__content { gap: 5px; padding-top: 7px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__meta-label,
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__rating { font-size: 7.5px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__stars { font-size: 7px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__rating strong { font-size: 8px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__rating small { font-size: 7px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__meta-label { max-width: 66%; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__title {
+      min-height: calc(2 * 1.2em);
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__price {
+      min-height: 22px;
+      gap: 6px;
+    }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__price strong {
+      font-size: 15px;
+      font-weight: 820;
+    }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__price s {
+      font-size: 10.5px;
+      font-weight: 560;
+    }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-specs { gap: 4px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-spec { min-height: 20px; gap: 3px; padding-inline: 6px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-spec small { font-size: 5.5px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-spec strong { font-size: 6.5px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-groups { gap: 6px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-group { grid-template-columns: 1fr; gap: 4px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-name { font-size: 6px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-values { gap: 4px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-value,
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-more {
+      min-height: 23px;
+      gap: 4px;
+      padding-inline: 7px;
+      font-size: 6.5px;
+    }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__variant-value--swatch { padding-left: 4px; }
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__swatch {
+      width: 15px;
+      height: 15px;
+      flex-basis: 15px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-floating-type {
+      width: calc(100vw - 18px);
+      bottom: max(12px, env(safe-area-inset-bottom));
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-floating-type__inner {
+      min-height: 58px;
+      grid-template-columns: 1fr;
+      gap: 7px;
+      padding: 8px;
+      border-radius: 16px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-floating-type__label {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 5px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-floating-type__label strong {
+      max-width: 58vw;
+      font-size: 11px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-floating-type__chip {
+      min-height: 33px;
+      padding-inline: 11px;
+      font-size: 10px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card,
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__media,
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__content,
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__image,
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-slide,
+    #TjsFinalSearch-{{ section.id }} .tjs-product-card__image-dots span,
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__tab,
+    #TjsFinalSearch-{{ section.id }} .tjs-floating-type,
+    #TjsFinalSearch-{{ section.id }} .tjs-floating-type__chip {
+      transition-duration: .01ms !important;
+      animation-duration: .01ms !important;
+    }
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__count {
+    margin: 8px 0 0;
+    color: var(--tjs-muted);
+    font-size: 10px;
+    font-weight: 650;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__heading span {
+    color: var(--tjs-accent);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__form,
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__form {
+    margin-bottom: 18px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__form label,
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-form label {
+    min-width: 0;
+    min-height: 46px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 9px;
+    padding: 0 14px;
+    border: 1px solid var(--tjs-border);
+    border-radius: 9px;
+    background: #fff;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__form label > svg,
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-form label > svg {
+    width: 17px;
+    height: 17px;
+    color: var(--tjs-muted);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__form input,
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-form input {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--tjs-text);
+    font: inherit;
+    font-size: 12px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__form button,
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-form button {
+    min-height: 46px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--tjs-button);
+    color: var(--tjs-button-text);
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 780;
+    letter-spacing: .045em;
+    text-transform: uppercase;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing {
+    max-width: 760px;
+    min-height: min(64vh, 580px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-inline: auto;
+    padding: 42px 0;
+    text-align: center;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing h1 {
+    margin: 0;
+    font-family: var(--font-heading-family, var(--font-body-family, sans-serif));
+    font-size: clamp(34px, 6vw, 64px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -.045em;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing > p:not(.tjs-final-collection__eyebrow) {
+    max-width: 540px;
+    margin: 14px auto 22px;
+    color: var(--tjs-muted);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-form {
+    width: 100%;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-links {
+    display: grid;
+    gap: 9px;
+    margin-top: 18px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-links > small {
+    color: var(--tjs-muted);
+    font-size: 8px;
+    font-weight: 760;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-links > div,
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__recovery {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-links a,
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__recovery a {
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 11px;
+    border: 1px solid var(--tjs-border);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--tjs-text);
+    font-size: 9px;
+    font-weight: 680;
+    text-decoration: none;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__empty-icon {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: var(--tjs-accent-soft);
+    color: var(--tjs-accent);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__empty-icon svg {
+    width: 27px;
+    height: 27px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__recovery {
+    margin-top: 18px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form,
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-form {
+      grid-template-columns: minmax(0, 1fr) 78px;
+      gap: 6px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form label,
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-form label,
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form button,
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-form button {
+      min-height: 44px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form label,
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-form label {
+      padding-inline: 11px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form input,
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-form input {
+      font-size: 11px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form button,
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing-form button {
+      padding-inline: 8px;
+      font-size: 8px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing {
+      min-height: 62vh;
+      padding: 30px 0;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__landing h1 {
+      font-size: 38px;
+    }
+  }
+
+
+  /* =====================================================
+     Search page UI/UX v2
+     Fixes cramped mobile heading, control alignment and search hierarchy.
+  ===================================================== */
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__form {
+    width: min(100%, 720px);
+    position: relative;
+    display: block;
+    margin: 0 0 22px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__form label {
+    width: 100%;
+    min-height: 50px;
+    padding: 0 118px 0 16px;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(23, 18, 14, .055);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__form input {
+    font-size: 13px;
+    font-weight: 580;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__form button {
+    min-width: 104px;
+    min-height: 42px;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 15px;
+    border-radius: 999px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__form button svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__header {
+    align-items: end;
+    margin-bottom: 17px;
+    padding-bottom: 17px;
+    border-bottom: 1px solid var(--tjs-border);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__heading-wrap {
+    min-width: 0;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__title-row {
+    min-width: 0;
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__heading {
+    min-width: 0;
+    max-width: 820px;
+    font-size: clamp(30px, 4.2vw, 54px);
+    line-height: .98;
+    overflow-wrap: anywhere;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__heading span {
+    color: var(--tjs-text);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__count {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    margin: 0 0 3px;
+    color: var(--tjs-muted);
+    font-size: 10px;
+    font-weight: 650;
+    white-space: nowrap;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__count strong {
+    color: var(--tjs-text);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__controls {
+    flex: 0 0 auto;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__filter-button,
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort {
+    min-height: 40px;
+    border-radius: 9px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort select {
+    min-width: 144px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__section {
+      padding-top: max(18px, calc(var(--tjs-top) * .7));
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form {
+      width: 100%;
+      margin-bottom: 17px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form label {
+      min-height: 46px;
+      padding: 0 52px 0 13px;
+      border-radius: 12px;
+      box-shadow: none;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form label > svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form input {
+      font-size: 11.5px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form button {
+      width: 38px;
+      min-width: 38px;
+      min-height: 38px;
+      top: 4px;
+      right: 4px;
+      padding: 0;
+      border-radius: 9px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form button span {
+      display: none;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__form button svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+      gap: 13px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__eyebrow {
+      margin-bottom: 6px;
+      font-size: 8px;
+      letter-spacing: .105em;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__title-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 8px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__heading {
+      max-width: 100%;
+      display: -webkit-box;
+      overflow: hidden;
+      font-size: clamp(27px, 10vw, 34px);
+      line-height: .98;
+      letter-spacing: -.04em;
+      overflow-wrap: normal;
+      word-break: normal;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__count {
+      display: grid;
+      justify-items: end;
+      gap: 0;
+      margin-bottom: 2px;
+      font-size: 7px;
+      line-height: 1.1;
+      text-align: right;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__count strong {
+      font-size: 12px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__controls {
+      width: 100%;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 7px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__filter-button,
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort {
+      width: 100%;
+      min-height: 40px;
+      padding-inline: 11px;
+      border-radius: 9px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__filter-button {
+      min-width: 96px;
+      justify-content: center;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__filter-button > span {
+      display: inline !important;
+      font-size: 10px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort {
+      min-width: 0;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort > span {
+      display: none !important;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__sort select {
+      width: 100%;
+      min-width: 0;
+      padding-right: 25px;
+      font-size: 10px;
+      font-weight: 690;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__tabs {
+      margin-top: 0;
+    }
+  }
+
+  @media screen and (max-width: 340px) {
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__title-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__count {
+      display: inline-flex;
+      justify-items: start;
+      justify-self: start;
+      text-align: left;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__controls {
+      grid-template-columns: 88px minmax(0, 1fr);
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__filter-button {
+      min-width: 88px;
+    }
+  }
+
+
+  /* =====================================================
+     Search suggestions — clean IKEA-inspired interaction
+     White surfaces, strong hierarchy, search-first discovery.
+  ===================================================== */
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest-root {
+    position: relative;
+    z-index: 30;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest[hidden] {
+    display: none !important;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest {
+    width: min(880px, calc(100vw - 32px));
+    max-height: min(68vh, 610px);
+    position: absolute;
+    z-index: 80;
+    top: calc(100% + 8px);
+    left: 0;
+    overflow-y: auto;
+    border: 1px solid var(--tjs-border);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--tjs-text);
+    box-shadow: 0 24px 64px rgba(22, 18, 14, .16);
+    scrollbar-width: thin;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__body {
+    display: grid;
+    grid-template-columns: minmax(240px, .9fr) minmax(340px, 1.35fr);
+    gap: 0;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__discovery {
+    min-width: 0;
+    display: grid;
+    align-content: start;
+    gap: 22px;
+    padding: 22px;
+    border-right: 1px solid var(--tjs-border);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__group {
+    min-width: 0;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__group[hidden] {
+    display: none !important;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__products-group {
+    padding: 22px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__group-head {
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 9px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__group-head h2 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 780;
+    line-height: 1.2;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__group-head a,
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__group-head button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--tjs-muted);
+    cursor: pointer;
+    font: inherit;
+    font-size: 8px;
+    font-weight: 720;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__term-list {
+    display: grid;
+    gap: 1px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__term {
+    min-height: 42px;
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) 18px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 7px;
+    border-radius: 7px;
+    color: var(--tjs-text);
+    font-size: 11px;
+    font-weight: 640;
+    text-decoration: none;
+    transition: background-color .15s ease;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__term:hover,
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__term:focus-visible {
+    outline: none;
+    background: #f4f4f4;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__term-icon {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #f3f3f3;
+    color: var(--tjs-text);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__term-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__arrow,
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product-arrow {
+    width: 15px;
+    height: 15px;
+    color: var(--tjs-muted);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__products {
+    display: grid;
+    gap: 2px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product {
+    min-height: 76px;
+    display: grid;
+    grid-template-columns: 62px minmax(0, 1fr) 18px;
+    align-items: center;
+    gap: 11px;
+    padding: 7px;
+    border-radius: 8px;
+    color: var(--tjs-text);
+    text-decoration: none;
+    transition: background-color .15s ease;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product:hover,
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product:focus-visible {
+    outline: none;
+    background: #f4f4f4;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product-image {
+    width: 62px;
+    height: 62px;
+    display: block;
+    overflow: hidden;
+    border-radius: 5px;
+    background: var(--tjs-surface);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product-image img,
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__placeholder {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product-copy {
+    min-width: 0;
+    display: grid;
+    gap: 3px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product-copy > strong {
+    overflow: hidden;
+    font-size: 10px;
+    font-weight: 720;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product-copy > small {
+    overflow: hidden;
+    color: var(--tjs-muted);
+    font-size: 7px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product-price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product-price b {
+    font-size: 10px;
+    font-weight: 820;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product-price s {
+    color: var(--tjs-muted);
+    font-size: 8px;
+    font-weight: 560;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__loading,
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__empty {
+    min-height: 170px;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    color: var(--tjs-muted);
+    font-size: 10px;
+    font-weight: 650;
+    text-align: center;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__dynamic {
+    display: grid;
+    grid-template-columns: minmax(220px, .8fr) minmax(340px, 1.35fr);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__dynamic-left,
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__dynamic-right {
+    min-width: 0;
+    padding: 22px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__dynamic-left {
+    border-right: 1px solid var(--tjs-border);
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__dynamic-section + .tjs-search-suggest__dynamic-section {
+    margin-top: 18px;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__dynamic-title {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 780;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__view-all {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 18px;
+    border-top: 1px solid var(--tjs-border);
+    background: #111;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 780;
+    letter-spacing: .035em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  @media screen and (max-width: 749px) {
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest {
+      width: 100%;
+      max-height: min(66vh, 520px);
+      top: calc(100% + 6px);
+      border-radius: 10px;
+      box-shadow: 0 18px 48px rgba(22, 18, 14, .16);
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__body,
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__dynamic {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__discovery,
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__products-group,
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__dynamic-left,
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__dynamic-right {
+      padding: 16px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__discovery,
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__dynamic-left {
+      border-right: 0;
+      border-bottom: 1px solid var(--tjs-border);
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__products-group,
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__dynamic-right {
+      padding-top: 14px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__group-head h2,
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__dynamic-title {
+      font-size: 11px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__term {
+      min-height: 40px;
+      font-size: 10px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product {
+      min-height: 70px;
+      grid-template-columns: 56px minmax(0, 1fr) 16px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-search-suggest__product-image {
+      width: 56px;
+      height: 56px;
+    }
+  }
+
+  /* Query-only result heading: removes redundant red label and product count. */
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__header .tjs-final-collection__heading {
+    margin: 0;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__count,
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__title-row {
+    display: none !important;
+  }
+
+  @media screen and (max-width: 749px) {
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__header .tjs-final-collection__heading {
+      display: -webkit-box;
+      max-width: 100%;
+      overflow: hidden;
+      font-size: clamp(28px, 10vw, 35px);
+      line-height: 1;
+      word-break: normal;
+      overflow-wrap: normal;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+  }
+
+
+  /* =====================================================
+     Search results v4
+     The global header owns search; the results page begins with the query.
+  ===================================================== */
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-search__header {
+    margin-top: 0;
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__section {
+    padding-top: clamp(20px, 3vw, var(--tjs-top));
+  }
+
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__heading {
+    max-width: min(820px, 100%);
+  }
+
+  @media screen and (max-width: 749px) {
+    #TjsFinalSearch-{{ section.id }} .tjs-final-collection__section {
+      padding-top: 16px;
+    }
+
+    #TjsFinalSearch-{{ section.id }} .tjs-final-search__header {
+      margin-top: 0;
+    }
+  }
+
+
+  /* Search relevance v5: Product Type belongs in Filters, not a tab rail. */
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__tabs,
+  #TjsFinalSearch-{{ section.id }} .tjs-floating-type,
+  #TjsFinalSearch-{{ section.id }} .tjs-final-collection__floating-anchor {
+    display: none !important;
+  }
+
+{% endstyle %}
+
+<script>
+  (() => {
+    const showSectionToast = (root, message) => {
+      const toast = root?.querySelector?.('[data-toast]');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      clearTimeout(toast._tjsTimer);
+      toast._tjsTimer = setTimeout(() => toast.classList.remove('is-visible'), 2500);
+    };
+
+
+
+
+
+
+
+    if (customElements.get('tjs-final-search')) {
+      return;
+    }
+
+    class TjsFinalSearch extends HTMLElement {
+      connectedCallback() {
+        if (this.dataset.ready === 'true') return;
+        this.dataset.ready = 'true';
+
+        this.sectionId = this.dataset.sectionId;
+        this.grid = this.querySelector('[data-grid]');
+        this.drawer = this.querySelector('[data-filter-drawer]');
+        this.status = this.querySelector('[data-status]');
+        this.toast = this.querySelector('[data-toast]');
+        this.floatingType = this.querySelector('[data-floating-type]');
+        this.floatingAnchor = this.querySelector('[data-floating-anchor]');
+        this.lastTrigger = null;
+        this.requestController = null;
+        this.scrollTicking = false;
+        this.searchSuggestionRoots = [];
+        this.searchSuggestionRecentKey = 'tjs_search_page_recent';
+        this.searchSuggestionOutsideHandler = null;
+        this.exactSearchRoutes = this.parseSearchMap(
+          this.querySelector('[data-tjs-search-exact-routes]')?.textContent || '""'
+        );
+        this.searchSynonyms = this.parseSearchMap(
+          this.querySelector('[data-tjs-search-synonyms]')?.textContent || '""'
+        );
+
+        if (this.redirectExactCategorySearch()) return;
+
+        this.boundClick = this.handleClick.bind(this);
+        this.boundChange = this.handleChange.bind(this);
+        this.boundSubmit = this.handleSubmit.bind(this);
+        this.boundScroll = this.handleScroll.bind(this);
+        this.boundResize = this.handleResize.bind(this);
+        this.addEventListener('click', this.boundClick);
+        this.addEventListener('change', this.boundChange);
+        this.addEventListener('submit', this.boundSubmit);
+
+        this.initializeProductCards(this);
+        this.initializeFilterSwatches();
+        this.setupSearchSuggestions();
+        this.observeCards();
+        this.setupFloatingType();
+        this.ensureSearchParameters();
+      }
+
+      disconnectedCallback() {
+        this.removeEventListener('click', this.boundClick);
+        this.removeEventListener('change', this.boundChange);
+        this.removeEventListener('submit', this.boundSubmit);
+        window.removeEventListener('scroll', this.boundScroll);
+        window.removeEventListener('resize', this.boundResize);
+        this.revealObserver?.disconnect();
+        this.requestController?.abort();
+        if (this.searchSuggestionOutsideHandler) {
+          document.removeEventListener('pointerdown', this.searchSuggestionOutsideHandler);
+        }
+        this.searchSuggestionRoots.forEach(root => {
+          root._tjsSuggestionController?.abort?.();
+          clearTimeout(root._tjsSuggestionTimer);
+        });
+      }
+
+      parseSearchMap(jsonText) {
+        let rawText = '';
+
+        try {
+          rawText = JSON.parse(jsonText || '""') || '';
+        } catch (error) {
+          rawText = '';
+        }
+
+        const map = new Map();
+
+        String(rawText)
+          .split(/\r?\n/)
+          .map(line => line.trim())
+          .filter(Boolean)
+          .forEach(line => {
+            const parts = line.split('=>');
+            if (parts.length < 2) return;
+
+            const destination = parts.slice(1).join('=>').trim();
+            if (!destination) return;
+
+            parts[0]
+              .split('|')
+              .map(alias => this.normaliseSearchKey(alias))
+              .filter(Boolean)
+              .forEach(alias => map.set(alias, destination));
+          });
+
+        return map;
+      }
+
+      normaliseSearchKey(value) {
+        return String(value || '')
+          .toLowerCase()
+          .replace(/[“”"'`]/g, '')
+          .replace(/&/g, ' and ')
+          .replace(/[^a-z0-9]+/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
+
+      normaliseSearchQuery(query) {
+        const original = String(query || '').trim();
+        const key = this.normaliseSearchKey(original);
+        return this.searchSynonyms.get(key) || original;
+      }
+
+      exactSearchDestination(query) {
+        const key = this.normaliseSearchKey(query);
+        return this.exactSearchRoutes.get(key) || '';
+      }
+
+      redirectExactCategorySearch() {
+        if (this.dataset.searchPerformed !== 'true') return false;
+
+        const currentUrl = new URL(window.location.href);
+        const query = currentUrl.searchParams.get('q') || this.dataset.searchQuery || '';
+        const exactDestination = this.exactSearchDestination(query);
+        const hasIntentionalFilters = [...currentUrl.searchParams.keys()]
+          .some(key => key.startsWith('filter.'));
+
+        if (!exactDestination || hasIntentionalFilters) return false;
+
+        const destinationUrl = new URL(exactDestination, window.location.origin);
+
+        if (
+          destinationUrl.pathname === window.location.pathname &&
+          destinationUrl.search === window.location.search
+        ) {
+          return false;
+        }
+
+        window.location.replace(destinationUrl.pathname + destinationUrl.search);
+        return true;
+      }
+
+      ensureSearchParameters() {
+        if (this.dataset.searchPerformed !== 'true') return;
+
+        const currentUrl = new URL(window.location.href);
+        let changed = false;
+
+        if (currentUrl.searchParams.get('type') !== 'product') {
+          currentUrl.searchParams.set('type', 'product');
+          changed = true;
+        }
+
+        if (currentUrl.searchParams.get('options[prefix]') !== 'last') {
+          currentUrl.searchParams.set('options[prefix]', 'last');
+          changed = true;
+        }
+
+        if (currentUrl.searchParams.get('options[unavailable_products]') !== 'last') {
+          currentUrl.searchParams.set('options[unavailable_products]', 'last');
+          changed = true;
+        }
+
+        [...currentUrl.searchParams.keys()].forEach(key => {
+          if (key.startsWith('resources[')) {
+            currentUrl.searchParams.delete(key);
+            changed = true;
+          }
+        });
+
+        if (this.dataset.forceInStock === 'true') {
+          const param = this.dataset.availabilityParam;
+          const value = this.dataset.availabilityValue;
+
+          if (
+            param &&
+            value &&
+            !currentUrl.searchParams.getAll(param).includes(value)
+          ) {
+            currentUrl.searchParams.set(param, value);
+            changed = true;
+          }
+        }
+
+        if (!changed) return;
+
+        currentUrl.searchParams.delete('page');
+        this.fetchSection(currentUrl.toString(), {
+          updateUrl: true,
+          replaceUrl: true,
+          preserveScroll: true
+        });
+      }
+
+      setupSearchSuggestions() {
+        this.searchSuggestionRoots = [
+          ...this.querySelectorAll('[data-search-suggest-root]')
+        ];
+
+        if (!this.searchSuggestionRoots.length) return;
+
+        this.searchSuggestionOutsideHandler = event => {
+          this.searchSuggestionRoots.forEach(root => {
+            if (!root.contains(event.target)) this.closeSearchSuggestion(root);
+          });
+        };
+
+        document.addEventListener(
+          'pointerdown',
+          this.searchSuggestionOutsideHandler
+        );
+
+        this.searchSuggestionRoots.forEach(root => {
+          const input = root.querySelector('input[name="q"]');
+          const panel = root.querySelector('[data-search-suggest]');
+          const form = root.matches('form') ? root : root.querySelector('form');
+
+          if (!input || !panel || !form) return;
+
+          root._tjsDefaultSuggestionHTML = panel.innerHTML;
+
+          const openDefault = () => {
+            this.closeOtherSearchSuggestions(root);
+            this.restoreDefaultSearchSuggestion(root);
+            panel.hidden = false;
+          };
+
+          input.addEventListener('focus', openDefault);
+          input.addEventListener('click', openDefault);
+
+          input.addEventListener('input', () => {
+            clearTimeout(root._tjsSuggestionTimer);
+            const query = input.value.trim();
+
+            if (query.length < 2) {
+              root._tjsSuggestionController?.abort?.();
+              this.restoreDefaultSearchSuggestion(root);
+              panel.hidden = false;
+              return;
+            }
+
+            root._tjsSuggestionTimer = setTimeout(() => {
+              this.fetchSearchSuggestions(root, query);
+            }, 180);
+          });
+
+          input.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+              this.closeSearchSuggestion(root);
+              input.blur();
+              return;
+            }
+
+            if (event.key === 'ArrowDown' && !panel.hidden) {
+              const firstLink = panel.querySelector('a[href], button:not([disabled])');
+              if (firstLink) {
+                event.preventDefault();
+                firstLink.focus();
+              }
+            }
+          });
+
+          panel.addEventListener('keydown', event => {
+            const controls = [
+              ...panel.querySelectorAll('a[href], button:not([disabled])')
+            ];
+            const index = controls.indexOf(document.activeElement);
+
+            if (event.key === 'ArrowDown' && index > -1) {
+              event.preventDefault();
+              controls[(index + 1) % controls.length]?.focus();
+            }
+
+            if (event.key === 'ArrowUp' && index > -1) {
+              event.preventDefault();
+
+              if (index === 0) input.focus();
+              else controls[index - 1]?.focus();
+            }
+
+            if (event.key === 'Escape') {
+              event.preventDefault();
+              this.closeSearchSuggestion(root);
+              input.focus();
+            }
+          });
+
+          panel.addEventListener('click', event => {
+            const clearRecent = event.target.closest('[data-clear-recent]');
+
+            if (clearRecent) {
+              this.clearRecentSearches();
+              this.restoreDefaultSearchSuggestion(root);
+              return;
+            }
+
+            const link = event.target.closest('a[href]');
+            if (!link) return;
+
+            const query = this.searchQueryFromUrl(link.href);
+            if (query) this.saveRecentSearch(query);
+          });
+
+          form.addEventListener('submit', event => {
+            event.preventDefault();
+
+            const query = input.value.trim();
+            if (!query) return;
+
+            this.saveRecentSearch(query);
+            window.location.assign(this.buildSearchSuggestionUrl(query));
+          });
+        });
+      }
+
+      closeOtherSearchSuggestions(activeRoot) {
+        this.searchSuggestionRoots.forEach(root => {
+          if (root !== activeRoot) this.closeSearchSuggestion(root);
+        });
+      }
+
+      closeSearchSuggestion(root) {
+        const panel = root?.querySelector?.('[data-search-suggest]');
+        if (panel) panel.hidden = true;
+      }
+
+      restoreDefaultSearchSuggestion(root) {
+        const panel = root?.querySelector?.('[data-search-suggest]');
+        if (!panel) return;
+
+        panel.innerHTML = root._tjsDefaultSuggestionHTML || '';
+        this.populateRecentSearches(panel);
+      }
+
+      readRecentSearches() {
+        try {
+          const searches = JSON.parse(
+            window.localStorage.getItem(this.searchSuggestionRecentKey) || '[]'
+          );
+
+          return Array.isArray(searches)
+            ? searches.map(value => String(value || '').trim()).filter(Boolean).slice(0, 5)
+            : [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      saveRecentSearch(query) {
+        const cleanQuery = String(query || '').trim();
+        if (!cleanQuery) return;
+
+        const searches = [
+          cleanQuery,
+          ...this.readRecentSearches().filter(
+            value => value.toLowerCase() !== cleanQuery.toLowerCase()
+          )
+        ].slice(0, 5);
+
+        try {
+          window.localStorage.setItem(
+            this.searchSuggestionRecentKey,
+            JSON.stringify(searches)
+          );
+        } catch (error) {}
+      }
+
+      clearRecentSearches() {
+        try {
+          window.localStorage.removeItem(this.searchSuggestionRecentKey);
+        } catch (error) {}
+      }
+
+      populateRecentSearches(panel) {
+        const group = panel.querySelector('[data-suggest-recent-group]');
+        const list = panel.querySelector('[data-suggest-recent]');
+        if (!group || !list) return;
+
+        const recent = this.readRecentSearches();
+
+        if (!recent.length) {
+          group.hidden = true;
+          list.innerHTML = '';
+          return;
+        }
+
+        list.innerHTML = recent.map(term => `
+          <a
+            class="tjs-search-suggest__term"
+            href="${this.buildSearchSuggestionUrl(term)}"
+            data-suggest-search-link
+          >
+            <span class="tjs-search-suggest__term-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </span>
+            <span>${this.escapeSuggestionHTML(term)}</span>
+            <svg class="tjs-search-suggest__arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        `).join('');
+
+        group.hidden = false;
+      }
+
+      async fetchSearchSuggestions(root, query) {
+        const panel = root.querySelector('[data-search-suggest]');
+        const requestQuery = this.normaliseSearchQuery(query);
+        if (!panel) return;
+
+        root._tjsSuggestionController?.abort?.();
+        root._tjsSuggestionController = new AbortController();
+        const suggestionController = root._tjsSuggestionController;
+
+        panel.hidden = false;
+        panel.innerHTML = `
+          <div class="tjs-search-suggest__loading">
+            Finding the best matches…
+          </div>
+        `;
+
+        const basePredictiveUrl = this.dataset.predictiveUrl || '/search/suggest';
+        const endpoint = basePredictiveUrl.endsWith('.json')
+          ? basePredictiveUrl
+          : `${basePredictiveUrl}.json`;
+        const requestUrl = new URL(endpoint, window.location.origin);
+
+        requestUrl.searchParams.set('q', requestQuery);
+        requestUrl.searchParams.set(
+          'resources[type]',
+          'product,query,collection'
+        );
+        requestUrl.searchParams.set('resources[limit]', '6');
+        requestUrl.searchParams.set('resources[limit_scope]', 'each');
+        requestUrl.searchParams.set(
+          'resources[options][unavailable_products]',
+          'last'
+        );
+        requestUrl.searchParams.set(
+          'resources[options][prefix]',
+          'last'
+        );
+        requestUrl.searchParams.set(
+          'resources[options][fields]',
+          'title,product_type,variants.title,variants.sku'
+        );
+
+        try {
+          const response = await fetch(requestUrl.toString(), {
+            signal: root._tjsSuggestionController.signal,
+            headers: { Accept: 'application/json' }
+          });
+
+          if (!response.ok) throw new Error('Search suggestions unavailable.');
+
+          const payload = await response.json();
+          if (suggestionController.signal.aborted || root._tjsSuggestionController !== suggestionController || !root.isConnected || root.querySelector('[data-input-search]')?.value.trim() !== query.trim()) return;
+          const resources =
+            payload?.resources?.results ||
+            payload?.resources ||
+            payload?.results ||
+            {};
+
+          this.renderDynamicSearchSuggestions(panel, query, resources);
+        } catch (error) {
+          if (error.name === 'AbortError') return;
+
+          panel.innerHTML = `
+            <div class="tjs-search-suggest__empty">
+              <a
+                class="tjs-search-suggest__view-all"
+                href="${this.buildSearchSuggestionUrl(query)}"
+              >
+                <span>Search for “${this.escapeSuggestionHTML(query)}”</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          `;
+        }
+      }
+
+      renderDynamicSearchSuggestions(panel, query, resources) {
+        const queries = Array.isArray(resources.queries)
+          ? resources.queries.slice(0, 5)
+          : [];
+        const collections = Array.isArray(resources.collections)
+          ? resources.collections.slice(0, 4)
+          : [];
+        const products = Array.isArray(resources.products)
+          ? resources.products.slice(0, 6)
+          : [];
+
+        const leftSections = [];
+
+        if (queries.length) {
+          leftSections.push(`
+            <section class="tjs-search-suggest__dynamic-section">
+              <span class="tjs-search-suggest__dynamic-title">Search suggestions</span>
+              <div class="tjs-search-suggest__term-list">
+                ${queries.map(item => {
+                  const text = item.text || item.title || query;
+                  const url = item.url || this.buildSearchSuggestionUrl(text);
+
+                  return this.searchSuggestionTermMarkup(text, url, false);
+                }).join('')}
+              </div>
+            </section>
+          `);
+        }
+
+        if (collections.length) {
+          leftSections.push(`
+            <section class="tjs-search-suggest__dynamic-section">
+              <span class="tjs-search-suggest__dynamic-title">Categories</span>
+              <div class="tjs-search-suggest__term-list">
+                ${collections.map(item =>
+                  this.searchSuggestionTermMarkup(
+                    item.title || 'Collection',
+                    item.url || '#',
+                    true
+                  )
+                ).join('')}
+              </div>
+            </section>
+          `);
+        }
+
+        const productsMarkup = products.map(product => {
+          const image =
+            product.featured_image?.url ||
+            product.image?.url ||
+            product.image ||
+            product.featured_image ||
+            '';
+          const title = product.title || 'Product';
+          const url = product.url || '#';
+          const type =
+            product.type ||
+            product.product_type ||
+            product.vendor ||
+            'The June Shop';
+          const price = this.formatSuggestionMoney(
+            product.price ??
+            product.price_min ??
+            product.price_max
+          );
+          const compare = this.formatSuggestionMoney(
+            product.compare_at_price ??
+            product.compare_at_price_min ??
+            product.compare_at_price_max
+          );
+
+          return `
+            <a
+              class="tjs-search-suggest__product"
+              href="${this.escapeSuggestionAttribute(url)}"
+              data-suggest-product-link
+            >
+              <span class="tjs-search-suggest__product-image">
+                ${image
+                  ? `<img src="${this.escapeSuggestionAttribute(image)}" alt="" loading="lazy">`
+                  : ''
+                }
+              </span>
+
+              <span class="tjs-search-suggest__product-copy">
+                <strong>${this.escapeSuggestionHTML(title)}</strong>
+                <small>${this.escapeSuggestionHTML(type)}</small>
+                ${price ? `
+                  <span class="tjs-search-suggest__product-price">
+                    <b>${this.escapeSuggestionHTML(price)}</b>
+                    ${compare && compare !== price
+                      ? `<s>${this.escapeSuggestionHTML(compare)}</s>`
+                      : ''
+                    }
+                  </span>
+                ` : ''}
+              </span>
+
+              <svg class="tjs-search-suggest__product-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          `;
+        }).join('');
+
+        if (!leftSections.length && !productsMarkup) {
+          panel.innerHTML = `
+            <div class="tjs-search-suggest__empty">
+              No quick matches yet. Search the full catalogue instead.
+            </div>
+            <a
+              class="tjs-search-suggest__view-all"
+              href="${this.buildSearchSuggestionUrl(query)}"
+            >
+              <span>Search for “${this.escapeSuggestionHTML(query)}”</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          `;
+          return;
+        }
+
+        panel.innerHTML = `
+          <div class="tjs-search-suggest__dynamic">
+            <div class="tjs-search-suggest__dynamic-left">
+              ${leftSections.join('')}
+            </div>
+
+            <div class="tjs-search-suggest__dynamic-right">
+              <span class="tjs-search-suggest__dynamic-title">Products</span>
+              <div class="tjs-search-suggest__products">
+                ${productsMarkup || '<div class="tjs-search-suggest__empty">No product matches yet.</div>'}
+              </div>
+            </div>
+          </div>
+
+          <a
+            class="tjs-search-suggest__view-all"
+            href="${this.buildSearchSuggestionUrl(query)}"
+          >
+            <span>View all results for “${this.escapeSuggestionHTML(query)}”</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        `;
+      }
+
+      searchSuggestionTermMarkup(text, url, category = false) {
+        return `
+          <a
+            class="tjs-search-suggest__term"
+            href="${this.escapeSuggestionAttribute(url)}"
+            data-suggest-search-link
+          >
+            <span class="tjs-search-suggest__term-icon" aria-hidden="true">
+              ${category
+                ? `<svg viewBox="0 0 24 24" fill="none">
+                    <path d="M4 6.5h6v5H4v-5Zm10 0h6v5h-6v-5ZM4 15h6v3H4v-3Zm10 0h6v3h-6v-3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+                  </svg>`
+                : `<svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="10.5" cy="10.5" r="6.4" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="m15.3 15.3 4.2 4.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>`
+              }
+            </span>
+            <span>${this.escapeSuggestionHTML(text)}</span>
+            <svg class="tjs-search-suggest__arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        `;
+      }
+
+      buildSearchSuggestionUrl(query) {
+        const cleanQuery = String(query || '').trim();
+        const exactDestination = this.exactSearchDestination(cleanQuery);
+
+        if (exactDestination) {
+          const destinationUrl = new URL(exactDestination, window.location.origin);
+          return destinationUrl.pathname + destinationUrl.search;
+        }
+
+        const normalizedQuery = this.normaliseSearchQuery(cleanQuery);
+        const url = new URL(
+          this.dataset.searchUrl || '/search',
+          window.location.origin
+        );
+
+        url.search = '';
+        url.searchParams.set('q', normalizedQuery);
+        url.searchParams.set('type', 'product');
+        url.searchParams.set('options[prefix]', 'last');
+        url.searchParams.set('options[unavailable_products]', 'last');
+        url.searchParams.set(
+          'options[fields]',
+          'title,product_type,variants.title,variants.sku'
+        );
+
+        return url.pathname + url.search;
+      }
+
+      searchQueryFromUrl(href) {
+        try {
+          return new URL(href, window.location.origin).searchParams.get('q') || '';
+        } catch (error) {
+          return '';
+        }
+      }
+
+      formatSuggestionMoney(value) {
+        if (value === null || value === undefined || value === '') return '';
+
+        const raw =
+          typeof value === 'object'
+            ? value.amount ?? value.value ?? ''
+            : value;
+        const text = String(raw).trim();
+
+        if (!text) return '';
+        if (/[₹$£€]|Rs\.?|INR/i.test(text)) return text;
+
+        const number = Number(text.replace(/,/g, ''));
+        if (!Number.isFinite(number)) return text;
+
+        try {
+          return new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: this.dataset.currency || 'INR',
+            maximumFractionDigits: 0
+          }).format(number);
+        } catch (error) {
+          return `₹${Math.round(number).toLocaleString('en-IN')}`;
+        }
+      }
+
+      escapeSuggestionHTML(value) {
+        return String(value || '').replace(/[&<>"']/g, character => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        })[character]);
+      }
+
+      escapeSuggestionAttribute(value) {
+        return this.escapeSuggestionHTML(String(value || ''));
+      }
+
+      initializeFilterSwatches() {
+        this.querySelectorAll('[data-filter-colour]').forEach(swatch => {
+          const label = swatch.dataset.filterColour || '';
+          const colour = this.resolveFilterColour(label);
+          swatch.style.background = colour;
+        });
+      }
+
+      resolveFilterColour(label) {
+        const key = String(label || '').toLowerCase().replace(/[_-]+/g, ' ').trim();
+
+        if (/(multi|rainbow|assorted)/.test(key)) {
+          return 'conic-gradient(#E15B64, #F3C969, #58A66C, #4AA7C8, #7B61A8, #E15B64)';
+        }
+        if (key.includes('black') && key.includes('gold')) {
+          return 'linear-gradient(135deg, #151515 0 50%, #D4AF37 50% 100%)';
+        }
+        if (key.includes('white') && key.includes('gold')) {
+          return 'linear-gradient(135deg, #FFFFFF 0 50%, #D4AF37 50% 100%)';
+        }
+        if (key.includes('cyan') && key.includes('purple')) {
+          return 'linear-gradient(135deg, #31B7D7 0 50%, #7E57A2 50% 100%)';
+        }
+        if (/(clear|transparent)/.test(key)) {
+          return 'linear-gradient(135deg, #FFFFFF 0 44%, #D8D8D8 45% 55%, #FFFFFF 56% 100%)';
+        }
+
+        const colours = [
+          [/rose gold/, '#B76E79'],
+          [/navy/, '#1F3155'],
+          [/sky blue/, '#87CEEB'],
+          [/royal blue/, '#3157A4'],
+          [/turquoise|cyan/, '#35B6B4'],
+          [/teal/, '#267A78'],
+          [/blue/, '#3F6FB5'],
+          [/lavender/, '#B7A1D6'],
+          [/lilac/, '#C8A2C8'],
+          [/violet|purple/, '#7E57A2'],
+          [/magenta/, '#C13A8D'],
+          [/burgundy|wine/, '#722F37'],
+          [/maroon/, '#800000'],
+          [/coral/, '#F07F73'],
+          [/peach/, '#F6B58D'],
+          [/rose|pink/, '#F2A7C2'],
+          [/red/, '#C53B38'],
+          [/mustard/, '#D4A017'],
+          [/orange/, '#E87822'],
+          [/yellow/, '#F2CF3A'],
+          [/sage/, '#A8B89A'],
+          [/mint/, '#A8E6CF'],
+          [/olive/, '#7C833A'],
+          [/green/, '#3F7D4A'],
+          [/wood|natural/, '#A67C52'],
+          [/camel|tan/, '#C19A6B'],
+          [/khaki/, '#BDB76B'],
+          [/brown/, '#7A4E2D'],
+          [/beige/, '#D8C3A5'],
+          [/cream/, '#FFF3D6'],
+          [/ivory/, '#FFF8E7'],
+          [/silver/, '#C0C0C0'],
+          [/gold/, '#D4AF37'],
+          [/charcoal/, '#4A4A4A'],
+          [/grey|gray/, '#9A9A9A'],
+          [/white/, '#FFFFFF'],
+          [/black/, '#161616']
+        ];
+
+        return colours.find(([pattern]) => pattern.test(key))?.[1] || '#D9D5CF';
+      }
+
+      observeCards() {
+        const cards = [...this.querySelectorAll('[data-reveal]:not(.is-visible)')];
+        if (!cards.length) return;
+
+        cards.forEach((card, index) => {
+          const staggerIndex = index % 8;
+          card.style.setProperty('--tjs-reveal-delay', `${staggerIndex * 45}ms`);
+        });
+
+        if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          cards.forEach(card => card.classList.add('is-visible'));
+          return;
+        }
+
+        this.revealObserver?.disconnect();
+        this.revealObserver = new IntersectionObserver((entries, observer) => {
+          entries
+            .filter(entry => entry.isIntersecting)
+            .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+            .forEach(entry => {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            });
+        }, { rootMargin: '90px 0px', threshold: .06 });
+
+        cards.forEach(card => this.revealObserver.observe(card));
+      }
+
+      handleClick(event) {
+        const ajaxLink = event.target.closest('[data-ajax-link]');
+        if (ajaxLink && !event.metaKey && !event.ctrlKey && !event.shiftKey && event.button === 0) {
+          event.preventDefault();
+          this.fetchSection(ajaxLink.href, {
+            updateUrl: true,
+            preserveScroll: ajaxLink.hasAttribute('data-preserve-scroll')
+          });
+          return;
+        }
+
+        const openFilters = event.target.closest('[data-open-filters]');
+        if (openFilters) { this.openDrawer(openFilters); return; }
+        if (event.target.closest('[data-close-filters]')) { this.closeDrawer(); return; }
+
+        const clearFilters = event.target.closest('[data-clear-filters]');
+        if (clearFilters) {
+          const url = new URL(window.location.href);
+
+          [...url.searchParams.keys()].forEach(key => {
+            if (key.startsWith('filter.') || key === 'page') {
+              url.searchParams.delete(key);
+            }
+          });
+
+          if (this.dataset.forceInStock === 'true') {
+            const param = this.dataset.availabilityParam;
+            const value = this.dataset.availabilityValue;
+            if (param && value) url.searchParams.set(param, value);
+          }
+
+          this.closeDrawer(false);
+          this.fetchSection(url.toString(), {
+            updateUrl: true,
+            preserveScroll: true
+          });
+          return;
+        }
+
+        const loadMore = event.target.closest('[data-load-more]');
+        if (loadMore) { this.loadMore(loadMore); return; }
+
+        const moreVariants = event.target.closest('[data-card-option-more]');
+        if (moreVariants) {
+          this.toggleVariantValues(moreVariants);
+          return;
+        }
+
+        const cardOption = event.target.closest('[data-card-option-value]');
+        if (cardOption) {
+          this.selectCardVariant(cardOption);
+          return;
+        }
+
+
+      }
+
+      handleChange(event) {
+        if (!event.target.matches('[data-sort]')) return;
+        const url = new URL(window.location.href);
+        url.searchParams.set('sort_by', event.target.value);
+        url.searchParams.delete('page');
+        this.fetchSection(url.toString(), {
+          updateUrl: true,
+          preserveScroll: true
+        });
+      }
+
+      handleSubmit(event) {
+        const form = event.target.closest('[data-filter-form]');
+        if (!form) return;
+        event.preventDefault();
+        const currentUrl = new URL(window.location.href);
+        const originalQuery = currentUrl.searchParams.get('tjs_original_q');
+        const url = new URL(window.location.href);
+        url.search = new URLSearchParams(new FormData(form)).toString();
+        if (originalQuery) url.searchParams.set('tjs_original_q', originalQuery);
+        url.searchParams.delete('page');
+        this.closeDrawer(false);
+        this.fetchSection(url.toString(), {
+          updateUrl: true,
+          preserveScroll: true
+        });
+      }
+
+      async fetchSection(url, { updateUrl = false, replaceUrl = false, preserveScroll = false } = {}) {
+        this.requestController?.abort();
+        this.requestController = new AbortController();
+        const requestSequence = this.requestSequence = (this.requestSequence || 0) + 1;
+        const scrollY = window.scrollY;
+        const requestUrl = new URL(url, window.location.origin);
+        requestUrl.searchParams.set('section_id', this.sectionId);
+        this.setBusy(true);
+        this.announce('Updating products');
+
+        try {
+          const response = await fetch(requestUrl.toString(), { signal: this.requestController.signal, headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+          if (!response.ok) throw new Error('Unable to update products');
+          const html = await response.text();
+          if (requestSequence !== this.requestSequence || !this.isConnected) return;
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const nextRoot = doc.querySelector(`#TjsFinalSearch-${CSS.escape(this.sectionId)}`);
+          if (!nextRoot) throw new Error('Updated search results were not found');
+
+          if (updateUrl) {
+            const cleanUrl = new URL(url, window.location.origin);
+            cleanUrl.searchParams.delete('section_id');
+            history[replaceUrl ? 'replaceState' : 'pushState']({ tjsSearch: true }, '', cleanUrl.toString());
+          }
+
+          this.replaceWith(nextRoot);
+          requestAnimationFrame(() => {
+            const currentRoot = document.getElementById(`TjsFinalSearch-${this.sectionId}`);
+            if (currentRoot && currentRoot.dataset.ready !== 'true' && typeof currentRoot.connectedCallback === 'function') {
+              currentRoot.connectedCallback();
+            }
+            if (preserveScroll) window.scrollTo({ top: scrollY, behavior: 'auto' });
+          });
+        } catch (error) {
+          if (error.name === 'AbortError' || requestSequence !== this.requestSequence || !this.isConnected) return;
+          this.setBusy(false);
+          this.announce(error.message || 'Unable to update products');
+        }
+      }
+
+      async loadMore(button) {
+        const nextUrl = button.dataset.nextUrl;
+        if (!nextUrl) return;
+        const originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Loading…';
+        try {
+          const requestUrl = new URL(nextUrl, window.location.origin);
+          requestUrl.searchParams.set('section_id', this.sectionId);
+          const response = await fetch(requestUrl.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+          if (!response.ok) throw new Error('Unable to load more');
+          const html = await response.text();
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const nextRoot = doc.querySelector(`#TjsFinalSearch-${CSS.escape(this.sectionId)}`);
+          const appendedCards = [];
+          nextRoot?.querySelectorAll('.tjs-product-card').forEach(card => {
+            this.grid.appendChild(card);
+            appendedCards.push(card);
+          });
+          this.initializeProductCards(this.grid);
+          const nextButton = nextRoot?.querySelector('[data-load-more]');
+          if (nextButton) {
+            button.dataset.nextUrl = nextButton.dataset.nextUrl;
+            button.disabled = false;
+            button.textContent = originalText;
+          } else {
+            button.closest('.tjs-final-collection__load-wrap')?.remove();
+          }
+          this.observeCards();
+        } catch (error) {
+          button.disabled = false;
+          button.textContent = originalText;
+          this.showToast(error.message || 'Unable to load more');
+        }
+      }
+
+      setBusy(isBusy) { this.grid?.setAttribute('aria-busy', isBusy ? 'true' : 'false'); }
+      announce(message) { if (this.status) this.status.textContent = message; }
+
+      setupFloatingType() {
+        if (!this.floatingType || !this.floatingAnchor) return;
+        this.measureFloatingType();
+        window.addEventListener('scroll', this.boundScroll, { passive: true });
+        window.addEventListener('resize', this.boundResize);
+        this.syncFloatingType();
+
+        const activeChip = this.floatingType.querySelector('.tjs-floating-type__chip.is-active');
+        if (activeChip) {
+          requestAnimationFrame(() => activeChip.scrollIntoView({ block: 'nearest', inline: 'center' }));
+        }
+      }
+
+      handleResize() {
+        this.measureFloatingType();
+        this.syncFloatingType();
+      }
+
+      handleScroll() {
+        if (this.scrollTicking) return;
+        this.scrollTicking = true;
+        requestAnimationFrame(() => {
+          this.scrollTicking = false;
+          this.syncFloatingType();
+        });
+      }
+
+      measureFloatingType() {
+        if (!this.floatingType) return;
+        const height = this.floatingType.offsetHeight || 72;
+        this.style.setProperty('--tjs-floating-space', `${height + 18}px`);
+      }
+
+      syncFloatingType() {
+        if (!this.floatingType || !this.floatingAnchor) return;
+        const anchorRect = this.floatingAnchor.getBoundingClientRect();
+        const sectionRect = this.getBoundingClientRect();
+        const floatingHeight = this.floatingType.offsetHeight || 72;
+        const hasEnteredProducts = anchorRect.top < 0;
+        const hasRoomBelow = sectionRect.bottom > window.innerHeight + floatingHeight + 44;
+        const shouldShow = hasEnteredProducts && hasRoomBelow;
+
+        this.floatingType.classList.toggle('is-visible', shouldShow);
+        this.classList.toggle('has-floating-type', shouldShow);
+      }
+
+      openDrawer(trigger) {
+        this.lastTrigger = trigger;
+        this.drawer.hidden = false;
+        this.previousOverflow = document.documentElement.style.overflow;
+        document.documentElement.style.overflow = 'hidden';
+      }
+
+      closeDrawer(restoreFocus = true) {
+        if (!this.drawer) return;
+        this.drawer.hidden = true;
+        document.documentElement.style.overflow = this.previousOverflow || '';
+        if (restoreFocus) this.lastTrigger?.focus?.();
+      }
+
+      initializeProductCards(scope = this) {
+        this.setupMediaTracks(scope);
+        this.setupImageFallbacks(scope);
+        scope.querySelectorAll?.('[data-card-option-group]').forEach(group => this.refreshVariantGroup(group));
+      }
+
+      setupImageFallbacks(scope = this) {
+        scope.querySelectorAll?.('.tjs-product-card__image').forEach(image => {
+          if (image.dataset.imageFallbackReady === 'true') return;
+          image.dataset.imageFallbackReady = 'true';
+
+          image.addEventListener('error', () => {
+            const slide = image.closest('[data-card-media-slide]');
+            const track = image.closest('[data-card-media-track]');
+            const card = image.closest('[data-card-product]');
+
+            if (slide?.classList.contains('tjs-product-card__image-slide--secondary')) {
+              slide.remove();
+              card?.querySelector('[data-card-media-dots]')?.remove();
+              if (track) track.scrollLeft = 0;
+            }
+          }, { once: true });
+        });
+      }
+
+      setupMediaTracks(scope = this) {
+        scope.querySelectorAll?.('[data-card-media-track]').forEach(track => {
+          if (track.dataset.mediaReady === 'true') return;
+          track.dataset.mediaReady = 'true';
+
+          const card = track.closest('[data-card-product]');
+          const dots = [...(card?.querySelectorAll('[data-card-media-dot]') || [])];
+
+          const setActiveDot = index => {
+            dots.forEach((dot, dotIndex) => {
+              dot.classList.toggle('is-active', dotIndex === index);
+            });
+          };
+
+          const syncDots = () => {
+            const slides = [...track.querySelectorAll('[data-card-media-slide]')];
+            if (slides.length < 2) {
+              setActiveDot(0);
+              return;
+            }
+
+            const slideWidth = Math.max(track.getBoundingClientRect().width, 1);
+            const index = Math.max(
+              0,
+              Math.min(slides.length - 1, Math.round(track.scrollLeft / slideWidth))
+            );
+            setActiveDot(index);
+          };
+
+          track.addEventListener('scroll', () => {
+            if (track._tjsScrollFrame) cancelAnimationFrame(track._tjsScrollFrame);
+            track._tjsScrollFrame = requestAnimationFrame(syncDots);
+          }, { passive: true });
+
+          // Prevent browsers from restoring a product card to slide two after
+          // AJAX replacement, resize, or back/forward navigation.
+          track.scrollLeft = 0;
+          setActiveDot(0);
+
+          requestAnimationFrame(() => {
+            track.scrollLeft = 0;
+            setActiveDot(0);
+          });
+        });
+      }
+
+      toggleVariantValues(button) {
+        const group = button.closest('[data-card-option-group]');
+        if (!group) return;
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+        group.dataset.expanded = expanded ? 'false' : 'true';
+        this.refreshVariantGroup(group);
+      }
+
+      refreshVariantGroup(group) {
+        if (!group) return;
+
+        const expanded = group.dataset.expanded === 'true';
+        const buttons = [...group.querySelectorAll('[data-card-option-value]')];
+        const availableButtons = buttons.filter(button => !button.disabled);
+        const activeButton = availableButtons.find(button => button.classList.contains('is-active'));
+        const visibleWhenCollapsed = new Set(availableButtons.slice(0, 4));
+        if (activeButton) visibleWhenCollapsed.add(activeButton);
+
+        buttons.forEach(button => {
+          if (button.disabled) {
+            button.hidden = true;
+            return;
+          }
+          button.hidden = expanded ? false : !visibleWhenCollapsed.has(button);
+        });
+
+        const hiddenCount = availableButtons.filter(button => button.hidden).length;
+        const moreButton = group.querySelector('[data-card-option-more]');
+        if (!moreButton) return;
+
+        const hasExpandableValues = availableButtons.length > visibleWhenCollapsed.size;
+        if (expanded) {
+          moreButton.hidden = availableButtons.length <= 4;
+          moreButton.textContent = 'Show less';
+        } else {
+          moreButton.hidden = !hasExpandableValues;
+          moreButton.textContent = `+${hiddenCount} more`;
+        }
+      }
+
+      getCardVariants(card) {
+        if (!card) return [];
+        if (card._tjsVariants) return card._tjsVariants;
+        const script = card.querySelector('[data-card-variants]');
+        try {
+          card._tjsVariants = JSON.parse(script?.textContent || '[]');
+        } catch (error) {
+          card._tjsVariants = [];
+        }
+        return card._tjsVariants;
+      }
+
+      getCardSelectedOptions(card) {
+        try {
+          return JSON.parse(card.dataset.selectedOptions || '[]');
+        } catch (error) {
+          return [];
+        }
+      }
+
+      selectCardVariant(button) {
+        const card = button.closest('[data-card-product]');
+        if (!card || button.disabled) return;
+
+        const variants = this.getCardVariants(card);
+        if (!variants.length) return;
+
+        const optionIndex = Number(button.dataset.optionIndex);
+        const optionValue = button.dataset.optionValue;
+        const selected = this.getCardSelectedOptions(card);
+        selected[optionIndex] = optionValue;
+
+        let selectedVariant = variants.find(variant =>
+          variant.available && variant.options.every((value, index) => value === selected[index])
+        );
+
+        if (!selectedVariant) {
+          const candidates = variants
+            .filter(variant => variant.available && variant.options[optionIndex] === optionValue)
+            .map(variant => ({
+              variant,
+              score: variant.options.reduce((total, value, index) => {
+                if (index === optionIndex) return total;
+                return total + (selected[index] === value ? 1 : 0);
+              }, 0)
+            }))
+            .sort((a, b) => b.score - a.score);
+          selectedVariant = candidates[0]?.variant || variants.find(variant => variant.available);
+        }
+
+        if (!selectedVariant) return;
+
+        card.dataset.selectedOptions = JSON.stringify(selectedVariant.options);
+        this.updateCardVariant(card, selectedVariant, variants);
+      }
+
+      updateCardVariant(card, variant, variants) {
+        card.querySelectorAll('[data-card-option-value]').forEach(button => {
+          const index = Number(button.dataset.optionIndex);
+          const value = button.dataset.optionValue;
+          const active = variant.options[index] === value;
+          button.classList.toggle('is-active', active);
+          button.setAttribute('aria-pressed', active ? 'true' : 'false');
+
+          const available = variants.some(candidate => {
+            if (!candidate.available || candidate.options[index] !== value) return false;
+            return candidate.options.every((candidateValue, candidateIndex) => {
+              if (candidateIndex === index) return true;
+              return candidateValue === variant.options[candidateIndex];
+            });
+          });
+          button.disabled = !available;
+          button.hidden = !available;
+        });
+
+        card.querySelectorAll('[data-card-option-group]').forEach(group => this.refreshVariantGroup(group));
+
+        const price = card.querySelector('[data-card-price]');
+        const compare = card.querySelector('[data-card-compare]');
+        if (price) price.textContent = this.formatMoney(variant.price);
+        if (compare) {
+          const showCompare = Number(variant.compare_at_price || 0) > Number(variant.price || 0);
+          compare.hidden = !showCompare;
+          compare.textContent = showCompare ? this.formatMoney(variant.compare_at_price) : '';
+        }
+
+        const image = card.querySelector('.tjs-product-card__image--primary');
+        const variantImage = variant.featured_image?.src || variant.featured_image || null;
+        if (image && variantImage) {
+          this.transitionVariantImage(card, image, variantImage);
+        }
+
+        const mediaTrack = card.querySelector('[data-card-media-track]');
+        if (mediaTrack && mediaTrack.scrollLeft > 0) {
+          mediaTrack.scrollTo({ left: 0, behavior: 'smooth' });
+        }
+      }
+
+      transitionVariantImage(card, image, nextSrc) {
+        if (!card || !image || !nextSrc) return;
+
+        const absoluteNextSrc = new URL(nextSrc, window.location.origin).href;
+        const currentSrc = image.currentSrc || image.src || '';
+        if (currentSrc === absoluteNextSrc || image.src === absoluteNextSrc) return;
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const preloader = new Image();
+
+        preloader.onload = () => {
+          if (reduceMotion) {
+            image.src = absoluteNextSrc;
+            image.removeAttribute('srcset');
+            return;
+          }
+
+          clearTimeout(card._tjsVariantExitTimer);
+          clearTimeout(card._tjsVariantEnterTimer);
+
+          card.classList.remove('is-variant-entering');
+          card.classList.add('is-variant-exiting');
+
+          card._tjsVariantExitTimer = setTimeout(() => {
+            image.src = absoluteNextSrc;
+            image.removeAttribute('srcset');
+
+            card.classList.remove('is-variant-exiting');
+            card.classList.add('is-variant-entering');
+
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                card.classList.remove('is-variant-entering');
+              });
+            });
+          }, 125);
+        };
+
+        preloader.src = absoluteNextSrc;
+      }
+
+      formatMoney(cents) {
+        if (window.Shopify?.formatMoney) return window.Shopify.formatMoney(cents);
+        return new Intl.NumberFormat('en-IN', {
+          style: 'currency',
+          currency: 'INR',
+          maximumFractionDigits: 0
+        }).format((Number(cents) || 0) / 100);
+      }
+
+
+      showToast(message) {
+        showSectionToast(this, message);
+      }
+    }
+
+    customElements.define('tjs-final-search', TjsFinalSearch);
+
+    if (!window.__tjsFinalSearchPopstate) {
+      window.__tjsFinalSearchPopstate = true;
+      window.addEventListener('popstate', () => {
+        const current = document.querySelector('tjs-final-search');
+        current?.fetchSection(window.location.href);
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TJS final search",
+  "tag": "section",
+  "class": "section-tjs-final-search",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Search heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Search The June Shop"
+    },
+    {
+      "type": "text",
+      "id": "empty_heading",
+      "label": "Empty result heading",
+      "default": "No exact matches found"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty result text",
+      "default": "Try another phrase, remove a filter, or explore one of these popular searches."
+    },
+    {
+      "type": "textarea",
+      "id": "recovery_searches",
+      "label": "Popular and recovery searches",
+      "default": "Rakhi Gifts, Gifts for Sister, Glassware, Undated Planners, Table Lamps, Organisers",
+      "info": "Separate searches with commas."
+    },
+    {
+      "type": "textarea",
+      "id": "exact_search_routes",
+      "label": "Exact search category routes",
+      "default": "mug|mugs|coffee mug|coffee mugs|coffee cup|coffee cups|cups and mugs => /collections/coffee-mugs\ntea cup|tea cups|teacup|teacups|tea and coffee => /collections/tea-cups-coffee-mugs",
+      "info": "Keep this aligned with the header. One mapping per line."
+    },
+    {
+      "type": "textarea",
+      "id": "search_synonyms",
+      "label": "Search query synonyms",
+      "default": "organizer|organizers => organiser\nlunchbox|lunchboxes|tiffin|tiffins => lunch box\nraksha bandhan => rakhi\nbathroom rug|bathroom rugs => bath mat\ntravel cup|flask => travel mug",
+      "info": "Keep this aligned with the header. One mapping per line."
+    },
+    {
+      "type": "header",
+      "content": "Filters and controls"
+    },
+    {
+      "type": "text",
+      "id": "filter_label",
+      "label": "Filter label",
+      "default": "Filters"
+    },
+    {
+      "type": "text",
+      "id": "filter_eyebrow",
+      "label": "Filter drawer eyebrow",
+      "default": "Refine your search"
+    },
+    {
+      "type": "text",
+      "id": "clear_all_label",
+      "label": "Clear all label",
+      "default": "Clear all"
+    },
+    {
+      "type": "text",
+      "id": "sort_label",
+      "label": "Sort label",
+      "default": "Sort by"
+    },
+    {
+      "type": "text",
+      "id": "clear_label",
+      "label": "Clear filters label",
+      "default": "Clear"
+    },
+    {
+      "type": "text",
+      "id": "apply_label",
+      "label": "Apply filters label",
+      "default": "Apply filters"
+    },
+    {
+      "type": "checkbox",
+      "id": "force_in_stock",
+      "label": "Automatically show in-stock products only",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Product grid"
+    },
+    {
+      "type": "select",
+      "id": "desktop_columns",
+      "label": "Desktop columns",
+      "default": "4",
+      "options": [
+        {
+          "value": "3",
+          "label": "3 columns"
+        },
+        {
+          "value": "4",
+          "label": "4 columns"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 12,
+      "max": 36,
+      "step": 3,
+      "label": "Results per page",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 8,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Horizontal card gap",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Product image ratio",
+      "default": "four-five",
+      "options": [
+        {
+          "value": "square",
+          "label": "1:1"
+        },
+        {
+          "value": "four-five",
+          "label": "4:5"
+        },
+        {
+          "value": "three-four",
+          "label": "3:4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "default": "cover",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Edge-to-edge crop"
+        },
+        {
+          "value": "contain",
+          "label": "Show full product"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "image_scale",
+      "min": 100,
+      "max": 118,
+      "step": 1,
+      "unit": "%",
+      "label": "Image scale",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "label": "Image corner radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Product information"
+    },
+    {
+      "type": "text",
+      "id": "bestseller_label",
+      "label": "Bestseller badge",
+      "default": "Best seller"
+    },
+    {
+      "type": "text",
+      "id": "new_label",
+      "label": "New badge",
+      "default": "New in"
+    },
+    {
+      "type": "text",
+      "id": "limited_label",
+      "label": "Limited badge",
+      "default": "Limited"
+    },
+    {
+      "type": "text",
+      "id": "editor_pick_label",
+      "label": "Editor pick badge",
+      "default": "TJS pick"
+    },
+    {
+      "type": "text",
+      "id": "default_meta_label",
+      "label": "Fallback product meta label",
+      "default": "Curated by TJS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ratings",
+      "label": "Show real review ratings when available",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "saving_display",
+      "label": "Savings display",
+      "default": "amount",
+      "options": [
+        {
+          "value": "amount",
+          "label": "Save amount"
+        },
+        {
+          "value": "percentage",
+          "label": "Percentage off"
+        },
+        {
+          "value": "both",
+          "label": "Amount and percentage"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "save_prefix",
+      "label": "Savings prefix",
+      "default": "Save"
+    },
+    {
+      "type": "text",
+      "id": "specification_label",
+      "label": "Fallback specification label",
+      "default": "Specification"
+    },
+    {
+      "type": "text",
+      "id": "use_label",
+      "label": "Product use label",
+      "default": "Designed For"
+    },
+    {
+      "type": "text",
+      "id": "load_more_label",
+      "label": "Load more label",
+      "default": "Load more"
+    },
+    {
+      "type": "header",
+      "content": "Colours and layout"
+    },
+    {
+      "type": "color",
+      "id": "page_background",
+      "label": "Page background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#171411"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Muted text",
+      "default": "#77716A"
+    },
+    {
+      "type": "color",
+      "id": "image_surface",
+      "label": "Image fallback surface",
+      "default": "#F4F3F1"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#C67A3B"
+    },
+    {
+      "type": "color",
+      "id": "accent_soft",
+      "label": "Soft accent",
+      "default": "#F3E4D4"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Primary button",
+      "default": "#171411"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Primary button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Borders",
+      "default": "#E5E1DC"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1560
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 16,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top spacing",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 16,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom spacing",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS final search"
+    }
+  ]
+}
+{% endschema %}
+

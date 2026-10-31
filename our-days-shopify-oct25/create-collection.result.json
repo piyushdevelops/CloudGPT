@@ -1,0 +1,11 @@
+{
+  "collectionCreate": {
+    "collection": {
+      "id": "gid://shopify/Collection/643833626819",
+      "handle": "our-days-memory-books",
+      "title": "Our Days Memory Books",
+      "templateSuffix": "our-days"
+    },
+    "userErrors": []
+  }
+}

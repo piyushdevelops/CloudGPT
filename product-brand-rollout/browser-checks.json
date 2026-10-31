@@ -1,0 +1,318 @@
+[
+  {
+    "view": "",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "Snail Correction Tape"
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "a_undated_planner",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "Too Creative For 9 to 5 — Undated Planner + Ultimate Sticker Book"
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "a_limited_undated_planner",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "Dolce Far Niente — Limited Edition Undated Planner"
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "a_wedding_planner",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "You & Me"
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "blackfriday25",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "Modern Loop Kitchen Mat (Set of 2)"
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "bogo",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "Too Creative For 9 to 5 — Undated Planner + Ultimate Sticker Book"
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "champagne_heart",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "Gold Rimmed Rose Heart Champagne Flute Stemware"
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "dated2026",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "Too Creative For 9 to 5 — Undated Planner + Ultimate Sticker Book"
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "feelgoodbox",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "Too Creative For 9 to 5 — Undated Planner + Ultimate Sticker Book"
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "mystery-box-v4",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "YOU KNOW\n          THE VALUE.\n          NOT WHAT’S\n          INSIDE."
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "mysterybox",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "Too Creative For 9 to 5 — Undated Planner + Ultimate Sticker Book"
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "mystery_box",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "You know the value. Not what's inside."
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "only_config",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "preorderdated2026",
+    "device": "mobile",
+    "enabled": true,
+    "errors": false,
+    "headings": [
+      {
+        "font": "Poppins, sans-serif",
+        "size": "30px",
+        "text": "Too Creative For 9 to 5 — Undated Planner + Ultimate Sticker Book"
+      }
+    ],
+    "overflow": false,
+    "width": 393
+  },
+  {
+    "view": "",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "a_undated_planner",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "a_limited_undated_planner",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "a_wedding_planner",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "blackfriday25",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "bogo",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "champagne_heart",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "dated2026",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "feelgoodbox",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "mystery-box-v4",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "mysterybox",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "mystery_box",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "only_config",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  },
+  {
+    "view": "preorderdated2026",
+    "device": "desktop",
+    "enabled": true,
+    "errors": false,
+    "overflow": false,
+    "width": 2560
+  }
+]

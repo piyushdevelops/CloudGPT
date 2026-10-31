@@ -1,0 +1,21 @@
+{
+  "status": "installed and checked; awaiting review",
+  "source_md5": "1027ca91cab0000c2b504a4f970551ec",
+  "liquid_validation": "passed revision4 source and index",
+  "browser": "Shopify preview desktop/mobile verified",
+  "widths": [
+    320,
+    390,
+    750,
+    1051,
+    1440,
+    2560
+  ],
+  "overflow": false,
+  "selection": "all 3 passed",
+  "keyboard": "Home selection and focus passed",
+  "shopify_uploaded": true,
+  "published": false,
+  "index_md5": "88713108936970d7bb26ddde2e5a9052",
+  "previous_sections_preserved": true
+}

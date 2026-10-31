@@ -1,0 +1,62 @@
+[
+  {
+    "name": "default",
+    "count": 4,
+    "data": {
+      "textMotion": "true",
+      "motionSpeed": "100",
+      "motionPlays": "1",
+      "motionLoop": "false",
+      "motionGap": "4"
+    },
+    "errors": []
+  },
+  {
+    "name": "two-fast-pink",
+    "count": 8,
+    "data": {
+      "textMotion": "true",
+      "motionSpeed": "200",
+      "motionPlays": "2",
+      "motionLoop": "false",
+      "motionGap": "1"
+    },
+    "errors": []
+  },
+  {
+    "name": "disabled",
+    "count": 0,
+    "data": {
+      "textMotion": "false",
+      "motionSpeed": "100",
+      "motionPlays": "1",
+      "motionLoop": "false",
+      "motionGap": "4"
+    },
+    "errors": []
+  },
+  {
+    "name": "reduced",
+    "count": 0,
+    "data": {
+      "textMotion": "true",
+      "motionSpeed": "100",
+      "motionPlays": "1",
+      "motionLoop": "false",
+      "motionGap": "4"
+    },
+    "errors": []
+  },
+  {
+    "name": "continuous-stop",
+    "count": 4,
+    "data": {
+      "textMotion": "true",
+      "motionSpeed": "200",
+      "motionPlays": "1",
+      "motionLoop": "true",
+      "motionGap": "1"
+    },
+    "errors": []
+  }
+]

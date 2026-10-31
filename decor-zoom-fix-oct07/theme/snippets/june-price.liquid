@@ -1,0 +1,5 @@
+{% doc %}
+ @param {number} amount - Price in currency subunits
+ @param {boolean} [compact] - Inline price for supporting values
+{% enddoc %}
+<span class="jmoney{% if compact %} jmoney--compact{% endif %}">{% if cart.currency.iso_code == 'INR' %}<span class="jmoney__symbol">&#8377;</span><span class="jmoney__amount">{{ amount | money_without_currency }}</span>{% else %}<span class="jmoney__amount">{{ amount | money }}</span>{% endif %}</span>

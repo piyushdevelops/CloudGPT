@@ -1,0 +1,10 @@
+query VerifyOurDays {
+  productByIdentifier(identifier: { handle: "our-days" }) {
+    id handle status templateSuffix
+    variants(first: 10) { nodes { id title price } }
+  }
+  pages(first: 5, query: "handle:our-days") { nodes { id handle title templateSuffix isPublished } }
+  collections(first: 5, query: "handle:our-days-memory-books") {
+    nodes { id handle title templateSuffix products(first: 5) { nodes { id handle } } }
+  }
+}

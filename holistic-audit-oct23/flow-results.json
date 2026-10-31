@@ -1,0 +1,278 @@
+{
+  "desktop:story": {
+    "mainText": "",
+    "mainHtmlLength": 1714,
+    "headings": [],
+    "sections": 1
+  },
+  "desktop:contact": {
+    "mainText": "\n\n\n\nRegistered Office\n\nJUNE RETAIL PRIVATE LIMITED\nEN-22, 1st Floor\nSalt Lake City, Sector 5\nKolkata - 700091\n\n\n\n\n\n\nPhone\n+917003079822\n\n\n\n\n\n\nEmail Address\nsales@thejuneshop.com",
+    "forms": [],
+    "headings": []
+  },
+  "desktop:collectionStart": {
+    "sort": [
+      {
+        "value": "manual",
+        "options": [
+          {
+            "text": "Featured",
+            "value": "manual"
+          },
+          {
+            "text": "Most relevant",
+            "value": "most-relevant"
+          },
+          {
+            "text": "Best selling",
+            "value": "best-selling"
+          },
+          {
+            "text": "Alphabetically, A-Z",
+            "value": "title-ascending"
+          },
+          {
+            "text": "Alphabetically, Z-A",
+            "value": "title-descending"
+          },
+          {
+            "text": "Price, low to high",
+            "value": "price-ascending"
+          },
+          {
+            "text": "Price, high to low",
+            "value": "price-descending"
+          },
+          {
+            "text": "Date, old to new",
+            "value": "created-ascending"
+          },
+          {
+            "text": "Date, new to old",
+            "value": "created-descending"
+          }
+        ]
+      }
+    ],
+    "filterBtns": 1,
+    "products": 24,
+    "body": "Explore\nTHE JUNE SHOP\n0\n\nTHE JUNE EDIT\n\nNew & Bestsellers\n\nDiscover a rotating edit of recent launches and customer favourites across home, dining, organisation, planning, gifting and personal style.\n\n59\nproducts\nIn stock only\n\nFilters\nSort by\nFeatured\nMost relevant\nBest selling\nAlphabetically, A-Z\nAlphabetically, Z-A\nPrice, low to high\nPrice, high"
+  },
+  "desktop:filterOpen": {
+    "dialogs": [
+      "\n      \n        \n          \n            The June Shop\n          \n        \n\n        \n          \n            \n          \n        \n      \n\n      \n\n\n  \n    \n      \n        \n          \n            Your pace\n            Undated Planner\n            Start wh",
+      "REFINE YOUR EDIT\nFilters\n\n59 products\n\nPrimary Use\n17\nCategory\n15\nMaterial\n12\nColour\n12\nPrice\nRoom\n7\nMore filters (14)\nClear\nApply filters\n59"
+    ],
+    "details": 57
+  },
+  "desktop:filterEscape": {
+    "visibleDialogs": 1
+  },
+  "desktop:sortOptions": [
+    "Featured",
+    "Most relevant",
+    "Best selling",
+    "Alphabetically, A-Z",
+    "Alphabetically, Z-A",
+    "Price, low to high",
+    "Price, high to low",
+    "Date, old to new",
+    "Date, new to old"
+  ],
+  "desktop:sortChanged": {
+    "url": "https://thejuneshop.com/collections/new-arrivals?filter.v.availability=1",
+    "selected": "manual",
+    "firstPrices": "Swipe for more\n66% off\nCERAMIC\nKnotted Elegance Ceramic Tissue Holder\nRs. 1,099\nRs. 3,199\nCOLOR\nBLACK"
+  },
+  "desktop:productControls": {
+    "buttons": [
+      "2",
+      "2\nGLASSES\nSet of 2\nPerfect for two\n₹999\n₹2,399\n₹500 per glass",
+      "MOST POPULAR\n4\nGLASSES\nSet of 4\nMade for sharing\n₹1,798\n₹4,798\n₹450 per glass",
+      "BEST VALUE\n6\nGLASSES\nSet of 6\nBest for hosting\n₹2,398\n₹7,197\n₹400 per glass",
+      "−",
+      "+",
+      "ADD TO CART",
+      "Add to wishlist",
+      "I18n Error: Missing interpolation value \"product\" for \"Decrease quantity for {{ product }}\"",
+      "I18n Error: Missing interpolation value \"product\" for \"Increase quantity for {{ product }}\"",
+      "Add To Cart",
+      "Description",
+      "Refund Policy",
+      "Returns"
+    ],
+    "forms": [
+      {
+        "action": "https://thejuneshop.com/cart/add",
+        "inputs": [
+          {
+            "name": "form_type",
+            "value": "product"
+          },
+          {
+            "name": "utf8",
+            "value": "✓"
+          },
+          {
+            "name": "id",
+            "value": "43881727983811"
+          },
+          {
+            "name": "quantity",
+            "value": "2"
+          },
+          {
+            "name": "product-id",
+            "value": "8010560078019"
+          },
+          {
+            "name": "section-id",
+            "value": "template--27363580805315__main-product"
+          },
+          {
+            "name": "properties[Bundle]",
+            "value": "Set of 4"
+          }
+        ]
+      }
+    ]
+  },
+  "mobile:story": {
+    "mainText": "",
+    "mainHtmlLength": 1714,
+    "headings": [],
+    "sections": 1
+  },
+  "mobile:contact": {
+    "mainText": "\n\n\n\nRegistered Office\n\nJUNE RETAIL PRIVATE LIMITED\nEN-22, 1st Floor\nSalt Lake City, Sector 5\nKolkata - 700091\n\n\n\n\n\n\nPhone\n+917003079822\n\n\n\n\n\n\nEmail Address\nsales@thejuneshop.com",
+    "forms": [],
+    "headings": []
+  },
+  "mobile:collectionStart": {
+    "sort": [
+      {
+        "value": "manual",
+        "options": [
+          {
+            "text": "Featured",
+            "value": "manual"
+          },
+          {
+            "text": "Most relevant",
+            "value": "most-relevant"
+          },
+          {
+            "text": "Best selling",
+            "value": "best-selling"
+          },
+          {
+            "text": "Alphabetically, A-Z",
+            "value": "title-ascending"
+          },
+          {
+            "text": "Alphabetically, Z-A",
+            "value": "title-descending"
+          },
+          {
+            "text": "Price, low to high",
+            "value": "price-ascending"
+          },
+          {
+            "text": "Price, high to low",
+            "value": "price-descending"
+          },
+          {
+            "text": "Date, old to new",
+            "value": "created-ascending"
+          },
+          {
+            "text": "Date, new to old",
+            "value": "created-descending"
+          }
+        ]
+      }
+    ],
+    "filterBtns": 1,
+    "products": 24,
+    "body": "the june shop\n\nTHE JUNE EDIT\n\nNew & Bestsellers\n\nDiscover a rotating edit of recent launches and customer favourites across home, dining, organisation, planning, gifting and personal style.\n\n59\nproducts\nIn stock only\n\nFilters\nSort by\nFeatured\nMost relevant\nBest selling\nAlphabetically, A-Z\nAlphabetically, Z-A\nPrice, low to high\nPrice, high to low\nDa"
+  },
+  "mobile:filterOpen": {
+    "dialogs": [
+      "\n      \n        \n          \n            The June Shop\n          \n        \n\n        \n          \n            \n          \n        \n      \n\n      \n\n\n  \n    \n      \n        \n          \n            Your pace\n            Undated Planner\n            Start wh",
+      "REFINE YOUR EDIT\nFilters\n\n59 products\n\nPrimary Use\n17\nCategory\n15\nMaterial\n12\nColour\n12\nPrice\nRoom\n7\nMore filters (14)\nClear\nApply filters\n59"
+    ],
+    "details": 57
+  },
+  "mobile:filterEscape": {
+    "visibleDialogs": 1
+  },
+  "mobile:sortOptions": [
+    "Featured",
+    "Most relevant",
+    "Best selling",
+    "Alphabetically, A-Z",
+    "Alphabetically, Z-A",
+    "Price, low to high",
+    "Price, high to low",
+    "Date, old to new",
+    "Date, new to old"
+  ],
+  "mobile:sortChanged": {
+    "url": "https://thejuneshop.com/collections/new-arrivals?filter.v.availability=1",
+    "selected": "manual",
+    "firstPrices": "Swipe for more\n66% off\nCERAMIC\nKnotted Elegance Ceramic Tissue Holder\nRs. 1,099\nRs. 3,199\nCOLOR\nBLACK"
+  },
+  "mobile:productControls": {
+    "buttons": [
+      "2",
+      "2\nGLASSES\nSet of 2\nPerfect for two\n₹999\n₹2,399\n₹500 per glass",
+      "MOST POPULAR\n4\nGLASSES\nSet of 4\nMade for sharing\n₹1,798\n₹4,798\n₹450 per glass",
+      "BEST VALUE\n6\nGLASSES\nSet of 6\nBest for hosting\n₹2,398\n₹7,197\n₹400 per glass",
+      "−",
+      "+",
+      "ADD TO CART",
+      "Add to wishlist",
+      "I18n Error: Missing interpolation value \"product\" for \"Decrease quantity for {{ product }}\"",
+      "I18n Error: Missing interpolation value \"product\" for \"Increase quantity for {{ product }}\"",
+      "Add To Cart",
+      "Description",
+      "Refund Policy",
+      "Returns"
+    ],
+    "forms": [
+      {
+        "action": "https://thejuneshop.com/cart/add",
+        "inputs": [
+          {
+            "name": "form_type",
+            "value": "product"
+          },
+          {
+            "name": "utf8",
+            "value": "✓"
+          },
+          {
+            "name": "id",
+            "value": "43881727983811"
+          },
+          {
+            "name": "quantity",
+            "value": "2"
+          },
+          {
+            "name": "product-id",
+            "value": "8010560078019"
+          },
+          {
+            "name": "section-id",
+            "value": "template--27363580805315__main-product"
+          },
+          {
+            "name": "properties[Bundle]",
+            "value": "Set of 4"
+          }
+        ]
+      }
+    ]
+  }
+}

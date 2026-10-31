@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "auditedOn": "2026-10-27",
+  "coverLibrary": {
+    "source": "cover-catalog.js",
+    "designCount": 62,
+    "groups": {
+      "birthday": 8,
+      "couples": 12,
+      "mum": 4,
+      "pets": 7,
+      "baby": 10,
+      "travel": 8,
+      "wedding": 5,
+      "year": 8
+    },
+    "legacyCollectionRemoved": true
+  }
+}

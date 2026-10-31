@@ -1,0 +1,30 @@
+{% assign product_url = section.settings.product_url | default: '/products/our-days' %}
+{% capture frame_url %}{{ section.settings.experience_url }}?shopify_store={{ shop.url }}&product_url={{ product_url }}&variant_3={{ section.settings.variant_3 }}&variant_6={{ section.settings.variant_6 }}&variant_12={{ section.settings.variant_12 }}{% endcapture %}
+<section class="jod-landing" style="--jod-height:{{ section.settings.desktop_height }}px;--jod-mobile-height:calc({{ section.settings.mobile_height }}px + 700px)">
+  <iframe
+    src="{{ frame_url | escape }}"
+    title="{{ section.settings.frame_title | escape }}"
+    loading="eager"
+    allow="clipboard-write"
+  ></iframe>
+  <noscript><a href="{{ product_url }}">Choose your Our Days plan</a></noscript>
+</section>
+{% stylesheet %}
+  .jod-landing{width:100%;background:#f8f1e5}.jod-landing iframe{display:block;width:100%;height:var(--jod-height);border:0;background:#f8f1e5}.jod-landing noscript{display:block;padding:40px;text-align:center}.jod-landing noscript a{color:#171717;font-weight:800}@media(max-width:749px){.jod-landing iframe{height:var(--jod-mobile-height)}}
+{% endstylesheet %}
+{% schema %}
+{
+  "name":"June Our Days landing",
+  "settings":[
+    {"type":"text","id":"experience_url","label":"Hosted landing page URL","default":"https://our-days-preview-production.up.railway.app"},
+    {"type":"text","id":"product_url","label":"Product URL","default":"/products/our-days"},
+    {"type":"text","id":"variant_3","label":"3 month variant ID"},
+    {"type":"text","id":"variant_6","label":"6 month variant ID"},
+    {"type":"text","id":"variant_12","label":"12 month variant ID"},
+    {"type":"text","id":"frame_title","label":"Accessible frame title","default":"Our Days guided memory books"},
+    {"type":"range","id":"desktop_height","label":"Desktop page height","min":5000,"max":9900,"step":100,"unit":"px","default":8400},
+    {"type":"range","id":"mobile_height","label":"Mobile base height","min":7000,"max":9900,"step":100,"unit":"px","default":9900}
+  ],
+  "presets":[{"name":"June Our Days landing"}]
+}
+{% endschema %}

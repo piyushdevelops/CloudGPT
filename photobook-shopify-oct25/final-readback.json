@@ -1,0 +1,81 @@
+{
+  "verifiedAt": "2026-10-25T01:15:56.3507222+05:30",
+  "pages": [
+    {
+      "id": "gid://shopify/Page/706648539331",
+      "template": "photo-book-studio",
+      "handle": "photo-book-studio",
+      "published": false
+    },
+    {
+      "id": "gid://shopify/Page/706648572099",
+      "template": "photo-books",
+      "handle": "photo-books",
+      "published": false
+    }
+  ],
+  "store": "thejuneshop.com",
+  "theme": {
+    "role": "UNPUBLISHED",
+    "templates": 4,
+    "assets": 8,
+    "sections": 4,
+    "id": "187527266499",
+    "files": 16
+  },
+  "product": {
+    "id": "gid://shopify/Product/14951682146499",
+    "status": "DRAFT",
+    "template": "photo-book",
+    "handle": "june-photo-book",
+    "variants": 22
+  },
+  "published": false,
+  "collection": {
+    "id": "gid://shopify/Collection/643832283331",
+    "template": "photo-books",
+    "handle": "photo-books",
+    "productId": "gid://shopify/Product/14951682146499"
+  },
+  "mainModified": true,
+  "liveThemeTestInstall": {
+    "themeId": "142259323075",
+    "themeName": "TJS August 2026 (Primary Theme)",
+    "role": "MAIN",
+    "filesAdded": 8,
+    "existingFilesOverwritten": 0,
+    "liquidExactReadback": 4,
+    "jsonSemanticReadback": 4,
+    "landingPreview": true,
+    "studioPreview": true,
+    "pagesRemainHidden": true,
+    "productRemainsDraft": true,
+    "navigationModified": false
+  },
+  "studioQa": {
+    "desktop": true,
+    "mobile": true,
+    "embeddedBuilder": true,
+    "variantParameters": 22,
+    "draftFallback": true,
+    "remoteExactReadback": true,
+    "browserErrors": 0
+  },
+  "productionHosting": {
+    "provider": "Railway",
+    "projectId": "53dbc256-8e00-4708-9b60-c858fd288e7a",
+    "serviceId": "76f65e96-3fc8-4a77-adc9-63c48cbac5e6",
+    "deploymentId": "69724d44-f287-4705-ba7e-fea7a17cda02",
+    "url": "https://june-photo-studio-production.up.railway.app",
+    "status": "SUCCESS",
+    "shopifyExactReadback": true
+  },
+  "productionQa": {
+    "uploadedPhotos": 10,
+    "restoredPhotos": 10,
+    "pdfBytes": 668460,
+    "cartHandoff": true,
+    "horizontalOverflow": false,
+    "pageErrors": 0
+  }
+}

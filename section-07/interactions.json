@@ -1,0 +1,29 @@
+[
+  {
+    "copy": "01 / IN THIS CORNER\n\nBlack & white ceramic vase\n\nRs. 499\n\nExplore this detail",
+    "imageLoaded": true,
+    "selected": [
+      "0",
+      "0"
+    ],
+    "url": "/products/black-on-white-texture-table-vase"
+  },
+  {
+    "copy": "02 / IN THIS CORNER\n\nGolden birds figurine\n\nRs. 399\n\nExplore this detail",
+    "imageLoaded": false,
+    "selected": [
+      "1",
+      "1"
+    ],
+    "url": "/products/shimmering-golden-birds-on-bark-figurine"
+  },
+  {
+    "copy": "03 / IN THIS CORNER\n\nMinimalist carved frame\n\nRs. 499\n\nExplore this detail",
+    "imageLoaded": false,
+    "selected": [
+      "2",
+      "2"
+    ],
+    "url": "/products/minimalist-carve-frame"
+  }
+]

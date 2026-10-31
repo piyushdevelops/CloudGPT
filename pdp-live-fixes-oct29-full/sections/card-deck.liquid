@@ -1,0 +1,1563 @@
+{% liquid
+  assign deck_collection = section.settings.collection
+  assign rendered_count = 0
+
+  if deck_collection != blank
+    for product in deck_collection.products limit: section.settings.product_limit
+      unless section.settings.hide_sold_out and product.available == false
+        assign rendered_count = rendered_count | plus: 1
+      endunless
+    endfor
+  endif
+
+  assign first_image_is_critical = false
+  if section.index != blank and section.index <= 2
+    assign first_image_is_critical = true
+  endif
+
+  assign card_shadow_alpha = section.settings.card_shadow_strength | times: 0.01
+  assign active_shadow_alpha = card_shadow_alpha | plus: 0.12
+  assign image_shadow_alpha = section.settings.image_shadow_strength | times: 0.01
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --deck-section-bg: {{ section.settings.section_background }};
+    --deck-text: {{ section.settings.text_color }};
+    --deck-muted: {{ section.settings.muted_text_color }};
+    --deck-accent: {{ section.settings.accent_color }};
+    --deck-card-bg: {{ section.settings.card_background }};
+    --deck-card-text: {{ section.settings.card_text_color }};
+    --deck-media-bg: {{ section.settings.media_background }};
+    --deck-radius: {{ section.settings.card_radius }}px;
+    --deck-card-width-desktop: min({{ section.settings.card_width_desktop }}px, 72vw);
+    --deck-card-width-mobile: min({{ section.settings.card_width_mobile }}px, 72vw);
+    --deck-spread-desktop: {{ section.settings.spread_desktop }}px;
+    --deck-spread-mobile: {{ section.settings.spread_mobile }}px;
+    --deck-rotation: {{ section.settings.rotation_step }}deg;
+    --deck-active-lift: {{ section.settings.active_lift }}px;
+    --deck-card-shadow: {{ card_shadow_alpha }};
+    --deck-active-shadow: {{ active_shadow_alpha }};
+    --deck-image-shadow: {{ image_shadow_alpha }};
+    --deck-sticky-top: 76px;
+    --deck-heading-font: var(--font-heading-family, var(--font-body-family, Arial, sans-serif));
+    background: var(--deck-section-bg);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck,
+  #shopify-section-{{ section.id }} .tjs-card-deck * {
+    box-sizing: border-box;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck {
+    position: relative;
+    overflow: clip;
+    padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;
+    color: var(--deck-text);
+    font-family: var(--font-body-family, Arial, sans-serif);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__outer {
+    width: min(100%, {{ section.settings.max_width }}px);
+    margin-inline: auto;
+    padding-inline: {{ section.settings.page_gutter }}px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__header {
+    position: relative;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 24px;
+    margin-bottom: clamp(20px, 3vw, 38px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__header-copy {
+    max-width: 760px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+    color: var(--deck-accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__heading {
+    margin: 0;
+    color: var(--deck-text);
+    font-family: var(--deck-heading-font);
+    font-size: clamp(36px, 5vw, {{ section.settings.heading_size }}px);
+    font-weight: {{ section.settings.heading_weight }};
+    line-height: .96;
+    letter-spacing: -.045em;
+    text-wrap: balance;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__description {
+    max-width: 58ch;
+    margin-top: 14px;
+    color: var(--deck-muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__description > * {
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__nav-button {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--deck-text) 14%, transparent);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--deck-section-bg) 92%, white);
+    color: var(--deck-text);
+    cursor: pointer;
+    transition: transform .25s ease, border-color .25s ease, background-color .25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__nav-button:hover,
+  #shopify-section-{{ section.id }} .tjs-card-deck__nav-button:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--deck-accent);
+    background: color-mix(in srgb, var(--deck-accent) 8%, var(--deck-section-bg));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__nav-button svg {
+    width: 17px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__counter {
+    min-width: 58px;
+    color: var(--deck-muted);
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .12em;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__track {
+    position: relative;
+    min-height: {% if section.settings.enable_scroll_spread %}{{ section.settings.scroll_depth_desktop }}vh{% else %}auto{% endif %};
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__sticky {
+    position: {% if section.settings.enable_scroll_spread %}sticky{% else %}relative{% endif %};
+    top: var(--deck-sticky-top);
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: clamp(520px, 72vh, 790px);
+    overflow: visible;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__stage {
+    position: relative;
+    min-height: clamp(460px, 64vh, 720px);
+    perspective: 1600px;
+    touch-action: pan-y;
+    user-select: none;
+    cursor: grab;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__stage.is-dragging {
+    cursor: grabbing;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    width: var(--deck-card-width-desktop);
+    aspect-ratio: {% case section.settings.card_ratio %}{% when 'four-five' %}4 / 5{% when 'three-four' %}3 / 4{% else %}5 / 7{% endcase %};
+    transform: translate3d(-50%, -50%, 0);
+    transform-origin: 50% 88%;
+    will-change: transform, opacity;
+    transition:
+      transform .62s cubic-bezier(.2, .78, .25, 1),
+      opacity .42s ease,
+      filter .42s ease;
+    backface-visibility: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__card-shell {
+    position: relative;
+    cursor: pointer;
+    isolation: isolate;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--deck-card-text) 12%, transparent);
+    border-radius: var(--deck-radius);
+    background:
+      linear-gradient(150deg, color-mix(in srgb, var(--deck-card-bg) 94%, white) 0%, var(--deck-card-bg) 54%, color-mix(in srgb, var(--deck-card-bg) 94%, var(--deck-accent)) 100%);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, .66) inset,
+      0 20px 48px rgba(27, 22, 19, var(--deck-card-shadow));
+    transition: border-color .35s ease, box-shadow .45s ease, transform .45s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__card-shell::before {
+    content: '';
+    position: absolute;
+    inset: 9px;
+    z-index: 6;
+    border: 1px solid color-mix(in srgb, var(--deck-card-text) 7%, transparent);
+    border-radius: max(calc(var(--deck-radius) - 7px), 0px);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__card-shell::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(circle at 78% 20%, color-mix(in srgb, var(--deck-accent) 14%, transparent) 0%, transparent 34%),
+      linear-gradient(125deg, rgba(255,255,255,.24), transparent 32%);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__card.is-active .tjs-card-deck__card-shell {
+    border-color: color-mix(in srgb, var(--deck-accent) 58%, var(--deck-card-text));
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, .75) inset,
+      0 34px 78px rgba(27, 22, 19, var(--deck-active-shadow)),
+      0 0 0 1px color-mix(in srgb, var(--deck-accent) 18%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__corner {
+    position: absolute;
+    z-index: 8;
+    display: grid;
+    gap: 2px;
+    color: color-mix(in srgb, var(--deck-card-text) 86%, var(--deck-accent));
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: .12em;
+    line-height: 1;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__corner strong {
+    color: var(--deck-accent);
+    font-family: var(--deck-heading-font);
+    font-size: 16px;
+    letter-spacing: -.02em;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__corner--top {
+    top: 21px;
+    left: 21px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__corner--bottom {
+    right: 21px;
+    bottom: 20px;
+    transform: rotate(180deg);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__media {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    min-height: 0;
+    place-items: center;
+    margin: 10px 10px 0;
+    overflow: hidden;
+    border-radius: max(calc(var(--deck-radius) - 9px), 0px);
+    background: var(--deck-media-bg);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__media::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 8%;
+    width: 58%;
+    height: 10%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(25, 20, 17, .18), transparent 72%);
+    opacity: .65;
+    transform: translateX(-50%);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__image-link {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    padding: {{ section.settings.image_padding }}px;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__image {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.image_fit }};
+    object-position: center center;
+    transform: scale({{ section.settings.image_scale | times: 0.01 }});
+    filter: drop-shadow(0 18px 24px rgba(25, 20, 17, var(--deck-image-shadow)));
+    transition: transform .5s cubic-bezier(.2, .78, .25, 1), filter .4s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__card.is-active .tjs-card-deck__image {
+    transform: scale({{ section.settings.image_scale | plus: 4 | times: 0.01 }});
+    filter: drop-shadow(0 24px 34px rgba(25, 20, 17, calc(var(--deck-image-shadow) + .08)));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__meta {
+    position: relative;
+    z-index: 7;
+    display: grid;
+    gap: 8px;
+    min-height: 132px;
+    padding: 18px 22px 20px;
+    border-top: 1px solid color-mix(in srgb, var(--deck-card-text) 9%, transparent);
+    background: color-mix(in srgb, var(--deck-card-bg) 94%, white);
+    color: var(--deck-card-text);
+    transition: opacity .34s ease, transform .42s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__card:not(.is-active) .tjs-card-deck__meta {
+    opacity: .28;
+    transform: translateY(12px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__vendor {
+    margin: 0;
+    color: color-mix(in srgb, var(--deck-card-text) 58%, transparent);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__title {
+    margin: 0;
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--deck-card-text);
+    font-family: var(--deck-heading-font);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -.025em;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__price-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__price {
+    position: relative;
+    color: var(--deck-accent);
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -.015em;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__price::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -4px;
+    left: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--deck-accent) 72%, transparent);
+    transform: scaleX(.74);
+    transform-origin: left center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__sale-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 21px;
+    padding: 5px 8px;
+    border: 1px solid color-mix(in srgb, var(--deck-accent) 25%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--deck-accent) 12%, var(--deck-card-bg));
+    color: var(--deck-accent);
+    font-size: 7px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: .10em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__button,
+  #shopify-section-{{ section.id }} .tjs-card-deck__quick-add {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 9px 12px;
+    border: 1px solid var(--deck-card-text);
+    border-radius: 999px;
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: .1em;
+    line-height: 1;
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform .22s ease, background-color .22s ease, color .22s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__quick-add {
+    background: var(--deck-card-text);
+    color: var(--deck-card-bg);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__button {
+    background: transparent;
+    color: var(--deck-card-text);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__button:hover,
+  #shopify-section-{{ section.id }} .tjs-card-deck__button:focus-visible,
+  #shopify-section-{{ section.id }} .tjs-card-deck__quick-add:hover,
+  #shopify-section-{{ section.id }} .tjs-card-deck__quick-add:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__quick-add[disabled] {
+    cursor: default;
+    opacity: .5;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__footer {
+    position: relative;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    min-height: 38px;
+    margin-top: 8px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    color: var(--deck-muted);
+    font-size: 9px;
+    font-weight: 650;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__hint svg {
+    width: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__collection-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--deck-text);
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: .11em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__collection-link svg {
+    width: 15px;
+    transition: transform .24s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__collection-link:hover svg,
+  #shopify-section-{{ section.id }} .tjs-card-deck__collection-link:focus-visible svg {
+    transform: translateX(3px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__empty {
+    display: grid;
+    min-height: 420px;
+    place-items: center;
+    border: 1px dashed color-mix(in srgb, var(--deck-text) 18%, transparent);
+    border-radius: 20px;
+    color: var(--deck-muted);
+    text-align: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tjs-card-deck {
+      padding-block: 36px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__outer {
+      padding-inline: {{ section.settings.mobile_gutter }}px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__header {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__heading {
+      font-size: clamp(30px, 10vw, {{ section.settings.mobile_heading_size }}px);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__description {
+      display: -webkit-box;
+      margin-top: 11px;
+      overflow: hidden;
+      font-size: 11px;
+      line-height: 1.45;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__header-actions {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__track {
+      min-height: {% if section.settings.enable_scroll_spread %}125vh{% else %}auto{% endif %};
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__sticky {
+      min-height: clamp(470px, 70vh, 650px);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__stage {
+      min-height: clamp(430px, 64vh, 590px);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__card {
+      width: var(--deck-card-width-mobile);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__corner--top {
+      top: 17px;
+      left: 17px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__corner--bottom {
+      right: 17px;
+      bottom: 17px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__corner strong {
+      font-size: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__meta {
+      min-height: 116px;
+      padding: 14px 17px 16px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__card:not(.is-active) .tjs-card-deck__meta {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__title {
+      font-size: 15px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__actions {
+      gap: 6px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__button,
+    #shopify-section-{{ section.id }} .tjs-card-deck__quick-add {
+      min-height: 32px;
+      padding: 8px 10px;
+      font-size: 7px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__footer {
+      justify-content: center;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-card-deck__collection-link {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{ section.id }} .tjs-card-deck__card,
+    #shopify-section-{{ section.id }} .tjs-card-deck__card-shell,
+    #shopify-section-{{ section.id }} .tjs-card-deck__image,
+    #shopify-section-{{ section.id }} .tjs-card-deck__meta,
+    #shopify-section-{{ section.id }} .tjs-card-deck__button,
+    #shopify-section-{{ section.id }} .tjs-card-deck__quick-add,
+    #shopify-section-{{ section.id }} .tjs-card-deck__nav-button {
+      transition-duration: .01ms !important;
+    }
+  }
+
+  /* Click/interaction reliability */
+  #shopify-section-{{ section.id }} .tjs-card-deck__image-link,
+  #shopify-section-{{ section.id }} .tjs-card-deck__title a,
+  #shopify-section-{{ section.id }} .tjs-card-deck__button,
+  #shopify-section-{{ section.id }} .tjs-card-deck__quick-add,
+  #shopify-section-{{ section.id }} .tjs-card-deck__add-form,
+  #shopify-section-{{ section.id }} .tjs-card-deck__add-form button {
+    position: relative;
+    z-index: 20;
+    pointer-events: auto !important;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__stage.is-dragging,
+  #shopify-section-{{ section.id }} .tjs-card-deck__stage.is-dragging * {
+    cursor: grabbing;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-card-deck__card.is-active .tjs-card-deck__card-shell {
+    cursor: pointer;
+  }
+
+{% endstyle %}
+
+<section
+  class="tjs-card-deck"
+  data-tjs-card-deck="{{ section.id }}"
+  data-scroll-spread="{{ section.settings.enable_scroll_spread }}"
+  data-spread-desktop="{{ section.settings.spread_desktop }}"
+  data-spread-mobile="{{ section.settings.spread_mobile }}"
+  data-rotation="{{ section.settings.rotation_step }}"
+  data-active-lift="{{ section.settings.active_lift }}"
+>
+  <div class="tjs-card-deck__outer">
+    <header class="tjs-card-deck__header">
+      <div class="tjs-card-deck__header-copy">
+        {% if section.settings.eyebrow != blank %}
+          <p class="tjs-card-deck__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="tjs-card-deck__heading">{{ section.settings.heading | escape }}</h2>
+        {% elsif deck_collection != blank %}
+          <h2 class="tjs-card-deck__heading">{{ deck_collection.title | escape }}</h2>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="tjs-card-deck__description rte">{{ section.settings.description }}</div>
+        {% endif %}
+      </div>
+
+      {% if rendered_count > 1 and section.settings.show_arrows %}
+        <div class="tjs-card-deck__header-actions">
+          <button class="tjs-card-deck__nav-button" type="button" data-deck-prev aria-label="Previous product">
+            <svg viewBox="0 0 18 12" aria-hidden="true"><path d="M17 6H2M7 1 2 6l5 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="tjs-card-deck__nav-button" type="button" data-deck-next aria-label="Next product">
+            <svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6h15M11 1l5 5-5 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      {% endif %}
+    </header>
+
+    {% if rendered_count > 0 %}
+      <div class="tjs-card-deck__track" data-deck-track>
+        <div class="tjs-card-deck__sticky" data-deck-sticky>
+          <div class="tjs-card-deck__stage" data-deck-stage tabindex="0" aria-label="Swipe through featured products">
+            {% assign card_index = 0 %}
+            {% for product in deck_collection.products limit: section.settings.product_limit %}
+              {% if section.settings.hide_sold_out and product.available == false %}
+                {% continue %}
+              {% endif %}
+
+              {% liquid
+                assign featured_media = product.featured_image
+                assign image_alt = product.title
+                if featured_media != blank and featured_media.alt != blank
+                  assign image_alt = featured_media.alt
+                endif
+
+                assign tjs_original_price = product.price_min
+                assign tjs_display_price = tjs_original_price | times: 1 | round
+
+                assign eager_image = false
+                if card_index == 0 and first_image_is_critical
+                  assign eager_image = true
+                endif
+              %}
+
+              <article
+                class="tjs-card-deck__card{% if card_index == 0 %} is-active{% endif %}"
+                data-deck-card
+                data-index="{{ card_index }}"
+                data-product-url="{{ product.url }}"
+                aria-current="{% if card_index == 0 %}true{% else %}false{% endif %}"
+              >
+                <div class="tjs-card-deck__card-shell" data-card-hit>
+                  {% if section.settings.show_card_index %}
+                    <span class="tjs-card-deck__corner tjs-card-deck__corner--top"><span>TJS</span><strong>{% if card_index < 9 %}0{% endif %}{{ card_index | plus: 1 }}</strong></span>
+                    <span class="tjs-card-deck__corner tjs-card-deck__corner--bottom"><span>TJS</span><strong>{% if card_index < 9 %}0{% endif %}{{ card_index | plus: 1 }}</strong></span>
+                  {% endif %}
+
+                  <div class="tjs-card-deck__media">
+                    <a class="tjs-card-deck__image-link" href="{{ product.url }}" data-active-link tabindex="{% if card_index == 0 %}0{% else %}-1{% endif %}">
+                      {% if featured_media != blank %}
+                        {% if eager_image %}
+                          {{ featured_media
+                            | image_url: width: 1400
+                            | image_tag:
+                              class: 'tjs-card-deck__image',
+                              loading: 'eager',
+                              fetchpriority: 'high',
+                              decoding: 'async',
+                              widths: '360, 480, 620, 760, 900, 1100, 1400',
+                              sizes: '(max-width: 749px) 72vw, 420px',
+                              alt: image_alt
+                          }}
+                        {% else %}
+                          {{ featured_media
+                            | image_url: width: 1400
+                            | image_tag:
+                              class: 'tjs-card-deck__image',
+                              loading: 'lazy',
+                              fetchpriority: 'low',
+                              decoding: 'async',
+                              widths: '360, 480, 620, 760, 900, 1100, 1400',
+                              sizes: '(max-width: 749px) 72vw, 420px',
+                              alt: image_alt
+                          }}
+                        {% endif %}
+                      {% endif %}
+                    </a>
+                  </div>
+
+                  <div class="tjs-card-deck__meta">
+
+                    <h3 class="tjs-card-deck__title"><a href="{{ product.url }}" data-active-link tabindex="{% if card_index == 0 %}0{% else %}-1{% endif %}">{{ product.title | escape }}</a></h3>
+
+                    {% if section.settings.show_price %}
+                      <div class="tjs-card-deck__price-row">
+                        <span class="tjs-card-deck__price">
+                          {% if product.price_varies %}From {% endif %}{{ tjs_display_price | money }}
+                        </span>
+                        <span class="tjs-card-deck__sale-label">Sale</span>
+                      </div>
+                    {% endif %}
+
+                    {% if section.settings.show_quick_add or section.settings.show_view_product %}
+                      <div class="tjs-card-deck__actions">
+                        {% if section.settings.show_quick_add %}
+                          {% if product.available and product.has_only_default_variant %}
+                            {% form 'product', product, class: 'tjs-card-deck__add-form', data-deck-add-form: '' %}
+                              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                              <input type="hidden" name="quantity" value="1">
+                              <button class="tjs-card-deck__quick-add" type="submit" data-default-label="Add to cart">Add to cart</button>
+                            {% endform %}
+                          {% elsif product.available %}
+                            <a class="tjs-card-deck__quick-add" href="{{ product.url }}" data-active-link tabindex="{% if card_index == 0 %}0{% else %}-1{% endif %}">Choose options</a>
+                          {% else %}
+                            <button class="tjs-card-deck__quick-add" type="button" disabled>Sold out</button>
+                          {% endif %}
+                        {% endif %}
+
+                        {% if section.settings.show_view_product %}
+                          <a class="tjs-card-deck__button" href="{{ product.url }}" data-active-link tabindex="{% if card_index == 0 %}0{% else %}-1{% endif %}">View product</a>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </article>
+
+              {% assign card_index = card_index | plus: 1 %}
+            {% endfor %}
+          </div>
+
+          <footer class="tjs-card-deck__footer">
+            {% if rendered_count > 1 %}
+              <p class="tjs-card-deck__hint">
+                <svg viewBox="0 0 24 12" aria-hidden="true"><path d="M1 6h22M5 2 1 6l4 4M19 2l4 4-4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Swipe the deck</span>
+              </p>
+            {% endif %}
+
+            {% if deck_collection != blank %}
+              <a class="tjs-card-deck__collection-link" href="{{ deck_collection.url }}">
+                <span>Explore the collection</span>
+                <svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6h15M11 1l5 5-5 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            {% endif %}
+          </footer>
+        </div>
+      </div>
+    {% else %}
+      <div class="tjs-card-deck__empty">Select a collection with available products to build the card deck.</div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  (() => {
+    const selector = '[data-tjs-card-deck="{{ section.id }}"]';
+
+    const initialise = (root) => {
+      if (!root || root.dataset.initialised === 'true') return;
+      root.dataset.initialised = 'true';
+
+      const controller = new AbortController();
+      const { signal } = controller;
+      const stage = root.querySelector('[data-deck-stage]');
+      const track = root.querySelector('[data-deck-track]');
+      const sticky = root.querySelector('[data-deck-sticky]');
+      const cards = Array.from(root.querySelectorAll('[data-deck-card]'));
+      const prev = root.querySelector('[data-deck-prev]');
+      const next = root.querySelector('[data-deck-next]');
+      const currentOutput = root.querySelector('[data-deck-current]');
+      const scrollSpread = root.dataset.scrollSpread === 'true';
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      if (!stage || !cards.length) return;
+
+      let active = 0;
+      let scrollProgress = scrollSpread && !reduceMotion.matches ? 0 : 1;
+      let dragStart = null;
+      let ticking = false;
+
+      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+      const twoDigits = (value) => String(value).padStart(2, '0');
+      const isMobile = () => window.matchMedia('(max-width: 749px)').matches;
+
+      const shortestOffset = (index) => {
+        const count = cards.length;
+        let offset = index - active;
+        if (offset > count / 2) offset -= count;
+        if (offset < -count / 2) offset += count;
+        return offset;
+      };
+
+      const updateCards = () => {
+        const mobile = isMobile();
+        const spread = Number(mobile ? root.dataset.spreadMobile : root.dataset.spreadDesktop) || (mobile ? 62 : 112);
+        const rotationStep = Number(root.dataset.rotation) || 6;
+        const outerDrop = 18;
+        const activeLift = Number(root.dataset.activeLift) || 52;
+        const visibleSides = mobile ? 2 : 3;
+        const stackGap = 5;
+        const activeScale = 0.04;
+        const p = reduceMotion.matches ? 1 : scrollProgress;
+
+        cards.forEach((card, index) => {
+          const offset = shortestOffset(index);
+          const abs = Math.abs(offset);
+          const activeCard = offset === 0;
+          const visible = abs <= visibleSides;
+          const xDistance = stackGap + (spread - stackGap) * p;
+          const x = offset * xDistance;
+          const rotation = offset * rotationStep * p + offset * .7 * (1 - p);
+          const y = abs * outerDrop * p + abs * 2 * (1 - p) - (activeCard ? activeLift * p : 0);
+          const scale = activeCard ? 1 + activeScale * p : Math.max(.78, 1 - abs * (.035 + .018 * p));
+          const opacity = visible ? Math.max(.18, 1 - abs * .12) : 0;
+
+          card.style.zIndex = String(100 - abs);
+          card.style.opacity = String(opacity);
+          card.style.pointerEvents = visible ? 'auto' : 'none';
+          card.style.transform = `translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), 0) rotate(${rotation}deg) scale(${scale})`;
+          card.classList.toggle('is-active', activeCard);
+          card.setAttribute('aria-current', activeCard ? 'true' : 'false');
+
+          card.querySelectorAll('[data-active-link], button, input').forEach((element) => {
+            if (element.matches('input[type="hidden"]')) return;
+            element.tabIndex = activeCard ? 0 : -1;
+          });
+        });
+
+        if (currentOutput) currentOutput.textContent = twoDigits(active + 1);
+      };
+
+      const setActive = (index) => {
+        active = (index + cards.length) % cards.length;
+        updateCards();
+      };
+
+      const updateScrollProgress = () => {
+        ticking = false;
+        if (!scrollSpread || reduceMotion.matches || !track || !sticky) {
+          scrollProgress = 1;
+          updateCards();
+          return;
+        }
+
+        const rect = track.getBoundingClientRect();
+        const stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
+        const travel = Math.max(1, track.offsetHeight - sticky.offsetHeight);
+        scrollProgress = clamp((-rect.top + stickyTop) / travel, 0, 1);
+        updateCards();
+      };
+
+      const requestScrollUpdate = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(updateScrollProgress);
+      };
+
+      prev?.addEventListener('click', () => setActive(active - 1), { signal });
+      next?.addEventListener('click', () => setActive(active + 1), { signal });
+
+      stage.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          setActive(active - 1);
+        } else if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          setActive(active + 1);
+        }
+      }, { signal });
+
+      const interactiveSelector = [
+        'a[href]',
+        'button',
+        'input',
+        'select',
+        'textarea',
+        'label',
+        'form'
+      ].join(',');
+
+      cards.forEach((card, index) => {
+        const hitArea = card.querySelector('[data-card-hit]');
+
+        hitArea?.addEventListener('click', (event) => {
+          const interactiveTarget = event.target.closest(interactiveSelector);
+
+          // Inactive cards behave like a deck: first click brings the card
+          // forward instead of accidentally opening or adding its product.
+          if (index !== active) {
+            event.preventDefault();
+            event.stopPropagation();
+            setActive(index);
+            return;
+          }
+
+          // Once a card is active, native links/buttons/forms must be allowed
+          // to handle the click without the deck intercepting it.
+          if (interactiveTarget) return;
+
+          // Clicking anywhere else on the active card opens the PDP.
+          const productUrl = card.dataset.productUrl;
+          if (productUrl) window.location.assign(productUrl);
+        }, { signal });
+      });
+
+      stage.addEventListener('pointerdown', (event) => {
+        if (event.pointerType === 'mouse' && event.button !== 0) return;
+
+        // Never start deck dragging from a real control. This preserves
+        // image/title/View Product navigation and Add to Cart submission.
+        if (event.target.closest(interactiveSelector)) {
+          dragStart = null;
+          return;
+        }
+
+        dragStart = {
+          x: event.clientX,
+          y: event.clientY,
+          time: performance.now(),
+          pointerId: event.pointerId
+        };
+
+        stage.classList.add('is-dragging');
+
+        // Pointer capture is only needed for genuine drag starts.
+        try {
+          stage.setPointerCapture?.(event.pointerId);
+        } catch (error) {}
+      }, { passive: true, signal });
+
+      stage.addEventListener('pointerup', (event) => {
+        stage.classList.remove('is-dragging');
+        if (!dragStart) return;
+
+        const deltaX = event.clientX - dragStart.x;
+        const deltaY = event.clientY - dragStart.y;
+        const elapsed = performance.now() - dragStart.time;
+        const pointerId = dragStart.pointerId;
+        dragStart = null;
+
+        try {
+          if (stage.hasPointerCapture?.(pointerId)) {
+            stage.releasePointerCapture(pointerId);
+          }
+        } catch (error) {}
+
+        const isSwipe =
+          Math.abs(deltaX) > 42 &&
+          Math.abs(deltaX) > Math.abs(deltaY) * 1.15 &&
+          elapsed < 1000;
+
+        if (isSwipe) {
+          event.preventDefault?.();
+          setActive(deltaX < 0 ? active + 1 : active - 1);
+        }
+      }, { signal });
+
+      stage.addEventListener('pointercancel', (event) => {
+        const pointerId = dragStart?.pointerId;
+        dragStart = null;
+        stage.classList.remove('is-dragging');
+
+        try {
+          if (pointerId != null && stage.hasPointerCapture?.(pointerId)) {
+            stage.releasePointerCapture(pointerId);
+          }
+        } catch (error) {}
+      }, { signal });
+
+      root.querySelectorAll('[data-deck-add-form]').forEach((form) => {
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+
+          const button = form.querySelector('button[type="submit"]');
+          if (!button || button.disabled) return;
+
+          const defaultLabel = button.dataset.defaultLabel || button.textContent;
+          button.disabled = true;
+          button.textContent = 'Adding…';
+
+          try {
+            const rootPath = window.Shopify?.routes?.root || '/';
+            const response = await fetch(`${rootPath}cart/add.js`, {
+              method: 'POST',
+              headers: { 'Accept': 'application/json' },
+              body: new FormData(form)
+            });
+
+            if (!response.ok) throw new Error('Unable to add product');
+            const item = await response.json();
+            button.textContent = 'Added';
+
+            const cartRefreshEvent = new CustomEvent('cart:refresh', {
+              bubbles: true,
+              detail: { item }
+            });
+            const cartUpdatedEvent = new CustomEvent('cart:updated', {
+              bubbles: true,
+              detail: { item }
+            });
+
+            document.dispatchEvent(cartRefreshEvent);
+            document.documentElement.dispatchEvent(
+              new CustomEvent('cart:refresh', {
+                bubbles: true,
+                detail: { item }
+              })
+            );
+            document.dispatchEvent(cartUpdatedEvent);
+
+            window.setTimeout(() => {
+              button.disabled = false;
+              button.textContent = defaultLabel;
+            }, 1600);
+          } catch (error) {
+            button.textContent = 'Try again';
+            window.setTimeout(() => {
+              button.disabled = false;
+              button.textContent = defaultLabel;
+            }, 1800);
+          }
+        }, { signal });
+      });
+
+      window.addEventListener('scroll', requestScrollUpdate, { passive: true, signal });
+      window.addEventListener('resize', requestScrollUpdate, { passive: true, signal });
+
+      document.addEventListener('shopify:block:select', (event) => {
+        const selected = event.target.closest(`${selector} [data-deck-card]`);
+        if (!selected) return;
+        setActive(Number(selected.dataset.index) || 0);
+      }, { signal });
+
+      root.tjsCardDeckDestroy = () => controller.abort();
+
+      updateScrollProgress();
+    };
+
+    initialise(document.querySelector(selector));
+
+    document.addEventListener('shopify:section:load', (event) => {
+      initialise(event.target.querySelector(selector));
+    });
+
+    document.addEventListener('shopify:section:unload', (event) => {
+      const root = event.target.querySelector(selector);
+      if (root && typeof root.tjsCardDeckDestroy === 'function') root.tjsCardDeckDestroy();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TJS premium card deck",
+  "tag": "section",
+  "class": "section-tjs-premium-card-deck",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "min": 5,
+      "max": 10,
+      "step": 1,
+      "label": "Products in deck",
+      "default": 7
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_sold_out",
+      "label": "Hide sold-out products",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The June Edit"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Pick a favourite"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>A deck of considered favourites. Scroll to open the fan, then swipe to bring your next pick forward.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Scroll and deck motion"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_spread",
+      "label": "Spread the deck on scroll",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "scroll_depth_desktop",
+      "min": 110,
+      "max": 200,
+      "step": 5,
+      "unit": "vh",
+      "label": "Desktop scroll depth",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "spread_desktop",
+      "min": 70,
+      "max": 180,
+      "step": 5,
+      "unit": "px",
+      "label": "Desktop fan spread",
+      "default": 115
+    },
+    {
+      "type": "range",
+      "id": "spread_mobile",
+      "min": 42,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile fan spread",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "rotation_step",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "unit": "deg",
+      "label": "Fan rotation per card",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "active_lift",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Centre card lift",
+      "default": 56
+    },
+    {
+      "type": "header",
+      "content": "Card design"
+    },
+    {
+      "type": "select",
+      "id": "card_ratio",
+      "label": "Card ratio",
+      "default": "five-seven",
+      "options": [
+        {
+          "value": "five-seven",
+          "label": "5:7 — playing card"
+        },
+        {
+          "value": "four-five",
+          "label": "4:5 — product card"
+        },
+        {
+          "value": "three-four",
+          "label": "3:4 — editorial"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "card_width_desktop",
+      "min": 280,
+      "max": 460,
+      "step": 10,
+      "unit": "px",
+      "label": "Desktop card width",
+      "default": 380
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "min": 220,
+      "max": 320,
+      "step": 10,
+      "unit": "px",
+      "label": "Mobile card width",
+      "default": 270
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 8,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Card corner radius",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_index",
+      "label": "Show playing-card corner numbers",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "card_shadow_strength",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "%",
+      "label": "Side-card shadow",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Product image"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "default": "contain",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Fit whole image"
+        },
+        {
+          "value": "cover",
+          "label": "Fill image area"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "image_padding",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Image-area padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "image_scale",
+      "min": 80,
+      "max": 120,
+      "step": 1,
+      "unit": "%",
+      "label": "Image scale",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "image_shadow_strength",
+      "min": 0,
+      "max": 35,
+      "step": 1,
+      "unit": "%",
+      "label": "Product image shadow",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Product details and actions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show Quick Add",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_product",
+      "label": "Show view-product link",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Navigation and helper text"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show desktop arrows",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 40,
+      "max": 88,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop heading size",
+      "default": 64
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "default": "600",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "min": 32,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile heading size",
+      "default": 42
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Section background",
+      "default": "#F5F2EC"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Section text",
+      "default": "#181614"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Muted text",
+      "default": "#756E67"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent colour",
+      "default": "#A97942"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#F9F6F0"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text",
+      "default": "#171513"
+    },
+    {
+      "type": "color",
+      "id": "media_background",
+      "label": "Product image background",
+      "default": "#ECE7DE"
+    },
+    {
+      "type": "header",
+      "content": "Section layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1480
+    },
+    {
+      "type": "range",
+      "id": "page_gutter",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop side spacing",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_gutter",
+      "min": 0,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile side spacing",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop top spacing",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop bottom spacing",
+      "default": 56
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS premium card deck"
+    }
+  ]
+}
+{% endschema %}

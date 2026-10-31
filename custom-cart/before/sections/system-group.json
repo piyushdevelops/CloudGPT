@@ -1,0 +1,134 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.name_group.system",
+  "type": "custom.system",
+  "sections": {
+    "cart-drawer": {
+      "type": "cart-drawer",
+      "blocks": {
+        "subtotal_8UtWWn": {
+          "type": "subtotal",
+          "settings": {}
+        },
+        "tax_mEDMCP": {
+          "type": "tax",
+          "disabled": true,
+          "settings": {}
+        },
+        "agree_Rhrhcq": {
+          "type": "agree",
+          "disabled": true,
+          "settings": {
+            "content": "I agree with the <a href=\"/policies/terms-of-service\" title=\"Terms of Service\"><strong>terms and conditions</strong></a>"
+          }
+        },
+        "btn_cart_checkout_fVQqmY": {
+          "type": "btn_cart_checkout",
+          "settings": {
+            "enable_btn_cart": true,
+            "btn_style_cart": "link",
+            "btn_fw_cart": "normal",
+            "btn_icon_cart": "none",
+            "enable_btn_checkout": true,
+            "btn_style_checkout": "solid",
+            "btn_fw_checkout": "normal",
+            "btn_icon_checkout": "none"
+          }
+        },
+        "img_trust_J7CDne": {
+          "type": "img_trust",
+          "disabled": true,
+          "settings": {
+            "mess": "Guarantee Safe Checkout",
+            "source": "1",
+            "wimg": 350,
+            "svg": "upi,visa,paypal,master,american_express,amazon_payments",
+            "height": 25
+          }
+        }
+      },
+      "block_order": [
+        "subtotal_8UtWWn",
+        "tax_mEDMCP",
+        "agree_Rhrhcq",
+        "btn_cart_checkout_fVQqmY",
+        "img_trust_J7CDne"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "show_free_shipping_bar": false,
+        "show_cart_note": false,
+        "show_gift_wrap": false,
+        "show_shipping_estimator": false,
+        "show_cart_discount": false,
+        "discount_error_message": "Enter a valid discount code",
+        "heading": "",
+        "product_list": [],
+        "replaces_products_selected": true
+      }
+    },
+    "toolbar-mobile": {
+      "type": "toolbar-mobile",
+      "blocks": {
+        "shop_jQccrN": {
+          "type": "shop",
+          "settings": {
+            "title": "Menu",
+            "collection_list": [],
+            "menu_categories": "new-navigation",
+            "link": ""
+          }
+        },
+        "wishlist_FLDXnV": {
+          "type": "wishlist",
+          "settings": {
+            "title": "Wishlist"
+          }
+        },
+        "cart_qEaYLM": {
+          "type": "cart",
+          "settings": {
+            "title": "Cart"
+          }
+        },
+        "account_KBmadz": {
+          "type": "account",
+          "settings": {
+            "title": "Account"
+          }
+        },
+        "search_wxK4Le": {
+          "type": "search",
+          "settings": {
+            "title": "Search"
+          }
+        }
+      },
+      "block_order": [
+        "shop_jQccrN",
+        "wishlist_FLDXnV",
+        "cart_qEaYLM",
+        "account_KBmadz",
+        "search_wxK4Le"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-67a7ca9f-3333-4245-b79f-2e9849d7e615",
+        "show_txt": true
+      }
+    }
+  },
+  "order": [
+    "cart-drawer",
+    "toolbar-mobile"
+  ]
+}
+

@@ -1,0 +1,1290 @@
+{% comment %}
+  TJS Reels Video Stage — 9:16 native video edition
+
+  Important:
+  - Instagram page URLs cannot be converted by Shopify Liquid into a clean raw video stream.
+  - Use a direct MP4 URL from Shopify Files/CDN for playback.
+  - Keep the Instagram Reel URL as an optional click-through link.
+  - Visitors never upload anything; all URLs are managed in the Theme Editor.
+{% endcomment %}
+
+{% liquid
+  assign playable_reel_count = 0
+
+  for block in section.blocks
+    if block.type == 'reel'
+      assign block_video_url = block.settings.video_url
+      if block_video_url == blank and block.settings.reel_url contains '.mp4'
+        assign block_video_url = block.settings.reel_url
+      endif
+
+      if block_video_url != blank
+        assign playable_reel_count = playable_reel_count | plus: 1
+      endif
+    endif
+  endfor
+%}
+
+<section
+  id="TjsVideoReels-{{ section.id }}"
+  class="tjs-video-reels{% if section.settings.full_width %} tjs-video-reels--full{% endif %}"
+  data-tjs-video-reels="{{ section.id }}"
+  data-playable-count="{{ playable_reel_count }}"
+  data-scroll-distance="{{ section.settings.scroll_distance }}"
+  style="
+    --tjs-rv-bg: {{ section.settings.background_color }};
+    --tjs-rv-text: {{ section.settings.text_color }};
+    --tjs-rv-muted: {{ section.settings.muted_text_color }};
+    --tjs-rv-accent: {{ section.settings.accent_color }};
+    --tjs-rv-card-bg: {{ section.settings.card_background }};
+    --tjs-rv-card-border: {{ section.settings.card_border_color }};
+    --tjs-rv-max-width: {{ section.settings.max_width }}px;
+    --tjs-rv-gutter: {{ section.settings.page_gutter }}px;
+    --tjs-rv-gutter-mobile: {{ section.settings.page_gutter_mobile }}px;
+    --tjs-rv-gap: {{ section.settings.card_gap }}px;
+    --tjs-rv-radius: {{ section.settings.card_radius }}px;
+    --tjs-rv-stage-height: {{ section.settings.stage_height }}px;
+    --tjs-rv-mobile-card-width: {{ section.settings.mobile_card_width }}vw;
+    --tjs-rv-sticky-offset: {{ section.settings.sticky_offset }}px;
+    --tjs-rv-top: {{ section.settings.padding_top }}px;
+    --tjs-rv-bottom: {{ section.settings.padding_bottom }}px;
+    --tjs-rv-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --tjs-rv-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --tjs-rv-shadow-alpha: {{ section.settings.shadow_strength | times: 0.01 }};
+  "
+>
+  <div class="tjs-video-reels__scroll-shell" data-scroll-shell>
+    <div class="tjs-video-reels__sticky" data-sticky>
+      <div class="tjs-video-reels__inner">
+        {% if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.description != blank or section.settings.profile_link != blank %}
+          <header class="tjs-video-reels__header">
+            <div class="tjs-video-reels__header-copy">
+              {% if section.settings.eyebrow != blank %}
+                <p class="tjs-video-reels__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+              {% endif %}
+
+              {% if section.settings.heading != blank %}
+                <h2 class="tjs-video-reels__heading">{{ section.settings.heading | escape }}</h2>
+              {% endif %}
+
+              {% if section.settings.description != blank %}
+                <div class="tjs-video-reels__description rte">{{ section.settings.description }}</div>
+              {% endif %}
+            </div>
+
+            {% if section.settings.profile_link != blank and section.settings.profile_button_label != blank %}
+              <a
+                class="tjs-video-reels__profile-link"
+                href="{{ section.settings.profile_link }}"
+                target="_blank"
+                rel="noopener"
+              >
+                <span>{{ section.settings.profile_button_label | escape }}</span>
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            {% endif %}
+          </header>
+        {% endif %}
+
+        <div class="tjs-video-reels__stage" data-stage aria-label="{{ section.settings.stage_accessibility_label | escape }}">
+          {% if playable_reel_count > 0 %}
+            <div class="tjs-video-reels__cards" data-cards>
+              {% assign reel_index = 0 %}
+              {% for block in section.blocks %}
+                {% if block.type == 'reel' %}
+                  {% liquid
+                    assign block_video_url = block.settings.video_url
+                    if block_video_url == blank and block.settings.reel_url contains '.mp4'
+                      assign block_video_url = block.settings.reel_url
+                    endif
+                  %}
+
+                  {% if block_video_url != blank %}
+                    {% assign reel_index = reel_index | plus: 1 %}
+                    <article
+                      class="tjs-video-reel-card"
+                      data-video-card
+                      data-card-index="{{ reel_index | minus: 1 }}"
+                      aria-hidden="{% if reel_index <= 5 %}false{% else %}true{% endif %}"
+                      {{ block.shopify_attributes }}
+                    >
+                      <div class="tjs-video-reel-card__frame">
+                        <video
+                          class="tjs-video-reel-card__video"
+                          data-reel-video
+                          data-src="{{ block_video_url }}"
+                          muted
+                          loop
+                          playsinline
+                          preload="metadata"
+                          {% if section.settings.autoplay_videos %}autoplay{% endif %}
+                          aria-label="{{ block.settings.label | default: 'The June Shop Instagram Reel' | escape }}"
+                        ></video>
+
+                        <div class="tjs-video-reel-card__loading" data-video-loading aria-hidden="true">
+                          <span></span>
+                        </div>
+
+                        <div class="tjs-video-reel-card__scrim" aria-hidden="true"></div>
+
+                        <div class="tjs-video-reel-card__controls">
+                          {% if section.settings.show_sound_button %}
+                            <button
+                              type="button"
+                              class="tjs-video-reel-card__control"
+                              data-sound-toggle
+                              aria-label="Turn sound on"
+                              aria-pressed="false"
+                            >
+                              <svg class="tjs-video-reel-card__icon tjs-video-reel-card__icon--muted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M5 9v6h4l5 4V5L9 9H5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                                <path d="m18 9 4 4m0-4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                              </svg>
+                              <svg class="tjs-video-reel-card__icon tjs-video-reel-card__icon--sound" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M5 9v6h4l5 4V5L9 9H5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                                <path d="M17 9.5c.8.7 1.2 1.55 1.2 2.5s-.4 1.8-1.2 2.5M19.5 7c1.55 1.35 2.3 3.02 2.3 5s-.75 3.65-2.3 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                              </svg>
+                            </button>
+                          {% endif %}
+
+                          {% if block.settings.reel_url != blank and block.settings.reel_url contains 'instagram.com' %}
+                            <a
+                              class="tjs-video-reel-card__control"
+                              href="{{ block.settings.reel_url }}"
+                              target="_blank"
+                              rel="noopener"
+                              aria-label="Open this Reel on Instagram"
+                            >
+                              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.6"/>
+                                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/>
+                                <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+                              </svg>
+                            </a>
+                          {% endif %}
+                        </div>
+
+                        {% if block.settings.label != blank %}
+                          <span class="tjs-video-reel-card__label">{{ block.settings.label | escape }}</span>
+                        {% endif %}
+                      </div>
+                    </article>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="tjs-video-reels__empty">
+              <strong>Add direct MP4 video URLs</strong>
+              <span>Paste Shopify Files or CDN MP4 links into the Reel blocks. Instagram page URLs can remain as optional click-through links.</span>
+            </div>
+          {% endif %}
+        </div>
+
+        {% if section.settings.show_progress and playable_reel_count > 1 %}
+          <div class="tjs-video-reels__progress" aria-hidden="true">
+            <span>{{ section.settings.progress_label | escape }}</span>
+            <span class="tjs-video-reels__progress-track"><span data-progress></span></span>
+            <strong data-progress-count>01</strong>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #TjsVideoReels-{{ section.id }},
+  #TjsVideoReels-{{ section.id }} *,
+  #TjsVideoReels-{{ section.id }} *::before,
+  #TjsVideoReels-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #TjsVideoReels-{{ section.id }} {
+    position: relative;
+    overflow: clip;
+    background: var(--tjs-rv-bg);
+    color: var(--tjs-rv-text);
+    font-family: var(--font-body-family, Arial, sans-serif);
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__scroll-shell {
+    position: relative;
+    height: calc(100svh + {{ section.settings.scroll_distance }}px);
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__sticky {
+    position: sticky;
+    top: var(--tjs-rv-sticky-offset);
+    min-height: calc(100svh - var(--tjs-rv-sticky-offset));
+    display: grid;
+    align-items: center;
+    padding: var(--tjs-rv-top) 0 var(--tjs-rv-bottom);
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__inner {
+    width: min(calc(100% - (var(--tjs-rv-gutter) * 2)), var(--tjs-rv-max-width));
+    margin-inline: auto;
+  }
+
+  #TjsVideoReels-{{ section.id }}.tjs-video-reels--full .tjs-video-reels__inner {
+    width: calc(100% - (var(--tjs-rv-gutter) * 2));
+    max-width: none;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 28px;
+    margin-bottom: 24px;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__header-copy {
+    max-width: 760px;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 10px;
+    color: var(--tjs-rv-accent);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__heading {
+    margin: 0;
+    color: var(--tjs-rv-text);
+    font-family: var(--font-heading-family, Georgia, serif);
+    font-size: clamp(38px, 4.7vw, {{ section.settings.heading_size }}px);
+    font-weight: 500;
+    line-height: .96;
+    letter-spacing: -.045em;
+    text-wrap: balance;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__description {
+    max-width: 52ch;
+    margin-top: 12px;
+    color: var(--tjs-rv-muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__description > * {
+    margin: 0;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__profile-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 16px;
+    border: 1px solid color-mix(in srgb, var(--tjs-rv-text) 14%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--tjs-rv-card-bg) 88%, transparent);
+    color: var(--tjs-rv-text);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 24px rgba(20, 18, 16, .06);
+    transition: transform .22s ease, box-shadow .22s ease;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__profile-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(20, 18, 16, .10);
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__profile-link svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__stage {
+    position: relative;
+    height: min(var(--tjs-rv-stage-height), 72svh);
+    min-height: 480px;
+    overflow: visible;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__cards {
+    position: absolute;
+    inset: 0;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 220px;
+    aspect-ratio: 9 / 16;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate3d(0, -50%, 0);
+    transform-origin: center center;
+    will-change: transform, width, opacity;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card.is-visible {
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--tjs-rv-card-border);
+    border-radius: var(--tjs-rv-radius);
+    background: var(--tjs-rv-card-bg);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, .25) inset,
+      0 26px 58px rgba(22, 18, 15, var(--tjs-rv-shadow-alpha));
+    transform: translateZ(0);
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    background: #151515;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__loading {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--tjs-rv-card-bg) 88%, #000000 12%);
+    transition: opacity .25s ease, visibility .25s ease;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card.is-ready .tjs-video-reel-card__loading {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__loading span {
+    width: 28px;
+    height: 28px;
+    border: 2px solid rgba(255, 255, 255, .28);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: tjs-rv-spin-{{ section.id }} .8s linear infinite;
+  }
+
+  @keyframes tjs-rv-spin-{{ section.id }} {
+    to { transform: rotate(360deg); }
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__scrim {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 2;
+    height: 34%;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .42));
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__controls {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__control {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, .36);
+    border-radius: 50%;
+    background: rgba(12, 12, 12, .52);
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform .2s ease, background-color .2s ease;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__control:hover,
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__control:focus-visible {
+    transform: translateY(-1px);
+    background: rgba(12, 12, 12, .72);
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__control svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__icon--sound {
+    display: none;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__control[aria-pressed="true"] .tjs-video-reel-card__icon--muted {
+    display: none;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__control[aria-pressed="true"] .tjs-video-reel-card__icon--sound {
+    display: block;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__label {
+    position: absolute;
+    left: 12px;
+    right: 98px;
+    bottom: 16px;
+    z-index: 4;
+    overflow: hidden;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1.25;
+    letter-spacing: .01em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, .42);
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__progress {
+    display: grid;
+    grid-template-columns: auto minmax(80px, 220px) auto;
+    align-items: center;
+    gap: 12px;
+    width: min(100%, 430px);
+    margin: 18px auto 0;
+    color: var(--tjs-rv-muted);
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__progress-track {
+    position: relative;
+    height: 2px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--tjs-rv-text) 12%, transparent);
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__progress-track > span {
+    position: absolute;
+    inset: 0;
+    background: var(--tjs-rv-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__progress strong {
+    color: var(--tjs-rv-text);
+    font-size: 11px;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__empty {
+    height: 100%;
+    display: grid;
+    place-content: center;
+    gap: 8px;
+    padding: 30px;
+    border: 1px dashed var(--tjs-rv-card-border);
+    border-radius: var(--tjs-rv-radius);
+    background: var(--tjs-rv-card-bg);
+    color: var(--tjs-rv-muted);
+    text-align: center;
+  }
+
+  #TjsVideoReels-{{ section.id }} .tjs-video-reels__empty strong {
+    color: var(--tjs-rv-text);
+    font-size: 18px;
+  }
+
+  @media screen and (max-width: 989px) {
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__scroll-shell {
+      height: auto;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__sticky {
+      position: relative;
+      top: auto;
+      min-height: 0;
+      padding: var(--tjs-rv-top-mobile) 0 var(--tjs-rv-bottom-mobile);
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__inner,
+    #TjsVideoReels-{{ section.id }}.tjs-video-reels--full .tjs-video-reels__inner {
+      width: calc(100% - (var(--tjs-rv-gutter-mobile) * 2));
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__header {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__profile-link {
+      justify-self: start;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__stage {
+      height: auto;
+      min-height: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-snap-type: x mandatory;
+      overscroll-behavior-inline: contain;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__stage::-webkit-scrollbar {
+      display: none;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__cards {
+      position: relative;
+      inset: auto;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: var(--tjs-rv-mobile-card-width);
+      gap: var(--tjs-rv-gap);
+      width: max-content;
+      padding: 8px 0 22px;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reel-card {
+      position: relative;
+      top: auto;
+      left: auto;
+      width: auto !important;
+      aspect-ratio: 9 / 16;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transform: none !important;
+      scroll-snap-align: center;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reel-card[data-clone="true"] {
+      display: none;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__progress {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__heading {
+      font-size: {{ section.settings.heading_size_mobile }}px;
+      line-height: .98;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__description {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__control {
+      width: 34px;
+      height: 34px;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__label {
+      right: 88px;
+      font-size: 10px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__scroll-shell {
+      height: auto;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__sticky {
+      position: relative;
+      top: auto;
+      min-height: 0;
+    }
+
+    #TjsVideoReels-{{ section.id }} .tjs-video-reel-card,
+    #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__frame,
+    #TjsVideoReels-{{ section.id }} .tjs-video-reel-card__control,
+    #TjsVideoReels-{{ section.id }} .tjs-video-reels__profile-link {
+      transition-duration: .01ms !important;
+      animation-duration: .01ms !important;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (() => {
+    const selector = '[data-tjs-video-reels="{{ section.id }}"]';
+
+    const init = (root) => {
+      if (!root || root.dataset.initialised === 'true') return;
+      root.dataset.initialised = 'true';
+
+      const stage = root.querySelector('[data-stage]');
+      const shell = root.querySelector('[data-scroll-shell]');
+      const sticky = root.querySelector('[data-sticky]');
+      const progressBar = root.querySelector('[data-progress]');
+      const progressCount = root.querySelector('[data-progress-count]');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const mobileQuery = window.matchMedia('(max-width: 989px)');
+
+      if (!stage) return;
+
+      let cards = Array.from(root.querySelectorAll('[data-video-card]'));
+      let originalCount = cards.length;
+      let virtualCount = originalCount;
+      let raf = null;
+      let stageObserver = null;
+      let isSectionVisible = false;
+      let activeUnmutedVideo = null;
+
+      const ensureMinimumLoopCards = () => {
+        if (cards.length === 0 || cards.length >= 6 || mobileQuery.matches) return;
+
+        const cardContainer = root.querySelector('[data-cards]');
+        if (!cardContainer) return;
+
+        let cloneIndex = 0;
+        while (cards.length < 6) {
+          const source = cards[cloneIndex % originalCount];
+          const clone = source.cloneNode(true);
+          clone.removeAttribute('data-shopify-editor-block');
+          clone.removeAttribute('data-block-id');
+          clone.setAttribute('aria-hidden', 'true');
+          clone.dataset.clone = 'true';
+          cardContainer.appendChild(clone);
+          cards.push(clone);
+          cloneIndex += 1;
+        }
+
+        virtualCount = cards.length;
+      };
+
+      const loadVideo = (card) => {
+        const video = card?.querySelector('[data-reel-video]');
+        if (!video || video.dataset.loaded === 'true') return video;
+
+        const source = video.dataset.src;
+        if (!source) return video;
+
+        video.src = source;
+        video.dataset.loaded = 'true';
+        video.load();
+
+        const markReady = () => card.classList.add('is-ready');
+        if (video.readyState >= 2) markReady();
+        else video.addEventListener('loadeddata', markReady, { once: true });
+
+        return video;
+      };
+
+      const playVideo = (card) => {
+        const video = loadVideo(card);
+        if (!video || !isSectionVisible) return;
+        video.play().catch(() => {});
+      };
+
+      const pauseVideo = (card) => {
+        const video = card?.querySelector('[data-reel-video]');
+        if (!video) return;
+        if (video !== activeUnmutedVideo) video.pause();
+      };
+
+      const setCardState = (card, visible, x, width, opacity, zIndex) => {
+        card.classList.toggle('is-visible', visible);
+        card.setAttribute('aria-hidden', visible ? 'false' : 'true');
+        card.style.width = `${Math.max(1, width)}px`;
+        card.style.opacity = String(Math.max(0, Math.min(1, opacity)));
+        card.style.zIndex = String(zIndex);
+        card.style.transform = `translate3d(${x}px, -50%, 0)`;
+
+        if (visible && opacity > 0.08) playVideo(card);
+        else pauseVideo(card);
+      };
+
+      const calculateSlots = () => {
+        const stageWidth = stage.clientWidth;
+        const stageHeight = stage.clientHeight;
+        const gap = parseFloat(getComputedStyle(root).getPropertyValue('--tjs-rv-gap')) || 14;
+        const weights = [0.25, 0.20, 0.10, 0.20, 0.25];
+        const gapTotal = gap * 4;
+        const availableWidth = Math.max(0, stageWidth - gapTotal);
+        const maximumExtremeWidth = Math.max(1, stageHeight * (9 / 16));
+        const widthAllowedByHeight = maximumExtremeWidth / weights[0];
+        const usableWidth = Math.min(availableWidth, widthAllowedByHeight);
+        const stripWidth = usableWidth + gapTotal;
+        const offset = Math.max(0, (stageWidth - stripWidth) / 2);
+
+        const widths = weights.map((weight) => usableWidth * weight);
+        const xPositions = [];
+        let cursor = offset;
+
+        widths.forEach((width, index) => {
+          xPositions.push(cursor);
+          cursor += width;
+          if (index < widths.length - 1) cursor += gap;
+        });
+
+        return {
+          widths,
+          xPositions,
+          offLeft: {
+            x: offset - widths[0] - gap,
+            width: widths[0]
+          },
+          offRight: {
+            x: offset + stripWidth + gap,
+            width: widths[4]
+          }
+        };
+      };
+
+      const interpolate = (start, end, amount) => start + ((end - start) * amount);
+      const modulo = (number, divisor) => ((number % divisor) + divisor) % divisor;
+
+      const renderDesktop = () => {
+        if (mobileQuery.matches || cards.length === 0) return;
+
+        const rect = shell.getBoundingClientRect();
+        const scrollableDistance = Math.max(1, shell.offsetHeight - window.innerHeight);
+        const rawProgress = Math.max(0, Math.min(1, -rect.top / scrollableDistance));
+        const travel = rawProgress * virtualCount;
+        const step = Math.floor(travel);
+        const fraction = travel - step;
+        const slots = calculateSlots();
+
+        cards.forEach((card, index) => {
+          const virtualSlot = modulo(index + step, virtualCount);
+
+          if (virtualSlot >= 0 && virtualSlot <= 4) {
+            const startX = slots.xPositions[virtualSlot];
+            const startWidth = slots.widths[virtualSlot];
+            const endX = virtualSlot === 4 ? slots.offRight.x : slots.xPositions[virtualSlot + 1];
+            const endWidth = virtualSlot === 4 ? slots.offRight.width : slots.widths[virtualSlot + 1];
+            const x = interpolate(startX, endX, fraction);
+            const width = interpolate(startWidth, endWidth, fraction);
+            const opacity = virtualSlot === 4 ? 1 - fraction : 1;
+            const zIndex = virtualSlot === 2 || virtualSlot === 3 ? 7 : 5;
+            setCardState(card, true, x, width, opacity, zIndex);
+            return;
+          }
+
+          if (virtualSlot === virtualCount - 1) {
+            const x = interpolate(slots.offLeft.x, slots.xPositions[0], fraction);
+            const width = interpolate(slots.offLeft.width, slots.widths[0], fraction);
+            setCardState(card, true, x, width, fraction, 4);
+            return;
+          }
+
+          setCardState(card, false, slots.offLeft.x, slots.offLeft.width, 0, 1);
+        });
+
+        if (progressBar) progressBar.style.transform = `scaleX(${rawProgress})`;
+        if (progressCount) {
+          const displayIndex = originalCount > 0 ? modulo(step, originalCount) + 1 : 1;
+          progressCount.textContent = String(displayIndex).padStart(2, '0');
+        }
+      };
+
+      const renderMobile = () => {
+        if (!mobileQuery.matches) return;
+
+        cards.forEach((card) => {
+          card.classList.add('is-visible');
+          card.setAttribute('aria-hidden', 'false');
+          card.style.removeProperty('width');
+          card.style.removeProperty('opacity');
+          card.style.removeProperty('z-index');
+          card.style.removeProperty('transform');
+          playVideo(card);
+        });
+      };
+
+      const render = () => {
+        raf = null;
+        if (mobileQuery.matches || reduceMotion.matches) renderMobile();
+        else renderDesktop();
+      };
+
+      const requestRender = () => {
+        if (raf) return;
+        raf = requestAnimationFrame(render);
+      };
+
+      const setupVideoControls = () => {
+        root.addEventListener('click', (event) => {
+          const soundButton = event.target.closest('[data-sound-toggle]');
+          if (!soundButton || !root.contains(soundButton)) return;
+
+          const card = soundButton.closest('[data-video-card]');
+          const video = loadVideo(card);
+          if (!video) return;
+
+          const shouldEnableSound = video.muted;
+
+          cards.forEach((otherCard) => {
+            const otherVideo = otherCard.querySelector('[data-reel-video]');
+            const otherButton = otherCard.querySelector('[data-sound-toggle]');
+            if (!otherVideo || otherVideo === video) return;
+            otherVideo.muted = true;
+            otherButton?.setAttribute('aria-pressed', 'false');
+            otherButton?.setAttribute('aria-label', 'Turn sound on');
+          });
+
+          video.muted = !shouldEnableSound;
+          soundButton.setAttribute('aria-pressed', shouldEnableSound ? 'true' : 'false');
+          soundButton.setAttribute('aria-label', shouldEnableSound ? 'Mute video' : 'Turn sound on');
+
+          if (shouldEnableSound) {
+            activeUnmutedVideo = video;
+            video.play().catch(() => {});
+          } else if (activeUnmutedVideo === video) {
+            activeUnmutedVideo = null;
+          }
+        });
+      };
+
+      const setupVisibilityObserver = () => {
+        if (!('IntersectionObserver' in window)) {
+          isSectionVisible = true;
+          return;
+        }
+
+        stageObserver = new IntersectionObserver((entries) => {
+          isSectionVisible = entries[0]?.isIntersecting ?? false;
+
+          if (isSectionVisible) {
+            requestRender();
+          } else {
+            cards.forEach((card) => {
+              const video = card.querySelector('[data-reel-video]');
+              if (video) video.pause();
+            });
+          }
+        }, { threshold: 0.08 });
+
+        stageObserver.observe(stage);
+      };
+
+      ensureMinimumLoopCards();
+      setupVideoControls();
+      setupVisibilityObserver();
+
+      window.addEventListener('scroll', requestRender, { passive: true });
+      window.addEventListener('resize', requestRender, { passive: true });
+      mobileQuery.addEventListener?.('change', () => {
+        cards.forEach((card) => {
+          card.style.removeProperty('width');
+          card.style.removeProperty('opacity');
+          card.style.removeProperty('z-index');
+          card.style.removeProperty('transform');
+        });
+        requestRender();
+      });
+
+      reduceMotion.addEventListener?.('change', requestRender);
+      requestRender();
+
+      root.tjsVideoReelsDestroy = () => {
+        if (raf) cancelAnimationFrame(raf);
+        stageObserver?.disconnect();
+        cards.forEach((card) => {
+          const video = card.querySelector('[data-reel-video]');
+          if (video) video.pause();
+        });
+      };
+    };
+
+    init(document.querySelector(selector));
+
+    document.addEventListener('shopify:section:load', (event) => {
+      init(event.target.querySelector(selector));
+    });
+
+    document.addEventListener('shopify:section:unload', (event) => {
+      const root = event.target.querySelector(selector);
+      if (root && typeof root.tjsVideoReelsDestroy === 'function') {
+        root.tjsVideoReelsDestroy();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TJS Reels video stage",
+  "tag": "section",
+  "class": "section-tjs-reels-video-stage",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Seen on Instagram"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The June Shop, In Motion"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Watch styling ideas, product details and everyday favourites from our Instagram.</p>"
+    },
+    {
+      "type": "url",
+      "id": "profile_link",
+      "label": "Instagram profile link"
+    },
+    {
+      "type": "text",
+      "id": "profile_button_label",
+      "label": "Profile button label",
+      "default": "Follow on Instagram"
+    },
+    {
+      "type": "text",
+      "id": "stage_accessibility_label",
+      "label": "Video stage accessibility label",
+      "default": "The June Shop Instagram videos"
+    },
+    {
+      "type": "header",
+      "content": "Video playback"
+    },
+    {
+      "type": "paragraph",
+      "content": "For clean 9:16 playback, paste a direct MP4 URL from Shopify Files or another CDN into each Reel block. Instagram page URLs remain optional click-through links."
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_videos",
+      "label": "Autoplay muted videos",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sound_button",
+      "label": "Show sound controls",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_progress",
+      "label": "Show scroll progress",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "progress_label",
+      "label": "Progress label",
+      "default": "Scroll to explore"
+    },
+    {
+      "type": "header",
+      "content": "Desktop scroll stage"
+    },
+    {
+      "type": "range",
+      "id": "stage_height",
+      "min": 500,
+      "max": 760,
+      "step": 10,
+      "unit": "px",
+      "label": "Video stage height",
+      "default": 650
+    },
+    {
+      "type": "range",
+      "id": "scroll_distance",
+      "min": 700,
+      "max": 2600,
+      "step": 100,
+      "unit": "px",
+      "label": "Scroll distance",
+      "default": 1500
+    },
+    {
+      "type": "range",
+      "id": "sticky_offset",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Sticky top offset",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 6,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Space between videos",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_width",
+      "min": 56,
+      "max": 86,
+      "step": 1,
+      "unit": "vw",
+      "label": "Mobile video width",
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Dimensions"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Use full browser width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 1100,
+      "max": 1900,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum content width",
+      "default": 1520
+    },
+    {
+      "type": "range",
+      "id": "page_gutter",
+      "min": 12,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop side spacing",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "page_gutter_mobile",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile side spacing",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 44,
+      "max": 86,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop heading size",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 30,
+      "max": 52,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile heading size",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Video corner radius",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "shadow_strength",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "unit": "%",
+      "label": "Video shadow strength",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#F5F1EA"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Main text",
+      "default": "#191715"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Muted text",
+      "default": "#756F68"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#B48A50"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Video background",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Video border",
+      "default": "#D9D0C4"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 16,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop top spacing",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 16,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop bottom spacing",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 12,
+      "max": 72,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile top spacing",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 12,
+      "max": 72,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile bottom spacing",
+      "default": 28
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reel",
+      "name": "Playable Reel",
+      "settings": [
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Direct MP4 video URL",
+          "info": "Required for clean playback. Upload the Reel MP4 to Shopify Files, then paste its file URL here."
+        },
+        {
+          "type": "url",
+          "id": "reel_url",
+          "label": "Instagram Reel link",
+          "info": "Optional. Used only for the Instagram button; it is not used as the video source."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Optional video label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS Reels video stage",
+      "blocks": [
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" }
+      ]
+    }
+  ]
+}
+{% endschema %}

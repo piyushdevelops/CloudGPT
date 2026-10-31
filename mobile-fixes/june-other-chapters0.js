@@ -1,0 +1,19 @@
+
+if(!customElements.get('june-chapters'))customElements.define('june-chapters',class extends HTMLElement{
+ connectedCallback(){
+ this.controller?.abort();this.controller=new AbortController();const o={signal:this.controller.signal};
+ this.scenes=[...this.querySelectorAll('[data-scene]')];this.tabs=[...this.querySelectorAll('[data-select]')];this.stage=this.querySelector('.jc__stage');this.active=-1;this.paused=false;this.reduced=matchMedia('(prefers-reduced-motion: reduce)');this.small=matchMedia('(max-height: 699px), (max-width: 900px)');this.dataset.ready='true';
+ this.addEventListener('click',e=>{const b=e.target.closest('[data-select]');if(b)this.jump(Number(b.dataset.select));if(e.target.closest('[data-pause]')){this.paused=!this.paused;this.dataset.paused=String(this.paused);const p=this.querySelector('[data-pause]');p.textContent=this.paused?this.dataset.resumeLabel:this.dataset.pauseLabel;p.setAttribute('aria-pressed',String(this.paused));if(!this.paused)this.update()}},o);
+ this.addEventListener('keydown',e=>{const b=e.target.closest('[data-select]');if(!b)return;let n,i=this.tabs.indexOf(b);if(e.key==='ArrowRight')n=(i+1)%this.tabs.length;if(e.key==='ArrowLeft')n=(i-1+this.tabs.length)%this.tabs.length;if(e.key==='Home')n=0;if(e.key==='End')n=this.tabs.length-1;if(n===undefined)return;e.preventDefault();this.jump(n);this.tabs[n].focus()},o);
+ this.addEventListener('shopify:block:select',e=>{const i=this.scenes.findIndex(s=>s.dataset.block===e.detail.blockId);if(i>=0)this.jump(i)},o);
+ this.reduced.addEventListener('change',()=>this.setup(),o);this.small.addEventListener('change',()=>this.setup(),o);
+ window.addEventListener('resize',()=>this.setup(),o);window.addEventListener('scroll',()=>{if(!this.raf)this.raf=requestAnimationFrame(()=>{this.raf=0;this.update()})},{...o,passive:true});
+ this.setup();
+ }
+ setup(){this.pinned=this.dataset.scroll==='true'&&!this.reduced.matches&&!this.small.matches&&this.dataset.editor!=='true';this.dataset.pinned=String(this.pinned);this.offset=parseFloat(getComputedStyle(this).getPropertyValue('--jc-offset'))||0;this.distance=Number(this.dataset.step)*this.scenes.length;this.style.setProperty('--jc-runway',(this.stage.offsetHeight+this.distance)+'px');this.querySelector('.jc__hint').hidden=!this.pinned;this.querySelector('[data-pause]').hidden=this.reduced.matches||this.dataset.motion==='false';if(this.active<0)this.select(0,.15);this.update()}
+ update(){if(!this.pinned)return;const rect=this.getBoundingClientRect();if(rect.bottom<0||rect.top>innerHeight)return;const progress=Math.max(0,Math.min(.99999,(this.offset-rect.top)/this.distance));const n=Math.min(this.scenes.length-1,Math.floor(progress*this.scenes.length));if(n!==this.active&&this.scenes[this.active]?.contains(document.activeElement))return;this.select(n,progress*this.scenes.length-n)}
+ select(n,p=.5){if(n!==this.active){this.active=n;this.scenes.forEach((s,i)=>{const active=i===n;s.dataset.active=String(active);s.inert=!active;s.setAttribute('aria-hidden',String(!active));this.tabs[i].setAttribute('aria-pressed',String(active))});this.style.setProperty('--jc-current',getComputedStyle(this.scenes[n]).getPropertyValue('--jc-scene'))}
+ const s=this.scenes[n],motion=this.dataset.motion==='true'&&!this.reduced.matches&&!this.paused;const progress=motion?p:.65;s.style.setProperty('--jc-local',progress.toFixed(3));s.style.setProperty('--write',motion?Math.min(1,Math.max(0,(progress-.15)*5)).toFixed(3):'0');s.style.setProperty('--wipe',motion?Math.min(1,Math.max(0,(progress-.55)*4)).toFixed(3):'0');s.style.setProperty('--memory',motion?Math.min(1,progress*3).toFixed(3):'1')}
+ jump(n){this.select(n,.5);if(this.pinned){const top=scrollY+this.getBoundingClientRect().top-this.offset+((n+.5)/this.scenes.length)*this.distance;window.scrollTo({top,behavior:'instant'})}}
+ disconnectedCallback(){this.controller?.abort();if(this.raf)cancelAnimationFrame(this.raf)}
+});

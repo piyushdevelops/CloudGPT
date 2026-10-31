@@ -1,0 +1,59 @@
+{
+  "theme": "187527266499",
+  "role": "UNPUBLISHED",
+  "checkedAt": "2026-10-23T07:27:46.918Z",
+  "files": [
+    {
+      "filename": "assets/june-scoop-search.js",
+      "exact": true
+    },
+    {
+      "filename": "blocks/_product-medias.liquid",
+      "exact": true
+    },
+    {
+      "filename": "locales/en.default.json",
+      "exact": true
+    },
+    {
+      "filename": "sections/main-cart.liquid",
+      "exact": true
+    },
+    {
+      "filename": "sections/main-page.liquid",
+      "exact": true
+    },
+    {
+      "filename": "sections/main-search.liquid",
+      "exact": true
+    },
+    {
+      "filename": "sections/tjs-side-cart.liquid",
+      "exact": true
+    },
+    {
+      "filename": "snippets/item-cart-page.liquid",
+      "exact": true
+    },
+    {
+      "filename": "snippets/june-cart-comparison-savings.liquid",
+      "exact": true
+    },
+    {
+      "filename": "snippets/june-story-text.liquid",
+      "exact": true
+    },
+    {
+      "filename": "snippets/product-qty-selector.liquid",
+      "exact": true
+    },
+    {
+      "filename": "assets/june-page-cart.js",
+      "exact": true
+    },
+    {
+      "filename": "sections/cart-drawer.liquid",
+      "exact": true
+    }
+  ]
+}

@@ -1,0 +1,445 @@
+{% comment %}
+  TJS Rakhi Gift Bundle Builder
+  Theme-only UI. Configure a matching Shopify automatic discount or enter a
+  discount code in this section so the displayed saving is honoured in cart.
+{% endcomment %}
+
+{% liquid
+  assign rb_multiplier = 100 | minus: section.settings.discount_percent
+  assign rb_has_products = false
+  for block in section.blocks
+    if block.settings.products != blank
+      assign rb_has_products = true
+      break
+    endif
+  endfor
+%}
+
+{% if rb_has_products %}
+<rakhi-bundle-builder
+  id="RakhiBundle-{{ section.id }}"
+  class="rb"
+  data-default-gender="{{ section.settings.default_gender }}"
+  data-discount-code="{{ section.settings.discount_code | escape }}"
+  data-after-add="{{ section.settings.after_add }}"
+  data-require-main="{{ section.settings.require_main_product }}"
+  data-main-product-id="{{ product.id }}"
+  data-main-product-title="{{ product.title | escape }}"
+  data-money-format="{{ shop.money_format | escape }}"
+  data-currency="{{ cart.currency.iso_code | default: shop.currency | escape }}"
+  style="
+    --rb-bg:{{ section.settings.background }};
+    --rb-card:{{ section.settings.card_background }};
+    --rb-text:{{ section.settings.text_color }};
+    --rb-muted:{{ section.settings.muted_color }};
+    --rb-accent:{{ section.settings.accent }};
+    --rb-soft:{{ section.settings.accent_soft }};
+    --rb-border:{{ section.settings.border_color }};
+    --rb-btn:{{ section.settings.button_background }};
+    --rb-btn-text:{{ section.settings.button_text }};
+    --rb-radius:{{ section.settings.radius }}px;
+    --rb-max:{{ section.settings.max_width }}px;
+    --rb-pt:{{ section.settings.padding_top }}px;
+    --rb-pb:{{ section.settings.padding_bottom }}px;
+  "
+>
+  <section class="rb__section">
+    <div class="rb__inner">
+      <header class="rb__header">
+        <div>
+          {% if section.settings.eyebrow != blank %}<p class="rb__eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+          <h2>{{ section.settings.heading | escape }}</h2>
+          {% if section.settings.intro != blank %}<div class="rb__intro">{{ section.settings.intro }}</div>{% endif %}
+        </div>
+        <div class="rb__offer"><strong>{{ section.settings.discount_percent }}% off</strong><span>{{ section.settings.offer_label | escape }}</span></div>
+      </header>
+
+      <div class="rb__step">
+        <div class="rb__step-title"><b>01</b><div><small>{{ section.settings.step_one_kicker | escape }}</small><h3>{{ section.settings.step_one_title | escape }}</h3></div></div>
+        <div class="rb__genders" role="tablist">
+          <button type="button" data-gender="her" aria-selected="false">{{ section.settings.her_label | escape }}</button>
+          <button type="button" data-gender="him" aria-selected="false">{{ section.settings.him_label | escape }}</button>
+          <button type="button" data-gender="baby" aria-selected="false">{{ section.settings.baby_label | escape }}</button>
+        </div>
+      </div>
+
+      <div class="rb__step">
+        <div class="rb__step-title"><b>02</b><div><small>{{ section.settings.step_two_kicker | escape }}</small><h3>{{ section.settings.step_two_title | escape }}</h3></div></div>
+        <div class="rb__personas">
+          {% for block in section.blocks %}
+            {% if block.settings.products != blank %}
+              <button
+                type="button"
+                class="rb__persona"
+                data-persona="{{ block.id }}"
+                data-persona-gender="{{ block.settings.gender }}"
+                aria-pressed="false"
+                {{ block.shopify_attributes }}
+              >
+                {% if block.settings.image != blank %}
+                  {{ block.settings.image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '64,96,120', sizes: '48px', alt: block.settings.title }}
+                {% endif %}
+                <span><strong>{{ block.settings.title | escape }}</strong>{% if block.settings.subtitle != blank %}<small>{{ block.settings.subtitle | escape }}</small>{% endif %}</span>
+                <i aria-hidden="true">✓</i>
+              </button>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="rb__step">
+        <div class="rb__step-title"><b>03</b><div><small>{{ section.settings.step_three_kicker | escape }}</small><h3>{{ section.settings.step_three_title | escape }}</h3></div></div>
+
+        {% for block in section.blocks %}
+          {% if block.settings.products != blank %}
+            <div class="rb__panel" data-panel="{{ block.id }}" data-persona-title="{{ block.settings.title | escape }}" hidden>
+              <div class="rb__panel-head">
+                <div><small>{{ section.settings.curated_label | escape }}</small><h4>{{ block.settings.title | escape }}</h4>{% if block.settings.description != blank %}<p>{{ block.settings.description | escape }}</p>{% endif %}</div>
+                <button type="button" data-select-all>{{ section.settings.select_all_label | escape }}</button>
+              </div>
+
+              <div class="rb__products">
+                {% for addon_product in block.settings.products limit: 5 %}
+                  {% assign addon_variant = addon_product.selected_or_first_available_variant %}
+                  {% if addon_product.available and addon_variant != blank %}
+                    {% assign rb_discounted = addon_variant.price | times: rb_multiplier | divided_by: 100 %}
+                    {% assign rb_image = addon_variant.featured_image | default: addon_product.featured_image %}
+
+                    <article
+                      class="rb-product"
+                      data-product-card
+                      data-selected="false"
+                      data-variant-id="{{ addon_variant.id }}"
+                      data-price="{{ addon_variant.price }}"
+                      data-discounted="{{ rb_discounted }}"
+                      data-product-title="{{ addon_product.title | escape }}"
+                    >
+                      <script type="application/json" data-variants>[
+                        {% assign rb_variant_started = false %}
+                        {% for variant in addon_product.variants %}
+                          {% if variant.available %}
+                            {% if rb_variant_started %},{% endif %}
+                            {
+                              "id":{{ variant.id | json }},
+                              "price":{{ variant.price | json }},
+                              "discounted":{{ variant.price | times: rb_multiplier | divided_by: 100 | json }},
+                              "image":{% if variant.featured_image != blank %}{{ variant.featured_image | image_url: width: 720 | json }}{% else %}null{% endif %}
+                            }
+                            {% assign rb_variant_started = true %}
+                          {% endif %}
+                        {% endfor %}
+                      ]</script>
+
+                      <button type="button" class="rb-product__check" data-select-product aria-pressed="false" aria-label="Select {{ addon_product.title | escape }}">✓</button>
+
+                      <a class="rb-product__media" href="{{ addon_product.url }}">
+                        {% if rb_image != blank %}
+                          {{ rb_image | image_url: width: 720 | image_tag: class: 'rb-product__image', widths: '220,320,480,640,720', sizes: '(max-width:749px) 44vw,220px', loading: 'lazy', alt: rb_image.alt | default: addon_product.title }}
+                        {% else %}
+                          {{ 'product-1' | placeholder_svg_tag: 'rb-product__image rb-product__placeholder' }}
+                        {% endif %}
+                        <span>{{ section.settings.discount_percent }}% off</span>
+                      </a>
+
+                      <div class="rb-product__body">
+                        <h5><a href="{{ addon_product.url }}">{{ addon_product.title | escape }}</a></h5>
+                        <div class="rb-product__price"><strong data-sale-price>{{ rb_discounted | money }}</strong><s data-original-price>{{ addon_variant.price | money }}</s></div>
+
+                        {% unless addon_product.has_only_default_variant %}
+                          <label class="rb-product__variant">
+                            <span>{{ section.settings.variant_label | escape }}</span>
+                            <select data-variant-select>
+                              {% for variant in addon_product.variants %}
+                                {% if variant.available %}
+                                  <option value="{{ variant.id }}" {% if variant.id == addon_variant.id %}selected{% endif %}>{{ variant.title | escape }}</option>
+                                {% endif %}
+                              {% endfor %}
+                            </select>
+                          </label>
+                        {% endunless %}
+                      </div>
+                    </article>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="rb__summary">
+        <div><small data-count>0 items selected</small><strong data-total>{{ 0 | money }}</strong><span>{{ section.settings.discount_note | escape }}</span></div>
+        <button type="button" data-add-bundle disabled><span>{{ section.settings.add_button_label | escape }}</span><svg viewBox="0 0 20 20" fill="none"><path d="M4 6h12l-1 10H5L4 6Z" stroke="currentColor" stroke-width="1.4"/><path d="M7 7V5a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.4"/></svg></button>
+      </div>
+    </div>
+  </section>
+  <div class="rb__toast" data-toast role="status" aria-live="polite"></div>
+</rakhi-bundle-builder>
+{% endif %}
+
+{% style %}
+#RakhiBundle-{{ section.id }}{display:block;background:var(--rb-bg);color:var(--rb-text);font-family:var(--font-body-family,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif);-webkit-font-smoothing:antialiased}
+#RakhiBundle-{{ section.id }} *,#RakhiBundle-{{ section.id }} *:before,#RakhiBundle-{{ section.id }} *:after{box-sizing:border-box}
+#RakhiBundle-{{ section.id }} .rb__section{padding:var(--rb-pt) 0 var(--rb-pb)}
+#RakhiBundle-{{ section.id }} .rb__inner{width:min(calc(100% - 32px),var(--rb-max));margin:auto}
+#RakhiBundle-{{ section.id }} .rb__header{position:relative;display:grid;grid-template-columns:minmax(0,760px) auto;justify-content:space-between;gap:24px;margin-bottom:30px}
+#RakhiBundle-{{ section.id }} .rb__eyebrow{margin:0 0 8px;color:var(--rb-accent);font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+#RakhiBundle-{{ section.id }} .rb__header h2{margin:0;font-family:var(--font-heading-family,var(--font-body-family,sans-serif));font-size:clamp(30px,4vw,48px);font-weight:520;line-height:1.02;letter-spacing:-.04em}
+#RakhiBundle-{{ section.id }} .rb__intro{max-width:620px;margin-top:12px;color:var(--rb-muted);font-size:14px;line-height:1.55}
+#RakhiBundle-{{ section.id }} .rb__intro p{margin:0}
+#RakhiBundle-{{ section.id }} .rb__offer{width:106px;height:106px;display:grid;place-content:center;gap:4px;border:1px solid color-mix(in srgb,var(--rb-accent) 30%,var(--rb-border));border-radius:50%;background:var(--rb-soft);text-align:center}
+#RakhiBundle-{{ section.id }} .rb__offer strong{color:var(--rb-accent);font-size:19px;font-weight:850}
+#RakhiBundle-{{ section.id }} .rb__offer span{max-width:70px;color:var(--rb-muted);font-size:8px;font-weight:760;line-height:1.15;text-transform:uppercase}
+#RakhiBundle-{{ section.id }} .rb__step{padding:23px 0;border-top:1px solid var(--rb-border)}
+#RakhiBundle-{{ section.id }} .rb__step-title{display:flex;align-items:flex-start;gap:11px;margin-bottom:16px}
+#RakhiBundle-{{ section.id }} .rb__step-title>b{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border:1px solid var(--rb-border);border-radius:50%;color:var(--rb-accent);font-size:9px}
+#RakhiBundle-{{ section.id }} .rb__step-title small{display:block;margin-bottom:2px;color:var(--rb-muted);font-size:8px;font-weight:760;letter-spacing:.09em;text-transform:uppercase}
+#RakhiBundle-{{ section.id }} .rb__step-title h3{margin:0;font-size:18px;font-weight:720;line-height:1.2;letter-spacing:-.02em}
+#RakhiBundle-{{ section.id }} .rb__genders{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+#RakhiBundle-{{ section.id }} .rb__genders button{min-height:58px;border:1px solid var(--rb-border);border-radius:var(--rb-radius);background:var(--rb-card);color:var(--rb-text);cursor:pointer;font:inherit;font-size:13px;font-weight:760;transition:.18s}
+#RakhiBundle-{{ section.id }} .rb__genders button:hover{border-color:var(--rb-accent);transform:translateY(-1px)}
+#RakhiBundle-{{ section.id }} .rb__genders button.is-active{border-color:var(--rb-accent);background:var(--rb-accent);color:#fff;box-shadow:0 10px 26px color-mix(in srgb,var(--rb-accent) 20%,transparent)}
+#RakhiBundle-{{ section.id }} .rb__personas{display:flex;gap:9px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none;scroll-snap-type:x proximity}
+#RakhiBundle-{{ section.id }} .rb__personas::-webkit-scrollbar{display:none}
+#RakhiBundle-{{ section.id }} .rb__persona{min-width:230px;flex:0 0 230px;min-height:72px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px;border:1px solid var(--rb-border);border-radius:var(--rb-radius);background:var(--rb-card);color:var(--rb-text);cursor:pointer;font:inherit;text-align:left;scroll-snap-align:start;transition:.18s}
+#RakhiBundle-{{ section.id }} .rb__persona[hidden]{display:none}
+#RakhiBundle-{{ section.id }} .rb__persona:hover{border-color:var(--rb-accent);transform:translateY(-1px)}
+#RakhiBundle-{{ section.id }} .rb__persona.is-active{border-color:var(--rb-accent);background:var(--rb-soft)}
+#RakhiBundle-{{ section.id }} .rb__persona img{width:48px;height:48px;display:block;object-fit:cover;border-radius:max(4px,calc(var(--rb-radius) - 2px))}
+#RakhiBundle-{{ section.id }} .rb__persona>span{min-width:0;display:grid;gap:4px}
+#RakhiBundle-{{ section.id }} .rb__persona strong{overflow:hidden;font-size:12px;font-weight:780;text-overflow:ellipsis;white-space:nowrap}
+#RakhiBundle-{{ section.id }} .rb__persona small{display:-webkit-box;overflow:hidden;color:var(--rb-muted);font-size:9px;line-height:1.3;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+#RakhiBundle-{{ section.id }} .rb__persona i{width:22px;height:22px;display:grid;place-items:center;border:1px solid var(--rb-border);border-radius:50%;background:#fff;color:transparent;font-size:11px;font-style:normal}
+#RakhiBundle-{{ section.id }} .rb__persona.is-active i{border-color:var(--rb-accent);background:var(--rb-accent);color:#fff}
+#RakhiBundle-{{ section.id }} .rb__panel[hidden]{display:none}
+#RakhiBundle-{{ section.id }} .rb__panel-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:13px}
+#RakhiBundle-{{ section.id }} .rb__panel-head small{color:var(--rb-accent);font-size:8px;font-weight:790;letter-spacing:.09em;text-transform:uppercase}
+#RakhiBundle-{{ section.id }} .rb__panel-head h4{margin:2px 0 0;font-size:18px;font-weight:760}
+#RakhiBundle-{{ section.id }} .rb__panel-head p{max-width:620px;margin:5px 0 0;color:var(--rb-muted);font-size:11px;line-height:1.4}
+#RakhiBundle-{{ section.id }} .rb__panel-head button{padding:0;border:0;background:transparent;color:var(--rb-accent);cursor:pointer;font:inherit;font-size:9px;font-weight:800;text-decoration:underline;text-underline-offset:4px;text-transform:uppercase}
+#RakhiBundle-{{ section.id }} .rb__products{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+#RakhiBundle-{{ section.id }} .rb-product{position:relative;min-width:0;overflow:hidden;border:1px solid var(--rb-border);border-radius:var(--rb-radius);background:var(--rb-card);transition:.18s}
+#RakhiBundle-{{ section.id }} .rb-product:hover{transform:translateY(-2px)}
+#RakhiBundle-{{ section.id }} .rb-product.is-selected{border-color:var(--rb-accent);box-shadow:0 12px 28px color-mix(in srgb,var(--rb-accent) 15%,transparent)}
+#RakhiBundle-{{ section.id }} .rb-product__check{position:absolute;z-index:4;top:8px;left:8px;width:28px;height:28px;border:1px solid rgba(255,255,255,.8);border-radius:50%;background:rgba(255,255,255,.95);color:transparent;cursor:pointer;box-shadow:0 6px 16px rgba(22,17,14,.12)}
+#RakhiBundle-{{ section.id }} .rb-product.is-selected .rb-product__check{background:var(--rb-accent);color:#fff}
+#RakhiBundle-{{ section.id }} .rb-product__media{position:relative;aspect-ratio:1;display:block;overflow:hidden;background:#f4f2ef}
+#RakhiBundle-{{ section.id }} .rb-product__image{width:100%;height:100%;display:block;object-fit:cover;transition:transform .3s ease}
+#RakhiBundle-{{ section.id }} .rb-product:hover .rb-product__image{transform:scale(1.025)}
+#RakhiBundle-{{ section.id }} .rb-product__placeholder{padding:22%;color:var(--rb-muted)}
+#RakhiBundle-{{ section.id }} .rb-product__media>span{position:absolute;right:7px;bottom:7px;min-height:23px;display:flex;align-items:center;padding:0 8px;border-radius:6px;background:rgba(255,255,255,.95);color:var(--rb-accent);font-size:8px;font-weight:850;text-transform:uppercase;box-shadow:0 6px 16px rgba(22,17,14,.1)}
+#RakhiBundle-{{ section.id }} .rb-product__body{display:grid;gap:7px;padding:10px}
+#RakhiBundle-{{ section.id }} .rb-product h5{min-height:2.5em;margin:0;font-size:11px;font-weight:720;line-height:1.25}
+#RakhiBundle-{{ section.id }} .rb-product h5 a{display:-webkit-box;overflow:hidden;color:inherit;text-decoration:none;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+#RakhiBundle-{{ section.id }} .rb-product__price{display:flex;align-items:baseline;flex-wrap:wrap;gap:5px}
+#RakhiBundle-{{ section.id }} .rb-product__price strong{font-size:13px;font-weight:840;letter-spacing:-.02em}
+#RakhiBundle-{{ section.id }} .rb-product__price s{color:var(--rb-muted);font-size:9px}
+#RakhiBundle-{{ section.id }} .rb-product__variant{display:grid;gap:4px}
+#RakhiBundle-{{ section.id }} .rb-product__variant>span{color:var(--rb-muted);font-size:7px;font-weight:760;letter-spacing:.06em;text-transform:uppercase}
+#RakhiBundle-{{ section.id }} .rb-product__variant select{width:100%;min-height:30px;padding:0 8px;border:1px solid var(--rb-border);border-radius:6px;background:#fff;color:var(--rb-text);font:inherit;font-size:8px}
+#RakhiBundle-{{ section.id }} .rb__summary{position:sticky;z-index:20;bottom:12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;margin-top:20px;padding:13px 14px 13px 18px;border:1px solid color-mix(in srgb,var(--rb-accent) 24%,var(--rb-border));border-radius:calc(var(--rb-radius) + 2px);background:#fff;box-shadow:0 18px 48px rgba(24,18,14,.14)}
+#RakhiBundle-{{ section.id }} .rb__summary>div{display:grid;grid-template-columns:auto auto;align-items:baseline;justify-content:start;gap:4px 10px}
+#RakhiBundle-{{ section.id }} .rb__summary small{color:var(--rb-muted);font-size:8px;font-weight:760;letter-spacing:.05em;text-transform:uppercase}
+#RakhiBundle-{{ section.id }} .rb__summary strong{font-size:18px;font-weight:850;letter-spacing:-.03em}
+#RakhiBundle-{{ section.id }} .rb__summary>div>span{grid-column:1/-1;color:var(--rb-muted);font-size:9px}
+#RakhiBundle-{{ section.id }} .rb__summary>button{min-width:220px;min-height:46px;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 20px;border:0;border-radius:7px;background:var(--rb-btn);color:var(--rb-btn-text);cursor:pointer;font:inherit;font-size:10px;font-weight:820;letter-spacing:.05em;text-transform:uppercase}
+#RakhiBundle-{{ section.id }} .rb__summary>button:disabled{opacity:.4;cursor:not-allowed}
+#RakhiBundle-{{ section.id }} .rb__summary svg{width:17px;height:17px}
+#RakhiBundle-{{ section.id }} .rb__toast{position:fixed;z-index:1200;right:18px;bottom:18px;max-width:min(360px,calc(100% - 36px));padding:12px 15px;border-radius:7px;background:var(--rb-text);color:#fff;font-size:11px;opacity:0;pointer-events:none;transform:translateY(10px);transition:.2s}
+#RakhiBundle-{{ section.id }} .rb__toast.is-visible{opacity:1;transform:none}
+@media(max-width:989px){#RakhiBundle-{{ section.id }} .rb__products{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:749px){
+#RakhiBundle-{{ section.id }} .rb__inner{width:min(calc(100% - 18px),var(--rb-max))}
+#RakhiBundle-{{ section.id }} .rb__header{grid-template-columns:minmax(0,1fr) 76px;gap:10px;margin-bottom:22px}
+#RakhiBundle-{{ section.id }} .rb__header h2{font-size:29px}
+#RakhiBundle-{{ section.id }} .rb__intro{font-size:12px}
+#RakhiBundle-{{ section.id }} .rb__offer{width:76px;height:76px}
+#RakhiBundle-{{ section.id }} .rb__offer strong{font-size:15px}
+#RakhiBundle-{{ section.id }} .rb__offer span{font-size:6px}
+#RakhiBundle-{{ section.id }} .rb__step{padding:18px 0}
+#RakhiBundle-{{ section.id }} .rb__step-title{margin-bottom:12px}
+#RakhiBundle-{{ section.id }} .rb__step-title h3{font-size:15px}
+#RakhiBundle-{{ section.id }} .rb__genders{gap:6px}
+#RakhiBundle-{{ section.id }} .rb__genders button{min-height:48px;font-size:10px}
+#RakhiBundle-{{ section.id }} .rb__persona{min-width:215px;flex-basis:215px}
+#RakhiBundle-{{ section.id }} .rb__products{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#RakhiBundle-{{ section.id }} .rb-product__body{padding:8px}
+#RakhiBundle-{{ section.id }} .rb__summary{bottom:max(8px,env(safe-area-inset-bottom));gap:9px;padding:10px}
+#RakhiBundle-{{ section.id }} .rb__summary>div{grid-template-columns:1fr;gap:1px}
+#RakhiBundle-{{ section.id }} .rb__summary>div>span{display:none}
+#RakhiBundle-{{ section.id }} .rb__summary strong{font-size:15px}
+#RakhiBundle-{{ section.id }} .rb__summary>button{min-width:0;min-height:42px;padding:0 12px;font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){#RakhiBundle-{{ section.id }} *,#RakhiBundle-{{ section.id }} *:before,#RakhiBundle-{{ section.id }} *:after{transition-duration:.01ms!important;animation-duration:.01ms!important;scroll-behavior:auto!important}}
+{% endstyle %}
+
+<script>
+(()=>{if(customElements.get('rakhi-bundle-builder'))return;
+class RakhiBundleBuilder extends HTMLElement{
+connectedCallback(){
+if(this.dataset.ready==='true')return;this.dataset.ready='true';
+this.code=(this.dataset.discountCode||'').trim();this.afterAdd=this.dataset.afterAdd||'cart';
+this.requireMain=this.dataset.requireMain==='true';this.mainProductId=Number(this.dataset.mainProductId||0);
+this.moneyFormat=this.dataset.moneyFormat||'${{amount}}';this.currency=this.dataset.currency||'INR';
+this.gender='';this.persona='';this.addButton=this.querySelector('[data-add-bundle]');
+this.count=this.querySelector('[data-count]');this.total=this.querySelector('[data-total]');this.toast=this.querySelector('[data-toast]');
+this.addEventListener('click',e=>this.click(e));this.addEventListener('change',e=>this.change(e));
+const genders=[...this.querySelectorAll('[data-gender]')].map(x=>x.dataset.gender).filter(g=>this.querySelector(`[data-persona-gender="${CSS.escape(g)}"]`));
+const initial=genders.includes(this.dataset.defaultGender)?this.dataset.defaultGender:genders[0];if(initial)this.setGender(initial);
+}
+click(e){
+const g=e.target.closest('[data-gender]');if(g){this.setGender(g.dataset.gender);return}
+const p=e.target.closest('[data-persona]');if(p){this.setPersona(p.dataset.persona);return}
+const c=e.target.closest('[data-select-product]');if(c){this.toggle(c.closest('[data-product-card]'));return}
+const all=e.target.closest('[data-select-all]');if(all){this.selectAll(all.closest('[data-panel]'));return}
+if(e.target.closest('[data-add-bundle]'))this.add();
+}
+change(e){const s=e.target.closest('[data-variant-select]');if(!s)return;this.setVariant(s.closest('[data-product-card]'),Number(s.value))}
+setGender(g){
+this.gender=g;this.querySelectorAll('[data-gender]').forEach(x=>{const a=x.dataset.gender===g;x.classList.toggle('is-active',a);x.setAttribute('aria-selected',a?'true':'false')});
+let first=null;this.querySelectorAll('[data-persona]').forEach(x=>{const show=x.dataset.personaGender===g;x.hidden=!show;if(show&&!first)first=x});
+if(first)this.setPersona(first.dataset.persona);
+}
+setPersona(id){
+this.persona=id;this.querySelectorAll('[data-persona]').forEach(x=>{const a=x.dataset.persona===id;x.classList.toggle('is-active',a);x.setAttribute('aria-pressed',a?'true':'false')});
+this.querySelectorAll('[data-panel]').forEach(x=>x.hidden=x.dataset.panel!==id);this.update();
+}
+panel(){return this.querySelector(`[data-panel="${CSS.escape(this.persona)}"]`)}
+toggle(card,force=null){
+if(!card)return;const on=force===null?card.dataset.selected!=='true':!!force;card.dataset.selected=on?'true':'false';card.classList.toggle('is-selected',on);
+card.querySelector('[data-select-product]')?.setAttribute('aria-pressed',on?'true':'false');this.update();
+}
+selectAll(panel){
+if(!panel)return;const cards=[...panel.querySelectorAll('[data-product-card]')];const on=cards.some(x=>x.dataset.selected!=='true');cards.forEach(x=>this.toggle(x,on));
+panel.querySelector('[data-select-all]').textContent=on?'Clear selection':'Select all';
+}
+variants(card){if(card._rbVariants)return card._rbVariants;try{card._rbVariants=JSON.parse(card.querySelector('[data-variants]')?.textContent||'[]')}catch(e){card._rbVariants=[]}return card._rbVariants}
+setVariant(card,id){
+const v=this.variants(card).find(x=>Number(x.id)===id);if(!v)return;card.dataset.variantId=v.id;card.dataset.price=v.price;card.dataset.discounted=v.discounted;
+card.querySelector('[data-sale-price]').textContent=this.money(v.discounted);card.querySelector('[data-original-price]').textContent=this.money(v.price);
+if(v.image){const img=card.querySelector('.rb-product__image'),pre=new Image();pre.onload=()=>{img.src=v.image;img.removeAttribute('srcset')};pre.src=v.image}this.update();
+}
+selected(){return [...(this.panel()?.querySelectorAll('[data-product-card][data-selected="true"]')||[])]}
+update(){
+const cards=this.selected(),sum=cards.reduce((a,c)=>a+Number(c.dataset.discounted||0),0);
+if(this.count)this.count.textContent=`${cards.length} item${cards.length===1?'':'s'} selected`;if(this.total)this.total.textContent=this.money(sum);if(this.addButton)this.addButton.disabled=!cards.length;
+}
+async mainInCart(){
+if(!this.requireMain||!this.mainProductId)return true;try{const r=await fetch(`${window.Shopify?.routes?.root||'/'}cart.js`,{headers:{Accept:'application/json'}});if(!r.ok)return false;const c=await r.json();return c.items?.some(x=>Number(x.product_id)===this.mainProductId)}catch(e){return false}
+}
+async add(){
+const cards=this.selected();if(!cards.length||!this.addButton)return;if(!(await this.mainInCart())){this.message('Add the Rakhi to cart first, then add this bundle.');return}
+const panel=this.panel(),persona=panel?.dataset.personaTitle||'',gender=this.querySelector(`[data-gender="${CSS.escape(this.gender)}"]`)?.textContent.trim()||this.gender;
+const items=cards.map(c=>({id:Number(c.dataset.variantId),quantity:1,properties:{'_rakhi_bundle':'true','_rakhi_bundle_gender':gender,'_rakhi_bundle_persona':persona,'_rakhi_main_product':this.dataset.mainProductTitle||''}}));
+const label=this.addButton.querySelector('span'),old=label.textContent;this.addButton.disabled=true;label.textContent='Adding…';
+try{
+const r=await fetch(`${window.Shopify?.routes?.root||'/'}cart/add.js`,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({items})});
+const data=await r.json();if(!r.ok)throw new Error(data.description||data.message||'Unable to add the bundle.');
+document.dispatchEvent(new CustomEvent('cart:refresh',{bubbles:true}));document.dispatchEvent(new CustomEvent('cart:updated',{bubbles:true,detail:data}));
+if(this.code){const redirect=this.afterAdd==='stay'?location.pathname+location.search:'/cart';location.href=`/discount/${encodeURIComponent(this.code)}?redirect=${encodeURIComponent(redirect)}`;return}
+if(this.afterAdd==='cart'){location.href='/cart';return}cards.forEach(c=>this.toggle(c,false));this.message('Your selected gifts were added to cart.');
+}catch(e){this.message(e.message||'Unable to add the selected gifts.')}finally{label.textContent=old;this.addButton.disabled=!this.selected().length}
+}
+money(cents){
+if(window.Shopify?.formatMoney){try{return window.Shopify.formatMoney(Number(cents||0),this.moneyFormat)}catch(e){}}
+return new Intl.NumberFormat(undefined,{style:'currency',currency:this.currency,maximumFractionDigits:0}).format(Number(cents||0)/100);
+}
+message(t){if(!this.toast)return;this.toast.textContent=t;this.toast.classList.add('is-visible');clearTimeout(this.toast._timer);this.toast._timer=setTimeout(()=>this.toast.classList.remove('is-visible'),3000)}
+}
+customElements.define('rakhi-bundle-builder',RakhiBundleBuilder);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Rakhi bundle builder",
+  "tag": "section",
+  "class": "section-rakhi-bundle",
+  "max_blocks": 15,
+  "settings": [
+    {"type":"header","content":"Section copy"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Build a better Rakhi gift"},
+    {"type":"text","id":"heading","label":"Heading","default":"Make the gift feel personal"},
+    {"type":"richtext","id":"intro","label":"Introduction","default":"<p>Choose who you are gifting, match their personality, and add a curated set of favourites at an extra bundle discount.</p>"},
+    {"type":"text","id":"offer_label","label":"Offer label","default":"On selected add-ons"},
+
+    {"type":"header","content":"Step labels"},
+    {"type":"text","id":"step_one_kicker","label":"Step one kicker","default":"Who is it for?"},
+    {"type":"text","id":"step_one_title","label":"Step one title","default":"Choose the recipient"},
+    {"type":"text","id":"step_two_kicker","label":"Step two kicker","default":"What are they like?"},
+    {"type":"text","id":"step_two_title","label":"Step two title","default":"Choose their personality"},
+    {"type":"text","id":"step_three_kicker","label":"Step three kicker","default":"Complete the gift"},
+    {"type":"text","id":"step_three_title","label":"Step three title","default":"Select the add-ons"},
+
+    {"type":"header","content":"Recipient labels"},
+    {"type":"select","id":"default_gender","label":"Default recipient","default":"her","options":[{"value":"her","label":"Her"},{"value":"him","label":"Him"},{"value":"baby","label":"Baby"}]},
+    {"type":"text","id":"her_label","label":"Her label","default":"For Her"},
+    {"type":"text","id":"him_label","label":"Him label","default":"For Him"},
+    {"type":"text","id":"baby_label","label":"Baby label","default":"For Baby"},
+
+    {"type":"header","content":"Bundle behaviour"},
+    {"type":"range","id":"discount_percent","min":5,"max":50,"step":5,"unit":"%","label":"Displayed bundle discount","default":30,"info":"Create a matching automatic discount or enter a discount code below."},
+    {"type":"text","id":"discount_code","label":"Optional discount code","info":"Applied automatically after selected products are added."},
+    {"type":"select","id":"after_add","label":"After adding bundle","default":"cart","options":[{"value":"cart","label":"Open cart"},{"value":"stay","label":"Stay on product page"}]},
+    {"type":"checkbox","id":"require_main_product","label":"Require this Rakhi in cart first","default":true},
+    {"type":"text","id":"discount_note","label":"Discount note","default":"Extra discount is applied in the cart."},
+    {"type":"text","id":"add_button_label","label":"Add button label","default":"Add selected gifts"},
+    {"type":"text","id":"select_all_label","label":"Select all label","default":"Select all"},
+    {"type":"text","id":"curated_label","label":"Curated label","default":"Curated for"},
+    {"type":"text","id":"variant_label","label":"Variant label","default":"Choose option"},
+
+    {"type":"header","content":"Colours and layout"},
+    {"type":"color","id":"background","label":"Section background","default":"#FFFFFF"},
+    {"type":"color","id":"card_background","label":"Card background","default":"#FFFFFF"},
+    {"type":"color","id":"text_color","label":"Text","default":"#171411"},
+    {"type":"color","id":"muted_color","label":"Muted text","default":"#77716A"},
+    {"type":"color","id":"accent","label":"Accent","default":"#B8463F"},
+    {"type":"color","id":"accent_soft","label":"Soft accent","default":"#F7E7E4"},
+    {"type":"color","id":"border_color","label":"Borders","default":"#E7E1DC"},
+    {"type":"color","id":"button_background","label":"Button background","default":"#171411"},
+    {"type":"color","id":"button_text","label":"Button text","default":"#FFFFFF"},
+    {"type":"range","id":"radius","min":0,"max":18,"step":2,"unit":"px","label":"Corner radius","default":8},
+    {"type":"range","id":"max_width","min":900,"max":1600,"step":20,"unit":"px","label":"Maximum width","default":1320},
+    {"type":"range","id":"padding_top","min":20,"max":100,"step":4,"unit":"px","label":"Top spacing","default":48},
+    {"type":"range","id":"padding_bottom","min":20,"max":100,"step":4,"unit":"px","label":"Bottom spacing","default":56}
+  ],
+  "blocks": [
+    {
+      "type": "persona",
+      "name": "Gift persona",
+      "settings": [
+        {"type":"select","id":"gender","label":"Recipient group","default":"her","options":[{"value":"her","label":"Her"},{"value":"him","label":"Him"},{"value":"baby","label":"Baby"}]},
+        {"type":"text","id":"title","label":"Persona title","default":"The Gen Z Sister"},
+        {"type":"text","id":"subtitle","label":"Short subtitle","default":"Trendy, expressive and always online"},
+        {"type":"text","id":"description","label":"Product description","default":"A useful, personality-led edit selected for them."},
+        {"type":"image_picker","id":"image","label":"Persona image"},
+        {"type":"product_list","id":"products","label":"Bundle products","limit":5,"info":"Select up to five available products."}
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rakhi bundle builder",
+      "blocks": [
+        {"type":"persona","settings":{"gender":"her","title":"The Gen Z Sister","subtitle":"Trendy, expressive and always online"}},
+        {"type":"persona","settings":{"gender":"her","title":"The Hosting Sister","subtitle":"She turns every gathering into an occasion"}},
+        {"type":"persona","settings":{"gender":"her","title":"The Coffee Sister","subtitle":"Her day begins after the first cup"}},
+        {"type":"persona","settings":{"gender":"her","title":"The Wellness Sister","subtitle":"Calm routines, thoughtful spaces"}},
+        {"type":"persona","settings":{"gender":"her","title":"The Creative Sister","subtitle":"Always making, planning or imagining"}},
+
+        {"type":"persona","settings":{"gender":"him","title":"The Gamer Brother","subtitle":"One more round is never one more round"}},
+        {"type":"persona","settings":{"gender":"him","title":"The Workaholic Brother","subtitle":"Calendar full, coffee closer"}},
+        {"type":"persona","settings":{"gender":"him","title":"The Fitness Brother","subtitle":"Always tracking the next goal"}},
+        {"type":"persona","settings":{"gender":"him","title":"The Traveller Brother","subtitle":"Already planning the next escape"}},
+        {"type":"persona","settings":{"gender":"him","title":"The Foodie Brother","subtitle":"Always knows where to order from"}},
+
+        {"type":"persona","settings":{"gender":"baby","title":"The Tiny Explorer","subtitle":"Curious about absolutely everything"}},
+        {"type":"persona","settings":{"gender":"baby","title":"The Playtime Baby","subtitle":"Every corner becomes an adventure"}},
+        {"type":"persona","settings":{"gender":"baby","title":"The Little Dreamer","subtitle":"Soft moments and sweeter naps"}},
+        {"type":"persona","settings":{"gender":"baby","title":"The Mealtime Baby","subtitle":"Small bites, big personality"}},
+        {"type":"persona","settings":{"gender":"baby","title":"The New Arrival","subtitle":"A thoughtful welcome for the newest one"}}
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,12 @@
+mutation Update2027PlannerListing($product: ProductUpdateInput!) {
+  productUpdate(product: $product) {
+    product {
+      id
+      title
+      descriptionHtml
+      seo { title description }
+      updatedAt
+    }
+    userErrors { field message }
+  }
+}

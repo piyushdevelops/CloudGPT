@@ -1,0 +1,858 @@
+[
+  {
+    "width": 390,
+    "height": 844,
+    "occasion": {
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "progress": "",
+      "progressRect": {
+        "x": 10,
+        "y": 54,
+        "width": 370,
+        "height": 44,
+        "top": 54,
+        "right": 380,
+        "bottom": 98,
+        "left": 10
+      },
+      "steps": [
+        {
+          "text": "01Occasion",
+          "rect": {
+            "x": 14,
+            "y": 56,
+            "width": 70.796875,
+            "height": 36,
+            "top": 56,
+            "right": 84.796875,
+            "bottom": 92,
+            "left": 14
+          },
+          "display": "flex",
+          "fontSize": "9px"
+        },
+        {
+          "text": "02Cover",
+          "rect": {
+            "x": 86.796875,
+            "y": 58,
+            "width": 70.796875,
+            "height": 36,
+            "top": 58,
+            "right": 157.59375,
+            "bottom": 94,
+            "left": 86.796875
+          },
+          "display": "flex",
+          "fontSize": "9px"
+        },
+        {
+          "text": "03Name it",
+          "rect": {
+            "x": 159.59375,
+            "y": 58,
+            "width": 70.796875,
+            "height": 36,
+            "top": 58,
+            "right": 230.390625,
+            "bottom": 94,
+            "left": 159.59375
+          },
+          "display": "flex",
+          "fontSize": "9px"
+        },
+        {
+          "text": "04Book",
+          "rect": {
+            "x": 232.390625,
+            "y": 58,
+            "width": 70.796875,
+            "height": 36,
+            "top": 58,
+            "right": 303.1875,
+            "bottom": 94,
+            "left": 232.390625
+          },
+          "display": "flex",
+          "fontSize": "9px"
+        },
+        {
+          "text": "05Pages",
+          "rect": {
+            "x": 305.1875,
+            "y": 58,
+            "width": 70.8125,
+            "height": 36,
+            "top": 58,
+            "right": 376,
+            "bottom": 94,
+            "left": 305.1875
+          },
+          "display": "flex",
+          "fontSize": "9px"
+        }
+      ]
+    },
+    "pages": {
+      "bodyClasses": "journey-started",
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "spreadMinWidth": "0px",
+      "spreadDisplay": "flex",
+      "editorColumns": "1fr",
+      "navColumns": "70.7969px 70.7969px 70.7969px 70.7969px 70.8125px",
+      "navRadius": "999px"
+    },
+    "errors": []
+  },
+  {
+    "width": 430,
+    "height": 932,
+    "occasion": {
+      "scrollWidth": 430,
+      "clientWidth": 430,
+      "progress": "",
+      "progressRect": {
+        "x": 10,
+        "y": 54,
+        "width": 410,
+        "height": 44,
+        "top": 54,
+        "right": 420,
+        "bottom": 98,
+        "left": 10
+      },
+      "steps": [
+        {
+          "text": "01Occasion",
+          "rect": {
+            "x": 14,
+            "y": 56,
+            "width": 78.796875,
+            "height": 36,
+            "top": 56,
+            "right": 92.796875,
+            "bottom": 92,
+            "left": 14
+          },
+          "display": "flex",
+          "fontSize": "9px"
+        },
+        {
+          "text": "02Cover",
+          "rect": {
+            "x": 94.796875,
+            "y": 58,
+            "width": 78.796875,
+            "height": 36,
+            "top": 58,
+            "right": 173.59375,
+            "bottom": 94,
+            "left": 94.796875
+          },
+          "display": "flex",
+          "fontSize": "9px"
+        },
+        {
+          "text": "03Name it",
+          "rect": {
+            "x": 175.59375,
+            "y": 58,
+            "width": 78.796875,
+            "height": 36,
+            "top": 58,
+            "right": 254.390625,
+            "bottom": 94,
+            "left": 175.59375
+          },
+          "display": "flex",
+          "fontSize": "9px"
+        },
+        {
+          "text": "04Book",
+          "rect": {
+            "x": 256.390625,
+            "y": 58,
+            "width": 78.796875,
+            "height": 36,
+            "top": 58,
+            "right": 335.1875,
+            "bottom": 94,
+            "left": 256.390625
+          },
+          "display": "flex",
+          "fontSize": "9px"
+        },
+        {
+          "text": "05Pages",
+          "rect": {
+            "x": 337.1875,
+            "y": 58,
+            "width": 78.8125,
+            "height": 36,
+            "top": 58,
+            "right": 416,
+            "bottom": 94,
+            "left": 337.1875
+          },
+          "display": "flex",
+          "fontSize": "9px"
+        }
+      ]
+    },
+    "pages": {
+      "bodyClasses": "journey-started",
+      "scrollWidth": 430,
+      "clientWidth": 430,
+      "spreadMinWidth": "0px",
+      "spreadDisplay": "flex",
+      "editorColumns": "1fr",
+      "navColumns": "78.7969px 78.7969px 78.7969px 78.7969px 78.8125px",
+      "navRadius": "999px"
+    },
+    "errors": []
+  },
+  {
+    "width": 568,
+    "height": 900,
+    "occasion": {
+      "scrollWidth": 568,
+      "clientWidth": 568,
+      "progress": "",
+      "progressRect": {
+        "x": 10,
+        "y": 54,
+        "width": 548,
+        "height": 44,
+        "top": 54,
+        "right": 558,
+        "bottom": 98,
+        "left": 10
+      },
+      "steps": [
+        {
+          "text": "01Occasion",
+          "rect": {
+            "x": 14,
+            "y": 56,
+            "width": 106.390625,
+            "height": 36,
+            "top": 56,
+            "right": 120.390625,
+            "bottom": 92,
+            "left": 14
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        },
+        {
+          "text": "02Cover",
+          "rect": {
+            "x": 122.390625,
+            "y": 58,
+            "width": 106.40625,
+            "height": 36,
+            "top": 58,
+            "right": 228.796875,
+            "bottom": 94,
+            "left": 122.390625
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        },
+        {
+          "text": "03Name it",
+          "rect": {
+            "x": 230.796875,
+            "y": 58,
+            "width": 106.390625,
+            "height": 36,
+            "top": 58,
+            "right": 337.1875,
+            "bottom": 94,
+            "left": 230.796875
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        },
+        {
+          "text": "04Book",
+          "rect": {
+            "x": 339.1875,
+            "y": 58,
+            "width": 106.40625,
+            "height": 36,
+            "top": 58,
+            "right": 445.59375,
+            "bottom": 94,
+            "left": 339.1875
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        },
+        {
+          "text": "05Pages",
+          "rect": {
+            "x": 447.59375,
+            "y": 58,
+            "width": 106.40625,
+            "height": 36,
+            "top": 58,
+            "right": 554,
+            "bottom": 94,
+            "left": 447.59375
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        }
+      ]
+    },
+    "pages": {
+      "bodyClasses": "journey-started",
+      "scrollWidth": 568,
+      "clientWidth": 568,
+      "spreadMinWidth": "0px",
+      "spreadDisplay": "flex",
+      "editorColumns": "1fr",
+      "navColumns": "106.391px 106.406px 106.391px 106.406px 106.406px",
+      "navRadius": "999px"
+    },
+    "errors": []
+  },
+  {
+    "width": 640,
+    "height": 960,
+    "occasion": {
+      "scrollWidth": 640,
+      "clientWidth": 640,
+      "progress": "",
+      "progressRect": {
+        "x": 10,
+        "y": 54,
+        "width": 620,
+        "height": 44,
+        "top": 54,
+        "right": 630,
+        "bottom": 98,
+        "left": 10
+      },
+      "steps": [
+        {
+          "text": "01Occasion",
+          "rect": {
+            "x": 14,
+            "y": 56,
+            "width": 120.796875,
+            "height": 36,
+            "top": 56,
+            "right": 134.796875,
+            "bottom": 92,
+            "left": 14
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        },
+        {
+          "text": "02Cover",
+          "rect": {
+            "x": 136.796875,
+            "y": 58,
+            "width": 120.796875,
+            "height": 36,
+            "top": 58,
+            "right": 257.59375,
+            "bottom": 94,
+            "left": 136.796875
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        },
+        {
+          "text": "03Name it",
+          "rect": {
+            "x": 259.59375,
+            "y": 58,
+            "width": 120.796875,
+            "height": 36,
+            "top": 58,
+            "right": 380.390625,
+            "bottom": 94,
+            "left": 259.59375
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        },
+        {
+          "text": "04Book",
+          "rect": {
+            "x": 382.390625,
+            "y": 58,
+            "width": 120.796875,
+            "height": 36,
+            "top": 58,
+            "right": 503.1875,
+            "bottom": 94,
+            "left": 382.390625
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        },
+        {
+          "text": "05Pages",
+          "rect": {
+            "x": 505.1875,
+            "y": 58,
+            "width": 120.8125,
+            "height": 36,
+            "top": 58,
+            "right": 626,
+            "bottom": 94,
+            "left": 505.1875
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        }
+      ]
+    },
+    "pages": {
+      "bodyClasses": "journey-started",
+      "scrollWidth": 640,
+      "clientWidth": 640,
+      "spreadMinWidth": "0px",
+      "spreadDisplay": "flex",
+      "editorColumns": "1fr",
+      "navColumns": "120.797px 120.797px 120.797px 120.797px 120.812px",
+      "navRadius": "999px"
+    },
+    "errors": []
+  },
+  {
+    "width": 768,
+    "height": 1024,
+    "occasion": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "progress": "",
+      "progressRect": {
+        "x": 10,
+        "y": 54,
+        "width": 748,
+        "height": 44,
+        "top": 54,
+        "right": 758,
+        "bottom": 98,
+        "left": 10
+      },
+      "steps": [
+        {
+          "text": "01Occasion",
+          "rect": {
+            "x": 14,
+            "y": 56,
+            "width": 146.390625,
+            "height": 36,
+            "top": 56,
+            "right": 160.390625,
+            "bottom": 92,
+            "left": 14
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        },
+        {
+          "text": "02Cover",
+          "rect": {
+            "x": 162.390625,
+            "y": 58,
+            "width": 146.40625,
+            "height": 36,
+            "top": 58,
+            "right": 308.796875,
+            "bottom": 94,
+            "left": 162.390625
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        },
+        {
+          "text": "03Name it",
+          "rect": {
+            "x": 310.796875,
+            "y": 58,
+            "width": 146.390625,
+            "height": 36,
+            "top": 58,
+            "right": 457.1875,
+            "bottom": 94,
+            "left": 310.796875
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        },
+        {
+          "text": "04Book",
+          "rect": {
+            "x": 459.1875,
+            "y": 58,
+            "width": 146.40625,
+            "height": 36,
+            "top": 58,
+            "right": 605.59375,
+            "bottom": 94,
+            "left": 459.1875
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        },
+        {
+          "text": "05Pages",
+          "rect": {
+            "x": 607.59375,
+            "y": 58,
+            "width": 146.390625,
+            "height": 36,
+            "top": 58,
+            "right": 753.984375,
+            "bottom": 94,
+            "left": 607.59375
+          },
+          "display": "flex",
+          "fontSize": "10px"
+        }
+      ]
+    },
+    "pages": {
+      "bodyClasses": "journey-started",
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "spreadMinWidth": "0px",
+      "spreadDisplay": "grid",
+      "editorColumns": "190px 540px",
+      "navColumns": "146.391px 146.406px 146.391px 146.406px 146.391px",
+      "navRadius": "999px"
+    },
+    "errors": []
+  },
+  {
+    "width": 1024,
+    "height": 768,
+    "occasion": {
+      "scrollWidth": 1024,
+      "clientWidth": 1024,
+      "progress": "",
+      "progressRect": {
+        "x": 0,
+        "y": 0,
+        "width": 1024,
+        "height": 50,
+        "top": 0,
+        "right": 1024,
+        "bottom": 50,
+        "left": 0
+      },
+      "steps": [
+        {
+          "text": "01Occasion",
+          "rect": {
+            "x": 1,
+            "y": 1,
+            "width": 204.390625,
+            "height": 48,
+            "top": 1,
+            "right": 205.390625,
+            "bottom": 49,
+            "left": 1
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        },
+        {
+          "text": "02Cover",
+          "rect": {
+            "x": 205.390625,
+            "y": 1,
+            "width": 204.40625,
+            "height": 48,
+            "top": 1,
+            "right": 409.796875,
+            "bottom": 49,
+            "left": 205.390625
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        },
+        {
+          "text": "03Name it",
+          "rect": {
+            "x": 409.796875,
+            "y": 1,
+            "width": 204.390625,
+            "height": 48,
+            "top": 1,
+            "right": 614.1875,
+            "bottom": 49,
+            "left": 409.796875
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        },
+        {
+          "text": "04Book",
+          "rect": {
+            "x": 614.1875,
+            "y": 1,
+            "width": 204.40625,
+            "height": 48,
+            "top": 1,
+            "right": 818.59375,
+            "bottom": 49,
+            "left": 614.1875
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        },
+        {
+          "text": "05Pages",
+          "rect": {
+            "x": 818.59375,
+            "y": 1,
+            "width": 204.390625,
+            "height": 48,
+            "top": 1,
+            "right": 1022.984375,
+            "bottom": 49,
+            "left": 818.59375
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        }
+      ]
+    },
+    "pages": {
+      "bodyClasses": "journey-started",
+      "scrollWidth": 1024,
+      "clientWidth": 1024,
+      "spreadMinWidth": "0px",
+      "spreadDisplay": "grid",
+      "editorColumns": "190px 784px",
+      "navColumns": "204.391px 204.406px 204.391px 204.406px 204.391px",
+      "navRadius": "999px"
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 900,
+    "occasion": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "progress": "",
+      "progressRect": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 50,
+        "top": 0,
+        "right": 1280,
+        "bottom": 50,
+        "left": 0
+      },
+      "steps": [
+        {
+          "text": "01Occasion",
+          "rect": {
+            "x": 1,
+            "y": 1,
+            "width": 255.59375,
+            "height": 48,
+            "top": 1,
+            "right": 256.59375,
+            "bottom": 49,
+            "left": 1
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        },
+        {
+          "text": "02Cover",
+          "rect": {
+            "x": 256.59375,
+            "y": 1,
+            "width": 255.59375,
+            "height": 48,
+            "top": 1,
+            "right": 512.1875,
+            "bottom": 49,
+            "left": 256.59375
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        },
+        {
+          "text": "03Name it",
+          "rect": {
+            "x": 512.1875,
+            "y": 1,
+            "width": 255.609375,
+            "height": 48,
+            "top": 1,
+            "right": 767.796875,
+            "bottom": 49,
+            "left": 512.1875
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        },
+        {
+          "text": "04Book",
+          "rect": {
+            "x": 767.796875,
+            "y": 1,
+            "width": 255.59375,
+            "height": 48,
+            "top": 1,
+            "right": 1023.390625,
+            "bottom": 49,
+            "left": 767.796875
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        },
+        {
+          "text": "05Pages",
+          "rect": {
+            "x": 1023.390625,
+            "y": 1,
+            "width": 255.609375,
+            "height": 48,
+            "top": 1,
+            "right": 1279,
+            "bottom": 49,
+            "left": 1023.390625
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        }
+      ]
+    },
+    "pages": {
+      "bodyClasses": "journey-started",
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "spreadMinWidth": "0px",
+      "spreadDisplay": "grid",
+      "editorColumns": "230px 830px 170px",
+      "navColumns": "255.594px 255.594px 255.609px 255.594px 255.609px",
+      "navRadius": "999px"
+    },
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "height": 1000,
+    "occasion": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "progress": "",
+      "progressRect": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 50,
+        "top": 0,
+        "right": 1440,
+        "bottom": 50,
+        "left": 0
+      },
+      "steps": [
+        {
+          "text": "01Occasion",
+          "rect": {
+            "x": 1,
+            "y": 1,
+            "width": 287.59375,
+            "height": 48,
+            "top": 1,
+            "right": 288.59375,
+            "bottom": 49,
+            "left": 1
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        },
+        {
+          "text": "02Cover",
+          "rect": {
+            "x": 288.59375,
+            "y": 1,
+            "width": 287.59375,
+            "height": 48,
+            "top": 1,
+            "right": 576.1875,
+            "bottom": 49,
+            "left": 288.59375
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        },
+        {
+          "text": "03Name it",
+          "rect": {
+            "x": 576.1875,
+            "y": 1,
+            "width": 287.609375,
+            "height": 48,
+            "top": 1,
+            "right": 863.796875,
+            "bottom": 49,
+            "left": 576.1875
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        },
+        {
+          "text": "04Book",
+          "rect": {
+            "x": 863.796875,
+            "y": 1,
+            "width": 287.59375,
+            "height": 48,
+            "top": 1,
+            "right": 1151.390625,
+            "bottom": 49,
+            "left": 863.796875
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        },
+        {
+          "text": "05Pages",
+          "rect": {
+            "x": 1151.390625,
+            "y": 1,
+            "width": 287.609375,
+            "height": 48,
+            "top": 1,
+            "right": 1439,
+            "bottom": 49,
+            "left": 1151.390625
+          },
+          "display": "flex",
+          "fontSize": "13.3333px"
+        }
+      ]
+    },
+    "pages": {
+      "bodyClasses": "journey-started",
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "spreadMinWidth": "0px",
+      "spreadDisplay": "grid",
+      "editorColumns": "230px 990px 170px",
+      "navColumns": "287.594px 287.594px 287.609px 287.594px 287.609px",
+      "navRadius": "999px"
+    },
+    "errors": []
+  }
+]

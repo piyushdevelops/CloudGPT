@@ -1,0 +1,3 @@
+mutation CreateOurDaysPage($page: PageCreateInput!) {
+  pageCreate(page: $page) { page { id handle title templateSuffix isPublished } userErrors { code field message } }
+}

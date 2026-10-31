@@ -1,0 +1,40 @@
+{% doc %}
+  Product-page header layout repair. Typography is controlled by the Product header block.
+  @param {section} section - Header section.
+{% enddoc %}
+{% if request.page_type == 'product' %}
+{% assign p = section.blocks | where: 'type', 'product_header' | first %}
+{% style %}
+{% if p.settings.font != blank %}{{ p.settings.font | font_face: font_display: 'swap' }}{% endif %}
+#TjsPremiumHeader-{{ section.id }} .tjs-ph__shell,
+#TjsPremiumHeader-{{ section.id }}.is-scrolled .tjs-ph__shell {
+  width:100%!important;margin:0!important;border-radius:0!important;
+  background:var(--tjs-ph-bg)!important;border:0!important;border-bottom:1px solid var(--tjs-ph-border)!important;
+  box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+#TjsPremiumHeader-{{ section.id }} .tjs-ph__shell::before,
+#TjsPremiumHeader-{{ section.id }} .tjs-ph__shell::after {display:none!important}
+@media(min-width:1150px){
+  #TjsPremiumHeader-{{ section.id }} .tjs-ph__inner {width:min(calc(100% - 64px),{{ p.settings.width | default: 1440 }}px)!important}
+  #TjsPremiumHeader-{{ section.id }} .tjs-ph__desktop,
+  #TjsPremiumHeader-{{ section.id }}.is-scrolled .tjs-ph__desktop {min-height:{{ p.settings.height | default: 72 }}px!important;column-gap:18px!important}
+  #TjsPremiumHeader-{{ section.id }} .tjs-ph__nav-list {justify-content:center;gap:clamp(10px,1.1vw,18px)}
+  #TjsPremiumHeader-{{ section.id }} .tjs-ph__nav-link,
+  #TjsPremiumHeader-{{ section.id }} .tjs-ph__nav-summary {
+    font-family:{{ p.settings.font.family | default: 'Poppins' }},sans-serif!important;
+    font-size:{{ p.settings.nav_size | default: 12 }}px!important;font-weight:{{ p.settings.weight | default: 600 }}!important;
+    letter-spacing:{{ p.settings.tracking | default: 0 | times: 0.01 }}em!important;
+    line-height:{{ p.settings.leading | default: 14 | times: 0.1 }}!important;min-height:44px;display:flex;align-items:center;
+  }
+  #TjsPremiumHeader-{{ section.id }} .tjs-ph__reference-wordmark {font-size:{{ p.settings.logo_desktop | default: 24 }}px!important}
+}
+@media(max-width:1149px){
+  #TjsPremiumHeader-{{ section.id }} .tjs-ph__inner {width:calc(100% - 24px)!important}
+  #TjsPremiumHeader-{{ section.id }} .tjs-ph__mobile,
+  #TjsPremiumHeader-{{ section.id }}.is-scrolled .tjs-ph__mobile {padding-inline:0!important}
+  #TjsPremiumHeader-{{ section.id }} .tjs-ph__reference-wordmark {font-size:{{ p.settings.logo_mobile | default: 16 }}px!important}
+  #TjsPremiumHeader-{{ section.id }} .tjs-ph__mobile-link,
+  #TjsPremiumHeader-{{ section.id }} .tjs-ph__mobile-summary {font-size:{{ p.settings.nav_mobile | default: 16 }}px!important;font-family:{{ p.settings.font.family | default: 'Poppins' }},sans-serif!important;font-weight:{{ p.settings.weight | default: 600 }}!important;letter-spacing:{{ p.settings.tracking | default: 0 | times: 0.01 }}em!important;line-height:{{ p.settings.leading | default: 14 | times: 0.1 }}!important}
+}
+{% endstyle %}
+{% endif %}

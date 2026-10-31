@@ -1,0 +1,51 @@
+{
+  "liveToDraft": {
+    "changed": [],
+    "onlyFirst": [],
+    "onlySecond": []
+  },
+  "liveToSandbox": {
+    "changed": [
+      "sections/about-us-tes.liquid",
+      "sections/footer-group.json",
+      "sections/header-group.json",
+      "sections/system-group.json",
+      "templates/index.json",
+      "templates/product.json"
+    ],
+    "onlyFirst": [
+      "assets/tjs-mystery-v4.css",
+      "assets/tjs-mystery-v4.js",
+      "sections/tjs-collection-new.liquid",
+      "sections/tjs-mystery-box-pdp.liquid",
+      "sections/tjs-mystery-faq-v4.liquid",
+      "sections/tjs-mystery-final-cta-v4.liquid",
+      "sections/tjs-mystery-gift-v4.liquid",
+      "sections/tjs-mystery-guarantees-v4.liquid",
+      "sections/tjs-mystery-hero-v4.liquid",
+      "sections/tjs-mystery-journey-v4.liquid",
+      "sections/tjs-mystery-shake-v4.liquid",
+      "sections/tjs-mystery-style-v4.liquid",
+      "sections/tjs-mystery-ugc-v4.liquid",
+      "sections/tjs-mystery-value-v4.liquid",
+      "templates/product.mystery-box-v4.json",
+      "templates/product.mysterybox.json",
+      "templates/product.mystery_box.json"
+    ],
+    "onlySecond": [
+      "assets/tjs-planner-story-production-final.css",
+      "assets/tjs-planner-story-production-final.js",
+      "assets/tjs-planner-story-production.css",
+      "assets/tjs-planner-story-production.js",
+      "sections/about-us-tes-backup-before-editorial.liquid",
+      "sections/category-test.liquid",
+      "sections/Category-test1.liquid",
+      "sections/google-review-card.liquid",
+      "sections/instagram-sec-middle_big.liquid",
+      "sections/Instagram-sec-test.liquid",
+      "sections/pdp-1-test.liquid",
+      "sections/Product_showcase-page.Liquid",
+      "sections/tjs-heartline.liquid"
+    ]
+  }
+}

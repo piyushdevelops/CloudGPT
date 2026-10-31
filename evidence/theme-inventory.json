@@ -1,0 +1,2740 @@
+{
+  "data": {
+    "themes": {
+      "nodes": [
+        {
+          "id": "gid://shopify/OnlineStoreTheme/142259323075",
+          "name": "TJS August 2026 (Primary Theme)",
+          "updatedAt": "2026-09-24T11:27:33Z",
+          "files": {
+            "nodes": [
+              {
+                "filename": "assets/base.css",
+                "size": "132399",
+                "checksumMd5": "353aa315f1a076bcb34a944450ecda47"
+              },
+              {
+                "filename": "assets/categories-section.min.css",
+                "size": "3468",
+                "checksumMd5": "e1a0a0d4c6da38dfe8fc68801fc29cc1"
+              },
+              {
+                "filename": "assets/cursor-close.svg",
+                "size": "797",
+                "checksumMd5": "ce3069f8b5ebfb6462b6021ed6f0c50e"
+              },
+              {
+                "filename": "assets/cursor-zoom-in.svg",
+                "size": "312",
+                "checksumMd5": "8504627bbf34446b6992ef38f1eb0e22"
+              },
+              {
+                "filename": "assets/custom.js",
+                "size": "86303",
+                "checksumMd5": "5eb3a9bf4e86cb453d057d951b8154a1"
+              },
+              {
+                "filename": "assets/customer.min.js",
+                "size": "2167",
+                "checksumMd5": "5c79aae7348471f298e3c7210288d442"
+              },
+              {
+                "filename": "assets/day.js",
+                "size": "8377",
+                "checksumMd5": "eede61b578b076de6f2e8652e2d0ea18"
+              },
+              {
+                "filename": "assets/day.min.js",
+                "size": "7134",
+                "checksumMd5": "7017dbd4614281fd6e558e04fe3124af"
+              },
+              {
+                "filename": "assets/ecomposer.json",
+                "size": "6368",
+                "checksumMd5": "2ca3de8953176cbc9acdfe79c5a0acfd"
+              },
+              {
+                "filename": "assets/es-psw.min.js",
+                "size": "60033",
+                "checksumMd5": "6380d9046dc7ada2c768a771e6a7b0f6"
+              },
+              {
+                "filename": "assets/events.js",
+                "size": "5918",
+                "checksumMd5": "f45233637300b7be1782e95935bd51c9"
+              },
+              {
+                "filename": "assets/facets.css",
+                "size": "16091",
+                "checksumMd5": "6813f0a26915f035073a87dd1506af00"
+              },
+              {
+                "filename": "assets/facets.min.js",
+                "size": "15430",
+                "checksumMd5": "a54539d1f990f26ca0ca1a5430deed40"
+              },
+              {
+                "filename": "assets/global.min.js",
+                "size": "156810",
+                "checksumMd5": "ac238faa54be4a31b7ab3bf3f680213f"
+              },
+              {
+                "filename": "assets/hdt-accordion.css",
+                "size": "5660",
+                "checksumMd5": "fc156aac1c2cf992557fa766f48a47d2"
+              },
+              {
+                "filename": "assets/hdt-announcement-bar.css",
+                "size": "3638",
+                "checksumMd5": "560adaccb6d298f9b9954baf880e0768"
+              },
+              {
+                "filename": "assets/hdt-banner.css",
+                "size": "3863",
+                "checksumMd5": "19f87002b62121d7cdad822cbd2691e4"
+              },
+              {
+                "filename": "assets/hdt-blog-post.css",
+                "size": "5637",
+                "checksumMd5": "934c11c9c6267d07f5e87ab78b13b2b1"
+              },
+              {
+                "filename": "assets/hdt-bundle-product.css",
+                "size": "8987",
+                "checksumMd5": "7febafb0a5add78e97a8c8e1a3eee11a"
+              },
+              {
+                "filename": "assets/hdt-cart-drawer.css",
+                "size": "19039",
+                "checksumMd5": "b201bb6ebf5e0b836d425db9150d73ac"
+              },
+              {
+                "filename": "assets/hdt-collections-list.css",
+                "size": "19608",
+                "checksumMd5": "074860a62ab1d53d16db981db65dc1fd"
+              },
+              {
+                "filename": "assets/hdt-compare.css",
+                "size": "3233",
+                "checksumMd5": "240c2927b431b4a1a7e5e3aa88cde431"
+              },
+              {
+                "filename": "assets/hdt-contact.css",
+                "size": "3584",
+                "checksumMd5": "ad266f383b80e6f43810486d56c8d7ac"
+              },
+              {
+                "filename": "assets/hdt-countdown.css",
+                "size": "3606",
+                "checksumMd5": "49e390271e36c8ea72b18b29c8efd137"
+              },
+              {
+                "filename": "assets/hdt-currencies.js",
+                "size": "25457",
+                "checksumMd5": "4ce968fee8a9f90297dde4edfa3f22f7"
+              },
+              {
+                "filename": "assets/hdt-customer.css",
+                "size": "11103",
+                "checksumMd5": "8ceec26f0f22ba32fd1dcec1789bec5b"
+              },
+              {
+                "filename": "assets/hdt-exit-popup.css",
+                "size": "3928",
+                "checksumMd5": "c091e9762d391e980fa31ef4e540cf1e"
+              },
+              {
+                "filename": "assets/hdt-hero.css",
+                "size": "5146",
+                "checksumMd5": "e426ed797072ffd7400cbfc0175d72ac"
+              },
+              {
+                "filename": "assets/hdt-icon-box.css",
+                "size": "10151",
+                "checksumMd5": "d9fc53fade0231de41afd1e0b22f4e01"
+              },
+              {
+                "filename": "assets/hdt-icon-social.css",
+                "size": "7702",
+                "checksumMd5": "098813d73cc41bef005545a6face6591"
+              },
+              {
+                "filename": "assets/hdt-image-with-text.css",
+                "size": "8102",
+                "checksumMd5": "818612c6b36ae59dd10a2d6576297d75"
+              },
+              {
+                "filename": "assets/hdt-list-categories.css",
+                "size": "4776",
+                "checksumMd5": "b2eefb7a47c2cff2e5e0a2ee923d9280"
+              },
+              {
+                "filename": "assets/hdt-lookbook-products.css",
+                "size": "6931",
+                "checksumMd5": "33ab2ebf12754e92144bf2760d1204cf"
+              },
+              {
+                "filename": "assets/hdt-lookbook.css",
+                "size": "7465",
+                "checksumMd5": "b42b849aba3b7552922b963f3f91279c"
+              },
+              {
+                "filename": "assets/hdt-main-article.css",
+                "size": "7969",
+                "checksumMd5": "7d8bcf94966006121f3cd254c389de66"
+              },
+              {
+                "filename": "assets/hdt-main-blog.css",
+                "size": "1582",
+                "checksumMd5": "d516e27822115659e095ec950410a5dc"
+              },
+              {
+                "filename": "assets/hdt-main-cart.css",
+                "size": "15255",
+                "checksumMd5": "becad5114e58ff11f5d5a31ae4a9b5b3"
+              },
+              {
+                "filename": "assets/hdt-main-collection.css",
+                "size": "15020",
+                "checksumMd5": "7138f52e0a9b1b2f211aff137d06e2ef"
+              },
+              {
+                "filename": "assets/hdt-main-compare.css",
+                "size": "3996",
+                "checksumMd5": "307a190337c1f87d190582f335f7a9e7"
+              },
+              {
+                "filename": "assets/hdt-newsletter-popup.css",
+                "size": "2714",
+                "checksumMd5": "a14c81bcd6d3619892b246bd7b638260"
+              },
+              {
+                "filename": "assets/hdt-pagination.css",
+                "size": "1754",
+                "checksumMd5": "0eb8a18bcd72d8ad3bfa125b9e63044b"
+              },
+              {
+                "filename": "assets/hdt-pickup-availability.css",
+                "size": "1902",
+                "checksumMd5": "3e19ec3825280357d6188d9dd14da1f4"
+              },
+              {
+                "filename": "assets/hdt-policy.css",
+                "size": "1730",
+                "checksumMd5": "f522a6a90bcccaf020a62f2cad4f94d9"
+              },
+              {
+                "filename": "assets/hdt-price-tables.css",
+                "size": "2805",
+                "checksumMd5": "599aab993683e2dd025a565a58da1fde"
+              },
+              {
+                "filename": "assets/hdt-product-card.scss.css",
+                "size": "57273",
+                "checksumMd5": "086bd5d6fcf2efcd57183558c7a5d241"
+              },
+              {
+                "filename": "assets/hdt-product-tabs.css",
+                "size": "6366",
+                "checksumMd5": "5bebf1f2759f50899cd8fc47689335cf"
+              },
+              {
+                "filename": "assets/hdt-quick-order-list.css",
+                "size": "3382",
+                "checksumMd5": "8a28b98a79ada4a4455dc639e78c0484"
+              },
+              {
+                "filename": "assets/hdt-search-form.css",
+                "size": "18363",
+                "checksumMd5": "e03d5f39489447cc411fc21862b694ad"
+              },
+              {
+                "filename": "assets/hdt-section-password.css",
+                "size": "0",
+                "checksumMd5": "d41d8cd98f00b204e9800998ecf8427e"
+              },
+              {
+                "filename": "assets/hdt-slideshow.css",
+                "size": "15025",
+                "checksumMd5": "908686643f8fdec51e5ae68b10fbcd1d"
+              },
+              {
+                "filename": "assets/hdt-sticky-atc.css",
+                "size": "2093",
+                "checksumMd5": "cc4668a9f903126d2b3cb5f394238e8a"
+              },
+              {
+                "filename": "assets/hdt-tabs-collections.css",
+                "size": "3407",
+                "checksumMd5": "a57e9845db64a675449b8c73addcedb4"
+              },
+              {
+                "filename": "assets/hdt-top-bar.css",
+                "size": "2533",
+                "checksumMd5": "7a0d9f9c2f96f2188e6c3708fedaebd1"
+              },
+              {
+                "filename": "assets/hdt-widget.css",
+                "size": "11523",
+                "checksumMd5": "4ae3fdece79e039afa9fd6682d87816d"
+              },
+              {
+                "filename": "assets/heading.css",
+                "size": "2843",
+                "checksumMd5": "fccd04d4ff6c1bf3749a1c32a82f3bbf"
+              },
+              {
+                "filename": "assets/importmap.min.js",
+                "size": "33126",
+                "checksumMd5": "825ebd9176fc7d96ae3f757387378863"
+              },
+              {
+                "filename": "assets/libs.min.js",
+                "size": "125829",
+                "checksumMd5": "4ef660ece88d0d899b8be9612746c083"
+              },
+              {
+                "filename": "assets/newsletter.css",
+                "size": "5157",
+                "checksumMd5": "4761388bf0803bb54f201d4e4e926ee5"
+              },
+              {
+                "filename": "assets/testimonials.css",
+                "size": "30062",
+                "checksumMd5": "8ec373d311a77779b4f837f39288d29c"
+              },
+              {
+                "filename": "assets/theme.css",
+                "size": "207705",
+                "checksumMd5": "880807ef51ba581c12594607b4edd864"
+              },
+              {
+                "filename": "assets/tjs-global-cart-load-safe-v2.js",
+                "size": "31860",
+                "checksumMd5": "39de81db21184b47707b7ebc4f353e04"
+              },
+              {
+                "filename": "assets/tjs-global-cart-native-bridge-v3.js",
+                "size": "42004",
+                "checksumMd5": "482973c33b5a52449360cdb5374ea6b0"
+              },
+              {
+                "filename": "assets/tjs-global-cart.js",
+                "size": "24368",
+                "checksumMd5": "e375491acd24554b6b45c1042d8f6665"
+              },
+              {
+                "filename": "assets/tjs-mystery-v4.css",
+                "size": "89796",
+                "checksumMd5": "e8e16ae12d3a54572fb9081c4aeed886"
+              },
+              {
+                "filename": "assets/tjs-mystery-v4.js",
+                "size": "19202",
+                "checksumMd5": "de3870058257e052ed51c7f50085c658"
+              },
+              {
+                "filename": "assets/tjs-smart-search.css",
+                "size": "11189",
+                "checksumMd5": "2382396311885f02aa2e53bcd953228f"
+              },
+              {
+                "filename": "assets/top-head.css",
+                "size": "1495",
+                "checksumMd5": "50bacf34b3d2964b20f56a2fc7524152"
+              },
+              {
+                "filename": "blocks/ai_gen_block_1e79126.liquid",
+                "size": "14923",
+                "checksumMd5": "020126f117f91c401013ed6834beaeff"
+              },
+              {
+                "filename": "blocks/ai_gen_block_42f9700.liquid",
+                "size": "6234",
+                "checksumMd5": "1157840a1d03218f02a35b76e7455d85"
+              },
+              {
+                "filename": "blocks/ai_gen_block_51f4d4d.liquid",
+                "size": "14046",
+                "checksumMd5": "76b8bc63d3d6dac3caa477f7ada30022"
+              },
+              {
+                "filename": "blocks/ai_gen_block_9bd9d96.liquid",
+                "size": "9853",
+                "checksumMd5": "0063658fdab2b43f6ff39fe820fd954b"
+              },
+              {
+                "filename": "blocks/ai_gen_block_b5cf6d8.liquid",
+                "size": "9629",
+                "checksumMd5": "9db693a27f449fdc4a054e9f5b4fbdfe"
+              },
+              {
+                "filename": "blocks/ai_gen_block_c72fda6.liquid",
+                "size": "9054",
+                "checksumMd5": "79c3c98bb371a6886012336e89d11b51"
+              },
+              {
+                "filename": "blocks/button.liquid",
+                "size": "11958",
+                "checksumMd5": "f8dd30b206014fefa50288986062f4e4"
+              },
+              {
+                "filename": "blocks/group.liquid",
+                "size": "1812",
+                "checksumMd5": "f5f47629354b2295bf685bebdd92b8de"
+              },
+              {
+                "filename": "blocks/heading.liquid",
+                "size": "5223",
+                "checksumMd5": "a591e80b1a32be023a533ea0d92bc593"
+              },
+              {
+                "filename": "blocks/line.liquid",
+                "size": "3239",
+                "checksumMd5": "7e675e30ae2cb1062e3842350c94ce14"
+              },
+              {
+                "filename": "blocks/newsletter.liquid",
+                "size": "2414",
+                "checksumMd5": "db41b457501b11881b0cdf902821c7a3"
+              },
+              {
+                "filename": "blocks/paragraph.liquid",
+                "size": "5225",
+                "checksumMd5": "33eaee98cc288180ec87f8d08113c6c6"
+              },
+              {
+                "filename": "blocks/section-heading.liquid",
+                "size": "1030",
+                "checksumMd5": "5432694f5326f2b393cb27e2a760577f"
+              },
+              {
+                "filename": "blocks/spacer.liquid",
+                "size": "1059",
+                "checksumMd5": "89ba3e5e5449b88340f892d0e1e227bb"
+              },
+              {
+                "filename": "blocks/text-box.liquid",
+                "size": "6837",
+                "checksumMd5": "44e90898270165bd9a47d722c951ce45"
+              },
+              {
+                "filename": "blocks/text.liquid",
+                "size": "4919",
+                "checksumMd5": "664f0c7cd58d22a21c37e788f11b3295"
+              },
+              {
+                "filename": "blocks/video.liquid",
+                "size": "1919",
+                "checksumMd5": "b81bc6f4d28ad6aaa7de21f88c250999"
+              },
+              {
+                "filename": "blocks/_accordion_add.liquid",
+                "size": "1665",
+                "checksumMd5": "ace0c144b8ae4d2c759f996c6c80a6d7"
+              },
+              {
+                "filename": "blocks/_accordion_customliquid.liquid",
+                "size": "1503",
+                "checksumMd5": "57af2d1a21591c7faf321094fbd6794b"
+              },
+              {
+                "filename": "blocks/_accordion_description.liquid",
+                "size": "1205",
+                "checksumMd5": "d9b4aad50f57bddf4f5b69e4fe271a89"
+              },
+              {
+                "filename": "blocks/_accordion_html.liquid",
+                "size": "1754",
+                "checksumMd5": "4c03e8700a0a9ae7a9fced1a279c450a"
+              },
+              {
+                "filename": "blocks/_accordion_review.liquid",
+                "size": "1156",
+                "checksumMd5": "9647dd55b2b10603acfaf574c159c153"
+              },
+              {
+                "filename": "blocks/_agree.liquid",
+                "size": "1167",
+                "checksumMd5": "3d636f9124d5a778bd3b39168616e0cf"
+              },
+              {
+                "filename": "blocks/_article-comments.liquid",
+                "size": "7156",
+                "checksumMd5": "d22979c74bc7cd8aebc7365ea6bc33e5"
+              },
+              {
+                "filename": "blocks/_article-content.liquid",
+                "size": "1263",
+                "checksumMd5": "ebdd3ccfe531ef9414ad24df8337385e"
+              },
+              {
+                "filename": "blocks/_article-image.liquid",
+                "size": "1880",
+                "checksumMd5": "ebdb3b5b29b1093eca8e8abdd983acd7"
+              },
+              {
+                "filename": "blocks/_article-navigation.liquid",
+                "size": "3431",
+                "checksumMd5": "95e0c7eea1f16cb83db55bed92ba16fe"
+              },
+              {
+                "filename": "blocks/_article-related.liquid",
+                "size": "17918",
+                "checksumMd5": "6e7a48ab69fcbb4a0f30bdea26bc8e63"
+              },
+              {
+                "filename": "blocks/_article-tag-shares.liquid",
+                "size": "16980",
+                "checksumMd5": "5897cbfb58edd9589babf5de017026bb"
+              },
+              {
+                "filename": "blocks/_article-title.liquid",
+                "size": "6329",
+                "checksumMd5": "550c5460dc72f7c6d27964b4986e65db"
+              },
+              {
+                "filename": "blocks/_banner-item.liquid",
+                "size": "10754",
+                "checksumMd5": "48a63f4fcc43cb4d95aa1bf4da68ad42"
+              },
+              {
+                "filename": "blocks/_banner-wrap.liquid",
+                "size": "1688",
+                "checksumMd5": "e0dcfe7c1b1f00c4c3b0f6db3afcdc28"
+              },
+              {
+                "filename": "blocks/_banner_item_column.liquid",
+                "size": "985",
+                "checksumMd5": "c98158c18da4e0254c4eceea5d795ee0"
+              },
+              {
+                "filename": "blocks/_banner_item_split.liquid",
+                "size": "7992",
+                "checksumMd5": "5c7b51de783544d85e64d89341ca4275"
+              },
+              {
+                "filename": "blocks/_button_group.liquid",
+                "size": "1428",
+                "checksumMd5": "20d8d07a10141ad156f61173ad7ef95b"
+              },
+              {
+                "filename": "blocks/_cart_line.liquid",
+                "size": "271",
+                "checksumMd5": "5dca5515b2e90ab15fe54460eb1c257a"
+              },
+              {
+                "filename": "blocks/_category.liquid",
+                "size": "2758",
+                "checksumMd5": "655f3f7e968d988f87356f7463bc0f1c"
+              },
+              {
+                "filename": "blocks/_champagne-pack-selector.liquid",
+                "size": "69953",
+                "checksumMd5": "9a15d6e97ee18fbea9ed4fe9a082f167"
+              },
+              {
+                "filename": "blocks/_collection_heading.liquid",
+                "size": "1578",
+                "checksumMd5": "3cb87fbc2ef80f4b629a44f62c938931"
+              },
+              {
+                "filename": "blocks/_collection_item_manual.liquid",
+                "size": "9588",
+                "checksumMd5": "218f7aee9e46b0f94877af917c3881e8"
+              },
+              {
+                "filename": "blocks/_compare_color.liquid",
+                "size": "10842",
+                "checksumMd5": "3d2596c9b4e77d2da55e7f3bc09d9fba"
+              },
+              {
+                "filename": "blocks/_countdown.liquid",
+                "size": "6566",
+                "checksumMd5": "d4b31b8be92a96b63bf6348b09fb6230"
+              },
+              {
+                "filename": "blocks/_currency.liquid",
+                "size": "518",
+                "checksumMd5": "f1526ee7136c10916e05c4d37da488aa"
+              },
+              {
+                "filename": "blocks/_custom-liquid.liquid",
+                "size": "430",
+                "checksumMd5": "c010f10a0bc1fc1a39cc8d0ab6fe4f22"
+              },
+              {
+                "filename": "blocks/_delivery_return.liquid",
+                "size": "10154",
+                "checksumMd5": "20e42037f0670d5e97d9404f4f57aa37"
+              },
+              {
+                "filename": "blocks/_gallery_item.liquid",
+                "size": "3247",
+                "checksumMd5": "0497a34f248c740068f3353fb3aac9ef"
+              },
+              {
+                "filename": "blocks/_group-product-tab.liquid",
+                "size": "1335",
+                "checksumMd5": "ac3a9d6908dd6c252704ff62bb9a6d79"
+              },
+              {
+                "filename": "blocks/_group-product.liquid",
+                "size": "2367",
+                "checksumMd5": "28ce6bde1b8356b85cfd75d9a28ed5e6"
+              },
+              {
+                "filename": "blocks/_group_accordion.liquid",
+                "size": "612",
+                "checksumMd5": "a3343d374eaad45ea2f8dbb3a9deedd5"
+              },
+              {
+                "filename": "blocks/_heading_slider_button.liquid",
+                "size": "4820",
+                "checksumMd5": "dcca57250677779e6b214e75ebfc5141"
+              },
+              {
+                "filename": "blocks/_icon.liquid",
+                "size": "6506",
+                "checksumMd5": "c77d88370be9cbe383985719e74a5c60"
+              },
+              {
+                "filename": "blocks/_icon_block.liquid",
+                "size": "7763",
+                "checksumMd5": "677d3f42f723ca2489844269b485479d"
+              },
+              {
+                "filename": "blocks/_image-gallery_manual.liquid",
+                "size": "2390",
+                "checksumMd5": "945894ef5d1ea25a2a23caeb157d012f"
+              },
+              {
+                "filename": "blocks/_image-masonry.liquid",
+                "size": "5387",
+                "checksumMd5": "c9ba981f0abfd0ad9bfd6cff3483ab31"
+              },
+              {
+                "filename": "blocks/_image-text-col.liquid",
+                "size": "2604",
+                "checksumMd5": "919a4822653c46e8fa54957676575af5"
+              },
+              {
+                "filename": "blocks/_image-text-column.liquid",
+                "size": "1487",
+                "checksumMd5": "fb645bb8c7cf96046b0b948243685a8b"
+              },
+              {
+                "filename": "blocks/_image.liquid",
+                "size": "4302",
+                "checksumMd5": "748ae1e70bd4ddac8d54f842e7b626a6"
+              },
+              {
+                "filename": "blocks/_img_trust.liquid",
+                "size": "2929",
+                "checksumMd5": "cbc4462c1c20a2adf3125b7b77156976"
+              },
+              {
+                "filename": "blocks/_incoming-mess.liquid",
+                "size": "3796",
+                "checksumMd5": "3d4b27a1eaf02ae407ed28d62456d478"
+              },
+              {
+                "filename": "blocks/_item-masonry.liquid",
+                "size": "7695",
+                "checksumMd5": "c810c06b2fdc4f81303f93b4bcd4a0d8"
+              },
+              {
+                "filename": "blocks/_language.liquid",
+                "size": "502",
+                "checksumMd5": "d8f1be639ae782e7e1d54a11fc9a9fb9"
+              },
+              {
+                "filename": "blocks/_liquid.liquid",
+                "size": "4236",
+                "checksumMd5": "9786bea4c5d0b43a8b471d21e92afb29"
+              },
+              {
+                "filename": "blocks/_load-more.liquid",
+                "size": "5111",
+                "checksumMd5": "213e4c77110be92d3271b0d7f576b28e"
+              },
+              {
+                "filename": "blocks/_logo-item.liquid",
+                "size": "1996",
+                "checksumMd5": "3ccad72065cd6f521e465d0a31171823"
+              },
+              {
+                "filename": "blocks/_lookbook.liquid",
+                "size": "5436",
+                "checksumMd5": "4a38b267da767c810cdda84f2e49559e"
+              },
+              {
+                "filename": "blocks/_media.liquid",
+                "size": "5127",
+                "checksumMd5": "6175f46e0c71c351b0086646d6cea316"
+              },
+              {
+                "filename": "blocks/_menu.liquid",
+                "size": "1436",
+                "checksumMd5": "ece6cc955ef17199c27df2ba04f474ee"
+              },
+              {
+                "filename": "blocks/_multi_column.liquid",
+                "size": "11570",
+                "checksumMd5": "ca63cb8b2e036859f8a3112c4b06d264"
+              },
+              {
+                "filename": "blocks/_multi_column_2.liquid",
+                "size": "10987",
+                "checksumMd5": "5188de437529fc1258ad67af9de0f4c3"
+              },
+              {
+                "filename": "blocks/_multi_row.liquid",
+                "size": "1099",
+                "checksumMd5": "c41fac31387f76050822d661ceaaff39"
+              },
+              {
+                "filename": "blocks/_multi_row_2.liquid",
+                "size": "1101",
+                "checksumMd5": "40dd95b8cbf1001dd10e3cc226dd9ed6"
+              },
+              {
+                "filename": "blocks/_newsletter.liquid",
+                "size": "3900",
+                "checksumMd5": "1b960157695f7ce47e2654fa842b26d9"
+              },
+              {
+                "filename": "blocks/_payment_icons.liquid",
+                "size": "1712",
+                "checksumMd5": "a5d1d081e95c22b1e74c46bf5904e55a"
+              },
+              {
+                "filename": "blocks/_pin-product.liquid",
+                "size": "15800",
+                "checksumMd5": "7e007cc010c334c51f69d624ab0bba93"
+              },
+              {
+                "filename": "blocks/_pin-text.liquid",
+                "size": "5758",
+                "checksumMd5": "32310cc1f4ad6e87e3a50036640727db"
+              },
+              {
+                "filename": "blocks/_pin_product_2.liquid",
+                "size": "6507",
+                "checksumMd5": "6e6e1f062e7f065480cbdb1412e76a11"
+              },
+              {
+                "filename": "blocks/_price_table_item.liquid",
+                "size": "4991",
+                "checksumMd5": "3166de869723cbb86d1dee9c4ad3d2ed"
+              },
+              {
+                "filename": "blocks/_product-ask-question.liquid",
+                "size": "5630",
+                "checksumMd5": "d7fcadf4848681cf5dcac462a53dd413"
+              },
+              {
+                "filename": "blocks/_product-badges.liquid",
+                "size": "8283",
+                "checksumMd5": "754bb45c4c2e16bc73c9ab99fde8dcd3"
+              },
+              {
+                "filename": "blocks/_product-brands.liquid",
+                "size": "937",
+                "checksumMd5": "0f66075de728fb553800b9cd62741832"
+              },
+              {
+                "filename": "blocks/_product-buy-button.liquid",
+                "size": "10485",
+                "checksumMd5": "caef7bb386eab076619d3630aef2e106"
+              },
+              {
+                "filename": "blocks/_product-countdown.liquid",
+                "size": "13475",
+                "checksumMd5": "12be5b5b11163520df748ab5322abdd6"
+              },
+              {
+                "filename": "blocks/_product-delivery-return.liquid",
+                "size": "2933",
+                "checksumMd5": "4cb2a30e82e74de0e61a3544655e1e90"
+              },
+              {
+                "filename": "blocks/_product-description.liquid",
+                "size": "3811",
+                "checksumMd5": "16e4fb256cb25b9890dc53174714d1c7"
+              },
+              {
+                "filename": "blocks/_product-extra-link.liquid",
+                "size": "681",
+                "checksumMd5": "8e3089529e3c713f1406af784959440d"
+              },
+              {
+                "filename": "blocks/_product-inventory.liquid",
+                "size": "8850",
+                "checksumMd5": "b0e67a3fc036bc493e41113c4a860a8d"
+              },
+              {
+                "filename": "blocks/_product-item-property.liquid",
+                "size": "13676",
+                "checksumMd5": "362a300af2596dc8592f6f9a6d1d633e"
+              },
+              {
+                "filename": "blocks/_product-link-custom.liquid",
+                "size": "895",
+                "checksumMd5": "3e4d1e8495af2cbdcecaa10aff03a6fc"
+              },
+              {
+                "filename": "blocks/_product-linked.liquid",
+                "size": "12391",
+                "checksumMd5": "e6a5e0b31f9d3c81374c093ff9dad8e5"
+              },
+              {
+                "filename": "blocks/_product-live-review.liquid",
+                "size": "2452",
+                "checksumMd5": "68e3b74b1f903e7e1b3c721b194ac71c"
+              },
+              {
+                "filename": "blocks/_product-medias.liquid",
+                "size": "24739",
+                "checksumMd5": "c2031d6eba43686448f3e0ea6e4a7349"
+              },
+              {
+                "filename": "blocks/_product-meta-barcode.liquid",
+                "size": "1200",
+                "checksumMd5": "6c3710e9ed121cb3e3dcfc2a07da429a"
+              },
+              {
+                "filename": "blocks/_product-meta-options.liquid",
+                "size": "748",
+                "checksumMd5": "2e9269ef333d5a440c0f4a1a47c55de6"
+              },
+              {
+                "filename": "blocks/_product-meta-sku.liquid",
+                "size": "1112",
+                "checksumMd5": "efbddf4b3304910dcf24ebeef7152634"
+              },
+              {
+                "filename": "blocks/_product-meta-type.liquid",
+                "size": "939",
+                "checksumMd5": "9fcfe06c44cb4921c4df75b73fdbcdee"
+              },
+              {
+                "filename": "blocks/_product-meta-vendor.liquid",
+                "size": "970",
+                "checksumMd5": "f45badbadd7eab6d4627d700e1e4e72f"
+              },
+              {
+                "filename": "blocks/_product-meta.liquid",
+                "size": "613",
+                "checksumMd5": "9fefbb6d71473a30797979757f81195b"
+              },
+              {
+                "filename": "blocks/_product-order.liquid",
+                "size": "14148",
+                "checksumMd5": "c2e5e372383f894650631d66cb65ebde"
+              },
+              {
+                "filename": "blocks/_product-payment-terms.liquid",
+                "size": "1132",
+                "checksumMd5": "997acbdc59a3490f2adf375743bc29d2"
+              },
+              {
+                "filename": "blocks/_product-pickup.liquid",
+                "size": "6711",
+                "checksumMd5": "42850aa0c4aaacd48f6720fe676f88af"
+              },
+              {
+                "filename": "blocks/_product-price.liquid",
+                "size": "1196",
+                "checksumMd5": "a59f263b9fcddc79287602e61b7dc8b3"
+              },
+              {
+                "filename": "blocks/_product-size-chart.liquid",
+                "size": "3943",
+                "checksumMd5": "6d3d1f29caa30313e7026538403a88c6"
+              },
+              {
+                "filename": "blocks/_product-sold.liquid",
+                "size": "13490",
+                "checksumMd5": "f70f4b45fb0820ade175f8525660f718"
+              },
+              {
+                "filename": "blocks/_product-tab-add.liquid",
+                "size": "1600",
+                "checksumMd5": "8f36ac4ce89a79611ed2a677815edef7"
+              },
+              {
+                "filename": "blocks/_product-tab-customliquid.liquid",
+                "size": "1276",
+                "checksumMd5": "d904beb4dfaf0b836ecda429a9378693"
+              },
+              {
+                "filename": "blocks/_product-tab-des.liquid",
+                "size": "1089",
+                "checksumMd5": "09c4c1bd2059f0f93ffd581ece7f3b48"
+              },
+              {
+                "filename": "blocks/_product-tab-html.liquid",
+                "size": "1461",
+                "checksumMd5": "4c8d7465c301607df2ce9fb5c0ba2311"
+              },
+              {
+                "filename": "blocks/_product-tab-review.liquid",
+                "size": "1001",
+                "checksumMd5": "3ac7445b2ed3a874f4957e48bf172dbe"
+              },
+              {
+                "filename": "blocks/_product-tax-ship.liquid",
+                "size": "775",
+                "checksumMd5": "344d3b5993397bbc6e6001e16c11b6ad"
+              },
+              {
+                "filename": "blocks/_product-title.liquid",
+                "size": "1910",
+                "checksumMd5": "2babbad1e239847f60427354ea21332f"
+              },
+              {
+                "filename": "blocks/_product-trust-badge.liquid",
+                "size": "5584",
+                "checksumMd5": "62c87fe377a099dbfb7156287836435e"
+              },
+              {
+                "filename": "blocks/_product-variant-picker.liquid",
+                "size": "16573",
+                "checksumMd5": "f8aacc2a68a9268da020023b58c93a55"
+              },
+              {
+                "filename": "blocks/_product-video.liquid",
+                "size": "6435",
+                "checksumMd5": "a8d7e115cdeaaede2771225bd3f6f146"
+              },
+              {
+                "filename": "blocks/_product_back_instock.liquid",
+                "size": "5794",
+                "checksumMd5": "ce7838e7748f220bcd96c4014883c92a"
+              },
+              {
+                "filename": "blocks/_product_bundle.liquid",
+                "size": "12127",
+                "checksumMd5": "9e1d0ed8bbfe2b7728fda64d2a644af8"
+              },
+              {
+                "filename": "blocks/_product_complimentary.liquid",
+                "size": "1521",
+                "checksumMd5": "dce138b0a1d4f0c7da2f11d901fa234a"
+              },
+              {
+                "filename": "blocks/_quantity-selector.liquid",
+                "size": "5666",
+                "checksumMd5": "28c2111f77583fc686f27feb5816b904"
+              },
+              {
+                "filename": "blocks/_quickview-content.liquid",
+                "size": "1687",
+                "checksumMd5": "665fbcaafecda7e8ea836d20b8ba0218"
+              },
+              {
+                "filename": "blocks/_quickview-medias.liquid",
+                "size": "9864",
+                "checksumMd5": "6afa6787b34f63fa5ba8eb3da1057e22"
+              },
+              {
+                "filename": "blocks/_quote.liquid",
+                "size": "9178",
+                "checksumMd5": "328aa17a29a5d05c2ca06a0b1ac106af"
+              },
+              {
+                "filename": "blocks/_rakhi-bundle.liquid",
+                "size": "44515",
+                "checksumMd5": "9d981305727c73316969b852ecb74bee"
+              },
+              {
+                "filename": "blocks/_rating-star.liquid",
+                "size": "9529",
+                "checksumMd5": "bbd324f8eac8fed4c67fd34f9bbcf5e0"
+              },
+              {
+                "filename": "blocks/_share_buttons.liquid",
+                "size": "5394",
+                "checksumMd5": "4d73e33fc56f63edc0740c29e70a374c"
+              },
+              {
+                "filename": "blocks/_slide-item.liquid",
+                "size": "14021",
+                "checksumMd5": "283e1b01c544f5a42d11abcd68fab300"
+              },
+              {
+                "filename": "blocks/_slide-split-item.liquid",
+                "size": "9309",
+                "checksumMd5": "1b9a816cb2882185faad7208e56ef7f5"
+              },
+              {
+                "filename": "blocks/_slide-wrap.liquid",
+                "size": "3874",
+                "checksumMd5": "c51298968c0cdd53d1b0d00ee8c16245"
+              },
+              {
+                "filename": "blocks/_slide_product-title.liquid",
+                "size": "1213",
+                "checksumMd5": "c5b625e7eb1c70dcffe6da43bee911c8"
+              },
+              {
+                "filename": "blocks/_socials.liquid",
+                "size": "3633",
+                "checksumMd5": "99bf0d764d200b59ae93477d2dae288b"
+              },
+              {
+                "filename": "blocks/_subtotal_price.liquid",
+                "size": "1358",
+                "checksumMd5": "17bbdbe9ae2db6793cbbd0def6e9189b"
+              },
+              {
+                "filename": "blocks/_tax.liquid",
+                "size": "843",
+                "checksumMd5": "751c2ed002696b2d5bb6ef940cc93104"
+              },
+              {
+                "filename": "blocks/_testimonial-ba-item.liquid",
+                "size": "5046",
+                "checksumMd5": "77e75dd3e4ab44367bdbfb69558fb241"
+              },
+              {
+                "filename": "blocks/_testimonial-item.liquid",
+                "size": "7016",
+                "checksumMd5": "43d4b58e9a6085294b84377d845f484a"
+              },
+              {
+                "filename": "blocks/_time-line.liquid",
+                "size": "4618",
+                "checksumMd5": "a657e126328e238f07df473f36a9c6ac"
+              },
+              {
+                "filename": "blocks/_user-infomation.liquid",
+                "size": "1042",
+                "checksumMd5": "c933d65629c61ca1aa91b1e508ef33a5"
+              },
+              {
+                "filename": "blocks/_variant-info.liquid",
+                "size": "1866",
+                "checksumMd5": "67f6a1add5aaaaa1581ab6e5434a6596"
+              },
+              {
+                "filename": "blocks/_video_popup.liquid",
+                "size": "4883",
+                "checksumMd5": "bbaed4b69030b0914fdc934f313fcb1a"
+              },
+              {
+                "filename": "blocks/_view-all-heading.liquid",
+                "size": "5520",
+                "checksumMd5": "8f986e473f36dfb725c67f07bfbcf562"
+              },
+              {
+                "filename": "blocks/_view-all.liquid",
+                "size": "4632",
+                "checksumMd5": "aae361324b9b1f0000fa606f453b6ff6"
+              },
+              {
+                "filename": "blocks/_view-product-detail.liquid",
+                "size": "757",
+                "checksumMd5": "17ba9aaed6918ac57897ae5ca74485c2"
+              },
+              {
+                "filename": "config/settings_data.json",
+                "size": "14404",
+                "checksumMd5": "dce313087bd5e8021edb32183cf8d580"
+              },
+              {
+                "filename": "config/settings_schema.json",
+                "size": "67462",
+                "checksumMd5": "86bea469ab2bb3f0bbf33e815c952082"
+              },
+              {
+                "filename": "layout/password.liquid",
+                "size": "2679",
+                "checksumMd5": "9563ab86661890a1cbacdbc6f088cd1c"
+              },
+              {
+                "filename": "layout/theme.liquid",
+                "size": "4867",
+                "checksumMd5": "13c15040938325d8cb40c7234826a732"
+              },
+              {
+                "filename": "locales/en.default.json",
+                "size": "24035",
+                "checksumMd5": "b8bd0da6e6278b107e4478f44c90de75"
+              },
+              {
+                "filename": "locales/en.default.schema.json",
+                "size": "192816",
+                "checksumMd5": "764e34a59de59ca581eda351b8f1a29c"
+              },
+              {
+                "filename": "locales/zh-CN.schema.json",
+                "size": "35452",
+                "checksumMd5": "b02d494481570923e431c20903540752"
+              },
+              {
+                "filename": "sections/404.liquid",
+                "size": "9797",
+                "checksumMd5": "fb5241d4ba8b42f7ec3df6372cb8d0f2"
+              },
+              {
+                "filename": "sections/about-us-tes.liquid",
+                "size": "0",
+                "checksumMd5": "d41d8cd98f00b204e9800998ecf8427e"
+              },
+              {
+                "filename": "sections/accordion.liquid",
+                "size": "15814",
+                "checksumMd5": "b1b7a74b29ba25835913c1825454d345"
+              },
+              {
+                "filename": "sections/accordion_inline.liquid",
+                "size": "11444",
+                "checksumMd5": "8de1502c5e438bc454bb2e47edcf1fb6"
+              },
+              {
+                "filename": "sections/announcement-bar.liquid",
+                "size": "10357",
+                "checksumMd5": "69f5ef00abf340cfa221acdb624f8c50"
+              },
+              {
+                "filename": "sections/apps.liquid",
+                "size": "668",
+                "checksumMd5": "052509b429338e5f24f7e31936d3f61f"
+              },
+              {
+                "filename": "sections/back_top.liquid",
+                "size": "6443",
+                "checksumMd5": "a0bb63d02f576e64a7662c2efe22ee6e"
+              },
+              {
+                "filename": "sections/banner-carousel.liquid",
+                "size": "18821",
+                "checksumMd5": "5ec20c205eb1ef9bbb97fbcde6e56e3e"
+              },
+              {
+                "filename": "sections/banner-masonry.liquid",
+                "size": "7815",
+                "checksumMd5": "86a5f8291332962f1d289d49e7714abb"
+              },
+              {
+                "filename": "sections/banner-product-grid.liquid",
+                "size": "15485",
+                "checksumMd5": "67e975c1adc57e929163bbd887ac553f"
+              },
+              {
+                "filename": "sections/banner.liquid",
+                "size": "19788",
+                "checksumMd5": "788a87f646212ee1ce89243f57966a71"
+              },
+              {
+                "filename": "sections/blog.liquid",
+                "size": "25352",
+                "checksumMd5": "439c6193d8b38f30bbafd6c64672687b"
+              },
+              {
+                "filename": "sections/blog_new.liquid",
+                "size": "22457",
+                "checksumMd5": "d57b9518f5a3090367ebb82e5d628055"
+              },
+              {
+                "filename": "sections/brands.liquid",
+                "size": "9589",
+                "checksumMd5": "c98c8eafee61efd8cb724d2ad7e383b0"
+              },
+              {
+                "filename": "sections/brc-nav-product.liquid",
+                "size": "9044",
+                "checksumMd5": "59068e6ae12dbb501a1f499b15233a9b"
+              },
+              {
+                "filename": "sections/bundle-product.liquid",
+                "size": "21684",
+                "checksumMd5": "7fdee0c3ba5289a08c6a6751d30abdc5"
+              },
+              {
+                "filename": "sections/card-deck.liquid",
+                "size": "50553",
+                "checksumMd5": "07f2dc5ee02dd59edfd60bcb082cfcb3"
+              },
+              {
+                "filename": "sections/carousel-focus.liquid",
+                "size": "82655",
+                "checksumMd5": "c9f9c98c1d895be3898476160c90505e"
+              },
+              {
+                "filename": "sections/cart-drawer.liquid",
+                "size": "141774",
+                "checksumMd5": "a4eef378dc27f8ae6483c33ff65ee61e"
+              },
+              {
+                "filename": "sections/categories-section.liquid",
+                "size": "7538",
+                "checksumMd5": "249fc1737566d1b0e15ccf7402efe4ee"
+              },
+              {
+                "filename": "sections/category-new.liquid",
+                "size": "25978",
+                "checksumMd5": "13e179e750e8316492b65bec3febb930"
+              },
+              {
+                "filename": "sections/champagne-home-page.liquid",
+                "size": "42547",
+                "checksumMd5": "6c83864b71fee07b05c83d5e8e57666f"
+              },
+              {
+                "filename": "sections/champagne-qty-selector.liquid",
+                "size": "44159",
+                "checksumMd5": "05777ddffa66b4098168cb58739cfed7"
+              },
+              {
+                "filename": "sections/collection-list-simple.liquid",
+                "size": "7485",
+                "checksumMd5": "a33359b42229c28514106defc124eca2"
+              },
+              {
+                "filename": "sections/collection-mini-swipe.liquid",
+                "size": "64990",
+                "checksumMd5": "6f6ac1633bac1bb4cdbd37a4c980b607"
+              },
+              {
+                "filename": "sections/collection-nav-2.liquid",
+                "size": "31427",
+                "checksumMd5": "d0d4d1df22b4c3543ff86c55ff3ade29"
+              },
+              {
+                "filename": "sections/collection-new-filter.liquid",
+                "size": "175366",
+                "checksumMd5": "08ded822decc83a990ee762097ae6f5a"
+              },
+              {
+                "filename": "sections/collection-new.liquid",
+                "size": "132318",
+                "checksumMd5": "7718be476cf4cb92d2f313dc8c38c45d"
+              },
+              {
+                "filename": "sections/collections-list-manual.liquid",
+                "size": "10150",
+                "checksumMd5": "e8361644fdea3f54953abc9d678a944e"
+              },
+              {
+                "filename": "sections/collections-list-tabs.liquid",
+                "size": "21658",
+                "checksumMd5": "4ec5fe9f801cb74dc9612092e87bcb64"
+              },
+              {
+                "filename": "sections/collections-list.liquid",
+                "size": "28117",
+                "checksumMd5": "35ea9e4fc16f0f35b4cd755bbca1f000"
+              },
+              {
+                "filename": "sections/color-swatch.liquid",
+                "size": "9260",
+                "checksumMd5": "1352f61637b15e29ca33973966f17a8e"
+              },
+              {
+                "filename": "sections/compare-offcanvas.liquid",
+                "size": "5576",
+                "checksumMd5": "3b0cd984680062d728a417ac4dc00932"
+              },
+              {
+                "filename": "sections/config-group.json",
+                "size": "779",
+                "checksumMd5": "ccfa57b732d4a907753a4e6f98fbffb6"
+              },
+              {
+                "filename": "sections/cookie-popup.liquid",
+                "size": "137",
+                "checksumMd5": "7ede18410168b5ce0175a9eb592f214d"
+              },
+              {
+                "filename": "sections/cookies.liquid",
+                "size": "6747",
+                "checksumMd5": "c9c6d291ed86e18fff16e70d4b56717e"
+              },
+              {
+                "filename": "sections/custom-line.liquid",
+                "size": "3488",
+                "checksumMd5": "bc195dc467d4eb4916e4dc1294fec7c7"
+              },
+              {
+                "filename": "sections/custom-liquid.liquid",
+                "size": "1989",
+                "checksumMd5": "02b896d80e1a0985e30743410049174c"
+              },
+              {
+                "filename": "sections/custom-section.liquid",
+                "size": "8183",
+                "checksumMd5": "f3a2dfe1e2c9e846bfdd16dfac3e95ca"
+              },
+              {
+                "filename": "sections/discount-collection.liquid",
+                "size": "32545",
+                "checksumMd5": "9512449089f89fbfd48f63407b0d02c0"
+              },
+              {
+                "filename": "sections/exit-popup.liquid",
+                "size": "20286",
+                "checksumMd5": "069acb328c4c710c5f853b4ebee4223e"
+              },
+              {
+                "filename": "sections/eyewear-model.liquid",
+                "size": "87432",
+                "checksumMd5": "2bee8ae9369f648ef695065bdaa254f0"
+              },
+              {
+                "filename": "sections/featured-collection-carousel.liquid",
+                "size": "32027",
+                "checksumMd5": "666596e1b4fb554ae27b71de2657a425"
+              },
+              {
+                "filename": "sections/featured-collection-grid.liquid",
+                "size": "27143",
+                "checksumMd5": "6e40656571198117883d772c68a8e8c4"
+              },
+              {
+                "filename": "sections/footer-group.json",
+                "size": "13823",
+                "checksumMd5": "b40f3fcdadf745e4bb173e8e2b8893da"
+              },
+              {
+                "filename": "sections/footer.liquid",
+                "size": "34133",
+                "checksumMd5": "c0a1f5172bc284bdd464fc0d59e6afa0"
+              },
+              {
+                "filename": "sections/form_contact-width-text.liquid",
+                "size": "5103",
+                "checksumMd5": "9624015162b964f42000283ca9c0aa6e"
+              },
+              {
+                "filename": "sections/grid-1.liquid",
+                "size": "28628",
+                "checksumMd5": "a9a3d42528c3ef73b762cbe784c3667a"
+              },
+              {
+                "filename": "sections/hdt_predictive-search.liquid",
+                "size": "16261",
+                "checksumMd5": "4dac6c3fbb589ea4ecf356e440c72fe2"
+              },
+              {
+                "filename": "sections/hdt_predictive-search2.liquid",
+                "size": "6804",
+                "checksumMd5": "3f9664eeacf2d3148f2652ee7348b6d0"
+              },
+              {
+                "filename": "sections/header-e-commerce.liquid",
+                "size": "31359",
+                "checksumMd5": "24a3498a48b1541faa2ccd5a5ac56452"
+              },
+              {
+                "filename": "sections/header-group.json",
+                "size": "3882",
+                "checksumMd5": "4dbbbea42f00b573004b7b90c577f153"
+              },
+              {
+                "filename": "sections/header-inline.liquid",
+                "size": "32247",
+                "checksumMd5": "db9e60309a11312dd2536f9961cb4c7a"
+              },
+              {
+                "filename": "sections/header-menu-bottom.liquid",
+                "size": "48588",
+                "checksumMd5": "b87b164ccf2ca451815c9de1f83bd10a"
+              },
+              {
+                "filename": "sections/heading-article.liquid",
+                "size": "4540",
+                "checksumMd5": "95b907621493c84b3e114312f5e74b6f"
+              },
+              {
+                "filename": "sections/heading-collection.liquid",
+                "size": "13122",
+                "checksumMd5": "383dd7ca56182183808549d62751c10c"
+              },
+              {
+                "filename": "sections/heart-glassware.liquid",
+                "size": "34221",
+                "checksumMd5": "868916ec704205758dfeadf37f0c6733"
+              },
+              {
+                "filename": "sections/hero-image.liquid",
+                "size": "16845",
+                "checksumMd5": "ac1d92b56648347acc033e14cf2d6bc3"
+              },
+              {
+                "filename": "sections/Home-banner-swiper.liquid",
+                "size": "79879",
+                "checksumMd5": "b039a45213f47f8efee8c26d2c4574be"
+              },
+              {
+                "filename": "sections/icon-box.liquid",
+                "size": "7844",
+                "checksumMd5": "a48e85ee7295156dfd17efd29936bd3d"
+              },
+              {
+                "filename": "sections/image-gallery-manual.liquid",
+                "size": "8570",
+                "checksumMd5": "0a9cfb7523d2a0f6027bef10092f968d"
+              },
+              {
+                "filename": "sections/image-gallery.liquid",
+                "size": "14070",
+                "checksumMd5": "6f25eda88ca570d89684a67584cf9af3"
+              },
+              {
+                "filename": "sections/image-with-tabs-content.liquid",
+                "size": "20750",
+                "checksumMd5": "e5c93f976374aad155ad87aac470018b"
+              },
+              {
+                "filename": "sections/image_text.liquid",
+                "size": "6886",
+                "checksumMd5": "df61b5f1ef92d8a808683fe99e640e6a"
+              },
+              {
+                "filename": "sections/infinite-loop-slider.liquid",
+                "size": "50341",
+                "checksumMd5": "9b19184f9a184c56b68c81477644db82"
+              },
+              {
+                "filename": "sections/instagram-feed-api.liquid",
+                "size": "17454",
+                "checksumMd5": "4297b123506c41619b7f3a2b70edcad9"
+              },
+              {
+                "filename": "sections/lookbook-carousel.liquid",
+                "size": "11110",
+                "checksumMd5": "f150de5205683671a6340156b04456a5"
+              },
+              {
+                "filename": "sections/lookbook-product.liquid",
+                "size": "18971",
+                "checksumMd5": "dc27af83b18048ccb4faa630ead7ba6b"
+              },
+              {
+                "filename": "sections/main-account.liquid",
+                "size": "8477",
+                "checksumMd5": "25e794510e4a993ad15097e8f9bc1353"
+              },
+              {
+                "filename": "sections/main-activate-account.liquid",
+                "size": "6343",
+                "checksumMd5": "b8096fe363a175bf203304f671a1ebc9"
+              },
+              {
+                "filename": "sections/main-addresses.liquid",
+                "size": "22027",
+                "checksumMd5": "05e87b94e26414d557b0eb488921fdf9"
+              },
+              {
+                "filename": "sections/main-article.liquid",
+                "size": "2936",
+                "checksumMd5": "01b072b7d8ebd443975158ec48b13686"
+              },
+              {
+                "filename": "sections/main-blog.liquid",
+                "size": "39339",
+                "checksumMd5": "05b50d8e78fc6437d0346414e55326c1"
+              },
+              {
+                "filename": "sections/main-brands.liquid",
+                "size": "17832",
+                "checksumMd5": "435dd8feff582edc1fd1cf259f465e89"
+              },
+              {
+                "filename": "sections/main-cart.liquid",
+                "size": "43416",
+                "checksumMd5": "60cbb8d0e18950aa384f9b6f8828e992"
+              },
+              {
+                "filename": "sections/main-collection.liquid",
+                "size": "96512",
+                "checksumMd5": "74cfb10890c3cd60f180ee2df42ff038"
+              },
+              {
+                "filename": "sections/main-compare.liquid",
+                "size": "17422",
+                "checksumMd5": "acdc8a63470d015e8931a9554a3a1e1d"
+              },
+              {
+                "filename": "sections/main-gift-cart.liquid",
+                "size": "7598",
+                "checksumMd5": "26ed5bf1392d450b5232b71b0635f426"
+              },
+              {
+                "filename": "sections/main-heading.liquid",
+                "size": "6573",
+                "checksumMd5": "e791b8a8cbfe658ecc2fef22119250a6"
+              },
+              {
+                "filename": "sections/main-list-collections.liquid",
+                "size": "17093",
+                "checksumMd5": "71baae701c25eb21c69419169042304d"
+              },
+              {
+                "filename": "sections/main-login.liquid",
+                "size": "17406",
+                "checksumMd5": "6451ae5abe62194f366bd0a084bc03e2"
+              },
+              {
+                "filename": "sections/main-order.liquid",
+                "size": "20022",
+                "checksumMd5": "31be83ae591f176439c372544e7b842e"
+              },
+              {
+                "filename": "sections/main-page.liquid",
+                "size": "2603",
+                "checksumMd5": "65141cfd294fcdeacd8082eac529affe"
+              },
+              {
+                "filename": "sections/main-password-header.liquid",
+                "size": "6192",
+                "checksumMd5": "6eb92b319b45ab3cde8cc63803825a9d"
+              },
+              {
+                "filename": "sections/main-password.liquid",
+                "size": "10965",
+                "checksumMd5": "a06bc9c896cc2bd757b9ffd276052f50"
+              },
+              {
+                "filename": "sections/main-product-tabs.liquid",
+                "size": "19785",
+                "checksumMd5": "e81cdf2fda4d0378552ff88cc6ec071f"
+              },
+              {
+                "filename": "sections/main-product.liquid",
+                "size": "9822",
+                "checksumMd5": "bf006dad832ccea7f77c4201d15bb729"
+              },
+              {
+                "filename": "sections/main-quick-add.liquid",
+                "size": "2959",
+                "checksumMd5": "978a08a567e59818690726a78908df18"
+              },
+              {
+                "filename": "sections/main-quick-view.liquid",
+                "size": "2497",
+                "checksumMd5": "c8d30b1ef816f29e128e14f694480fd7"
+              },
+              {
+                "filename": "sections/main-register.liquid",
+                "size": "8061",
+                "checksumMd5": "4c871ef9fbe21222702ea6ccc215c9e4"
+              },
+              {
+                "filename": "sections/main-reset-password.liquid",
+                "size": "6093",
+                "checksumMd5": "e5bb77bb106fe815c4a446eea3889a26"
+              },
+              {
+                "filename": "sections/main-search.liquid",
+                "size": "177329",
+                "checksumMd5": "140aded68f81be0400af723ed49666c7"
+              },
+              {
+                "filename": "sections/main-wishlist.liquid",
+                "size": "18422",
+                "checksumMd5": "591f8baed7107d74aab915834019d1d3"
+              },
+              {
+                "filename": "sections/map-pin-info.liquid",
+                "size": "11008",
+                "checksumMd5": "66c7f41d18338958eb0d4d3fc67c84af"
+              },
+              {
+                "filename": "sections/map-with-text.liquid",
+                "size": "5157",
+                "checksumMd5": "60a92af076bdb88b9b4a3f6f6861ece6"
+              },
+              {
+                "filename": "sections/marquee.liquid",
+                "size": "16398",
+                "checksumMd5": "eaf2ac31d0bee9ea6e7f497ac9f06a21"
+              },
+              {
+                "filename": "sections/mobile-first-hero.liquid",
+                "size": "28893",
+                "checksumMd5": "304625af2fc18c9d710fecbef64f2a9c"
+              },
+              {
+                "filename": "sections/my-header.liquid",
+                "size": "150651",
+                "checksumMd5": "33afda9116d6d6e61679fe0553507e58"
+              },
+              {
+                "filename": "sections/My_Section_Offer.liquid",
+                "size": "45530",
+                "checksumMd5": "355b21c86e950a973ca4a4a0f90a29bf"
+              },
+              {
+                "filename": "sections/new-hero.liquid",
+                "size": "9224",
+                "checksumMd5": "3223ffe183595c77ff0b6aa6f0ec32ef"
+              },
+              {
+                "filename": "sections/newsletter-modal.liquid",
+                "size": "9179",
+                "checksumMd5": "0fe3776f475b61976907c05dce6f44e8"
+              },
+              {
+                "filename": "sections/newsletter-with-image.liquid",
+                "size": "8403",
+                "checksumMd5": "cd725db1ec2e63804485c242e4e89ae6"
+              },
+              {
+                "filename": "sections/newsletter.liquid",
+                "size": "5393",
+                "checksumMd5": "d704323a9706c5869fd4b78ec75b4c95"
+              },
+              {
+                "filename": "sections/Orbit-category.liquid",
+                "size": "48596",
+                "checksumMd5": "dabfd62fb7e0fa0b14f63f3fd2618f8a"
+              },
+              {
+                "filename": "sections/pdp-3.liquid",
+                "size": "149206",
+                "checksumMd5": "96b5501aeb7a61f045192ad6b1c77292"
+              },
+              {
+                "filename": "sections/pickup-availability.liquid",
+                "size": "156",
+                "checksumMd5": "4db236e8be3ef7399c41649a852f1b70"
+              },
+              {
+                "filename": "sections/popover-currencies.liquid",
+                "size": "35",
+                "checksumMd5": "8ce7b984a4511a62515d7c0e03dd7ad2"
+              },
+              {
+                "filename": "sections/price_tables.liquid",
+                "size": "8655",
+                "checksumMd5": "051a60eba3e21d610ae5f45f8c79a3b7"
+              },
+              {
+                "filename": "sections/product-group-media.liquid",
+                "size": "8065",
+                "checksumMd5": "0955fbdc914c624505cbb4f880c423ce"
+              },
+              {
+                "filename": "sections/product-video.liquid",
+                "size": "8465",
+                "checksumMd5": "35b3720d01437e132d45e86c9173c40f"
+              },
+              {
+                "filename": "sections/quick-order-list.liquid",
+                "size": "9243",
+                "checksumMd5": "fb295b9d56a614deca7b9b23e258910d"
+              },
+              {
+                "filename": "sections/rakhi-bundle.liquid",
+                "size": "36572",
+                "checksumMd5": "7a5cb930e33656bd5f4a67ad6c1d8d30"
+              },
+              {
+                "filename": "sections/rakhi.liquid",
+                "size": "69648",
+                "checksumMd5": "2f97b15a87f7ad951fb6cbc80e3e5842"
+              },
+              {
+                "filename": "sections/recently-products.liquid",
+                "size": "26531",
+                "checksumMd5": "3be2bb1a0e22bd5894da0c9f65c07ecf"
+              },
+              {
+                "filename": "sections/related-products.liquid",
+                "size": "27042",
+                "checksumMd5": "ec7e3046d5b86d27a93fdfc13cbe8404"
+              },
+              {
+                "filename": "sections/sidebar-product.liquid",
+                "size": "38620",
+                "checksumMd5": "5ea2a9122ecfb2bd099ea218991a84ce"
+              },
+              {
+                "filename": "sections/slideshow-banner.liquid",
+                "size": "26121",
+                "checksumMd5": "579466a5267b556bb34cd0028bb2bf44"
+              },
+              {
+                "filename": "sections/slideshow-center.liquid",
+                "size": "15121",
+                "checksumMd5": "aa7069f8d4a9c69eb46032e2cc8d9d82"
+              },
+              {
+                "filename": "sections/slideshow-split.liquid",
+                "size": "14638",
+                "checksumMd5": "0cb7781c5886ef9587080e834f08113e"
+              },
+              {
+                "filename": "sections/slideshow.liquid",
+                "size": "16466",
+                "checksumMd5": "8fa3f0ded89c6acbe2dd030c921570f5"
+              },
+              {
+                "filename": "sections/store-locator.liquid",
+                "size": "10591",
+                "checksumMd5": "6efdab4f58e3107949298ecb32355c28"
+              },
+              {
+                "filename": "sections/store-tabs.liquid",
+                "size": "16975",
+                "checksumMd5": "3faad8e17b3fe7ce4771c7dc8a6bd455"
+              },
+              {
+                "filename": "sections/Sunglass_bogo_section.liquid",
+                "size": "36589",
+                "checksumMd5": "4bcc1a25fce69e114d39ae879b1e49f4"
+              },
+              {
+                "filename": "sections/system-group.json",
+                "size": "1983",
+                "checksumMd5": "beccb1866f2d5b7a9875bc05e85b8111"
+              },
+              {
+                "filename": "sections/tabs-collections-carousel.liquid",
+                "size": "37742",
+                "checksumMd5": "93428a0c7b5c3e37d26f84b0b2dea3d9"
+              },
+              {
+                "filename": "sections/tabs-collections-grid.liquid",
+                "size": "35362",
+                "checksumMd5": "0450ffd8df60aefd5684747dea6e21aa"
+              },
+              {
+                "filename": "sections/testimonial-before-after.liquid",
+                "size": "16005",
+                "checksumMd5": "a19dae16bca12734f3f62032f0c6e0fd"
+              },
+              {
+                "filename": "sections/testimonial-image.liquid",
+                "size": "14678",
+                "checksumMd5": "d19ed36ff1043fea8c19bd8a8f92eb45"
+              },
+              {
+                "filename": "sections/testimonials-2.liquid",
+                "size": "16898",
+                "checksumMd5": "146cac62e6143fa8f35a6b21094b5c98"
+              },
+              {
+                "filename": "sections/testimonials-3.liquid",
+                "size": "16983",
+                "checksumMd5": "e342fefa7d3a1f61968214457e93541d"
+              },
+              {
+                "filename": "sections/testimonials.liquid",
+                "size": "10473",
+                "checksumMd5": "8561925b444c804e04ad40fa47e65ab0"
+              },
+              {
+                "filename": "sections/Test_insta_reel.liquid",
+                "size": "41713",
+                "checksumMd5": "2d68769df37c472e7f58313fa1562f0f"
+              },
+              {
+                "filename": "sections/timeline.liquid",
+                "size": "8359",
+                "checksumMd5": "a87719177d4a6cc16518a7fb03cbb480"
+              },
+              {
+                "filename": "sections/tjs-collection-new.liquid",
+                "size": "32780",
+                "checksumMd5": "adbbb5e03e5196c093e635dbb5f4807b"
+              },
+              {
+                "filename": "sections/tjs-mystery-box-pdp.liquid",
+                "size": "38483",
+                "checksumMd5": "1e74517885286863ff87d6689187d2ab"
+              },
+              {
+                "filename": "sections/tjs-mystery-faq-v4.liquid",
+                "size": "5171",
+                "checksumMd5": "520826d48bac097d75a64ab767196206"
+              },
+              {
+                "filename": "sections/tjs-mystery-final-cta-v4.liquid",
+                "size": "2831",
+                "checksumMd5": "c220c3c78e93d795796c652b5851f999"
+              },
+              {
+                "filename": "sections/tjs-mystery-gift-v4.liquid",
+                "size": "5354",
+                "checksumMd5": "07bd51184947c76326514cd1fe7459f7"
+              },
+              {
+                "filename": "sections/tjs-mystery-guarantees-v4.liquid",
+                "size": "5052",
+                "checksumMd5": "cb88908507fcc3c87b662c68d8fa26e2"
+              },
+              {
+                "filename": "sections/tjs-mystery-hero-v4.liquid",
+                "size": "25732",
+                "checksumMd5": "1302d04fa011d9032cb49dcf1515cc70"
+              },
+              {
+                "filename": "sections/tjs-mystery-journey-v4.liquid",
+                "size": "4528",
+                "checksumMd5": "6e6d27c11a4c4d1a7b1238c2cd0af996"
+              },
+              {
+                "filename": "sections/tjs-mystery-shake-v4.liquid",
+                "size": "3971",
+                "checksumMd5": "cb7bb3a29307aeb368e92882c64db0c3"
+              },
+              {
+                "filename": "sections/tjs-mystery-style-v4.liquid",
+                "size": "9444",
+                "checksumMd5": "7d6adc4e7cfaa6ffbf0e5e82da5d4bd9"
+              },
+              {
+                "filename": "sections/tjs-mystery-ugc-v4.liquid",
+                "size": "3762",
+                "checksumMd5": "a5ddff537778a94e93e46edf186970d5"
+              },
+              {
+                "filename": "sections/tjs-mystery-value-v4.liquid",
+                "size": "4084",
+                "checksumMd5": "ede5dcfa74c0d6ac1bf6681865dd343e"
+              },
+              {
+                "filename": "sections/tjs-side-cart.liquid",
+                "size": "43914",
+                "checksumMd5": "3ab3fa3d7d05e49787bb518d057a678f"
+              },
+              {
+                "filename": "sections/toolbar-mobile.liquid",
+                "size": "52175",
+                "checksumMd5": "53274eabb48d80e63a5fb2d424b1f5d4"
+              },
+              {
+                "filename": "sections/top-bar.liquid",
+                "size": "10637",
+                "checksumMd5": "5c1e5803aaf9ee2fd836f2cf1b2a3cb0"
+              },
+              {
+                "filename": "sections/triple-sec.liquid",
+                "size": "58334",
+                "checksumMd5": "cb8dc53ef75f9867169c387baa4915ef"
+              },
+              {
+                "filename": "sections/video-2.liquid",
+                "size": "4518",
+                "checksumMd5": "5dc7d48c6f6532e1ea5416d24a8ddcc3"
+              },
+              {
+                "filename": "sections/video-with-text.liquid",
+                "size": "17574",
+                "checksumMd5": "6082bf772415516184de6e539b7687fd"
+              },
+              {
+                "filename": "sections/video-with-text2.liquid",
+                "size": "33778",
+                "checksumMd5": "5857cf0f23b2116757bd60859f3a08d9"
+              },
+              {
+                "filename": "sections/video.liquid",
+                "size": "11255",
+                "checksumMd5": "d56018b456f3eb9ad412bc45a1776633"
+              },
+              {
+                "filename": "snippets/account-sidebar.liquid",
+                "size": "17165",
+                "checksumMd5": "c86d504af15133ec27e65d8d7eae46c0"
+              },
+              {
+                "filename": "snippets/active-filters.liquid",
+                "size": "2369",
+                "checksumMd5": "7e1fce6381594098cf82b98d2e58ad95"
+              },
+              {
+                "filename": "snippets/article_loop_1.liquid",
+                "size": "5076",
+                "checksumMd5": "0cffe97d2a6f50d5a25a42646fcbc710"
+              },
+              {
+                "filename": "snippets/article_loop_2.liquid",
+                "size": "5137",
+                "checksumMd5": "45b2b2d075c2d28d11a7351b3a679079"
+              },
+              {
+                "filename": "snippets/article_loop_item.liquid",
+                "size": "1103",
+                "checksumMd5": "9207d76bef299f8165c337a1110586a1"
+              },
+              {
+                "filename": "snippets/article_sidebar.liquid",
+                "size": "2489",
+                "checksumMd5": "ad5517d6c6864c552b76bcccb18b8ab8"
+              },
+              {
+                "filename": "snippets/back-instock.liquid",
+                "size": "5124",
+                "checksumMd5": "05e35024881c8956967b848a3c09ff14"
+              },
+              {
+                "filename": "snippets/badges.liquid",
+                "size": "7553",
+                "checksumMd5": "57ca2a1b147c0a55b0dc9edf5d74c887"
+              },
+              {
+                "filename": "snippets/blog-post-item.liquid",
+                "size": "5461",
+                "checksumMd5": "df771d2dc17c642b59538b8e193b4f6d"
+              },
+              {
+                "filename": "snippets/btn-compare.liquid",
+                "size": "2147",
+                "checksumMd5": "04ee3641da3373addf5804eb640c8025"
+              },
+              {
+                "filename": "snippets/btn-quick-view.liquid",
+                "size": "1106",
+                "checksumMd5": "1a2a4ac48ed1c2fcb04ea61d847acc22"
+              },
+              {
+                "filename": "snippets/btn-ultra.liquid",
+                "size": "5314",
+                "checksumMd5": "865fb9a5c9fcf1fe36c1edbb098a26ca"
+              },
+              {
+                "filename": "snippets/btn-wishlist.liquid",
+                "size": "3118",
+                "checksumMd5": "a67d0aad7f10a6d38a6f2d9868a7306c"
+              },
+              {
+                "filename": "snippets/bundle-product-placeholder.liquid",
+                "size": "1600",
+                "checksumMd5": "93e8628687512cfadf81e1073ca52b0d"
+              },
+              {
+                "filename": "snippets/buy-buttons.liquid",
+                "size": "4042",
+                "checksumMd5": "332956df6bf58f852a16f997d7c0a304"
+              },
+              {
+                "filename": "snippets/card-price.liquid",
+                "size": "5354",
+                "checksumMd5": "2fa69f1486fb9be36bebce2f98401031"
+              },
+              {
+                "filename": "snippets/card-product-discount2.liquid",
+                "size": "7852",
+                "checksumMd5": "a73a9783982d84dc6d906c1396a2695d"
+              },
+              {
+                "filename": "snippets/card-product-discount3.liquid",
+                "size": "8024",
+                "checksumMd5": "e13c0ef423e1be855423cefd0d345f9f"
+              },
+              {
+                "filename": "snippets/card-product-list.liquid",
+                "size": "6627",
+                "checksumMd5": "438a5e6fe0e7b6eff715f09bbea37f75"
+              },
+              {
+                "filename": "snippets/card-product-placeholder.liquid",
+                "size": "1424",
+                "checksumMd5": "2f0ef1c9b92d7f9db98d2f151dd1e7b1"
+              },
+              {
+                "filename": "snippets/card-product-price-tables.liquid",
+                "size": "6312",
+                "checksumMd5": "5bec5b931b598edc6ea71437ed1c1a6e"
+              },
+              {
+                "filename": "snippets/card-product-wishlist.liquid",
+                "size": "6444",
+                "checksumMd5": "36f1d8a4dac6b114cbbe234be9370890"
+              },
+              {
+                "filename": "snippets/card-product1.liquid",
+                "size": "6664",
+                "checksumMd5": "43da1765b39850df857dc2291c09b1e1"
+              },
+              {
+                "filename": "snippets/card-product10.liquid",
+                "size": "6786",
+                "checksumMd5": "ecfe213cf3b29f57f57bd795ce947fc5"
+              },
+              {
+                "filename": "snippets/card-product11.liquid",
+                "size": "6665",
+                "checksumMd5": "160f14c0ca269f00deaf46c5ee693709"
+              },
+              {
+                "filename": "snippets/card-product2.liquid",
+                "size": "6673",
+                "checksumMd5": "bc6a552a11ab97103abd9c1c82228764"
+              },
+              {
+                "filename": "snippets/card-product3.liquid",
+                "size": "6667",
+                "checksumMd5": "1af394103f7b645c15eb7e75d091bf1e"
+              },
+              {
+                "filename": "snippets/card-product4.liquid",
+                "size": "6667",
+                "checksumMd5": "79a6dd0cae6e56bbedfcb668bd143e8e"
+              },
+              {
+                "filename": "snippets/card-product5.liquid",
+                "size": "6526",
+                "checksumMd5": "71491051e499a1bc1a9eb7712cd97754"
+              },
+              {
+                "filename": "snippets/card-product6.liquid",
+                "size": "6727",
+                "checksumMd5": "5d23cf5627c576e9855a7ee02b9570d1"
+              },
+              {
+                "filename": "snippets/card-product7.liquid",
+                "size": "6736",
+                "checksumMd5": "65e10ab087911ea706d2c8355e5736ce"
+              },
+              {
+                "filename": "snippets/card-product8.liquid",
+                "size": "6713",
+                "checksumMd5": "fca5ec3570de760692f3050981da8888"
+              },
+              {
+                "filename": "snippets/card-product9.liquid",
+                "size": "6448",
+                "checksumMd5": "e6cfffc1138f5933e7c099d15735b2e9"
+              },
+              {
+                "filename": "snippets/cart-checkbox.liquid",
+                "size": "774",
+                "checksumMd5": "9e6e92fcdf850d5df65f752c3b58f886"
+              },
+              {
+                "filename": "snippets/cart-complementary.liquid",
+                "size": "5855",
+                "checksumMd5": "049d40d7b75dddba866d09df133ac9e3"
+              },
+              {
+                "filename": "snippets/cart-shipping-bar.liquid",
+                "size": "3253",
+                "checksumMd5": "320b0770d1e3fc878f007adc73aecd6d"
+              },
+              {
+                "filename": "snippets/choose_style.liquid",
+                "size": "3837",
+                "checksumMd5": "cfa946632b8072884ecdf4e52bbecc47"
+              },
+              {
+                "filename": "snippets/collection_item1.liquid",
+                "size": "2059",
+                "checksumMd5": "6eef5ef78515d11ce2d383c4fb10577a"
+              },
+              {
+                "filename": "snippets/collection_item2.liquid",
+                "size": "2735",
+                "checksumMd5": "8a567ee24c4f065117a35c9e93d06bb2"
+              },
+              {
+                "filename": "snippets/collection_item3.liquid",
+                "size": "3803",
+                "checksumMd5": "00e8f04d5bd7d0e6e5fe0c046786d0f5"
+              },
+              {
+                "filename": "snippets/collection_loop_item.liquid",
+                "size": "1475",
+                "checksumMd5": "07134733a11a3d923c6ae3546fd8f5b0"
+              },
+              {
+                "filename": "snippets/collection_manual_item.liquid",
+                "size": "2212",
+                "checksumMd5": "a66d0a54b8f715f18648f0c774c4a590"
+              },
+              {
+                "filename": "snippets/color-list.liquid",
+                "size": "5766",
+                "checksumMd5": "03ac716e873f95a81b395f8e04e72a80"
+              },
+              {
+                "filename": "snippets/comment.liquid",
+                "size": "812",
+                "checksumMd5": "36ad44360085b0c6d1c0b86619a602fe"
+              },
+              {
+                "filename": "snippets/compare-color.liquid",
+                "size": "9149",
+                "checksumMd5": "8d98aad3a4a8b413b86f598bb1faae4f"
+              },
+              {
+                "filename": "snippets/compare-offcanvas.liquid",
+                "size": "1559",
+                "checksumMd5": "89b8a4eb61c071917119160b001bfc57"
+              },
+              {
+                "filename": "snippets/countdown.liquid",
+                "size": "1445",
+                "checksumMd5": "cf9dac62749f3f288de3e6c7656179f4"
+              },
+              {
+                "filename": "snippets/countdown2.liquid",
+                "size": "2395",
+                "checksumMd5": "c0ec93c733d1e50d4d550e2ceaaf80b3"
+              },
+              {
+                "filename": "snippets/css-variables.liquid",
+                "size": "16060",
+                "checksumMd5": "db43e401f24e19d4e20bec1c1f3cf576"
+              },
+              {
+                "filename": "snippets/exits-card.liquid",
+                "size": "3953",
+                "checksumMd5": "941e06e3219d3024376652dc89279e2f"
+              },
+              {
+                "filename": "snippets/facets.liquid",
+                "size": "21635",
+                "checksumMd5": "38884bb82a560b428b17d8e4e87f6cdc"
+              },
+              {
+                "filename": "snippets/form-status.liquid",
+                "size": "1877",
+                "checksumMd5": "bd6ed7b01fa1b105495ff0bddeeb0a3c"
+              },
+              {
+                "filename": "snippets/gift-card-recipient-form.liquid",
+                "size": "6853",
+                "checksumMd5": "4d61fd731ef0cac14fc006bf8b99eafe"
+              },
+              {
+                "filename": "snippets/gokwik-buy-now.liquid",
+                "size": "350",
+                "checksumMd5": "62caba46b2384ec345b994bffae816f4"
+              },
+              {
+                "filename": "snippets/gokwik-checkout.liquid",
+                "size": "691",
+                "checksumMd5": "a5766ed9446172c4617033ae18fb767c"
+              },
+              {
+                "filename": "snippets/gokwik.liquid",
+                "size": "3915",
+                "checksumMd5": "cf5a4a2bf32361540fc22c17f92c12cf"
+              },
+              {
+                "filename": "snippets/hdt-pr-card-rating.liquid",
+                "size": "2085",
+                "checksumMd5": "3eff6a9fc940c6bdf949409835cd5f4d"
+              },
+              {
+                "filename": "snippets/hdt-pr-single-rating.liquid",
+                "size": "0",
+                "checksumMd5": "d41d8cd98f00b204e9800998ecf8427e"
+              },
+              {
+                "filename": "snippets/hdt-pr-single-review.liquid",
+                "size": "76",
+                "checksumMd5": "b5c89584b468aa29578e33c1c598fa8f"
+              },
+              {
+                "filename": "snippets/hdt-quick-order-list-row.liquid",
+                "size": "6846",
+                "checksumMd5": "b52868bb8b8806b48249502005b8a58b"
+              },
+              {
+                "filename": "snippets/hdt_currency.liquid",
+                "size": "2679",
+                "checksumMd5": "1b18aabe09e98af6b358f3798611c7c9"
+              },
+              {
+                "filename": "snippets/hdt_customer_form_popup.liquid",
+                "size": "7953",
+                "checksumMd5": "5d969637380f9deb0e3c95f4f43adf78"
+              },
+              {
+                "filename": "snippets/hdt_language.liquid",
+                "size": "805",
+                "checksumMd5": "1ae60d98ecce51caa0eca8446edf06b2"
+              },
+              {
+                "filename": "snippets/hdt_logo.liquid",
+                "size": "3945",
+                "checksumMd5": "3aa0455fcea4639facacc857b91f10b1"
+              },
+              {
+                "filename": "snippets/header_group_icons.liquid",
+                "size": "12714",
+                "checksumMd5": "6a86302ff476ea0b3e8acc3295b9d488"
+              },
+              {
+                "filename": "snippets/heading_page.liquid",
+                "size": "3490",
+                "checksumMd5": "ace3ce310155026da6ce12f7f12625cb"
+              },
+              {
+                "filename": "snippets/icon-error.liquid",
+                "size": "1073",
+                "checksumMd5": "4b5d3af7d8150754ad493828e5d489e0"
+              },
+              {
+                "filename": "snippets/icon.liquid",
+                "size": "11706",
+                "checksumMd5": "59019e339780eb7fe6733d654c537858"
+              },
+              {
+                "filename": "snippets/icons.liquid",
+                "size": "50851",
+                "checksumMd5": "2f9f0d4ab5a0a49814f1b4ddff180e7b"
+              },
+              {
+                "filename": "snippets/icon_socials.liquid",
+                "size": "15740",
+                "checksumMd5": "d84da3e2394f34181b41697a56c7dbfe"
+              },
+              {
+                "filename": "snippets/icon_theme_svg.liquid",
+                "size": "112050",
+                "checksumMd5": "becf5e8a624a64ec2efec67a04225296"
+              },
+              {
+                "filename": "snippets/incoming-mess.liquid",
+                "size": "1881",
+                "checksumMd5": "4731c2ad6cabe59e4fb525d4b81b9be3"
+              },
+              {
+                "filename": "snippets/inventory.liquid",
+                "size": "7009",
+                "checksumMd5": "804ed30017a2213978b216713da96f0b"
+              },
+              {
+                "filename": "snippets/item-cart-page.liquid",
+                "size": "3761",
+                "checksumMd5": "c3bcdec3041d1be1d7bc396d8c2abaa0"
+              },
+              {
+                "filename": "snippets/item-cart.liquid",
+                "size": "5667",
+                "checksumMd5": "c88c42a8bd8669b9da469f0139110163"
+              },
+              {
+                "filename": "snippets/js-head.liquid",
+                "size": "2578",
+                "checksumMd5": "6cee366b97266b8320183e46823fa07d"
+              },
+              {
+                "filename": "snippets/layout-switch.liquid",
+                "size": "3423",
+                "checksumMd5": "bb9f621fb8cc1aa5148f7083d5310efc"
+              },
+              {
+                "filename": "snippets/line-item-price.liquid",
+                "size": "3027",
+                "checksumMd5": "b61bc3b0ca39b413e31d602f43b51c7b"
+              },
+              {
+                "filename": "snippets/line-item-properties.liquid",
+                "size": "5973",
+                "checksumMd5": "8de1e784e30763f85c09236ea4fa52b5"
+              },
+              {
+                "filename": "snippets/linked-products.liquid",
+                "size": "8372",
+                "checksumMd5": "3beb178517d8ef252bb58d3b1e5ccdc9"
+              },
+              {
+                "filename": "snippets/lookbook-card-product.liquid",
+                "size": "4436",
+                "checksumMd5": "cafb05160b58d7509f3bd1d7f79213d8"
+              },
+              {
+                "filename": "snippets/media-thumb.liquid",
+                "size": "2199",
+                "checksumMd5": "ab20145c7d050481b5f3c321fc95f14c"
+              },
+              {
+                "filename": "snippets/media.liquid",
+                "size": "4935",
+                "checksumMd5": "faa8027db6caeefae2e0b210cf4e9de3"
+              },
+              {
+                "filename": "snippets/mega_menu_blocks.liquid",
+                "size": "35062",
+                "checksumMd5": "ff4da197e901c4adc1ff6ccf31e435f9"
+              },
+              {
+                "filename": "snippets/mega_menu_e_blocks.liquid",
+                "size": "22249",
+                "checksumMd5": "891c9f0a5255764403a3d0e604151c37"
+              },
+              {
+                "filename": "snippets/menu_blocks.liquid",
+                "size": "5253",
+                "checksumMd5": "7f80d570c4ae56cf212b30c54b9de65c"
+              },
+              {
+                "filename": "snippets/menu_blocks_ecomerce.liquid",
+                "size": "6006",
+                "checksumMd5": "d4a3ddc76e151e4dfbe34c76fcca24de"
+              },
+              {
+                "filename": "snippets/menu_mobile.liquid",
+                "size": "62643",
+                "checksumMd5": "0e9de3ce8ad2261043a0ee37b7c2f61c"
+              },
+              {
+                "filename": "snippets/meta-tags.liquid",
+                "size": "1776",
+                "checksumMd5": "9aab74d7f648249df18359aed241f125"
+              },
+              {
+                "filename": "snippets/nav_slider.liquid",
+                "size": "1580",
+                "checksumMd5": "daa172121738a0ddc8292733aa36b0d2"
+              },
+              {
+                "filename": "snippets/newsletter.liquid",
+                "size": "4121",
+                "checksumMd5": "54e99ed0ffc2ff3ac940543c1b8ddf51"
+              },
+              {
+                "filename": "snippets/pagination.liquid",
+                "size": "4573",
+                "checksumMd5": "70c867d030fb51d02fc9c43634e8bb43"
+              },
+              {
+                "filename": "snippets/payment-terms.liquid",
+                "size": "404",
+                "checksumMd5": "f7dc8f2f38f7b2e1e5bae21c5da4f74f"
+              },
+              {
+                "filename": "snippets/pickup-availability.liquid",
+                "size": "6162",
+                "checksumMd5": "91a132c2afcb5013bde745fa8b8a185c"
+              },
+              {
+                "filename": "snippets/pin-product.liquid",
+                "size": "1898",
+                "checksumMd5": "000c6c914a33a7da3a78dedf43e7a054"
+              },
+              {
+                "filename": "snippets/popover-currencies.liquid",
+                "size": "3556",
+                "checksumMd5": "482ccd783678f3b8efe0082b8e185714"
+              },
+              {
+                "filename": "snippets/price.liquid",
+                "size": "7336",
+                "checksumMd5": "02a3ecbc43e0f465bd94cc13c21b93b0"
+              },
+              {
+                "filename": "snippets/product-form-bundle.liquid",
+                "size": "9730",
+                "checksumMd5": "54cdaa6d5c24ac4ae1e03aaaf0318f7d"
+              },
+              {
+                "filename": "snippets/product-form-bundle2.liquid",
+                "size": "11050",
+                "checksumMd5": "38c47b21af415567ee58f918168a28c1"
+              },
+              {
+                "filename": "snippets/product-qty-selector.liquid",
+                "size": "2720",
+                "checksumMd5": "20c741f99b484247c9d45cee0e0eea95"
+              },
+              {
+                "filename": "snippets/product-variant-options.liquid",
+                "size": "11772",
+                "checksumMd5": "9b5a29b14a7d6d6d00cd48ce44265b20"
+              },
+              {
+                "filename": "snippets/pr_loop_item.liquid",
+                "size": "1595",
+                "checksumMd5": "c7542c64409a6dd1451805f162d0dc5a"
+              },
+              {
+                "filename": "snippets/quote_1.liquid",
+                "size": "6983",
+                "checksumMd5": "dcd0f3042abda4aa3b275d6c8aa1481a"
+              },
+              {
+                "filename": "snippets/quote_2.liquid",
+                "size": "5866",
+                "checksumMd5": "d69b3952b22ad6ff6029b6ef6bbb17ba"
+              },
+              {
+                "filename": "snippets/quote_3.liquid",
+                "size": "3437",
+                "checksumMd5": "6b6300d844b90b1d1f7b7479c14444ce"
+              },
+              {
+                "filename": "snippets/rating_star.liquid",
+                "size": "8445",
+                "checksumMd5": "a5f7e3b6d5d3d818d34be5656f3fc04b"
+              },
+              {
+                "filename": "snippets/s-dom-temp.liquid",
+                "size": "7134",
+                "checksumMd5": "85b2780261a22932aabcbdae352cff4f"
+              },
+              {
+                "filename": "snippets/scrolling_badge.liquid",
+                "size": "2882",
+                "checksumMd5": "03f994231990efefb2d7a7f37af5625d"
+              },
+              {
+                "filename": "snippets/search-form.liquid",
+                "size": "20505",
+                "checksumMd5": "171c48639fcf5dea8f3b8fd998cce5d4"
+              },
+              {
+                "filename": "snippets/section-layout-design.liquid",
+                "size": "1856",
+                "checksumMd5": "d891cf8633c44d2d8bd94bc11b08e0db"
+              },
+              {
+                "filename": "snippets/section-top-head.liquid",
+                "size": "13406",
+                "checksumMd5": "7cae9963f88b40ed6f0e7ccbf5153c45"
+              },
+              {
+                "filename": "snippets/share-buttons.liquid",
+                "size": "5302",
+                "checksumMd5": "753c8ecfc25296dc4cd1dc1307c11636"
+              },
+              {
+                "filename": "snippets/shipping-calculator.liquid",
+                "size": "5783",
+                "checksumMd5": "9a3a9338b1be227242f882ffc3a985e7"
+              },
+              {
+                "filename": "snippets/size-list.liquid",
+                "size": "1556",
+                "checksumMd5": "3647095586689dc13738812e10c1b50a"
+              },
+              {
+                "filename": "snippets/sizes.liquid",
+                "size": "601",
+                "checksumMd5": "da56f4e612ec32e2f160d6c0597505cf"
+              },
+              {
+                "filename": "snippets/social-meta-tags.liquid",
+                "size": "1776",
+                "checksumMd5": "ea3aeaf0e1e5a4038a11008d4dd63bdc"
+              },
+              {
+                "filename": "snippets/social_sharing.liquid",
+                "size": "2016",
+                "checksumMd5": "daf35207b41d6be3a4df4324c9bf51d3"
+              },
+              {
+                "filename": "snippets/sort-by-popover.liquid",
+                "size": "1928",
+                "checksumMd5": "5082e956ab84156569df09e76046c61a"
+              },
+              {
+                "filename": "snippets/structured-data.liquid",
+                "size": "8665",
+                "checksumMd5": "52ed236164190d010c4de26b74b3178b"
+              },
+              {
+                "filename": "snippets/sub_menu_blocks.liquid",
+                "size": "5751",
+                "checksumMd5": "f77893f48bf45b0fa97df8292e72ea5d"
+              },
+              {
+                "filename": "snippets/system-bottom.liquid",
+                "size": "8059",
+                "checksumMd5": "634203e4c8bc643595fbd88292eb17c7"
+              },
+              {
+                "filename": "snippets/tjs-cart-button.liquid",
+                "size": "2144",
+                "checksumMd5": "d1f77493ade8d3674ae2fb93b8c9cfff"
+              },
+              {
+                "filename": "snippets/type.liquid",
+                "size": "616",
+                "checksumMd5": "83bd71b0a6c4e4ac55624f16a1f765ec"
+              },
+              {
+                "filename": "snippets/variant-picker.liquid",
+                "size": "12242",
+                "checksumMd5": "0216eefb5b0f65c109ab8b365fd4eded"
+              },
+              {
+                "filename": "snippets/var_adm.liquid",
+                "size": "7232",
+                "checksumMd5": "7b92f97557bb48ce7c9cdfd4fb471d3e"
+              },
+              {
+                "filename": "snippets/vendor.liquid",
+                "size": "657",
+                "checksumMd5": "6f663bc1553d8a6dc1fe8095f4687525"
+              },
+              {
+                "filename": "templates/404.json",
+                "size": "1659",
+                "checksumMd5": "a525dafad15344a240b4f767d61538bb"
+              },
+              {
+                "filename": "templates/article.json",
+                "size": "5224",
+                "checksumMd5": "8ed3fa8fff237b8341148e2453d43a15"
+              },
+              {
+                "filename": "templates/blog.json",
+                "size": "4357",
+                "checksumMd5": "d036bdaa313c8784378ce42d3d8c16e6"
+              },
+              {
+                "filename": "templates/cart.json",
+                "size": "5551",
+                "checksumMd5": "b2c3770c0a87290f099cc6b1590d8326"
+              },
+              {
+                "filename": "templates/collection.a_undated_planner_c.json",
+                "size": "22344",
+                "checksumMd5": "dae98fd5186dca86407d8f4b9cbc7d68"
+              },
+              {
+                "filename": "templates/collection.feelgoodbox.json",
+                "size": "1446",
+                "checksumMd5": "d9dda58001b94a85d04ceba3f016e7ef"
+              },
+              {
+                "filename": "templates/collection.json",
+                "size": "2807",
+                "checksumMd5": "d6713d7431255b2b68dd79893276b880"
+              },
+              {
+                "filename": "templates/customers/account.json",
+                "size": "1550",
+                "checksumMd5": "0e476cf9dd55f0a960fe2e2eea169f99"
+              },
+              {
+                "filename": "templates/customers/activate_account.json",
+                "size": "922",
+                "checksumMd5": "78600d35b3142497598ab2af80014136"
+              },
+              {
+                "filename": "templates/customers/addresses.json",
+                "size": "1544",
+                "checksumMd5": "41dc26faf318b9689358114f1388db6c"
+              },
+              {
+                "filename": "templates/customers/login.json",
+                "size": "2397",
+                "checksumMd5": "f100781523f471903f2b1ef696a528e3"
+              },
+              {
+                "filename": "templates/customers/order.json",
+                "size": "874",
+                "checksumMd5": "cd1db57331e732c99f941cd5f272f5b0"
+              },
+              {
+                "filename": "templates/customers/register.json",
+                "size": "1544",
+                "checksumMd5": "5772b055fa61aa4647c259f5b849c4da"
+              },
+              {
+                "filename": "templates/customers/reset_password.json",
+                "size": "920",
+                "checksumMd5": "141fd529e5535e5e95f76679c23f14ee"
+              },
+              {
+                "filename": "templates/gift_card.liquid",
+                "size": "23688",
+                "checksumMd5": "6f870ef2754bac96ee6d71c064a09114"
+              },
+              {
+                "filename": "templates/index.json",
+                "size": "11933",
+                "checksumMd5": "762016e0d8d4f17985cc92fa01673dc8"
+              },
+              {
+                "filename": "templates/list-collections.json",
+                "size": "2105",
+                "checksumMd5": "0eb46b02c83eea5482306ff9feee3e67"
+              },
+              {
+                "filename": "templates/page.about-us.json",
+                "size": "46016",
+                "checksumMd5": "ee74f4d821d18445c8c074825c72d006"
+              },
+              {
+                "filename": "templates/page.brand-v2.json",
+                "size": "1527",
+                "checksumMd5": "0fd63f0d481fca8dbe05f085553429bf"
+              },
+              {
+                "filename": "templates/page.brands.json",
+                "size": "1422",
+                "checksumMd5": "5d69fbef185bd82a144aab5549018c50"
+              },
+              {
+                "filename": "templates/page.contact-1.json",
+                "size": "8883",
+                "checksumMd5": "12edfc9b5402f547355c7f3b0b90815e"
+              },
+              {
+                "filename": "templates/page.contact-2.json",
+                "size": "5104",
+                "checksumMd5": "a004da86837a066e8c76b025a9f941bb"
+              },
+              {
+                "filename": "templates/page.faq-01.json",
+                "size": "13971",
+                "checksumMd5": "2565c3aa85c5f8c9b60aaa443afb277a"
+              },
+              {
+                "filename": "templates/page.faq-02.json",
+                "size": "13591",
+                "checksumMd5": "81c281d3102c626a364e5fc65e625aa0"
+              },
+              {
+                "filename": "templates/page.iykyk.json",
+                "size": "449",
+                "checksumMd5": "af081958f89d3a82cc49ae417fc627af"
+              },
+              {
+                "filename": "templates/page.json",
+                "size": "676",
+                "checksumMd5": "26cc7c31eb0cace5de4a160570bc3892"
+              },
+              {
+                "filename": "templates/page.kids.json",
+                "size": "63465",
+                "checksumMd5": "c646b8d1779ba0c00bb9cec71ec60933"
+              },
+              {
+                "filename": "templates/page.men.json",
+                "size": "44747",
+                "checksumMd5": "421dd3c5e2350747bdf6f4da121b9550"
+              },
+              {
+                "filename": "templates/page.our-store.json",
+                "size": "29707",
+                "checksumMd5": "40f04ed07a29825685f27a6501ee4709"
+              },
+              {
+                "filename": "templates/page.planner-landing.json",
+                "size": "16571",
+                "checksumMd5": "77ed723d6d43c17a1f537bd3305e6733"
+              },
+              {
+                "filename": "templates/page.store-locations.json",
+                "size": "5731",
+                "checksumMd5": "92584c7a216cc8a4f8988a9b04d3a666"
+              },
+              {
+                "filename": "templates/page.timeline.json",
+                "size": "13529",
+                "checksumMd5": "c97f6c9d54ef3fbc57b07fcc56b36e3e"
+              },
+              {
+                "filename": "templates/page.women.json",
+                "size": "58742",
+                "checksumMd5": "b8ecd0d232d8b75e0e98c3598a0fc21c"
+              },
+              {
+                "filename": "templates/password.json",
+                "size": "789",
+                "checksumMd5": "cd60626752a4ef7eab1529b8f2dfdb2b"
+              },
+              {
+                "filename": "templates/product.a_limited_undated_planner.json",
+                "size": "232197",
+                "checksumMd5": "06b97e04a9c07b7874aa8a0829f4ae8b"
+              },
+              {
+                "filename": "templates/product.a_undated_planner.json",
+                "size": "232184",
+                "checksumMd5": "3c275b6f2b2cfbd9dccf88e6f990f822"
+              },
+              {
+                "filename": "templates/product.a_wedding_planner.json",
+                "size": "150912",
+                "checksumMd5": "b901cfd621b9f265a501f2263e03372b"
+              },
+              {
+                "filename": "templates/product.blackfriday25.json",
+                "size": "17958",
+                "checksumMd5": "131b76873e4604b43f28337691c6ad06"
+              },
+              {
+                "filename": "templates/product.bogo.json",
+                "size": "14478",
+                "checksumMd5": "9af11db2701af8122af6ecb4be76e99d"
+              },
+              {
+                "filename": "templates/product.champagne_heart.json",
+                "size": "79001",
+                "checksumMd5": "f171b73edb3231b577a842ae657afa4e"
+              },
+              {
+                "filename": "templates/product.dated2026.json",
+                "size": "16515",
+                "checksumMd5": "f2b2e7947cb68bfc3c70a61fced5695f"
+              },
+              {
+                "filename": "templates/product.feelgoodbox.json",
+                "size": "27703",
+                "checksumMd5": "d338cc589614ea4c6255665f1b662bce"
+              },
+              {
+                "filename": "templates/product.json",
+                "size": "79031",
+                "checksumMd5": "090fddf53373fe05535e90e75a8272e5"
+              },
+              {
+                "filename": "templates/product.mystery-box-v4.json",
+                "size": "4155",
+                "checksumMd5": "737bd163e9d908717bfcedb3fc73ecea"
+              },
+              {
+                "filename": "templates/product.mysterybox.json",
+                "size": "17420",
+                "checksumMd5": "4148ec8953d505b823b66df7b2b5a78f"
+              },
+              {
+                "filename": "templates/product.mystery_box.json",
+                "size": "3496",
+                "checksumMd5": "f6b9b7f01e3d8dc04896aac152bf3170"
+              },
+              {
+                "filename": "templates/product.only_config.json",
+                "size": "6581",
+                "checksumMd5": "2eb03761d15d892c74b67e498d3ef4dc"
+              },
+              {
+                "filename": "templates/product.preorderdated2026.json",
+                "size": "17860",
+                "checksumMd5": "f0cf7dc396703a5bcc7ed0f4d74abba6"
+              },
+              {
+                "filename": "templates/search.compare.json",
+                "size": "3172",
+                "checksumMd5": "2e5c3d9219d4d195d9f6674b674651ee"
+              },
+              {
+                "filename": "templates/search.json",
+                "size": "1253",
+                "checksumMd5": "d272214599c807a25ce1187b896885a7"
+              },
+              {
+                "filename": "templates/search.wishlist.json",
+                "size": "2448",
+                "checksumMd5": "b7ec642bd288af6b70f0adadf942b347"
+              }
+            ],
+            "pageInfo": {
+              "hasNextPage": false,
+              "endCursor": "InRlbXBsYXRlc1wvc2VhcmNoLndpc2hsaXN0Lmpzb24i"
+            }
+          }
+        }
+      ],
+      "pageInfo": {
+        "hasNextPage": false,
+        "endCursor": "eyJsYXN0X2lkIjoxNDIyNTkzMjMwNzUsImxhc3RfdmFsdWUiOjE0MjI1OTMyMzA3NX0="
+      }
+    }
+  }
+}

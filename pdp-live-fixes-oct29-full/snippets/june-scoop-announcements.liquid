@@ -1,0 +1,19 @@
+{% doc %}
+ @param {section} section - Header section.
+ @param {block} block - Optional announcement controls.
+{% enddoc %}
+{% if block != blank %}
+{% assign s = block.settings %}
+{% assign announcement_font = s.font | font_modify: 'weight', s.weight %}
+{% style %}{{ s.font | font_face: font_display: 'swap' }}{{ announcement_font | font_face: font_display: 'swap' }}{% endstyle %}
+{{ 'june-scoop-announcements.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'june-scoop-announcements.js' | asset_url }}" defer="defer"></script>
+<june-scoop-announcements data-header="TjsPremiumHeader-{{ section.id }}" {{ block.shopify_attributes }} style="--jsa-font:{{ s.font.family | escape }},{{ s.font.fallback_families | escape }};--jsa-size:{{ s.size }}px;--jsa-size-mobile:{{ s.size_mobile }}px;--jsa-weight:{{ s.weight }};--jsa-tracking:{{ s.tracking }}px;--jsa-line:{{ s.line }};{% if s.color != blank %}--jsa-color:{{ s.color }};{% endif %}">
+<script type="application/json">{"desktop":{{ s.desktop | json }},"mobile":{{ s.mobile | json }},"motion":{{ s.motion | json }},"logo_hold":{{ s.logo_hold | json }},"message_hold":{{ s.message_hold | json }},"transition":{{ s.transition | json }},"speed":{{ s.speed | json }},"inset_desktop":{{ s.inset_desktop | json }},"inset_mobile":{{ s.inset_mobile | json }},"pause_label":{{ s.pause_label | json }},"resume_label":{{ s.resume_label | json }}}</script>
+{% capture announcement_arrow %}<svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" style="width:18px;height:18px;flex:none;display:inline-block;vertical-align:middle" xmlns="http://www.w3.org/2000/svg"><path d="M6 18 18 6M6 6h12v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>{% endcapture %}
+{% for i in (1..4) %}
+ {% assign message_key = 'message_' | append: i %}{% assign link_key = 'link_' | append: i %}
+ {% if s[message_key] != blank %}<template>{% if s[link_key] != blank %}<a class="jsa-clip" href="{{ s[link_key] }}">{% else %}<span class="jsa-clip">{% endif %}<span class="jsa-track">{{ s[message_key] | escape | replace: '↗️', announcement_arrow | replace: '↗', announcement_arrow }}</span>{% if s[link_key] != blank %}</a>{% else %}</span>{% endif %}</template>{% endif %}
+{% endfor %}
+</june-scoop-announcements>
+{% endif %}

@@ -1,0 +1,896 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "1763490295f56b04ed": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_42f9700_wb3nUC": {
+          "type": "ai_gen_block_42f9700",
+          "settings": {
+            "heading": "Start 2026 with a <strong>plan</strong>, not a to-do list",
+            "heading_size": 28,
+            "heading_weight": "500",
+            "text_color": "#171717",
+            "tagline": "Premium layouts + thoughtfully crafted sections = your most <strong>productive</strong> & <strong>aesthetic</strong> year yet!",
+            "tagline_size": 16,
+            "tagline_weight": "300",
+            "tagline_color": "#DADADA",
+            "spacing": 4,
+            "glow_color": "#9953ff",
+            "glow_intensity": 20,
+            "animation_speed": 5,
+            "text_alignment": "center",
+            "background_color": "#FFFFFF",
+            "padding_top": 20,
+            "padding_bottom": 12
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_42f9700_wb3nUC"
+      ],
+      "settings": {}
+    },
+    "categories_section_WfRxrP": {
+      "type": "categories-section",
+      "blocks": {
+        "category_TzNFTy": {
+          "type": "_category",
+          "settings": {
+            "collection": "2026-dated-planners",
+            "image": "shopify://shop_images/Gemini_Generated_Image_76hhqs76hhqs76hh.png",
+            "title": "Dated Planner",
+            "collection_link": ""
+          },
+          "blocks": {}
+        },
+        "category_9WLCkp": {
+          "type": "_category",
+          "settings": {
+            "collection": "undated-yearly-planners",
+            "image": "shopify://shop_images/Gemini_Generated_Image_1y0z4a1y0z4a1y0z.png",
+            "title": "Undated Planner",
+            "collection_link": ""
+          },
+          "blocks": {}
+        },
+        "category_4V4UMz": {
+          "type": "_category",
+          "settings": {
+            "collection": "limited-edition",
+            "image": "shopify://shop_images/Gemini_Generated_Image_par0eppar0eppar0.png",
+            "title": "Limited Edition",
+            "collection_link": ""
+          },
+          "blocks": {}
+        },
+        "category_WyQTgQ": {
+          "type": "_category",
+          "settings": {
+            "collection": "undated-limited-hardbound-planners",
+            "image": "shopify://shop_images/Gemini_Generated_Image_1a1ncx1a1ncx1a1n.png",
+            "title": "Hardbound Undated",
+            "collection_link": ""
+          },
+          "blocks": {}
+        },
+        "category_rwNqm9": {
+          "type": "_category",
+          "settings": {
+            "collection": "wedding-planners",
+            "image": "shopify://shop_images/Gemini_Generated_Image_uwiba3uwiba3uwib.png",
+            "title": "Wedding Planner",
+            "collection_link": ""
+          },
+          "blocks": {}
+        },
+        "category_YQJtpy": {
+          "type": "_category",
+          "settings": {
+            "collection": "baby-record-book",
+            "image": "shopify://shop_images/Gemini_Generated_Image_s8xwrus8xwrus8xw.png",
+            "title": "Baby Record Book",
+            "collection_link": ""
+          },
+          "blocks": {}
+        },
+        "categories": {
+          "type": "section-heading",
+          "static": true,
+          "settings": {
+            "alignment": "center",
+            "row_gap": 15,
+            "margin_bottom": 30
+          },
+          "blocks": {
+            "heading_z3yNBK": {
+              "type": "heading",
+              "disabled": true,
+              "settings": {
+                "heading": "<h4>Categories</h4>",
+                "hidden_br_mobile": false,
+                "hidden_on_mobile": false,
+                "line_height": "",
+                "heading_size": "h4",
+                "text_color": "hdt-s-text",
+                "font_size_heading_lg": 50,
+                "font_size_heading_md": 30,
+                "font_size_heading": 24,
+                "font_weight_heading": 600,
+                "letter_spacing_heading": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "heading_z3yNBK"
+          ]
+        }
+      },
+      "block_order": [
+        "category_TzNFTy",
+        "category_9WLCkp",
+        "category_4V4UMz",
+        "category_WyQTgQ",
+        "category_rwNqm9",
+        "category_YQJtpy"
+      ],
+      "name": "t:sections.categories-section.name",
+      "settings": {
+        "title": "",
+        "item_link": "",
+        "color_scheme": "scheme-1",
+        "style": "small",
+        "padding_top": 10,
+        "padding_bottom": 20,
+        "padding_rate": 40
+      }
+    },
+    "heading": {
+      "type": "main-heading",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "spacing_hd": 0,
+        "padding_top": 88,
+        "padding_bottom": 88,
+        "padding_rate": 75
+      }
+    },
+    "collections_list_tabs_MUQKN3": {
+      "type": "collections-list-tabs",
+      "blocks": {
+        "collection_item_APfa9R": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "2026-dated-planners",
+            "title": "2026 Dated Planners",
+            "collection_link": ""
+          }
+        },
+        "collection_item_yWJkjH": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "undated-yearly-planners",
+            "title": "Undated Planners",
+            "collection_link": ""
+          }
+        },
+        "collection_item_dRTmLr": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "limited-edition",
+            "title": "Limited Edition",
+            "collection_link": ""
+          }
+        },
+        "collection_item_MN9fNB": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "undated-limited-hardbound-planners",
+            "title": "Hardbound Undated",
+            "collection_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_item_APfa9R",
+        "collection_item_yWJkjH",
+        "collection_item_dRTmLr",
+        "collection_item_MN9fNB"
+      ],
+      "name": "t:sections.collection_list.name_tabs",
+      "settings": {
+        "sec_heading": "Get Ready for 2026",
+        "heading_tag": "h2",
+        "heading_size": "h3",
+        "text_color": "hdt-s-text",
+        "heading_align": "center",
+        "sec_subheading": "<p>Designed to Inspire Every Day</p>",
+        "subheading_size": "lg",
+        "heading_reverse": false,
+        "btn_heading_collection": false,
+        "heading_gap": 8,
+        "sec_heading_spacing": 11,
+        "collection_list": [],
+        "content_weight": "normal",
+        "text_transform": false,
+        "image_ratio": "adapt_image",
+        "image_size": true,
+        "section_fullwidth": false,
+        "color_scheme": "scheme-67a7ca9f-3333-4245-b79f-2e9849d7e615",
+        "padding_top": 21,
+        "padding_bottom": 36,
+        "padding_rate": 75
+      }
+    },
+    "banner_a4fdVy": {
+      "type": "banner",
+      "blocks": {
+        "banner_item_FngNPF": {
+          "type": "_banner-item",
+          "settings": {
+            "banner_url": "",
+            "banner_target": false,
+            "img_effect": "none",
+            "b_effect": "none",
+            "color_scheme": "",
+            "content_position": "center",
+            "alignment": "center",
+            "content_position_mb": "center",
+            "alignment_mb": "center"
+          },
+          "blocks": {
+            "heading_UtJNRj": {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>UNDATED YEARLY PLANNER</p>",
+                "hidden_br_mobile": false,
+                "hidden_on_mobile": false,
+                "line_height": "hdt-lh-sm",
+                "heading_size": "h5",
+                "text_color": "hdt-s-text",
+                "font_size_heading_lg": 50,
+                "font_size_heading_md": 30,
+                "font_size_heading": 24,
+                "font_weight_heading": 600,
+                "letter_spacing_heading": 0
+              },
+              "blocks": {}
+            },
+            "text_N4by6a": {
+              "type": "text",
+              "disabled": true,
+              "settings": {
+                "text": "<p>SS 2025 New Arrival</p>",
+                "hidden_br_mobile": false,
+                "hidden_on_mobile": false,
+                "text_size": "4xl",
+                "text_color": "hdt-s-text",
+                "font_size_text_lg": 16,
+                "font_size_text_md": 14,
+                "font_size_text": 14,
+                "font_weight_text": 400,
+                "letter_spacing_text": 0
+              },
+              "blocks": {}
+            },
+            "spacer_caMF8A": {
+              "type": "spacer",
+              "disabled": true,
+              "settings": {
+                "direction": false,
+                "space_lg": 50,
+                "space_md": 50,
+                "space": 50
+              },
+              "blocks": {}
+            },
+            "button_ez4EfM": {
+              "type": "button",
+              "settings": {
+                "label": "Shop Now",
+                "link": "",
+                "open_in_new_tab": false,
+                "full_width": false,
+                "style_class": "outline",
+                "font_size": "s",
+                "font_weight": "medium",
+                "font_size_btn": 14,
+                "padding_btn": 30,
+                "min_width_btn": 100,
+                "min_width_dt_btn": 100,
+                "min_height_btn": 40,
+                "icon": "arrow_right",
+                "icon_position": "after",
+                "icon_height": 16,
+                "icon_spacing": 5
+              },
+              "blocks": {}
+            },
+            "banner-media": {
+              "type": "_media",
+              "static": true,
+              "settings": {
+                "source": "video",
+                "video": "shopify://files/videos/Amazon Undated Planners.mp4",
+                "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "heading_UtJNRj",
+            "text_N4by6a",
+            "spacer_caMF8A",
+            "button_ez4EfM"
+          ]
+        },
+        "banner-heading": {
+          "type": "section-heading",
+          "static": true,
+          "settings": {
+            "alignment": "center",
+            "row_gap": 15,
+            "margin_bottom": 30
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "banner_item_FngNPF"
+      ],
+      "name": "Banner Video",
+      "settings": {
+        "image_height": "fixed",
+        "fixed_height": 500,
+        "image_height_mb": "fixed",
+        "fixed_height_mb": 500,
+        "col_dk": "1",
+        "col_tb": "1",
+        "col_mb": "1",
+        "scrollnap": false,
+        "color_scheme": "",
+        "full_width": true,
+        "box_content": false,
+        "gap_r": 20,
+        "gap_c": 20,
+        "gap_r_mb": 20,
+        "gap_c_mb": 20,
+        "padding_top": 5,
+        "padding_bottom": 52,
+        "padding_rate": 49
+      }
+    },
+    "tabs_collections_carousel_kicH3T": {
+      "type": "tabs-collections-carousel",
+      "blocks": {
+        "tab_item_eQJMJH": {
+          "type": "tab_item",
+          "settings": {
+            "title": "Limited Edition Planners",
+            "collection": "limited-edition",
+            "product_list": []
+          }
+        },
+        "tab_item_YDYpeJ": {
+          "type": "tab_item",
+          "settings": {
+            "title": "Undated Yearly Planner",
+            "collection": "undated-yearly-planners",
+            "product_list": []
+          }
+        },
+        "tab_item_npnN4n": {
+          "type": "tab_item",
+          "settings": {
+            "title": "2026 Dated Planner",
+            "collection": "2026-dated-planners",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "tab_item_eQJMJH",
+        "tab_item_YDYpeJ",
+        "tab_item_npnN4n"
+      ],
+      "name": "t:sections.tabs_collections.carousel_name",
+      "settings": {
+        "tabs_heading": "",
+        "heading_size": "h4",
+        "heading_inline": false,
+        "tabs_head_spacing": 20,
+        "tabs_des": "outline",
+        "tab_item_size": "lg",
+        "tab_item_weight": "medium",
+        "text_transform": true,
+        "border_width": 1,
+        "spacing_items": 10,
+        "product_des": "8",
+        "image_ratio": "adapt_image",
+        "image_size": true,
+        "show_vendor": false,
+        "products_count": 8,
+        "col_dk": "4",
+        "col_tb": "2",
+        "col_mb": "1",
+        "navUI": false,
+        "btn_vi": "hover",
+        "nav_des": "default",
+        "nav_shape": "rounded",
+        "nav_size": "xsmall",
+        "nav_pos": "on_border",
+        "nav_icon": "chrvon",
+        "dotUI": false,
+        "use_pagination": "none",
+        "paginate_pos": "center",
+        "dis_pagination": 8,
+        "btn_label": "View all",
+        "btn_style": "outline",
+        "btn_fw": "semibold",
+        "section_fullwidth": false,
+        "color_scheme": "scheme-1",
+        "padding_top": 5,
+        "padding_bottom": 20,
+        "padding_rate": 60
+      }
+    },
+    "testimonial_before_after_KyiaNA": {
+      "type": "testimonial-before-after",
+      "blocks": {
+        "testimonial_ba_item_94jix9": {
+          "type": "_testimonial-ba-item",
+          "settings": {
+            "heading": "",
+            "content": "<p>I got two dated planners — one for home, one for work — and it’s crazy how much more productive I feel. It’s like my brain finally has a system.</p>",
+            "author": "Ayushi Surana",
+            "product": "2026-dated-planner-keep-going",
+            "rating": 5
+          },
+          "blocks": {}
+        },
+        "testimonial_ba_item_fTqLwV": {
+          "type": "_testimonial-ba-item",
+          "settings": {
+            "heading": "",
+            "content": "<p>I ordered two planners and suddenly my coworkers are like ‘send link pls’. The peer pressure is crazy but also… the planners are THAT good.</p>",
+            "author": "Payal Shah",
+            "product": "2026-dated-planner-never-stop-dreaming",
+            "rating": 5
+          },
+          "blocks": {}
+        },
+        "testimonial_ba_item_tWkN8H": {
+          "type": "_testimonial-ba-item",
+          "settings": {
+            "heading": "",
+            "content": "<p>Got two planners and showed them to my besties. Now all of them bought one and are blaming <em>me</em>. You’re welcome.</p>",
+            "author": "Aparna Singh",
+            "product": "2026-dated-planner-keep-going",
+            "rating": 5
+          },
+          "blocks": {}
+        },
+        "heading-testimonials-before-after": {
+          "type": "section-heading",
+          "static": true,
+          "settings": {
+            "alignment": "center",
+            "row_gap": 15,
+            "margin_bottom": 30
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "testimonial_ba_item_94jix9",
+        "testimonial_ba_item_fTqLwV",
+        "testimonial_ba_item_tWkN8H"
+      ],
+      "name": "t:sections.testimonials.name3",
+      "settings": {
+        "content_align": "start",
+        "navUI": false,
+        "nav_des": "default",
+        "dotUI": false,
+        "hor-ver-layout": "horizontal",
+        "bf_af_first": false,
+        "first_img": "shopify://shop_images/cwt_all_19.jpg",
+        "second_img": "shopify://shop_images/cwt_all_17.jpg",
+        "image_ratio": "asos",
+        "image_size": true,
+        "first_text": "#1",
+        "second_text": "#2",
+        "initial_cur_pos": 47,
+        "initial_drag_pos": 50,
+        "color_scheme": "",
+        "pr_rating": "#FF7B54",
+        "section_fullwidth": false,
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_rate": 60
+      }
+    },
+    "1763492720e463e17e": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_42f9700_KE9DbP": {
+          "type": "ai_gen_block_42f9700",
+          "name": "Glowing heading",
+          "settings": {
+            "heading": "Add-to-Cart Magnet",
+            "heading_size": 30,
+            "heading_weight": "700",
+            "text_color": "#171717",
+            "tagline": "",
+            "tagline_size": 12,
+            "tagline_weight": "400",
+            "tagline_color": "#DADADA",
+            "spacing": 16,
+            "glow_color": "#00fffc",
+            "glow_intensity": 20,
+            "animation_speed": 3.5,
+            "text_alignment": "center",
+            "background_color": "#FFFFFF",
+            "padding_top": 12,
+            "padding_bottom": 0
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_b5cf6d8_aGQfWP": {
+          "type": "ai_gen_block_b5cf6d8",
+          "settings": {
+            "product": "2026-dated-planner-show-me-how-good-it-can-get",
+            "card_background": "#F5F5F3",
+            "card_border_radius": 10,
+            "content_padding": 16,
+            "shadow_horizontal": 0,
+            "shadow_vertical": 4,
+            "shadow_blur": 20,
+            "shadow_opacity": 0.4,
+            "shimmer_duration": 4.5,
+            "shimmer_opacity": 0.4,
+            "price_color": "#171717",
+            "price_size": 18,
+            "price_weight": "600",
+            "title_color": "#000000",
+            "title_size": 16,
+            "title_weight": "400"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_42f9700_KE9DbP",
+        "ai_gen_block_b5cf6d8_aGQfWP"
+      ],
+      "settings": {}
+    },
+    "infinite_loop_slider_daQNK6": {
+      "type": "infinite-loop-slider",
+      "blocks": {
+        "image_RVpWcP": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/1_2270f125-454c-4374-b66c-85b7d797fa23.jpg",
+            "link_img": "",
+            "target": false
+          }
+        },
+        "image_Qdh6Qe": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2_bf6e2322-bed0-4ab5-8b1d-a2b5b03d2d8e.jpg",
+            "link_img": "",
+            "target": false
+          }
+        },
+        "image_MhPBXa": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/3_9d8860fe-ebc5-4c83-aa66-8175d1bb1793.jpg",
+            "link_img": "",
+            "target": false
+          }
+        },
+        "heading_tgWUQq": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Match Your Planner To Your Personality</p>",
+            "hidden_br_mobile": false,
+            "hidden_on_mobile": false,
+            "heading_size": "h3",
+            "text_color": "hdt-s-text",
+            "font_size_heading_lg": 50,
+            "font_size_heading_md": 30,
+            "font_size_heading": 24,
+            "font_weight_heading": 600,
+            "letter_spacing_heading": 0
+          }
+        },
+        "spacer_TAV8X9": {
+          "type": "spacer",
+          "disabled": true,
+          "settings": {
+            "direction": false,
+            "space_lg": 20,
+            "space_md": 20,
+            "space": 20
+          }
+        },
+        "text_gRmJYP": {
+          "type": "text",
+          "settings": {
+            "text": "<h1><em><strong>Find Your Vibe</strong></em></h1>",
+            "adding_border": false,
+            "hidden_br_mobile": false,
+            "hidden_on_mobile": true,
+            "text_size": "base",
+            "text_color": "hdt-s-text",
+            "font_size_text_lg": 16,
+            "font_size_text_md": 14,
+            "font_size_text": 14,
+            "font_weight_text": 400,
+            "letter_spacing_text": 0
+          }
+        },
+        "spacer_rFU99j": {
+          "type": "spacer",
+          "settings": {
+            "direction": false,
+            "space_lg": 20,
+            "space_md": 20,
+            "space": 20
+          }
+        },
+        "button_EGmwG3": {
+          "type": "button",
+          "settings": {
+            "label": "Choose Your Planner",
+            "link": "shopify://collections/2026-dated-planners",
+            "open_in_new_tab": false,
+            "full_width": false,
+            "style_class": "solid",
+            "font_size": "m",
+            "font_weight": "bold",
+            "font_size_btn": 14,
+            "padding_btn": 30,
+            "min_width_btn": 100,
+            "min_width_dt_btn": 100,
+            "min_height_btn": 40,
+            "icon": "arrow_simple",
+            "icon_position": "after",
+            "icon_height": 14,
+            "icon_spacing": 5
+          }
+        },
+        "spacer_dJrHrH": {
+          "type": "spacer",
+          "disabled": true,
+          "settings": {
+            "direction": false,
+            "space_lg": 20,
+            "space_md": 20,
+            "space": 20
+          }
+        },
+        "countdown_Rx4atE": {
+          "type": "countdown",
+          "disabled": true,
+          "settings": {
+            "color_scheme": "",
+            "cd_style": "solid",
+            "rounded_full": false,
+            "space_item": 15,
+            "year": 2030,
+            "month": 4,
+            "day": 19,
+            "hour": 12,
+            "minute": 0,
+            "effect_cd": "none",
+            "uppercase": false,
+            "prepend_number": false,
+            "hide_on_complete": false,
+            "mess_complete": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_RVpWcP",
+        "image_Qdh6Qe",
+        "image_MhPBXa",
+        "heading_tgWUQq",
+        "spacer_TAV8X9",
+        "text_gRmJYP",
+        "spacer_rFU99j",
+        "button_EGmwG3",
+        "spacer_dJrHrH",
+        "countdown_Rx4atE"
+      ],
+      "name": "t:sections.infinite-loop-slider.name",
+      "settings": {
+        "image_height": "adapt_image",
+        "fixed_height": 860,
+        "image_height_mb": "adapt_image",
+        "fixed_height_mb": 300,
+        "use_bg_content": false,
+        "color_scheme": "",
+        "col_dk": "3",
+        "col_tb": "2",
+        "col_mb": "1",
+        "speed": 0.2,
+        "direction": "rtl",
+        "marquee_pause_when_hover": false,
+        "content_position": "end-center",
+        "content_align": "center",
+        "content_position_mb": "end-center",
+        "content_align_mb": "center",
+        "padding_top": 5,
+        "padding_bottom": 5,
+        "padding_rate": 21
+      }
+    },
+    "banner_D3BFyp": {
+      "type": "banner",
+      "blocks": {
+        "banner_item_x8fGVQ": {
+          "type": "_banner-item",
+          "settings": {
+            "banner_url": "",
+            "banner_target": false,
+            "img_effect": "none",
+            "b_effect": "none",
+            "color_scheme": "",
+            "content_position": "center",
+            "alignment": "center",
+            "content_position_mb": "center",
+            "alignment_mb": "center"
+          },
+          "blocks": {
+            "heading_xjnULF": {
+              "type": "heading",
+              "disabled": true,
+              "settings": {
+                "heading": "<p>SALE OFF UP TO 70%</p>",
+                "hidden_br_mobile": false,
+                "hidden_on_mobile": false,
+                "line_height": "",
+                "heading_size": "h5",
+                "text_color": "hdt-s-text",
+                "font_size_heading_lg": 50,
+                "font_size_heading_md": 30,
+                "font_size_heading": 24,
+                "font_weight_heading": 600,
+                "letter_spacing_heading": 0
+              },
+              "blocks": {}
+            },
+            "text_xtUyQQ": {
+              "type": "text",
+              "disabled": true,
+              "settings": {
+                "text": "<p>SS 2025 New Arrival</p>",
+                "hidden_br_mobile": false,
+                "hidden_on_mobile": false,
+                "text_size": "4xl",
+                "text_color": "hdt-s-text",
+                "font_size_text_lg": 16,
+                "font_size_text_md": 14,
+                "font_size_text": 14,
+                "font_weight_text": 400,
+                "letter_spacing_text": 0
+              },
+              "blocks": {}
+            },
+            "spacer_pAW4az": {
+              "type": "spacer",
+              "disabled": true,
+              "settings": {
+                "direction": false,
+                "space_lg": 50,
+                "space_md": 50,
+                "space": 50
+              },
+              "blocks": {}
+            },
+            "button_PXWkHN": {
+              "type": "button",
+              "disabled": true,
+              "settings": {
+                "label": "Shop now",
+                "link": "",
+                "open_in_new_tab": false,
+                "full_width": false,
+                "style_class": "solid",
+                "font_size": "m",
+                "font_weight": "normal",
+                "font_size_btn": 14,
+                "padding_btn": 30,
+                "min_width_btn": 100,
+                "min_width_dt_btn": 100,
+                "min_height_btn": 40,
+                "icon": "none",
+                "icon_position": "after",
+                "icon_height": 16,
+                "icon_spacing": 5
+              },
+              "blocks": {}
+            },
+            "banner-media": {
+              "type": "_media",
+              "static": true,
+              "settings": {
+                "source": "video",
+                "video": "shopify://files/videos/gold (2).mp4",
+                "external_video_url": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "heading_xjnULF",
+            "text_xtUyQQ",
+            "spacer_pAW4az",
+            "button_PXWkHN"
+          ]
+        },
+        "banner-heading": {
+          "type": "section-heading",
+          "static": true,
+          "settings": {
+            "alignment": "center",
+            "row_gap": 15,
+            "margin_bottom": 30
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "banner_item_x8fGVQ"
+      ],
+      "name": "Banner Video",
+      "settings": {
+        "image_height": "adapt_image",
+        "fixed_height": 500,
+        "image_height_mb": "adapt_image",
+        "fixed_height_mb": 500,
+        "col_dk": "1",
+        "col_tb": "1",
+        "col_mb": "1",
+        "scrollnap": false,
+        "color_scheme": "",
+        "full_width": true,
+        "box_content": false,
+        "gap_r": 20,
+        "gap_c": 20,
+        "gap_r_mb": 20,
+        "gap_c_mb": 20,
+        "padding_top": 30,
+        "padding_bottom": 28,
+        "padding_rate": 49
+      }
+    }
+  },
+  "order": [
+    "1763490295f56b04ed",
+    "categories_section_WfRxrP",
+    "heading",
+    "collections_list_tabs_MUQKN3",
+    "banner_a4fdVy",
+    "tabs_collections_carousel_kicH3T",
+    "testimonial_before_after_KyiaNA",
+    "1763492720e463e17e",
+    "infinite_loop_slider_daQNK6",
+    "banner_D3BFyp"
+  ]
+}

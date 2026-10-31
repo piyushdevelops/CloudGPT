@@ -1,0 +1,59 @@
+{
+  "responsive": [
+    {
+      "height": 719.078125,
+      "overflow": false,
+      "paper": 138.20538330078125,
+      "stage": 305,
+      "width": 320,
+      "year": 83.91455078125
+    },
+    {
+      "height": 682.796875,
+      "overflow": false,
+      "paper": 172.83799743652344,
+      "stage": 375,
+      "width": 390,
+      "year": 102.26605224609376
+    },
+    {
+      "height": 650.796875,
+      "overflow": false,
+      "paper": 353.1280517578125,
+      "stage": 735,
+      "width": 750,
+      "year": 131.12344360351562
+    },
+    {
+      "height": 488.453125,
+      "overflow": false,
+      "paper": 320.3232727050781,
+      "stage": 1009,
+      "width": 1024,
+      "year": 201.38714599609375
+    },
+    {
+      "height": 472.453125,
+      "overflow": false,
+      "paper": 455.7790832519531,
+      "stage": 1425,
+      "width": 1440,
+      "year": 314.6620178222656
+    },
+    {
+      "height": 472.453125,
+      "overflow": false,
+      "paper": 543.92041015625,
+      "stage": 1680,
+      "width": 2560,
+      "year": 327.7774658203125
+    }
+  ],
+  "mobile": {
+    "height": 682.796875,
+    "width": 375,
+    "y": 3535.234375
+  },
+  "nativeEmailTypeMismatch": true,
+  "submitted": false
+}

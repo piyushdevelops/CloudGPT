@@ -1,0 +1,126 @@
+{% liquid
+  assign tier1_price = section.settings.tier1_price | default: 1499
+  assign tier1_value = section.settings.tier1_value | default: 3000
+%}
+<section id="TjsMysteryValue-{{ section.id }}" class="tjs-mv4 tjs-mv4-value" style="--tjs-value-tape-angle:{{ section.settings.tape_angle }}deg;">
+  <div class="tjs-mv4__shell">
+    <div class="tjs-mv4-value__panel" style="min-height:{{ section.settings.desktop_height }}px;">
+      <div>
+        {% if section.settings.eyebrow != blank %}<div class="tjs-mv4__eyebrow" style="color:rgba(255,255,255,.55);margin-bottom:14px">{{ section.settings.eyebrow }}</div>{% endif %}
+        <h2 class="tjs-mv4-value__headline tjs-mv5-manual-heading" data-reveal aria-label="{{ section.settings.line1 | escape }} {{ section.settings.line2 | escape }} {{ section.settings.line3 | escape }}"><span class="tjs-mv5-manual-line">{{ section.settings.line1 }}</span><span class="tjs-mv5-manual-line">{{ section.settings.line2 }}</span><span class="tjs-mv5-manual-line">{{ section.settings.line3 }}</span></h2>
+        {% if section.settings.show_tape %}<div class="tjs-mv4-value__tape" data-mystery-bind="tape">₹{{ tier1_value }}+ GUARANTEED</div>{% endif %}
+      </div>
+      <div class="tjs-mv4-value__data">
+        <div class="tjs-mv4-value__datum" data-reveal><label>{{ section.settings.pay_label }}</label><strong class="tjs-mv4-value-swap" data-mystery-bind="price">₹{{ tier1_price }}</strong></div>
+        <div class="tjs-mv4-value__datum" data-reveal><label>{{ section.settings.value_label }}</label><strong class="tjs-mv4-value-swap" data-mystery-bind="value">₹{{ tier1_value }}+</strong></div>
+      </div>
+      {% if section.settings.footer != blank %}<div class="tjs-mv4-value__footer">{{ section.settings.footer }}</div>{% endif %}
+    </div>
+  </div>
+</section>
+<style>@media(max-width:749px){#TjsMysteryValue-{{ section.id }} .tjs-mv4-value__panel{min-height:{{ section.settings.mobile_height }}px}}</style>
+{% schema %}
+{
+  "name": "TJS Mystery Value",
+  "tag": "section",
+  "class": "tjs-mystery-v4-value-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "VALUE / GUARANTEED"
+    },
+    {
+      "type": "text",
+      "id": "line1",
+      "label": "Headline line 1",
+      "default": "THE VALUE"
+    },
+    {
+      "type": "text",
+      "id": "line2",
+      "label": "Headline line 2",
+      "default": "ISN'T THE"
+    },
+    {
+      "type": "text",
+      "id": "line3",
+      "label": "Headline line 3",
+      "default": "MYSTERY."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tape",
+      "label": "Show guaranteed-value tape",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "tape_angle",
+      "label": "Tape angle",
+      "min": -12,
+      "max": 12,
+      "step": 1,
+      "unit": "deg",
+      "default": -7
+    },
+    {
+      "type": "text",
+      "id": "pay_label",
+      "label": "Pay label",
+      "default": "YOU PAY"
+    },
+    {
+      "type": "text",
+      "id": "value_label",
+      "label": "Value label",
+      "default": "GUARANTEED VALUE"
+    },
+    {
+      "type": "textarea",
+      "id": "footer",
+      "label": "Footer copy",
+      "default": "What’s actually inside? Still classified."
+    },
+    {
+      "type": "number",
+      "id": "tier1_price",
+      "label": "Initial price fallback",
+      "default": 1499,
+      "info": "Updates automatically when the hero tier changes."
+    },
+    {
+      "type": "number",
+      "id": "tier1_value",
+      "label": "Initial value fallback",
+      "default": 3000
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Desktop panel height",
+      "min": 480,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 640
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Mobile panel height",
+      "min": 420,
+      "max": 700,
+      "step": 20,
+      "unit": "px",
+      "default": 540
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS Mystery Value"
+    }
+  ]
+}
+{% endschema %}

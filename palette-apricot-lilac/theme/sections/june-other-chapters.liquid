@@ -1,0 +1,676 @@
+{% liquid
+ assign typography = section.blocks | where: 'type', 'typography' | first
+ assign type = typography.settings
+ assign chapters = section.blocks | where: 'type', 'chapter'
+%}
+{% style %}
+#JuneChapters-{{ section.id }}{--jc-bg:{{ section.settings.background }};--jc-ink:{{ section.settings.ink }};--jc-accent:{{ section.settings.accent }};--jc-height:{{ section.settings.height }}px;--jc-offset:{{ section.settings.offset }}px;--jc-duration:{{ section.settings.duration }}ms;}
+{% assign face = type.heading_font | default: section.settings.fallback_font %}{% assign weight = type.heading_weight | default: 900 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneChapters-{{ section.id }}{--jc-heading-font:{{ face.family }},{{ face.fallback_families }};--jc-heading-weight:{{ type.heading_weight | default: 900 }};--jc-heading-size:{{ type.heading_size | default: 62 }}px;--jc-heading-mobile:{{ type.heading_mobile | default: 42 }}px;--jc-heading-tracking:{{ type.heading_tracking | default: -2 | divided_by: 100.0 }}em;--jc-heading-leading:{{ type.heading_leading | default: 105 | divided_by: 100.0 }};}
+{% assign face = type.title_font | default: section.settings.fallback_font %}{% assign weight = type.title_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneChapters-{{ section.id }}{--jc-title-font:{{ face.family }},{{ face.fallback_families }};--jc-title-weight:{{ type.title_weight | default: 600 }};--jc-title-size:{{ type.title_size | default: 26 }}px;--jc-title-mobile:{{ type.title_mobile | default: 23 }}px;--jc-title-tracking:{{ type.title_tracking | default: -2 | divided_by: 100.0 }}em;--jc-title-leading:{{ type.title_leading | default: 120 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign weight = type.body_weight | default: 400 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneChapters-{{ section.id }}{--jc-body-font:{{ face.family }},{{ face.fallback_families }};--jc-body-weight:{{ type.body_weight | default: 400 }};--jc-body-size:{{ type.body_size | default: 18 }}px;--jc-body-mobile:{{ type.body_mobile | default: 16 }}px;--jc-body-tracking:{{ type.body_tracking | default: -1 | divided_by: 100.0 }}em;--jc-body-leading:{{ type.body_leading | default: 150 | divided_by: 100.0 }};}
+{% assign face = type.button_font | default: section.settings.fallback_font %}{% assign weight = type.button_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneChapters-{{ section.id }}{--jc-button-font:{{ face.family }},{{ face.fallback_families }};--jc-button-weight:{{ type.button_weight | default: 600 }};--jc-button-size:{{ type.button_size | default: 14 }}px;--jc-button-mobile:{{ type.button_mobile | default: 14 }}px;--jc-button-tracking:{{ type.button_tracking | default: -1 | divided_by: 100.0 }}em;--jc-button-leading:{{ type.button_leading | default: 130 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign bold = face | font_modify: 'weight', '700' %}{{ bold | font_face: font_display: 'swap' }}
+{% endstyle %}
+{% capture arrow %}<span class="jc__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{% endcapture %}
+{% if chapters.size > 0 %}
+<june-chapters class="jc" id="JuneChapters-{{ section.id }}" data-scroll="{{ section.settings.scroll }}" data-motion="{{ section.settings.motion }}" data-step="{{ section.settings.step }}" data-editor="{{ request.design_mode }}" data-pause-label="{{ section.settings.pause | escape }}" data-resume-label="{{ section.settings.resume | escape }}" aria-label="{{ section.settings.eyebrow | escape }}">
+ <div class="jc__stage">
+  <a class="jc__skip jc__button-type" href="#JuneChaptersEnd-{{ section.id }}">{{ section.settings.skip | escape }}</a>
+  <div class="jc__navigation">
+   <div class="jc__tabs" role="group" aria-label="{{ section.settings.navigation | escape }}">{% for block in chapters %}<button class="jc__tab jc__button-type" type="button" data-select="{{ forloop.index0 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="JuneChapterTitle-{{ section.id }}-{{ forloop.index0 }}"><span class="jc__dot" aria-hidden="true"></span>{{ block.settings.label | escape }}</button>{% endfor %}</div>
+   <div class="jc__motion"><p class="jc__hint jc__button-type">{{ section.settings.hint | escape }}</p><button class="jc__pause jc__button-type" type="button" aria-pressed="false" data-pause>{{ section.settings.pause | escape }}</button></div>
+  </div>
+  <div class="jc__scenes">
+  {% for block in chapters %}
+   {% liquid
+    assign product = block.settings.product
+    assign image_index = block.settings.image_number | minus: 1
+    assign scene = block.settings.image | default: product.images[image_index] | default: product.featured_image
+    assign mobile_scene = block.settings.mobile_image | default: scene
+    assign write_index = block.settings.write_number | minus: 1
+    assign wipe_index = block.settings.wipe_number | minus: 1
+    assign write_image = product.images[write_index]
+    assign wipe_image = product.images[wipe_index]
+    assign alt = block.settings.alt | default: scene.alt | default: product.title
+   %}
+   <article class="jc__scene" data-scene="{{ forloop.index0 }}" data-effect="{{ block.settings.effect }}" data-block="{{ block.id }}" style="--jc-scene:{{ block.settings.background }};--jc-decoration:{{ block.settings.decoration }};--jc-local:0" aria-labelledby="JuneChapterTitle-{{ section.id }}-{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+    <div class="jc__copy">
+     <p class="jc__eyebrow jc__button-type">{{ section.settings.eyebrow | escape }} <span aria-hidden="true"> / 0{{ forloop.index }}</span></p>
+     <h2 class="jc__heading" id="JuneChapterTitle-{{ section.id }}-{{ forloop.index0 }}">{{ block.settings.heading | escape }}{% if block.settings.heading_second != blank %}<span>{{ block.settings.heading_second | escape }}</span>{% endif %}</h2>
+     <div class="jc__body">{{ block.settings.body }}</div>
+     {% if block.settings.show_shop and block.settings.collection != blank %}<a class="jc__primary jc__button-type" href="{{ block.settings.collection.url }}">{{ block.settings.shop | escape }}{{ arrow }}</a>{% endif %}
+     {% if block.settings.note != blank %}<p class="jc__note jc__body">{{ block.settings.note | escape }}</p>{% endif %}
+    </div>
+    <div class="jc__visual">
+     {% if scene != blank %}<picture class="jc__photo"><source media="(max-width:900px)" srcset="{{ mobile_scene | image_url: width: 600 }} 600w, {{ mobile_scene | image_url: width: 1000 }} 1000w" sizes="100vw">{{ scene | image_url: width: 1400 | image_tag: widths: '500,900,1400', sizes: '(min-width:1680px) 1000px, (min-width:901px) 58vw, 100vw', loading: 'lazy', alt: alt }}</picture>{% endif %}
+     {% if block.settings.effect == 'petals' %}<div class="jc__petals" aria-hidden="true">{% for i in (1..12) %}<i style="--n:{{ i }};--angle:{{ i | times: 30 }}deg"></i>{% endfor %}</div>{% endif %}
+     {% if block.settings.effect == 'wipe' and write_image != blank and wipe_image != blank %}
+      <div class="jc__write" aria-hidden="true">{{ write_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: '' }}</div>
+      <div class="jc__wipe" aria-hidden="true">{{ wipe_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: '' }}</div>
+     {% endif %}
+     {% if block.settings.effect == 'memories' %}<div class="jc__footprints" aria-hidden="true">{% for i in (1..2) %}<svg viewBox="0 0 70 120" style="--foot:{{ i }}"><ellipse cx="35" cy="75" rx="17" ry="32"/><ellipse cx="16" cy="28" rx="9" ry="13"/><ellipse cx="34" cy="18" rx="7" ry="10"/><ellipse cx="49" cy="20" rx="6" ry="9"/><ellipse cx="60" cy="30" rx="5" ry="7"/><ellipse cx="65" cy="43" rx="4" ry="6"/></svg>{% endfor %}</div>{% endif %}
+    </div>
+   </article>
+  {% endfor %}
+  </div>
+
+ </div>
+</june-chapters>
+<div id="JuneChaptersEnd-{{ section.id }}" tabindex="-1"></div>
+{% endif %}
+{% stylesheet %}
+june-chapters.jc{display:block;max-width:1680px;margin:auto;color:var(--jc-ink);background:var(--jc-bg)}.jc *{box-sizing:border-box}.jc h2,.jc p{margin:0;color:inherit}.jc a{color:inherit;text-decoration:none}.jc button{color:inherit;cursor:pointer;appearance:none}.jc button:focus-visible,.jc a:focus-visible{outline:2px solid currentColor;outline-offset:5px}.jc strong{font-weight:700}
+.jc .jc__heading{font-family:var(--jc-heading-font);font-size:var(--jc-heading-size);font-weight:var(--jc-heading-weight);letter-spacing:var(--jc-heading-tracking);line-height:var(--jc-heading-leading)}
+.jc .jc__title{font-family:var(--jc-title-font);font-size:var(--jc-title-size);font-weight:var(--jc-title-weight);letter-spacing:var(--jc-title-tracking);line-height:var(--jc-title-leading)}
+.jc .jc__body{font-family:var(--jc-body-font);font-size:var(--jc-body-size);font-weight:var(--jc-body-weight);letter-spacing:var(--jc-body-tracking);line-height:var(--jc-body-leading)}
+.jc .jc__button-type{font-family:var(--jc-button-font);font-size:var(--jc-button-size);font-weight:var(--jc-button-weight);letter-spacing:var(--jc-button-tracking);line-height:var(--jc-button-leading)}
+.jc__stage{position:relative}.jc__scene{display:grid;grid-template-columns:42% 58%;background:var(--jc-scene);min-height:600px}.jc__copy{align-self:center;padding:48px;z-index:2}.jc__eyebrow{text-transform:uppercase;letter-spacing:.12em!important}.jc .jc__heading{margin:18px 0 24px;overflow-wrap:break-word}.jc__heading span{display:block}.jc .jc__primary{display:inline-flex;align-items:center;justify-content:space-between;gap:22px;min-height:52px;margin-top:28px;padding:9px 10px 9px 20px;border:1px solid #191816;border-radius:999px;background:var(--jc-accent);color:#191816;box-shadow:-2px 1px 0 #191816}.jc__arrow{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;background:#191816;color:var(--jc-accent)}.jc__arrow svg{width:18px;height:18px}.jc .jc__note{margin-top:24px;opacity:.7;font-size:calc(var(--jc-body-size)*.85)}
+.jc__visual{min-width:0;position:relative;overflow:hidden;isolation:isolate}.jc__photo,.jc__write,.jc__wipe{display:block;position:absolute;inset:0}.jc__visual img{display:block;width:100%;height:100%;object-fit:contain}.jc__visual:after{content:"";position:absolute;inset:0 auto 0 0;width:7%;background:linear-gradient(90deg,var(--jc-scene),transparent);pointer-events:none}.jc__write,.jc__wipe{opacity:0;background:var(--jc-scene);pointer-events:none}.jc__write{opacity:var(--write,0)}.jc__wipe{opacity:var(--wipe,0);clip-path:inset(0 calc((1 - var(--wipe,0))*100%) 0 0)}
+.jc__petals{position:absolute;inset:0;pointer-events:none}.jc__petals i{position:absolute;left:50%;top:50%;width:24px;height:42px;border-radius:85% 10% 85% 15%;background:linear-gradient(135deg,#fff8,var(--jc-decoration));box-shadow:2px 3px 6px #704b3220;transform:rotate(var(--angle)) translateY(calc(-100px - var(--jc-local)*190px)) rotate(25deg);opacity:.65}.jc__footprints{position:absolute;left:5%;bottom:6%;display:flex;gap:12px;transform:rotate(-18deg);pointer-events:none}.jc__footprints svg{width:50px;height:85px;fill:var(--jc-decoration);opacity:var(--memory,1);transform:translateY(calc((1 - var(--memory,1))*30px))}.jc__footprints svg:nth-child(2){margin-top:32px;transform:scaleX(-1) translateY(calc((1 - var(--memory,1))*30px))}
+.jc__navigation,.jc__skip{display:none}.jc[data-ready=true] .jc__stage{height:var(--jc-height);min-height:580px}.jc[data-ready=true] .jc__scene{position:absolute;inset:0;min-height:0;visibility:hidden;opacity:0;pointer-events:none;padding-bottom:100px}.jc[data-ready=true] .jc__scene[data-active=true]{visibility:visible;opacity:1;pointer-events:auto}.jc[data-ready=true] .jc__scene[data-active=true] .jc__copy{animation:jc-reveal var(--jc-duration) ease both}.jc[data-ready=true] .jc__scene[data-effect=memories] .jc__photo{transform:translateY(calc((1 - var(--memory,1))*25px)) rotate(calc((1 - var(--memory,1))*3deg))}
+@keyframes jc-reveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.jc[data-ready=true] .jc__navigation{display:flex;position:absolute;bottom:0;left:0;right:0;z-index:3;justify-content:space-between;align-items:center;gap:24px;padding:20px 48px;border-top:1px solid #1112;background:var(--jc-current,var(--jc-bg))}.jc__tabs{display:flex;gap:28px;position:relative}.jc__tabs:before{content:"";position:absolute;left:20px;right:20px;top:9px;height:1px;background:#1114}.jc .jc__tab{position:relative;min-width:75px;min-height:50px;border:0;background:transparent;padding:0 5px;display:flex;flex-direction:column;align-items:center;gap:12px}.jc__dot{display:block;width:18px;height:18px;border-radius:50%;border:1px solid #1115;background:var(--jc-current,var(--jc-bg));z-index:1}.jc__tab[aria-pressed=true] .jc__dot{background:var(--jc-accent);border:2px solid #191816}.jc__tab[aria-pressed=true]{text-decoration:underline;text-underline-offset:4px}.jc__motion{display:flex;gap:20px;align-items:center}.jc .jc__hint{opacity:.65;font-size:calc(var(--jc-button-size)*.85)}.jc .jc__pause{border:1px solid #1115;background:none;border-radius:999px;min-height:44px;padding:9px 14px}
+.jc[data-pinned=true]{height:var(--jc-runway)}.jc[data-pinned=true] .jc__stage{position:sticky;top:var(--jc-offset);height:min(var(--jc-height),calc(100svh - var(--jc-offset) - 16px));min-height:0}.jc[data-ready=true] .jc__skip:focus{display:block;position:absolute;top:12px;left:12px;background:var(--jc-bg);padding:12px;z-index:6}.jc[data-ready=true] .jc__skip{display:block;position:absolute;left:-10000px}.jc[data-paused=true] .jc__hint{visibility:hidden}.jc[data-motion=false] .jc__petals,.jc[data-motion=false] .jc__footprints{display:none}
+@media(min-width:901px) and (max-width:1200px){.jc__copy{padding:28px}.jc .jc__heading{font-size:calc(var(--jc-heading-size)*.8)}.jc[data-ready=true] .jc__navigation{padding-inline:28px}.jc__motion{gap:10px}}
+@media(max-width:900px){.jc__scene{display:flex;flex-direction:column;min-height:650px}.jc__visual{order:0;min-height:300px;height:350px}.jc__copy{order:1;padding:22px 20px;text-align:center;align-self:stretch}.jc .jc__heading{margin:10px 0 14px}.jc .jc__primary{margin-top:18px}.jc__visual:after{inset:auto 0 0;width:100%;height:8%;background:linear-gradient(0deg,var(--jc-scene),transparent)}.jc[data-ready=true] .jc__stage{height:800px;min-height:0}.jc[data-ready=true] .jc__scene{padding-bottom:132px}.jc[data-ready=true] .jc__visual{height:auto;min-height:180px;flex:1}.jc[data-ready=true] .jc__copy{flex:none;padding:14px 20px 20px}.jc[data-ready=true] .jc__navigation{flex-direction:column;gap:12px;padding:14px 20px}.jc__tabs{width:100%;justify-content:space-around;gap:12px}.jc__tabs:before{left:16%;right:16%}.jc__motion{width:100%;justify-content:center}.jc .jc__hint{font-size:11px}.jc .jc__pause{min-height:32px;padding:6px 12px;font-size:11px}.jc[data-pinned=true] .jc__stage{height:calc(100svh - var(--jc-offset) - 8px);max-height:850px}.jc .jc__eyebrow{font-size:11px}.jc .jc__note{margin-top:16px;font-size:14px}
+.jc .jc__heading{font-size:var(--jc-heading-mobile)}
+.jc .jc__title{font-size:var(--jc-title-mobile)}
+.jc .jc__body{font-size:var(--jc-body-mobile)}
+.jc .jc__button-type{font-size:var(--jc-button-mobile)}
+.jc .jc__eyebrow{font-size:11px}.jc .jc__hint,.jc .jc__pause{font-size:11px}.jc__petals i{width:18px;height:30px}.jc__footprints svg{width:32px;height:56px}}
+.jc[data-paused=true] *,.jc[data-motion=false] *{animation:none!important;transition:none!important}
+@media(prefers-reduced-motion:reduce){.jc *{animation:none!important;transition:none!important}.jc__petals,.jc__footprints{display:none}}
+
+.jc{scroll-margin-top:110px}[id^="JuneChaptersEnd-"]{scroll-margin-top:110px}.jc[data-ready=true] .jc__skip{position:absolute;top:10px;left:20px;clip:auto;clip-path:none;width:auto;height:auto;overflow:visible;z-index:8;padding:8px 12px;min-height:44px;background:var(--jc-current,var(--jc-bg));border:1px solid #1114;border-radius:999px}.jc .jc__pause{min-height:44px}.jc__copy{padding-top:65px}.jc .jc__note{opacity:1}
+@media(max-width:900px){.jc[data-ready=true] .jc__stage{height:auto;min-height:660px}.jc[data-ready=true] .jc__scene{min-height:660px;padding-bottom:100px}.jc[data-ready=true] .jc__visual{flex:none;height:260px;min-height:0}.jc[data-ready=true] .jc__copy{padding:18px 20px}.jc__navigation{min-height:88px}.jc .jc__pause{font-size:var(--jc-button-mobile)}.jc__motion:has(.jc__hint[hidden]){display:none}.jc[data-ready=true] .jc__skip{top:8px;left:12px}}
+
+
+@media(max-width:900px){.jc[data-ready=true] .jc__stage{height:auto;min-height:0;display:flex;flex-direction:column;padding-top:0}.jc[data-ready=true] .jc__navigation{position:relative;inset:auto;order:0;min-height:0;padding:12px 16px;background:var(--jc-current);z-index:3}.jc__tabs{padding:0}.jc__dot{display:none}.jc[data-ready=true] .jc__scenes{position:relative;order:1;min-height:0}.jc[data-ready=true] .jc__scene{position:relative;inset:auto;display:none;min-height:0;padding:0 0 18px;opacity:1}.jc[data-ready=true] .jc__scene[data-active=true]{display:flex}.jc[data-ready=true] .jc__visual{height:210px;min-height:0}.jc[data-ready=true] .jc__copy{padding:18px 20px 4px}.jc[data-ready=true] .jc__skip{position:relative;inset:auto;order:2;align-self:center;margin:0 0 12px}.jc__scene .jc__heading{margin-top:8px}.jc__scene .jc__primary{margin-top:16px}}
+
+{% endstylesheet %}
+{% javascript %}
+if(!customElements.get('june-chapters'))customElements.define('june-chapters',class extends HTMLElement{
+ connectedCallback(){
+ this.controller?.abort();this.controller=new AbortController();const o={signal:this.controller.signal};
+ this.scenes=[...this.querySelectorAll('[data-scene]')];this.tabs=[...this.querySelectorAll('[data-select]')];this.stage=this.querySelector('.jc__stage');this.active=-1;this.paused=false;this.reduced=matchMedia('(prefers-reduced-motion: reduce)');this.small=matchMedia('(max-height: 699px), (max-width: 900px)');this.dataset.ready='true';
+ this.addEventListener('click',e=>{const b=e.target.closest('[data-select]');if(b)this.jump(Number(b.dataset.select));if(e.target.closest('[data-pause]')){this.paused=!this.paused;this.dataset.paused=String(this.paused);const p=this.querySelector('[data-pause]');p.textContent=this.paused?this.dataset.resumeLabel:this.dataset.pauseLabel;p.setAttribute('aria-pressed',String(this.paused));if(!this.paused)this.update()}},o);
+ this.addEventListener('keydown',e=>{const b=e.target.closest('[data-select]');if(!b)return;let n,i=this.tabs.indexOf(b);if(e.key==='ArrowRight')n=(i+1)%this.tabs.length;if(e.key==='ArrowLeft')n=(i-1+this.tabs.length)%this.tabs.length;if(e.key==='Home')n=0;if(e.key==='End')n=this.tabs.length-1;if(n===undefined)return;e.preventDefault();this.jump(n);this.tabs[n].focus()},o);
+ this.addEventListener('shopify:block:select',e=>{const i=this.scenes.findIndex(s=>s.dataset.block===e.detail.blockId);if(i>=0)this.jump(i)},o);
+ this.reduced.addEventListener('change',()=>this.setup(),o);this.small.addEventListener('change',()=>this.setup(),o);
+ window.addEventListener('resize',()=>this.setup(),o);window.addEventListener('scroll',()=>{if(!this.raf)this.raf=requestAnimationFrame(()=>{this.raf=0;this.update()})},{...o,passive:true});
+ this.setup();
+ }
+ setup(){this.pinned=this.dataset.scroll==='true'&&!this.reduced.matches&&!this.small.matches&&this.dataset.editor!=='true';this.dataset.pinned=String(this.pinned);this.offset=parseFloat(getComputedStyle(this).getPropertyValue('--jc-offset'))||0;this.distance=Number(this.dataset.step)*this.scenes.length;this.style.setProperty('--jc-runway',(this.stage.offsetHeight+this.distance)+'px');this.querySelector('.jc__hint').hidden=!this.pinned;this.querySelector('[data-pause]').hidden=this.reduced.matches||this.dataset.motion==='false';if(this.active<0)this.select(0,.15);this.update()}
+ update(){if(!this.pinned)return;const rect=this.getBoundingClientRect();if(rect.bottom<0||rect.top>innerHeight)return;const progress=Math.max(0,Math.min(.99999,(this.offset-rect.top)/this.distance));const n=Math.min(this.scenes.length-1,Math.floor(progress*this.scenes.length));if(n!==this.active&&this.scenes[this.active]?.contains(document.activeElement))return;this.select(n,progress*this.scenes.length-n)}
+ select(n,p=.5){if(n!==this.active){this.active=n;this.scenes.forEach((s,i)=>{const active=i===n;s.dataset.active=String(active);s.inert=!active;s.setAttribute('aria-hidden',String(!active));this.tabs[i].setAttribute('aria-pressed',String(active))});this.style.setProperty('--jc-current',getComputedStyle(this.scenes[n]).getPropertyValue('--jc-scene'))}
+ const s=this.scenes[n],motion=this.dataset.motion==='true'&&!this.reduced.matches&&!this.paused;const progress=motion?p:.65;s.style.setProperty('--jc-local',progress.toFixed(3));s.style.setProperty('--write',motion?Math.min(1,Math.max(0,(progress-.15)*5)).toFixed(3):'0');s.style.setProperty('--wipe',motion?Math.min(1,Math.max(0,(progress-.55)*4)).toFixed(3):'0');s.style.setProperty('--memory',motion?Math.min(1,progress*3).toFixed(3):'1')}
+ jump(n){this.select(n,.5);if(this.pinned){const top=scrollY+this.getBoundingClientRect().top-this.offset+((n+.5)/this.scenes.length)*this.distance;window.scrollTo({top,behavior:'instant'})}}
+ disconnectedCallback(){this.controller?.abort();if(this.raf)cancelAnimationFrame(this.raf)}
+});
+{% endjavascript %}
+{% schema %}
+{
+  "name": "June · Other chapters",
+  "tag": "section",
+  "class": "june-chapters-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Other chapters"
+    },
+    {
+      "type": "text",
+      "id": "navigation",
+      "label": "Navigation label",
+      "default": "Choose your next chapter"
+    },
+    {
+      "type": "text",
+      "id": "hint",
+      "label": "Scroll hint",
+      "default": "Scroll to turn the chapter"
+    },
+    {
+      "type": "text",
+      "id": "pause",
+      "label": "Pause label",
+      "default": "Pause motion"
+    },
+    {
+      "type": "text",
+      "id": "resume",
+      "label": "Resume label",
+      "default": "Resume motion"
+    },
+    {
+      "type": "text",
+      "id": "skip",
+      "label": "Skip link",
+      "default": "Skip the story"
+    },
+    {
+      "type": "checkbox",
+      "id": "scroll",
+      "label": "Enable pinned scroll story",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "motion",
+      "label": "Enable decorative motion",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "step",
+      "label": "Scroll distance per chapter",
+      "min": 200,
+      "max": 700,
+      "step": 25,
+      "unit": "px",
+      "default": 350
+    },
+    {
+      "type": "range",
+      "id": "offset",
+      "label": "Sticky header clearance",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 85
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Desktop stage height",
+      "min": 480,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 650
+    },
+    {
+      "type": "range",
+      "id": "duration",
+      "label": "Transition duration",
+      "min": 100,
+      "max": 800,
+      "step": 50,
+      "unit": "ms",
+      "default": 350
+    },
+    {
+      "type": "font_picker",
+      "id": "fallback_font",
+      "label": "Fallback font",
+      "default": "poppins_n4"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fallback background",
+      "default": "#FAF7EF"
+    },
+    {
+      "type": "color",
+      "id": "ink",
+      "label": "Text",
+      "default": "#191816"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Buttons and navigation",
+      "default": "#F5A477"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chapter",
+      "name": "Chapter",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Chapter name",
+          "default": "Wedding"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading first line",
+          "default": "For your next"
+        },
+        {
+          "type": "text",
+          "id": "heading_second",
+          "label": "Heading second line",
+          "default": "big yes."
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Supporting copy",
+          "default": "<p>Make room for every wedding detail.</p>"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Featured product"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Shopping collection"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_shop",
+          "label": "Show shopping button",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "shop",
+          "label": "Shopping label",
+          "default": "Explore wedding planners"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Optional status note"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Scene image override"
+        },
+        {
+          "type": "range",
+          "id": "image_number",
+          "label": "Product image number",
+          "min": 1,
+          "max": 40,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile scene override"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Image description"
+        },
+        {
+          "type": "select",
+          "id": "effect",
+          "label": "Scene effect",
+          "default": "petals",
+          "options": [
+            {
+              "value": "petals",
+              "label": "Petals opening"
+            },
+            {
+              "value": "wipe",
+              "label": "Write then wipe"
+            },
+            {
+              "value": "memories",
+              "label": "Footprints and photo"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "write_number",
+          "label": "Writing photo number",
+          "min": 1,
+          "max": 40,
+          "step": 1,
+          "default": 2
+        },
+        {
+          "type": "range",
+          "id": "wipe_number",
+          "label": "Erasing photo number",
+          "min": 1,
+          "max": 40,
+          "step": 1,
+          "default": 3
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Chapter background",
+          "default": "#EEE8DD"
+        },
+        {
+          "type": "color",
+          "id": "decoration",
+          "label": "Petal or footprint colour",
+          "default": "#F5A477"
+        }
+      ]
+    },
+    {
+      "type": "typography",
+      "name": "Typography controls",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "font_picker",
+          "id": "heading_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "heading_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 900
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 62
+        },
+        {
+          "type": "range",
+          "id": "heading_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 38
+        },
+        {
+          "type": "range",
+          "id": "heading_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "heading_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 105
+        },
+        {
+          "type": "header",
+          "content": "Product title"
+        },
+        {
+          "type": "font_picker",
+          "id": "title_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "title_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 26
+        },
+        {
+          "type": "range",
+          "id": "title_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 23
+        },
+        {
+          "type": "range",
+          "id": "title_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "title_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 120
+        },
+        {
+          "type": "header",
+          "content": "Supporting copy"
+        },
+        {
+          "type": "font_picker",
+          "id": "body_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "body_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "body_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "body_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "header",
+          "content": "Actions and navigation"
+        },
+        {
+          "type": "font_picker",
+          "id": "button_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "button_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "button_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 130
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "June · Other chapters",
+      "blocks": [
+        {
+          "type": "chapter",
+          "settings": {
+            "label": "Wedding",
+            "heading": "For your next",
+            "heading_second": "big yes.",
+            "body": "<p>Make room for <strong>every wedding detail.</strong></p>",
+            "product": "wedding-planner-we-are-getting-married",
+            "collection": "wedding-planners",
+            "shop": "Explore wedding planners",
+            "image_number": 2,
+            "effect": "petals",
+            "background": "#EEE8DD",
+            "decoration": "#F5A477",
+            "alt": "We Are Getting Married wedding planner open to its illustrated introductory spread"
+          }
+        },
+        {
+          "type": "chapter",
+          "settings": {
+            "label": "Rewritable",
+            "heading": "Make room for",
+            "heading_second": "what’s next.",
+            "body": "<p>Write it. Wipe it. <strong>Begin again.</strong></p>",
+            "product": "you-got-this-daily-planner-re-writable-planner",
+            "collection": "re-writable-planners",
+            "shop": "Explore rewritable planners",
+            "image_number": 1,
+            "effect": "wipe",
+            "background": "#FAF7EF",
+            "decoration": "#F5A477",
+            "alt": "Rewritable planning board with marker and duster"
+          }
+        },
+        {
+          "type": "chapter",
+          "settings": {
+            "label": "Baby",
+            "heading": "Little firsts.",
+            "heading_second": "Kept forever.",
+            "body": "<p>A place for the moments <strong>you’ll treasure.</strong></p>",
+            "image": "shopify://shop_images/9_716e9fca-5ed5-4327-9c9e-cd94f56c02df.jpg",
+            "show_shop": false,
+            "note": "Baby record books are currently unavailable.",
+            "effect": "memories",
+            "background": "#E7E1F0",
+            "decoration": "#F5A477",
+            "alt": "A Mother’s Touch baby record book cover showing tiny feet held in a parent’s hands"
+          }
+        },
+        {
+          "type": "typography"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

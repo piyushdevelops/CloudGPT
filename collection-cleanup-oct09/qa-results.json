@@ -1,0 +1,108 @@
+{
+  "desktop": {
+    "initial": {
+      "heading": "New & Bestsellers",
+      "cards": 24,
+      "overflow": false,
+      "font": "Poppins, sans-serif",
+      "titleFont": "15px",
+      "priceFont": "22px",
+      "compareFont": "14px",
+      "zeroRatings": 0,
+      "stickyControls": 0,
+      "bottomTypePosition": "relative",
+      "bottomTypeAfterGrid": true
+    },
+    "filters": {
+      "open": true,
+      "visibleGroups": 6,
+      "hiddenGroups": 14,
+      "more": "More filters (14)",
+      "firstGroups": [
+        "Primary Use\n                    \n                  \n                  \n                    \n                      17",
+        "Category\n                    \n                  \n                  \n                    \n                      15",
+        "Material\n                    \n                  \n                  \n                    \n                      12",
+        "Colour\n                    \n                  \n                  \n                    \n                      12",
+        "Price",
+        "Room\n                    \n                  \n                  \n                    \n                      7"
+      ],
+      "expandedGroups": 20,
+      "choiceValue": "Ambient Lighting",
+      "previewCount": "5",
+      "appliedValue": "Ambient Lighting",
+      "appliedCount": 5
+    },
+    "type": {
+      "url": "Undated Planners",
+      "cards": 4,
+      "sort": "price-ascending",
+      "typeAfterSort": "Undated Planners",
+      "prices": [
+        "Rs. 1,999",
+        "Rs. 1,999",
+        "Rs. 1,999",
+        "Rs. 1,999"
+      ],
+      "pricesAscending": true,
+      "allPricesAscending": true,
+      "allPriceRange": [
+        299,
+        699
+      ]
+    },
+    "errors": []
+  },
+  "mobile": {
+    "initial": {
+      "heading": "New & Bestsellers",
+      "cards": 24,
+      "overflow": false,
+      "font": "Poppins, sans-serif",
+      "titleFont": "14px",
+      "priceFont": "20px",
+      "compareFont": "12px",
+      "zeroRatings": 0,
+      "stickyControls": 0,
+      "bottomTypePosition": "relative",
+      "bottomTypeAfterGrid": true
+    },
+    "filters": {
+      "open": true,
+      "visibleGroups": 6,
+      "hiddenGroups": 14,
+      "more": "More filters (14)",
+      "firstGroups": [
+        "Primary Use\n                    \n                  \n                  \n                    \n                      17",
+        "Category\n                    \n                  \n                  \n                    \n                      15",
+        "Material\n                    \n                  \n                  \n                    \n                      12",
+        "Colour\n                    \n                  \n                  \n                    \n                      12",
+        "Price",
+        "Room\n                    \n                  \n                  \n                    \n                      7"
+      ],
+      "expandedGroups": 20,
+      "choiceValue": "Ambient Lighting",
+      "previewCount": "5",
+      "appliedValue": "Ambient Lighting",
+      "appliedCount": 5
+    },
+    "type": {
+      "url": "Undated Planners",
+      "cards": 4,
+      "sort": "price-ascending",
+      "typeAfterSort": "Undated Planners",
+      "prices": [
+        "Rs. 1,999",
+        "Rs. 1,999",
+        "Rs. 1,999",
+        "Rs. 1,999"
+      ],
+      "pricesAscending": true,
+      "allPricesAscending": true,
+      "allPriceRange": [
+        299,
+        699
+      ]
+    },
+    "errors": []
+  }
+}

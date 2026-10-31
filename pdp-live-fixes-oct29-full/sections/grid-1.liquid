@@ -1,0 +1,984 @@
+{% liquid
+  assign layout_style = section.settings.layout_style
+%}
+
+<section id="tjs-home-collections-{{ section.id }}" class="tjs-home-collections tjs-home-collections--{{ layout_style }}">
+  <div class="tjs-home-collections__ornament" aria-hidden="true">THE JUNE SHOP</div>
+
+  <div class="tjs-home-collections__head">
+    <div>
+      {% if section.settings.eyebrow != blank %}
+        <div class="tjs-home-collections__eyebrow">{{ section.settings.eyebrow }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <p>{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+
+    {% if section.settings.show_view_all %}
+      <a href="{{ section.settings.view_all_link | default: routes.all_products_collection_url }}" class="tjs-home-collections__view-all">
+        {{ section.settings.view_all_text }}
+        <span>→</span>
+      </a>
+    {% endif %}
+  </div>
+
+  {% if section.blocks.size > 0 %}
+    <div class="tjs-home-collections__grid">
+      {% for block in section.blocks %}
+        {% liquid
+          assign collection = collections[block.settings.collection]
+          assign title = block.settings.title | default: collection.title | default: 'Collection'
+          assign link = block.settings.link | default: collection.url | default: routes.all_products_collection_url
+          assign meta = block.settings.meta
+          assign image_source = block.settings.image_source
+
+          if image_source == 'inherit'
+            assign image_source = section.settings.default_image_source
+          endif
+
+          assign display_img = blank
+          assign image_product = blank
+
+          if block.settings.image != blank
+            assign display_img = block.settings.image
+          else
+            if image_source == 'collection_image'
+              if collection.image != blank
+                assign display_img = collection.image
+              endif
+            elsif image_source == 'second_product'
+              assign image_product = collection.products[1]
+            else
+              assign image_product = collection.products.first
+            endif
+
+            if display_img == blank
+              if image_product != blank and image_product.featured_image != blank
+                assign display_img = image_product.featured_image
+              elsif collection.image != blank
+                assign display_img = collection.image
+              elsif collection.products.first.featured_image != blank
+                assign display_img = collection.products.first.featured_image
+              endif
+            endif
+          endif
+
+          assign card_style = block.settings.card_style
+        %}
+
+        <a
+          href="{{ link }}"
+          class="tjs-home-collections__card tjs-home-collections__card--{{ card_style }}"
+          {{ block.shopify_attributes }}
+        >
+          {% if display_img != blank %}
+            <img
+              src="{{ display_img | image_url: width: 1200 }}"
+              alt="{{ title | escape }}"
+              loading="lazy"
+              width="1200"
+              height="1200"
+            >
+          {% else %}
+            {{ 'collection-1' | placeholder_svg_tag }}
+          {% endif %}
+
+          <div class="tjs-home-collections__shade"></div>
+
+          {% if block.settings.badge != blank %}
+            <div class="tjs-home-collections__badge">
+              {{ block.settings.badge }}
+            </div>
+          {% endif %}
+
+          <div class="tjs-home-collections__content">
+            <div>
+              <span>
+                {% if section.settings.show_count and collection.products_count != blank %}
+                  {{ collection.products_count }} finds
+                {% elsif meta != blank %}
+                  {{ meta }}
+                {% else %}
+                  Curated edit
+                {% endif %}
+              </span>
+
+              <h3>{{ title }}</h3>
+            </div>
+
+            <em>Explore</em>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="tjs-home-collections__empty">
+      Add collection blocks from the Theme Editor.
+    </div>
+  {% endif %}
+</section>
+
+<style>
+  #tjs-home-collections-{{ section.id }},
+  #tjs-home-collections-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #tjs-home-collections-{{ section.id }} {
+    --tjs-ink: {{ section.settings.text_color }};
+    --tjs-bg: {{ section.settings.background_color }};
+    --tjs-card-bg: {{ section.settings.card_background }};
+    --tjs-accent: {{ section.settings.accent_color }};
+    --tjs-gold: {{ section.settings.gold_color }};
+    --tjs-muted: rgba(31, 25, 22, 0.62);
+    --tjs-line: rgba(31, 25, 22, 0.10);
+
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding: {{ section.settings.padding_top }}px clamp(14px, 4vw, 56px) {{ section.settings.padding_bottom }}px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 12% 12%, rgba(213, 141, 130, 0.11), transparent 28%),
+      radial-gradient(circle at 88% 86%, rgba(213, 162, 91, 0.12), transparent 30%),
+      linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,248,242,0.74)),
+      var(--tjs-bg);
+    color: var(--tjs-ink);
+    font-family: inherit;
+  }
+
+  #tjs-home-collections-{{ section.id }}::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(31,25,22,0.025) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(31,25,22,0.022) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__ornament {
+    position: absolute;
+    right: clamp(10px, 5vw, 72px);
+    top: 22px;
+    color: rgba(31,25,22,0.035);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(56px, 9vw, 150px);
+    line-height: 0.8;
+    letter-spacing: -5px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__head {
+    position: relative;
+    z-index: 2;
+    width: min(1220px, 100%);
+    margin: 0 auto 30px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 20px;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__eyebrow {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.42)),
+      rgba(255,255,255,0.54);
+    border: 1px solid rgba(255,255,255,0.72);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.78),
+      0 8px 24px rgba(31,25,22,0.06);
+    color: rgba(31,25,22,0.62);
+    font-size: 8.5px;
+    line-height: 1;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+    font-weight: 850;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__eyebrow::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--tjs-gold);
+    box-shadow: 0 0 0 5px rgba(184, 137, 60, 0.12);
+  }
+
+  #tjs-home-collections-{{ section.id }} h2 {
+    margin: 0;
+    max-width: 760px;
+    color: var(--tjs-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(36px, 5.6vw, 74px);
+    line-height: 0.92;
+    letter-spacing: -2.8px;
+    font-weight: 400;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__head p {
+    position: relative;
+    max-width: 560px;
+    margin: 14px 0 0;
+    padding-left: 18px;
+    color: var(--tjs-muted);
+    font-size: 13.5px;
+    line-height: 1.65;
+    font-weight: 650;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__head p::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.45em;
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(180deg, var(--tjs-gold), transparent);
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__view-all {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 0 17px;
+    border-radius: 999px;
+    background: var(--tjs-ink);
+    color: #fff;
+    text-decoration: none;
+    font-size: 9.5px;
+    line-height: 1;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-weight: 900;
+    box-shadow:
+      5px 5px 0 rgba(213, 141, 130, 0.34),
+      0 12px 28px rgba(31,25,22,0.12);
+    white-space: nowrap;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__view-all span {
+    transition: transform 0.22s ease;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__view-all:hover span {
+    transform: translateX(3px);
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__grid {
+    position: relative;
+    z-index: 2;
+    width: min(1220px, 100%);
+    margin: 0 auto;
+    display: grid;
+    gap: {{ section.settings.grid_gap }}px;
+  }
+
+  #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-auto-rows: {{ section.settings.row_height }}px;
+  }
+
+  #tjs-home-collections-{{ section.id }}.tjs-home-collections--grid .tjs-home-collections__grid {
+    grid-template-columns: repeat({{ section.settings.desktop_columns }}, minmax(0, 1fr));
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__card {
+    position: relative;
+    min-height: 280px;
+    display: block;
+    overflow: hidden;
+    border-radius: {{ section.settings.card_radius }}px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.56), rgba(255,255,255,0.18)),
+      var(--tjs-card-bg);
+    border: 1px solid rgba(255,255,255,0.72);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.85),
+      0 16px 42px rgba(31,25,22,0.08);
+    text-decoration: none;
+    color: #fff;
+    isolation: isolate;
+    transform: translateZ(0);
+    transition:
+      transform 0.35s cubic-bezier(.2,.9,.2,1),
+      box-shadow 0.35s ease,
+      border-color 0.35s ease;
+  }
+
+  #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__card--hero {
+    grid-column: span 6;
+    grid-row: span 2;
+  }
+
+  #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__card--wide {
+    grid-column: span 6;
+    grid-row: span 1;
+  }
+
+  #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__card--tall {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+
+  #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__card--standard {
+    grid-column: span 3;
+    grid-row: span 1;
+  }
+
+  #tjs-home-collections-{{ section.id }}.tjs-home-collections--grid .tjs-home-collections__card {
+    aspect-ratio: 1 / 1.15;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__card::before {
+    content: "";
+    position: absolute;
+    top: -75%;
+    left: -45%;
+    z-index: 5;
+    width: 44px;
+    height: 250%;
+    background: linear-gradient(110deg, transparent, rgba(255,255,255,0.60), transparent);
+    transform: rotate(18deg);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(184,137,60,0.28);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.92),
+      0 26px 64px rgba(31,25,22,0.15);
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__card:hover::before {
+    animation: tjsCollectionCardShine{{ section.id }} 0.9s ease forwards;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__card img,
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__card svg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition:
+      transform 0.65s cubic-bezier(.2,.8,.2,1),
+      filter 0.65s ease;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__card:hover img,
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__card:hover svg {
+    transform: scale(1.06);
+    filter: saturate(1.04) contrast(1.03);
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__shade {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.08) 42%, rgba(0,0,0,0.54) 100%),
+      radial-gradient(circle at 50% 10%, rgba(255,255,255,0.18), transparent 40%);
+    pointer-events: none;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__badge {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    z-index: 4;
+    min-height: 30px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: 999px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.40)),
+      rgba(255,255,255,0.56);
+    border: 1px solid rgba(255,255,255,0.62);
+    color: var(--tjs-ink);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.82),
+      0 8px 20px rgba(0,0,0,0.08);
+    backdrop-filter: blur(16px) saturate(145%);
+    -webkit-backdrop-filter: blur(16px) saturate(145%);
+    font-size: 8px;
+    line-height: 1;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__content {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    z-index: 4;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 15px;
+    border-radius: 22px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.42)),
+      rgba(255,255,255,0.50);
+    border: 1px solid rgba(255,255,255,0.66);
+    color: var(--tjs-ink);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.82),
+      0 10px 28px rgba(0,0,0,0.12);
+    backdrop-filter: blur(18px) saturate(145%);
+    -webkit-backdrop-filter: blur(18px) saturate(145%);
+    transition:
+      transform 0.25s ease,
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__card:hover .tjs-home-collections__content {
+    transform: translateY(-2px);
+    background:
+      linear-gradient(180deg, rgba(26,26,26,0.88), rgba(26,26,26,0.74)),
+      rgba(26,26,26,0.80);
+    color: #fff;
+    border-color: rgba(255,255,255,0.18);
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__content span {
+    display: block;
+    margin-bottom: 7px;
+    color: rgba(31,25,22,0.56);
+    font-size: 8px;
+    line-height: 1;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__card:hover .tjs-home-collections__content span {
+    color: rgba(255,255,255,0.62);
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__content h3 {
+    margin: 0;
+    color: inherit;
+    font-size: clamp(20px, 2.6vw, 34px);
+    line-height: 0.92;
+    letter-spacing: -1.2px;
+    font-weight: 950;
+    text-transform: uppercase;
+  }
+
+  #tjs-home-collections-{{ section.id }}.tjs-home-collections--grid .tjs-home-collections__content h3 {
+    font-size: 22px;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__content em {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--tjs-ink);
+    color: #fff;
+    font-style: normal;
+    font-size: 0;
+    transition:
+      transform 0.25s ease,
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__content em::before {
+    content: "→";
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__card:hover .tjs-home-collections__content em {
+    transform: translateX(3px);
+    background: #fff;
+    color: var(--tjs-ink);
+  }
+
+  #tjs-home-collections-{{ section.id }} .tjs-home-collections__empty {
+    position: relative;
+    z-index: 2;
+    width: min(1220px, 100%);
+    min-height: 220px;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+    border-radius: 26px;
+    background: rgba(255,255,255,0.58);
+    border: 1px solid rgba(31,25,22,0.08);
+    color: rgba(31,25,22,0.62);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  @keyframes tjsCollectionCardShine{{ section.id }} {
+    0% {
+      left: -45%;
+      opacity: 0;
+    }
+    35% {
+      opacity: 0.8;
+    }
+    100% {
+      left: 128%;
+      opacity: 0;
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__head {
+      grid-template-columns: 1fr;
+      margin-bottom: 22px;
+    }
+
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__grid,
+    #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__grid,
+    #tjs-home-collections-{{ section.id }}.tjs-home-collections--grid .tjs-home-collections__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: auto;
+    }
+
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__card,
+    #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__card--hero,
+    #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__card--wide,
+    #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__card--tall,
+    #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__card--standard {
+      grid-column: auto;
+      grid-row: auto;
+      min-height: 260px;
+      aspect-ratio: 1 / 1.18;
+    }
+
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__content h3 {
+      font-size: 22px;
+      letter-spacing: -0.8px;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    #tjs-home-collections-{{ section.id }} {
+      padding: {{ section.settings.mobile_padding_top }}px 12px {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__ornament {
+      top: 18px;
+      right: 6px;
+      font-size: 54px;
+      letter-spacing: -2px;
+    }
+
+    #tjs-home-collections-{{ section.id }} h2 {
+      font-size: 36px;
+      letter-spacing: -1.8px;
+    }
+
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__head p {
+      padding-left: 14px;
+      font-size: 12.5px;
+    }
+
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__grid,
+    #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__grid,
+    #tjs-home-collections-{{ section.id }}.tjs-home-collections--grid .tjs-home-collections__grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__card,
+    #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__card--hero,
+    #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__card--wide,
+    #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__card--tall,
+    #tjs-home-collections-{{ section.id }}.tjs-home-collections--collage .tjs-home-collections__card--standard {
+      min-height: 250px;
+      aspect-ratio: 1 / 0.92;
+      border-radius: 24px;
+    }
+
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__badge {
+      left: 12px;
+      top: 12px;
+    }
+
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__content {
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      padding: 12px;
+      border-radius: 18px;
+    }
+
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__content h3 {
+      font-size: 22px;
+    }
+
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__content em {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__card,
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__card img,
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__content,
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__content em,
+    #tjs-home-collections-{{ section.id }} .tjs-home-collections__card::before {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "TJS Collection Collage",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout_style",
+      "label": "Layout style",
+      "options": [
+        {
+          "value": "collage",
+          "label": "Editorial collage"
+        },
+        {
+          "value": "grid",
+          "label": "Clean grid"
+        }
+      ],
+      "default": "collage"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Curated edits"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop the home you keep saving."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Tagline",
+      "default": "Explore our most-loved collections across decor, dining, glassware, lighting and everyday finds."
+    },
+    {
+      "type": "select",
+      "id": "default_image_source",
+      "label": "Default image source",
+      "options": [
+        {
+          "value": "first_product",
+          "label": "First product image"
+        },
+        {
+          "value": "second_product",
+          "label": "Second product image"
+        },
+        {
+          "value": "collection_image",
+          "label": "Collection image"
+        }
+      ],
+      "default": "first_product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All text",
+      "default": "Shop All"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count",
+      "label": "Show collection product count",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Grid desktop columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "row_height",
+      "label": "Collage row height",
+      "min": 180,
+      "max": 360,
+      "step": 10,
+      "unit": "px",
+      "default": 260
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid gap",
+      "min": 8,
+      "max": 34,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop top padding",
+      "min": 24,
+      "max": 112,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop bottom padding",
+      "min": 24,
+      "max": 112,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile top padding",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile bottom padding",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#fff8f2"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card fallback",
+      "default": "#f8f4ef"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#1f1916"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#d58d82"
+    },
+    {
+      "type": "color",
+      "id": "gold_color",
+      "label": "Luxury accent",
+      "default": "#b8893c"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Collection card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "select",
+          "id": "card_style",
+          "label": "Card size",
+          "options": [
+            {
+              "value": "hero",
+              "label": "Hero large"
+            },
+            {
+              "value": "wide",
+              "label": "Wide"
+            },
+            {
+              "value": "tall",
+              "label": "Tall"
+            },
+            {
+              "value": "standard",
+              "label": "Standard"
+            }
+          ],
+          "default": "standard"
+        },
+        {
+          "type": "select",
+          "id": "image_source",
+          "label": "Auto image source",
+          "options": [
+            {
+              "value": "inherit",
+              "label": "Use section default"
+            },
+            {
+              "value": "first_product",
+              "label": "First product image"
+            },
+            {
+              "value": "second_product",
+              "label": "Second product image"
+            },
+            {
+              "value": "collection_image",
+              "label": "Collection image"
+            }
+          ],
+          "default": "inherit"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Manual image override"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge",
+          "default": "Featured"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Manual title"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Small label",
+          "default": "Curated edit"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Manual link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS Collection Collage",
+      "blocks": [
+        {
+          "type": "collection_card",
+          "settings": {
+            "card_style": "hero"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "card_style": "wide"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "card_style": "standard"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "card_style": "standard"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "card_style": "wide"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

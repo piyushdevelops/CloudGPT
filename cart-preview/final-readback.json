@@ -1,0 +1,22 @@
+{
+  "role": "UNPUBLISHED",
+  "theme": "187527266499",
+  "checks": [
+    {
+      "filename": "sections/cart-drawer.liquid",
+      "exact": true
+    },
+    {
+      "filename": "assets/june-scoop-search.js",
+      "exact": true
+    },
+    {
+      "filename": "snippets/june-cart-preview.liquid",
+      "exact": true
+    },
+    {
+      "filename": "assets/june-cart-preview.js",
+      "exact": true
+    }
+  ]
+}

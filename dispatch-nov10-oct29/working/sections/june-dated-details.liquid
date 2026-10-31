@@ -1,0 +1,465 @@
+{% liquid
+  assign type_block = section.blocks | where: 'type', 'typography' | first
+  assign type = type_block.settings
+  assign inside_count = 0
+  assign feature_count = 0
+  assign divider_count = 0
+  assign included_count = 0
+  assign fact_count = 0
+  assign faq_count = 0
+  for block in section.blocks
+    if block.type == 'feature_group' and block.settings.heading != blank and block.settings.content != blank
+      assign feature_count = feature_count | plus: 1
+    elsif block.type == 'divider' and block.settings.month != blank
+      assign divider_count = divider_count | plus: 1
+    elsif block.type == 'inside' and block.settings.image != blank
+      assign inside_count = inside_count | plus: 1
+    elsif block.type == 'included' and block.settings.heading != blank
+      assign included_count = included_count | plus: 1
+    elsif block.type == 'fact' and block.settings.value != blank
+      assign fact_count = fact_count | plus: 1
+    elsif block.type == 'faq' and block.settings.question != blank and block.settings.answer != blank
+      assign faq_count = faq_count | plus: 1
+    endif
+  endfor
+%}
+{% style %}
+{% if type_block %}
+  {% assign heading_weight_text = type.heading_weight | append: '' %}
+  {% assign copy_weight_text = type.copy_weight | append: '' %}
+  {% assign action_weight_text = type.action_weight | append: '' %}
+  {% assign heading_face = type.heading_font | font_modify: 'weight', heading_weight_text | default: type.heading_font %}
+  {% assign copy_face = type.copy_font | font_modify: 'weight', copy_weight_text | default: type.copy_font %}
+  {% assign action_face = type.action_font | font_modify: 'weight', action_weight_text | default: type.action_font %}
+  {{ heading_face | font_face: font_display: 'swap' }}
+  {{ copy_face | font_face: font_display: 'swap' }}
+  {{ action_face | font_face: font_display: 'swap' }}
+{% endif %}
+{% endstyle %}
+
+<section id="JuneDatedDetails-{{ section.id }}" class="jdd" style="
+  --jdd-heading-font:{% if type_block %}{{ type.heading_font.family }},{{ type.heading_font.fallback_families }}{% else %}'Poppins',sans-serif{% endif %};
+  --jdd-heading-weight:{{ type.heading_weight | default: 800 }};
+  --jdd-heading-size:{{ type.heading_size | default: 46 }}px;
+  --jdd-heading-mobile:{{ type.heading_mobile | default: 30 }}px;
+  --jdd-heading-tracking:{{ type.heading_tracking | default: -2 | divided_by: 100.0 }}em;
+  --jdd-heading-leading:{{ type.heading_leading | default: 110 | divided_by: 100.0 }};
+  --jdd-copy-font:{% if type_block %}{{ type.copy_font.family }},{{ type.copy_font.fallback_families }}{% else %}'Poppins',sans-serif{% endif %};
+  --jdd-copy-weight:{{ type.copy_weight | default: 400 }};
+  --jdd-copy-size:{{ type.copy_size | default: 15 }}px;
+  --jdd-copy-mobile:{{ type.copy_mobile | default: 14 }}px;
+  --jdd-copy-tracking:{{ type.copy_tracking | default: 0 | divided_by: 100.0 }}em;
+  --jdd-copy-leading:{{ type.copy_leading | default: 160 | divided_by: 100.0 }};
+  --jdd-action-font:{% if type_block %}{{ type.action_font.family }},{{ type.action_font.fallback_families }}{% else %}'Poppins',sans-serif{% endif %};
+  --jdd-action-weight:{{ type.action_weight | default: 700 }};
+  --jdd-action-size:{{ type.action_size | default: 13 }}px;
+  --jdd-action-mobile:{{ type.action_mobile | default: 12 }}px;
+  --jdd-action-tracking:{{ type.action_tracking | default: 0 | divided_by: 100.0 }}em;
+  --jdd-action-leading:{{ type.action_leading | default: 130 | divided_by: 100.0 }};
+">
+  <div class="jdd__intro">
+    <div class="jdd__intro-inner">
+      <div>
+        <span class="jdd__eyebrow">2027 / THE JUNE SHOP</span>
+        <h2>{{ section.settings.heading | escape }}</h2>
+      </div>
+      <div class="jdd__description">
+        {% if product.description != blank %}{{ product.description }}{% elsif section.settings.fallback_copy != blank %}<p>{{ section.settings.fallback_copy | escape }}</p>{% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% if feature_count > 0 %}
+    <div class="jdd__features">
+      <div class="jdd__section-heading"><span class="jdd__eyebrow">Plan · grow · celebrate</span><h2>{{ section.settings.features_heading | escape }}</h2></div>
+      <div class="jdd__feature-grid">
+        {% assign feature_index = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'feature_group' and block.settings.heading != blank and block.settings.content != blank %}
+            {% assign feature_index = feature_index | plus: 1 %}
+            <article class="jdd__feature-card" {{ block.shopify_attributes }}>
+              {% if block.settings.image != blank %}
+                <div class="jdd__feature-media">{{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(max-width: 749px) 100vw, 45vw', alt: block.settings.heading }}</div>
+              {% endif %}
+              <div class="jdd__feature-top">
+                <span class="jdd__feature-number">{{ feature_index | prepend: '0' }}</span>
+                {% if block.settings.eyebrow != blank %}<span class="jdd__feature-eyebrow">{{ block.settings.eyebrow | escape }}</span>{% endif %}
+              </div>
+              <h3>{{ block.settings.heading | escape }}</h3>
+              <details class="jdd__feature-reveal">
+                <summary>Explore this chapter <span aria-hidden="true">+</span></summary>
+                <div class="jdd__feature-content">{{ block.settings.content }}</div>
+              </details>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if section.settings.show_divider_story %}
+    <div class="jdd__dividers">
+      <div class="jdd__divider-copy">
+        <span class="jdd__eyebrow">12 months · 12 celebrations</span>
+        <h2>{{ section.settings.divider_heading | escape }}</h2>
+        {% if section.settings.divider_copy != blank %}<p>{{ section.settings.divider_copy | escape }}</p>{% endif %}
+        <div class="jdd__divider-notes">
+          {% if section.settings.postcard_copy != blank %}<span>{{ section.settings.postcard_copy | escape }}</span>{% endif %}
+          {% if section.settings.song_copy != blank %}<span>{{ section.settings.song_copy | escape }}</span>{% endif %}
+        </div>
+      </div>
+      <div class="jdd__divider-track" aria-label="Monthly divider preview">
+        {% if divider_count > 0 %}
+          {% assign divider_index = 0 %}
+          {% for block in section.blocks %}
+            {% if block.type == 'divider' and block.settings.month != blank %}
+              {% assign divider_index = divider_index | plus: 1 %}
+              <article class="jdd__divider-card" {{ block.shopify_attributes }}>
+                {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '260, 420, 560, 700', sizes: '240px', alt: block.settings.quality | default: block.settings.month }}{% else %}<span class="jdd__divider-art" aria-hidden="true">{{ divider_index | prepend: '0' }}</span>{% endif %}
+                <div><strong>{{ block.settings.month | escape }}</strong>{% if block.settings.quality != blank %}<small>{{ block.settings.quality | escape }}</small>{% else %}<small>Illustrated divider</small>{% endif %}</div>
+              </article>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if inside_count > 0 %}
+    <div class="jdd__inside">
+      <div class="jdd__inside-head">
+        <div class="jdd__section-heading"><span class="jdd__eyebrow">A closer look</span><h2>{{ section.settings.inside_heading | escape }}</h2></div>
+        {% if inside_count > 1 %}
+          <div class="jdd__inside-controls">
+            <span><b data-jdd-current>01</b> / {{ inside_count | prepend: '0' }}</span>
+            <button type="button" data-jdd-prev aria-label="Previous inside page">←</button>
+            <button type="button" data-jdd-next aria-label="Next inside page">→</button>
+          </div>
+        {% endif %}
+      </div>
+      <div class="jdd__inside-grid" data-jdd-track>
+        {% assign inside_index = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'inside' and block.settings.image != blank %}
+            {% assign inside_index = inside_index | plus: 1 %}
+            <figure class="jdd__inside-card" {{ block.shopify_attributes }}>
+              {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400, 600, 800, 1200', sizes: '(max-width: 749px) 85vw, 40vw', alt: block.settings.title }}
+              {% if block.settings.title != blank or block.settings.caption != blank %}<figcaption><i>{{ inside_index | prepend: '0' }}</i><strong>{{ block.settings.title | escape }}</strong>{% if block.settings.caption != blank %}<span>{{ block.settings.caption | escape }}</span>{% endif %}</figcaption>{% endif %}
+            </figure>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if included_count > 0 %}
+    <div class="jdd__included">
+      <div class="jdd__section-heading"><span class="jdd__eyebrow">In the box</span><h2>{{ section.settings.included_heading | escape }}</h2></div>
+      <div class="jdd__included-grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'included' and block.settings.heading != blank %}
+            <article class="jdd__included-card" {{ block.shopify_attributes }}>
+              {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '280, 420, 560, 700', sizes: '(max-width: 749px) 78vw, 24vw', alt: block.settings.heading }}{% endif %}
+              <div><strong>{{ block.settings.heading | escape }}</strong>{% if block.settings.copy != blank %}<p>{{ block.settings.copy | escape }}</p>{% endif %}</div>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if fact_count > 0 %}
+    <div class="jdd__facts">
+      <div class="jdd__section-heading"><span class="jdd__eyebrow">The details</span><h2>{{ section.settings.facts_heading | escape }}</h2></div>
+      <dl class="jdd__fact-grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'fact' and block.settings.value != blank %}
+            <div class="jdd__fact" {{ block.shopify_attributes }}><dt>{{ block.settings.label | escape }}</dt><dd>{{ block.settings.value | escape }}</dd></div>
+          {% endif %}
+        {% endfor %}
+      </dl>
+    </div>
+  {% endif %}
+
+  {% if section.settings.quote != blank %}
+    <blockquote class="jdd__quote"><span aria-hidden="true">“</span><p>{{ section.settings.quote | escape }}</p></blockquote>
+  {% endif %}
+
+  {% if faq_count > 0 %}
+    <div class="jdd__faqs">
+      <div class="jdd__section-heading"><span class="jdd__eyebrow">Good to know</span><h2>{{ section.settings.faq_heading | escape }}</h2></div>
+      <div class="jdd__faq-list">
+        {% for block in section.blocks %}
+          {% if block.type == 'faq' and block.settings.question != blank and block.settings.answer != blank %}
+            <details {{ block.shopify_attributes }}><summary>{{ block.settings.question | escape }}<span aria-hidden="true">+</span></summary><div class="jdd__answer">{{ block.settings.answer }}</div></details>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="jdd__last">
+    <span class="jdd__eyebrow">Your next chapter</span>
+    <h2>{{ section.settings.last_heading | escape }}</h2>
+    <a href="#JuneDatedBuy-{{ section.settings.buy_section_id | escape }}">{{ section.settings.last_link | escape }} <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+<style>
+  #JuneDatedDetails-{{ section.id }}{--ink:var(--june-ink,#171717);--bg:var(--june-bg,#fff);--surface:var(--june-surface,#f5f5f3);--accent:var(--june-accent,#f56a28);--on-accent:var(--june-on-accent,#171717);--muted:var(--june-muted,#656565);--border:var(--june-border,#dadada);--soft:color-mix(in srgb,var(--accent) 10%,var(--bg));color:var(--ink);background:var(--bg);font-family:var(--jdd-copy-font);font-size:var(--jdd-copy-size);font-weight:var(--jdd-copy-weight);line-height:var(--jdd-copy-leading);letter-spacing:var(--jdd-copy-tracking)}
+  #JuneDatedDetails-{{ section.id }} *{box-sizing:border-box}
+  #JuneDatedDetails-{{ section.id }} .jdd__intro{padding:clamp(68px,8vw,120px) clamp(18px,4vw,58px);background:linear-gradient(120deg,color-mix(in srgb,var(--accent) 10%,var(--bg)),var(--surface));overflow:hidden}
+  #JuneDatedDetails-{{ section.id }} .jdd__intro-inner{position:relative;max-width:1450px;margin:auto;display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(30px,7vw,120px);align-items:start}
+  #JuneDatedDetails-{{ section.id }} .jdd__intro-inner::after{content:'A year of you.';position:absolute;right:-2%;bottom:-54px;padding:14px 20px;background:var(--accent);color:var(--on-accent);transform:rotate(-3deg);font:800 clamp(17px,2vw,28px)/1 var(--jdd-heading-font);letter-spacing:-.04em}
+  #JuneDatedDetails-{{ section.id }} .jdd__eyebrow{display:block;margin-bottom:12px;font:800 11px/1.2 'Poppins',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+  #MainContent[data-june-product-brand] #JuneDatedDetails-{{ section.id }} h2,#JuneDatedDetails-{{ section.id }} h2{margin:0;font-family:var(--jdd-heading-font)!important;font-weight:var(--jdd-heading-weight)!important;font-size:var(--jdd-heading-size)!important;line-height:var(--jdd-heading-leading)!important;letter-spacing:var(--jdd-heading-tracking)!important;color:var(--ink);text-wrap:balance}
+  #MainContent[data-june-product-brand] #JuneDatedDetails-{{ section.id }} .jdd__description :is(p,li),#JuneDatedDetails-{{ section.id }} .jdd__description :is(p,li){font-family:var(--jdd-copy-font)!important;font-weight:var(--jdd-copy-weight)!important;font-size:var(--jdd-copy-size)!important;line-height:var(--jdd-copy-leading)!important;letter-spacing:var(--jdd-copy-tracking)!important;color:var(--ink)}
+  #JuneDatedDetails-{{ section.id }} .jdd__description :first-child{margin-top:0}
+  #JuneDatedDetails-{{ section.id }} .jdd__description h2{font-size:24px!important;margin:18px 0 8px}
+  #JuneDatedDetails-{{ section.id }} .jdd__description h3{font-size:17px!important;margin:20px 0 6px}
+  #JuneDatedDetails-{{ section.id }} .jdd__description ul{padding-left:20px}
+  #JuneDatedDetails-{{ section.id }} .jdd__features,#JuneDatedDetails-{{ section.id }} .jdd__inside,#JuneDatedDetails-{{ section.id }} .jdd__included,#JuneDatedDetails-{{ section.id }} .jdd__facts,#JuneDatedDetails-{{ section.id }} .jdd__faqs{max-width:1560px;margin:auto;padding:75px clamp(18px,3vw,48px) 0}
+  #JuneDatedDetails-{{ section.id }} .jdd__section-heading{max-width:720px;margin-bottom:27px}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-card{padding:12px clamp(22px,3vw,38px) clamp(22px,3vw,38px);border:1px solid var(--border);border-radius:18px;background:var(--surface);overflow:hidden}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-media{margin:0 calc(clamp(22px,3vw,38px) * -1) 24px;aspect-ratio:1.65;background:var(--bg);overflow:hidden}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-media img{display:block;width:100%;height:100%;object-fit:cover}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-top{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-number{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:10px;font-weight:900}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-eyebrow{font-family:var(--jdd-action-font);font-size:11px;font-weight:var(--jdd-action-weight);letter-spacing:.06em;text-transform:uppercase}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-card h3{max-width:18ch;margin:0 0 18px;font-family:var(--jdd-heading-font);font-size:clamp(22px,2vw,31px);font-weight:var(--jdd-heading-weight);line-height:1.08;letter-spacing:-.02em;text-wrap:balance}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-content ul{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-content li{position:relative;margin:0;padding-left:18px;font-size:var(--jdd-copy-size);line-height:1.48}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-content li::before{content:'';position:absolute;left:0;top:.65em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  #JuneDatedDetails-{{ section.id }} .jdd__dividers{max-width:1560px;margin:75px auto 0;padding:clamp(40px,6vw,78px) clamp(18px,3vw,48px);background:linear-gradient(135deg,var(--soft,color-mix(in srgb,var(--accent) 10%,var(--bg))),var(--surface));border-radius:24px}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-copy{display:grid;grid-template-columns:1.1fr .9fr;gap:22px 50px;align-items:end;margin-bottom:34px}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-copy .jdd__eyebrow,#JuneDatedDetails-{{ section.id }} .jdd__divider-copy h2{grid-column:1}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-copy p{grid-column:2;grid-row:1/3;margin:0;color:var(--muted);align-self:end}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-notes{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-notes span{padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:999px;font-size:11px;font-weight:700}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-track{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 14px;scroll-snap-type:x mandatory;scrollbar-width:none}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-track::-webkit-scrollbar{display:none}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-card{flex:0 0 clamp(150px,15vw,210px);margin:0;padding:9px;background:var(--bg);border:1px solid var(--border);border-radius:14px;box-shadow:0 12px 28px #0000000d;scroll-snap-align:start;transform:rotate(-1deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-card:nth-child(even){transform:rotate(1deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-card img,#JuneDatedDetails-{{ section.id }} .jdd__divider-art{display:grid;place-items:center;width:100%;aspect-ratio:.76;border-radius:9px;background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 18%,var(--bg)),var(--surface));object-fit:cover;font:900 clamp(34px,5vw,70px)/1 var(--jdd-heading-font);color:color-mix(in srgb,var(--accent) 75%,var(--ink))}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-card div{display:grid;gap:1px;padding:11px 5px 4px}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-card strong{text-transform:uppercase;font-size:11px;letter-spacing:.06em}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-card small{color:var(--muted);font-size:10px}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-head{display:flex;align-items:end;justify-content:space-between;gap:20px}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-controls{display:flex;align-items:center;gap:8px;margin-bottom:27px}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-controls>span{margin-right:5px;color:var(--muted);font-size:11px;font-weight:700}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-controls button{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--ink);border-radius:50%;background:var(--bg);color:var(--ink);font-size:18px;cursor:pointer}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-grid{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-grid::-webkit-scrollbar{display:none}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card{flex:0 0 calc(50% - 10px);margin:0;background:var(--surface);border-radius:14px;overflow:hidden;scroll-snap-align:start}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card img{display:block;width:100%;height:auto;aspect-ratio:1.22;object-fit:contain}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card figcaption{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;padding:18px 22px}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card figcaption i{grid-row:1/3;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:9px;font-style:normal;font-weight:900}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card figcaption strong{font-size:15px;font-weight:800}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card figcaption span{font-size:13px;color:var(--muted)}
+  #JuneDatedDetails-{{ section.id }} .jdd__included-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  #JuneDatedDetails-{{ section.id }} .jdd__included-card{display:grid;grid-template-columns:112px 1fr;align-items:center;gap:16px;min-height:132px;padding:10px;border:1px solid var(--border);border-radius:12px;background:var(--bg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__included-card img{display:block;width:112px;height:112px;border-radius:8px;object-fit:contain;background:var(--surface)}
+  #JuneDatedDetails-{{ section.id }} .jdd__included-card strong{font-size:14px;font-weight:800}
+  #JuneDatedDetails-{{ section.id }} .jdd__included-card p{margin:5px 0 0;color:var(--muted);font-size:12px;line-height:1.45}
+  #JuneDatedDetails-{{ section.id }} .jdd__fact-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0}
+  #JuneDatedDetails-{{ section.id }} .jdd__fact{min-height:108px;padding:18px;border:1px solid var(--border);border-radius:10px}
+  #JuneDatedDetails-{{ section.id }} .jdd__fact dt{margin-bottom:8px;color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  #JuneDatedDetails-{{ section.id }} .jdd__fact dd{margin:0;font-size:16px;font-weight:800;line-height:1.35}
+  #JuneDatedDetails-{{ section.id }} .jdd__quote{position:relative;max-width:1464px;margin:75px auto 0;padding:clamp(34px,5vw,70px);background:var(--accent);color:var(--on-accent);border:0;border-radius:20px;transform:rotate(-.35deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__quote span{position:absolute;left:24px;top:4px;font:900 70px/1 var(--jdd-heading-font);opacity:.3}
+  #JuneDatedDetails-{{ section.id }} .jdd__quote p{max-width:900px;margin:0 auto;font:var(--jdd-heading-weight) clamp(25px,3.4vw,52px)/1.05 var(--jdd-heading-font);letter-spacing:-.04em;text-align:center;text-wrap:balance}
+  #JuneDatedDetails-{{ section.id }} .jdd__faq-list{border-top:1px solid var(--border)}
+  #JuneDatedDetails-{{ section.id }} .jdd__faq-list details{border-bottom:1px solid var(--border)}
+  #MainContent[data-june-product-brand] #JuneDatedDetails-{{ section.id }} summary,#JuneDatedDetails-{{ section.id }} summary{display:flex;justify-content:space-between;gap:15px;padding:22px 4px;list-style:none;cursor:pointer;font-family:var(--jdd-action-font)!important;font-weight:var(--jdd-action-weight)!important;font-size:var(--jdd-action-size)!important;line-height:var(--jdd-action-leading)!important;letter-spacing:var(--jdd-action-tracking)!important}
+  #JuneDatedDetails-{{ section.id }} summary::-webkit-details-marker{display:none}
+  #JuneDatedDetails-{{ section.id }} details[open] summary span{transform:rotate(45deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__answer{max-width:76ch;padding:0 4px 22px;color:var(--muted)}
+  #JuneDatedDetails-{{ section.id }} .jdd__answer :first-child{margin-top:0}
+  #JuneDatedDetails-{{ section.id }} .jdd__last{max-width:1560px;margin:75px auto 0;padding:48px clamp(18px,3vw,48px);background:var(--accent);color:var(--on-accent);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  #JuneDatedDetails-{{ section.id }} .jdd__last .jdd__eyebrow{width:100%;margin:0;color:inherit}
+  #JuneDatedDetails-{{ section.id }} .jdd__last h2{max-width:800px;color:inherit!important}
+  #MainContent[data-june-product-brand] #JuneDatedDetails-{{ section.id }} .jdd__last a,#JuneDatedDetails-{{ section.id }} .jdd__last a{display:inline-flex;align-items:center;justify-content:center;gap:15px;min-height:48px;padding:12px 20px;border:1.5px solid var(--ink);border-radius:999px;background:var(--bg);color:var(--ink);font-family:var(--jdd-action-font)!important;font-weight:var(--jdd-action-weight)!important;font-size:var(--jdd-action-size)!important;line-height:var(--jdd-action-leading)!important;letter-spacing:var(--jdd-action-tracking)!important;text-decoration:none}
+  #JuneDatedDetails-{{ section.id }} :is(a,summary):focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  @media(max-width:980px){#JuneDatedDetails-{{ section.id }} .jdd__feature-grid,#JuneDatedDetails-{{ section.id }} .jdd__included-grid{grid-template-columns:1fr}}
+  @media(max-width:749px){#JuneDatedDetails-{{ section.id }} .jdd__intro-inner::after{right:-8px;bottom:-38px;font-size:16px}#JuneDatedDetails-{{ section.id }} .jdd__divider-copy{display:block}#JuneDatedDetails-{{ section.id }} .jdd__divider-copy p{margin:18px 0}#JuneDatedDetails-{{ section.id }} .jdd__divider-notes{display:grid}#JuneDatedDetails-{{ section.id }} .jdd__dividers{margin-top:55px;padding:42px 14px;border-radius:0}#JuneDatedDetails-{{ section.id }} .jdd__divider-card{flex-basis:148px}#JuneDatedDetails-{{ section.id }} .jdd__quote{margin-top:55px;border-radius:0;transform:none}#JuneDatedDetails-{{ section.id }} .jdd__quote p{font-size:27px}}
+  @media(max-width:749px){#JuneDatedDetails-{{ section.id }}{font-size:var(--jdd-copy-mobile)}#JuneDatedDetails-{{ section.id }} .jdd__intro{padding:50px 18px}#JuneDatedDetails-{{ section.id }} .jdd__intro-inner{display:block}#JuneDatedDetails-{{ section.id }} .jdd__description{margin-top:22px}#MainContent[data-june-product-brand] #JuneDatedDetails-{{ section.id }} h2,#JuneDatedDetails-{{ section.id }} h2{font-size:var(--jdd-heading-mobile)!important}#MainContent[data-june-product-brand] #JuneDatedDetails-{{ section.id }} .jdd__description :is(p,li),#JuneDatedDetails-{{ section.id }} .jdd__description :is(p,li){font-size:var(--jdd-copy-mobile)!important}#JuneDatedDetails-{{ section.id }} .jdd__features,#JuneDatedDetails-{{ section.id }} .jdd__inside,#JuneDatedDetails-{{ section.id }} .jdd__included,#JuneDatedDetails-{{ section.id }} .jdd__facts,#JuneDatedDetails-{{ section.id }} .jdd__faqs{padding:55px 14px 0}#JuneDatedDetails-{{ section.id }} .jdd__feature-card{padding:22px 18px}#JuneDatedDetails-{{ section.id }} .jdd__feature-card h3{font-size:23px}#JuneDatedDetails-{{ section.id }} .jdd__feature-content li{font-size:var(--jdd-copy-mobile)}#JuneDatedDetails-{{ section.id }} .jdd__inside-head{align-items:center}#JuneDatedDetails-{{ section.id }} .jdd__inside-controls>span{display:none}#JuneDatedDetails-{{ section.id }} .jdd__inside-controls button{width:36px;height:36px}#JuneDatedDetails-{{ section.id }} .jdd__inside-grid{gap:12px}#JuneDatedDetails-{{ section.id }} .jdd__inside-card{flex:0 0 85%}#JuneDatedDetails-{{ section.id }} .jdd__included-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}#JuneDatedDetails-{{ section.id }} .jdd__included-card{flex:0 0 86%;scroll-snap-align:start}#JuneDatedDetails-{{ section.id }} .jdd__fact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#JuneDatedDetails-{{ section.id }} .jdd__last{margin-top:55px;padding:40px 18px 125px}#MainContent[data-june-product-brand] #JuneDatedDetails-{{ section.id }} summary,#JuneDatedDetails-{{ section.id }} summary{font-size:var(--jdd-action-mobile)!important}#MainContent[data-june-product-brand] #JuneDatedDetails-{{ section.id }} .jdd__last a,#JuneDatedDetails-{{ section.id }} .jdd__last a{font-size:var(--jdd-action-mobile)!important}}
+  /* Approved storybook composition */
+  #JuneDatedDetails-{{ section.id }}{overflow:hidden;background:var(--bg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__intro{position:relative;padding:clamp(72px,8vw,126px) clamp(18px,4vw,58px);background:var(--bg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__intro::before{content:'';position:absolute;left:2%;top:14%;width:170px;height:54px;background:var(--accent);opacity:.16;transform:rotate(-4deg);clip-path:polygon(2% 8%,100% 0,95% 92%,0 100%)}
+  #JuneDatedDetails-{{ section.id }} .jdd__intro-inner{max-width:1500px;grid-template-columns:.95fr 1.05fr;align-items:center}
+  #JuneDatedDetails-{{ section.id }} .jdd__intro-inner::after{right:2%;bottom:-72px;background:transparent;color:var(--accent);transform:rotate(-5deg);font-size:clamp(18px,2vw,30px)}
+  #JuneDatedDetails-{{ section.id }} .jdd__features{max-width:1680px;padding-top:42px;padding-bottom:clamp(76px,8vw,120px)}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.5vw,22px);align-items:start}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-card{padding:0;border:0;border-radius:0;background:transparent;overflow:visible}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-card:nth-child(even){padding-top:34px}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-media{position:relative;margin:0 0 20px;aspect-ratio:.78;border-radius:15px;clip-path:polygon(2% 1%,98% 0,100% 97%,4% 100%,0 45%);box-shadow:0 18px 40px #0002}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-media::after{content:'';position:absolute;inset:auto 10% -8px 12%;height:18px;background:var(--accent);opacity:.55;transform:rotate(-2deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-media img{object-fit:cover;transition:transform .35s ease}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-card:hover .jdd__feature-media img{transform:scale(1.025)}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-top{margin-bottom:10px}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-number{width:auto;height:auto;border-radius:0;background:transparent;color:var(--accent);font-size:12px}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-card h3{margin-bottom:10px;font-size:clamp(23px,2.05vw,34px)}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-reveal{border-top:1px solid var(--border)}
+  #MainContent[data-june-product-brand] #JuneDatedDetails-{{ section.id }} .jdd__feature-reveal summary,#JuneDatedDetails-{{ section.id }} .jdd__feature-reveal summary{padding:13px 0;font-family:var(--jdd-action-font)!important;font-size:11px!important;font-weight:var(--jdd-action-weight)!important;text-transform:uppercase;letter-spacing:.05em}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-reveal[open] summary span{transform:rotate(45deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-content{padding:0 0 12px}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-content li{font-size:12px}
+  #JuneDatedDetails-{{ section.id }} .jdd__dividers{position:relative;max-width:none;margin:0;padding:clamp(70px,8vw,120px) max(clamp(18px,4vw,68px),calc((100vw - 1680px)/2 + 48px));border-radius:0;background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 8%,var(--bg)),var(--surface));isolation:isolate}
+  #JuneDatedDetails-{{ section.id }} .jdd__dividers::before{content:'12 stories · 12 versions of you';position:absolute;right:6%;top:8%;max-width:230px;color:var(--accent);font:800 clamp(16px,1.8vw,27px)/1.2 var(--jdd-heading-font);letter-spacing:-.03em;transform:rotate(5deg);text-align:center}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-copy{max-width:1500px;margin:0 auto 44px}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-track{max-width:1680px;margin:auto;gap:0;padding:24px 20px 42px}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-card{flex-basis:clamp(144px,13vw,200px);margin:0 -4px;padding:7px;border:0;border-radius:4px;box-shadow:0 14px 30px #0002;transform:rotate(-3deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-card:nth-child(3n+2){transform:translateY(-14px) rotate(2deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-card:nth-child(3n){transform:translateY(9px) rotate(-1deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-card img,#JuneDatedDetails-{{ section.id }} .jdd__divider-art{border-radius:0;background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 25%,var(--bg)),color-mix(in srgb,var(--surface) 74%,var(--bg)));position:relative}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-card:nth-child(even) .jdd__divider-art{background:linear-gradient(155deg,var(--surface),color-mix(in srgb,var(--accent) 16%,var(--bg)))}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside{position:relative;max-width:1680px;padding-top:clamp(76px,9vw,138px)}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside::before{content:'';position:absolute;left:-3%;right:-3%;top:55%;height:34%;z-index:-1;background:color-mix(in srgb,var(--accent) 7%,var(--surface));transform:rotate(-1deg);clip-path:polygon(1% 4%,100% 0,97% 100%,0 94%)}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-grid{gap:26px;padding:8px 2px 28px}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card{position:relative;flex:0 0 100%;padding:clamp(18px,3vw,42px);border-radius:18px;background:var(--surface);overflow:visible}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card img{aspect-ratio:1.72;object-fit:contain;background:var(--bg);box-shadow:0 24px 60px #0002;transform:rotate(-.35deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card figcaption{max-width:760px;margin:18px auto 0;text-align:center;display:grid;grid-template-columns:auto 1fr}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card figcaption i{background:transparent;color:var(--accent);font-size:11px}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card figcaption strong{font-size:18px}
+  #JuneDatedDetails-{{ section.id }} .jdd__facts{padding-top:clamp(64px,7vw,105px)}
+  #JuneDatedDetails-{{ section.id }} .jdd__fact-grid{gap:0;border-top:1px solid var(--border);border-left:1px solid var(--border)}
+  #JuneDatedDetails-{{ section.id }} .jdd__fact{border:0;border-right:1px solid var(--border);border-bottom:1px solid var(--border);border-radius:0;background:var(--bg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__quote{max-width:1500px;border-radius:0;background:color-mix(in srgb,var(--accent) 13%,var(--bg));color:var(--ink);clip-path:polygon(1% 5%,99% 0,100% 92%,3% 100%,0 44%);transform:rotate(-.5deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__quote::after{content:'Same you. Brighter year.';display:block;margin:22px auto 0;color:var(--accent);font:800 16px/1.2 var(--jdd-heading-font);text-align:center;transform:rotate(2deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__last{position:relative;max-width:none;margin-top:82px;padding:clamp(52px,6vw,88px) max(clamp(18px,4vw,68px),calc((100vw - 1560px)/2 + 48px));clip-path:polygon(0 7%,100% 0,100% 92%,0 100%)}
+  @media(max-width:1100px){#JuneDatedDetails-{{ section.id }} .jdd__feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#JuneDatedDetails-{{ section.id }} .jdd__feature-card:nth-child(even){padding-top:0}}
+  @media(max-width:749px){#JuneDatedDetails-{{ section.id }} .jdd__intro::before{display:none}#JuneDatedDetails-{{ section.id }} .jdd__feature-grid{grid-template-columns:1fr;gap:38px}#JuneDatedDetails-{{ section.id }} .jdd__feature-card{display:grid;grid-template-columns:42% 1fr;column-gap:16px;align-items:start}#JuneDatedDetails-{{ section.id }} .jdd__feature-media{grid-row:1/4;margin:0;aspect-ratio:.78}#JuneDatedDetails-{{ section.id }} .jdd__feature-top{margin:0 0 6px}#JuneDatedDetails-{{ section.id }} .jdd__feature-card h3{font-size:21px;margin-bottom:8px}#JuneDatedDetails-{{ section.id }} .jdd__feature-reveal{grid-column:2}#JuneDatedDetails-{{ section.id }} .jdd__dividers::before{display:none}#JuneDatedDetails-{{ section.id }} .jdd__divider-track{padding-left:5px;padding-right:5px}#JuneDatedDetails-{{ section.id }} .jdd__inside-card{flex-basis:94%;padding:10px}#JuneDatedDetails-{{ section.id }} .jdd__inside-card img{aspect-ratio:1.25}#JuneDatedDetails-{{ section.id }} .jdd__inside-card figcaption{padding:14px 10px;text-align:left}#JuneDatedDetails-{{ section.id }} .jdd__fact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#JuneDatedDetails-{{ section.id }} .jdd__quote{width:100%;max-width:100%;margin-left:0;margin-right:0;transform:none}#JuneDatedDetails-{{ section.id }} .jdd__last{margin-top:60px}}
+  @media(prefers-reduced-motion:reduce){#JuneDatedDetails-{{ section.id }} .jdd__feature-media img{transition:none}}
+  #JuneDatedDetails-{{ section.id }}{background-color:var(--bg);background-image:radial-gradient(circle,color-mix(in srgb,var(--ink) 13%,transparent) .8px,transparent .9px);background-size:18px 18px}
+  #JuneDatedDetails-{{ section.id }} .jdd__intro{background-color:color-mix(in srgb,var(--bg) 97%,var(--surface));background-image:radial-gradient(circle,color-mix(in srgb,var(--accent) 24%,transparent) .85px,transparent .95px),linear-gradient(90deg,transparent 0 62px,color-mix(in srgb,var(--accent) 18%,transparent) 63px 64px,transparent 65px);background-size:18px 18px,100% 100%;box-shadow:inset 0 -1px 0 color-mix(in srgb,var(--ink) 10%,transparent),0 24px 60px #0000000d}
+  #JuneDatedDetails-{{ section.id }} .jdd__features,#JuneDatedDetails-{{ section.id }} .jdd__inside,#JuneDatedDetails-{{ section.id }} .jdd__included,#JuneDatedDetails-{{ section.id }} .jdd__facts,#JuneDatedDetails-{{ section.id }} .jdd__faqs{position:relative}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-card{padding:12px 12px 18px;border-radius:8px;background:color-mix(in srgb,var(--bg) 96%,var(--surface));box-shadow:0 24px 48px #00000014,0 6px 14px #0000000d,5px 6px 0 color-mix(in srgb,var(--accent) 10%,var(--bg)),0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent)}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-card:nth-child(even){transform:rotate(.35deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-card:nth-child(odd){transform:rotate(-.35deg)}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-media{border-radius:4px;box-shadow:0 14px 26px #00000018,0 2px 6px #00000012}
+  #JuneDatedDetails-{{ section.id }} .jdd__feature-top,#JuneDatedDetails-{{ section.id }} .jdd__feature-card h3,#JuneDatedDetails-{{ section.id }} .jdd__feature-reveal{margin-left:8px;margin-right:8px}
+  #JuneDatedDetails-{{ section.id }} .jdd__dividers{background-color:color-mix(in srgb,var(--accent) 7%,var(--bg));background-image:radial-gradient(circle,color-mix(in srgb,var(--ink) 13%,transparent) .8px,transparent .9px),linear-gradient(180deg,color-mix(in srgb,var(--accent) 8%,var(--bg)),color-mix(in srgb,var(--surface) 92%,var(--bg)));background-size:18px 18px,100% 100%;box-shadow:inset 0 1px 0 #ffffffb3,inset 0 -1px 0 color-mix(in srgb,var(--ink) 10%,transparent),0 30px 70px #00000010}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-notes span{background:color-mix(in srgb,var(--bg) 94%,transparent);box-shadow:0 7px 16px #0000000d}
+  #JuneDatedDetails-{{ section.id }} .jdd__divider-card{box-shadow:0 22px 44px #00000020,0 7px 15px #00000012,3px 4px 0 color-mix(in srgb,var(--accent) 12%,var(--bg))}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside::before{background-color:color-mix(in srgb,var(--accent) 7%,var(--surface));background-image:radial-gradient(circle,color-mix(in srgb,var(--ink) 12%,transparent) .8px,transparent .9px);background-size:18px 18px}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card{border:1px solid color-mix(in srgb,var(--ink) 10%,transparent);background-color:color-mix(in srgb,var(--bg) 96%,var(--surface));background-image:radial-gradient(circle,color-mix(in srgb,var(--ink) 11%,transparent) .75px,transparent .85px);background-size:18px 18px;box-shadow:0 30px 70px #00000018,0 8px 18px #0000000f,7px 8px 0 color-mix(in srgb,var(--accent) 9%,var(--bg))}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-card img{box-shadow:0 34px 65px #00000022,0 8px 18px #00000014,0 0 0 1px color-mix(in srgb,var(--ink) 8%,transparent)}
+  #JuneDatedDetails-{{ section.id }} .jdd__inside-controls button{background:color-mix(in srgb,var(--bg) 96%,transparent);box-shadow:0 8px 16px #00000010}
+  #JuneDatedDetails-{{ section.id }} .jdd__fact-grid{background:var(--bg);box-shadow:0 22px 48px #00000010,5px 6px 0 color-mix(in srgb,var(--accent) 8%,var(--bg))}
+  #JuneDatedDetails-{{ section.id }} .jdd__fact{background-color:color-mix(in srgb,var(--bg) 97%,var(--surface));background-image:radial-gradient(circle,color-mix(in srgb,var(--ink) 10%,transparent) .7px,transparent .8px);background-size:18px 18px}
+  #JuneDatedDetails-{{ section.id }} .jdd__quote{box-shadow:0 30px 65px #00000018,7px 8px 0 color-mix(in srgb,var(--accent) 10%,var(--bg))}
+  #JuneDatedDetails-{{ section.id }} .jdd__faq-list details{background:color-mix(in srgb,var(--bg) 97%,var(--surface));box-shadow:0 8px 18px #00000008}
+  #JuneDatedDetails-{{ section.id }} .jdd__last{box-shadow:0 -22px 55px #00000012}
+  @media(max-width:749px){#JuneDatedDetails-{{ section.id }}{background-size:16px 16px}#JuneDatedDetails-{{ section.id }} .jdd__intro{background-size:16px 16px,100% 100%;background-image:radial-gradient(circle,color-mix(in srgb,var(--accent) 22%,transparent) .8px,transparent .9px)}#JuneDatedDetails-{{ section.id }} .jdd__feature-card{padding:9px 9px 14px;box-shadow:0 18px 35px #00000013,0 5px 11px #0000000c,0 5px 0 color-mix(in srgb,var(--accent) 9%,var(--bg))}#JuneDatedDetails-{{ section.id }} .jdd__feature-card:nth-child(n){transform:none}#JuneDatedDetails-{{ section.id }} .jdd__feature-top,#JuneDatedDetails-{{ section.id }} .jdd__feature-card h3,#JuneDatedDetails-{{ section.id }} .jdd__feature-reveal{margin-left:4px;margin-right:4px}#JuneDatedDetails-{{ section.id }} .jdd__divider-card{box-shadow:0 20px 38px #0000001e,0 6px 13px #00000010,0 4px 0 color-mix(in srgb,var(--accent) 10%,var(--bg))}#JuneDatedDetails-{{ section.id }} .jdd__inside::before{left:0;right:0}#JuneDatedDetails-{{ section.id }} .jdd__inside-card{box-shadow:0 22px 44px #00000016,0 5px 0 color-mix(in srgb,var(--accent) 8%,var(--bg))}}
+</style>
+
+<script>
+(() => {
+  const root = document.getElementById('JuneDatedDetails-{{ section.id }}');
+  if (!root) return;
+  const track = root.querySelector('[data-jdd-track]');
+  const current = root.querySelector('[data-jdd-current]');
+  if (!track || !current) return;
+  const cards = [...track.querySelectorAll('.jdd__inside-card')];
+  const move = direction => track.scrollBy({ left: direction * track.clientWidth * .72, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  root.querySelector('[data-jdd-prev]')?.addEventListener('click', () => move(-1));
+  root.querySelector('[data-jdd-next]')?.addEventListener('click', () => move(1));
+  track.addEventListener('scroll', () => {
+    const center = track.scrollLeft + track.clientWidth / 2;
+    let nearest = 0;
+    let distance = Infinity;
+    cards.forEach((card, index) => {
+      const delta = Math.abs(card.offsetLeft + card.offsetWidth / 2 - center);
+      if (delta < distance) {
+        distance = delta;
+        nearest = index;
+      }
+    });
+    current.textContent = String(nearest + 1).padStart(2, '0');
+  }, { passive: true });
+})();
+</script>
+
+{% schema %}
+{
+  "name":"June · 2027 details",
+  "tag":"section",
+  "class":"june-dated-details-section",
+  "settings":[
+    {"type":"text","id":"heading","label":"Story heading","default":"Make room for the year ahead."},
+    {"type":"textarea","id":"fallback_copy","label":"Copy if product description is empty","default":"A new year begins with a fresh page. Make this one yours."},
+    {"type":"text","id":"features_heading","label":"What's inside heading","default":"What’s inside"},
+    {"type":"checkbox","id":"show_divider_story","label":"Show monthly divider story","default":true},
+    {"type":"text","id":"divider_heading","label":"Divider story heading","default":"A year of women, in full colour."},
+    {"type":"textarea","id":"divider_copy","label":"Divider story copy","default":"Twelve illustrated monthly dividers celebrate the qualities and people that make life richer."},
+    {"type":"text","id":"postcard_copy","label":"Postcard note","default":"Detachable postcards to personalise and gift"},
+    {"type":"text","id":"song_copy","label":"Song note","default":"A Spotify song dedication every month"},
+    {"type":"textarea","id":"quote","label":"Story quote","default":"Plan a life you love, one intentional day at a time."},
+    {"type":"text","id":"inside_heading","label":"Inside gallery heading","default":"See what’s inside"},
+    {"type":"text","id":"included_heading","label":"What’s included heading","default":"Everything that comes with it"},
+    {"type":"text","id":"facts_heading","label":"Specifications heading","default":"The planner, at a glance"},
+    {"type":"text","id":"faq_heading","label":"FAQ heading","default":"Your questions, answered"},
+    {"type":"text","id":"last_heading","label":"Closing heading","default":"Ready to make 2027 yours?"},
+    {"type":"text","id":"last_link","label":"Closing link","default":"Choose your planner"},
+    {"type":"text","id":"buy_section_id","label":"Purchase section ID","default":"main"}
+  ],
+  "blocks":[
+    {"type":"feature_group","name":"Inside feature group","settings":[
+      {"type":"image_picker","id":"image","label":"Chapter image"},
+      {"type":"text","id":"eyebrow","label":"Eyebrow"},
+      {"type":"text","id":"heading","label":"Heading"},
+      {"type":"richtext","id":"content","label":"Feature list"}
+    ]},
+    {"type":"divider","name":"Monthly divider","limit":12,"settings":[
+      {"type":"text","id":"month","label":"Month"},
+      {"type":"image_picker","id":"image","label":"Divider or postcard image"},
+      {"type":"text","id":"quality","label":"Celebrated quality"}
+    ]},
+    {"type":"inside","name":"Inside page image","settings":[
+      {"type":"image_picker","id":"image","label":"Real interior image"},
+      {"type":"text","id":"title","label":"Title"},
+      {"type":"text","id":"caption","label":"Caption"}
+    ]},
+    {"type":"included","name":"Included item","settings":[
+      {"type":"image_picker","id":"image","label":"Item image"},
+      {"type":"text","id":"heading","label":"Item name"},
+      {"type":"text","id":"copy","label":"Short description"}
+    ]},
+    {"type":"fact","name":"Verified specification","settings":[
+      {"type":"text","id":"label","label":"Label"},
+      {"type":"text","id":"value","label":"Verified value"}
+    ]},
+    {"type":"faq","name":"Product question","settings":[
+      {"type":"text","id":"question","label":"Question"},
+      {"type":"richtext","id":"answer","label":"Answer"}
+    ]},
+    {"type":"typography","name":"Typography controls","limit":1,"settings":[
+      {"type":"header","content":"Heading"},
+      {"type":"font_picker","id":"heading_font","label":"Font family","default":"poppins_n4"},
+      {"type":"range","id":"heading_weight","label":"Thickness","min":100,"max":900,"step":100,"default":800},
+      {"type":"range","id":"heading_size","label":"Desktop size","min":24,"max":80,"step":1,"unit":"px","default":46},
+      {"type":"range","id":"heading_mobile","label":"Mobile size","min":22,"max":56,"step":1,"unit":"px","default":30},
+      {"type":"range","id":"heading_tracking","label":"Letter spacing (hundredths em)","min":-10,"max":10,"step":1,"default":-2},
+      {"type":"range","id":"heading_leading","label":"Line spacing (%)","min":90,"max":160,"step":5,"default":110},
+      {"type":"header","content":"Supporting copy"},
+      {"type":"font_picker","id":"copy_font","label":"Font family","default":"poppins_n4"},
+      {"type":"range","id":"copy_weight","label":"Thickness","min":100,"max":900,"step":100,"default":400},
+      {"type":"range","id":"copy_size","label":"Desktop size","min":12,"max":24,"step":1,"unit":"px","default":15},
+      {"type":"range","id":"copy_mobile","label":"Mobile size","min":12,"max":22,"step":1,"unit":"px","default":14},
+      {"type":"range","id":"copy_tracking","label":"Letter spacing (hundredths em)","min":-6,"max":12,"step":1,"default":0},
+      {"type":"range","id":"copy_leading","label":"Line spacing (%)","min":100,"max":190,"step":5,"default":160},
+      {"type":"header","content":"Buttons and questions"},
+      {"type":"font_picker","id":"action_font","label":"Font family","default":"poppins_n4"},
+      {"type":"range","id":"action_weight","label":"Thickness","min":100,"max":900,"step":100,"default":700},
+      {"type":"range","id":"action_size","label":"Desktop size","min":11,"max":22,"step":1,"unit":"px","default":13},
+      {"type":"range","id":"action_mobile","label":"Mobile size","min":11,"max":20,"step":1,"unit":"px","default":12},
+      {"type":"range","id":"action_tracking","label":"Letter spacing (hundredths em)","min":-6,"max":12,"step":1,"default":0},
+      {"type":"range","id":"action_leading","label":"Line spacing (%)","min":100,"max":170,"step":5,"default":130}
+    ]}
+  ],
+  "presets":[{"name":"June · 2027 details","blocks":[{"type":"typography"}]}]
+}
+{% endschema %}
+

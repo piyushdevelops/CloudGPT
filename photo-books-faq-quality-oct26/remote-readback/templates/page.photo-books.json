@@ -1,0 +1,106 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "june-photo-books-landing",
+      "settings": {
+        "studio_page": "photo-book-studio"
+      },
+      "blocks": {
+        "o1": {
+          "type": "occasion",
+          "settings": {
+            "title": "Anniversary",
+            "asset": "june-photobook-anniversary.jpg"
+          }
+        },
+        "o2": {
+          "type": "occasion",
+          "settings": {
+            "title": "Wedding",
+            "asset": "june-photobook-wedding.jpg"
+          }
+        },
+        "o3": {
+          "type": "occasion",
+          "settings": {
+            "title": "Travel",
+            "asset": "june-photobook-travel.jpg"
+          }
+        },
+        "o4": {
+          "type": "occasion",
+          "settings": {
+            "title": "Baby first year",
+            "asset": "june-photobook-baby.jpg"
+          }
+        },
+        "f1": {
+          "type": "faq",
+          "settings": {
+            "q": "How much does a photo book cost?",
+            "a": "<p>Regular starts at ₹2,799 and Large starts at ₹3,099, including 20 pages. The price updates as pages are added.</p>"
+          }
+        },
+        "f2": {
+          "type": "faq",
+          "settings": {
+            "q": "Will I lose my work if I close the page?",
+            "a": "<p>Your draft saves locally on this device while you work, including uploaded photos.</p>"
+          }
+        },
+        "f3": {
+          "type": "faq",
+          "settings": {
+            "q": "Can I review it before ordering?",
+            "a": "<p>Yes. Preview the album, review the final price and download a PDF before adding it to your bag.</p>"
+          }
+        },
+        "f4": {
+          "type": "faq",
+          "settings": {
+            "q": "What paper and finish do you use?",
+            "a": "<p>Each album is printed on premium acid-free photo paper for crisp detail and rich colour. The cover has a smooth matte lamination that helps reduce glare and protects it from everyday scuffs.</p>"
+          }
+        },
+        "f5": {
+          "type": "faq",
+          "settings": {
+            "q": "Will the photos stay vibrant over time?",
+            "a": "<p>Yes. High-quality printing and acid-free paper help resist yellowing and preserve colour, making the album suitable as a long-lasting keepsake. For the best life, store it flat in a cool, dry place away from direct sunlight.</p>"
+          }
+        },
+        "f6": {
+          "type": "faq",
+          "settings": {
+            "q": "Is the album made for regular handling?",
+            "a": "<p>Yes. The sturdy hardcover, protective matte lamination and premium pages are chosen for an album that can be opened, shared and enjoyed for years.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "o1",
+        "o2",
+        "o3",
+        "o4",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,46 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "june-photo-book-product",
+      "settings": {
+        "eyebrow": "JUNE PHOTO STUDIO",
+        "button_label": "Start creating",
+        "studio_page": "photo-book-studio",
+        "accent": "#CBF36B",
+        "surface": "#F5F5F3"
+      },
+      "disabled": true
+    },
+    "june_mobile_product": {
+      "type": "june-mobile-product",
+      "blocks": {
+        "typography": {
+          "type": "typography",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "typography"
+      ],
+      "settings": {
+        "show_discovery": true,
+        "action_mode": "link",
+        "action_link": "/pages/photo-book-studio",
+        "action_label": "Start creating"
+      }
+    }
+  },
+  "order": [
+    "june_mobile_product",
+    "main"
+  ]
+}

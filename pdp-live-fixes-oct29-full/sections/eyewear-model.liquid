@@ -1,0 +1,2094 @@
+{% liquid
+  assign male_model = section.settings.male_model
+  assign female_model = section.settings.female_model
+
+  assign male_frame_count = 0
+  assign female_frame_count = 0
+  for block in section.blocks
+    if block.type == 'frame'
+      assign block_has_visual = false
+      if block.settings.frame_image != blank or block.settings.lens_image != blank or block.settings.image != blank
+        assign block_has_visual = true
+      endif
+      if block_has_visual
+        if block.settings.gender == 'male'
+          assign male_frame_count = male_frame_count | plus: 1
+        elsif block.settings.gender == 'female'
+          assign female_frame_count = female_frame_count | plus: 1
+        endif
+      endif
+    endif
+  endfor
+
+  assign male_available = false
+  assign female_available = false
+  if male_model != blank or male_frame_count > 0
+    assign male_available = true
+  endif
+  if female_model != blank or female_frame_count > 0
+    assign female_available = true
+  endif
+
+  assign initial_gender = section.settings.default_gender
+  if initial_gender == 'female' and female_available == false and male_available
+    assign initial_gender = 'male'
+  elsif initial_gender == 'male' and male_available == false and female_available
+    assign initial_gender = 'female'
+  endif
+
+  assign card_shadow_alpha = section.settings.card_shadow_strength | times: 0.01
+  assign frame_shadow_contact = section.settings.frame_shadow_strength | times: 0.0022
+  assign frame_shadow_mid = section.settings.frame_shadow_strength | times: 0.0016
+  assign frame_shadow_soft = section.settings.frame_shadow_strength | times: 0.00105
+  assign gender_list = 'male,female' | split: ','
+  assign model_half_desktop = section.settings.model_width_desktop | divided_by: 2.0
+  assign model_half_mobile = section.settings.model_width_mobile | divided_by: 2.0
+  assign preview_outside_gap_desktop = section.settings.preview_gap_desktop | times: 0.12
+  assign preview_outside_gap_mobile = section.settings.preview_gap_mobile | times: 0.12
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --tjs-eyewear-space-top: {{ section.settings.padding_top }}px;
+    --tjs-eyewear-space-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay {
+    --tjs-section-bg: {{ section.settings.section_background }};
+    --tjs-stage-bg: {{ section.settings.stage_background }};
+    --tjs-text: {{ section.settings.text_color }};
+    --tjs-muted: {{ section.settings.muted_text_color }};
+    --tjs-accent: {{ section.settings.accent_color }};
+    --tjs-card-bg: {{ section.settings.info_card_background }};
+    --tjs-card-border: {{ section.settings.card_border_color }};
+    --tjs-max-width: {{ section.settings.max_width }}px;
+    --tjs-stage-height: {{ section.settings.desktop_height }}px;
+    --tjs-mobile-stage-height: {{ section.settings.mobile_height }}px;
+    --tjs-model-width: {{ section.settings.model_width_desktop }}%;
+    --tjs-model-width-mobile: {{ section.settings.model_width_mobile }}%;
+    --tjs-model-width-clamped: min(var(--tjs-model-width), 40%);
+    --tjs-model-width-mobile-clamped: min(var(--tjs-model-width-mobile), 72%);
+    --tjs-model-half: {{ model_half_desktop }}%;
+    --tjs-model-half-mobile: {{ model_half_mobile }}%;
+    --tjs-model-half-clamped: calc(var(--tjs-model-width-clamped) / 2);
+    --tjs-model-half-mobile-clamped: calc(var(--tjs-model-width-mobile-clamped) / 2);
+    --tjs-preview-width: 18%;
+    --tjs-preview-height: 18%;
+    --tjs-preview-second-width: 13%;
+    --tjs-preview-second-height: 15%;
+    --tjs-preview-width-mobile: 24%;
+    --tjs-preview-height-mobile: 16%;
+    --tjs-preview-outside-gap: clamp(10px, {{ preview_outside_gap_desktop }}px, 42px);
+    --tjs-preview-outside-gap-mobile: clamp(8px, {{ preview_outside_gap_mobile }}px, 24px);
+    --tjs-model-radius: {{ section.settings.model_radius }}px;
+    --tjs-preview-gap: {{ section.settings.preview_gap_desktop }}px;
+    --tjs-preview-gap-mobile: {{ section.settings.preview_gap_mobile }}px;
+    --tjs-side-scale: {{ section.settings.preview_scale }};
+    --tjs-side-scale-mobile: {{ section.settings.preview_scale_mobile }};
+    --tjs-hidden-scale: .68;
+    --tjs-active-scale: {{ section.settings.active_scale }};
+    --tjs-active-scale-mobile: {{ section.settings.active_scale_mobile }};
+    --tjs-page-gutter: {{ section.settings.page_gutter }}px;
+    --tjs-mobile-gutter: {{ section.settings.mobile_gutter }}px;
+    --tjs-card-shadow-alpha: {{ card_shadow_alpha }};
+    --tjs-frame-shadow-contact: {{ frame_shadow_contact }};
+    --tjs-frame-shadow-mid: {{ frame_shadow_mid }};
+    --tjs-frame-shadow-soft: {{ frame_shadow_soft }};
+    padding-block: var(--tjs-eyewear-space-top) var(--tjs-eyewear-space-bottom);
+    background: var(--tjs-section-bg);
+    color: var(--tjs-text);
+    font-family: var(--font-body-family, Arial, sans-serif);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay * {
+    box-sizing: border-box;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__outer {
+    width: min(100%, var(--tjs-max-width));
+    margin-inline: auto;
+    padding-inline: var(--tjs-page-gutter);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__header {
+    display: grid;
+    justify-items: center;
+    max-width: 760px;
+    margin: 0 auto clamp(24px, 3vw, 42px);
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+    color: var(--tjs-accent);
+    font-size: 10px;
+    font-weight: 760;
+    line-height: 1;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__eyebrow::before,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__eyebrow::after {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    opacity: .68;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__heading {
+    margin: 0;
+    color: var(--tjs-text);
+    font-family: var(--font-heading-family, var(--font-body-family, Arial, sans-serif));
+    font-size: clamp(40px, 5vw, {{ section.settings.heading_size }}px);
+    font-weight: 500;
+    line-height: .95;
+    letter-spacing: -.045em;
+    text-wrap: balance;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__description {
+    max-width: 56ch;
+    margin-top: 15px;
+    color: var(--tjs-muted);
+    font-size: 13px;
+    line-height: 1.58;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__description > * {
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__viewport {
+    position: relative;
+    isolation: isolate;
+    height: var(--tjs-stage-height);
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--tjs-text) 9%, transparent);
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 50% 16%, color-mix(in srgb, var(--tjs-accent) 12%, transparent) 0, transparent 34%),
+      linear-gradient(135deg, color-mix(in srgb, var(--tjs-stage-bg) 97%, white) 0%, var(--tjs-stage-bg) 56%, color-mix(in srgb, var(--tjs-stage-bg) 90%, var(--tjs-accent)) 100%);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.7) inset,
+      0 28px 72px rgba(31, 26, 22, .09);
+    outline: none;
+    touch-action: pan-y;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__viewport::before {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    z-index: 18;
+    border: 1px solid color-mix(in srgb, var(--tjs-text) 5%, transparent);
+    border-radius: 16px;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__switch-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 18px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__toggle {
+    position: relative;
+    z-index: 30;
+    display: inline-grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3px;
+    min-width: 190px;
+    padding: 4px;
+    border: 1px solid color-mix(in srgb, var(--tjs-text) 10%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--tjs-stage-bg) 94%, white);
+    box-shadow: 0 12px 30px rgba(30, 25, 22, .10);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__toggle-button {
+    min-height: 34px;
+    padding: 9px 16px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: color-mix(in srgb, var(--tjs-text) 58%, transparent);
+    font: inherit;
+    font-size: 9px;
+    font-weight: 760;
+    line-height: 1;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color .28s ease, color .28s ease, box-shadow .28s ease, transform .28s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__toggle-button.is-active {
+    background: var(--tjs-text);
+    color: var(--tjs-stage-bg);
+    box-shadow: 0 7px 18px rgba(28, 23, 20, .16);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__toggle-button:disabled {
+    opacity: .32;
+    cursor: not-allowed;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__panel {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .48s cubic-bezier(.22, .8, .3, 1), visibility .48s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__panel.is-active {
+    z-index: 2;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__model-wrap {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__model {
+    position: relative;
+    width: var(--tjs-model-width-clamped);
+    height: 100%;
+    overflow: hidden;
+    border-inline: 1px solid color-mix(in srgb, var(--tjs-text) 7%, transparent);
+    border-radius: var(--tjs-model-radius);
+    background: color-mix(in srgb, var(--tjs-stage-bg) 94%, white);
+    box-shadow:
+      0 2px 0 rgba(255,255,255,.72) inset,
+      0 28px 70px rgba(24, 20, 18, .15);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__model::before {
+    content: '';
+    position: absolute;
+    inset: 9px;
+    z-index: 4;
+    border: 1px solid rgba(255,255,255,.52);
+    border-radius: max(calc(var(--tjs-model-radius) - 8px), 0px);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__model::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background:
+      linear-gradient(90deg, rgba(20,17,15,.08), transparent 15%, transparent 85%, rgba(20,17,15,.08)),
+      linear-gradient(180deg, rgba(255,255,255,.06), transparent 24%, transparent 78%, rgba(18,15,13,.10));
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__model-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__model-placeholder,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__empty {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 28px;
+    color: var(--tjs-muted);
+    font-size: 13px;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__fan {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__track {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    --active-frame-width: var(--track-width, 58%);
+    --active-frame-height: var(--track-height, 29%);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame {
+    --frame-left: 50%;
+    --frame-width: var(--active-frame-width);
+    --frame-height: var(--active-frame-height);
+    --frame-scale: 1;
+    --frame-rotate: 0deg;
+    --frame-opacity: 0;
+    position: absolute;
+    left: var(--frame-left);
+    top: var(--track-y, 34%);
+    z-index: 1;
+    width: var(--frame-width);
+    height: var(--frame-height);
+    opacity: var(--frame-opacity);
+    pointer-events: none;
+    transform: translate(-50%, -50%) rotate(var(--frame-rotate)) scale(var(--frame-scale));
+    transform-origin: center center;
+    transition:
+      transform .54s cubic-bezier(.22, .8, .3, 1),
+      left .54s cubic-bezier(.22, .8, .3, 1),
+      width .54s cubic-bezier(.22, .8, .3, 1),
+      height .54s cubic-bezier(.22, .8, .3, 1),
+      opacity .38s cubic-bezier(.22, .8, .3, 1),
+      filter .38s ease;
+    will-change: transform, opacity, left, width, height;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='active'] {
+    --frame-left: 50%;
+    --frame-width: var(--active-frame-width);
+    --frame-height: var(--active-frame-height);
+    --frame-scale: var(--tjs-active-scale);
+    --frame-rotate: 0deg;
+    --frame-opacity: 1;
+    z-index: 12;
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='prev-1'] {
+    --frame-left: calc(50% - var(--tjs-model-half-clamped) - 8% - var(--tjs-preview-outside-gap));
+    --frame-width: var(--tjs-preview-width);
+    --frame-height: var(--tjs-preview-height);
+    --frame-scale: .62;
+    --frame-rotate: -3deg;
+    --frame-opacity: .74;
+    z-index: 6;
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='next-1'] {
+    --frame-left: calc(50% + var(--tjs-model-half-clamped) + 8% + var(--tjs-preview-outside-gap));
+    --frame-width: var(--tjs-preview-width);
+    --frame-height: var(--tjs-preview-height);
+    --frame-scale: .62;
+    --frame-rotate: 3deg;
+    --frame-opacity: .74;
+    z-index: 6;
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='prev-2'] {
+    --frame-opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='next-2'] {
+    --frame-opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='hidden'] {
+    --frame-left: 50%;
+    --frame-width: var(--active-frame-width);
+    --frame-height: var(--active-frame-height);
+    --frame-scale: .52;
+    --frame-rotate: 0deg;
+    --frame-opacity: 0;
+    z-index: 1;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 10%;
+    width: 62%;
+    height: 28%;
+    border-radius: 999px;
+    background: radial-gradient(circle, color-mix(in srgb, var(--tjs-accent) 18%, white) 0%, rgba(255,255,255,.24) 34%, transparent 72%);
+    filter: blur(16px);
+    opacity: 0;
+    transform: translateX(-50%);
+    transition: opacity .35s ease, transform .35s ease;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='prev-1']::before,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='next-1']::before {
+    opacity: .55;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='active']::before {
+    width: 74%;
+    height: 22%;
+    bottom: 14%;
+    opacity: .28;
+    filter: blur(14px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame-link {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame-visual {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    isolation: isolate;
+    transform:
+      translate3d(var(--frame-personal-x-desktop, 0%), var(--frame-personal-y-desktop, 0%), 0)
+      rotate(var(--frame-personal-rotate-desktop, 0deg))
+      scale(var(--frame-personal-scale-desktop, 1));
+    transform-origin: center center;
+    transition: transform .38s cubic-bezier(.22, .8, .3, 1);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame-image,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__lens-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+    transition: filter .35s ease, transform .35s ease, opacity .35s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame-image--combined {
+    z-index: 1;
+    opacity: 1;
+    filter:
+      drop-shadow(0 2px 1px rgba(24, 20, 18, var(--tjs-frame-shadow-contact)))
+      drop-shadow(0 12px 20px rgba(24, 20, 18, var(--tjs-frame-shadow-mid)))
+      drop-shadow(0 24px 34px rgba(24, 20, 18, var(--tjs-frame-shadow-soft)));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame-image--structure {
+    z-index: 4;
+    opacity: 1;
+    mix-blend-mode: normal;
+    filter:
+      drop-shadow(0 2px 1px rgba(24, 20, 18, var(--tjs-frame-shadow-contact)))
+      drop-shadow(0 10px 18px rgba(24, 20, 18, var(--tjs-frame-shadow-mid)))
+      drop-shadow(0 20px 28px rgba(24, 20, 18, var(--tjs-frame-shadow-soft)));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__lens-image {
+    z-index: 1;
+    opacity: var(--frame-lens-opacity, .84);
+    mix-blend-mode: var(--frame-lens-blend, multiply);
+    filter: drop-shadow(0 2px 3px rgba(24, 20, 18, .08));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame-visual::before,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    -webkit-mask-image: var(--lens-mask-image);
+    mask-image: var(--lens-mask-image);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame-visual::before {
+    z-index: 2;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.20) 0%, rgba(0,0,0,.10) 36%, rgba(255,255,255,.02) 58%, rgba(0,0,0,.16) 100%),
+      radial-gradient(circle at 50% 52%, rgba(0,0,0,.12) 0%, transparent 62%);
+    mix-blend-mode: multiply;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame-visual::after {
+    z-index: 3;
+    background:
+      linear-gradient(112deg, transparent 22%, rgba(255,255,255,.07) 38%, rgba(255,255,255,.40) 48%, rgba(255,255,255,.10) 58%, transparent 74%),
+      radial-gradient(circle at 34% 24%, rgba(255,255,255,.14) 0%, transparent 18%);
+    mix-blend-mode: screen;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='active'] .tjs-eyewear-overlay__frame-visual.has-lens::before,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__mobile-frame.is-active .tjs-eyewear-overlay__frame-visual.has-lens::before {
+    opacity: var(--frame-lens-depth, .20);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='active'] .tjs-eyewear-overlay__frame-visual.has-lens::after,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__mobile-frame.is-active .tjs-eyewear-overlay__frame-visual.has-lens::after {
+    opacity: var(--frame-lens-highlight, .10);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='active'] .tjs-eyewear-overlay__frame-image--combined {
+    filter:
+      drop-shadow(0 1px 1px rgba(24, 20, 18, calc(var(--tjs-frame-shadow-contact) * 1.1)))
+      drop-shadow(0 10px 18px rgba(24, 20, 18, calc(var(--tjs-frame-shadow-mid) * 1.08)))
+      drop-shadow(0 20px 28px rgba(24, 20, 18, calc(var(--tjs-frame-shadow-soft) * 1.1)));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='active'] .tjs-eyewear-overlay__frame-image--structure {
+    filter:
+      drop-shadow(0 1px 1px rgba(24, 20, 18, calc(var(--tjs-frame-shadow-contact) * 1.1)))
+      drop-shadow(0 8px 15px rgba(24, 20, 18, calc(var(--tjs-frame-shadow-mid) * 1.04)))
+      drop-shadow(0 16px 22px rgba(24, 20, 18, calc(var(--tjs-frame-shadow-soft) * 1.05)));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='active'] .tjs-eyewear-overlay__frame-link:hover .tjs-eyewear-overlay__frame-visual,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame[data-position='active'] .tjs-eyewear-overlay__frame-link:focus-visible .tjs-eyewear-overlay__frame-visual {
+    transform:
+      translate3d(var(--frame-personal-x-desktop, 0%), calc(var(--frame-personal-y-desktop, 0%) - 1%), 0)
+      rotate(var(--frame-personal-rotate-desktop, 0deg))
+      scale(var(--frame-personal-scale-desktop, 1));
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__info {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    z-index: 22;
+    width: min(660px, calc(100% - 52px));
+    min-height: 0;
+    padding: 10px 12px;
+    border: 1px solid color-mix(in srgb, var(--tjs-card-border) 78%, transparent);
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--tjs-card-bg) 95%, white);
+    box-shadow: 0 18px 40px rgba(28, 23, 20, .12);
+    transform: translateX(-50%);
+    backdrop-filter: blur(12px);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__info-card {
+    position: relative;
+    display: none;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__info-card.is-active {
+    display: grid;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__info-kicker {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--tjs-accent);
+    font-size: 7px;
+    font-weight: 760;
+    line-height: 1;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__missing-product {
+    margin: 5px 0 0;
+    color: var(--tjs-muted);
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__info-thumb {
+    width: 56px;
+    height: 56px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--tjs-card-border) 84%, transparent);
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,.9), color-mix(in srgb, var(--tjs-card-bg) 90%, white));
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(28, 23, 20, .06);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__info-thumb img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+    padding: 7px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__meta {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__product-title {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: var(--tjs-text);
+    font-size: 14px;
+    font-weight: 620;
+    line-height: 1.2;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    color: var(--tjs-text);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__compare-price {
+    color: var(--tjs-muted);
+    font-weight: 500;
+    text-decoration: line-through;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__button,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__ghost,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__cart-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 760;
+    line-height: 1;
+    letter-spacing: .12em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__button,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__cart-button {
+    background: var(--tjs-text);
+    color: var(--tjs-stage-bg);
+    border: 1px solid var(--tjs-text);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__cart-button {
+    font: inherit;
+    cursor: pointer;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__cart-button[disabled] {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__cart-status {
+    grid-column: 2 / -1;
+    margin-top: 2px;
+    color: var(--tjs-muted);
+    font-size: 9px;
+    line-height: 1.25;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__ghost {
+    background: transparent;
+    color: var(--tjs-text);
+    border: 1px solid color-mix(in srgb, var(--tjs-text) 18%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__button:hover,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__button:focus-visible,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__cart-button:not([disabled]):hover,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__cart-button:not([disabled]):focus-visible,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__ghost:hover,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__ghost:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(30, 24, 21, .12);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__nav {
+    position: absolute;
+    right: 22px;
+    bottom: 24px;
+    z-index: 24;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__nav-button {
+    width: 42px;
+    height: 42px;
+    border: 1px solid color-mix(in srgb, var(--tjs-text) 14%, transparent);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--tjs-stage-bg) 94%, white);
+    color: var(--tjs-text);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(31, 26, 22, .10);
+    transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__nav-button:hover,
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__nav-button:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 34px rgba(31, 26, 22, .14);
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__nav-button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media screen and (max-width: 1023px) {
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__info {
+      width: min(420px, calc(100% - 36px));
+    }
+  }
+
+  #shopify-section-{{ section.id }} .tjs-eyewear-overlay__mobile-frame-stage {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay {
+      --tjs-side-scale: var(--tjs-side-scale-mobile);
+      --tjs-active-scale: var(--tjs-active-scale-mobile);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__outer {
+      padding-inline: var(--tjs-mobile-gutter);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__model-wrap {
+      position: relative;
+      inset: auto;
+      display: block;
+      padding: 0;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__heading {
+      font-size: clamp(30px, 8vw, {{ section.settings.mobile_heading_size }}px);
+      line-height: .97;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__description {
+      font-size: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__viewport {
+      height: auto;
+      min-height: 0;
+      overflow: hidden;
+      padding: 7px 7px 10px;
+      border-radius: 20px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__panel {
+      position: relative;
+      inset: auto;
+      display: none;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: none;
+      transition: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__panel.is-active {
+      display: block;
+      pointer-events: auto;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__switch-wrap {
+      margin-bottom: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__toggle {
+      min-width: 164px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__toggle-button {
+      min-height: 31px;
+      padding-inline: 12px;
+      font-size: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__model {
+      width: 100%;
+      height: auto;
+      min-height: 340px;
+      aspect-ratio: var(--model-aspect-ratio, .8);
+      margin-inline: auto;
+      border: 0;
+      border-radius: min(var(--tjs-model-radius), 16px);
+      box-shadow: 0 14px 34px rgba(24, 20, 18, .10);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__model::before {
+      inset: 6px;
+      border-radius: max(calc(min(var(--tjs-model-radius), 16px) - 5px), 0px);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__model-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: 50% 50% !important;
+      background: color-mix(in srgb, var(--tjs-stage-bg) 92%, white);
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__fan {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__mobile-frame-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 8;
+      display: block;
+      pointer-events: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__mobile-frame {
+      position: absolute;
+      left: 50%;
+      top: var(--mobile-track-y, 34%);
+      width: var(--mobile-track-width, 72%);
+      height: var(--mobile-track-height, 24%);
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(.9);
+      transition:
+        opacity .34s ease,
+        transform .48s cubic-bezier(.22, .8, .3, 1);
+      will-change: opacity, transform;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__mobile-frame.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(var(--tjs-active-scale-mobile));
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__mobile-frame.is-updating {
+      opacity: .7;
+      transform: translate(-50%, -50%) scale(calc(var(--tjs-active-scale-mobile) * .99));
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__mobile-frame .tjs-eyewear-overlay__frame-link {
+      pointer-events: auto;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__mobile-frame .tjs-eyewear-overlay__frame-visual {
+      transform:
+        translate3d(var(--frame-personal-x-mobile, 0%), var(--frame-personal-y-mobile, 0%), 0)
+        rotate(var(--frame-personal-rotate-mobile, 0deg))
+        scale(var(--frame-personal-scale-mobile, 1));
+    }
+
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__info {
+      position: relative;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      width: auto;
+      min-height: 0;
+      margin: 10px 3px 2px;
+      padding: 10px 11px;
+      transform: none;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__info-card {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__info-thumb {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__meta {
+      min-width: 0;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__product-title {
+      font-size: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__price {
+      font-size: 11px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__actions {
+      grid-column: 1 / -1;
+      justify-content: flex-start;
+      padding-top: 2px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__button,
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__ghost,
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__cart-button {
+      min-height: 34px;
+      padding-inline: 13px;
+      font-size: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__nav {
+      right: 16px;
+      top: 16px;
+      bottom: auto;
+      gap: 6px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__nav-button {
+      width: 38px;
+      height: 38px;
+    }
+
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__nav {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 549px) {
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__actions {
+      justify-content: flex-start;
+      gap: 6px;
+    }
+
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__cart-status {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__panel,
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame,
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__mobile-frame,
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame-visual,
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__frame-visual::after,
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__toggle-button,
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__nav-button,
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__button,
+    #shopify-section-{{ section.id }} .tjs-eyewear-overlay__ghost {
+      transition-duration: .01ms !important;
+      animation: none !important;
+    }
+  }
+{% endstyle %}
+
+<section
+  class="tjs-eyewear-overlay"
+  data-tjs-eyewear-stage="{{ section.id }}"
+  data-default-gender="{{ initial_gender }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-interval="{{ section.settings.autoplay_speed | times: 1000 }}"
+  data-pause-hover="{{ section.settings.pause_on_hover }}"
+  data-allow-swipe="{{ section.settings.allow_swipe }}"
+>
+  <div class="tjs-eyewear-overlay__outer">
+    <div class="tjs-eyewear-overlay__header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="tjs-eyewear-overlay__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="tjs-eyewear-overlay__heading">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <div class="tjs-eyewear-overlay__description rte">{{ section.settings.description }}</div>
+      {% endif %}
+    </div>
+
+    <div class="tjs-eyewear-overlay__switch-wrap">
+      <div class="tjs-eyewear-overlay__toggle" role="tablist" aria-label="Choose model">
+        <button class="tjs-eyewear-overlay__toggle-button{% if initial_gender == 'male' %} is-active{% endif %}" type="button" role="tab" aria-selected="{% if initial_gender == 'male' %}true{% else %}false{% endif %}" data-gender-button="male"{% unless male_available %} disabled{% endunless %}>Male</button>
+        <button class="tjs-eyewear-overlay__toggle-button{% if initial_gender == 'female' %} is-active{% endif %}" type="button" role="tab" aria-selected="{% if initial_gender == 'female' %}true{% else %}false{% endif %}" data-gender-button="female"{% unless female_available %} disabled{% endunless %}>Female</button>
+      </div>
+    </div>
+
+    <div class="tjs-eyewear-overlay__viewport" tabindex="0" aria-label="Eyewear showcase">
+      {% for gender in gender_list %}
+        {% liquid
+          if gender == 'male'
+            assign gender_model = male_model
+            assign gender_track_y = section.settings.male_track_y_desktop
+            assign gender_track_y_mobile = section.settings.male_track_y_mobile
+            assign gender_track_width = section.settings.male_track_width_desktop
+            assign gender_track_width_mobile = section.settings.male_track_width_mobile
+            assign gender_track_height = section.settings.male_track_height_desktop
+            assign gender_track_height_mobile = section.settings.male_track_height_mobile
+            assign gender_model_y = section.settings.male_model_y
+          else
+            assign gender_model = female_model
+            assign gender_track_y = section.settings.female_track_y_desktop
+            assign gender_track_y_mobile = section.settings.female_track_y_mobile
+            assign gender_track_width = section.settings.female_track_width_desktop
+            assign gender_track_width_mobile = section.settings.female_track_width_mobile
+            assign gender_track_height = section.settings.female_track_height_desktop
+            assign gender_track_height_mobile = section.settings.female_track_height_mobile
+            assign gender_model_y = section.settings.female_model_y
+          endif
+
+          assign gender_has_frames = false
+          if gender == 'male' and male_frame_count > 0
+            assign gender_has_frames = true
+          elsif gender == 'female' and female_frame_count > 0
+            assign gender_has_frames = true
+          endif
+
+          assign gender_is_active = false
+          if gender == initial_gender
+            assign gender_is_active = true
+          endif
+
+          assign gender_model_style = 'object-position: 50% ' | append: gender_model_y | append: '%;'
+          assign gender_model_alt = gender | append: ' model'
+          assign gender_model_aspect = gender_model.aspect_ratio | default: 0.8
+        %}
+
+        <div class="tjs-eyewear-overlay__panel{% if gender_is_active %} is-active{% endif %}" data-gender-panel="{{ gender }}" aria-hidden="{% if gender_is_active %}false{% else %}true{% endif %}">
+          <div class="tjs-eyewear-overlay__model-wrap">
+            <div class="tjs-eyewear-overlay__model" style="--model-aspect-ratio: {{ gender_model_aspect }};">
+              {% if gender_model != blank %}
+                {{ gender_model
+                  | image_url: width: 1600
+                  | image_tag:
+                    class: 'tjs-eyewear-overlay__model-image',
+                    loading: 'lazy',
+                    decoding: 'async',
+                    widths: '480, 640, 800, 1000, 1200, 1400, 1600',
+                    sizes: '(max-width: 749px) 100vw, 50vw',
+                    style: gender_model_style,
+                    alt: gender_model_alt
+                }}
+              {% else %}
+                <div class="tjs-eyewear-overlay__model-placeholder">Upload the {{ gender }} model image in the section settings.</div>
+              {% endif %}
+
+              <div
+                class="tjs-eyewear-overlay__mobile-frame-stage"
+                data-mobile-frame-stage
+                style="--mobile-track-y: {{ gender_track_y_mobile }}%; --mobile-track-width: {{ gender_track_width_mobile }}%; --mobile-track-height: {{ gender_track_height_mobile }}%;"
+              >
+                <div class="tjs-eyewear-overlay__mobile-frame is-active" data-mobile-active-frame aria-hidden="false">
+                  <a class="tjs-eyewear-overlay__frame-link" data-mobile-active-link aria-label="">
+                    <span class="tjs-eyewear-overlay__frame-visual" data-mobile-active-visual>
+                      <img
+                        class="tjs-eyewear-overlay__frame-image tjs-eyewear-overlay__frame-image--combined"
+                        data-mobile-active-combined
+                        alt=""
+                        loading="eager"
+                        decoding="async"
+                        hidden
+                      >
+                      <img
+                        class="tjs-eyewear-overlay__lens-image"
+                        data-mobile-active-lens
+                        alt=""
+                        loading="eager"
+                        decoding="async"
+                        hidden
+                      >
+                      <img
+                        class="tjs-eyewear-overlay__frame-image tjs-eyewear-overlay__frame-image--structure"
+                        data-mobile-active-structure
+                        alt=""
+                        loading="eager"
+                        decoding="async"
+                        hidden
+                      >
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tjs-eyewear-overlay__fan">
+            <div class="tjs-eyewear-overlay__track" style="--track-y: {{ gender_track_y }}%; --track-y-mobile: {{ gender_track_y_mobile }}%; --track-width: {{ gender_track_width }}%; --track-width-mobile: {{ gender_track_width_mobile }}%; --track-height: {{ gender_track_height }}%; --track-height-mobile: {{ gender_track_height_mobile }}%;">
+              {% assign slide_index = 0 %}
+              {% for block in section.blocks %}
+                {% if block.type == 'frame' and block.settings.gender == gender %}
+                  {% liquid
+                    assign combined_image = block.settings.image
+                    assign structure_image = block.settings.frame_image
+                    assign lens_image = block.settings.lens_image
+                    assign block_has_visual = false
+                    if combined_image != blank or structure_image != blank or lens_image != blank
+                      assign block_has_visual = true
+                    endif
+                  %}
+
+                  {% if block_has_visual %}
+                    {% liquid
+                      assign use_layered_assets = false
+                      if structure_image != blank or lens_image != blank
+                        assign use_layered_assets = true
+                      endif
+
+                      assign primary_image = structure_image | default: combined_image | default: lens_image
+                      assign frame_product = block.settings.product
+                      assign frame_title = block.settings.custom_title
+                      if frame_title == blank and frame_product != blank
+                        assign frame_title = frame_product.title
+                      endif
+                      if frame_title == blank and primary_image != blank
+                        assign frame_title = primary_image.alt
+                      endif
+                      if frame_title == blank
+                        assign frame_title = gender | capitalize | append: ' frame '
+                      endif
+
+                      assign frame_url = block.settings.custom_link
+                      if frame_url == blank and frame_product != blank
+                        assign frame_url = frame_product.url
+                      endif
+
+                      assign lens_mask_url = ''
+                      if lens_image != blank
+                        assign lens_mask_url = lens_image | image_url: width: 1800
+                      endif
+
+                      assign frame_scale_desktop = block.settings.desktop_scale | times: 0.01
+                      assign frame_scale_mobile = block.settings.mobile_scale | times: 0.01
+                      assign frame_lens_opacity = block.settings.lens_opacity | times: 0.01
+                      assign frame_lens_depth = block.settings.lens_depth | times: 0.01
+                      assign frame_lens_highlight = block.settings.lens_highlight | times: 0.01
+
+                      assign frame_visual_class = 'tjs-eyewear-overlay__frame-visual'
+                      if lens_image != blank
+                        assign frame_visual_class = frame_visual_class | append: ' has-lens'
+                      endif
+                      if use_layered_assets
+                        assign frame_visual_class = frame_visual_class | append: ' is-layered'
+                      else
+                        assign frame_visual_class = frame_visual_class | append: ' is-combined'
+                      endif
+                    %}
+
+                    <div
+                      class="tjs-eyewear-overlay__frame"
+                      data-position="{% if slide_index == 0 %}active{% else %}hidden{% endif %}"
+                      data-frame-index="{{ slide_index }}"
+                      style="
+                        {% if lens_mask_url != blank %}--lens-mask-image: url('{{ lens_mask_url }}');{% endif %}
+                        --frame-lens-opacity: {{ frame_lens_opacity }};
+                        --frame-lens-blend: {{ block.settings.lens_blend }};
+                        --frame-lens-depth: {{ frame_lens_depth }};
+                        --frame-lens-highlight: {{ frame_lens_highlight }};
+                        --frame-personal-scale-desktop: {{ frame_scale_desktop }};
+                        --frame-personal-x-desktop: {{ block.settings.desktop_x }}%;
+                        --frame-personal-y-desktop: {{ block.settings.desktop_y }}%;
+                        --frame-personal-rotate-desktop: {{ block.settings.desktop_rotate }}deg;
+                        --frame-personal-scale-mobile: {{ frame_scale_mobile }};
+                        --frame-personal-x-mobile: {{ block.settings.mobile_x }}%;
+                        --frame-personal-y-mobile: {{ block.settings.mobile_y }}%;
+                        --frame-personal-rotate-mobile: {{ block.settings.mobile_rotate }}deg;
+                      "
+                      {{ block.shopify_attributes }}
+                    >
+                      {% if frame_url != blank %}
+                        <a class="tjs-eyewear-overlay__frame-link" href="{{ frame_url }}" aria-label="View {{ frame_title | escape }}">
+                      {% else %}
+                        <div class="tjs-eyewear-overlay__frame-link" aria-label="{{ frame_title | escape }}">
+                      {% endif %}
+                          <span class="{{ frame_visual_class }}">
+                            {% if use_layered_assets %}
+                              {% if lens_image != blank %}
+                                {{ lens_image
+                                  | image_url: width: 1800
+                                  | image_tag:
+                                    class: 'tjs-eyewear-overlay__lens-image',
+                                    loading: 'lazy',
+                                    decoding: 'async',
+                                    widths: '280, 420, 560, 720, 900, 1200, 1500, 1800',
+                                    sizes: '(max-width: 749px) 68vw, 42vw',
+                                    alt: frame_title
+                                }}
+                              {% endif %}
+                              {% if structure_image != blank %}
+                                {{ structure_image
+                                  | image_url: width: 1800
+                                  | image_tag:
+                                    class: 'tjs-eyewear-overlay__frame-image tjs-eyewear-overlay__frame-image--structure',
+                                    loading: 'lazy',
+                                    decoding: 'async',
+                                    widths: '280, 420, 560, 720, 900, 1200, 1500, 1800',
+                                    sizes: '(max-width: 749px) 68vw, 42vw',
+                                    alt: frame_title
+                                }}
+                              {% endif %}
+                            {% elsif combined_image != blank %}
+                              {{ combined_image
+                                | image_url: width: 1800
+                                | image_tag:
+                                  class: 'tjs-eyewear-overlay__frame-image tjs-eyewear-overlay__frame-image--combined',
+                                  loading: 'lazy',
+                                  decoding: 'async',
+                                  widths: '280, 420, 560, 720, 900, 1200, 1500, 1800',
+                                  sizes: '(max-width: 749px) 68vw, 42vw',
+                                  alt: frame_title
+                              }}
+                            {% endif %}
+                          </span>
+                      {% if frame_url != blank %}
+                        </a>
+                      {% else %}
+                        </div>
+                      {% endif %}
+                    </div>
+
+                    {% assign slide_index = slide_index | plus: 1 %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+          {% if gender_has_frames %}
+            <div class="tjs-eyewear-overlay__info" data-info-wrap>
+              {% assign info_index = 0 %}
+              {% for block in section.blocks %}
+                {% if block.type == 'frame' and block.settings.gender == gender %}
+                  {% liquid
+                    assign combined_image = block.settings.image
+                    assign structure_image = block.settings.frame_image
+                    assign lens_image = block.settings.lens_image
+                    assign block_has_visual = false
+                    if combined_image != blank or structure_image != blank or lens_image != blank
+                      assign block_has_visual = true
+                    endif
+                  %}
+
+                  {% if block_has_visual %}
+                    {% liquid
+                      assign primary_image = structure_image | default: combined_image | default: lens_image
+                      assign frame_product = block.settings.product
+                      assign frame_title = block.settings.custom_title
+                      if frame_title == blank and frame_product != blank
+                        assign frame_title = frame_product.title
+                      endif
+                      if frame_title == blank and primary_image != blank
+                        assign frame_title = primary_image.alt
+                      endif
+                      assign frame_url = block.settings.custom_link
+                      if frame_url == blank and frame_product != blank
+                        assign frame_url = frame_product.url
+                      endif
+                      assign frame_price = blank
+                      assign frame_compare = blank
+                      assign on_sale = false
+                      assign frame_variant = blank
+                      assign frame_has_product = false
+                      assign frame_is_single_variant = false
+                      assign frame_available = false
+                      if frame_product != blank
+                        assign frame_has_product = true
+                        assign frame_variant = frame_product.selected_or_first_available_variant
+                        assign frame_available = frame_product.available
+                        assign frame_is_single_variant = frame_product.has_only_default_variant
+                        assign frame_price = frame_product.price | money
+                        if frame_product.compare_at_price_max > frame_product.price
+                          assign frame_compare = frame_product.compare_at_price_max | money
+                          assign on_sale = true
+                        endif
+                      endif
+                      assign display_index = info_index | plus: 1
+                      if frame_title == blank
+                        assign frame_title = gender | capitalize | append: ' frame ' | append: display_index
+                      endif
+
+                      assign frame_thumb = blank
+                      if frame_product != blank and frame_product.featured_image != blank
+                        assign frame_thumb = frame_product.featured_image
+                      elsif structure_image != blank
+                        assign frame_thumb = structure_image
+                      elsif combined_image != blank
+                        assign frame_thumb = combined_image
+                      elsif lens_image != blank
+                        assign frame_thumb = lens_image
+                      endif
+                    %}
+                    <div class="tjs-eyewear-overlay__info-card{% if info_index == 0 %} is-active{% endif %}" data-info-index="{{ info_index }}">
+                      <div class="tjs-eyewear-overlay__info-thumb">
+                        {% if frame_thumb != blank %}
+                          {{ frame_thumb | image_url: width: 160 | image_tag: loading: 'lazy', decoding: 'async', alt: frame_title }}
+                        {% endif %}
+                      </div>
+                      <div class="tjs-eyewear-overlay__meta">
+                        <span class="tjs-eyewear-overlay__info-kicker">Selected frame</span>
+                        <p class="tjs-eyewear-overlay__product-title">{{ frame_title | escape }}</p>
+                        {% if section.settings.show_prices and frame_price != blank %}
+                          <div class="tjs-eyewear-overlay__price">
+                            <span>{{ frame_price }}</span>
+                            {% if on_sale and frame_compare != blank %}
+                              <span class="tjs-eyewear-overlay__compare-price">{{ frame_compare }}</span>
+                            {% endif %}
+                          </div>
+                        {% elsif frame_has_product == false %}
+                          <p class="tjs-eyewear-overlay__missing-product">Link a product inside this eyewear-frame block to display price and cart actions.</p>
+                        {% endif %}
+                      </div>
+                      <div class="tjs-eyewear-overlay__actions">
+                        {% if section.settings.show_secondary_button and frame_url != blank %}
+                          <a class="tjs-eyewear-overlay__ghost" href="{{ frame_url }}">Details</a>
+                        {% endif %}
+
+                        {% if section.settings.show_primary_button and frame_has_product %}
+                          {% if frame_available == false %}
+                            <button class="tjs-eyewear-overlay__cart-button" type="button" disabled>Sold out</button>
+                          {% elsif frame_is_single_variant and frame_variant != blank %}
+                            <button class="tjs-eyewear-overlay__cart-button" type="button" data-eyewear-add-to-cart data-variant-id="{{ frame_variant.id }}">Add to cart</button>
+                          {% elsif frame_url != blank %}
+                            <a class="tjs-eyewear-overlay__button" href="{{ frame_url }}">Choose options</a>
+                          {% endif %}
+                        {% elsif section.settings.show_primary_button and frame_url != blank %}
+                          <a class="tjs-eyewear-overlay__button" href="{{ frame_url }}">Shop now</a>
+                        {% endif %}
+                      </div>
+                      <span class="tjs-eyewear-overlay__cart-status" data-cart-status aria-live="polite"></span>
+                    </div>
+                    {% assign info_index = info_index | plus: 1 %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="tjs-eyewear-overlay__empty">Add {{ gender }} frame blocks with transparent PNG sunglasses.</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      {% if section.settings.show_arrows %}
+        <div class="tjs-eyewear-overlay__nav" aria-label="Eyewear navigation">
+          <button class="tjs-eyewear-overlay__nav-button" type="button" data-eyewear-prev aria-label="Previous frame">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 3 5.5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="tjs-eyewear-overlay__nav-button" type="button" data-eyewear-next aria-label="Next frame">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m5.5 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const selector = '[data-tjs-eyewear-stage="{{ section.id }}"]';
+
+    const initialise = (root) => {
+      if (!root || root.dataset.initialised === 'true') return;
+      root.dataset.initialised = 'true';
+
+      const controller = new AbortController();
+      const { signal } = controller;
+      const viewport = root.querySelector('.tjs-eyewear-overlay__viewport');
+      const panels = Array.from(root.querySelectorAll('[data-gender-panel]'));
+      const genderButtons = Array.from(root.querySelectorAll('[data-gender-button]'));
+      const prevButton = root.querySelector('[data-eyewear-prev]');
+      const nextButton = root.querySelector('[data-eyewear-next]');
+      const addToCartButtons = Array.from(root.querySelectorAll('[data-eyewear-add-to-cart]'));
+      const autoplayEnabled = root.dataset.autoplay === 'true';
+      const pauseOnHover = root.dataset.pauseHover === 'true';
+      const allowSwipe = root.dataset.allowSwipe === 'true';
+      const interval = Math.max(parseInt(root.dataset.interval, 10) || 3500, 2200);
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+      const states = new Map();
+      let activeGender = root.dataset.defaultGender || 'male';
+      let timer = null;
+      let inViewport = true;
+      let pointerStart = null;
+      let suppressClick = false;
+      let observer = null;
+
+      const normalise = (value, length) => {
+        if (!length) return 0;
+        return ((value % length) + length) % length;
+      };
+
+      const createState = (panel) => {
+        const frames = Array.from(panel.querySelectorAll('[data-frame-index]'));
+        const mobileFrame = panel.querySelector('[data-mobile-active-frame]');
+        const mobileVisual = panel.querySelector('[data-mobile-active-visual]');
+        const mobileCombined = panel.querySelector('[data-mobile-active-combined]');
+        const mobileLens = panel.querySelector('[data-mobile-active-lens]');
+        const mobileStructure = panel.querySelector('[data-mobile-active-structure]');
+        const mobileLink = panel.querySelector('[data-mobile-active-link]');
+        const infoCards = Array.from(panel.querySelectorAll('[data-info-wrap] [data-info-index]'));
+        const state = {
+          panel,
+          gender: panel.dataset.genderPanel,
+          frames,
+          mobileFrame,
+          mobileVisual,
+          mobileCombined,
+          mobileLens,
+          mobileStructure,
+          mobileLink,
+          infoCards,
+          count: frames.length,
+          current: 0
+        };
+        states.set(state.gender, state);
+        return state;
+      };
+
+      const setFramePosition = (frame, position) => {
+        frame.dataset.position = position;
+        frame.setAttribute('aria-hidden', position === 'hidden' ? 'true' : 'false');
+        const link = frame.querySelector('a');
+        if (link) link.tabIndex = position === 'active' ? 0 : -1;
+      };
+
+      const syncMobileFrame = (state, current) => {
+        if (!state?.mobileFrame || !state.mobileVisual || !state.frames[current]) return;
+
+        const sourceFrame = state.frames[current];
+        const sourceVisual = sourceFrame.querySelector('.tjs-eyewear-overlay__frame-visual');
+        const sourceCombined = sourceFrame.querySelector('.tjs-eyewear-overlay__frame-image--combined');
+        const sourceLens = sourceFrame.querySelector('.tjs-eyewear-overlay__lens-image');
+        const sourceStructure = sourceFrame.querySelector('.tjs-eyewear-overlay__frame-image--structure');
+        const sourceLink = sourceFrame.querySelector('a');
+        const accessibleSource = sourceStructure || sourceCombined || sourceLens;
+        if (!sourceVisual || !accessibleSource) return;
+
+        const copyStyle = (property) => {
+          const value = sourceFrame.style.getPropertyValue(property);
+          if (value) state.mobileFrame.style.setProperty(property, value);
+          else state.mobileFrame.style.removeProperty(property);
+        };
+
+        [
+          '--lens-mask-image',
+          '--frame-lens-opacity',
+          '--frame-lens-blend',
+          '--frame-lens-depth',
+          '--frame-lens-highlight',
+          '--frame-personal-scale-mobile',
+          '--frame-personal-x-mobile',
+          '--frame-personal-y-mobile',
+          '--frame-personal-rotate-mobile'
+        ].forEach(copyStyle);
+
+        const syncImage = (source, target) => {
+          if (!target) return;
+          if (!source) {
+            target.hidden = true;
+            target.removeAttribute('src');
+            target.removeAttribute('srcset');
+            target.alt = '';
+            return;
+          }
+
+          const src = source.getAttribute('src');
+          const srcset = source.getAttribute('srcset');
+          if (src) target.setAttribute('src', src);
+          if (srcset) target.setAttribute('srcset', srcset);
+          else target.removeAttribute('srcset');
+          target.setAttribute('sizes', '78vw');
+          target.alt = source.alt || '';
+          target.hidden = false;
+        };
+
+        state.mobileFrame.classList.add('is-updating');
+        state.mobileVisual.classList.toggle('has-lens', sourceVisual.classList.contains('has-lens'));
+        state.mobileVisual.classList.toggle('is-layered', sourceVisual.classList.contains('is-layered'));
+        state.mobileVisual.classList.toggle('is-combined', sourceVisual.classList.contains('is-combined'));
+
+        syncImage(sourceCombined, state.mobileCombined);
+        syncImage(sourceLens, state.mobileLens);
+        syncImage(sourceStructure, state.mobileStructure);
+
+        const href = sourceLink?.getAttribute('href');
+        if (href) state.mobileLink.setAttribute('href', href);
+        else state.mobileLink.removeAttribute('href');
+        state.mobileLink.setAttribute('aria-label', sourceLink?.getAttribute('aria-label') || accessibleSource.alt || 'View frame');
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => state.mobileFrame.classList.remove('is-updating'));
+        });
+      };
+
+      const renderState = (state) => {
+        if (!state || !state.count) return;
+
+        const total = state.count;
+        const current = normalise(state.current, total);
+        const prev1 = normalise(current - 1, total);
+        const next1 = normalise(current + 1, total);
+
+        state.frames.forEach((frame, index) => {
+          let position = 'hidden';
+          if (index === current) position = 'active';
+          else if (index === prev1 && total > 1) position = 'prev-1';
+          else if (index === next1 && total > 2) position = 'next-1';
+          setFramePosition(frame, position);
+        });
+
+        syncMobileFrame(state, current);
+
+        state.infoCards.forEach((card, index) => {
+          card.classList.toggle('is-active', index === current);
+        });
+      };
+
+      const activeState = () => states.get(activeGender);
+
+      const stopAutoplay = () => {
+        if (timer) window.clearInterval(timer);
+        timer = null;
+      };
+
+      const startAutoplay = () => {
+        stopAutoplay();
+        const state = activeState();
+        if (!state || state.count < 2 || !autoplayEnabled || reducedMotion.matches || document.hidden || !inViewport) return;
+        timer = window.setInterval(() => move(1, false), interval);
+      };
+
+      const move = (direction, restart = true) => {
+        const state = activeState();
+        if (!state || state.count < 1) return;
+        state.current = normalise(state.current + direction, state.count);
+        renderState(state);
+        if (restart) startAutoplay();
+      };
+
+      const setGender = (gender, restart = true) => {
+        if (!states.has(gender)) return;
+        const targetButton = genderButtons.find((button) => button.dataset.genderButton === gender);
+        if (targetButton?.disabled) return;
+
+        activeGender = gender;
+        root.dataset.defaultGender = gender;
+
+        panels.forEach((panel) => {
+          const active = panel.dataset.genderPanel === gender;
+          panel.classList.toggle('is-active', active);
+          panel.setAttribute('aria-hidden', active ? 'false' : 'true');
+        });
+
+        genderButtons.forEach((button) => {
+          const active = button.dataset.genderButton === gender;
+          button.classList.toggle('is-active', active);
+          button.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+
+        renderState(activeState());
+        if (restart) startAutoplay();
+      };
+
+      panels.forEach((panel) => {
+        const state = createState(panel);
+
+        state.frames.forEach((frame, index) => {
+          frame.addEventListener('click', (event) => {
+            if (suppressClick) {
+              event.preventDefault();
+              return;
+            }
+
+            if (index !== state.current) {
+              event.preventDefault();
+              state.current = index;
+              renderState(state);
+              startAutoplay();
+            }
+          }, { signal });
+        });
+      });
+
+      addToCartButtons.forEach((button) => {
+        button.addEventListener('click', async (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (button.disabled || button.dataset.loading === 'true') return;
+          const variantId = Number(button.dataset.variantId);
+          if (!variantId) return;
+
+          const card = button.closest('[data-info-index]');
+          const status = card?.querySelector('[data-cart-status]');
+          const originalText = button.textContent;
+          button.dataset.loading = 'true';
+          button.disabled = true;
+          button.textContent = 'Adding…';
+          if (status) status.textContent = '';
+
+          try {
+            const rootUrl = window.Shopify?.routes?.root || '/';
+            const response = await fetch(`${rootUrl}cart/add.js`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
+            });
+
+            if (!response.ok) {
+              const payload = await response.json().catch(() => ({}));
+              throw new Error(payload.description || payload.message || 'Unable to add this item.');
+            }
+
+            const payload = await response.json();
+            button.textContent = 'Added';
+            if (status) status.textContent = 'Added to your cart';
+
+            document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true, detail: { source: 'tjs-eyewear', payload } }));
+            document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { source: 'tjs-eyewear', payload } }));
+            document.dispatchEvent(new CustomEvent('cart:change', { bubbles: true, detail: { source: 'tjs-eyewear', payload } }));
+
+            window.setTimeout(() => {
+              button.textContent = originalText;
+              button.disabled = false;
+              button.dataset.loading = 'false';
+              if (status) status.textContent = '';
+            }, 1800);
+          } catch (error) {
+            button.textContent = originalText;
+            button.disabled = false;
+            button.dataset.loading = 'false';
+            if (status) status.textContent = error.message || 'Unable to add this item.';
+          }
+        }, { signal });
+      });
+
+      genderButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          setGender(button.dataset.genderButton, true);
+        }, { signal });
+      });
+
+      if (prevButton) prevButton.addEventListener('click', () => move(-1, true), { signal });
+      if (nextButton) nextButton.addEventListener('click', () => move(1, true), { signal });
+
+      if (viewport) {
+        viewport.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            move(1, true);
+          } else if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            move(-1, true);
+          }
+        }, { signal });
+
+        if (allowSwipe) {
+          viewport.addEventListener('pointerdown', (event) => {
+            if (event.pointerType === 'mouse' && event.button !== 0) return;
+            pointerStart = { x: event.clientX, y: event.clientY, time: performance.now() };
+            suppressClick = false;
+            stopAutoplay();
+          }, { passive: true, signal });
+
+          viewport.addEventListener('pointermove', (event) => {
+            if (!pointerStart) return;
+            const deltaX = event.clientX - pointerStart.x;
+            if (Math.abs(deltaX) > 8) suppressClick = true;
+          }, { passive: true, signal });
+
+          viewport.addEventListener('pointerup', (event) => {
+            if (!pointerStart) return;
+            const deltaX = event.clientX - pointerStart.x;
+            const deltaY = event.clientY - pointerStart.y;
+            const elapsed = performance.now() - pointerStart.time;
+            pointerStart = null;
+
+            const isHorizontalSwipe = Math.abs(deltaX) > 34 && Math.abs(deltaX) > Math.abs(deltaY) * 1.12 && elapsed < 900;
+            if (isHorizontalSwipe) move(deltaX < 0 ? 1 : -1, true);
+            else startAutoplay();
+
+            window.setTimeout(() => { suppressClick = false; }, 20);
+          }, { passive: true, signal });
+
+          viewport.addEventListener('pointercancel', () => {
+            pointerStart = null;
+            suppressClick = false;
+            startAutoplay();
+          }, { signal });
+        }
+      }
+
+      if (pauseOnHover && hasHover.matches) {
+        root.addEventListener('mouseenter', stopAutoplay, { signal });
+        root.addEventListener('mouseleave', startAutoplay, { signal });
+      }
+
+      if ('IntersectionObserver' in window) {
+        observer = new IntersectionObserver((entries) => {
+          inViewport = entries[0]?.isIntersecting ?? true;
+          if (inViewport) startAutoplay();
+          else stopAutoplay();
+        }, { threshold: 0.2 });
+        observer.observe(root);
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stopAutoplay();
+        else startAutoplay();
+      }, { signal });
+
+      document.addEventListener('shopify:block:select', (event) => {
+        const selectedFrame = event.target.closest(`${selector} [data-frame-index]`);
+        if (!selectedFrame) return;
+
+        const panel = selectedFrame.closest('[data-gender-panel]');
+        const gender = panel?.dataset.genderPanel;
+        const state = gender ? states.get(gender) : null;
+        if (!state) return;
+
+        setGender(gender, false);
+        state.current = Number(selectedFrame.dataset.frameIndex) || 0;
+        renderState(state);
+        stopAutoplay();
+      }, { signal });
+
+      setGender(activeGender, false);
+      startAutoplay();
+
+      root.tjsEyewearStageDestroy = () => {
+        stopAutoplay();
+        if (observer) observer.disconnect();
+        controller.abort();
+      };
+    };
+
+    initialise(document.querySelector(selector));
+
+    document.addEventListener('shopify:section:load', (event) => {
+      initialise(event.target.querySelector(selector));
+    });
+
+    document.addEventListener('shopify:section:unload', (event) => {
+      const root = event.target.querySelector(selector);
+      if (root && typeof root.tjsEyewearStageDestroy === 'function') {
+        root.tjsEyewearStageDestroy();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TJS eyewear model stage",
+  "tag": "section",
+  "class": "section-tjs-eyewear-model-stage",
+  "max_blocks": 24,
+  "settings": [
+    { "type": "header", "content": "Header" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Eyewear showcase" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Choose the frame. See the face." },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Upload model images and transparent sunglass PNGs for a high-end try-on style eyewear showcase.</p>" },
+    { "type": "range", "id": "heading_size", "min": 42, "max": 80, "step": 1, "unit": "px", "label": "Desktop heading size", "default": 60 },
+    { "type": "range", "id": "mobile_heading_size", "min": 28, "max": 48, "step": 1, "unit": "px", "label": "Mobile heading size", "default": 36 },
+
+    { "type": "header", "content": "Models" },
+    { "type": "image_picker", "id": "male_model", "label": "Male model image" },
+    { "type": "range", "id": "male_model_y", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "Male model vertical focus", "default": 36 },
+    { "type": "image_picker", "id": "female_model", "label": "Female model image" },
+    { "type": "range", "id": "female_model_y", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "Female model vertical focus", "default": 36 },
+    { "type": "select", "id": "default_gender", "label": "Default visible model", "default": "male", "options": [
+      { "value": "male", "label": "Male" },
+      { "value": "female", "label": "Female" }
+    ] },
+
+    { "type": "header", "content": "Male sunglasses overlay position" },
+    { "type": "range", "id": "male_track_y_desktop", "min": 16, "max": 55, "step": 1, "unit": "%", "label": "Desktop vertical position", "default": 34 },
+    { "type": "range", "id": "male_track_width_desktop", "min": 10, "max": 140, "step": 2, "unit": "%", "label": "Desktop overlay width", "default": 58 },
+    { "type": "range", "id": "male_track_height_desktop", "min": 5, "max": 60, "step": 1, "unit": "%", "label": "Desktop overlay height", "default": 29 },
+    { "type": "range", "id": "male_track_y_mobile", "min": 16, "max": 55, "step": 1, "unit": "%", "label": "Mobile vertical position", "default": 34 },
+    { "type": "range", "id": "male_track_width_mobile", "min": 20, "max": 160, "step": 2, "unit": "%", "label": "Mobile overlay width", "default": 88 },
+    { "type": "range", "id": "male_track_height_mobile", "min": 5, "max": 50, "step": 1, "unit": "%", "label": "Mobile overlay height", "default": 24 },
+
+    { "type": "header", "content": "Female sunglasses overlay position" },
+    { "type": "range", "id": "female_track_y_desktop", "min": 16, "max": 55, "step": 1, "unit": "%", "label": "Desktop vertical position", "default": 34 },
+    { "type": "range", "id": "female_track_width_desktop", "min": 10, "max": 140, "step": 2, "unit": "%", "label": "Desktop overlay width", "default": 58 },
+    { "type": "range", "id": "female_track_height_desktop", "min": 5, "max": 60, "step": 1, "unit": "%", "label": "Desktop overlay height", "default": 29 },
+    { "type": "range", "id": "female_track_y_mobile", "min": 16, "max": 55, "step": 1, "unit": "%", "label": "Mobile vertical position", "default": 34 },
+    { "type": "range", "id": "female_track_width_mobile", "min": 20, "max": 160, "step": 2, "unit": "%", "label": "Mobile overlay width", "default": 88 },
+    { "type": "range", "id": "female_track_height_mobile", "min": 5, "max": 50, "step": 1, "unit": "%", "label": "Mobile overlay height", "default": 24 },
+
+    { "type": "header", "content": "Stage layout" },
+    { "type": "range", "id": "desktop_height", "min": 520, "max": 980, "step": 10, "unit": "px", "label": "Desktop stage height", "default": 720 },
+    { "type": "range", "id": "mobile_height", "min": 420, "max": 820, "step": 10, "unit": "px", "label": "Mobile stage height", "default": 560 },
+    { "type": "range", "id": "model_width_desktop", "min": 28, "max": 70, "step": 1, "unit": "%", "label": "Desktop model width", "default": 44 },
+    { "type": "range", "id": "model_width_mobile", "min": 48, "max": 88, "step": 1, "unit": "%", "label": "Mobile model width", "default": 68 },
+    { "type": "range", "id": "model_radius", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Model frame radius", "default": 20 },
+    { "type": "range", "id": "preview_gap_desktop", "min": 80, "max": 360, "step": 4, "unit": "px", "label": "Desktop side preview distance", "default": 168 },
+    { "type": "range", "id": "preview_gap_mobile", "min": 50, "max": 220, "step": 2, "unit": "px", "label": "Mobile side preview distance", "default": 88 },
+    { "type": "range", "id": "preview_scale", "min": 0.2, "max": 1.4, "step": 0.1, "label": "Desktop side preview scale", "default": 0.8 },
+    { "type": "range", "id": "preview_scale_mobile", "min": 0.2, "max": 1.4, "step": 0.1, "label": "Mobile side preview scale", "default": 0.7 },
+    { "type": "range", "id": "active_scale", "min": 0.4, "max": 2.5, "step": 0.1, "label": "Desktop active frame scale", "default": 1.1 },
+    { "type": "range", "id": "active_scale_mobile", "min": 0.4, "max": 2.5, "step": 0.1, "label": "Mobile active frame scale", "default": 1.1 },
+
+    { "type": "header", "content": "Interaction" },
+    { "type": "checkbox", "id": "autoplay", "label": "Auto-scroll frames", "default": true },
+    { "type": "range", "id": "autoplay_speed", "min": 2, "max": 8, "step": 0.5, "unit": "s", "label": "Time before next frame", "default": 3.5 },
+    { "type": "checkbox", "id": "pause_on_hover", "label": "Pause on hover", "default": true },
+    { "type": "checkbox", "id": "allow_swipe", "label": "Allow swipe and drag", "default": true },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show navigation arrows", "default": true },
+
+    { "type": "header", "content": "Product info" },
+    { "type": "checkbox", "id": "show_prices", "label": "Show prices", "default": true },
+    { "type": "checkbox", "id": "show_primary_button", "label": "Show primary button", "default": true },
+    { "type": "checkbox", "id": "show_secondary_button", "label": "Show secondary button", "default": true },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "section_background", "label": "Section background", "default": "#f7f3ee" },
+    { "type": "color", "id": "stage_background", "label": "Stage background", "default": "#efe8df" },
+    { "type": "color", "id": "accent_color", "label": "Accent colour", "default": "#ae7f50" },
+    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#1a1715" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text colour", "default": "#6f6963" },
+    { "type": "color", "id": "info_card_background", "label": "Info card background", "default": "#fbf8f3" },
+    { "type": "color", "id": "card_border_color", "label": "Card border colour", "default": "#ded4c7" },
+
+    { "type": "header", "content": "Effects and spacing" },
+    { "type": "range", "id": "frame_shadow_strength", "min": 0, "max": 100, "step": 5, "unit": "%", "label": "Sunglass shadow strength", "default": 65 },
+    { "type": "range", "id": "card_shadow_strength", "min": 0, "max": 30, "step": 1, "unit": "%", "label": "Stage card shadow strength", "default": 8 },
+    { "type": "range", "id": "max_width", "min": 980, "max": 1800, "step": 20, "unit": "px", "label": "Maximum width", "default": 1480 },
+    { "type": "range", "id": "page_gutter", "min": 0, "max": 64, "step": 4, "unit": "px", "label": "Desktop side spacing", "default": 24 },
+    { "type": "range", "id": "mobile_gutter", "min": 0, "max": 28, "step": 2, "unit": "px", "label": "Mobile side spacing", "default": 12 },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top spacing", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom spacing", "default": 24 }
+  ],
+  "blocks": [
+    {
+      "type": "frame",
+      "name": "Eyewear frame",
+      "settings": [
+        {
+          "type": "select",
+          "id": "gender",
+          "label": "Assign to",
+          "default": "male",
+          "options": [
+            { "value": "male", "label": "Male" },
+            { "value": "female", "label": "Female" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Eyewear artwork"
+        },
+        {
+          "type": "paragraph",
+          "content": "Best result: upload an opaque frame PNG and a separate lens-only PNG using the exact same canvas size and alignment. Keep the combined PNG only as a fallback."
+        },
+        {
+          "type": "image_picker",
+          "id": "frame_image",
+          "label": "Opaque frame PNG — recommended"
+        },
+        {
+          "type": "image_picker",
+          "id": "lens_image",
+          "label": "Lens-only PNG — same canvas"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Combined sunglass PNG — fallback"
+        },
+        {
+          "type": "header",
+          "content": "Lens realism"
+        },
+        {
+          "type": "range",
+          "id": "lens_opacity",
+          "min": 50,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "Lens opacity",
+          "default": 85
+        },
+        {
+          "type": "select",
+          "id": "lens_blend",
+          "label": "Lens blend",
+          "default": "multiply",
+          "options": [
+            { "value": "normal", "label": "Normal" },
+            { "value": "multiply", "label": "Natural tint" },
+            { "value": "darken", "label": "Dark lens" },
+            { "value": "overlay", "label": "Glossy blend" }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "lens_depth",
+          "min": 0,
+          "max": 60,
+          "step": 5,
+          "unit": "%",
+          "label": "Lens depth overlay",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "lens_highlight",
+          "min": 0,
+          "max": 40,
+          "step": 5,
+          "unit": "%",
+          "label": "Lens highlight overlay",
+          "default": 10
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Linked product"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom title override"
+        },
+        {
+          "type": "url",
+          "id": "custom_link",
+          "label": "Custom link override"
+        },
+        {
+          "type": "header",
+          "content": "Per-frame desktop fitting"
+        },
+        {
+          "type": "range",
+          "id": "desktop_scale",
+          "min": 40,
+          "max": 220,
+          "step": 5,
+          "unit": "%",
+          "label": "Desktop size",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "desktop_x",
+          "min": -30,
+          "max": 30,
+          "step": 1,
+          "unit": "%",
+          "label": "Desktop horizontal adjustment",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "desktop_y",
+          "min": -30,
+          "max": 30,
+          "step": 1,
+          "unit": "%",
+          "label": "Desktop vertical adjustment",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "desktop_rotate",
+          "min": -10,
+          "max": 10,
+          "step": 1,
+          "unit": "deg",
+          "label": "Desktop rotation",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Per-frame mobile fitting"
+        },
+        {
+          "type": "range",
+          "id": "mobile_scale",
+          "min": 40,
+          "max": 240,
+          "step": 5,
+          "unit": "%",
+          "label": "Mobile size",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "mobile_x",
+          "min": -30,
+          "max": 30,
+          "step": 1,
+          "unit": "%",
+          "label": "Mobile horizontal adjustment",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "mobile_y",
+          "min": -30,
+          "max": 30,
+          "step": 1,
+          "unit": "%",
+          "label": "Mobile vertical adjustment",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "mobile_rotate",
+          "min": -10,
+          "max": 10,
+          "step": 1,
+          "unit": "deg",
+          "label": "Mobile rotation",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS eyewear model stage"
+    }
+  ]
+}
+{% endschema %}

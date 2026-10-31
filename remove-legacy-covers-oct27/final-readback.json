@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-27",
+  "themeId": "187527266499",
+  "themePublished": false,
+  "railwayDeployment": "b91ccfbf-dc81-4138-9753-cefbff8409f9",
+  "studioLegacyJpegsRemaining": 0,
+  "shopify": {
+    "sections/june-photo-books-landing.liquid": "240DC578B48BF2B0EA1FF2EF110948E6",
+    "assets/june-photobook-new-travel.jpg": "37A611D67EB13CF122827BCE7992E847",
+    "assets/june-photobook-new-anniversary.jpg": "66BABEACFCE1B8642BC58E4584CD148E",
+    "assets/june-photobook-new-baby.jpg": "CAB303FBC2BCC6D308606BAD1EE80E5C",
+    "assets/june-photobook-new-wedding.jpg": "2134567F1833BED29B949BE959071B0E"
+  },
+  "exactReadback": true,
+  "dormantLegacyThemeAssets": [
+    "assets/june-photobook-cover-3.jpg",
+    "assets/june-photobook-cover-12.jpg",
+    "assets/june-photobook-cover-18.jpg",
+    "assets/june-photobook-cover-21.jpg"
+  ],
+  "legacyThemeAssetReferences": 0,
+  "legacyThemeAssetDeleteBlocked": true
+}

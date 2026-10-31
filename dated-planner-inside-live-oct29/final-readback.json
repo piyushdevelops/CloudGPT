@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-29",
+  "themeId": 187527266499,
+  "role": "MAIN",
+  "filename": "templates/product.june_dated_2027.json",
+  "beforeMd5": "53219069319b4851b26995df593d9b41",
+  "afterMd5": "fb45683b87fa6339f844dcef1693e048",
+  "exactReadback": true,
+  "insideBlocks": [
+    "shopify://shop_images/june-2027-inside-monthly-overview.jpg",
+    "shopify://shop_images/june-2027-inside-monthly-memory-page.jpg",
+    "shopify://shop_images/june-2027-inside-celebration-page.jpg",
+    "shopify://shop_images/june-2027-inside-monthly-intentions.jpg",
+    "shopify://shop_images/june-2027-inside-monthly-reflections.jpg",
+    "shopify://shop_images/june-2027-inside-daily-priorities.jpg"
+  ],
+  "browserChecks": {
+    "mobile393x852": {
+      "imagesLoaded": "6/6",
+      "horizontalOverflow": false,
+      "consoleErrors": 0
+    },
+    "desktop1440x1000": {
+      "imagesLoaded": "6/6",
+      "horizontalOverflow": false,
+      "consoleErrors": 0
+    }
+  }
+}

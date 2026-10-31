@@ -1,0 +1,58 @@
+{
+  "theme": "gid://shopify/OnlineStoreTheme/187527266499",
+  "role": "UNPUBLISHED",
+  "files": [
+    {
+      "filename": "locales/en.default.json",
+      "checksumMd5": "9b43a08391603c8a03d6424475013f71"
+    },
+    {
+      "filename": "sections/june-inside-discovery.liquid",
+      "checksumMd5": "af0ef2d9741fbf5ca405d72705c06d97"
+    },
+    {
+      "filename": "sections/june-layer-the-table.liquid",
+      "checksumMd5": "51586945f52470adbedb7e51e0d6242d"
+    },
+    {
+      "filename": "sections/june-make-room.liquid",
+      "checksumMd5": "75c1f49239860c629c487e7b69ed4e6a"
+    },
+    {
+      "filename": "sections/june-next-chapter.liquid",
+      "checksumMd5": "0a85f37894c1385f4b2716bdc12667bf"
+    },
+    {
+      "filename": "sections/june-other-chapters.liquid",
+      "checksumMd5": "44e67072573e0943098367e77b159aa0"
+    },
+    {
+      "filename": "sections/june-pick-your-pour.liquid",
+      "checksumMd5": "88b1f80ff544bc6f7b78f88eb66160bc"
+    },
+    {
+      "filename": "sections/june-with-extras.liquid",
+      "checksumMd5": "87bb4678edbe49c081801db868a070f0"
+    },
+    {
+      "filename": "sections/june-your-year.liquid",
+      "checksumMd5": "1c965a380520862a98b44c8162143a6e"
+    },
+    {
+      "filename": "templates/index.json",
+      "checksumMd5": "ed2d0ffd3f06e82752909bcf665f0e76"
+    }
+  ],
+  "schemaValidation": "passed revision 3",
+  "coverGiftCounts": [
+    5,
+    5,
+    5,
+    3
+  ],
+  "mobileKeyboardScrollLeft": 229,
+  "revealClose": true,
+  "keyboardHome": true,
+  "staticStickerFile": "gid://shopify/MediaImage/48565917515971",
+  "notes": "Recent merchant homepage save reconciled; section order and other section settings preserved. Reduced-motion and no-script fallbacks inspected in code, not dynamically emulated."
+}

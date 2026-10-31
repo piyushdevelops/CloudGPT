@@ -1,0 +1,63 @@
+{% comment %}
+  TJS Global Cart Button Adapter
+
+  Usage — product with one/default variant:
+    {% render 'tjs-cart-button', product: product %}
+
+  Usage — a variant selected by your card UI:
+    {% render 'tjs-cart-button', product: product, variant: selected_variant, label: 'Add to cart', quantity: 1, button_class: 'my-card__button' %}
+
+  Safety:
+  - Multiple-variant products do not silently add the wrong variant.
+  - Pass an explicit `variant` after your card selector resolves the choice.
+  - Without an explicit variant, multiple-variant products link to the PDP.
+{% endcomment %}
+
+{% liquid
+  assign tjs_product = product
+  assign tjs_variant = variant
+  assign tjs_quantity = quantity | default: 1
+  assign tjs_label = label | default: 'Add to cart'
+  assign tjs_choose_label = choose_options_label | default: 'Choose options'
+  assign tjs_button_class = button_class | default: 'tjs-global-atc-button'
+  assign tjs_link_class = link_class | default: tjs_button_class
+  assign tjs_direct_add = false
+
+  if tjs_variant != blank
+    assign tjs_direct_add = true
+  elsif tjs_product != blank and tjs_product.has_only_default_variant
+    assign tjs_variant = tjs_product.selected_or_first_available_variant
+    assign tjs_direct_add = true
+  endif
+%}
+
+{% if tjs_product == blank %}
+  <button type="button" class="{{ tjs_button_class }}" disabled>
+    Unavailable
+  </button>
+{% elsif tjs_direct_add and tjs_variant != blank %}
+  <button
+    type="button"
+    class="{{ tjs_button_class }}"
+    data-tjs-add-to-cart
+    data-variant-id="{{ tjs_variant.id }}"
+    data-quantity="{{ tjs_quantity }}"
+    data-tjs-cart-source="adapter-button"
+    {% unless tjs_variant.available %}disabled{% endunless %}
+  >
+    <span data-tjs-add-label>
+      {% if tjs_variant.available %}
+        {{ tjs_label | replace: '&amp;', '&' | escape }}
+      {% else %}
+        Sold out
+      {% endif %}
+    </span>
+  </button>
+{% else %}
+  <a
+    class="{{ tjs_link_class }}"
+    href="{{ tjs_product.url }}"
+  >
+    {{ tjs_choose_label | replace: '&amp;', '&' | escape }}
+  </a>
+{% endif %}

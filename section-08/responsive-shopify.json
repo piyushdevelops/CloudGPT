@@ -1,0 +1,32 @@
+[
+  {
+    "overflow": false,
+    "stageWidth": 305,
+    "visibleImagesLoaded": true,
+    "width": 320
+  },
+  {
+    "overflow": false,
+    "stageWidth": 375,
+    "visibleImagesLoaded": true,
+    "width": 390
+  },
+  {
+    "overflow": false,
+    "stageWidth": 735,
+    "visibleImagesLoaded": true,
+    "width": 750
+  },
+  {
+    "overflow": false,
+    "stageWidth": 1425,
+    "visibleImagesLoaded": true,
+    "width": 1440
+  },
+  {
+    "overflow": false,
+    "stageWidth": 1680,
+    "visibleImagesLoaded": true,
+    "width": 2560
+  }
+]

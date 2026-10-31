@@ -1,0 +1,38 @@
+{
+  "desktop-normal": {
+    "shell": true,
+    "imageLoaded": true,
+    "imageVisible": true,
+    "fallbackVisible": false,
+    "brokenImages": 0,
+    "headerOverflow": false,
+    "errors": []
+  },
+  "desktop-blocked": {
+    "shell": true,
+    "imageLoaded": false,
+    "imageVisible": false,
+    "fallbackVisible": true,
+    "brokenImages": 2,
+    "headerOverflow": false,
+    "errors": []
+  },
+  "mobile-normal": {
+    "shell": true,
+    "imageLoaded": true,
+    "imageVisible": true,
+    "fallbackVisible": false,
+    "brokenImages": 0,
+    "headerOverflow": false,
+    "errors": []
+  },
+  "mobile-blocked": {
+    "shell": true,
+    "imageLoaded": false,
+    "imageVisible": false,
+    "fallbackVisible": true,
+    "brokenImages": 2,
+    "headerOverflow": false,
+    "errors": []
+  }
+}

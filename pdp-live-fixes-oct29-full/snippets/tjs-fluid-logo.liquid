@@ -1,0 +1,18 @@
+{% doc %}
+  Renders the merchant logo inside the fluid header. A GIF is loaded only after
+  the header settles; its exact final frame is the stable fallback.
+  @param {image} logo - Merchant-selected logo
+  @param {string} alt - Accessible shop name
+{% enddoc %}
+{% assign fluid_logo_src = logo.src | downcase %}
+{% if fluid_logo_src contains '.gif' %}
+  <span class="tjs-fluid-logo" data-tjs-fluid-logo>
+    <img class="tjs-fluid-logo__still" src="{{ 'tjs-fluid-logo-static.png' | asset_url }}" alt="{{ alt | escape }}" width="195" height="152" loading="eager">
+    <img class="tjs-fluid-logo__motion" data-tjs-animated-src="{{ logo | image_url: width: 416 }}" alt="" width="416" height="156" aria-hidden="true">
+  </span>
+{% elsif logo != blank %}
+  {{ logo | image_url: width: 440 | image_tag: widths: '120,180,240,320,440', loading: 'eager', alt: alt }}
+{% else %}
+  <span class="tjs-ph__brand-text">{{ shop.name | escape }}</span>
+{% endif %}
+

@@ -1,0 +1,48 @@
+{
+  "themeId": "187527266499",
+  "themeName": "TJS Website Rework — 24 Sep 2026",
+  "published": false,
+  "verifiedAt": "2026-10-25T23:31:03.2793764+05:30",
+  "files": {
+    "sections/june-make-room.liquid": "799C792F8A568CD10E137D7D44909F7F5F5B11527EE5F4A415BAF2F925FF34C8",
+    "sections/june-memory-feature.liquid": "058783B8403E3C168EB710C2352171E781276365E6D3D2A97E59B0604E4399F4",
+    "templates/index.json": "FFDA71D5307F3A31F686848B380E302CF16E8956149B28237CEBC1C06F12AD25",
+    "sections/footer-group.json": "43550F4648A2DFED025DA0A4A7E0C85DA5F413CC1FCD7DEB345AF23B121FD608",
+    "sections/header-group.json": "B22B903CCCAF307ED8004BD4324A107C09A882F2B2C0BC1CC14F593FFB46E90A"
+  },
+  "homepageOrder": [
+    "june_make_room",
+    "june_your_year",
+    "june_with_extras",
+    "june_our_days_home",
+    "june_photo_books_home",
+    "june_next_chapter",
+    "june_inside_discovery",
+    "june_other_chapters",
+    "june_shop_the_corner",
+    "june_find_your_glow",
+    "june_pick_your_pour",
+    "june_layer_the_table",
+    "home_banner_swiper_gPUxE8"
+  ],
+  "menu": {
+    "id": "gid://shopify/Menu/304161587395",
+    "handle": "tjs-redesign-navigation",
+    "items": [
+      "New & Bestsellers",
+      "Home",
+      "Kitchen & Dining",
+      "Organise",
+      "Planners & Journals",
+      "Our Days",
+      "Photo Books",
+      "Eyewear",
+      "Gifting"
+    ],
+    "existingHierarchySha256": "69DA697F965A8D2EC54C0D8EBABCF7DBC1618BC16124DD5FA6CBCA5E2745824A",
+    "existingHierarchyPreserved": true,
+    "ourDaysUrl": "/collections/our-days-memory-books",
+    "photoBooksUrl": "/collections/photo-books"
+  },
+  "mysteryBoxHomepageReferences": 0
+}

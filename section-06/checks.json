@@ -1,0 +1,55 @@
+{
+  "date": "2026-09-28",
+  "theme": "gid://shopify/OnlineStoreTheme/187527266499",
+  "role": "UNPUBLISHED",
+  "sourceExact": true,
+  "priorSourcesPreserved": true,
+  "priorSettingsPreserved": true,
+  "priorOrderPreserved": true,
+  "validation": "Liquid/index revision2 valid",
+  "files": [
+    {
+      "filename": "locales/en.default.json",
+      "checksumMd5": "9b43a08391603c8a03d6424475013f71"
+    },
+    {
+      "filename": "sections/june-inside-discovery.liquid",
+      "checksumMd5": "af0ef2d9741fbf5ca405d72705c06d97"
+    },
+    {
+      "filename": "sections/june-layer-the-table.liquid",
+      "checksumMd5": "51586945f52470adbedb7e51e0d6242d"
+    },
+    {
+      "filename": "sections/june-make-room.liquid",
+      "checksumMd5": "bf79951765103d6e089af3d1d0d89d7d"
+    },
+    {
+      "filename": "sections/june-next-chapter.liquid",
+      "checksumMd5": "0a85f37894c1385f4b2716bdc12667bf"
+    },
+    {
+      "filename": "sections/june-other-chapters.liquid",
+      "checksumMd5": "44e67072573e0943098367e77b159aa0"
+    },
+    {
+      "filename": "sections/june-pick-your-pour.liquid",
+      "checksumMd5": "88b1f80ff544bc6f7b78f88eb66160bc"
+    },
+    {
+      "filename": "sections/june-with-extras.liquid",
+      "checksumMd5": "16ca9a61f1f724bee938a4bcaba582b1"
+    },
+    {
+      "filename": "sections/june-your-year.liquid",
+      "checksumMd5": "1c965a380520862a98b44c8162143a6e"
+    },
+    {
+      "filename": "templates/index.json",
+      "checksumMd5": "3dd79a7f08de918c54c36309e1c4cf1a"
+    }
+  ],
+  "reducedMotion": "JS disables pinning and decorative effect; CSS removes animation. Reviewed, not OS-emulated.",
+  "baby": "User requested visible without shopping button; catalog has no active baby books",
+  "published": false
+}

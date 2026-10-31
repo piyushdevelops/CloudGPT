@@ -1,0 +1,80 @@
+[
+  {
+    "path": "/collections/undated-yearly-planners",
+    "status": 200,
+    "final": "https://thejuneshop.com/collections/undated-yearly-planners",
+    "title": "Undated Planners | The June Shop"
+  },
+  {
+    "path": "/collections/home-all",
+    "status": 200,
+    "final": "https://thejuneshop.com/collections/home-all",
+    "title": "Home | The June Shop"
+  },
+  {
+    "path": "/collections/lamps-lighting",
+    "status": 200,
+    "final": "https://thejuneshop.com/collections/lamps-lighting",
+    "title": "Lamps &amp; Lighting | The June Shop"
+  },
+  {
+    "path": "/collections/dining",
+    "status": 200,
+    "final": "https://thejuneshop.com/collections/dining",
+    "title": "Kitchen &amp; Dining | The June Shop"
+  },
+  {
+    "path": "/collections/wedding-planners",
+    "status": 200,
+    "final": "https://thejuneshop.com/collections/wedding-planners",
+    "title": "Wedding &amp; Memory Planners | The June Shop"
+  },
+  {
+    "path": "/products/mystery-box-limited-drop",
+    "status": 200,
+    "final": "https://thejuneshop.com/products/mystery-box-limited-drop",
+    "title": "The June Shop Mystery Box"
+  },
+  {
+    "path": "/pages/contact-us",
+    "status": 200,
+    "final": "https://thejuneshop.com/pages/contact-us",
+    "title": "Contact Us\n &ndash; The June Shop"
+  },
+  {
+    "path": "/pages/faqs",
+    "status": 200,
+    "final": "https://thejuneshop.com/pages/faqs",
+    "title": "Frequently Asked Questions\n &ndash; The June Shop"
+  },
+  {
+    "path": "/pages/shipping-delivery",
+    "status": 200,
+    "final": "https://thejuneshop.com/pages/shipping-delivery",
+    "title": "Shipping &amp; Delivery\n &ndash; The June Shop"
+  },
+  {
+    "path": "/pages/return-and-refund-policy",
+    "status": 200,
+    "final": "https://thejuneshop.com/pages/return-and-refund-policy",
+    "title": "Returns &amp; Refund\n &ndash; The June Shop"
+  },
+  {
+    "path": "/pages/our-story",
+    "status": 200,
+    "final": "https://thejuneshop.com/pages/our-story",
+    "title": "Our Story\n &ndash; The June Shop"
+  },
+  {
+    "path": "/policies/privacy-policy",
+    "status": 200,
+    "final": "https://thejuneshop.com/policies/privacy-policy",
+    "title": "Privacy policy\n &ndash; The June Shop"
+  },
+  {
+    "path": "/policies/terms-of-service",
+    "status": 200,
+    "final": "https://thejuneshop.com/policies/terms-of-service",
+    "title": "Terms of service\n &ndash; The June Shop"
+  }
+]

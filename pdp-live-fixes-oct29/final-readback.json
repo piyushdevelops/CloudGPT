@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-29",
+  "themeId": 187527266499,
+  "role": "MAIN",
+  "files": [
+    {
+      "filename": "sections/june-mobile-product.liquid",
+      "checksumMd5": "f9f5af7ed55f578c2c5df5c589f42def",
+      "exactReadback": true
+    },
+    {
+      "filename": "snippets/june-pdp-card.liquid",
+      "checksumMd5": "2a506cbfe9e6eddcfc37f0ce8e8f6d3a",
+      "exactReadback": true
+    }
+  ],
+  "themeCheck": {
+    "changedFileOffenses": 0,
+    "legacyThemeFindingsOutsideScope": true
+  },
+  "liveBrowser": {
+    "cases": 8,
+    "viewports": ["360x640", "393x852", "430x932", "1440x1000"],
+    "products": ["dated preorder planner", "standard undated planner"],
+    "http200": "8/8",
+    "firstImagesLoaded": "8/8",
+    "squareStages": "8/8",
+    "initialStickyHidden": "8/8",
+    "thumbnailPageJump": "0/8",
+    "tabsFit": "8/8",
+    "usefulSpecifications": "8/8",
+    "stickyAfterPurchase": "8/8",
+    "recommendationsAfterStory": "8/8",
+    "horizontalOverflow": "0/8",
+    "consoleErrors": "0/8",
+    "keyboardTabs": true,
+    "variantMediaMatch": true,
+    "stickyHiddenAtFooter": true
+  },
+  "qaThemeId": 187623407811,
+  "qaThemeRole": "UNPUBLISHED"
+}

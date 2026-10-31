@@ -1,0 +1,158 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "t:sections.name_group.header",
+  "sections": {
+    "1770015248824ec59a": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_1e79126_tGyiXM": {
+          "type": "ai_gen_block_1e79126",
+          "disabled": true,
+          "settings": {
+            "tagline": "Dont forget to Choose your free gift. Limited Time Only",
+            "message": "",
+            "end_date": "2026-02-15",
+            "end_time": "23:59:59",
+            "expired_message": "",
+            "cta_text": "",
+            "cta_link": "",
+            "show_days": false,
+            "days_label": "",
+            "hours_label": "",
+            "minutes_label": "",
+            "seconds_label": "",
+            "desktop_width_percent": 100,
+            "padding_vertical": 5,
+            "background_color": "#171717",
+            "text_color": "#ffffff",
+            "timer_background_color": "#f56a28",
+            "timer_text_color": "#171717",
+            "cta_background_color": "#f56a28",
+            "cta_text_color": "#171717",
+            "tagline_font_size": 11,
+            "tagline_font_weight": "700",
+            "message_font_size": 14,
+            "message_font_weight": "400",
+            "timer_font_size": 14,
+            "timer_font_weight": "600",
+            "label_font_size": 9,
+            "cta_font_size": 13,
+            "cta_font_weight": "600",
+            "timer_border_radius": 6,
+            "cta_border_radius": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_1e79126_tGyiXM"
+      ],
+      "settings": {}
+    },
+    "17767700394527b0a9": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_9bd9d96_PdeYic": {
+          "type": "ai_gen_block_9bd9d96",
+          "disabled": true,
+          "settings": {
+            "word_1": "Our First Ever Clearance Sale Is Now Live, Use Code",
+            "word_1_text_color": "#ffffff",
+            "word_1_background_color": "#171717",
+            "word_1_alt_text_color": "#ffffff",
+            "word_1_alt_background_color": "#171717",
+            "word_2": "FLAT50",
+            "word_2_text_color": "#171717",
+            "word_2_background_color": "#ffffff",
+            "word_2_alt_text_color": "#171717",
+            "word_2_alt_background_color": "#ffffff",
+            "word_3": "at checkout to get a killer deal.",
+            "word_3_text_color": "#ffffff",
+            "word_3_background_color": "#171717",
+            "word_3_alt_text_color": "#ffffff",
+            "word_3_alt_background_color": "#171717",
+            "text_size": 14,
+            "word_font_weight": "500",
+            "word_padding_vertical": 2,
+            "word_padding_horizontal": 2,
+            "word_border_radius": 3,
+            "text_alignment": "center",
+            "enable_color_switch": true,
+            "animation_speed": 2,
+            "animation_delay": 1,
+            "background_color": "#171717",
+            "padding_vertical": 12,
+            "padding_horizontal": 20
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_9bd9d96_PdeYic"
+      ],
+      "settings": {}
+    },
+    "my_header_xzi9nP": {
+      "type": "my-header",
+      "name": "TJS premium header",
+      "settings": {
+        "logo": "shopify://shop_images/Untitled_design_ca96a32d-25ec-4b1e-b793-d8d0def24b77.gif",
+        "logo_width": 208,
+        "logo_width_mobile": 118,
+        "main_menu": "tjs-redesign-navigation",
+        "mobile_menu": "",
+        "show_desktop_promo": true,
+        "menu_alignment": "center",
+        "show_account": true,
+        "show_wishlist": false,
+        "show_desktop_search": true,
+        "mobile_fullscreen_search": true,
+        "search_placeholder": "Search the shop",
+        "enable_typing_effect": false,
+        "typing_terms": "Search mugs, planners, lamps…\nSearch gifts under ₹999…\nSearch by room or occasion…\nFind something for the table…",
+        "drawer_search_placeholder": "What are you looking for?",
+        "popular_searches": "Rakhi Gifts, Gifts for Sister, Glassware, Undated Planners, Table Lamps, Organisers",
+        "exact_search_routes": "mug|mugs|coffee mug|coffee mugs|coffee cup|coffee cups|cups and mugs => /collections/coffee-mugs\ntea cup|tea cups|teacup|teacups|tea and coffee => /collections/tea-cups-coffee-mugs",
+        "search_synonyms": "organizer|organizers => organiser\nlunchbox|lunchboxes|tiffin|tiffins => lunch box\nraksha bandhan => rakhi\nbathroom rug|bathroom rugs => bath mat\ntravel cup|flask => travel mug",
+        "sticky_mode": "on_scroll_up",
+        "compact_mobile_scroll": true,
+        "compact_desktop_scroll": true,
+        "hide_note_on_scroll": true,
+        "float_mobile": true,
+        "float_desktop": true,
+        "transparent_home": false,
+        "glass_strength": 88,
+        "glass_blur": 22,
+        "glass_saturation": 155,
+        "glass_highlight": 42,
+        "icon_effect": "orbit",
+        "top_note": "",
+        "top_note_link": "",
+        "desktop_height": 78,
+        "mobile_top_height": 54,
+        "search_height": 42,
+        "shell_radius": 18,
+        "max_width": 1380,
+        "background": "#ffffff",
+        "text_color": "#171717",
+        "muted_color": "#656565",
+        "accent": "#f56a28",
+        "border_color": "#dadada"
+      }
+    }
+  },
+  "order": [
+    "1770015248824ec59a",
+    "17767700394527b0a9",
+    "my_header_xzi9nP"
+  ]
+}

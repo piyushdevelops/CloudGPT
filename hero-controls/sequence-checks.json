@@ -1,0 +1,7 @@
+{
+  "defaultOrderAndCounts": true,
+  "customCountsAndRepeat": true,
+  "rateFloor": true,
+  "cancelStopsRemainingDigits": true,
+  "disabledStatic": true
+}

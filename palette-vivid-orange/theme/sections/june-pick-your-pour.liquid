@@ -1,0 +1,580 @@
+{% liquid
+ assign typography = section.blocks | where: 'type', 'typography' | first
+ assign type = typography.settings
+ assign pours = section.blocks | where: 'type', 'pour'
+ assign count = 0
+ for block in pours
+  if block.settings.product != blank
+   assign count = count | plus: 1
+  endif
+ endfor
+%}
+{% style %}
+#JunePour-{{ section.id }}{--jg-bg:{{ section.settings.background }};--jg-ink:{{ section.settings.ink }};--jg-accent:{{ section.settings.accent }};--jg-height:{{ section.settings.height }}px;--jg-mobile-height:{{ section.settings.mobile_height }}px;--jg-duration:{{ 24000 | divided_by: section.settings.speed }}ms;}
+{% assign face = type.heading_font | default: section.settings.fallback_font %}{% assign weight = type.heading_weight | default: 900 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JunePour-{{ section.id }}{--jg-heading-font:{{ face.family }},{{ face.fallback_families }};--jg-heading-weight:{{ type.heading_weight | default: 900 }};--jg-heading-size:{{ type.heading_size | default: 62 }}px;--jg-heading-mobile:{{ type.heading_mobile | default: 42 }}px;--jg-heading-tracking:{{ type.heading_tracking | default: -2 | divided_by: 100.0 }}em;--jg-heading-leading:{{ type.heading_leading | default: 105 | divided_by: 100.0 }};}
+{% assign face = type.title_font | default: section.settings.fallback_font %}{% assign weight = type.title_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JunePour-{{ section.id }}{--jg-title-font:{{ face.family }},{{ face.fallback_families }};--jg-title-weight:{{ type.title_weight | default: 600 }};--jg-title-size:{{ type.title_size | default: 26 }}px;--jg-title-mobile:{{ type.title_mobile | default: 23 }}px;--jg-title-tracking:{{ type.title_tracking | default: -2 | divided_by: 100.0 }}em;--jg-title-leading:{{ type.title_leading | default: 120 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign weight = type.body_weight | default: 400 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JunePour-{{ section.id }}{--jg-body-font:{{ face.family }},{{ face.fallback_families }};--jg-body-weight:{{ type.body_weight | default: 400 }};--jg-body-size:{{ type.body_size | default: 18 }}px;--jg-body-mobile:{{ type.body_mobile | default: 16 }}px;--jg-body-tracking:{{ type.body_tracking | default: -1 | divided_by: 100.0 }}em;--jg-body-leading:{{ type.body_leading | default: 150 | divided_by: 100.0 }};}
+{% assign face = type.button_font | default: section.settings.fallback_font %}{% assign weight = type.button_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JunePour-{{ section.id }}{--jg-button-font:{{ face.family }},{{ face.fallback_families }};--jg-button-weight:{{ type.button_weight | default: 600 }};--jg-button-size:{{ type.button_size | default: 14 }}px;--jg-button-mobile:{{ type.button_mobile | default: 14 }}px;--jg-button-tracking:{{ type.button_tracking | default: -1 | divided_by: 100.0 }}em;--jg-button-leading:{{ type.button_leading | default: 130 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign bold = face | font_modify: 'weight', '700' %}{{ bold | font_face: font_display: 'swap' }}
+{% endstyle %}
+{% capture arrow %}<span class="jg__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{% endcapture %}
+{% if count > 0 %}
+<june-pour id="JunePour-{{ section.id }}" class="jg" data-motion="{{ section.settings.motion }}" aria-labelledby="JunePourHeading-{{ section.id }}">
+ <div class="jg__stage">
+  <header class="jg__header">
+   <p class="jg__eyebrow jg__button-type">{{ section.settings.eyebrow | escape }}</p>
+   <h2 class="jg__heading" id="JunePourHeading-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+   <div class="jg__body">{{ section.settings.body }}</div>
+  </header>
+  <div class="jg__scenes">
+  {% assign number = 0 %}{% for block in pours %}{% assign product = block.settings.product %}{% if product != blank %}
+   {% liquid
+    assign image_index = block.settings.image_number | minus: 1
+    assign scene = block.settings.image | default: product.images[image_index] | default: product.featured_image
+    assign mobile_scene = block.settings.mobile_image | default: scene
+    assign alt = block.settings.alt | default: scene.alt | default: product.title
+   %}
+   <picture data-scene="{{ number }}" style="--jg-focus:{{ block.settings.focus }}%" {% unless number == 0 %}hidden{% endunless %}>
+    <source media="(max-width:900px)" srcset="{{ mobile_scene | image_url: width: 500 }} 500w, {{ mobile_scene | image_url: width: 900 }} 900w" sizes="100vw">
+    {{ scene | image_url: width: 1600 | image_tag: widths: '500,800,1200,1600', sizes: '(min-width: 1680px) 1000px, (min-width: 901px) 60vw, 100vw', loading: 'lazy', alt: alt }}
+   </picture>
+  {% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+  </div>
+ </div>
+ <div class="jg__footer">
+  <div class="jg__choices">
+   <p class="jg__body" id="JunePourChoose-{{ section.id }}">{{ section.settings.choose | escape }}</p>
+   <div class="jg__tabs" role="group" aria-labelledby="JunePourChoose-{{ section.id }}">
+    {% assign number = 0 %}{% for block in pours %}{% if block.settings.product != blank %}
+    <button class="jg__tab jg__button-type" type="button" data-select="{{ number }}" data-block="{{ block.id }}" aria-pressed="{% if number == 0 %}true{% else %}false{% endif %}" aria-controls="JunePourProduct-{{ section.id }}-{{ number }}" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}{% if block.settings.short_label != blank %}<small>{{ block.settings.short_label | escape }}</small>{% endif %}</button>
+    {% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+   </div>
+  </div>
+  <div class="jg__products" aria-live="polite" aria-atomic="true">
+   {% assign number = 0 %}{% for block in pours %}{% assign product = block.settings.product %}{% if product != blank %}
+   <div class="jg__product" id="JunePourProduct-{{ section.id }}-{{ number }}" data-product="{{ number }}" {% unless number == 0 %}hidden{% endunless %}>
+    <div class="jg__product-copy"><h3 class="jg__title">{{ block.settings.name | default: product.title | escape }}</h3>{% if block.settings.detail != blank %}<p class="jg__body jg__detail">{{ block.settings.detail | escape }}</p>{% endif %}<p class="jg__body jg__spec">{{ block.settings.specification | escape }}</p><p class="jg__body jg__price">{% if product.price_varies %}{{ section.settings.from | escape }} {% endif %}{{ product.price | money }}</p></div>
+    <a class="jg__primary jg__button-type" href="{{ product.url }}">{% if product.available %}{{ section.settings.shop | escape }}{% else %}{{ section.settings.view | escape }}{% endif %}{{ arrow }}</a>
+   </div>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+  </div>
+  {% if section.settings.collection != blank %}<a class="jg__all jg__button-type" href="{{ section.settings.collection.url }}">{{ section.settings.all | escape }}{{ arrow }}</a>{% endif %}
+ </div>
+ <noscript><div class="jg__fallback jg__body">{% for block in pours %}{% if block.settings.product != blank %}<a href="{{ block.settings.product.url }}">{{ block.settings.product.title | escape }}</a>{% endif %}{% endfor %}</div></noscript>
+</june-pour>
+{% elsif request.design_mode %}<p>Add a product to each pour block.</p>{% endif %}
+{% stylesheet %}
+june-pour.jg{display:block;max-width:1680px;margin:0 auto;background:var(--jg-bg);color:var(--jg-ink);border-bottom:1px solid #17171733}.jg *{box-sizing:border-box}.jg [hidden]{display:none!important}.jg h2,.jg h3,.jg p{margin:0;color:inherit}.jg strong{font-weight:700}.jg a{color:inherit;text-decoration:none}.jg button{cursor:pointer;appearance:none}.jg a:focus-visible,.jg button:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+.jg .jg__heading{font-family:var(--jg-heading-font);font-size:var(--jg-heading-size);font-weight:var(--jg-heading-weight);letter-spacing:var(--jg-heading-tracking);line-height:var(--jg-heading-leading)}
+.jg .jg__title{font-family:var(--jg-title-font);font-size:var(--jg-title-size);font-weight:var(--jg-title-weight);letter-spacing:var(--jg-title-tracking);line-height:var(--jg-title-leading)}
+.jg .jg__body{font-family:var(--jg-body-font);font-size:var(--jg-body-size);font-weight:var(--jg-body-weight);letter-spacing:var(--jg-body-tracking);line-height:var(--jg-body-leading)}
+.jg .jg__button-type{font-family:var(--jg-button-font);font-size:var(--jg-button-size);font-weight:var(--jg-button-weight);letter-spacing:var(--jg-button-tracking);line-height:var(--jg-button-leading)}
+.jg__stage{position:relative;display:grid;grid-template-columns:.85fr 1.15fr;min-height:var(--jg-height)}.jg__header{position:relative;z-index:1;align-self:center;padding:48px 20px 48px 48px}.jg__eyebrow{text-transform:uppercase;letter-spacing:.12em!important}.jg .jg__heading{margin:18px 0 24px;overflow-wrap:break-word}.jg__scenes{min-width:0;position:relative;overflow:hidden}.jg__scenes picture{position:absolute;inset:0;display:block}.jg__scenes img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--jg-focus) 50%}.jg__scenes:after{content:"";position:absolute;inset:0 auto 0 0;width:12%;background:linear-gradient(90deg,var(--jg-bg),transparent);pointer-events:none}
+.jg__footer{display:grid;grid-template-columns:minmax(300px,.9fr) minmax(0,1.3fr);gap:20px 40px;padding:28px 48px 24px;border-top:1px solid #17171722;align-items:center}.jg__tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.jg .jg__tab{min-height:46px;padding:10px 16px;border:1px solid transparent;border-bottom-color:#17171777;border-radius:0;background:none;color:inherit}.jg .jg__tab[aria-pressed=true]{background:var(--jg-accent);color:#171717;border:1px solid #171717;border-radius:999px;box-shadow:-1px 1px 0 #171717}
+.jg__product{display:flex;gap:24px;align-items:center;justify-content:space-between}.jg__product-copy{min-width:0}.jg .jg__detail{margin-top:7px;opacity:.75}.jg .jg__price{margin-top:6px}.jg .jg__primary{display:inline-flex;align-items:center;gap:24px;justify-content:space-between;flex:none;min-height:52px;padding:9px 10px 9px 22px;background:var(--jg-accent);color:#171717;border:1px solid #171717;border-radius:999px;box-shadow:-2px 1px 0 #171717;transition:transform var(--jg-duration) ease}
+.jg__arrow{display:grid;place-items:center;flex:none;width:32px;height:32px;border-radius:50%;background:#171717;color:var(--jg-accent)}.jg__arrow svg{width:18px;height:18px}.jg .jg__all{grid-column:2;justify-self:end;display:inline-flex;align-items:center;gap:10px;min-height:44px;text-decoration:underline;text-underline-offset:5px}.jg__all .jg__arrow{width:24px;height:24px}.jg__all svg{width:16px;height:16px}.jg__fallback{padding:20px}.jg__fallback a{display:inline-block;padding:10px;text-decoration:underline}
+@media(hover:hover){.jg[data-motion=true] .jg__primary:hover{transform:translateY(-2px)}.jg .jg__tab:hover{border-color:currentColor}}
+@media(min-width:901px) and (max-width:1200px){.jg__header{padding-left:28px}.jg .jg__heading{font-size:calc(var(--jg-heading-size)*.85)}.jg__footer{padding-inline:28px;gap:16px 24px;grid-template-columns:.9fr 1.1fr}.jg__product{display:block}.jg__primary{margin-top:14px}}
+@media(max-width:900px){.jg__stage{display:flex;flex-direction:column;min-height:0}.jg__header{padding:28px 20px 24px;align-self:stretch}.jg .jg__heading{margin:12px 0 16px;max-width:650px}
+.jg .jg__heading{font-size:var(--jg-heading-mobile)}
+.jg .jg__title{font-size:var(--jg-title-mobile)}
+.jg .jg__body{font-size:var(--jg-body-mobile)}
+.jg .jg__button-type{font-size:var(--jg-button-mobile)}
+.jg__scenes{height:var(--jg-mobile-height)}.jg__scenes img{object-fit:contain}.jg__scenes:after{display:none}.jg__footer{display:block;padding:24px 20px}.jg__tabs{gap:6px;flex-wrap:nowrap;justify-content:space-between}.jg .jg__tab{padding:10px 11px;flex:1}.jg__product{display:block;margin-top:26px;padding-top:22px;border-top:1px solid #17171722}.jg .jg__primary{margin-top:18px;width:100%}.jg .jg__all{display:flex;justify-content:center;margin-top:14px}.jg__eyebrow{font-size:calc(var(--jg-button-mobile)*.8)!important}
+}
+@media(max-width:359px){.jg .jg__tab{padding:10px 7px;font-size:calc(var(--jg-button-mobile)*.9)}}
+@media(prefers-reduced-motion:reduce){.jg *{transition:none!important;animation:none!important}.jg .jg__primary{transform:none!important}}.jg[data-motion=false] *{transition:none!important}
+
+.jg{scroll-margin-top:110px}.jg__tab small{display:block;font-size:.85em;font-weight:400;margin-top:4px}.jg__spec{margin-top:6px!important}.jg__footer{padding-block:20px!important}
+@media(max-width:900px){.jg__header{padding-block:24px!important}.jg__scene,.jg__scenes{max-height:260px}.jg__scene img{object-fit:cover}.jg__footer{gap:16px!important}.jg__tab{min-height:58px}}
+
+{% endstylesheet %}
+{% javascript %}
+if(!customElements.get('june-pour')){
+ customElements.define('june-pour',class extends HTMLElement{
+  connectedCallback(){
+   this.controller?.abort();this.controller=new AbortController();const options={signal:this.controller.signal};
+   this.buttons=[...this.querySelectorAll('[data-select]')];
+   this.addEventListener('click',e=>{const b=e.target.closest('[data-select]');if(b&&this.contains(b))this.select(Number(b.dataset.select));},options);
+   this.addEventListener('keydown',e=>{const b=e.target.closest('[data-select]');if(!b)return;let i=this.buttons.indexOf(b),n;
+    if(e.key==='ArrowRight')n=(i+1)%this.buttons.length;if(e.key==='ArrowLeft')n=(i-1+this.buttons.length)%this.buttons.length;if(e.key==='Home')n=0;if(e.key==='End')n=this.buttons.length-1;
+    if(n===undefined)return;e.preventDefault();this.select(n);this.buttons[n].focus();
+   },options);
+   this.addEventListener('shopify:block:select',e=>{const b=this.buttons.find(b=>b.dataset.block===e.detail.blockId);if(b)this.select(Number(b.dataset.select));},options);
+  }
+  select(index){if(!this.buttons[index])return;this.buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));['scene','product'].forEach(key=>this.querySelectorAll('[data-'+key+']').forEach(el=>el.hidden=Number(el.dataset[key])!==index));}
+  disconnectedCallback(){this.controller?.abort();}
+ });
+}
+{% endjavascript %}
+{% schema %}
+{
+  "name": "June · Pick your pour",
+  "tag": "section",
+  "class": "june-pour-section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Glassware"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A toast, shaped differently."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "body",
+      "label": "Supporting copy",
+      "default": "Make the everyday <strong>a little more special.</strong>"
+    },
+    {
+      "type": "text",
+      "id": "choose",
+      "label": "Selector label",
+      "default": "Pick your pour"
+    },
+    {
+      "type": "text",
+      "id": "shop",
+      "label": "Shop button",
+      "default": "Shop this glass"
+    },
+    {
+      "type": "text",
+      "id": "view",
+      "label": "Unavailable product button",
+      "default": "View this glass"
+    },
+    {
+      "type": "text",
+      "id": "all",
+      "label": "Collection link label",
+      "default": "All glassware"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Glassware collection"
+    },
+    {
+      "type": "text",
+      "id": "from",
+      "label": "Price prefix",
+      "default": "From"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "ink",
+      "label": "Text",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent",
+      "default": "#F56A28"
+    },
+    {
+      "type": "font_picker",
+      "id": "fallback_font",
+      "label": "Fallback font",
+      "default": "poppins_n4"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Desktop scene height",
+      "min": 400,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Mobile scene height",
+      "min": 240,
+      "max": 480,
+      "step": 10,
+      "unit": "px",
+      "default": 340
+    },
+    {
+      "type": "checkbox",
+      "id": "motion",
+      "label": "Enable button hover motion",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Hover speed",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pour",
+      "name": "Pour and product",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Pour label",
+          "default": "Everyday"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Short product name"
+        },
+        {
+          "type": "text",
+          "id": "detail",
+          "label": "Product detail"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop scene override"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile scene override"
+        },
+        {
+          "type": "range",
+          "id": "image_number",
+          "label": "Catalog image number",
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Scene description"
+        },
+        {
+          "type": "range",
+          "id": "focus",
+          "label": "Horizontal image position",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "text",
+          "id": "specification",
+          "label": "Verified product specification"
+        },
+        {
+          "type": "text",
+          "id": "short_label",
+          "label": "Short product type"
+        }
+      ]
+    },
+    {
+      "type": "typography",
+      "name": "Typography controls",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "font_picker",
+          "id": "heading_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "heading_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 900
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 62
+        },
+        {
+          "type": "range",
+          "id": "heading_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 42
+        },
+        {
+          "type": "range",
+          "id": "heading_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "heading_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 105
+        },
+        {
+          "type": "header",
+          "content": "Product title"
+        },
+        {
+          "type": "font_picker",
+          "id": "title_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "title_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 26
+        },
+        {
+          "type": "range",
+          "id": "title_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 23
+        },
+        {
+          "type": "range",
+          "id": "title_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "title_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 120
+        },
+        {
+          "type": "header",
+          "content": "Supporting copy"
+        },
+        {
+          "type": "font_picker",
+          "id": "body_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "body_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "body_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "body_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "header",
+          "content": "Actions and navigation"
+        },
+        {
+          "type": "font_picker",
+          "id": "button_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "button_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "button_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 130
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "June · Pick your pour",
+      "blocks": [
+        {
+          "type": "pour",
+          "settings": {
+            "label": "Everyday"
+          }
+        },
+        {
+          "type": "pour",
+          "settings": {
+            "label": "Slow mornings"
+          }
+        },
+        {
+          "type": "pour",
+          "settings": {
+            "label": "Celebrations"
+          }
+        },
+        {
+          "type": "typography"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

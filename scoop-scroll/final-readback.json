@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-08",
+  "theme": "187527266499",
+  "role": "UNPUBLISHED",
+  "files": [
+    {
+      "filename": "sections/my-header.liquid",
+      "exact": true
+    },
+    {
+      "filename": "sections/header-group.json",
+      "exact": true
+    },
+    {
+      "filename": "snippets/june-scoop-scroll.liquid",
+      "exact": true
+    },
+    {
+      "filename": "assets/june-scoop-scroll.js",
+      "exact": true
+    }
+  ],
+  "browser": {
+    "mobileCompact": "148 x 38 at top 10; scrollY 764",
+    "mobileReturn": "228 x 40 at top 0; scrollY 0",
+    "searchFromCompact": "Opened searchbox; Escape restored header",
+    "desktopCompact": "185 x 40 at top 10; scrollY 736",
+    "consoleErrors": [],
+    "physicalSafari": "Not tested"
+  },
+  "published": false
+}

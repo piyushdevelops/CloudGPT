@@ -1,0 +1,3 @@
+# Décor zoom badge correction
+
+7 October2026: User screenshot showed Zoom in text wrapping/spilling. Shared typography with five-class specificity and !important overrode local font-size:0. Added higher-specificity mobile section-only override, fixed44px icon control inside photo; parent anchor accessible label unchanged. No shared files modified. Fresh target read and conflict check before saving unpublished187527266499; Liquid validated and exact readback verified. current-theme synced. Visual/browser verification remains unavailable from preceding tool initialization failures; user screenshot is before evidence. Nothing published.

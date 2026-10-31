@@ -1,0 +1,198 @@
+{
+  "320/": {
+    "status": "interactive",
+    "h1": [
+      "Make room."
+    ],
+    "h2": [
+      "A little extra. All yours.",
+      "The next chapter is coming.",
+      "For the chapters that matter.",
+      "Your year. Your rules.",
+      "Your planner.\nWith extras."
+    ],
+    "scrollWidth": 320,
+    "viewport": 320,
+    "brokenVisible": 0
+  },
+  "320/collections/new-arrivals": {
+    "status": "interactive",
+    "h1": [
+      "New & Bestsellers"
+    ],
+    "h2": [
+      "Knotted Elegance Ceramic Tissue Holder",
+      "Gold Rimmed Rose Heart Champagne Flute Stemware",
+      "Gilded Swirl Glasses (Set of 2)",
+      "Saoirse Rustic Gold Photo Frame",
+      "Dolce Far Niente — Limited Edition Undated Planner"
+    ],
+    "scrollWidth": 320,
+    "viewport": 320,
+    "brokenVisible": 0
+  },
+  "320/products/limited-edition-undated-planner-la-vie-est-belle": {
+    "status": "interactive",
+    "h1": [
+      "La Vie Est Belle — Limited Edition Undated Planner"
+    ],
+    "h2": [
+      "Plan, Dream & Reset",
+      "For the one who plans, dreams, resets & starts over beautifully.",
+      "Every month gets its own main character mood",
+      "Peel. Stick. Romanticise Everything.",
+      "Choose the cover that feels most like you"
+    ],
+    "scrollWidth": 324,
+    "viewport": 320,
+    "brokenVisible": 0
+  },
+  "320/pages/contact-us": {
+    "status": "complete",
+    "h1": [],
+    "h2": [],
+    "scrollWidth": 320,
+    "viewport": 320,
+    "brokenVisible": 0
+  },
+  "320/pages/faqs": {
+    "status": "complete",
+    "h1": [],
+    "h2": [],
+    "scrollWidth": 320,
+    "viewport": 320,
+    "brokenVisible": 0
+  },
+  "320/pages/our-story": {
+    "status": "complete",
+    "h1": [],
+    "h2": [],
+    "scrollWidth": 320,
+    "viewport": 320,
+    "brokenVisible": 0
+  },
+  "320/pages/shipping-delivery": {
+    "status": "complete",
+    "h1": [],
+    "h2": [],
+    "scrollWidth": 320,
+    "viewport": 320,
+    "brokenVisible": 0
+  },
+  "320/pages/return-and-refund-policy": {
+    "status": "complete",
+    "h1": [],
+    "h2": [],
+    "scrollWidth": 320,
+    "viewport": 320,
+    "brokenVisible": 0
+  },
+  "320/cart": {
+    "status": "complete",
+    "h1": [
+      "Shopping Cart"
+    ],
+    "h2": [],
+    "scrollWidth": 320,
+    "viewport": 320,
+    "brokenVisible": 0
+  },
+  "768/": {
+    "status": "interactive",
+    "h1": [
+      "Make room."
+    ],
+    "h2": [
+      "A little extra. All yours.",
+      "The next chapter is coming.",
+      "For the chapters that matter.",
+      "Your year. Your rules.",
+      "Your planner.\nWith extras."
+    ],
+    "scrollWidth": 768,
+    "viewport": 768,
+    "brokenVisible": 0
+  },
+  "768/collections/new-arrivals": {
+    "status": "interactive",
+    "h1": [
+      "New & Bestsellers"
+    ],
+    "h2": [
+      "Knotted Elegance Ceramic Tissue Holder",
+      "Gold Rimmed Rose Heart Champagne Flute Stemware",
+      "Gilded Swirl Glasses (Set of 2)",
+      "Saoirse Rustic Gold Photo Frame",
+      "Dolce Far Niente — Limited Edition Undated Planner"
+    ],
+    "scrollWidth": 768,
+    "viewport": 768,
+    "brokenVisible": 0
+  },
+  "768/products/limited-edition-undated-planner-la-vie-est-belle": {
+    "status": "complete",
+    "h1": [
+      "La Vie Est Belle — Limited Edition Undated Planner"
+    ],
+    "h2": [
+      "Plan, Dream & Reset",
+      "For the one who plans, dreams, resets & starts over beautifully.",
+      "Every month gets its own main character mood",
+      "Peel. Stick. Romanticise Everything.",
+      "Choose the cover that feels most like you"
+    ],
+    "scrollWidth": 768,
+    "viewport": 768,
+    "brokenVisible": 0
+  },
+  "768/pages/contact-us": {
+    "status": "complete",
+    "h1": [],
+    "h2": [],
+    "scrollWidth": 768,
+    "viewport": 768,
+    "brokenVisible": 0
+  },
+  "768/pages/faqs": {
+    "status": "complete",
+    "h1": [],
+    "h2": [],
+    "scrollWidth": 768,
+    "viewport": 768,
+    "brokenVisible": 0
+  },
+  "768/pages/our-story": {
+    "status": "interactive",
+    "h1": [],
+    "h2": [],
+    "scrollWidth": 768,
+    "viewport": 768,
+    "brokenVisible": 0
+  },
+  "768/pages/shipping-delivery": {
+    "status": "complete",
+    "h1": [],
+    "h2": [],
+    "scrollWidth": 768,
+    "viewport": 768,
+    "brokenVisible": 0
+  },
+  "768/pages/return-and-refund-policy": {
+    "status": "complete",
+    "h1": [],
+    "h2": [],
+    "scrollWidth": 768,
+    "viewport": 768,
+    "brokenVisible": 0
+  },
+  "768/cart": {
+    "status": "complete",
+    "h1": [
+      "Shopping Cart"
+    ],
+    "h2": [],
+    "scrollWidth": 768,
+    "viewport": 768,
+    "brokenVisible": 0
+  }
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "profile": "desktop",
+    "title": "The Day We Said Yes",
+    "summary": "Large · 40 pages",
+    "errors": [],
+    "horizontalOverflow": false,
+    "spreadWidth": {
+      "client": 934,
+      "scroll": 934
+    },
+    "activeStepVisible": true
+  },
+  {
+    "profile": "mobile-360",
+    "title": "The Day We Said Yes",
+    "summary": "Large · 40 pages",
+    "errors": [],
+    "horizontalOverflow": false,
+    "spreadWidth": {
+      "client": 286,
+      "scroll": 286
+    },
+    "activeStepVisible": true
+  },
+  {
+    "profile": "mobile-390",
+    "title": "The Day We Said Yes",
+    "summary": "Large · 40 pages",
+    "errors": [],
+    "horizontalOverflow": false,
+    "spreadWidth": {
+      "client": 316,
+      "scroll": 316
+    },
+    "activeStepVisible": true
+  },
+  {
+    "profile": "mobile-430",
+    "title": "The Day We Said Yes",
+    "summary": "Large · 40 pages",
+    "errors": [],
+    "horizontalOverflow": false,
+    "spreadWidth": {
+      "client": 356,
+      "scroll": 356
+    },
+    "activeStepVisible": true
+  }
+]

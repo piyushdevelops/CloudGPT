@@ -1,0 +1,68 @@
+{% assign tier1_price = section.settings.initial_price | default: 1499 %}{% assign tier1_value = section.settings.initial_value | default: 3000 %}
+<section id="TjsMysteryFinal-{{ section.id }}" class="tjs-mv4 tjs-mv4-final">
+  <div class="tjs-mv4__shell"><div class="tjs-mv4__content" data-reveal>
+    {% if section.settings.eyebrow != blank %}<div class="tjs-mv4__eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
+    <h2 class="tjs-mv4__display tjs-mv4-final__heading tjs-mv5-manual-heading" aria-label="{{ section.settings.heading_line_1 | escape }} {{ section.settings.heading_line_2 | escape }} {{ section.settings.heading_line_3 | escape }}">
+      {% if section.settings.heading_line_1 != blank %}<span class="tjs-mv5-manual-line">{{ section.settings.heading_line_1 }}</span>{% endif %}
+      {% if section.settings.heading_line_2 != blank %}<span class="tjs-mv5-manual-line">{{ section.settings.heading_line_2 }}</span>{% endif %}
+      {% if section.settings.heading_line_3 != blank %}<span class="tjs-mv5-manual-line">{{ section.settings.heading_line_3 }}</span>{% endif %}
+    </h2>
+    <div class="tjs-mv4-final__meta"><span class="tjs-mv4-value-swap" data-mystery-bind="price">₹{{ tier1_price }}</span><span>→</span><span class="tjs-mv4-value-swap" data-mystery-bind="value">₹{{ tier1_value }}+</span></div>
+    <button type="button" class="tjs-mv4-cta" data-final-cta><span>{{ section.settings.cta_text }}</span><span class="tjs-mv4-cta__arrow" aria-hidden="true">→</span></button>
+  </div></div>
+</section>
+<script>(function(){var s=document.getElementById('TjsMysteryFinal-{{ section.id }}');if(!s)return;var b=s.querySelector('[data-final-cta]');if(b)b.addEventListener('click',function(){var p=document.querySelector('[data-mystery-primary-cta]');if(p)p.click();});})();</script>
+{% schema %}
+{
+  "name": "TJS Final CTA",
+  "tag": "section",
+  "class": "tjs-mystery-v4-final-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "STILL / CURIOUS?"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "GOOD."
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_3",
+      "label": "Heading line 3"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "UNLOCK MY BOX"
+    },
+    {
+      "type": "number",
+      "id": "initial_price",
+      "label": "Initial price fallback",
+      "default": 1499
+    },
+    {
+      "type": "number",
+      "id": "initial_value",
+      "label": "Initial value fallback",
+      "default": 3000
+    }
+  ],
+  "presets": [
+    {
+      "name": "TJS Final CTA"
+    }
+  ]
+}
+{% endschema %}

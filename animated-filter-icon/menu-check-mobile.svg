@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" role="img" aria-labelledby="menu-title">
+<title id="menu-title">Menu transforming into a checked planner box</title>
+<style>
+.jm-top,.jm-bottom,.jm-middle,.jm-sides,.jm-tick,.jm-leg-a,.jm-leg-b{animation-duration:8s;animation-iteration-count:infinite;animation-timing-function:cubic-bezier(.65,0,.35,1);transform-box:view-box}
+.jm-top{animation-name:jm-top}.jm-bottom{animation-name:jm-bottom}.jm-middle{animation-name:jm-middle}
+.jm-sides{transform-origin:12px 12px;animation-name:jm-sides}
+.jm-tick{transform-origin:12px 12px;animation-name:jm-color,jm-settle}
+.jm-leg-a{transform-origin:7.5px 12px;animation-name:jm-a}
+.jm-leg-b{transform-origin:10.5px 15px;animation-name:jm-b}
+@keyframes jm-top{0%,35%,94%,100%{transform:translateY(0)}47%,83%{transform:translateY(-2px)}}
+@keyframes jm-bottom{0%,35%,94%,100%{transform:translateY(0)}47%,83%{transform:translateY(2px)}}
+@keyframes jm-middle{0%,35%,94%,100%{opacity:1}41%,88%{opacity:0}}
+@keyframes jm-sides{0%,37%,94%,100%{transform:scaleY(0);opacity:0}47%,83%{transform:scaleY(1);opacity:1}}
+@keyframes jm-a{0%,49%{transform:scale(0);opacity:0}53%,78%{transform:scale(1);opacity:1}83%,100%{transform:scale(1);opacity:0}}
+@keyframes jm-b{0%,53%{transform:scale(0);opacity:0}59%,78%{transform:scale(1);opacity:1}83%,100%{transform:scale(1);opacity:0}}
+@keyframes jm-color{0%,65%{stroke:#BFAEE9}72%,100%{stroke:#000000}}
+@keyframes jm-settle{0%,59%,64%,100%{transform:scale(1)}61%{transform:scale(1.035)}}
+@media(prefers-reduced-motion:reduce){.jm-top,.jm-bottom,.jm-middle,.jm-sides,.jm-tick,.jm-leg-a,.jm-leg-b{animation:none}.jm-sides,.jm-tick{display:none}}
+</style>
+<g stroke="#000000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<path class="jm-top" d="M4 6H20"/><path class="jm-middle" d="M4 12H20"/><path class="jm-bottom" d="M4 18H20"/>
+<g class="jm-sides"><path d="M4 4V20M20 4V20"/></g>
+<g class="jm-tick" stroke-width="2.5"><path class="jm-leg-a" d="m7.5 12 3 3"/><path class="jm-leg-b" d="m10.5 15 6-6"/></g>
+</g></svg>

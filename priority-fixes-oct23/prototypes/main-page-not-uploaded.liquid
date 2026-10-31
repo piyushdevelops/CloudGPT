@@ -1,0 +1,256 @@
+<!-- sections/main-page.liquid -->
+{% if page.handle == 'our-story' %}
+{% liquid
+ assign story_heading_font = section.settings.story_heading_font
+ assign story_body_font = section.settings.story_body_font
+ assign story_heading_weight = section.settings.story_heading_weight | append: ''
+ assign story_body_weight = section.settings.story_body_weight | append: ''
+ assign story_heading_variant = story_heading_font | font_modify: 'weight', story_heading_weight
+ assign story_body_variant = story_body_font | font_modify: 'weight', story_body_weight
+%}
+{% style %}
+ {{ story_heading_font | font_face: font_display: 'swap' }}
+ {{ story_body_font | font_face: font_display: 'swap' }}
+ {% if story_heading_variant %}{{ story_heading_variant | font_face: font_display: 'swap' }}{% endif %}
+ {% if story_body_variant %}{{ story_body_variant | font_face: font_display: 'swap' }}{% endif %}
+ #shopify-section-{{ section.id }} .june-story {max-width:820px;margin:0 auto 48px;padding:24px 0;color:inherit}
+ #shopify-section-{{ section.id }} .june-story h1 {font-family:{{ story_heading_font.family }},{{ story_heading_font.fallback_families }};font-weight:{{ section.settings.story_heading_weight }};font-size:{{ section.settings.story_heading_size }}px;letter-spacing:{{ section.settings.story_heading_tracking }}em;line-height:{{ section.settings.story_heading_line }};margin:0 0 28px}
+ #shopify-section-{{ section.id }} .june-story-copy,#shopify-section-{{ section.id }} .june-story-original summary {font-family:{{ story_body_font.family }},{{ story_body_font.fallback_families }};font-weight:{{ section.settings.story_body_weight }};font-size:{{ section.settings.story_body_size }}px;letter-spacing:{{ section.settings.story_body_tracking }}em;line-height:{{ section.settings.story_body_line }}}
+ #shopify-section-{{ section.id }} .june-story-copy p {margin:0 0 1.25em}
+ #shopify-section-{{ section.id }} .june-story-original {max-width:1000px;margin:auto}
+ #shopify-section-{{ section.id }} .june-story-original summary {cursor:pointer;padding:18px 0;border-top:1px solid currentColor;text-decoration:underline;text-underline-offset:5px}
+ #shopify-section-{{ section.id }} .june-story-original img {display:block;width:100%;height:auto}
+ @media(max-width:749px){
+ #shopify-section-{{ section.id }} .june-story h1{font-size:{{ section.settings.story_heading_mobile }}px}
+ #shopify-section-{{ section.id }} .june-story-copy,#shopify-section-{{ section.id }} .june-story-original summary{font-size:{{ section.settings.story_body_mobile }}px}
+ }
+{% endstyle %}
+{% endif %}
+
+{% style %}
+  #shopify-section-{{ section.id }}{
+    --section-pt: {{ section.settings.padding_top }}px;
+    --section-pb: {{ section.settings.padding_bottom }}px; 
+    --section-prate: {{ section.settings.padding_rate }};
+  }
+{% endstyle %}
+<div timeline hdt-reveal="slide-in" class="hdt-main-page hdt-relative hdt-s-gradient" color-scheme="{{ section.settings.color_scheme }}">
+  <div class="hdt-container{%- if section.settings.section_fullwidth -%}-full{% endif %} hdt-section-spacing">
+    {%- if section.settings.image_bg != blank -%}
+      <div class="hdt-main-page_imagebg hdt-h-full hdt-w-full hdt-absolute hdt-left-0 hdt-top-0">
+        {{ section.settings.image_bg | image_url: width: section.settings.image_bg.width | image_tag: loading: 'lazy', width: section.settings.image_bg.width, height: section.settings.image_bg.height, class: 'hdt-w-full hdt-h-full hdt-object-cover', sizes: "100vw", widths: "375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840" }}
+      </div>
+    {%- endif -%}
+    {%- if page.content != blank -%}
+      <div class="hdt-main-area hdt-rte hdt-relative">
+      {% if page.handle == 'our-story' %}
+      <article class="june-story">
+        <h1>{{ page.title | escape }}</h1>
+        <div class="june-story-copy">{{ section.settings.story_copy }}</div>
+      </article>
+      <details class="june-story-original"><summary>Explore our illustrated story</summary>
+        {{ page.content }}
+      </details>
+      {% else %}
+      {{ page.content }}
+      {% endif %}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.main-page.name",
+  "class": "hdt-section hdt-section-main-page",
+  "tag": "section",
+  "enabled_on": {
+    "templates": [
+      "page"
+    ]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "section_fullwidth",
+      "label": "t:sections.all.section_fullwidth",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "t:sections.main-page.image.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_rate",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:sections.all.padding.padding_rate",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Our Story — readable content"
+    },
+    {
+      "type": "richtext",
+      "id": "story_copy",
+      "label": "Story text",
+      "default": "<p><strong>A little gift shop that dared to dream big.</strong></p><p>The June Shop began with childhood friends Rishav and Pranav, a shared curiosity and a desire to elevate everyday spaces. They set out to bring together home décor that is both beautiful and functional.</p><p>What started in home décor grew from a love of making spaces feel personal. Each piece is thoughtfully chosen to bring character and charm to everyday life.</p><p>Our original illustrated story below shares more about the people, the name and the collection behind The June Shop.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Story heading typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "story_heading_font",
+      "label": "Font family",
+      "default": "poppins_n9"
+    },
+    {
+      "type": "range",
+      "id": "story_heading_weight",
+      "label": "Font weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 900
+    },
+    {
+      "type": "range",
+      "id": "story_heading_size",
+      "label": "Desktop size",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 62
+    },
+    {
+      "type": "range",
+      "id": "story_heading_mobile",
+      "label": "Mobile size",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "story_heading_tracking",
+      "label": "Letter spacing",
+      "min": -0.1,
+      "max": 0.2,
+      "step": 0.1,
+      "unit": "em",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "story_heading_line",
+      "label": "Line spacing",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.1
+    },
+    {
+      "type": "header",
+      "content": "Story body typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "story_body_font",
+      "label": "Font family",
+      "default": "poppins_n4"
+    },
+    {
+      "type": "range",
+      "id": "story_body_weight",
+      "label": "Font weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "story_body_size",
+      "label": "Desktop size",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "story_body_mobile",
+      "label": "Mobile size",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "story_body_tracking",
+      "label": "Letter spacing",
+      "min": -0.1,
+      "max": 0.2,
+      "step": 0.1,
+      "unit": "em",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "story_body_line",
+      "label": "Line spacing",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.6
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.main-page.name"
+    }
+  ]
+}
+{% endschema %}
+

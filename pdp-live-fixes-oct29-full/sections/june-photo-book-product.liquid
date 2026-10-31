@@ -1,0 +1,108 @@
+{% liquid
+  assign studio_page = section.settings.studio_page
+  assign studio_url = studio_page.url | default: '/pages/photo-book-studio'
+  case product.handle
+    when 'travel-photo-book'
+      assign studio_occasion = 'travel'
+    when 'couples-anniversary-photo-book'
+      assign studio_occasion = 'anniversary'
+    when 'wedding-photo-book'
+      assign studio_occasion = 'wedding'
+    when 'pregnancy-baby-photo-book'
+      assign studio_occasion = 'baby'
+    when 'birthday-photo-book'
+      assign studio_occasion = 'birthday'
+    when 'pet-photo-book'
+      assign studio_occasion = 'pets'
+    when 'year-in-review-photo-book'
+      assign studio_occasion = 'year-in-review'
+    when 'photo-book-for-mum'
+      assign studio_occasion = 'for-mum'
+    else
+      assign studio_occasion = 'anniversary'
+  endcase
+  capture studio_query
+    echo 'product='
+    echo product.handle | url_encode
+    echo '&occasion='
+    echo studio_occasion | url_encode
+    echo '&shopify_store='
+    echo shop.url | url_encode
+    for variant in product.variants
+      assign size_key = variant.option1 | downcase | strip
+      echo '&variant_' | append: size_key | append: '_' | append: variant.option2 | append: '=' | append: variant.id
+    endfor
+  endcapture
+  assign primary_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media
+%}
+<section class="jpb-product" data-section-id="{{ section.id }}" style="--accent:{{ section.settings.accent }};--surface:{{ section.settings.surface }};--heading-size:{{ section.settings.heading_size }}px;--heading-size-mobile:{{ section.settings.heading_size_mobile }}px;--body-size:{{ section.settings.body_size }}px;--body-size-mobile:{{ section.settings.body_size_mobile }}px;--button-size:{{ section.settings.button_size }}px;--button-size-mobile:{{ section.settings.button_size_mobile }}px;--heading-weight:{{ section.settings.heading_weight }};--body-weight:{{ section.settings.body_weight }};--button-weight:{{ section.settings.button_weight }};--heading-spacing:{{ section.settings.heading_spacing | divided_by: 100.0 }}em;--body-spacing:{{ section.settings.body_spacing | divided_by: 100.0 }}em;--button-spacing:{{ section.settings.button_spacing | divided_by: 100.0 }}em;--heading-leading:{{ section.settings.heading_leading | divided_by: 100.0 }};--body-leading:{{ section.settings.body_leading | divided_by: 100.0 }}">
+  <div class="jpb-product__gallery">
+    <div class="jpb-product__media">
+      {% if primary_media.preview_image %}
+        {{ primary_media.preview_image | image_url: width: 1600 | image_tag: id: 'jpb-main-image', class: 'jpb-product__main-image', loading: 'eager', widths: '550, 800, 1100, 1400, 1600', sizes: '(min-width: 900px) 52vw, 100vw', alt: primary_media.alt | default: product.title }}
+      {% elsif product.featured_image %}
+        {{ product.featured_image | image_url: width: 1600 | image_tag: id: 'jpb-main-image', class: 'jpb-product__main-image', loading: 'eager', widths: '550, 800, 1100, 1400, 1600', sizes: '(min-width: 900px) 52vw, 100vw', alt: product.featured_image.alt | default: product.title }}
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag }}
+      {% endif %}
+      <span class="jpb-product__counter" aria-live="polite">1 / {{ product.media.size | at_least: 1 }}</span>
+    </div>
+    {% if product.media.size > 1 %}
+      <div class="jpb-product__thumbs" role="list" aria-label="Choose a cover design">
+        {% for media in product.media %}
+          {% if media.preview_image %}
+            <button type="button" role="listitem" class="jpb-product__thumb{% if media.id == primary_media.id %} is-active{% endif %}" data-gallery-index="{{ forloop.index }}" data-gallery-src="{{ media.preview_image | image_url: width: 1600 }}" data-gallery-srcset="{{ media.preview_image | image_url: width: 640 }} 640w, {{ media.preview_image | image_url: width: 1000 }} 1000w, {{ media.preview_image | image_url: width: 1600 }} 1600w" aria-label="View {{ media.alt | default: product.title | escape }}" aria-pressed="{% if media.id == primary_media.id %}true{% else %}false{% endif %}">
+              {{ media.preview_image | image_url: width: 220 | image_tag: loading: 'lazy', widths: '110, 160, 220', sizes: '96px', alt: media.alt | default: product.title }}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+  <div class="jpb-product__copy">
+    <p class="jpb-product__eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1>{{ product.title }}</h1>
+    <div class="jpb-product__description">{{ product.description }}</div>
+    <div class="jpb-product__prices">
+      <span><b>Regular · 8 × 8 in</b>From ₹2,799</span>
+      <span><b>Large · 11 × 11 in</b>From ₹3,099</span>
+    </div>
+    <ul class="jpb-product__facts">
+      <li>Regular 8 × 8 in starts at ₹2,799</li>
+      <li>Large 11 × 11 in starts at ₹3,099</li>
+      <li>20 pages included; add four pages at a time</li>
+      <li>Upload 30+ photos to compare three editable first drafts</li>
+      <li>Your work saves automatically while you design</li>
+    </ul>
+    <a class="jpb-product__start" href="{{ studio_url }}?{{ studio_query | strip }}">
+      <span>{{ section.settings.button_label }}</span><i aria-hidden="true">→</i>
+    </a>
+    <p class="jpb-product__note">Choose a cover above, then personalise the title, photos, pages and finishing touches in the Studio.</p>
+  </div>
+</section>
+<script>
+  (() => {
+    const section = document.querySelector('.jpb-product[data-section-id="{{ section.id }}"]');
+    if (!section || section.dataset.galleryReady) return;
+    section.dataset.galleryReady = 'true';
+    const main = section.querySelector('.jpb-product__main-image');
+    const counter = section.querySelector('.jpb-product__counter');
+    section.querySelectorAll('.jpb-product__thumb').forEach((button) => button.addEventListener('click', () => {
+      if (!main) return;
+      main.src = button.dataset.gallerySrc;
+      main.srcset = button.dataset.gallerySrcset;
+      section.querySelectorAll('.jpb-product__thumb').forEach((thumb) => {
+        const active = thumb === button;
+        thumb.classList.toggle('is-active', active);
+        thumb.setAttribute('aria-pressed', String(active));
+      });
+      if (counter) counter.textContent = `${button.dataset.galleryIndex} / ${section.querySelectorAll('.jpb-product__thumb').length}`;
+    }));
+  })();
+</script>
+{% stylesheet %}
+  .jpb-product{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);gap:clamp(34px,6vw,96px);align-items:start;max-width:1680px;margin:auto;padding:clamp(44px,7vw,110px) clamp(20px,5vw,80px);color:#171717}.jpb-product__gallery{min-width:0}.jpb-product__media{position:relative;aspect-ratio:1;border-radius:32px;background:var(--surface);overflow:hidden}.jpb-product__media img,.jpb-product__media svg{display:block;width:100%;height:100%;object-fit:cover}.jpb-product__counter{position:absolute;right:16px;bottom:16px;padding:8px 12px;border:1px solid #ffffff66;border-radius:999px;background:#171717e8;color:#fff;font-size:11px;font-weight:800}.jpb-product__thumbs{display:flex;gap:10px;margin-top:14px;padding:4px 2px 10px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:thin}.jpb-product__thumb{flex:0 0 92px;width:92px;aspect-ratio:1;border:2px solid transparent;border-radius:16px;background:var(--surface);padding:4px;overflow:hidden;scroll-snap-align:start;cursor:pointer;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}.jpb-product__thumb img{display:block;width:100%;height:100%;border-radius:11px;object-fit:cover}.jpb-product__thumb:hover{transform:translateY(-2px)}.jpb-product__thumb.is-active{border-color:#171717;box-shadow:0 4px 0 var(--accent)}.jpb-product__copy{position:sticky;top:110px;padding-top:8px}.jpb-product__eyebrow{margin:0 0 12px;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.jpb-product h1{margin:0;font-size:var(--heading-size);font-weight:var(--heading-weight);letter-spacing:var(--heading-spacing);line-height:var(--heading-leading)}.jpb-product__description{font-size:var(--body-size);font-weight:var(--body-weight);letter-spacing:var(--body-spacing);line-height:var(--body-leading)}.jpb-product__prices{display:flex;gap:10px;margin:26px 0}.jpb-product__prices span{padding:12px 15px;border:1px solid #dadada;border-radius:16px;background:var(--surface);font-size:14px}.jpb-product__prices b{display:block;margin-bottom:2px}.jpb-product__facts{display:grid;gap:9px;padding-left:20px;font-size:14px}.jpb-product__start{display:inline-flex;align-items:center;gap:28px;margin-top:24px;padding:8px 9px 8px 23px;border:2px solid #171717;border-radius:999px;background:var(--accent);color:#171717;font-size:var(--button-size);font-weight:var(--button-weight);letter-spacing:var(--button-spacing);text-decoration:none;box-shadow:0 5px 0 #171717}.jpb-product__start i{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#171717;color:#fff;font-style:normal}.jpb-product__note{max-width:520px;color:#656565;font-size:12px;line-height:1.5}@media(max-width:749px){.jpb-product{grid-template-columns:1fr;padding:28px 18px 54px}.jpb-product__media{border-radius:24px}.jpb-product__copy{position:static}.jpb-product h1{font-size:var(--heading-size-mobile)}.jpb-product__description{font-size:var(--body-size-mobile)}.jpb-product__start{font-size:var(--button-size-mobile)}.jpb-product__prices{display:grid;grid-template-columns:1fr 1fr}.jpb-product__thumb{flex-basis:76px;width:76px;border-radius:13px}.jpb-product__thumb img{border-radius:9px}}
+{% endstylesheet %}
+{% schema %}
+{"name":"June photo book product","settings":[{"type":"text","id":"eyebrow","label":"Eyebrow","default":"JUNE PHOTO STUDIO"},{"type":"text","id":"button_label","label":"Button label","default":"Start creating"},{"type":"page","id":"studio_page","label":"Photo studio page"},{"type":"color","id":"accent","label":"Accent","default":"#CBF36B"},{"type":"color","id":"surface","label":"Surface","default":"#F5F5F3"},{"type":"header","content":"Heading typography"},{"type":"range","id":"heading_size","label":"Desktop size","min":36,"max":96,"step":2,"unit":"px","default":72},{"type":"range","id":"heading_size_mobile","label":"Mobile size","min":30,"max":58,"step":1,"unit":"px","default":46},{"type":"range","id":"heading_weight","label":"Weight","min":500,"max":900,"step":100,"default":900},{"type":"range","id":"heading_spacing","label":"Letter spacing","min":-8,"max":8,"step":1,"default":-5},{"type":"range","id":"heading_leading","label":"Line height","min":85,"max":130,"step":5,"default":95},{"type":"header","content":"Body typography"},{"type":"range","id":"body_size","label":"Desktop size","min":14,"max":24,"step":1,"unit":"px","default":17},{"type":"range","id":"body_size_mobile","label":"Mobile size","min":13,"max":20,"step":1,"unit":"px","default":15},{"type":"range","id":"body_weight","label":"Weight","min":400,"max":700,"step":100,"default":400},{"type":"range","id":"body_spacing","label":"Letter spacing","min":-4,"max":8,"step":1,"default":0},{"type":"range","id":"body_leading","label":"Line height","min":120,"max":180,"step":5,"default":150},{"type":"header","content":"Button typography"},{"type":"range","id":"button_size","label":"Desktop size","min":13,"max":22,"step":1,"unit":"px","default":16},{"type":"range","id":"button_size_mobile","label":"Mobile size","min":12,"max":19,"step":1,"unit":"px","default":15},{"type":"range","id":"button_weight","label":"Weight","min":500,"max":900,"step":100,"default":800},{"type":"range","id":"button_spacing","label":"Letter spacing","min":-3,"max":8,"step":1,"default":0}],"presets":[{"name":"June photo book product"}]}
+{% endschema %}

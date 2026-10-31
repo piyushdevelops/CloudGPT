@@ -1,0 +1,98 @@
+{
+  "selections": [
+    {
+      "badge": "5 freebies included",
+      "gifts": 5,
+      "href": "/products/limited-edition-undated-planner-dolce-far-niente",
+      "imageLoaded": true,
+      "name": "Dolce Far Niente",
+      "price": "Rs. 1,399",
+      "selected": 1
+    },
+    {
+      "badge": "5 freebies included",
+      "gifts": 5,
+      "href": "/products/limited-edition-undated-planner-old-ways-dont-open-new-doors",
+      "imageLoaded": false,
+      "name": "Old Ways Don't Open New Doors",
+      "price": "Rs. 1,749",
+      "selected": 1
+    },
+    {
+      "badge": "5 freebies included",
+      "gifts": 5,
+      "href": "/products/limited-edition-undated-planner-soul-on-fleek",
+      "imageLoaded": false,
+      "name": "Soul On Fleek",
+      "price": "Rs. 1,749",
+      "selected": 1
+    },
+    {
+      "badge": "3 freebies included",
+      "gifts": 3,
+      "href": "/products/limited-edition-undated-planner-remember-why-you-started",
+      "imageLoaded": false,
+      "name": "Remember Why You Started",
+      "price": "Rs. 1,749",
+      "selected": 1
+    }
+  ],
+  "responsive": [
+    {
+      "hero": {
+        "width": 305,
+        "x": 0
+      },
+      "overflow": false,
+      "section": {
+        "height": 1370.28125,
+        "width": 305,
+        "x": 0
+      },
+      "viewport": 320
+    },
+    {
+      "hero": {
+        "width": 735,
+        "x": 0
+      },
+      "overflow": false,
+      "section": {
+        "height": 1272.1875,
+        "width": 735,
+        "x": 0
+      },
+      "viewport": 750
+    },
+    {
+      "hero": {
+        "width": 1425,
+        "x": 0
+      },
+      "overflow": false,
+      "section": {
+        "height": 801.6875,
+        "width": 1425,
+        "x": 0
+      },
+      "viewport": 1440
+    },
+    {
+      "hero": {
+        "width": 1680,
+        "x": 432.5
+      },
+      "overflow": false,
+      "section": {
+        "height": 801.6875,
+        "width": 1680,
+        "x": 432.5
+      },
+      "viewport": 2560
+    }
+  ],
+  "keyboardHome": true,
+  "mobileAccordion": true,
+  "allScenesEventuallyLoaded": true,
+  "pageErrors": []
+}

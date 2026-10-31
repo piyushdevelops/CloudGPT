@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-27",
+  "themeId": "187527266499",
+  "themePublished": false,
+  "themeFiles": {
+    "june-photo-books-landing.liquid": "9A8F837DEA19D684107B6BEA9F6B88EA",
+    "june-photo-book-product.liquid": "099E2D48F1C5A4B4451362883D008B22",
+    "june-photo-studio-page.liquid": "CC163673D68011468F64562726DABBFB"
+  },
+  "studioDeployment": "4d3c136b-c55c-482d-859e-0ede1dc38d13",
+  "studioFiles": {
+    "styles.css": "E48533B04B70FDEC697E6AA363A37FCF98C944BD0C4FC7C67477568195D3B424",
+    "index.html": "69B1E18FDC86998D8F94C5073FE53B9B6884CC7525DEC006E3566ED135EBFA2D",
+    "cover-catalog.js": "BB60B348F18EA9A16F90F0B7264A9B60983D7FDEC767A3D8408F91549F45928F",
+    "app.js": "4717367BC45BE9C6D3524033EF5FBACBD39A009BBC3089CA3F20629A46B2242A"
+  },
+  "catalog": {
+    "products": 8,
+    "status": "DRAFT",
+    "variants": 176,
+    "media": 62,
+    "studioCoverAssets": 62
+  },
+  "checks": [
+    "Liquid validation 3/3",
+    "Theme pre-write reconciliation 3/3",
+    "Theme exact readback 3/3",
+    "Catalog handoff 8/8 local and production",
+    "Studio responsive mobile/wide-phone/desktop",
+    "Square canvas and no overflow",
+    "Autosave/restore",
+    "Page reorder",
+    "Layer order",
+    "Text layer move/edit/resize",
+    "PDF export",
+    "Shopify Studio iframe query bridge"
+  ]
+}

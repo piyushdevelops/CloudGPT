@@ -1,0 +1,515 @@
+<style>
+  .tjs-planner-variant-wrap {
+    margin: 16px 0 18px;
+    font-family: inherit;
+  }
+
+  .tjs-planner-variant-head {
+    margin-bottom: 10px;
+  }
+
+  .tjs-planner-variant-label {
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    color: currentColor;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .tjs-planner-variant-selected {
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--june-ink,#171717);
+    font-weight: 500;
+  }
+
+  .tjs-planner-variant-selected strong {
+    color: var(--june-ink,#171717);
+    font-weight: 800;
+  }
+
+  .tjs-planner-variant-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+
+  .tjs-planner-variant-option {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .tjs-planner-variant-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .tjs-planner-variant-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(23,23,23, 0.48);
+    background: var(--june-bg,#FFFFFF);
+    color: var(--june-ink,#171717);
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 700;
+    transition: all 0.22s ease;
+  }
+
+  .tjs-planner-variant-option:hover .tjs-planner-variant-pill {
+    transform: translateY(-1px);
+    border-color: rgba(23,23,23, 0.55);
+    box-shadow: 0 8px 18px rgba(47, 36, 32, 0.08);
+  }
+
+  .tjs-planner-variant-option input:checked + .tjs-planner-variant-pill {
+    background: linear-gradient(135deg, var(--june-dark,#171717), var(--june-surface,#F5F5F3));
+    color: var(--june-on-dark,#FFFFFF);
+    border-color: var(--june-ink,#171717);
+    box-shadow: 0 9px 20px rgba(47, 36, 32, 0.14);
+  }
+
+  .tjs-planner-variant-option input:disabled + .tjs-planner-variant-pill {
+    opacity: 0.45;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+
+  .tjs-planner-custom-name-box {
+    display: none;
+    margin-top: 13px;
+    padding: 12px 13px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--june-bg,#FFFFFF), var(--june-bg,#FFFFFF));
+    border: 1px solid rgba(23,23,23, 0.42);
+  }
+
+  .tjs-planner-custom-name-box.is-visible {
+    display: block;
+    animation: tjsCustomNameReveal 0.28s ease;
+  }
+
+  @keyframes tjsCustomNameReveal {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .tjs-planner-custom-name-label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 12px;
+    line-height: 1.3;
+    color: var(--june-ink,#171717);
+    font-weight: 800;
+  }
+
+  .tjs-planner-custom-name-input {
+    width: 100%;
+    min-height: 44px;
+    padding: 12px 13px;
+    border-radius: 12px;
+    border: 1px solid rgba(23,23,23, 0.28);
+    background: var(--june-bg,#FFFFFF);
+    color: var(--june-ink,#171717);
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 600;
+    outline: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .tjs-planner-custom-name-input:focus {
+    border-color: rgba(23,23,23, 0.65);
+    box-shadow: 0 0 0 3px rgba(23,23,23, 0.22);
+  }
+
+  .tjs-planner-custom-name-note {
+    margin-top: 6px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--june-muted,#656565);
+    font-weight: 500;
+  }
+
+  .tjs-planner-custom-name-error {
+    display: none;
+    margin-top: 6px;
+    font-size: 11.5px;
+    line-height: 1.35;
+    color: #b8463d;
+    font-weight: 700;
+  }
+
+  .tjs-planner-custom-name-error.is-visible {
+    display: block;
+  }
+
+  .tjs-name-preview {
+    display: block;
+    margin-top: 11px;
+    padding: 12px 13px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--june-bg,#FFFFFF), var(--june-bg,#FFFFFF));
+    border: 1px solid rgba(23,23,23, 0.45);
+    box-shadow: 0 8px 18px rgba(47, 36, 32, 0.06);
+  }
+
+  .tjs-name-preview__label {
+    margin-bottom: 5px;
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: currentColor;
+    font-weight: 800;
+  }
+
+  .tjs-name-preview__text {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 850;
+    letter-spacing: 0.35px;
+    text-transform: uppercase;
+    background: linear-gradient(
+      115deg,
+      var(--june-surface,#F5F5F3) 0%,
+      var(--june-surface,#F5F5F3) 16%,
+      var(--june-surface,#F5F5F3) 28%,
+      var(--june-surface,#F5F5F3) 40%,
+      var(--june-surface,#F5F5F3) 52%,
+      var(--june-surface,#F5F5F3) 64%,
+      var(--june-surface,#F5F5F3) 78%,
+      var(--june-surface,#F5F5F3) 100%
+    );
+    background-size: 260% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: tjsGoldFoilShimmer 3.4s linear infinite;
+    text-shadow: 0 0 1px rgba(23,23,23, 0.18);
+  }
+
+  @keyframes tjsGoldFoilShimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -60% 0;
+    }
+  }
+
+  .tjs-name-preview__text.tjs-name-pop {
+    animation: tjsNamePop 0.32s ease, tjsGoldFoilShimmer 3.4s linear infinite;
+  }
+
+  @keyframes tjsNamePop {
+    0% {
+      transform: scale(1);
+    }
+    45% {
+      transform: scale(1.04);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .tjs-name-preview__sparkle {
+    display: inline-block;
+    margin-left: 6px;
+    color: currentColor;
+    font-size: 12px;
+    animation: tjsPreviewSparkle 1.8s ease-in-out infinite;
+  }
+
+  @keyframes tjsPreviewSparkle {
+    0%, 100% {
+      transform: scale(0.8) rotate(0deg);
+      opacity: 0.55;
+    }
+    45% {
+      transform: scale(1.25) rotate(18deg);
+      opacity: 1;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .tjs-planner-variant-wrap {
+      margin: 15px 0 17px;
+      text-align: center;
+    }
+
+    .tjs-planner-variant-label {
+      font-size: 10px;
+    }
+
+    .tjs-planner-variant-selected {
+      font-size: 12.5px;
+    }
+
+    .tjs-planner-variant-grid {
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .tjs-planner-variant-pill {
+      min-height: 36px;
+      padding: 9px 12px;
+      font-size: 12px;
+    }
+
+    .tjs-planner-custom-name-box {
+      text-align: left;
+      padding: 12px;
+    }
+
+    .tjs-name-preview__text {
+      font-size: 18px;
+    }
+  }
+</style>
+
+{% assign current_variant = product.selected_or_first_available_variant %}
+
+<div
+  class="tjs-planner-variant-wrap"
+  data-tjs-custom-variant-picker
+  data-product-json='{{ product | json | escape }}'
+>
+  <div class="tjs-planner-variant-head">
+    <div class="tjs-planner-variant-label">
+      Select Your Planner Option
+    </div>
+
+    <div class="tjs-planner-variant-selected">
+      Selected: <strong data-tjs-selected-variant-title>{{ current_variant.title }}</strong>
+    </div>
+  </div>
+
+  <div class="tjs-planner-variant-grid">
+    {% for variant in product.variants %}
+      <label class="tjs-planner-variant-option">
+        <input
+          type="radio"
+          name="tjs-planner-variant"
+          value="{{ variant.id }}"
+          data-variant-title="{{ variant.title | escape }}"
+          {% if variant.id == current_variant.id %}checked{% endif %}
+          {% unless variant.available %}disabled{% endunless %}
+        >
+        <span class="tjs-planner-variant-pill">
+          {{ variant.title }}
+        </span>
+      </label>
+    {% endfor %}
+  </div>
+
+  <div class="tjs-planner-custom-name-box" data-tjs-custom-name-box>
+    <label class="tjs-planner-custom-name-label" for="tjsPlannerCustomName">
+      Type your name customisation
+    </label>
+
+    <input
+      id="tjsPlannerCustomName"
+      class="tjs-planner-custom-name-input"
+      type="text"
+      placeholder="Example: Anushka"
+      maxlength="24"
+      data-tjs-custom-name-input
+    >
+
+    <div class="tjs-name-preview" data-tjs-name-preview>
+      <div class="tjs-name-preview__label">Preview</div>
+      <div>
+        <span class="tjs-name-preview__text" data-tjs-name-preview-text>
+          ANUSHKA
+        </span>
+        <span class="tjs-name-preview__sparkle">✦</span>
+      </div>
+    </div>
+
+    <div class="tjs-planner-custom-name-note">
+      This name will be added to your planner customisation request.
+    </div>
+
+    <div class="tjs-planner-custom-name-error" data-tjs-custom-name-error>
+      Please enter the name for customisation before adding to cart.
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const picker = document.querySelector("[data-tjs-custom-variant-picker]");
+    if (!picker) return;
+
+    const selectedTitleEl = picker.querySelector("[data-tjs-selected-variant-title]");
+    const customNameBox = picker.querySelector("[data-tjs-custom-name-box]");
+    const customNameInput = picker.querySelector("[data-tjs-custom-name-input]");
+    const customNameError = picker.querySelector("[data-tjs-custom-name-error]");
+    const namePreviewText = picker.querySelector("[data-tjs-name-preview-text]");
+    const variantRadios = picker.querySelectorAll('input[name="tjs-planner-variant"]');
+
+    const productForm =
+      picker.closest("section")?.querySelector('form[action*="/cart/add"]') ||
+      document.querySelector('form[action*="/cart/add"]');
+
+    if (!productForm) return;
+
+    const formVariantInput =
+      productForm.querySelector('input[name="id"]') ||
+      productForm.querySelector('select[name="id"]');
+
+    function isCustomisationVariant(title) {
+      const cleanTitle = title.toLowerCase();
+      return cleanTitle.includes("add your name") || cleanTitle.includes("name customisation") || cleanTitle.includes("personalised name") || cleanTitle.includes("personalized name");
+    }
+
+    function getOrCreatePropertyInput() {
+      let propertyInput = productForm.querySelector('input[name="properties[Name Customisation]"]');
+
+      if (!propertyInput) {
+        propertyInput = document.createElement("input");
+        propertyInput.type = "hidden";
+        propertyInput.name = "properties[Name Customisation]";
+        productForm.appendChild(propertyInput);
+      }
+
+      return propertyInput;
+    }
+
+    function removePropertyInput() {
+      const propertyInput = productForm.querySelector('input[name="properties[Name Customisation]"]');
+      if (propertyInput) propertyInput.remove();
+    }
+
+    function formatPreviewName(name) {
+      const cleanName = name.trim();
+      if (!cleanName) return "ANUSHKA";
+      return cleanName.toUpperCase();
+    }
+
+    function animateNamePreview() {
+      if (!namePreviewText) return;
+
+      namePreviewText.classList.remove("tjs-name-pop");
+      void namePreviewText.offsetWidth;
+      namePreviewText.classList.add("tjs-name-pop");
+    }
+
+    function updateNamePreview() {
+      if (!namePreviewText || !customNameInput) return;
+
+      namePreviewText.textContent = formatPreviewName(customNameInput.value);
+      animateNamePreview();
+    }
+
+    function updateCustomNameVisibility(variantTitle) {
+      if (isCustomisationVariant(variantTitle)) {
+        customNameBox.classList.add("is-visible");
+        customNameInput.setAttribute("required", "required");
+        updateNamePreview();
+      } else {
+        customNameBox.classList.remove("is-visible");
+        customNameInput.removeAttribute("required");
+        customNameInput.value = "";
+        customNameError.classList.remove("is-visible");
+        removePropertyInput();
+
+        if (namePreviewText) {
+          namePreviewText.textContent = "ANUSHKA";
+        }
+      }
+    }
+
+    function updateVariantSelection(radio) {
+      const variantId = radio.value;
+      const variantTitle = radio.getAttribute("data-variant-title") || "";
+
+      if (selectedTitleEl) selectedTitleEl.textContent = variantTitle;
+
+      if (formVariantInput) {
+        formVariantInput.value = variantId;
+        formVariantInput.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+
+      updateCustomNameVisibility(variantTitle);
+    }
+
+    variantRadios.forEach(function (radio) {
+      radio.addEventListener("change", function () {
+        if (radio.checked) updateVariantSelection(radio);
+      });
+
+      if (radio.checked) {
+        updateVariantSelection(radio);
+      }
+    });
+
+    customNameInput.addEventListener("input", function () {
+      customNameError.classList.remove("is-visible");
+      updateNamePreview();
+
+      const checkedRadio = picker.querySelector('input[name="tjs-planner-variant"]:checked');
+      if (!checkedRadio) return;
+
+      const variantTitle = checkedRadio.getAttribute("data-variant-title") || "";
+
+      if (isCustomisationVariant(variantTitle)) {
+        const propertyInput = getOrCreatePropertyInput();
+        propertyInput.value = customNameInput.value.trim();
+      }
+    });
+
+    formVariantInput?.addEventListener("change", function () {
+      const radio = Array.from(variantRadios).find(item => item.value === formVariantInput.value);
+      if (!radio) return;
+      radio.checked = true;
+      const title = radio.getAttribute("data-variant-title") || "";
+      if (selectedTitleEl) selectedTitleEl.textContent = title;
+      updateCustomNameVisibility(title);
+    });
+
+    document.addEventListener("submit", function (event) {
+      if (event.target !== productForm) return;
+      const checkedRadio = picker.querySelector('input[name="tjs-planner-variant"]:checked');
+      if (!checkedRadio) return;
+
+      const variantTitle = checkedRadio.getAttribute("data-variant-title") || "";
+
+      if (isCustomisationVariant(variantTitle)) {
+        const customName = customNameInput.value.trim();
+
+        if (!customName || customName.length > 24) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+
+          customNameError.classList.add("is-visible");
+          customNameInput.focus();
+          return false;
+        }
+
+        const propertyInput = getOrCreatePropertyInput();
+        propertyInput.value = customName;
+      } else {
+        removePropertyInput();
+      }
+    }, true);
+  });
+</script>

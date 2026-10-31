@@ -1,0 +1,19 @@
+{% doc %}
+  Renders a compact product card for June PDP discovery rails.
+
+  @param {product} product - Product shown in the card.
+{% enddoc %}
+
+<a class="jmp-card" href="{{ product.url }}">
+  <figure class="jmp-card__media">
+    {%- if product.featured_image != blank -%}
+      {{ product.featured_image | image_url: width: 720 | image_tag: loading: 'lazy', widths: '240, 360, 540, 720', sizes: '(max-width: 749px) 72vw, 24vw', alt: product.featured_image.alt | default: product.title }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+  </figure>
+  <div class="jmp-card__copy">
+    <strong>{{ product.title }}</strong>
+    <span>{{ product.price_min | money }}{% if product.price_varies %} +{% endif %}</span>
+  </div>
+</a>

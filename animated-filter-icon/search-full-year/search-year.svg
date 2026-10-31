@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="24" viewBox="0 0 36 24" role="img" aria-labelledby="year-title"><title id="year-title">Search, 2020 changing to 2027</title>
+<style>
+.ticker{animation:year-ticker 10s cubic-bezier(.35,0,.25,1) forwards;transform-box:view-box}
+.lens-fill{fill:#fff;animation:year-light 10s linear forwards}
+.digit-land{transform-origin:25px 10px;transform-box:view-box;animation:year-land 10s linear forwards}
+@keyframes year-ticker{0%,10%{transform:translateY(0)}14%,18%{transform:translateY(12px)}22%,26%{transform:translateY(24px)}30%,34%{transform:translateY(36px)}38%,42%{transform:translateY(48px)}46%,51%{transform:translateY(60px)}59%,72%{transform:translateY(72px)}84%,100%{transform:translateY(84px)}}
+@keyframes year-light{0%,80%{fill:#fff}85%,91%{fill:#D5C4F0}100%{fill:#EFE8FA}}
+@keyframes year-land{0%,83%,92%,100%{transform:translateY(0)}86%{transform:translateY(.6px)}89%{transform:translateY(-.25px)}}
+@media(prefers-reduced-motion:reduce){.ticker{animation:none;transform:translateY(84px)}.lens-fill{animation:none;fill:#EFE8FA}.digit-land{animation:none}}
+</style>
+<defs>
+<clipPath id="digit-window"><rect x="16.7" y="5.6" width="5.8" height="8.7" rx=".25"/></clipPath>
+<linearGradient id="rim-metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#707070"/><stop offset=".35" stop-color="#252525"/><stop offset="1" stop-color="#080808"/></linearGradient>
+</defs>
+<g font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="9.2" fill="#171717">
+<circle class="lens-fill" cx="17" cy="10" r="7.6"/>
+<text x="1" y="12.8" letter-spacing="-.3">20</text>
+<text x="11.4" y="12.8">2</text>
+<g clip-path="url(#digit-window)"><g class="digit-land"><g class="ticker"><text x="17" y="12.8">0</text><text x="17" y=".8">1</text><text x="17" y="-11.2">2</text><text x="17" y="-23.2">3</text><text x="17" y="-35.2">4</text><text x="17" y="-47.2">5</text><text x="17" y="-59.2">6</text><text x="17" y="-71.2">7</text></g></g></g>
+<path d="m22.5 15.5 6 6" fill="none" stroke="#111" stroke-width="3.6" stroke-linecap="round"/>
+<path d="m25 18 3.2 3.2" fill="none" stroke="#BFAEE9" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="17" cy="10" r="7.6" fill="none" stroke="#111" stroke-width="2.3"/>
+<circle cx="17" cy="10" r="7.6" fill="none" stroke="url(#rim-metal)" stroke-width="1.6"/>
+<path d="M11.2 6.8a6.6 6.6 0 0 1 7.5-3.2" fill="none" stroke="#c4c4c4" stroke-width=".45" stroke-linecap="round"/>
+</g></svg>

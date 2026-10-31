@@ -1,0 +1,27 @@
+{
+  "theme": 187527266499,
+  "role": "UNPUBLISHED",
+  "files": [
+    {
+      "filename": "sections/my-header.liquid",
+      "exactRemoteMatch": true,
+      "sha256": "64211d6b53a48065d04deb3b17ab75acd4b2dcb2d07863e4a95e596cb48feae9"
+    },
+    {
+      "filename": "snippets/june-happy-cart.liquid",
+      "exactRemoteMatch": true,
+      "sha256": "9f868cabe39de05840c4ebfcd144efcfb720280ace03247a9cdf490250948d43"
+    },
+    {
+      "filename": "assets/june-happy-cart.css",
+      "exactRemoteMatch": true,
+      "sha256": "bea1b842c28c5564c28ae903187ffe43e2b287ae5d32509f9bde1aa16e5ca23a"
+    },
+    {
+      "filename": "assets/june-happy-cart.js",
+      "exactRemoteMatch": true,
+      "sha256": "a15d8ff7d4ad82481aed45baeb6678c3f5f37f72159e0762ece9714377b5f634"
+    }
+  ],
+  "visualGate": "pending: browser tool unavailable"
+}

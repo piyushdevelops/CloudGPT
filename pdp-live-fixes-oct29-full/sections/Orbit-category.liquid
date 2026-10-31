@@ -1,0 +1,764 @@
+{% liquid
+  assign category_count = section.blocks.size
+%}
+
+{% style %}
+#shopify-section-{{ section.id }}{
+  --bc-bg:{{ section.settings.background }};
+  --bc-text:{{ section.settings.text_color }};
+  --bc-muted:{{ section.settings.muted_color }};
+  --bc-accent:{{ section.settings.accent_color }};
+  --bc-width:{{ section.settings.max_width }}px;
+  --bc-visible:{{ section.settings.desktop_visible }};
+  --bc-gap:{{ section.settings.gap }}px;
+  --bc-height:{{ section.settings.card_height }}px;
+  --bc-art:{{ section.settings.art_size }}px;
+  --bc-radius:{{ section.settings.card_radius }}px;
+  --bc-gutter:{{ section.settings.page_gutter }}px;
+  --bc-mobile-gutter:{{ section.settings.mobile_gutter }}px;
+  --bc-mobile-width:{{ section.settings.mobile_card_width }}px;
+  --bc-mobile-art:{{ section.settings.mobile_art_size }}px;
+  --bc-top:{{ section.settings.padding_top }}px;
+  --bc-bottom:{{ section.settings.padding_bottom }}px;
+  --bc-top-mobile:{{ section.settings.padding_top_mobile }}px;
+  --bc-bottom-mobile:{{ section.settings.padding_bottom_mobile }}px;
+  --bc-heading-font:{% if section.settings.heading_font == 'heading' %}var(--font-heading-family,var(--font-body-family,Arial,sans-serif)){% else %}var(--font-body-family,Arial,sans-serif){% endif %};
+}
+#shopify-section-{{ section.id }} .tjs-beachcat,
+#shopify-section-{{ section.id }} .tjs-beachcat *,
+#shopify-section-{{ section.id }} .tjs-beachcat *:before,
+#shopify-section-{{ section.id }} .tjs-beachcat *:after{box-sizing:border-box}
+#shopify-section-{{ section.id }} .tjs-beachcat{
+  position:relative;
+  overflow:hidden;
+  padding:var(--bc-top) 0 var(--bc-bottom);
+  color:var(--bc-text);
+  background:
+    radial-gradient(circle at 7% 18%,rgba(255,179,117,.18),transparent 21%),
+    radial-gradient(circle at 91% 72%,rgba(88,213,213,.15),transparent 24%),
+    linear-gradient(180deg,rgba(255,255,255,.35),transparent 48%),
+    var(--bc-bg);
+  font-family:var(--font-body-family,Arial,sans-serif);
+  -webkit-font-smoothing:antialiased;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat:before{
+  content:'';
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.34;
+  background-image:
+    radial-gradient(circle,rgba(255,107,102,.18) 1px,transparent 1.3px),
+    radial-gradient(circle,rgba(53,184,181,.14) 1px,transparent 1.3px);
+  background-position:0 0,11px 11px;
+  background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);
+}
+#shopify-section-{{ section.id }} .tjs-beachcat__inner{
+  position:relative;
+  width:min(calc(100% - (var(--bc-gutter)*2)),var(--bc-width));
+  margin-inline:auto;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat--full .tjs-beachcat__inner{width:100%;max-width:none;padding-inline:var(--bc-gutter)}
+#shopify-section-{{ section.id }} .tjs-beachcat__header{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:{{ section.settings.header_gap }}px;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat__copy{min-width:0}
+#shopify-section-{{ section.id }} .tjs-beachcat__eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin:0 0 5px;
+  color:var(--bc-accent);
+  font-size:9px;
+  font-weight:750;
+  line-height:1;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat__eyebrow:before{
+  content:'';
+  width:15px;
+  height:2px;
+  border-radius:99px;
+  background:linear-gradient(90deg,#ff776d,#ffc95f,#5fd6cf);
+}
+#shopify-section-{{ section.id }} .tjs-beachcat__heading{
+  margin:0;
+  color:var(--bc-text);
+  font-family:var(--bc-heading-font);
+  font-size:{{ section.settings.heading_size }}px;
+  font-weight:{{ section.settings.heading_weight }};
+  line-height:1;
+  letter-spacing:-.035em;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat__subheading{
+  max-width:540px;
+  margin:6px 0 0;
+  color:var(--bc-muted);
+  font-size:11px;
+  line-height:1.45;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat__actions{display:flex;align-items:center;gap:7px;flex:0 0 auto}
+#shopify-section-{{ section.id }} .tjs-beachcat__viewall{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  min-height:30px;
+  padding:0 10px;
+  color:var(--bc-text);
+  border:1px solid rgba(36,35,53,.12);
+  border-radius:999px;
+  background:rgba(255,255,255,.78);
+  text-decoration:none;
+  font-size:8px;
+  font-weight:750;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  box-shadow:0 5px 14px rgba(51,42,40,.06);
+  transition:.22s ease;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat__viewall svg{width:12px;height:12px}
+#shopify-section-{{ section.id }} .tjs-beachcat__arrows{display:flex;gap:5px}
+#shopify-section-{{ section.id }} .tjs-beachcat__arrow{
+  width:30px;
+  height:30px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  color:var(--bc-text);
+  border:1px solid rgba(36,35,53,.12);
+  border-radius:50%;
+  background:rgba(255,255,255,.78);
+  box-shadow:0 5px 14px rgba(51,42,40,.06);
+  cursor:pointer;
+  transition:.22s ease;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat__arrow svg{width:14px;height:14px}
+#shopify-section-{{ section.id }} .tjs-beachcat__arrow:disabled{opacity:.28;cursor:default}
+#shopify-section-{{ section.id }} .tjs-beachcat__viewport{
+  width:100%;
+  margin-block:-8px -10px;
+  padding-block:8px 10px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  scroll-snap-type:x proximity;
+  overscroll-behavior-inline:contain;
+  touch-action:pan-x pan-y;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat__viewport::-webkit-scrollbar{display:none}
+#shopify-section-{{ section.id }} .tjs-beachcat__viewport:focus-visible{outline:2px solid var(--bc-accent);outline-offset:2px;border-radius:14px}
+#shopify-section-{{ section.id }} .tjs-beachcat__track{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:calc((100% - (var(--bc-gap)*(var(--bc-visible) - 1)))/var(--bc-visible));
+  gap:var(--bc-gap);
+  align-items:stretch;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat__item{
+  min-width:0;
+  scroll-snap-align:start;
+  opacity:0;
+  transform:translateY(9px);
+  transition:opacity .42s ease,transform .42s ease;
+  transition-delay:calc(var(--i)*42ms);
+}
+#shopify-section-{{ section.id }} .tjs-beachcat.is-ready .tjs-beachcat__item{opacity:1;transform:none}
+#shopify-section-{{ section.id }} .tjs-beachcat-card{
+  position:relative;
+  display:grid;
+  min-height:var(--bc-height);
+  padding:9px 8px 8px;
+  align-content:start;
+  justify-items:center;
+  overflow:hidden;
+  color:var(--ink);
+  text-align:center;
+  text-decoration:none;
+  border:1px solid var(--border);
+  border-radius:var(--bc-radius);
+  background:
+    radial-gradient(circle at 78% 18%,rgba(255,255,255,.72) 0 7px,transparent 8px),
+    radial-gradient(circle at 16% 78%,rgba(255,255,255,.4) 0 5px,transparent 6px),
+    linear-gradient(150deg,var(--c1),var(--c2));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.72),
+    0 7px 17px var(--shadow);
+  outline:none;
+  isolation:isolate;
+  transition:transform .28s cubic-bezier(.22,.75,.28,1),box-shadow .28s ease,border-color .28s ease;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat-card:before{
+  content:'';
+  position:absolute;
+  top:-28%;
+  left:-58%;
+  width:38%;
+  height:165%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.62),transparent);
+  transform:rotate(17deg);
+  opacity:0;
+  pointer-events:none;
+  z-index:4;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat-card:after{
+  content:'';
+  position:absolute;
+  right:-16px;
+  bottom:-18px;
+  width:62px;
+  height:38px;
+  border:2px solid rgba(255,255,255,.3);
+  border-radius:50%;
+  opacity:.72;
+  pointer-events:none;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__sun{
+  position:absolute;
+  top:9px;
+  left:10px;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#fff8c9;
+  box-shadow:0 0 0 4px rgba(255,255,255,.22),0 0 13px rgba(255,244,163,.72);
+}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__artwrap{
+  position:relative;
+  width:100%;
+  height:calc(var(--bc-art) + 8px);
+  display:grid;
+  place-items:center;
+  z-index:2;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__artwrap:after{
+  content:'';
+  position:absolute;
+  left:50%;
+  bottom:2px;
+  width:54%;
+  height:8px;
+  border-radius:50%;
+  background:rgba(36,31,50,.16);
+  filter:blur(5px);
+  opacity:.38;
+  transform:translateX(-50%) scaleX(.78);
+  transition:.28s ease;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__art{
+  position:relative;
+  z-index:2;
+  width:var(--bc-art);
+  height:var(--bc-art);
+  display:grid;
+  place-items:center;
+  color:var(--ink);
+  filter:drop-shadow(0 5px 7px rgba(45,37,53,.14));
+  transform:translate3d(var(--x),var(--y),0) scale(var(--scale));
+  transform-origin:center 70%;
+  transition:transform .3s cubic-bezier(.22,.75,.28,1),filter .3s ease;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__image,
+#shopify-section-{{ section.id }} .tjs-beachcat-card__icon,
+#shopify-section-{{ section.id }} .tjs-beachcat-card__mask{display:block;width:100%;height:100%}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__image{object-fit:contain;object-position:center}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__icon{overflow:visible}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__mask{
+  background:var(--ink);
+  -webkit-mask-repeat:no-repeat;
+  mask-repeat:no-repeat;
+  -webkit-mask-position:center;
+  mask-position:center;
+  -webkit-mask-size:contain;
+  mask-size:contain;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__badge{
+  position:absolute;
+  top:7px;
+  right:7px;
+  z-index:5;
+  max-width:66px;
+  min-height:17px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 5px;
+  overflow:hidden;
+  color:var(--ink);
+  border:1px solid rgba(255,255,255,.56);
+  border-radius:999px;
+  background:rgba(255,255,255,.72);
+  font-size:6.5px;
+  font-weight:800;
+  line-height:1;
+  letter-spacing:.05em;
+  text-overflow:ellipsis;
+  text-transform:uppercase;
+  white-space:nowrap;
+  backdrop-filter:blur(4px);
+}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__copy{position:relative;z-index:2;width:100%;display:grid;gap:2px;padding-inline:2px}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__label{
+  margin:0;
+  overflow:hidden;
+  color:var(--ink);
+  font-size:{{ section.settings.label_size }}px;
+  font-weight:{{ section.settings.label_weight }};
+  line-height:1.12;
+  letter-spacing:-.015em;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  text-wrap:balance;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__count{margin:0;color:color-mix(in srgb,var(--ink) 72%,transparent);font-size:7.5px;line-height:1.1;letter-spacing:.02em}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__progress{
+  position:absolute;
+  right:11px;
+  bottom:5px;
+  left:11px;
+  height:2px;
+  overflow:hidden;
+  border-radius:99px;
+  background:rgba(255,255,255,.28);
+  opacity:0;
+  z-index:3;
+}
+#shopify-section-{{ section.id }} .tjs-beachcat-card__progress span{display:block;width:100%;height:100%;border-radius:inherit;background:var(--ink);transform:scaleX(0);transform-origin:left}
+#shopify-section-{{ section.id }} .tjs-beachcat__item.is-active .tjs-beachcat-card{
+  transform:translateY(-4px) rotate(-.6deg) scale(1.015);
+  border-color:rgba(255,255,255,.9);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 11px 22px var(--shadow-active),0 0 0 2px rgba(255,255,255,.55);
+}
+#shopify-section-{{ section.id }} .tjs-beachcat__item.is-active .tjs-beachcat-card:before{animation:tjsBeachShine-{{ section.id }} .9s ease}
+#shopify-section-{{ section.id }} .tjs-beachcat__item.is-active .tjs-beachcat-card__art{animation:tjsBeachBob-{{ section.id }} 2.2s ease-in-out infinite}
+#shopify-section-{{ section.id }} .tjs-beachcat__item.is-active .tjs-beachcat-card__artwrap:after{opacity:.5;transform:translateX(-50%) scaleX(.9)}
+#shopify-section-{{ section.id }} .tjs-beachcat__item.is-active .tjs-beachcat-card__progress{opacity:.72}
+#shopify-section-{{ section.id }} .tjs-beachcat__item.is-active .tjs-beachcat-card__progress span{animation:tjsBeachProgress-{{ section.id }} var(--interval) linear}
+@media (hover:hover) and (pointer:fine){
+  #shopify-section-{{ section.id }} .tjs-beachcat__viewall:hover,
+  #shopify-section-{{ section.id }} .tjs-beachcat__arrow:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 17px rgba(51,42,40,.1)}
+  #shopify-section-{{ section.id }} .tjs-beachcat-card:hover,
+  #shopify-section-{{ section.id }} .tjs-beachcat-card:focus-visible{transform:translateY(-4px) rotate(.7deg);box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 12px 23px var(--shadow-active)}
+  #shopify-section-{{ section.id }} .tjs-beachcat-card:hover .tjs-beachcat-card__art,
+  #shopify-section-{{ section.id }} .tjs-beachcat-card:focus-visible .tjs-beachcat-card__art{transform:translate3d(var(--x),calc(var(--y) - 3px),0) scale(calc(var(--scale) + .04)) rotate(-2deg)}
+}
+@keyframes tjsBeachShine-{{ section.id }}{0%{left:-58%;opacity:0}20%{opacity:1}100%{left:140%;opacity:0}}
+@keyframes tjsBeachBob-{{ section.id }}{0%,100%{transform:translate3d(var(--x),var(--y),0) scale(var(--scale)) rotate(0)}50%{transform:translate3d(var(--x),calc(var(--y) - 4px),0) scale(calc(var(--scale) + .025)) rotate(1.5deg)}}
+@keyframes tjsBeachProgress-{{ section.id }}{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media(max-width:1199px){#shopify-section-{{ section.id }}{--bc-visible:7}}
+@media(max-width:989px){#shopify-section-{{ section.id }}{--bc-visible:5}}
+@media(max-width:749px){
+  #shopify-section-{{ section.id }} .tjs-beachcat{padding-top:var(--bc-top-mobile);padding-bottom:var(--bc-bottom-mobile)}
+  #shopify-section-{{ section.id }} .tjs-beachcat__inner{width:calc(100% - (var(--bc-mobile-gutter)*2))}
+  #shopify-section-{{ section.id }} .tjs-beachcat--full .tjs-beachcat__inner{width:100%;padding-inline:var(--bc-mobile-gutter)}
+  #shopify-section-{{ section.id }} .tjs-beachcat__header{align-items:center;margin-bottom:{{ section.settings.header_gap_mobile }}px}
+  #shopify-section-{{ section.id }} .tjs-beachcat__eyebrow{display:none}
+  #shopify-section-{{ section.id }} .tjs-beachcat__heading{font-size:{{ section.settings.heading_size_mobile }}px;letter-spacing:-.025em}
+  #shopify-section-{{ section.id }} .tjs-beachcat__subheading{margin-top:4px;font-size:9.5px;line-height:1.35}
+  #shopify-section-{{ section.id }} .tjs-beachcat__viewall{min-height:27px;padding-inline:8px;font-size:7px}
+  #shopify-section-{{ section.id }} .tjs-beachcat__arrows{display:none}
+  #shopify-section-{{ section.id }} .tjs-beachcat__viewport{margin:-7px calc(var(--bc-mobile-gutter)*-1) -9px 0;padding:7px var(--bc-mobile-gutter) 9px 0;scroll-snap-type:x mandatory}
+  #shopify-section-{{ section.id }} .tjs-beachcat--full .tjs-beachcat__viewport{margin-right:calc(var(--bc-mobile-gutter)*-1);padding-right:var(--bc-mobile-gutter)}
+  #shopify-section-{{ section.id }} .tjs-beachcat__track{grid-auto-columns:var(--bc-mobile-width);gap:8px}
+  #shopify-section-{{ section.id }} .tjs-beachcat-card{min-height:{{ section.settings.mobile_card_height }}px;padding:7px 6px 7px;border-radius:min(var(--bc-radius),18px)}
+  #shopify-section-{{ section.id }} .tjs-beachcat-card__artwrap{height:calc(var(--bc-mobile-art) + 6px)}
+  #shopify-section-{{ section.id }} .tjs-beachcat-card__art{width:var(--bc-mobile-art);height:var(--bc-mobile-art)}
+  #shopify-section-{{ section.id }} .tjs-beachcat-card__label{font-size:{{ section.settings.label_size_mobile }}px}
+  #shopify-section-{{ section.id }} .tjs-beachcat-card__count{font-size:7px}
+  #shopify-section-{{ section.id }} .tjs-beachcat-card__badge{top:5px;right:5px;min-height:15px;font-size:6px}
+  #shopify-section-{{ section.id }} .tjs-beachcat__item.is-active .tjs-beachcat-card{transform:translateY(-3px) scale(1.01)}
+}
+@media(prefers-reduced-motion:reduce){
+  #shopify-section-{{ section.id }} .tjs-beachcat__item,
+  #shopify-section-{{ section.id }} .tjs-beachcat-card,
+  #shopify-section-{{ section.id }} .tjs-beachcat-card__art{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
+}
+{% endstyle %}
+
+<tjs-beach-category-carousel
+  class="tjs-beachcat{% if section.settings.full_width %} tjs-beachcat--full{% endif %}"
+  data-auto="{{ section.settings.enable_auto }}"
+  data-interval="{{ section.settings.auto_interval | times: 1000 }}"
+  style="--interval:{{ section.settings.auto_interval }}s"
+>
+  <div class="tjs-beachcat__inner">
+    {% if section.settings.heading != blank or section.settings.view_all_label != blank %}
+      <div class="tjs-beachcat__header">
+        <div class="tjs-beachcat__copy">
+          {% if section.settings.eyebrow != blank %}<p class="tjs-beachcat__eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+          {% if section.settings.heading != blank %}<h2 class="tjs-beachcat__heading">{{ section.settings.heading | escape }}</h2>{% endif %}
+          {% if section.settings.subheading != blank %}<p class="tjs-beachcat__subheading">{{ section.settings.subheading | escape }}</p>{% endif %}
+        </div>
+        <div class="tjs-beachcat__actions">
+          {% if section.settings.view_all_label != blank and section.settings.view_all_link != blank %}
+            <a class="tjs-beachcat__viewall" href="{{ section.settings.view_all_link }}">
+              <span>{{ section.settings.view_all_label | escape }}</span>
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          {% endif %}
+          {% if section.settings.show_arrows and category_count > 1 %}
+            <div class="tjs-beachcat__arrows" data-arrows>
+              <button class="tjs-beachcat__arrow" type="button" data-prev aria-label="Previous categories"><svg viewBox="0 0 18 18" fill="none"><path d="m11.25 4.5-4.5 4.5 4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <button class="tjs-beachcat__arrow" type="button" data-next aria-label="Next categories"><svg viewBox="0 0 18 18" fill="none"><path d="m6.75 4.5 4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="tjs-beachcat__viewport" data-viewport tabindex="0" role="region" aria-label="{{ section.settings.slider_label | escape }}">
+      <div class="tjs-beachcat__track" data-track>
+        {% for block in section.blocks %}
+          {% liquid
+            assign collection = block.settings.collection
+            assign label = block.settings.label
+            if label == blank and collection != blank
+              assign label = collection.title
+            endif
+            if label == blank
+              assign label = 'Category'
+            endif
+
+            assign link = block.settings.link
+            if link == blank and collection != blank
+              assign link = collection.url
+            endif
+
+            assign count = block.settings.count_override
+            if count == blank and collection != blank
+              assign count = collection.all_products_count
+            endif
+
+            assign image = blank
+            if block.settings.image_source == 'custom'
+              assign image = block.settings.icon_image
+            elsif block.settings.image_source == 'collection' and collection != blank
+              assign image = collection.featured_image
+              if image == blank and collection.products.first != blank
+                assign image = collection.products.first.featured_image
+              endif
+            endif
+
+            assign alt = block.settings.image_alt
+            if alt == blank
+              assign alt = label
+            endif
+
+            assign c1 = block.settings.color_1
+            assign c2 = block.settings.color_2
+            assign ink = block.settings.ink_color
+            case block.settings.color_preset
+              when 'coral'
+                assign c1 = '#FFD3CA'
+                assign c2 = '#FF887A'
+                assign ink = '#8B352C'
+              when 'aqua'
+                assign c1 = '#C9FBF2'
+                assign c2 = '#57DCC8'
+                assign ink = '#126D64'
+              when 'lemon'
+                assign c1 = '#FFF3A6'
+                assign c2 = '#FFD954'
+                assign ink = '#755A00'
+              when 'sky'
+                assign c1 = '#D7F0FF'
+                assign c2 = '#72C7FF'
+                assign ink = '#205F8A'
+              when 'lilac'
+                assign c1 = '#EEE1FF'
+                assign c2 = '#B99AFF'
+                assign ink = '#5D418B'
+              when 'shell'
+                assign c1 = '#FFE6EC'
+                assign c2 = '#FFAAC2'
+                assign ink = '#8C4058'
+              when 'lime'
+                assign c1 = '#EEFAB2'
+                assign c2 = '#BADC52'
+                assign ink = '#526713'
+              when 'mango'
+                assign c1 = '#FFE1A9'
+                assign c2 = '#FFAD5A'
+                assign ink = '#864812'
+              when 'seafoam'
+                assign c1 = '#DDF8E9'
+                assign c2 = '#83DDB2'
+                assign ink = '#276B50'
+              when 'periwinkle'
+                assign c1 = '#E2E7FF'
+                assign c2 = '#9BAAFF'
+                assign ink = '#46558F'
+              when 'watermelon'
+                assign c1 = '#FFD4DA'
+                assign c2 = '#FF718A'
+                assign ink = '#8C3042'
+              when 'apricot'
+                assign c1 = '#FFE0C8'
+                assign c2 = '#FF9C72'
+                assign ink = '#8B432A'
+              when 'sand'
+                assign c1 = '#FFF0D4'
+                assign c2 = '#EAC58D'
+                assign ink = '#76542C'
+              when 'lagoon'
+                assign c1 = '#D5F5F7'
+                assign c2 = '#71CBD4'
+                assign ink = '#21666E'
+            endcase
+            assign shadow = ink | color_modify: 'alpha', 0.14
+            assign shadow_active = ink | color_modify: 'alpha', 0.22
+            assign scale = block.settings.art_scale | divided_by: 100.0
+          %}
+
+          <div
+            class="tjs-beachcat__item{% if forloop.first and section.settings.enable_auto %} is-active{% endif %}"
+            data-item
+            data-block-id="{{ block.id }}"
+            style="--i:{{ forloop.index0 }};--c1:{{ c1 }};--c2:{{ c2 }};--border:{{ block.settings.border_color }};--ink:{{ ink }};--shadow:{{ shadow }};--shadow-active:{{ shadow_active }};--scale:{{ scale }};--x:{{ block.settings.art_x }}%;--y:{{ block.settings.art_y }}%;"
+            {{ block.shopify_attributes }}
+          >
+            {% if link != blank %}<a class="tjs-beachcat-card" href="{{ link }}" aria-label="{{ label | escape }}">{% else %}<div class="tjs-beachcat-card">{% endif %}
+              <span class="tjs-beachcat-card__sun" aria-hidden="true"></span>
+              {% if block.settings.badge != blank %}<span class="tjs-beachcat-card__badge">{{ block.settings.badge | escape }}</span>{% endif %}
+
+              <div class="tjs-beachcat-card__artwrap">
+                <div class="tjs-beachcat-card__art">
+                  {% if image != blank %}
+                    {% if block.settings.artwork_treatment == 'tint' %}
+                      {% assign mask_url = image | image_url: width: 360 %}
+                      <span class="tjs-beachcat-card__mask" role="img" aria-label="{{ alt | escape }}" style="-webkit-mask-image:url('{{ mask_url }}');mask-image:url('{{ mask_url }}')"></span>
+                    {% else %}
+                      {{ image | image_url: width: 360 | image_tag: widths: '80,120,160,220,280,360', sizes: '(max-width:749px) 52px, 62px', loading: 'lazy', class: 'tjs-beachcat-card__image', alt: alt }}
+                    {% endif %}
+                  {% else %}
+                    {% case block.settings.icon_type %}
+                      {% when 'home' %}<svg class="tjs-beachcat-card__icon" viewBox="0 0 96 96" fill="none" aria-hidden="true"><path d="m18 47 30-26 30 26" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M25 42v35h46V42M40 77V58h16v19" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M28 44h40v33H28z" fill="currentColor" opacity=".14"/></svg>
+                      {% when 'kitchen' %}<svg class="tjs-beachcat-card__icon" viewBox="0 0 96 96" fill="none" aria-hidden="true"><path d="M23 61c0-15 11-26 25-26s25 11 25 26H23Z" fill="currentColor" opacity=".15"/><path d="M23 61c0-15 11-26 25-26s25 11 25 26M17 63h62M48 35V24M42 24h12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      {% when 'organise' %}<svg class="tjs-beachcat-card__icon" viewBox="0 0 96 96" fill="none" aria-hidden="true"><rect x="21" y="19" width="54" height="60" rx="8" fill="currentColor" opacity=".14"/><rect x="21" y="19" width="54" height="17" rx="6" stroke="currentColor" stroke-width="4"/><rect x="21" y="40" width="54" height="16" rx="5" stroke="currentColor" stroke-width="4"/><rect x="21" y="60" width="54" height="19" rx="6" stroke="currentColor" stroke-width="4"/><path d="M43 27h10M43 48h10M43 69h10" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
+                      {% when 'planner' %}<svg class="tjs-beachcat-card__icon" viewBox="0 0 96 96" fill="none" aria-hidden="true"><rect x="23" y="19" width="52" height="62" rx="7" fill="currentColor" opacity=".14"/><rect x="23" y="19" width="52" height="62" rx="7" stroke="currentColor" stroke-width="4"/><path d="M35 15v11M47 15v11M59 15v11M34 42h30M34 53h23M34 64h17" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
+                      {% when 'eyewear' %}<svg class="tjs-beachcat-card__icon" viewBox="0 0 96 96" fill="none" aria-hidden="true"><path d="M18 44c2-7 9-11 17-10l11 1c2 .2 4 .2 6 0l9-1c9-1 16 4 18 11" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M19 47c1 13 7 21 17 21 9 0 14-7 16-19M77 47c-1 13-7 21-17 21-9 0-14-7-16-19" fill="currentColor" opacity=".14"/><path d="M19 47c1 13 7 21 17 21 9 0 14-7 16-19M77 47c-1 13-7 21-17 21-9 0-14-7-16-19M43 46h10" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      {% when 'gift' %}<svg class="tjs-beachcat-card__icon" viewBox="0 0 96 96" fill="none" aria-hidden="true"><path d="M20 40h56v40H20z" fill="currentColor" opacity=".14"/><path d="M20 40h56v40H20ZM16 29h64v14H16V29ZM48 29v51" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M48 29c-4-11-11-15-17-11-6 5 0 13 17 11ZM48 29c4-11 11-15 17-11 6 5 0 13-17 11Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/></svg>
+                      {% when 'tag' %}<svg class="tjs-beachcat-card__icon" viewBox="0 0 96 96" fill="none" aria-hidden="true"><path d="M19 21h27l31 31-25 25-31-31V21Z" fill="currentColor" opacity=".14"/><path d="M19 21h27l31 31-25 25-31-31V21Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><circle cx="34" cy="35" r="6" stroke="currentColor" stroke-width="4"/></svg>
+                      {% when 'lamp' %}<svg class="tjs-beachcat-card__icon" viewBox="0 0 96 96" fill="none" aria-hidden="true"><path d="M31 20h34l9 32H22l9-32Z" fill="currentColor" opacity=".14"/><path d="M31 20h34l9 32H22l9-32ZM48 52v22M36 79h24M41 74h14" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      {% when 'glass' %}<svg class="tjs-beachcat-card__icon" viewBox="0 0 96 96" fill="none" aria-hidden="true"><path d="M29 18h38l-4 29c-1 9-7 15-15 15s-14-6-15-15l-4-29Z" fill="currentColor" opacity=".14"/><path d="M29 18h38l-4 29c-1 9-7 15-15 15s-14-6-15-15l-4-29ZM48 62v15M36 80h24" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      {% when 'star' %}<svg class="tjs-beachcat-card__icon" viewBox="0 0 96 96" fill="none" aria-hidden="true"><path d="m48 15 9.5 19.2 21.2 3.1-15.4 15 3.6 21.1L48 63.5 29.1 73.4l3.6-21.1-15.4-15 21.2-3.1L48 15Z" fill="currentColor" opacity=".18"/><path d="m48 15 9.5 19.2 21.2 3.1-15.4 15 3.6 21.1L48 63.5 29.1 73.4l3.6-21.1-15.4-15 21.2-3.1L48 15Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/></svg>
+                      {% else %}<svg class="tjs-beachcat-card__icon" viewBox="0 0 96 96" fill="none" aria-hidden="true"><circle cx="48" cy="48" r="31" fill="currentColor" opacity=".14"/><circle cx="48" cy="48" r="31" stroke="currentColor" stroke-width="4"/><path d="M48 32v32M32 48h32" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
+                    {% endcase %}
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="tjs-beachcat-card__copy">
+                <p class="tjs-beachcat-card__label">{{ label | escape }}</p>
+                {% if section.settings.show_counts and count != blank %}<p class="tjs-beachcat-card__count">{{ count }}{% if block.settings.show_plus %}+{% endif %} {{ section.settings.count_label | escape }}</p>{% endif %}
+              </div>
+              <div class="tjs-beachcat-card__progress" aria-hidden="true"><span></span></div>
+            {% if link != blank %}</a>{% else %}</div>{% endif %}
+          </div>
+        {% else %}
+          {% assign demo_colors = '#FFE681,#FFC857,#7A5600|#FFD0C6,#FF9684,#8F3B2F|#C6F5EE,#67D9C7,#186C63|#D4EAFF,#7FC6FF,#235F8F|#E9D8FF,#BDA0FF,#5E438B|#FFD7E7,#FF91BD,#91405E|#EAF5A7,#BFD95B,#5B6C1B|#FFDDB0,#FFB15A,#8B4D16' | split: '|' %}
+          {% for color in demo_colors %}
+            {% assign values = color | split: ',' %}
+            <div class="tjs-beachcat__item{% if forloop.first %} is-active{% endif %}" data-item style="--i:{{ forloop.index0 }};--c1:{{ values[0] }};--c2:{{ values[1] }};--border:rgba(255,255,255,.5);--ink:{{ values[2] }};--shadow:rgba(45,37,53,.12);--shadow-active:rgba(45,37,53,.2);--scale:1;--x:0%;--y:0%">
+              <div class="tjs-beachcat-card"><span class="tjs-beachcat-card__sun"></span><div class="tjs-beachcat-card__artwrap"><div class="tjs-beachcat-card__art"><svg class="tjs-beachcat-card__icon" viewBox="0 0 96 96" fill="none"><circle cx="48" cy="48" r="31" fill="currentColor" opacity=".14"/><circle cx="48" cy="48" r="31" stroke="currentColor" stroke-width="4"/><path d="M48 32v32M32 48h32" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></div></div><div class="tjs-beachcat-card__copy"><p class="tjs-beachcat-card__label">Category {{ forloop.index }}</p></div><div class="tjs-beachcat-card__progress"><span></span></div></div>
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</tjs-beach-category-carousel>
+
+<script>
+(()=>{
+  if(customElements.get('tjs-beach-category-carousel'))return;
+  class TjsBeachCategoryCarousel extends HTMLElement{
+    connectedCallback(){
+      this.viewport=this.querySelector('[data-viewport]');
+      this.track=this.querySelector('[data-track]');
+      this.items=[...this.querySelectorAll('[data-item]')];
+      this.prev=this.querySelector('[data-prev]');
+      this.next=this.querySelector('[data-next]');
+      this.arrows=this.querySelector('[data-arrows]');
+      this.auto=this.dataset.auto==='true';
+      this.interval=Math.max(1600,Number(this.dataset.interval)||2400);
+      this.reduce=matchMedia('(prefers-reduced-motion:reduce)');
+      this.index=0;
+      this.controller=new AbortController();
+      this.signal=this.controller.signal;
+      if(!this.viewport||!this.track||!this.items.length)return;
+      requestAnimationFrame(()=>this.classList.add('is-ready'));
+      this.prev?.addEventListener('click',()=>this.move(-1),{signal:this.signal});
+      this.next?.addEventListener('click',()=>this.move(1),{signal:this.signal});
+      this.viewport.addEventListener('scroll',()=>{cancelAnimationFrame(this.raf);this.raf=requestAnimationFrame(()=>this.updateArrows())},{passive:true,signal:this.signal});
+      this.viewport.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();this.move(1)}else if(e.key==='ArrowLeft'){e.preventDefault();this.move(-1)}},{signal:this.signal});
+      this.addEventListener('mouseenter',()=>this.stop(),{signal:this.signal});
+      this.addEventListener('mouseleave',()=>this.start(),{signal:this.signal});
+      this.addEventListener('focusin',()=>this.stop(),{signal:this.signal});
+      this.addEventListener('focusout',e=>{if(!this.contains(e.relatedTarget))this.start()},{signal:this.signal});
+      this.viewport.addEventListener('pointerdown',()=>this.stop(),{passive:true,signal:this.signal});
+      this.viewport.addEventListener('pointerup',()=>this.resume(),{passive:true,signal:this.signal});
+      this.items.forEach((item,i)=>{item.addEventListener('mouseenter',()=>this.activate(i),{signal:this.signal});item.addEventListener('focusin',()=>this.activate(i),{signal:this.signal})});
+      document.addEventListener('visibilitychange',()=>document.hidden?this.stop():this.start(),{signal:this.signal});
+      document.addEventListener('shopify:block:select',e=>{const item=this.querySelector(`[data-block-id="${e.detail.blockId}"]`);if(!item)return;this.stop();item.scrollIntoView({behavior:this.reduce.matches?'auto':'smooth',block:'nearest',inline:'center'});this.activate(this.items.indexOf(item))},{signal:this.signal});
+      if('ResizeObserver'in window){this.ro=new ResizeObserver(()=>this.updateArrows());this.ro.observe(this.viewport)}else addEventListener('resize',()=>this.updateArrows(),{passive:true,signal:this.signal});
+      this.updateArrows();this.start();
+    }
+    disconnectedCallback(){this.stop();this.ro?.disconnect();this.controller?.abort();cancelAnimationFrame(this.raf)}
+    step(){const first=this.items[0];if(!first)return this.viewport.clientWidth*.8;const s=getComputedStyle(this.track);return first.getBoundingClientRect().width+parseFloat(s.columnGap||s.gap||0)}
+    move(dir){this.viewport.scrollBy({left:dir*this.step(),behavior:this.reduce.matches?'auto':'smooth'});this.resume()}
+    updateArrows(){const max=Math.max(0,this.viewport.scrollWidth-this.viewport.clientWidth),over=max>2;if(this.prev)this.prev.disabled=!over||this.viewport.scrollLeft<=3;if(this.next)this.next.disabled=!over||this.viewport.scrollLeft>=max-3;if(this.arrows)this.arrows.hidden=!over}
+    activate(i){this.index=(i+this.items.length)%this.items.length;this.items.forEach((item,n)=>item.classList.toggle('is-active',n===this.index))}
+    nextVisible(){const vr=this.viewport.getBoundingClientRect(),visible=this.items.map((item,index)=>({item,index,rect:item.getBoundingClientRect()})).filter(x=>x.rect.right>vr.left+6&&x.rect.left<vr.right-6);if(!visible.length)return;let pos=visible.findIndex(x=>x.index===this.index);const next=visible[(pos+1+visible.length)%visible.length];this.activate(next.index)}
+    start(){this.stop();if(!this.auto||this.reduce.matches||document.hidden)return;this.timer=setInterval(()=>this.nextVisible(),this.interval)}
+    stop(){if(this.timer)clearInterval(this.timer);if(this.resumeTimer)clearTimeout(this.resumeTimer);this.timer=null;this.resumeTimer=null}
+    resume(){this.stop();this.resumeTimer=setTimeout(()=>this.start(),2200)}
+  }
+  customElements.define('tjs-beach-category-carousel',TjsBeachCategoryCarousel)
+})();
+</script>
+
+{% schema %}
+{
+  "name":"TJS beach category strip",
+  "tag":"section",
+  "class":"section-tjs-beach-category-strip",
+  "max_blocks":10,
+  "settings":[
+    {"type":"header","content":"Content"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"A little sunshine for every space"},
+    {"type":"text","id":"heading","label":"Heading","default":"Shop by category"},
+    {"type":"text","id":"subheading","label":"Subheading","default":"Bright finds, happy colours and useful things for everyday life."},
+    {"type":"text","id":"view_all_label","label":"View-all label","default":"View all"},
+    {"type":"url","id":"view_all_link","label":"View-all link"},
+    {"type":"checkbox","id":"show_counts","label":"Show product counts","default":false},
+    {"type":"text","id":"count_label","label":"Count label","default":"products"},
+    {"type":"text","id":"slider_label","label":"Accessibility label","default":"Shop product categories"},
+
+    {"type":"header","content":"Compact layout"},
+    {"type":"checkbox","id":"full_width","label":"Use full browser width","default":false},
+    {"type":"range","id":"max_width","label":"Maximum content width","min":1000,"max":1800,"step":20,"unit":"px","default":1500},
+    {"type":"range","id":"desktop_visible","label":"Categories visible on desktop","min":6,"max":10,"step":1,"default":8},
+    {"type":"range","id":"gap","label":"Space between categories","min":6,"max":18,"step":1,"unit":"px","default":9},
+    {"type":"range","id":"card_height","label":"Desktop card height","min":100,"max":160,"step":2,"unit":"px","default":124},
+    {"type":"range","id":"art_size","label":"Desktop artwork size","min":42,"max":78,"step":2,"unit":"px","default":58},
+    {"type":"range","id":"mobile_card_width","label":"Mobile card width","min":82,"max":126,"step":2,"unit":"px","default":98},
+    {"type":"range","id":"mobile_card_height","label":"Mobile card height","min":94,"max":146,"step":2,"unit":"px","default":112},
+    {"type":"range","id":"mobile_art_size","label":"Mobile artwork size","min":38,"max":68,"step":2,"unit":"px","default":50},
+    {"type":"range","id":"card_radius","label":"Card corner radius","min":12,"max":28,"step":2,"unit":"px","default":18},
+    {"type":"range","id":"page_gutter","label":"Desktop side spacing","min":0,"max":80,"step":1,"unit":"px","default":28},
+    {"type":"range","id":"mobile_gutter","label":"Mobile side spacing","min":0,"max":28,"step":1,"unit":"px","default":12},
+    {"type":"checkbox","id":"show_arrows","label":"Show desktop arrows","default":true},
+    {"type":"checkbox","id":"enable_auto","label":"Auto-highlight categories","default":true},
+    {"type":"range","id":"auto_interval","label":"Auto-highlight interval","min":1.5,"max":5,"step":0.5,"unit":"s","default":2.5},
+
+    {"type":"header","content":"Typography"},
+    {"type":"select","id":"heading_font","label":"Heading font source","default":"heading","options":[{"value":"heading","label":"Theme heading font"},{"value":"body","label":"Theme body font"}]},
+    {"type":"range","id":"heading_size","label":"Desktop heading size","min":22,"max":44,"step":1,"unit":"px","default":31},
+    {"type":"range","id":"heading_size_mobile","label":"Mobile heading size","min":20,"max":34,"step":1,"unit":"px","default":25},
+    {"type":"select","id":"heading_weight","label":"Heading weight","default":"600","options":[{"value":"400","label":"Regular"},{"value":"500","label":"Medium"},{"value":"600","label":"Semi-bold"},{"value":"700","label":"Bold"}]},
+    {"type":"range","id":"label_size","label":"Desktop label size","min":9,"max":14,"step":1,"unit":"px","default":11},
+    {"type":"range","id":"label_size_mobile","label":"Mobile label size","min":9,"max":13,"step":1,"unit":"px","default":10},
+    {"type":"select","id":"label_weight","label":"Label weight","default":"700","options":[{"value":"500","label":"Medium"},{"value":"600","label":"Semi-bold"},{"value":"700","label":"Bold"}]},
+
+    {"type":"header","content":"Beach palette"},
+    {"type":"color","id":"background","label":"Section background","default":"#FFF8E9"},
+    {"type":"color","id":"text_color","label":"Heading colour","default":"#242335"},
+    {"type":"color","id":"muted_color","label":"Subheading colour","default":"#756C73"},
+    {"type":"color","id":"accent_color","label":"Eyebrow colour","default":"#FF6F66"},
+
+    {"type":"header","content":"Spacing"},
+    {"type":"range","id":"header_gap","label":"Desktop header gap","min":4,"max":24,"step":1,"unit":"px","default":10},
+    {"type":"range","id":"header_gap_mobile","label":"Mobile header gap","min":4,"max":18,"step":1,"unit":"px","default":8},
+    {"type":"range","id":"padding_top","label":"Desktop top spacing","min":0,"max":60,"step":2,"unit":"px","default":14},
+    {"type":"range","id":"padding_bottom","label":"Desktop bottom spacing","min":0,"max":60,"step":2,"unit":"px","default":16},
+    {"type":"range","id":"padding_top_mobile","label":"Mobile top spacing","min":0,"max":40,"step":2,"unit":"px","default":12},
+    {"type":"range","id":"padding_bottom_mobile","label":"Mobile bottom spacing","min":0,"max":40,"step":2,"unit":"px","default":14}
+  ],
+  "blocks":[
+    {
+      "type":"category",
+      "name":"Category",
+      "settings":[
+        {"type":"collection","id":"collection","label":"Collection"},
+        {"type":"text","id":"label","label":"Custom label","info":"Leave blank to use the collection title."},
+        {"type":"url","id":"link","label":"Custom link","info":"Leave blank to use the collection link."},
+        {"type":"text","id":"badge","label":"Optional badge","info":"Examples: New, Popular, Sale"},
+        {"type":"text","id":"count_override","label":"Product-count override"},
+        {"type":"checkbox","id":"show_plus","label":"Add + after product count","default":false},
+
+        {"type":"header","content":"Artwork"},
+        {"type":"select","id":"image_source","label":"Artwork source","default":"builtin","options":[{"value":"builtin","label":"Built-in icon"},{"value":"custom","label":"Uploaded artwork"},{"value":"collection","label":"Collection image"}]},
+        {"type":"image_picker","id":"icon_image","label":"Uploaded transparent PNG or WebP"},
+        {"type":"text","id":"image_alt","label":"Artwork alt text"},
+        {"type":"select","id":"artwork_treatment","label":"Uploaded artwork treatment","default":"original","options":[{"value":"original","label":"Keep original colours"},{"value":"tint","label":"Apply card ink colour"}]},
+        {"type":"select","id":"icon_type","label":"Built-in icon","default":"home","options":[{"value":"home","label":"Home décor"},{"value":"kitchen","label":"Kitchen and dining"},{"value":"organise","label":"Organisation"},{"value":"planner","label":"Planners"},{"value":"eyewear","label":"Eyewear"},{"value":"gift","label":"Gifting"},{"value":"star","label":"Bestsellers"},{"value":"tag","label":"Sale"},{"value":"lamp","label":"Lighting"},{"value":"glass","label":"Glassware"},{"value":"plus","label":"General category"}]},
+        {"type":"range","id":"art_scale","label":"Artwork scale","min":70,"max":135,"step":1,"unit":"%","default":100},
+        {"type":"range","id":"art_x","label":"Artwork horizontal position","min":-24,"max":24,"step":1,"unit":"%","default":0},
+        {"type":"range","id":"art_y","label":"Artwork vertical position","min":-24,"max":24,"step":1,"unit":"%","default":0},
+
+        {"type":"header","content":"Vibrant pastel colours"},
+        {"type":"select","id":"color_preset","label":"Colour preset","default":"custom","options":[{"value":"custom","label":"Custom colours"},{"value":"coral","label":"Vibrant coral"},{"value":"aqua","label":"Aqua splash"},{"value":"lemon","label":"Lemon sunshine"},{"value":"sky","label":"Clear sky"},{"value":"lilac","label":"Dreamy lilac"},{"value":"shell","label":"Shell pink"},{"value":"lime","label":"Lime sorbet"},{"value":"mango","label":"Mango peach"},{"value":"seafoam","label":"Seafoam mint"},{"value":"periwinkle","label":"Periwinkle blue"},{"value":"watermelon","label":"Watermelon pink"},{"value":"apricot","label":"Sunset apricot"},{"value":"sand","label":"Coconut sand"},{"value":"lagoon","label":"Blue lagoon"}]},
+        {"type":"paragraph","content":"Choose a ready-made palette above. Select Custom colours to use the settings below."},
+        {"type":"color","id":"color_1","label":"Custom pastel colour 1","default":"#FFD0C6"},
+        {"type":"color","id":"color_2","label":"Custom pastel colour 2","default":"#FF9684"},
+        {"type":"color","id":"border_color","label":"Border colour","default":"#FFFFFF"},
+        {"type":"color","id":"ink_color","label":"Custom icon and text colour","default":"#8F3B2F"}
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name":"TJS beach category strip – Mixed Pastels",
+      "blocks":[
+        {"type":"category","settings":{"label":"Bestsellers","icon_type":"star","color_preset":"lemon","badge":"Popular"}},
+        {"type":"category","settings":{"label":"Home Décor","icon_type":"home","color_preset":"coral"}},
+        {"type":"category","settings":{"label":"Kitchen & Dining","icon_type":"kitchen","color_preset":"aqua"}},
+        {"type":"category","settings":{"label":"Organise","icon_type":"organise","color_preset":"sky"}},
+        {"type":"category","settings":{"label":"Planners","icon_type":"planner","color_preset":"lilac"}},
+        {"type":"category","settings":{"label":"Eyewear","icon_type":"eyewear","color_preset":"mango"}},
+        {"type":"category","settings":{"label":"Gifting","icon_type":"gift","color_preset":"shell"}},
+        {"type":"category","settings":{"label":"The June Event","icon_type":"tag","color_preset":"lime","badge":"Sale"}},
+        {"type":"category","settings":{"label":"Lighting","icon_type":"lamp","color_preset":"periwinkle"}},
+        {"type":"category","settings":{"label":"Glassware","icon_type":"glass","color_preset":"lagoon"}}
+      ]
+    },
+    {
+      "name":"TJS beach category strip – Tropical Pop",
+      "settings":{"background":"#FFF9E8","accent_color":"#FF6B61"},
+      "blocks":[
+        {"type":"category","settings":{"label":"Bestsellers","icon_type":"star","color_preset":"mango","badge":"Hot"}},
+        {"type":"category","settings":{"label":"Home Décor","icon_type":"home","color_preset":"watermelon"}},
+        {"type":"category","settings":{"label":"Kitchen & Dining","icon_type":"kitchen","color_preset":"lemon"}},
+        {"type":"category","settings":{"label":"Organise","icon_type":"organise","color_preset":"seafoam"}},
+        {"type":"category","settings":{"label":"Planners","icon_type":"planner","color_preset":"periwinkle"}},
+        {"type":"category","settings":{"label":"Eyewear","icon_type":"eyewear","color_preset":"sky"}},
+        {"type":"category","settings":{"label":"Gifting","icon_type":"gift","color_preset":"coral"}},
+        {"type":"category","settings":{"label":"The June Event","icon_type":"tag","color_preset":"lime","badge":"Sale"}}
+      ]
+    },
+    {
+      "name":"TJS beach category strip – Coastal Sorbet",
+      "settings":{"background":"#F6FCFA","accent_color":"#2BAE9B"},
+      "blocks":[
+        {"type":"category","settings":{"label":"Bestsellers","icon_type":"star","color_preset":"lemon","badge":"Popular"}},
+        {"type":"category","settings":{"label":"Home Décor","icon_type":"home","color_preset":"shell"}},
+        {"type":"category","settings":{"label":"Kitchen & Dining","icon_type":"kitchen","color_preset":"lagoon"}},
+        {"type":"category","settings":{"label":"Organise","icon_type":"organise","color_preset":"seafoam"}},
+        {"type":"category","settings":{"label":"Planners","icon_type":"planner","color_preset":"lilac"}},
+        {"type":"category","settings":{"label":"Eyewear","icon_type":"eyewear","color_preset":"sky"}},
+        {"type":"category","settings":{"label":"Gifting","icon_type":"gift","color_preset":"apricot"}},
+        {"type":"category","settings":{"label":"The June Event","icon_type":"tag","color_preset":"coral","badge":"Sale"}}
+      ]
+    }
+  ]
+}
+{% endschema %}

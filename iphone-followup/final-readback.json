@@ -1,0 +1,31 @@
+{
+  "theme": "187527266499",
+  "role": "UNPUBLISHED",
+  "checks": [
+    {
+      "filename": "sections/june-a-little-curious.liquid",
+      "checksum": "54be20eabce063daaf91d5736edfd6c9",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-layer-the-table.liquid",
+      "checksum": "bbc974991b91e1dadbf8085097b39546",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-other-chapters.liquid",
+      "checksum": "4ffc905b4d960eb667cc63495331ba31",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-shop-the-corner.liquid",
+      "checksum": "9a8149826b06c47f2cacf6ac420c0f16",
+      "exact": true
+    },
+    {
+      "filename": "sections/june-with-extras.liquid",
+      "checksum": "72676863392484c74a1b90eb3c1356a9",
+      "exact": true
+    }
+  ]
+}

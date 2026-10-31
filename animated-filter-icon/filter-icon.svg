@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none" role="img" aria-labelledby="title">
+<title id="title">Gently animated adjustment sliders</title>
+<style>.still{display:none}@media(prefers-reduced-motion:reduce){.moving{display:none}.still{display:inline}}</style>
+<defs><mask id="gaps" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="120"><rect width="120" height="120" fill="white"/><g fill="black">
+<rect x="36" y="15" width="20" height="28"><animate attributeName="x" values="36;36;64;64;36;36" keyTimes="0;0.12;0.34;0.62;0.84;1" dur="8s" calcMode="spline" keySplines="0 0 1 1;0.65 0 0.35 1;0 0 1 1;0.65 0 0.35 1;0 0 1 1" repeatCount="indefinite"/></rect>
+<rect x="64" y="46" width="20" height="28"><animate attributeName="x" values="64;64;36;36;64;64" keyTimes="0;0.135;0.35500000000000004;0.635;0.855;1" dur="8s" calcMode="spline" keySplines="0 0 1 1;0.65 0 0.35 1;0 0 1 1;0.65 0 0.35 1;0 0 1 1" repeatCount="indefinite"/></rect>
+<rect x="36" y="77" width="20" height="28"><animate attributeName="x" values="36;36;64;64;36;36" keyTimes="0;0.15;0.37;0.65;0.87;1" dur="8s" calcMode="spline" keySplines="0 0 1 1;0.65 0 0.35 1;0 0 1 1;0.65 0 0.35 1;0 0 1 1" repeatCount="indefinite"/></rect>
+</g></mask></defs>
+<g class="moving" stroke="white" stroke-width="2.2" stroke-linecap="round">
+<path mask="url(#gaps)" d="M18 29H102M18 60H102M18 91H102"/>
+<path d="M46 19V39"><animateTransform attributeName="transform" type="translate" values="0 0;0 0;28 0;28 0;0 0;0 0" keyTimes="0;0.12;0.34;0.62;0.84;1" dur="8s" calcMode="spline" keySplines="0 0 1 1;0.65 0 0.35 1;0 0 1 1;0.65 0 0.35 1;0 0 1 1" repeatCount="indefinite"/></path>
+<path d="M74 50V70"><animateTransform attributeName="transform" type="translate" values="0 0;0 0;-28 0;-28 0;0 0;0 0" keyTimes="0;0.135;0.35500000000000004;0.635;0.855;1" dur="8s" calcMode="spline" keySplines="0 0 1 1;0.65 0 0.35 1;0 0 1 1;0.65 0 0.35 1;0 0 1 1" repeatCount="indefinite"/></path>
+<path d="M46 81V101"><animateTransform attributeName="transform" type="translate" values="0 0;0 0;28 0;28 0;0 0;0 0" keyTimes="0;0.15;0.37;0.65;0.87;1" dur="8s" calcMode="spline" keySplines="0 0 1 1;0.65 0 0.35 1;0 0 1 1;0.65 0 0.35 1;0 0 1 1" repeatCount="indefinite"/></path>
+</g>
+<g class="still" stroke="white" stroke-width="2.2" stroke-linecap="round"><path d="M18 29H36M56 29H102M46 19V39M18 60H64M84 60H102M74 50V70M18 91H36M56 91H102M46 81V101"/></g>
+</svg>

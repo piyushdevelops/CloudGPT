@@ -1,0 +1,52 @@
+[
+  {
+    "viewport": 1440,
+    "width": 1440,
+    "height": 914,
+    "font": "Poppins, sans-serif",
+    "overflow": false,
+    "heading": "Your year. Your rules.",
+    "panels": 3,
+    "selected": 1,
+    "images": 0,
+    "next": 2,
+    "cover": true,
+    "dialog": true,
+    "closed": true
+  },
+  {
+    "viewport": 390,
+    "width": 390,
+    "height": 880,
+    "font": "Poppins, sans-serif",
+    "overflow": false,
+    "heading": "Your year. Your rules.",
+    "panels": 3,
+    "selected": 1,
+    "images": 0,
+    "thumb": 0,
+    "url": "/products/undated-yearly-planner-too-creative-for-9-to-5-ultimate-sticker-book"
+  },
+  {
+    "viewport": 750,
+    "width": 750,
+    "height": 879,
+    "font": "Poppins, sans-serif",
+    "overflow": false,
+    "heading": "Your year. Your rules.",
+    "panels": 3,
+    "selected": 1,
+    "images": 0
+  },
+  {
+    "viewport": 320,
+    "width": 320,
+    "height": 862,
+    "font": "Poppins, sans-serif",
+    "overflow": false,
+    "heading": "Your year. Your rules.",
+    "panels": 3,
+    "selected": 1,
+    "images": 0
+  }
+]

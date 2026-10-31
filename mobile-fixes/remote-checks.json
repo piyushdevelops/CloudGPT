@@ -1,0 +1,55 @@
+{
+  "role": "UNPUBLISHED",
+  "checks": [
+    {
+      "filename": "locales/en.default.json",
+      "matches": true,
+      "checksumMd5": "0413dc041180d3a3b039b67a94a26171"
+    },
+    {
+      "filename": "sections/june-inside-discovery.liquid",
+      "matches": true,
+      "checksumMd5": "210bdc4d4fe94051675875d985095401"
+    },
+    {
+      "filename": "sections/june-layer-the-table.liquid",
+      "matches": true,
+      "checksumMd5": "68a9a2b575a12e2b2d340a64a8df9209"
+    },
+    {
+      "filename": "sections/june-make-room.liquid",
+      "matches": true,
+      "checksumMd5": "54206b08a56dc85ca3f57c3698cf7338"
+    },
+    {
+      "filename": "sections/june-other-chapters.liquid",
+      "matches": true,
+      "checksumMd5": "352a3335e29c543a3151343c56b884e2"
+    },
+    {
+      "filename": "sections/june-with-extras.liquid",
+      "matches": true,
+      "checksumMd5": "7e5bfaee502c59b995b50f4bab7096d1"
+    },
+    {
+      "filename": "sections/june-your-year.liquid",
+      "matches": true,
+      "checksumMd5": "1d4efd02c1cce0b26d328a06a3603467"
+    },
+    {
+      "filename": "sections/my-header.liquid",
+      "matches": true,
+      "checksumMd5": "142158b909c45245b51b093e770e8f82"
+    },
+    {
+      "filename": "snippets/june-photo-viewer.liquid",
+      "matches": true,
+      "checksumMd5": "bff7782df24aa8dac1e3cb629da13722"
+    },
+    {
+      "filename": "templates/index.json",
+      "matches": true,
+      "checksumMd5": "c9d68b3685281efbdb86cde1b6ab8fad"
+    }
+  ]
+}

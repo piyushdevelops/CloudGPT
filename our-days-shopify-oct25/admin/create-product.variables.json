@@ -1,0 +1,19 @@
+{
+  "input": {
+    "title": "Our Days",
+    "handle": "our-days",
+    "descriptionHtml": "<p>Thoughtful prompts help you capture the little moments in your own words and photographs. Review every page, then receive a beautifully printed Regular 8 × 8 in hardcover book.</p><ul><li>Choose a 3, 6 or 12 month chapter</li><li>Reply naturally and add photographs</li><li>Edit and approve every page before printing</li><li>Gift activation included</li></ul>",
+    "vendor": "The June Shop",
+    "productType": "Guided Memory Book",
+    "status": "DRAFT",
+    "templateSuffix": "our-days",
+    "tags": ["our-days", "memory-book", "personalised", "made-to-order"],
+    "productOptions": [{"name":"Chapter","position":1,"values":[{"name":"3 months"},{"name":"6 months"},{"name":"12 months"}]}],
+    "variants": [
+      {"optionValues":[{"optionName":"Chapter","name":"3 months"}],"price":"2999.00"},
+      {"optionValues":[{"optionName":"Chapter","name":"6 months"}],"price":"4299.00"},
+      {"optionValues":[{"optionName":"Chapter","name":"12 months"}],"price":"6499.00"}
+    ],
+    "files": [{"originalSource":"https://our-days-preview-production.up.railway.app/assets/open-book-v1.jpg","filename":"our-days-memory-book.jpg","alt":"An open Our Days family memory book","contentType":"IMAGE"}]
+  }
+}

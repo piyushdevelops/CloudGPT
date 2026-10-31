@@ -1,0 +1,32 @@
+/* Directional doorway depth, rather than a uniformly glowing plaque. */
+.jn.jn--portal{grid-template-columns:minmax(0,2.15fr) minmax(280px,1fr);gap:36px;background:radial-gradient(ellipse at 48% 75%,color-mix(in srgb,var(--portal-glow) 14%,transparent),transparent 48%),var(--jn-bg)}
+.jn--portal .jn__teaser{grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:24px}
+.jn--portal .jn__heading{font-size:min(calc(var(--jn-heading-size)*.88),2.8vw)}
+.jn--portal .jn__portal-scene{height:440px;perspective:900px}
+.jn--portal .jn__doorway{width:60%;height:79%;bottom:16%;border-radius:48% 48% 1px 1px;border:2px solid #fff;background:radial-gradient(ellipse at 70% 85%,color-mix(in srgb,var(--portal-glow) 80%,white),transparent 65%),linear-gradient(145deg,color-mix(in srgb,var(--portal-glow) 55%,#302344),color-mix(in srgb,var(--portal-glow) 85%,#302344) 58%,var(--portal-glow));box-shadow:5px 3px 0 color-mix(in srgb,var(--portal-glow) 65%,#443553),8px 6px 0 color-mix(in srgb,var(--portal-glow) 40%,transparent),0 0 14px color-mix(in srgb,var(--portal-glow) 65%,transparent),inset 12px 9px 26px #30234455;transform:perspective(900px) rotateY(-15deg)}
+.jn--portal .jn__door-light{inset:10px 9px 0 12px;border:1px solid #ffffff80;border-bottom:0;background:linear-gradient(115deg,#ffffff08 30%,#ffffff55);box-shadow:inset -5px 0 10px #ffffff55}
+.jn--portal .jn__doorway:after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:3px;background:#fff;box-shadow:0 0 12px white}
+.jn--portal .jn__light-spill{width:110%;height:110px;bottom:-5%;background:linear-gradient(180deg,color-mix(in srgb,var(--portal-glow) 65%,white),color-mix(in srgb,var(--portal-glow) 20%,transparent) 65%,transparent);clip-path:polygon(25% 0,78% 0,100% 100%,0 100%);filter:blur(4px);opacity:.65;transform:rotate(-3deg);z-index:-1}
+.jn--portal .jn__portal-year{gap:22px;padding-top:25px;transform:translateX(-7%) rotate(var(--portal-tilt));z-index:2}
+.jn--portal .jn__year{font-size:min(calc(var(--jn-year-size)*1.15),12vw);text-shadow:1px 2px 0 #ffffffb3,0 12px 18px #24143233}
+.jn--portal .jn__badge{border:0;border-radius:0;padding:0;background:transparent;letter-spacing:.18em;font-size:11px;color:var(--jn-ink);transform:rotate(calc(-1*var(--portal-tilt)));text-shadow:0 0 8px var(--jn-bg)}
+.jn--portal .jn__stars{inset:6% 13% 18%;z-index:3}
+.jn--portal .jn__stars i{background:white;opacity:.85;box-shadow:0 0 5px white,0 0 9px var(--portal-glow)}
+.jn--portal .jn__stars i:nth-child(1){left:22%;top:20%}
+.jn--portal .jn__stars i:nth-child(2){left:78%;top:32%}
+.jn--portal .jn__stars i:nth-child(3){left:14%;top:68%;width:9px;height:9px}
+.jn--portal .jn__stars i:nth-child(4){left:72%;top:10%}
+.jn--portal .jn__stars i:nth-child(5){left:85%;top:78%}
+.jn--portal .jn__signup{font-size:min(calc(var(--jn-signup-size)*.8),2.1vw);line-height:1.18}
+.jn--portal .jn__submit{background:color-mix(in srgb,var(--jn-accent) 25%,var(--jn-bg));box-shadow:none}
+@keyframes jn-portal-arrive{from{opacity:0;transform:translateX(-3%) translateY(-10px) translateZ(-80px) rotate(var(--portal-tilt))}to{opacity:1;transform:translateX(-7%) translateY(0) translateZ(0) rotate(var(--portal-tilt))}}
+@keyframes jn-portal-dust{from{opacity:0;transform:translateY(12px)}to{opacity:.85;transform:translateY(0)}}
+@media(max-width:900px){
+ .jn.jn--portal{display:block}
+ .jn--portal .jn__teaser{display:flex;gap:0}
+ .jn--portal .jn__heading{font-size:calc(var(--jn-heading-mobile)*.9)}
+ .jn--portal .jn__portal-scene{height:330px;margin-bottom:28px}
+ .jn--portal .jn__year{font-size:min(calc(var(--jn-year-mobile)*1.9),27vw)}
+ .jn--portal .jn__signup{font-size:calc(var(--jn-signup-mobile)*.85)}
+ .jn--portal .jn__light-spill{height:85px}
+}

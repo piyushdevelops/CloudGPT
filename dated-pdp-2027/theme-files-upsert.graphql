@@ -1,0 +1,15 @@
+mutation InstallDatedPlannerTemplate($themeId: ID!, $files: [OnlineStoreThemeFilesUpsertFileInput!]!) {
+  themeFilesUpsert(themeId: $themeId, files: $files) {
+    upsertedThemeFiles {
+      filename
+      checksumMd5
+    }
+    job {
+      id
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

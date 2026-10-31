@@ -1,0 +1,869 @@
+{% liquid
+  assign hero_id = 'JuneHero-' | append: section.id
+  assign primary_url = section.settings.undated_collection.url | default: routes.all_products_collection_url
+  assign limited_url = section.settings.limited_collection.url | default: primary_url
+  assign life_url = section.settings.life_collection.url | default: primary_url
+  assign mystery_url = section.settings.mystery_product.url | default: section.settings.mystery_link
+  assign left_image = section.settings.cover_left | default: section.settings.left_product.featured_image
+  assign right_image = section.settings.cover_right | default: section.settings.right_product.featured_image
+  assign image_index = section.settings.interior_number | minus: 1
+  assign spread_image = section.settings.inside_image | default: section.settings.left_product.images[image_index]
+  assign edition_image = section.settings.limited_image | default: section.settings.edition_product.featured_image
+  assign typography_block = section.blocks | where: 'type', 'typography' | first
+  assign typography = typography_block.settings
+  assign title_font = section.settings.title_font | font_modify: 'weight', typography.heading_weight | default: section.settings.title_font
+%}
+{% style %}
+  {{ title_font | font_face: font_display: 'swap' }}
+  #{{ hero_id }} {
+    --jh-bg: {{ section.settings.background }};
+    --jh-ink: {{ section.settings.text_color }};
+    --jh-height: {{ section.settings.desktop_height }}px;
+    --jh-mobile-art: {{ section.settings.mobile_art_height }}px;
+    --jh-title-size: {{ section.settings.heading_size }}px;
+    --jh-title-mobile: {{ section.settings.heading_size_mobile }}px;
+    --jh-font: {{ title_font.family }}, {{ title_font.fallback_families }};
+    --jh-weight: {{ title_font.weight }};
+  }
+
+{% if typography_block != blank %}
+{% if typography.custom_text_font %}
+{% assign role_font = typography.text_font | font_modify: 'weight', typography.subtitle_weight %}{{ role_font | font_face: font_display: 'swap' }}
+{% assign role_font = typography.text_font | font_modify: 'weight', typography.body_weight %}{{ role_font | font_face: font_display: 'swap' }}
+{% assign role_font = typography.text_font | font_modify: 'weight', typography.eyebrow_weight %}{{ role_font | font_face: font_display: 'swap' }}
+{% assign role_font = typography.text_font | font_modify: 'weight', typography.button_weight %}{{ role_font | font_face: font_display: 'swap' }}
+{% assign role_font = typography.text_font | font_modify: 'weight', typography.nav_weight %}{{ role_font | font_face: font_display: 'swap' }}
+{% endif %}
+#{{ hero_id }} .jh__title, #{{ hero_id }} .jh__alternate-title, #{{ hero_id }} .jh__year { font-weight: {{ typography.heading_weight }}; letter-spacing: {{ typography.heading_tracking | divided_by: 100.0 }}em; line-height: {{ typography.heading_leading | divided_by: 100.0 }}; }
+#{{ hero_id }} .jh__subtitle { font-weight: {{ typography.subtitle_weight }}; letter-spacing: {{ typography.subtitle_tracking | divided_by: 100.0 }}em; line-height: {{ typography.subtitle_leading | divided_by: 100.0 }}; }
+#{{ hero_id }} .jh__subtitle { font-size: {{ typography.subtitle_size }}px; }
+@media(max-width:749px) { #{{ hero_id }} .jh__subtitle { font-size: {{ typography.subtitle_size_mobile }}px; } }
+#{{ hero_id }} .jh__body, #{{ hero_id }} .jh__form, #{{ hero_id }} .jh__life-list { font-weight: {{ typography.body_weight }}; letter-spacing: {{ typography.body_tracking | divided_by: 100.0 }}em; line-height: {{ typography.body_leading | divided_by: 100.0 }}; }
+#{{ hero_id }} .jh__body, #{{ hero_id }} .jh__form, #{{ hero_id }} .jh__life-list { font-size: {{ typography.body_size }}px; }
+@media(max-width:749px) { #{{ hero_id }} .jh__body, #{{ hero_id }} .jh__form, #{{ hero_id }} .jh__life-list { font-size: {{ typography.body_size_mobile }}px; } }
+#{{ hero_id }} .jh__eyebrow { font-weight: {{ typography.eyebrow_weight }}; letter-spacing: {{ typography.eyebrow_tracking | divided_by: 100.0 }}em; line-height: {{ typography.eyebrow_leading | divided_by: 100.0 }}; }
+#{{ hero_id }} .jh__eyebrow { font-size: {{ typography.eyebrow_size }}px; }
+@media(max-width:749px) { #{{ hero_id }} .jh__eyebrow { font-size: {{ typography.eyebrow_size_mobile }}px; } }
+#{{ hero_id }} .jh__button, #{{ hero_id }} .jh__text-link { font-weight: {{ typography.button_weight }}; letter-spacing: {{ typography.button_tracking | divided_by: 100.0 }}em; line-height: {{ typography.button_leading | divided_by: 100.0 }}; }
+#{{ hero_id }} .jh__button, #{{ hero_id }} .jh__text-link { font-size: {{ typography.button_size }}px; }
+@media(max-width:749px) { #{{ hero_id }} .jh__button, #{{ hero_id }} .jh__text-link { font-size: {{ typography.button_size_mobile }}px; } }
+#{{ hero_id }} .jh__tab, #{{ hero_id }} .jh__mystery { font-weight: {{ typography.nav_weight }}; letter-spacing: {{ typography.nav_tracking | divided_by: 100.0 }}em; line-height: {{ typography.nav_leading | divided_by: 100.0 }}; }
+#{{ hero_id }} .jh__tab, #{{ hero_id }} .jh__mystery { font-size: {{ typography.nav_size }}px; }
+@media(max-width:749px) { #{{ hero_id }} .jh__tab, #{{ hero_id }} .jh__mystery { font-size: {{ typography.nav_size_mobile }}px; } }
+#{{ hero_id }} { {% if typography.custom_text_font %}font-family: {{ typography.text_font.family }}, {{ typography.text_font.fallback_families }};{% endif %} }
+#{{ hero_id }} .jh__title { font-size: clamp(24px, {{ section.settings.heading_size | times: 13.3 | divided_by: 140.0 }}vw, {{ section.settings.heading_size | times: 1.386 }}px); }
+#{{ hero_id }} .jh__alternate-title { font-size: {{ section.settings.heading_size | times: 76.0 | divided_by: 140.0 }}px; }
+@media(max-width:749px) { #{{ hero_id }} .jh__title { font-size: clamp(24px, {{ section.settings.heading_size_mobile | times: 27.0 | divided_by: 88.0 }}vw, {{ section.settings.heading_size_mobile | times: 1.59 }}px); line-height: {{ typography.heading_leading | divided_by: 100.0 | times: 0.93 }}; } #{{ hero_id }} .jh__alternate-title { font-size: {{ section.settings.heading_size_mobile | times: 44.0 | divided_by: 88.0 }}px; } }
+@media(min-width:750px) and (max-width:1050px) { #{{ hero_id }} .jh__subtitle { font-size: {{ typography.subtitle_size | times: 2.0 | divided_by: 3.0 }}px; } }
+{% endif %}
+{% endstyle %}
+<june-make-room id="{{ hero_id }}" class="jh" aria-label="{{ 'june_hero.labels.region' | t | escape }}">
+  <div class="jh__stage" {{ typography_block.shopify_attributes }}>
+    <div id="{{ hero_id }}-undated" class="jh__panel" data-panel="undated">
+      <div class="jh__copy">
+        <p class="jh__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        <h1 class="jh__title">{{ section.settings.heading | escape }}</h1>
+        <p class="jh__subtitle">{{ section.settings.subheading | escape | newline_to_br }}</p>
+        <p class="jh__body">{{ section.settings.body | escape }}</p>
+      </div>
+      <div class="jh__art" aria-label="{{ 'june_hero.labels.planner_images' | t | escape }}">
+        {% if section.settings.hero_image != blank %}
+          <picture class="jh__full-art">
+            {% if section.settings.hero_image_mobile != blank %}
+              <source media="(max-width: 749px)" srcset="{{ section.settings.hero_image_mobile | image_url: width: 600 }} 600w, {{ section.settings.hero_image_mobile | image_url: width: 1000 }} 1000w" sizes="100vw">
+            {% endif %}
+            {{ section.settings.hero_image | image_url: width: 1600 | image_tag: widths: '500,750,1000,1300,1600', sizes: '(min-width: 750px) 60vw, 100vw', loading: 'eager', fetchpriority: 'high', alt: section.settings.hero_alt }}
+          </picture>
+        {% else %}
+          {% if left_image != blank %}
+            <div class="jh__cover jh__cover--left">{{ left_image | image_url: width: 800 | image_tag: widths: '300,500,800', sizes: '(min-width: 750px) 28vw, 48vw', loading: 'eager', alt: section.settings.cover_left_alt }}</div>
+          {% endif %}
+          {% if right_image != blank %}
+            <div class="jh__cover jh__cover--right">{{ right_image | image_url: width: 800 | image_tag: widths: '300,500,800', sizes: '(min-width: 750px) 28vw, 48vw', loading: 'eager', alt: section.settings.cover_right_alt }}</div>
+          {% endif %}
+          {% if spread_image != blank %}
+            <div class="jh__spread{% if section.settings.crop_interior %} jh__spread--crop{% endif %}">{{ spread_image | image_url: width: 1200 | image_tag: widths: '450,700,1000,1200', sizes: '(min-width: 750px) 43vw, 75vw', loading: 'eager', fetchpriority: 'high', alt: section.settings.inside_alt }}</div>
+          {% endif %}
+          {% if left_image == blank and right_image == blank and spread_image == blank %}
+            {{ 'product-1' | placeholder_svg_tag: 'jh__placeholder' }}
+          {% endif %}
+        {% endif %}
+      </div>
+      <div class="jh__actions">
+        <a class="jh__button" href="{{ primary_url }}">{{ 'june_hero.actions.shop_undated' | t }} <span aria-hidden="true">↗</span></a>
+        <a class="jh__text-link" href="{{ limited_url }}">{{ 'june_hero.actions.explore_limited' | t }} <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <div id="{{ hero_id }}-limited" class="jh__panel jh__panel--alternate" data-panel="limited" hidden>
+      <div class="jh__copy"><p class="jh__eyebrow">{{ 'june_hero.tabs.limited' | t }}</p><h2 class="jh__alternate-title">{{ section.settings.limited_heading | escape }}</h2><p class="jh__body">{{ section.settings.limited_body | escape }}</p></div>
+      <div class="jh__art jh__art--single">{% if edition_image != blank %}{{ edition_image | image_url: width: 1000 | image_tag: widths: '400,650,1000', sizes: '(min-width: 750px) 45vw, 80vw', loading: 'lazy', alt: section.settings.limited_alt }}{% endif %}</div>
+      <div class="jh__actions"><a class="jh__button" href="{{ limited_url }}">{{ 'june_hero.actions.shop_limited' | t }} <span aria-hidden="true">↗</span></a></div>
+    </div>
+    <div id="{{ hero_id }}-dated" class="jh__panel jh__panel--dated" data-panel="dated" hidden>
+      <div class="jh__copy"><p class="jh__eyebrow">{{ 'june_hero.labels.coming_soon' | t }}</p><h2 class="jh__alternate-title">{{ section.settings.dated_heading | escape }}</h2><p class="jh__body">{{ 'june_hero.labels.launch_description' | t }}</p>
+        {% assign form_id = hero_id | append: '-launch' %}
+        {% form 'customer', id: form_id, class: 'jh__form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter,2027-planner-launch">
+          {% if form.posted_successfully? %}<p role="status" tabindex="-1" class="jh__success">{{ 'june_hero.form.success' | t }}</p>{% else %}
+            {% if form.errors %}<div id="{{ form_id }}-error" class="jh__error" role="alert">{{ form.errors | default_errors }}</div>{% endif %}
+            <label for="{{ form_id }}-email">{{ 'june_hero.form.email' | t }}</label>
+            <div class="jh__form-row"><input id="{{ form_id }}-email" type="email" name="contact[email]" autocomplete="email" required value="{{ form.email | escape }}" {% if form.errors %}aria-invalid="true" aria-describedby="{{ form_id }}-error"{% endif %}><button type="submit" class="jh__button">{{ 'june_hero.form.submit' | t }} <span aria-hidden="true">↗</span></button></div>
+            <p class="jh__form-note">{{ 'june_hero.form.note' | t }}</p>
+          {% endif %}
+        {% endform %}
+      </div>
+      <div class="jh__year" aria-hidden="true">2027<span>{{ 'june_hero.labels.next_chapter' | t }}</span></div>
+    </div>
+    <div id="{{ hero_id }}-life" class="jh__panel jh__panel--life" data-panel="life" hidden>
+      <div class="jh__copy"><p class="jh__eyebrow">{{ 'june_hero.tabs.life' | t }}</p><h2 class="jh__alternate-title">{{ section.settings.life_heading | escape }}</h2><p class="jh__body">{{ section.settings.life_body | escape }}</p></div>
+      <div class="jh__life-list">
+        {% for block in section.blocks %}
+          {% if block.type == 'life_link' %}
+          <a class="jh__life-item" href="{{ block.settings.collection.url | default: life_url }}" {{ block.shopify_attributes }}>
+            {% assign life_image = block.settings.image | default: block.settings.collection.image %}
+            {% if life_image != blank %}{{ life_image | image_url: width: 240 | image_tag: widths: '120,240', sizes: '90px', loading: 'lazy', alt: '' }}{% endif %}
+            <span>{{ block.settings.label | escape }}</span><span aria-hidden="true">↗</span>
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="jh__actions"><a class="jh__text-link" href="{{ life_url }}">{{ 'june_hero.actions.all_journals' | t }} <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </div>
+  <div class="jh__navigation">
+    <nav class="jh__tabs" aria-label="{{ 'june_hero.labels.categories' | t | escape }}">
+      <a class="jh__tab" href="{{ primary_url }}" data-target="undated" id="{{ hero_id }}-tab-undated"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="7" y="3" width="19" height="26" rx="2"/><path d="M11 3v26M4 8h6M4 14h6M4 20h6M4 26h6"/></svg><span>{{ 'june_hero.tabs.undated' | t }}</span></a>
+      <a class="jh__tab" href="{{ limited_url }}" data-target="limited" id="{{ hero_id }}-tab-limited"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 26C3 7 16 3 28 4c0 15-8 24-19 19M5 28L23 9M12 20v-8M12 20h8"/></svg><span>{{ 'june_hero.tabs.limited' | t }}</span></a>
+      <a class="jh__tab" href="#{{ hero_id }}-dated" data-target="dated" id="{{ hero_id }}-tab-dated"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="7" width="24" height="21" rx="2"/><path d="M4 13h24M10 3v8M22 3v8"/></svg><span>{{ 'june_hero.tabs.dated' | t }}<small>{{ 'june_hero.labels.coming_soon' | t }}</small></span></a>
+      <a class="jh__tab" href="{{ life_url }}" data-target="life" id="{{ hero_id }}-tab-life"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M16 7C12 3 6 3 3 5v22c5-3 9-2 13 1 4-3 8-4 13-1V5c-3-2-9-2-13 2ZM16 7v21"/></svg><span>{{ 'june_hero.tabs.life' | t }}</span></a>
+    </nav>
+    {% if mystery_url != blank %}<a class="jh__mystery" href="{{ mystery_url }}"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 14h24v15H4zM2 9h28v5H2zM16 9v20M16 9C4 10 7-3 12 3l4 6Zm0 0c12 1 9-12 4-6l-4 6Z"/></svg><span>{{ 'june_hero.actions.mystery' | t }}</span><span aria-hidden="true">↗</span></a>{% endif %}
+  </div>
+</june-make-room>
+<noscript><style>#{{ hero_id }} [data-panel][hidden]{display:grid}#{{ hero_id }} .jh__panel{border-bottom:1px solid #ccc}</style></noscript>
+{% stylesheet %}
+.jh{display:block;position:relative;background:var(--jh-bg,#f7f3eb);color:var(--jh-ink,#121212);font-family:Arial,sans-serif;isolation:isolate;overflow:clip}.jh *{box-sizing:border-box}.jh h1,.jh h2,.jh p{margin:0;color:inherit}.jh a{color:inherit;text-decoration:none}.jh button,.jh input{font:inherit}.jh a:focus-visible,.jh button:focus-visible,.jh input:focus-visible{outline:3px solid #955331;outline-offset:5px}.jh__stage{position:relative;max-width:1680px;margin:auto}.jh__stage:before{content:"";pointer-events:none;position:absolute;inset:8% -12% -35% 36%;border-radius:50%;background:linear-gradient(145deg,transparent 42%,#fff9 43%,#e0d8c62b 47%,transparent 63%);transform:rotate(-15deg)}.jh__panel{min-height:var(--jh-height,520px);display:grid;grid-template-columns:45% 55%;grid-template-rows:1fr auto;position:relative;padding:48px clamp(24px,4vw,72px) 44px;align-items:center}.jh__panel[hidden]{display:none!important}.jh__copy{grid-column:1;grid-row:1;z-index:2;align-self:center}.jh__eyebrow{font-size:11px;line-height:1.5;letter-spacing:.24em;text-transform:uppercase;font-weight:600;margin-bottom:20px!important}.jh__title{font-family:var(--jh-font),Impact,sans-serif;font-weight:var(--jh-weight,700);font-size:clamp(76px,9.2vw,var(--jh-title-size,144px));line-height:1.04;letter-spacing:-.045em;white-space:nowrap;position:relative;z-index:3;margin-left:-4px!important}.jh__subtitle{font-size:clamp(24px,2.7vw,39px);line-height:1.13;letter-spacing:-.035em;max-width:470px;margin-top:24px!important}.jh__body{font-size:15px;line-height:1.55;max-width:410px;margin-top:18px!important}.jh__art{grid-column:2;grid-row:1 / 3;position:relative;height:100%;min-height:400px;isolation:auto;align-self:stretch}.jh__cover{position:absolute;width:42%;aspect-ratio:.74;overflow:hidden;mix-blend-mode:multiply}.jh__cover img{display:block;width:145%;max-width:none;height:auto;margin-left:-22%;margin-top:-5%}.jh__cover--left{left:12%;top:0;transform:rotate(-9deg)}.jh__cover--right{right:-1%;top:0;transform:rotate(10deg)}.jh__spread{position:absolute;left:10%;bottom:0;width:79%;transform:rotate(-7deg);border-radius:7px;box-shadow:0 1px 0 #f6f1e7,0 2px 0 #cfc5b4,0 3px 0 #eee8dc,0 4px 0 #b9ae9c,0 8px 10px -5px #382a2438,0 23px 28px -15px #382a2459}.jh__spread:after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 1px 0 #ffffff90,inset 0 0 0 1px #382a2414;pointer-events:none}.jh__spread img{display:block;width:100%;height:auto;border-radius:inherit}.jh__spread--crop{aspect-ratio:1.62;overflow:hidden;border-radius:7px}.jh__spread--crop img{width:112%;max-width:none;margin-left:-6%;margin-top:-27%}.jh__full-art{display:block;width:100%;height:100%}.jh__full-art img{width:100%;height:100%;object-fit:contain}.jh__actions{grid-column:1;grid-row:2;display:flex;align-items:center;gap:24px;z-index:3;margin-top:28px;flex-wrap:wrap}.jh__button{border:1px solid var(--jh-ink);background:var(--jh-ink);color:var(--jh-bg)!important;display:inline-flex;align-items:center;justify-content:center;gap:16px;padding:14px 22px;min-height:48px;font-size:13px;font-weight:600;line-height:1.3;cursor:pointer;border-radius:6px;box-shadow:inset 0 1px 0 #ffffff26,0 2px 0 #000,0 5px 9px -4px #221b1940;transition:background .18s,box-shadow .18s,transform .18s}.jh__button:hover{background:#38332e;transform:translateY(-1px);box-shadow:inset 0 1px 0 #ffffff30,0 3px 0 #161310,0 7px 12px -5px #221b194d}.jh__button:active{transform:translateY(1px);box-shadow:inset 0 1px 2px #0003,0 1px 0 #161310}.jh__text-link{font-size:13px;min-height:44px;display:inline-flex;align-items:center;gap:10px;text-decoration:underline!important;text-underline-offset:5px}.jh__navigation{display:flex;border-top:1px solid #24242425;position:relative;z-index:4}.jh__tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));flex:1}.jh__tab{min-height:86px;display:flex;align-items:center;justify-content:center;gap:16px;padding:16px 10px;border-right:1px solid #24242420;position:relative;font-size:14px;line-height:1.3}.jh__tab[aria-selected=true]:after{content:"";position:absolute;bottom:0;left:0;right:0;height:4px;background:currentColor}.jh__tab:hover{background:#fff7}.jh__tab svg,.jh__mystery svg{width:29px;height:29px;flex-shrink:0}.jh__tab small{display:block;font-size:10px;margin-top:5px}.jh__mystery{width:23%;background:var(--jh-ink);color:var(--jh-bg)!important;display:flex;align-items:center;justify-content:center;gap:15px;padding:18px;font-size:14px}.jh__mystery:hover{background:#38332e}.jh__alternate-title{font-family:var(--jh-font),Impact,sans-serif;font-weight:var(--jh-weight,700);font-size:clamp(45px,5.4vw,76px);line-height:1.04;letter-spacing:-.025em;max-width:540px}.jh__art--single{display:flex;justify-content:center;align-items:center;mix-blend-mode:multiply}.jh__art--single img{height:100%;max-height:450px;width:100%;object-fit:contain}.jh__panel--dated .jh__copy{grid-row:1 / 3}.jh__year{grid-column:2;grid-row:1 / 3;font-family:var(--jh-font);font-weight:var(--jh-weight);font-size:clamp(120px,21vw,310px);line-height:1;text-align:center;letter-spacing:-.07em;transform:rotate(-6deg)}.jh__year span{display:block;font:11px Arial;letter-spacing:.2em;text-transform:uppercase;margin-top:18px}.jh__form{margin-top:24px;max-width:460px}.jh__form label{display:block;font-size:12px;font-weight:600;margin-bottom:8px}.jh__form-row{display:flex;gap:8px}.jh__form input[type=email]{min-width:0;width:100%;border:1px solid #9b978e;border-radius:0;background:#fff9;color:#111;min-height:48px;padding:12px;font-size:16px}.jh__form button{flex-shrink:0}.jh__form-note{font-size:11px;line-height:1.5;margin-top:8px!important}.jh__success,.jh__error{font-size:14px;line-height:1.5}.jh__life-list{grid-column:2;grid-row:1 / 3;padding-left:40px}.jh__life-item{display:flex;align-items:center;gap:18px;min-height:100px;padding:12px 0;border-bottom:1px solid #24242430;font-size:19px}.jh__life-item img{width:76px;height:76px;object-fit:cover}.jh__life-item span:last-child{margin-left:auto}.jh__placeholder{width:100%;height:100%;max-height:400px}
+@media(min-width:750px) and (max-width:1050px){.jh__panel{padding:35px 28px;grid-template-columns:47% 53%}.jh__actions{gap:12px}.jh__button{padding:13px 16px}.jh__tab{gap:8px;font-size:12px}.jh__mystery{font-size:12px;gap:8px}.jh__art{min-height:350px}.jh__life-list{padding-left:20px}}
+@media(max-width:749px){.jh__panel{display:flex;flex-direction:column;min-height:0;padding:28px 20px 22px;align-items:stretch}.jh__copy{align-self:stretch}.jh__eyebrow{font-size:10px;margin-bottom:12px!important;letter-spacing:.2em}.jh__title{font-size:clamp(68px,17vw,var(--jh-title-mobile,94px));line-height:1.02;letter-spacing:-.035em;margin-left:0!important}.jh__subtitle{font-size:25px;line-height:1.13;margin-top:12px!important;max-width:340px}.jh__body{font-size:14px;margin-top:10px!important}.jh__art{height:var(--jh-mobile-art,255px);min-height:0;margin:12px -10px 0;flex:none}.jh__cover{width:41%}.jh__cover--left{top:0;left:10%}.jh__cover--right{top:0;right:3%}.jh__spread{width:78%;left:12%;bottom:0}.jh__actions{display:flex;flex-direction:column;align-items:stretch;gap:10px;margin-top:16px}.jh__actions .jh__text-link{border:1px solid var(--jh-ink);justify-content:center;text-decoration:none!important;min-height:44px;border-radius:6px;background:#ffffff30;box-shadow:inset 0 1px 0 #fff9,0 2px 0 #d6cebf,0 5px 9px -5px #221b1930}.jh__button{min-height:46px;padding:12px 16px;font-size:12px}.jh__navigation{display:block}.jh__tab{min-height:90px;flex-direction:column;gap:8px;padding:12px 4px;font-size:11px;text-align:center}.jh__tab svg{width:24px;height:24px}.jh__tab small{font-size:9px;line-height:1.15;margin-top:3px}.jh__mystery{width:100%;min-height:54px;padding:12px;font-size:12px;gap:12px}.jh__mystery svg{height:25px;width:25px}.jh__alternate-title{font-size:44px;max-width:100%}.jh__art--single{height:290px}.jh__panel--dated{min-height:510px}.jh__panel--dated .jh__copy{order:2}.jh__year{order:1;font-size:130px;transform:rotate(-4deg);margin:8px 0 22px}.jh__year span{font-size:9px;margin-top:8px}.jh__panel--dated .jh__alternate-title{font-size:38px}.jh__form-row{flex-direction:column}.jh__life-list{padding-left:0;margin-top:14px}.jh__life-item{font-size:17px;min-height:90px}.jh__life-item img{height:65px;width:65px}}
+@media(prefers-reduced-motion:reduce){.jh *{transition:none!important;scroll-behavior:auto!important}}
+.jh__stage:before{inset:0;background:linear-gradient(116deg,#ffffff12 0 39%,#d6cbbb4d 39.1%,#fdfbf680 53%,transparent 70%);border-radius:0;transform:none}
+.jh__stage:after{content:"";position:absolute;pointer-events:none;inset:0;z-index:0;background:linear-gradient(19deg,transparent 0 14%,#ad9c8124 14.2%,#fff9 14.7%,transparent 19%);}
+.jh__panel{z-index:1}
+.jh__panel[data-panel=undated]{min-height:clamp(540px,48vw,calc(var(--jh-height,520px) + 190px));padding:62px 3vw 55px;grid-template-columns:43% 57%;grid-template-rows:auto 1fr;align-items:start}
+.jh__panel[data-panel=undated] .jh__copy{align-self:start;padding-top:40px}
+.jh__title{font-size:clamp(112px,13.3vw,calc(var(--jh-title-size,140px) * 1.386));line-height:1;letter-spacing:-.055em;transform:scaleX(.77);transform-origin:left center;width:130%;margin-left:-3px!important}
+.jh__eyebrow{margin-bottom:24px!important}
+.jh__subtitle{margin-top:24px!important;font-size:clamp(26px,3vw,42px)}
+.jh__panel[data-panel=undated] .jh__actions{align-self:start;margin-top:22px;gap:22px}
+.jh__panel[data-panel=undated] .jh__art{position:absolute;inset:0 1.5% 0 44%;min-height:0;height:auto}
+.jh__cover{width:44%;aspect-ratio:.74;overflow:hidden;mix-blend-mode:multiply;filter:drop-shadow(7px 10px 4px #45372928);border-radius:5px}
+.jh__cover--left{left:5%;top:7%;transform:perspective(1100px) rotateY(-9deg) rotate(-8deg)}
+.jh__cover--right{right:2%;top:5%;transform:perspective(1100px) rotateY(-12deg) rotate(8deg)}
+.jh__spread{width:93%;left:-7%;bottom:7%;transform:perspective(1200px) rotateX(31deg) rotateZ(8deg);transform-origin:center bottom;box-shadow:0 1px 0 #fcf9f1,0 3px 0 #d2c7b4,0 4px 0 #f8f2e5,0 6px 0 #c2b59d,0 7px 0 #eee6d5,0 9px 0 #9e8c70,8px 16px 12px -7px #59442b63,16px 36px 30px -13px #59442b59}
+.jh__spread:after{background:linear-gradient(90deg,transparent 39%,#7a634519 47%,#fff9 49%,#68513626 51%,transparent 58%);box-shadow:inset 0 1px 0 #fff9,inset 0 0 0 1px #382a2414}
+.jh__button{text-transform:uppercase;letter-spacing:.01em;border-radius:5px}
+.jh__navigation{background:#f7f3ebc9}
+.jh__tab{min-height:78px}
+@media(min-width:750px) and (max-width:1050px){.jh__panel[data-panel=undated]{padding:40px 24px;min-height:560px}.jh__panel[data-panel=undated] .jh__copy{padding-top:25px}.jh__title{font-size:14vw;transform:scaleX(.7);width:143%}.jh__panel[data-panel=undated] .jh__art{left:44%;right:2%}.jh__cover{width:47%}.jh__cover--left{left:0;top:13%}.jh__cover--right{top:10%}.jh__spread{width:105%;left:-14%;bottom:8%}.jh__subtitle{font-size:28px}.jh__panel[data-panel=undated] .jh__actions{max-width:280px;gap:10px}}
+@media(max-width:749px){.jh__stage:before{background:linear-gradient(120deg,transparent 28%,#d6cbbb33 28.2%,#fff7 51%,transparent 73%)}.jh__stage:after{background:linear-gradient(20deg,transparent 28%,#ad9c8120 28.2%,#fff7 28.7%,transparent 33%)}.jh__panel[data-panel=undated]{padding:25px 20px 22px;min-height:0;display:flex}.jh__panel[data-panel=undated] .jh__copy{padding-top:0}.jh__eyebrow{margin-bottom:12px!important}.jh__title{font-size:clamp(100px,27vw,calc(var(--jh-title-mobile,88px) * 1.59));line-height:.93;white-space:normal;width:3.7em;max-width:130%;transform:scaleX(.76);letter-spacing:-.055em}.jh__subtitle{font-size:27px;line-height:1.13;margin-top:14px!important;max-width:340px}.jh__body{font-size:13px;margin-top:12px!important}.jh__panel[data-panel=undated] .jh__art{position:relative;inset:auto;height:calc(var(--jh-mobile-art,250px) + 40px);min-height:0;margin:12px -14px 0}.jh__cover{width:44%}.jh__cover--left{left:8%;top:0;transform:perspective(700px) rotateY(-9deg) rotate(-8deg)}.jh__cover--right{right:3%;top:0}.jh__spread{width:91%;left:2%;bottom:4%;transform:perspective(800px) rotateX(33deg) rotateZ(6deg)}.jh__panel[data-panel=undated] .jh__actions{margin-top:8px;gap:10px;align-self:stretch}.jh__button{min-height:44px}.jh__actions .jh__text-link{min-height:42px}.jh__tab{min-height:82px}.jh__mystery{min-height:52px}}
+@media(max-width:359px){.jh__panel[data-panel=undated] .jh__art{height:250px}.jh__subtitle{font-size:24px}}
+.jh__panel[data-panel=undated] .jh__art{grid-column:auto;grid-row:auto}
+.jh__cover{aspect-ratio:.69}
+.jh__cover img{width:155%;margin-left:-27%;margin-top:-13%}
+@media(min-width:750px){.jh__cover--left{left:8%;top:8%}.jh__cover--right{right:2%;top:6%}.jh__spread{width:98%;left:-7%;bottom:7%}}
+@media(min-width:750px) and (max-width:1050px){.jh__cover--left{top:17%;left:1%}.jh__cover--right{top:14%}.jh__spread{bottom:8%;width:103%;left:-12%}}
+@media(min-width:1051px){.jh__title{transform:scaleX(.68)}.jh__spread{width:92%;left:-5%;bottom:10%}.jh__cover--left{left:10%}}
+@media(min-width:750px) and (max-width:1050px){.jh__title{transform:scaleX(.61)}.jh__panel[data-panel=undated] .jh__art{left:47%}.jh__cover--left{left:3%}.jh__spread{width:100%;left:-8%;bottom:10%}}
+
+.jh__cover{aspect-ratio:.77;filter:none}
+{% endstylesheet %}
+{% javascript %}
+if (!customElements.get('june-make-room')) {
+  customElements.define('june-make-room', class extends HTMLElement {
+    connectedCallback() {
+      if (this.ready) return;
+      this.ready = true;
+      this.tabs = [...this.querySelectorAll('[data-target]')];
+      this.panels = [...this.querySelectorAll('[data-panel]')];
+      this.querySelector('.jh__tabs').setAttribute('role', 'tablist');
+      this.tabs.forEach(tab => {
+        tab.setAttribute('role', 'tab');
+        tab.setAttribute('aria-controls', this.id + '-' + tab.dataset.target);
+        tab.addEventListener('click', event => { event.preventDefault(); this.select(tab.dataset.target); });
+        tab.addEventListener('keydown', event => {
+          const index = this.tabs.indexOf(tab);
+          let next;
+          if (event.key === 'ArrowRight') next = (index + 1) % this.tabs.length;
+          if (event.key === 'ArrowLeft') next = (index + this.tabs.length - 1) % this.tabs.length;
+          if (event.key === 'Home') next = 0;
+          if (event.key === 'End') next = this.tabs.length - 1;
+          if (event.key === ' ') { event.preventDefault(); this.select(tab.dataset.target); }
+          if (next !== undefined) { event.preventDefault(); this.tabs[next].focus(); this.select(this.tabs[next].dataset.target); }
+        });
+      });
+      this.panels.forEach(panel => {
+        panel.setAttribute('role', 'tabpanel');
+        panel.setAttribute('aria-labelledby', this.id + '-tab-' + panel.dataset.panel);
+        panel.tabIndex = 0;
+      });
+      const launch = this.querySelector('.jh__form');
+      this.select(launch && (launch.querySelector('.jh__success, .jh__error') || location.hash.startsWith('#' + this.id + '-launch')) ? 'dated' : 'undated');
+      launch?.addEventListener('submit', () => { launch.action = launch.action.split('#')[0] + '#' + this.id + '-launch'; });
+      this.editorHandler = event => { if (this.contains(event.target) && event.target.closest('.jh__life-item')) this.select('life'); };
+      document.addEventListener('shopify:block:select', this.editorHandler);
+    }
+    disconnectedCallback() { document.removeEventListener('shopify:block:select', this.editorHandler); }
+    select(key) {
+      this.tabs.forEach(tab => { const active = tab.dataset.target === key; tab.setAttribute('aria-selected', String(active)); tab.tabIndex = active ? 0 : -1; });
+      this.panels.forEach(panel => { panel.hidden = panel.dataset.panel !== key; });
+    }
+  });
+}
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "June \u00b7 Make Room",
+  "tag": "section",
+  "class": "june-make-room-section",
+  "enabled_on": {
+    "templates": [
+      "index"
+    ]
+  },
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The planner edit"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "MAKE ROOM."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "For big plans. And\neveryday ones."
+    },
+    {
+      "type": "text",
+      "id": "body",
+      "label": "Supporting text",
+      "default": "Start any day. Make it yours."
+    },
+    {
+      "type": "header",
+      "content": "Planner imagery"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Optional complete desktop artwork"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_mobile",
+      "label": "Optional complete mobile artwork"
+    },
+    {
+      "type": "text",
+      "id": "hero_alt",
+      "label": "Complete artwork description",
+      "default": "Undated planners and an open planner spread"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_left",
+      "label": "Left cover"
+    },
+    {
+      "type": "text",
+      "id": "cover_left_alt",
+      "label": "Left cover description",
+      "default": "Serendipity undated planner"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_right",
+      "label": "Right cover"
+    },
+    {
+      "type": "text",
+      "id": "cover_right_alt",
+      "label": "Right cover description",
+      "default": "Quiet The Mind undated planner"
+    },
+    {
+      "type": "image_picker",
+      "id": "inside_image",
+      "label": "Open planner"
+    },
+    {
+      "type": "text",
+      "id": "inside_alt",
+      "label": "Open planner description",
+      "default": "Yearly goals pages inside an undated planner"
+    },
+    {
+      "type": "checkbox",
+      "id": "crop_interior",
+      "label": "Crop catalogue border from interior image",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Destinations"
+    },
+    {
+      "type": "collection",
+      "id": "undated_collection",
+      "label": "Undated collection"
+    },
+    {
+      "type": "collection",
+      "id": "limited_collection",
+      "label": "Limited Edition collection"
+    },
+    {
+      "type": "collection",
+      "id": "life_collection",
+      "label": "All planners and journals"
+    },
+    {
+      "type": "product",
+      "id": "mystery_product",
+      "label": "Mystery Box product"
+    },
+    {
+      "type": "url",
+      "id": "mystery_link",
+      "label": "Fallback Mystery Box link"
+    },
+    {
+      "type": "header",
+      "content": "Alternate tabs"
+    },
+    {
+      "type": "text",
+      "id": "limited_heading",
+      "label": "Limited Edition heading",
+      "default": "A little extra.\nAll yours."
+    },
+    {
+      "type": "textarea",
+      "id": "limited_body",
+      "label": "Limited Edition description",
+      "default": "Undated planners with thoughtful extras. Discover the gifts included with each design."
+    },
+    {
+      "type": "image_picker",
+      "id": "limited_image",
+      "label": "Limited Edition image"
+    },
+    {
+      "type": "text",
+      "id": "limited_alt",
+      "label": "Limited Edition image description",
+      "default": "Dolce Far Niente Limited Edition undated planner"
+    },
+    {
+      "type": "text",
+      "id": "dated_heading",
+      "label": "2027 heading",
+      "default": "The next chapter is coming."
+    },
+    {
+      "type": "text",
+      "id": "life_heading",
+      "label": "Life Journals heading",
+      "default": "For the chapters that matter."
+    },
+    {
+      "type": "textarea",
+      "id": "life_body",
+      "label": "Life Journals description",
+      "default": "Big days. Fresh starts. Little firsts."
+    },
+    {
+      "type": "header",
+      "content": "Layout and colour"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Desktop stage minimum height",
+      "min": 420,
+      "max": 680,
+      "step": 10,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "mobile_art_height",
+      "label": "Mobile artwork height",
+      "min": 180,
+      "max": 340,
+      "step": 10,
+      "unit": "px",
+      "default": 250
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#f7f3eb"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text and buttons",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Product image defaults"
+    },
+    {
+      "type": "product",
+      "id": "left_product",
+      "label": "Left planner / interior source"
+    },
+    {
+      "type": "product",
+      "id": "right_product",
+      "label": "Right planner"
+    },
+    {
+      "type": "range",
+      "id": "interior_number",
+      "label": "Interior image number in left product gallery",
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "product",
+      "id": "edition_product",
+      "label": "Limited Edition planner"
+    },
+    {
+      "type": "header",
+      "content": "Typography \u00b7 Display font"
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Display font",
+      "default": "oswald_n7"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Desktop heading maximum size",
+      "min": 90,
+      "max": 170,
+      "step": 2,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Mobile heading maximum size",
+      "min": 60,
+      "max": 110,
+      "step": 2,
+      "unit": "px",
+      "default": 88
+    }
+  ],
+  "blocks": [
+    {
+      "type": "life_link",
+      "name": "Life journal link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Wedding Planners"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Optional image override"
+        }
+      ],
+      "limit": 3
+    },
+    {
+      "type": "typography",
+      "name": "Typography controls",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Typography \u00b7 Font families"
+        },
+        {
+          "type": "checkbox",
+          "id": "custom_text_font",
+          "label": "Use custom text font (otherwise Arial)",
+          "default": false
+        },
+        {
+          "type": "font_picker",
+          "id": "text_font",
+          "label": "Text font",
+          "default": "assistant_n4"
+        },
+        {
+          "type": "paragraph",
+          "content": "Display font applies to headings. Text font applies to descriptions, buttons and tabs. Weight availability depends on the selected font family."
+        },
+        {
+          "type": "header",
+          "content": "Typography \u00b7 Headings"
+        },
+        {
+          "type": "range",
+          "id": "heading_weight",
+          "label": "Thickness (font weight)",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 700
+        },
+        {
+          "type": "range",
+          "id": "heading_tracking",
+          "label": "Letter spacing",
+          "min": -8,
+          "max": 30,
+          "step": 0.5,
+          "default": -5.5,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "heading_leading",
+          "label": "Line spacing",
+          "min": 90,
+          "max": 190,
+          "step": 1,
+          "default": 100,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Typography \u00b7 Subheading"
+        },
+        {
+          "type": "range",
+          "id": "subtitle_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 42,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "subtitle_size_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 27,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "subtitle_weight",
+          "label": "Thickness (font weight)",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "subtitle_tracking",
+          "label": "Letter spacing",
+          "min": -8,
+          "max": 30,
+          "step": 0.5,
+          "default": -3.5,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "subtitle_leading",
+          "label": "Line spacing",
+          "min": 90,
+          "max": 190,
+          "step": 1,
+          "default": 113,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Typography \u00b7 Supporting text"
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 15,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "body_size_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 13,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "body_weight",
+          "label": "Thickness (font weight)",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "body_tracking",
+          "label": "Letter spacing",
+          "min": -8,
+          "max": 30,
+          "step": 0.5,
+          "default": 0,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "body_leading",
+          "label": "Line spacing",
+          "min": 90,
+          "max": 190,
+          "step": 1,
+          "default": 155,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Typography \u00b7 Eyebrow"
+        },
+        {
+          "type": "range",
+          "id": "eyebrow_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 11,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "eyebrow_size_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 10,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "eyebrow_weight",
+          "label": "Thickness (font weight)",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "eyebrow_tracking",
+          "label": "Letter spacing",
+          "min": -8,
+          "max": 30,
+          "step": 0.5,
+          "default": 24,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "eyebrow_leading",
+          "label": "Line spacing",
+          "min": 90,
+          "max": 190,
+          "step": 1,
+          "default": 150,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Typography \u00b7 Buttons and links"
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 13,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "button_size_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 12,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "button_weight",
+          "label": "Thickness (font weight)",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "button_tracking",
+          "label": "Letter spacing",
+          "min": -8,
+          "max": 30,
+          "step": 0.5,
+          "default": 1,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "button_leading",
+          "label": "Line spacing",
+          "min": 90,
+          "max": 190,
+          "step": 1,
+          "default": 130,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Typography \u00b7 Tabs and navigation"
+        },
+        {
+          "type": "range",
+          "id": "nav_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 14,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "nav_size_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 11,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "nav_weight",
+          "label": "Thickness (font weight)",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "nav_tracking",
+          "label": "Letter spacing",
+          "min": -8,
+          "max": 30,
+          "step": 0.5,
+          "default": 0,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "nav_leading",
+          "label": "Line spacing",
+          "min": 90,
+          "max": 190,
+          "step": 1,
+          "default": 130,
+          "unit": "%"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "June \u00b7 Make Room",
+      "blocks": [
+        {
+          "type": "typography"
+        },
+        {
+          "type": "life_link"
+        },
+        {
+          "type": "life_link",
+          "settings": {
+            "label": "Rewritable Planners"
+          }
+        },
+        {
+          "type": "life_link",
+          "settings": {
+            "label": "Baby Record Books"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

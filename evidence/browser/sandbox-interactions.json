@@ -1,0 +1,136 @@
+[
+  {
+    "mode": "desktop",
+    "geometry": {
+      "top": 974,
+      "height": 5800
+    },
+    "planner": {
+      "label": "Personal planning",
+      "headings": [
+        {
+          "text": "",
+          "opacity": "1"
+        },
+        {
+          "text": "Plan the celebration",
+          "opacity": "1"
+        },
+        {
+          "text": "Make space for yourself",
+          "opacity": "1"
+        },
+        {
+          "text": "Hold onto every first",
+          "opacity": "1"
+        },
+        {
+          "text": "",
+          "opacity": "1"
+        },
+        {
+          "text": "",
+          "opacity": "1"
+        }
+      ],
+      "trackHeight": 5800
+    },
+    "categoryStates": [
+      {
+        "selected": "Category",
+        "color": "rgb(141, 147, 203)",
+        "activePanels": 1,
+        "products": 0,
+        "banners": 3
+      },
+      {
+        "selected": "Category",
+        "color": "rgb(188, 216, 236)",
+        "activePanels": 1,
+        "products": 0,
+        "banners": 3
+      },
+      {
+        "selected": "Category",
+        "color": "rgb(255, 203, 225)",
+        "activePanels": 1,
+        "products": 0,
+        "banners": 3
+      },
+      {
+        "selected": "Category",
+        "color": "rgb(248, 223, 168)",
+        "activePanels": 1,
+        "products": 0,
+        "banners": 3
+      }
+    ]
+  },
+  {
+    "mode": "mobile",
+    "geometry": {
+      "top": 769.859375,
+      "height": 4895
+    },
+    "planner": {
+      "label": "Personal planning",
+      "headings": [
+        {
+          "text": "",
+          "opacity": "1"
+        },
+        {
+          "text": "Plan the celebration",
+          "opacity": "1"
+        },
+        {
+          "text": "Make space for yourself",
+          "opacity": "1"
+        },
+        {
+          "text": "Hold onto every first",
+          "opacity": "1"
+        },
+        {
+          "text": "",
+          "opacity": "1"
+        },
+        {
+          "text": "",
+          "opacity": "1"
+        }
+      ],
+      "trackHeight": 4895
+    },
+    "categoryStates": [
+      {
+        "selected": "Category",
+        "color": "rgb(141, 147, 203)",
+        "activePanels": 1,
+        "products": 0,
+        "banners": 3
+      },
+      {
+        "selected": "Category",
+        "color": "rgb(188, 216, 236)",
+        "activePanels": 1,
+        "products": 0,
+        "banners": 3
+      },
+      {
+        "selected": "Category",
+        "color": "rgb(255, 203, 225)",
+        "activePanels": 1,
+        "products": 0,
+        "banners": 3
+      },
+      {
+        "selected": "Category",
+        "color": "rgb(248, 223, 168)",
+        "activePanels": 1,
+        "products": 0,
+        "banners": 3
+      }
+    ]
+  }
+]

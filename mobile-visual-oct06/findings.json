@@ -1,0 +1,256 @@
+[
+  [
+    "Header & search",
+    "00-search.png",
+    [
+      [
+        "Fix",
+        "The animated logo repeatedly dissolves into dots and a black shape. On a phone this reads as a broken logo. Use a stable mobile logo; retain desktop animation if desired."
+      ],
+      [
+        "Improve",
+        "Search suggestions fill a tall, mostly empty panel. Make the initial list compact and keep results close to the field."
+      ],
+      [
+        "Content",
+        "Rakhi Gifts and Gifts for Sister lead the October search suggestions. Review seasonal relevance rather than presenting an old campaign as current."
+      ]
+    ]
+  ],
+  [
+    "1 \u00b7 Hero",
+    "01-limited-confirmed.png",
+    [
+      [
+        "Improve",
+        "Undated copy, full-width primary action and separate secondary action push the artwork and category tabs below the initial phone screen."
+      ],
+      [
+        "Improve",
+        "Equal tab heights are retained, but shorter Limited/Journal content leaves conspicuous blank space below. Rebalance internal spacing without allowing tab-height jumps."
+      ],
+      [
+        "Improve",
+        "Four category tabs wrap differently: Limited Edition, Life Journals and 2027 Coming soon occupy different line counts. Standardise icon and label alignment."
+      ],
+      [
+        "Investigate",
+        "Limited artwork was blank immediately after switching and appeared on a subsequent capture. Preload adjacent hero artwork and verify on a cold connection; do not treat the initial blank frame as a permanently missing image."
+      ]
+    ]
+  ],
+  [
+    "2 \u00b7 Undated",
+    "02-undated-details.png",
+    [
+      [
+        "Fix",
+        "Delivery details and Returns policy visually run together in the mobile layout. Restore an explicit gap and independent touch areas."
+      ],
+      [
+        "Improve",
+        "Large swipeable covers are followed by a second thumbnail selector. This duplicates visual decision controls and adds height."
+      ],
+      [
+        "Improve",
+        "Interior preview is a tiny square beside a multi-line copy block. The useful page detail is unreadable until enlarged; give the preview more width."
+      ],
+      [
+        "Improve",
+        "Purchase, compare, reassurance and interior exploration become four stacked bands. Tighten their relationship while preserving the primary purchase action."
+      ]
+    ]
+  ],
+  [
+    "3 \u00b7 Limited Edition",
+    "03-limited.png",
+    [
+      [
+        "Improve",
+        "Heading, tall cover stage, cover thumbnails and selected title push the purchase action well below the initial section view."
+      ],
+      [
+        "Improve",
+        "The freebies badge competes with the cover at a similar visual weight. Reduce it on phones while preserving the included count."
+      ],
+      [
+        "Improve",
+        "Expanded extras show one large card and a clipped neighbour at375px. Add an explicit swipe cue or compact count; the crop is carousel behaviour, not page overflow."
+      ],
+      [
+        "Improve",
+        "The unboxing toggle looks as prominent as the shopping action. Differentiate exploration from purchase more clearly."
+      ]
+    ]
+  ],
+  [
+    "4 \u00b7 2027 announcement",
+    "03-limited-bottom.png",
+    [
+      [
+        "Improve",
+        "The introduction, large portal and second signup headline occupy roughly a screen before the form is reached. Reduce portal and inter-block spacing on mobile."
+      ],
+      [
+        "Improve",
+        "Two competing bold headings split a single announcement into two visual sections. Keep the main heading and subordinate the signup prompt."
+      ],
+      [
+        "Improve",
+        "The year extends beyond the portal outline. This can be intentional, but needs a tighter mobile composition rather than desktop proportions stacked vertically."
+      ]
+    ]
+  ],
+  [
+    "5 \u00b7 Inside Discovery",
+    "05-inside-main.png",
+    [
+      [
+        "Improve",
+        "The planner spread is soft and its annotations are illegible at the displayed size. Prefer a sharper genuine source and crop for page content."
+      ],
+      [
+        "Improve",
+        "Weekly plans wraps while neighbouring labels remain one line. Give tabs a consistent two-line rhythm or use a deliberate horizontal control."
+      ],
+      [
+        "Improve",
+        "Description, large preview action, shopping link and attribution create a long tail. Shorten the description and quieten the attribution without removing the product link."
+      ]
+    ]
+  ],
+  [
+    "6 \u00b7 Other Chapters",
+    "06-story-start.png",
+    [
+      [
+        "Improve",
+        "The initial blank stage can look like the page failed to load. Keep the approved empty opening but shorten the lead-in or add a subtle scroll cue."
+      ],
+      [
+        "Improve",
+        "Much of each pinned screen is empty above the product. Rebalance product/copy vertically for small screens while preserving one shared stage."
+      ],
+      [
+        "Improve",
+        "The visible control says Skip the story rather than the approved Skip to shopping. The latter explains the destination more clearly."
+      ]
+    ]
+  ],
+  [
+    "7 \u00b7 Home D\u00e9cor",
+    "07-decor.png",
+    [
+      [
+        "Fix",
+        "A floral-sticks photo/product URL appears under Black & white ceramic vase, with vase specifications. Resolve the actual product mapping before adjusting styling."
+      ],
+      [
+        "Improve",
+        "Large numbered hotspots and a second Vase/Birds/Frame selector compete. Choose one primary mobile selection mechanism."
+      ],
+      [
+        "Improve",
+        "The actual product thumbnail is very small beside wrapped text and a narrow action. Give real product photography more prominence than the styled scene."
+      ]
+    ]
+  ],
+  [
+    "8 \u00b7 Lighting",
+    "08-lighting-430.png",
+    [
+      [
+        "Fix",
+        "Vespera and Gilded Wave backgrounds become enlarged vertical close-ups; the complete lamp and base are lost. Use dedicated mobile artwork/focal framing."
+      ],
+      [
+        "Improve",
+        "The heading lies over the bright lamp area, competing with the product silhouette. Reserve quieter space for copy."
+      ],
+      [
+        "Improve",
+        "Small dark thumbnails are difficult to distinguish. Increase their useful image area and make selected state clearer."
+      ],
+      [
+        "Improve",
+        "The lower product panel covers a substantial part of the scene. Integrate it below the visible lamp on mobile while keeping the same overall photographic treatment."
+      ]
+    ]
+  ],
+  [
+    "9 \u00b7 Glassware",
+    "09-slow-mornings.png",
+    [
+      [
+        "Fix",
+        "Slow mornings shows a champagne flute while its title and destination identify Ripple Coffee Mug. This is a product-accuracy defect, not merely styling."
+      ],
+      [
+        "Improve",
+        "The large headline, tall photo and bottom buying panel make a long mobile section. Resize the headline/photo together, preserving the approved condensed type."
+      ],
+      [
+        "Improve",
+        "There is excessive empty space between Details and All glassware. Remove the mobile minimum-height slack."
+      ],
+      [
+        "Improve",
+        "Slow mornings wraps while the other selector labels do not. Align labels consistently."
+      ]
+    ]
+  ],
+  [
+    "10 \u00b7 Dining",
+    "10-dining-bottom.png",
+    [
+      [
+        "Improve",
+        "Arrangement controls and product tabs form two consecutive selection layers before the actual purchase details."
+      ],
+      [
+        "Improve",
+        "The selected real photo is tiny, while a large gap separates its product title from the price. Rebuild this small product summary as one coherent block."
+      ],
+      [
+        "Improve",
+        "Shop the table edit, Lunch essentials and Kitchen organisation each consume a separate band. Compress secondary navigation after the primary action."
+      ]
+    ]
+  ],
+  [
+    "11 \u00b7 Mystery Box",
+    "11-mystery.png",
+    [
+      [
+        "Improve",
+        "From \u20b91,499 repeats immediately in the first tier, creating redundant pricing emphasis."
+      ],
+      [
+        "Improve",
+        "The two box-value links and a generic Explore action compete. Make it clearer whether a row chooses a value or navigates directly."
+      ],
+      [
+        "Improve",
+        "How the surprise works overlaps the artwork/base of the box. Separate it slightly for a cleaner silhouette."
+      ]
+    ]
+  ],
+  [
+    "12 \u00b7 Footer",
+    "12-footer.png",
+    [
+      [
+        "Improve",
+        "The very large two-line wordmark adds considerable scrolling before payment/localisation details. Scale it down on small screens."
+      ],
+      [
+        "Improve",
+        "Visa and Mastercard repeat a logo and text in small badges, while other badges use text only. Standardise badge treatment."
+      ],
+      [
+        "Observed good",
+        "Accordion rows and the rebuilt payment row fit the phone width. No reason to rebuild these solely to increase the issue count; preserve their functional layout."
+      ]
+    ]
+  ]
+]

@@ -1,0 +1,498 @@
+{% liquid
+ assign typography = section.blocks | where: 'type', 'typography' | first
+ assign type = typography.settings
+ assign pieces = section.blocks | where: 'type', 'piece'
+ assign count = 0
+ for block in pieces
+  if block.settings.product != blank
+   assign count = count | plus: 1
+  endif
+ endfor
+%}
+{% style %}
+#JuneGlow-{{ section.id }}{--jglow-bg:{{ section.settings.background }};--jglow-ink:{{ section.settings.ink }};--jglow-accent:{{ section.settings.accent }};--jglow-duration:{{ 24000 | divided_by: section.settings.speed }}ms;}
+{% assign face = type.heading_font | default: section.settings.fallback_font %}{% assign weight = type.heading_weight | default: 900 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneGlow-{{ section.id }}{--jglow-heading-font:{{ face.family }},{{ face.fallback_families }};--jglow-heading-weight:{{ type.heading_weight | default: 900 }};--jglow-heading-size:{{ type.heading_size | default: 54 }}px;--jglow-heading-mobile:{{ type.heading_mobile | default: 34 }}px;--jglow-heading-tracking:{{ type.heading_tracking | default: -4 | divided_by: 100.0 }}em;--jglow-heading-leading:{{ type.heading_leading | default: 105 | divided_by: 100.0 }};}
+{% assign face = type.title_font | default: section.settings.fallback_font %}{% assign weight = type.title_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneGlow-{{ section.id }}{--jglow-title-font:{{ face.family }},{{ face.fallback_families }};--jglow-title-weight:{{ type.title_weight | default: 600 }};--jglow-title-size:{{ type.title_size | default: 22 }}px;--jglow-title-mobile:{{ type.title_mobile | default: 20 }}px;--jglow-title-tracking:{{ type.title_tracking | default: -2 | divided_by: 100.0 }}em;--jglow-title-leading:{{ type.title_leading | default: 120 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign weight = type.body_weight | default: 400 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneGlow-{{ section.id }}{--jglow-body-font:{{ face.family }},{{ face.fallback_families }};--jglow-body-weight:{{ type.body_weight | default: 400 }};--jglow-body-size:{{ type.body_size | default: 16 }}px;--jglow-body-mobile:{{ type.body_mobile | default: 14 }}px;--jglow-body-tracking:{{ type.body_tracking | default: -1 | divided_by: 100.0 }}em;--jglow-body-leading:{{ type.body_leading | default: 150 | divided_by: 100.0 }};}
+{% assign face = type.button_font | default: section.settings.fallback_font %}{% assign weight = type.button_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneGlow-{{ section.id }}{--jglow-button-font:{{ face.family }},{{ face.fallback_families }};--jglow-button-weight:{{ type.button_weight | default: 600 }};--jglow-button-size:{{ type.button_size | default: 14 }}px;--jglow-button-mobile:{{ type.button_mobile | default: 14 }}px;--jglow-button-tracking:{{ type.button_tracking | default: -1 | divided_by: 100.0 }}em;--jglow-button-leading:{{ type.button_leading | default: 130 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign bold = face | font_modify: 'weight', '700' %}{{ bold | font_face: font_display: 'swap' }}
+{% endstyle %}
+
+
+{% capture arrow %}<span class="jglow__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{% endcapture %}
+{% if count > 0 %}
+<june-glow id="JuneGlow-{{ section.id }}" class="jglow" data-motion="{{ section.settings.motion }}" aria-labelledby="JuneGlowHeading-{{ section.id }}">
+ <div class="jglow__stage">
+ <div class="jglow__scenes">{% assign number = 0 %}{% for block in pieces %}{% if block.settings.product != blank %}{% assign scene = block.settings.scene | default: block.settings.product.featured_image %}
+ <div class="jglow__scene" data-scene="{{ number }}" {% unless number == 0 %}hidden{% endunless %}>
+ {% if scene != blank %}<picture>{% if block.settings.mobile_scene != blank %}<source media="(max-width:749px)" srcset="{{ block.settings.mobile_scene | image_url: width: 900 }}">{% endif %}{{ scene | image_url: width: 1600 | image_tag: widths: '500,800,1200,1600', sizes: '(min-width: 1680px) 1000px, (min-width: 750px) 65vw, 100vw', loading: 'lazy', alt: block.settings.product.title }}</picture>{% endif %}
+ </div>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}</div>
+ <header class="jglow__header"><p class="jglow__eyebrow jglow__button-type">{{ section.settings.eyebrow | escape }}</p><h2 class="jglow__heading" id="JuneGlowHeading-{{ section.id }}">{{ section.settings.heading | escape }}<br>{{ section.settings.heading_second | escape }}</h2><div class="jglow__body">{{ section.settings.body }}</div></header>
+ </div>
+ <div class="jglow__dock">
+ <div class="jglow__selection"><p class="jglow__eyebrow jglow__button-type">{{ section.settings.choose | escape }}</p><div class="jglow__nav" role="group" aria-label="{{ section.settings.choose | escape }}">{% assign number = 0 %}{% for block in pieces %}{% if block.settings.product != blank %}{% assign image = block.settings.image | default: block.settings.scene | default: block.settings.product.featured_image %}
+ <button type="button" class="jglow__choice jglow__button-type" data-select="{{ number }}" data-block="{{ block.id }}" aria-pressed="{% if number == 0 %}true{% else %}false{% endif %}" aria-controls="JuneGlowProduct-{{ section.id }}-{{ number }}" {{ block.shopify_attributes }}>{% if image != blank %}{{ image | image_url: width: 200 | image_tag: widths: '100,200', sizes: '70px', loading: 'lazy', alt: '' }}{% endif %}<span>{{ block.settings.label | default: block.settings.product.title | escape }}</span></button>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}</div></div>
+ <div class="jglow__details" aria-live="polite" aria-atomic="true">{% assign number = 0 %}{% for block in pieces %}{% assign product = block.settings.product %}{% if product != blank %}<div data-product="{{ number }}" id="JuneGlowProduct-{{ section.id }}-{{ number }}" {% unless number == 0 %}hidden{% endunless %}><div class="jglow__product-heading"><h3 class="jglow__title">{{ block.settings.name | default: product.title | escape }}</h3><p class="jglow__body">{% if product.price_varies %}{{ section.settings.from | escape }} {% endif %}{{ product.price | money }}</p></div><a class="jglow__primary jglow__button-type" href="{{ product.url }}">{% if product.available %}{{ section.settings.shop | escape }}{% else %}{{ section.settings.unavailable | escape }}{% endif %}{{ arrow }}</a></div>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}{% if section.settings.collection != blank %}<a class="jglow__secondary jglow__button-type" href="{{ section.settings.collection.url }}">{{ section.settings.all | escape }}{{ arrow }}</a>{% endif %}</div>
+ </div>
+ <noscript><style>#JuneGlow-{{ section.id }} [data-product][hidden]{display:block!important;margin-top:20px}#JuneGlow-{{ section.id }} .jglow__selection{display:none}#JuneGlow-{{ section.id }} .jglow__dock{display:block}</style></noscript>
+</june-glow>
+{% elsif request.design_mode %}<p>{{ section.settings.setup | escape }}</p>{% endif %}
+
+{% stylesheet %}
+
+june-glow.jglow{display:block;position:relative;isolation:isolate;max-width:1680px;margin:auto;background:var(--jglow-bg);color:var(--jglow-ink);padding:0 36px 28px}
+.jglow *{box-sizing:border-box}.jglow [hidden]{display:none!important}.jglow h2,.jglow h3,.jglow p{margin:0;color:inherit}.jglow a{color:inherit;text-decoration:none}.jglow button{appearance:none;cursor:pointer;color:inherit}.jglow strong{font-weight:700}.jglow a:focus-visible,.jglow button:focus-visible{outline:3px solid var(--jglow-accent);outline-offset:5px}
+.jglow .jglow__heading{font-family:var(--jglow-heading-font);font-size:var(--jglow-heading-size);font-weight:var(--jglow-heading-weight);letter-spacing:var(--jglow-heading-tracking);line-height:var(--jglow-heading-leading)}
+.jglow .jglow__title{font-family:var(--jglow-title-font);font-size:var(--jglow-title-size);font-weight:var(--jglow-title-weight);letter-spacing:var(--jglow-title-tracking);line-height:var(--jglow-title-leading)}
+.jglow .jglow__body{font-family:var(--jglow-body-font);font-size:var(--jglow-body-size);font-weight:var(--jglow-body-weight);letter-spacing:var(--jglow-body-tracking);line-height:var(--jglow-body-leading)}
+.jglow .jglow__button-type{font-family:var(--jglow-button-font);font-size:var(--jglow-button-size);font-weight:var(--jglow-button-weight);letter-spacing:var(--jglow-button-tracking);line-height:var(--jglow-button-leading)}
+
+
+.jglow__stage{position:relative;min-height:460px;margin:0 -36px}.jglow__scenes{position:absolute;inset:0;overflow:hidden}.jglow__scene{position:absolute;inset:0 0 0 43%;animation:jglow-in var(--jglow-duration) ease both}.jglow__scene picture,.jglow__scene img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}.jglow__scene img{mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}.jglow__scene:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--jglow-bg),transparent 20%),linear-gradient(0deg,var(--jglow-bg),transparent 22%)}
+.jglow__header{position:relative;z-index:1;width:57%;padding:64px 0 60px 60px;pointer-events:none}.jglow .jglow__heading{margin:20px 0 24px;overflow-wrap:break-word;text-shadow:0 2px 25px #0006}.jglow__eyebrow{text-transform:uppercase;font-size:calc(var(--jglow-button-size)*.75)!important;letter-spacing:.15em!important}.jglow__header .jglow__body{max-width:350px}
+.jglow__dock{position:relative;display:grid;grid-template-columns:1.5fr 1fr;gap:34px;background:#ffffff06;border:1px solid #ffffff50;border-radius:3px;padding:20px 26px}.jglow__selection{min-width:0}.jglow__nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:10px}.jglow__choice{background:transparent;border:0;border-bottom:2px solid transparent;display:flex;align-items:center;justify-content:center;gap:14px;padding:8px 4px 14px;opacity:.65;min-height:88px;transition:opacity var(--jglow-duration) ease,border-color var(--jglow-duration) ease}.jglow__choice img{width:64px;height:64px;border-radius:50%;object-fit:cover}.jglow__choice span{overflow-wrap:anywhere}.jglow__choice[aria-pressed=true]{opacity:1;border-color:var(--jglow-accent)}.jglow__choice:hover{opacity:1}.jglow__details{border-left:1px solid #ffffff45;padding-left:34px;align-self:center}.jglow__product-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}.jglow__product-heading .jglow__body{white-space:nowrap}.jglow__arrow{display:grid;place-items:center;width:32px;height:32px;flex:none;border-radius:50%;background:#111;color:var(--jglow-accent)}.jglow__arrow svg{width:18px;height:18px}.jglow .jglow__primary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:50px;padding:8px 9px 8px 22px;border:1px solid #111;border-radius:999px;background:var(--jglow-accent);color:#111;box-shadow:-2px 1px 0 #111;transition:transform var(--jglow-duration) ease}.jglow .jglow__secondary{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;text-decoration:underline;text-underline-offset:4px;margin-top:6px}.jglow__secondary .jglow__arrow{width:22px;height:22px}.jglow__secondary svg{width:14px;height:14px}
+@keyframes jglow-in{from{opacity:0}to{opacity:1}}@media(hover:hover){.jglow[data-motion=true] .jglow__primary:hover{transform:translateY(-2px)}}
+@media(min-width:1680px){.jglow__stage{min-height:520px}}
+@media(min-width:750px) and (max-width:1100px){.jglow__header{padding-left:36px;width:65%}.jglow .jglow__heading{font-size:calc(var(--jglow-heading-size)*.85)}.jglow__choice{flex-direction:column;gap:8px}.jglow__product-heading{display:block}.jglow__product-heading .jglow__body{margin-top:6px}.jglow__dock{gap:22px;padding:20px}.jglow__details{padding-left:22px}}
+@media(max-width:749px){june-glow.jglow{padding:0 20px 22px}.jglow__stage{margin:0 -20px;min-height:0;display:flex;flex-direction:column}.jglow__header{width:100%;padding:28px 24px 0}.jglow .jglow__heading{font-size:var(--jglow-heading-mobile);margin:14px 0 16px}.jglow .jglow__title{font-size:var(--jglow-title-mobile)}.jglow .jglow__body{font-size:var(--jglow-body-mobile)}.jglow .jglow__button-type{font-size:var(--jglow-button-mobile)}.jglow__eyebrow{font-size:calc(var(--jglow-button-mobile)*.75)!important}.jglow__scenes{position:relative;order:2;height:300px;margin-top:12px}.jglow__scene{inset:0}.jglow__scene img{object-fit:contain;object-position:center}.jglow__scene:after{background:linear-gradient(180deg,var(--jglow-bg),transparent 15%,transparent 82%,var(--jglow-bg))}.jglow__dock{display:block;padding:16px 16px 8px}.jglow__nav{gap:8px;margin-top:8px}.jglow__choice{flex-direction:column;gap:8px;padding:6px 0 12px;min-height:96px;font-size:calc(var(--jglow-button-mobile)*.85)!important}.jglow__choice img{width:54px;height:54px}.jglow__details{border:0;border-top:1px solid #ffffff45;padding:16px 0 0;margin-top:16px}.jglow__product-heading{display:block;margin-bottom:12px}.jglow__product-heading .jglow__body{margin-top:6px}}
+@media(prefers-reduced-motion:reduce){.jglow *{animation:none!important;transition:none!important}.jglow .jglow__primary{transform:none!important}}.jglow[data-motion=false] *{animation:none!important;transition:none!important}
+
+{% endstylesheet %}
+{% javascript %}
+
+
+if(!customElements.get('june-glow')){
+ customElements.define('june-glow',class extends HTMLElement{
+  connectedCallback(){
+   this.controller?.abort();this.controller=new AbortController();const options={signal:this.controller.signal};
+   this.addEventListener('click',event=>{const b=event.target.closest('[data-select]');if(b&&this.contains(b))this.select(Number(b.dataset.select));},options);
+   this.addEventListener('keydown',event=>{const b=event.target.closest('[data-select]');if(!b)return;const group=[...b.parentElement.querySelectorAll('[data-select]')];let i=group.indexOf(b),n;if(event.key==='ArrowRight')n=(i+1)%group.length;if(event.key==='ArrowLeft')n=(i-1+group.length)%group.length;if(event.key==='Home')n=0;if(event.key==='End')n=group.length-1;if(n===undefined)return;event.preventDefault();this.select(Number(group[n].dataset.select));group[n].focus();},options);
+   this.addEventListener('shopify:block:select',event=>{const b=[...this.querySelectorAll('[data-block]')].find(b=>b.dataset.block===event.detail.blockId);if(b)this.select(Number(b.dataset.select));},options);
+  }
+  select(index){this.querySelectorAll('[data-select]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.select)===index)));this.querySelectorAll('[data-scene]').forEach(p=>p.hidden=Number(p.dataset.scene)!==index);this.querySelectorAll('[data-product]').forEach(p=>p.hidden=Number(p.dataset.product)!==index);}
+  disconnectedCallback(){this.controller?.abort();}
+ });
+}
+
+
+{% endjavascript %}
+{% schema %}
+{
+  "name": "June · Find your glow",
+  "tag": "section",
+  "class": "june-glow-section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Lighting"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A little light."
+    },
+    {
+      "type": "text",
+      "id": "heading_second",
+      "label": "Heading second line",
+      "default": "A different mood."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "body",
+      "label": "Supporting copy",
+      "default": "Find your favourite <strong>glow.</strong>"
+    },
+    {
+      "type": "text",
+      "id": "choose",
+      "label": "Selection label",
+      "default": "Find your glow"
+    },
+    {
+      "type": "text",
+      "id": "shop",
+      "label": "Product button",
+      "default": "Shop this lamp"
+    },
+    {
+      "type": "text",
+      "id": "all",
+      "label": "Collection link",
+      "default": "View all lighting"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Lighting collection"
+    },
+    {
+      "type": "text",
+      "id": "from",
+      "label": "Price prefix",
+      "default": "From"
+    },
+    {
+      "type": "text",
+      "id": "unavailable",
+      "label": "Unavailable button",
+      "default": "View lamp details"
+    },
+    {
+      "type": "text",
+      "id": "setup",
+      "label": "Setup message",
+      "default": "Choose up to three lamps and their scene photos."
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#140D09"
+    },
+    {
+      "type": "color",
+      "id": "ink",
+      "label": "Text",
+      "default": "#FFFBF1"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent and button fill",
+      "default": "#D5FF46"
+    },
+    {
+      "type": "font_picker",
+      "id": "fallback_font",
+      "label": "Fallback font",
+      "default": "poppins_n4"
+    },
+    {
+      "type": "checkbox",
+      "id": "motion",
+      "label": "Enable selection and button motion",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Motion speed",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "default": 100,
+      "unit": "%"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "piece",
+      "name": "Lamp",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Short selection label"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Display name"
+        },
+        {
+          "type": "image_picker",
+          "id": "scene",
+          "label": "Desktop scene photo"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_scene",
+          "label": "Optional mobile scene photo"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Selection thumbnail override"
+        }
+      ]
+    },
+    {
+      "type": "typography",
+      "name": "Typography controls",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "font_picker",
+          "id": "heading_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "heading_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 900
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 54
+        },
+        {
+          "type": "range",
+          "id": "heading_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 34
+        },
+        {
+          "type": "range",
+          "id": "heading_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -4
+        },
+        {
+          "type": "range",
+          "id": "heading_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 105
+        },
+        {
+          "type": "header",
+          "content": "Product title"
+        },
+        {
+          "type": "font_picker",
+          "id": "title_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "title_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 22
+        },
+        {
+          "type": "range",
+          "id": "title_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "title_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "title_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 120
+        },
+        {
+          "type": "header",
+          "content": "Supporting copy"
+        },
+        {
+          "type": "font_picker",
+          "id": "body_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "body_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "body_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "body_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "header",
+          "content": "Actions and navigation"
+        },
+        {
+          "type": "font_picker",
+          "id": "button_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "button_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "button_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 130
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "June · Find your glow",
+      "blocks": [
+        {
+          "type": "piece"
+        },
+        {
+          "type": "piece"
+        },
+        {
+          "type": "piece"
+        },
+        {
+          "type": "typography"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

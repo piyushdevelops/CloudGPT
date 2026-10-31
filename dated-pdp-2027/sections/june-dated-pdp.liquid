@@ -1,0 +1,414 @@
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant | default: product.variants.first
+  assign type_block = section.blocks | where: 'type', 'typography' | first
+  assign type = type_block.settings
+  assign product_form_id = 'JuneDatedForm-' | append: section.id
+  assign preorder_tag = section.settings.preorder_tag | strip
+  assign planner_collection = section.settings.collection | default: collections['2027-dated-planners']
+  assign is_preorder = false
+  if preorder_tag != blank and product.tags contains preorder_tag
+    assign is_preorder = true
+  endif
+  assign highlight_count = 0
+  for block in section.blocks
+    if block.type == 'highlight' and block.settings.heading != blank
+      assign highlight_count = highlight_count | plus: 1
+    endif
+  endfor
+%}
+
+{% style %}
+{% if type_block %}
+  {% assign heading_weight_text = type.heading_weight | append: '' %}
+  {% assign copy_weight_text = type.copy_weight | append: '' %}
+  {% assign action_weight_text = type.action_weight | append: '' %}
+  {% assign heading_face = type.heading_font | font_modify: 'weight', heading_weight_text | default: type.heading_font %}
+  {% assign copy_face = type.copy_font | font_modify: 'weight', copy_weight_text | default: type.copy_font %}
+  {% assign action_face = type.action_font | font_modify: 'weight', action_weight_text | default: type.action_font %}
+  {{ heading_face | font_face: font_display: 'swap' }}
+  {{ copy_face | font_face: font_display: 'swap' }}
+  {{ action_face | font_face: font_display: 'swap' }}
+{% endif %}
+{% endstyle %}
+
+<section id="JuneDated-{{ section.id }}" class="jdp{% if is_preorder %} is-preorder{% endif %}" data-preorder="{{ is_preorder }}" style="
+  --jdp-heading-font:{% if type_block %}{{ type.heading_font.family }},{{ type.heading_font.fallback_families }}{% else %}'Poppins',sans-serif{% endif %};
+  --jdp-heading-weight:{{ type.heading_weight | default: 800 }};
+  --jdp-heading-size:{{ type.heading_size | default: 54 }}px;
+  --jdp-heading-mobile:{{ type.heading_mobile | default: 34 }}px;
+  --jdp-heading-tracking:{{ type.heading_tracking | default: -2 | divided_by: 100.0 }}em;
+  --jdp-heading-leading:{{ type.heading_leading | default: 105 | divided_by: 100.0 }};
+  --jdp-copy-font:{% if type_block %}{{ type.copy_font.family }},{{ type.copy_font.fallback_families }}{% else %}'Poppins',sans-serif{% endif %};
+  --jdp-copy-weight:{{ type.copy_weight | default: 400 }};
+  --jdp-copy-size:{{ type.copy_size | default: 15 }}px;
+  --jdp-copy-mobile:{{ type.copy_mobile | default: 14 }}px;
+  --jdp-copy-tracking:{{ type.copy_tracking | default: 0 | divided_by: 100.0 }}em;
+  --jdp-copy-leading:{{ type.copy_leading | default: 150 | divided_by: 100.0 }};
+  --jdp-action-font:{% if type_block %}{{ type.action_font.family }},{{ type.action_font.fallback_families }}{% else %}'Poppins',sans-serif{% endif %};
+  --jdp-action-weight:{{ type.action_weight | default: 700 }};
+  --jdp-action-size:{{ type.action_size | default: 14 }}px;
+  --jdp-action-mobile:{{ type.action_mobile | default: 13 }}px;
+  --jdp-action-tracking:{{ type.action_tracking | default: 0 | divided_by: 100.0 }}em;
+  --jdp-action-leading:{{ type.action_leading | default: 120 | divided_by: 100.0 }};
+">
+  <div class="jdp__wrap">
+    <nav class="jdp__crumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a><span aria-hidden="true">/</span>
+      {% if planner_collection != blank %}<a href="{{ planner_collection.url }}">{{ planner_collection.title }}</a><span aria-hidden="true">/</span>{% endif %}
+      <span aria-current="page">{{ product.title }}</span>
+    </nav>
+
+    <div class="jdp__layout">
+      <div class="jdp__gallery" data-jdp-gallery>
+        <div class="jdp__stage">
+          {% if product.media.size > 0 %}
+            {% for media in product.media %}
+              <div class="jdp__slide{% if forloop.first %} is-active{% endif %}" data-jdp-slide="{{ forloop.index0 }}"{% unless forloop.first %} hidden{% endunless %}>
+                {% if media.media_type == 'image' %}
+                  {% if forloop.first %}
+                    {{ media.preview_image | image_url: width: 1400 | image_tag: widths: '400, 600, 800, 1100, 1400', sizes: '(max-width: 749px) 100vw, 50vw', loading: 'eager', fetchpriority: 'high', alt: media.alt | default: product.title, class: 'jdp__image' }}
+                  {% else %}
+                    {{ media.preview_image | image_url: width: 1400 | image_tag: widths: '400, 600, 800, 1100, 1400', sizes: '(max-width: 749px) 100vw, 50vw', loading: 'lazy', alt: media.alt | default: product.title, class: 'jdp__image' }}
+                  {% endif %}
+                {% else %}
+                  {{ media | media_tag: image_size: '1200x', controls: true, class: 'jdp__media' }}
+                {% endif %}
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="jdp__empty-media" role="img" aria-label="Product image coming soon"><span>THE JUNE SHOP</span><strong>2027</strong><small>Product images coming soon</small></div>
+          {% endif %}
+          <span class="jdp__year" aria-hidden="true">2027 / THE DATED EDIT</span>
+          <span class="jdp__paper-note" aria-hidden="true">A brighter<br>year of you.</span>
+          <span class="jdp__paper-mark" aria-hidden="true">Plan · grow · celebrate</span>
+          <span class="jdp__torn-note" aria-hidden="true">More than a planner.<br>A year of you.</span>
+          <span class="jdp__leaf jdp__leaf--one" aria-hidden="true"></span>
+          <span class="jdp__leaf jdp__leaf--two" aria-hidden="true"></span>
+          <span class="jdp__flower" aria-hidden="true"></span>
+        </div>
+        {% if product.media.size > 1 %}
+          <div class="jdp__thumbs" aria-label="Product media">
+            {% for media in product.media %}
+              <button type="button" class="jdp__thumb{% if forloop.first %} is-active{% endif %}" data-jdp-thumb="{{ forloop.index0 }}" aria-label="View media {{ forloop.index }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+                {{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="jdp__buy" id="JuneDatedBuy-{{ section.id }}">
+        <span class="jdp__eyebrow">{% if is_preorder %}{{ section.settings.preorder_badge | escape }}{% else %}{{ section.settings.eyebrow | escape }}{% endif %}</span>
+        <h1 class="jdp__title">{{ product.title }}</h1>
+        {% if section.settings.intro != blank %}<p class="jdp__intro">{{ section.settings.intro | escape }}</p>{% endif %}
+        {% if is_preorder %}<span class="jdp__preorder-price-label">Pre-order price</span>{% endif %}
+        <div class="jdp__price-line">
+          <strong class="jdp__price" data-jdp-price>{{ selected_variant.price | money }}</strong>
+          <del class="jdp__compare" data-jdp-compare{% unless selected_variant.compare_at_price > selected_variant.price %} hidden{% endunless %}>{{ selected_variant.compare_at_price | money }}</del>
+        </div>
+        {% if is_preorder %}
+          <div class="jdp__preorder" aria-label="Pre-order information">
+            <span class="jdp__preorder-pulse" aria-hidden="true"></span>
+            <div>
+              {% if section.settings.preorder_heading != blank %}<strong>{{ section.settings.preorder_heading | escape }}</strong>{% endif %}
+              {% if section.settings.preorder_message != blank %}<p>{{ section.settings.preorder_message | escape }}</p>{% endif %}
+              {% if section.settings.preorder_dispatch != blank %}<small><b>Dispatch:</b> {{ section.settings.preorder_dispatch | escape }}</small>{% endif %}
+              {% if section.settings.preorder_delivery != blank %}<small><b>Delivery:</b> {{ section.settings.preorder_delivery | escape }}</small>{% endif %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% form 'product', product, id: product_form_id, class: 'jdp__form' %}
+          <input type="hidden" name="id" value="{{ selected_variant.id }}" data-jdp-variant-id>
+          {% if is_preorder %}
+            <input type="hidden" name="properties[Purchase type]" value="Pre-order">
+            <input type="hidden" name="properties[_Pre-order campaign]" value="{{ preorder_tag | escape }}">
+            {% if section.settings.preorder_dispatch != blank %}<input type="hidden" name="properties[Expected dispatch]" value="{{ section.settings.preorder_dispatch | escape }}">{% endif %}
+          {% endif %}
+          {% unless product.has_only_default_variant %}
+            <fieldset class="jdp__options">
+              <legend>{{ section.settings.option_label | escape }}</legend>
+              <div class="jdp__option-list">
+                {% for variant in product.variants %}
+                  {% assign variant_title_down = variant.title | downcase %}
+                  <button type="button" class="jdp__option{% if variant.id == selected_variant.id %} is-active{% endif %}" data-jdp-variant="{{ variant.id }}" data-jdp-price="{{ variant.price | money | escape }}" data-jdp-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | escape }}{% endif %}" data-jdp-available="{{ variant.available }}" data-jdp-name="{% if variant_title_down contains 'add name' %}true{% else %}false{% endif %}" aria-pressed="{% if variant.id == selected_variant.id %}true{% else %}false{% endif %}">
+                    <span>{{ variant.title }}</span><small>{{ variant.price | money }}</small>
+                  </button>
+                {% endfor %}
+              </div>
+            </fieldset>
+          {% endunless %}
+          {% assign selected_title_down = selected_variant.title | downcase %}
+          <div class="jdp__name" data-jdp-name-wrap{% unless selected_title_down contains 'add name' %} hidden{% endunless %}>
+            <label for="JuneDatedName-{{ section.id }}">{{ section.settings.name_label | escape }}</label>
+            <input id="JuneDatedName-{{ section.id }}" name="properties[Name]" type="text" maxlength="30" autocomplete="off" placeholder="{{ section.settings.name_placeholder | escape }}"{% if selected_title_down contains 'add name' %} required{% else %} disabled{% endif %}>
+            <small>{{ section.settings.name_hint | escape }}</small>
+          </div>
+          <div class="jdp__purchase">
+            <label class="jdp__quantity">Quantity <input name="quantity" type="number" min="1" value="1" inputmode="numeric"></label>
+            <button type="submit" name="add" class="jdp__atc" data-jdp-atc{% unless selected_variant.available %} disabled{% endunless %}>
+              <span data-jdp-atc-text>{% if selected_variant.available %}{% if is_preorder %}{{ section.settings.preorder_button_label | escape }}{% else %}{{ section.settings.button_label | escape }}{% endif %}{% else %}Currently unavailable{% endif %}</span>
+              <span class="jdp__atc-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h13m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+          </div>
+        {% endform %}
+        {% if section.settings.supporting_line != blank %}<p class="jdp__support">{{ section.settings.supporting_line | escape }}</p>{% endif %}
+        {% if highlight_count > 0 %}
+          <ul class="jdp__highlights" aria-label="{{ section.settings.highlights_label | escape }}">
+            {% assign highlight_index = 0 %}
+            {% for block in section.blocks %}
+              {% if block.type == 'highlight' and block.settings.heading != blank %}
+                {% assign highlight_index = highlight_index | plus: 1 %}
+                <li {{ block.shopify_attributes }}>
+                  <span aria-hidden="true">{{ highlight_index | prepend: '0' }}</span>
+                  <div><strong>{{ block.settings.heading | escape }}</strong>{% if block.settings.copy != blank %}<small>{{ block.settings.copy | escape }}</small>{% endif %}</div>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+        <div class="jdp__links">
+          {% if planner_collection != blank %}<a href="{{ planner_collection.url }}">Explore all 2027 planners</a>{% endif %}
+          {% if shop.shipping_policy.url != blank %}<a href="{{ shop.shipping_policy.url }}">Shipping policy</a>{% endif %}
+          {% if shop.refund_policy.url != blank %}<a href="{{ shop.refund_policy.url }}">Returns policy</a>{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="jdp__mobile-bar" data-jdp-mobile-bar>
+    <span data-jdp-mobile-price>{{ selected_variant.price | money }}</span>
+    <a href="#JuneDatedBuy-{{ section.id }}">{% if is_preorder %}{{ section.settings.preorder_button_label | escape }}{% else %}Choose your option{% endif %} <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+<style>
+  #JuneDated-{{ section.id }}{--ink:var(--june-ink,#171717);--bg:var(--june-bg,#fff);--surface:var(--june-surface,#f5f5f3);--accent:var(--june-accent,#f56a28);--on-accent:var(--june-on-accent,#171717);--muted:var(--june-muted,#656565);--border:var(--june-border,#dadada);--soft:color-mix(in srgb,var(--accent) 10%,var(--bg));color:var(--ink);background:linear-gradient(180deg,var(--soft) 0,transparent 720px),var(--bg);font-family:var(--jdp-copy-font);font-size:var(--jdp-copy-size);line-height:var(--jdp-copy-leading);letter-spacing:var(--jdp-copy-tracking);}
+  #JuneDated-{{ section.id }} *{box-sizing:border-box}
+  #JuneDated-{{ section.id }} .jdp__wrap{max-width:1560px;margin:auto;padding:30px clamp(18px,3vw,48px) 82px}
+  #JuneDated-{{ section.id }} .jdp__crumb{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 24px;color:var(--muted);font-size:11px}
+  #JuneDated-{{ section.id }} .jdp__crumb a{text-decoration:underline;text-underline-offset:3px;color:inherit}
+  #JuneDated-{{ section.id }} .jdp__crumb [aria-current]{color:var(--ink);max-width:42ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #JuneDated-{{ section.id }} .jdp__layout{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(390px,.88fr);gap:clamp(28px,4vw,68px);align-items:start}
+  #JuneDated-{{ section.id }} .jdp__gallery,#JuneDated-{{ section.id }} .jdp__buy{min-width:0}
+  #JuneDated-{{ section.id }} .jdp__stage{position:relative;isolation:isolate;aspect-ratio:1.08/1;background:var(--surface);border:1px solid color-mix(in srgb,var(--accent) 16%,var(--border));border-radius:24px;overflow:hidden;box-shadow:0 24px 70px #00000012}
+  #JuneDated-{{ section.id }} .jdp__stage::before,#JuneDated-{{ section.id }} .jdp__stage::after{content:'';position:absolute;z-index:-1;background:var(--accent);opacity:.9;transform:rotate(-8deg)}
+  #JuneDated-{{ section.id }} .jdp__stage::before{width:44%;height:38%;left:-9%;top:-10%;clip-path:polygon(5% 9%,100% 0,91% 100%,0 88%)}
+  #JuneDated-{{ section.id }} .jdp__stage::after{width:35%;height:29%;right:-8%;bottom:-9%;transform:rotate(9deg);clip-path:polygon(8% 0,100% 14%,91% 100%,0 82%)}
+  #JuneDated-{{ section.id }} .jdp__slide{width:100%;height:100%}
+  #JuneDated-{{ section.id }} .jdp__slide[hidden],#JuneDated-{{ section.id }} .jdp__name[hidden],#JuneDated-{{ section.id }} .jdp__compare[hidden]{display:none!important}
+  #JuneDated-{{ section.id }} .jdp__image,#JuneDated-{{ section.id }} .jdp__media{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 22px 28px #00000018)}
+  #JuneDated-{{ section.id }} .jdp__year{position:absolute;left:16px;top:16px;padding:8px 11px;border-radius:4px;background:var(--bg);color:var(--ink);font:700 10px/1.2 'Poppins',sans-serif;letter-spacing:.09em}
+  #JuneDated-{{ section.id }} .jdp__paper-note{position:absolute;right:4%;top:6%;z-index:2;padding:15px 18px;background:var(--bg);color:var(--ink);box-shadow:0 10px 24px #00000012;transform:rotate(5deg);font:800 clamp(15px,1.6vw,23px)/1.05 var(--jdp-heading-font);letter-spacing:-.04em;text-align:center}
+  #JuneDated-{{ section.id }} .jdp__paper-mark{position:absolute;left:5%;bottom:5%;z-index:2;padding:9px 12px;background:var(--ink);color:var(--bg);transform:rotate(-2deg);font:700 10px/1.1 var(--jdp-action-font);letter-spacing:.06em;text-transform:uppercase}
+  #JuneDated-{{ section.id }} .jdp__empty-media{height:100%;display:grid;place-content:center;text-align:center;gap:8px}
+  #JuneDated-{{ section.id }} .jdp__empty-media span,#JuneDated-{{ section.id }} .jdp__empty-media small{font-size:12px;letter-spacing:.1em}
+  #JuneDated-{{ section.id }} .jdp__empty-media strong{font:800 clamp(90px,13vw,190px)/.9 'Poppins',sans-serif;letter-spacing:-.08em;color:var(--accent)}
+  #JuneDated-{{ section.id }} .jdp__thumbs{display:flex;gap:10px;overflow-x:auto;margin-top:12px;padding:3px 2px 8px}
+  #JuneDated-{{ section.id }} .jdp__thumb{flex:0 0 68px;width:68px;height:68px;padding:0;border:1px solid var(--border);border-radius:9px;background:var(--surface);overflow:hidden;cursor:pointer}
+  #JuneDated-{{ section.id }} .jdp__thumb.is-active{outline:2px solid var(--ink);outline-offset:2px}
+  #JuneDated-{{ section.id }} .jdp__thumb img{width:100%;height:100%;object-fit:cover}
+  #JuneDated-{{ section.id }} .jdp__buy{position:sticky;top:92px;padding:clamp(24px,3vw,38px);border:1px solid var(--border);border-radius:22px;background:color-mix(in srgb,var(--bg) 94%,transparent);box-shadow:0 22px 60px #00000010;backdrop-filter:blur(10px)}
+  #JuneDated-{{ section.id }} .jdp__eyebrow{display:inline-flex;padding:7px 10px;margin-bottom:15px;background:var(--accent);color:var(--on-accent);font:800 10px/1.1 'Poppins',sans-serif;text-transform:uppercase;letter-spacing:.08em}
+  #MainContent[data-june-product-brand] #JuneDated-{{ section.id }} .jdp__title,#JuneDated-{{ section.id }} .jdp__title{margin:0 0 14px;font-family:var(--jdp-heading-font)!important;font-weight:var(--jdp-heading-weight)!important;font-size:var(--jdp-heading-size)!important;line-height:var(--jdp-heading-leading)!important;letter-spacing:var(--jdp-heading-tracking)!important;color:var(--ink);text-wrap:balance}
+  #MainContent[data-june-product-brand] #JuneDated-{{ section.id }} :is(.jdp__intro,.jdp__support),#JuneDated-{{ section.id }} :is(.jdp__intro,.jdp__support){font-family:var(--jdp-copy-font)!important;font-size:var(--jdp-copy-size)!important;font-weight:var(--jdp-copy-weight)!important;line-height:var(--jdp-copy-leading)!important;letter-spacing:var(--jdp-copy-tracking)!important}
+  #JuneDated-{{ section.id }} .jdp__intro{max-width:53ch;margin:0 0 20px;color:var(--muted)}
+  #JuneDated-{{ section.id }} .jdp__price-line{display:flex;align-items:baseline;gap:13px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+  #JuneDated-{{ section.id }} .jdp__price{font-family:var(--jpb-price-font,'Archivo Black','Poppins',sans-serif);font-size:clamp(27px,2.5vw,38px);font-weight:900;letter-spacing:-.045em;line-height:1.15}
+  #JuneDated-{{ section.id }} .jdp__preorder-price-label{display:block;margin:20px 0 4px;color:var(--accent);font:800 10px/1 var(--jdp-action-font);letter-spacing:.12em;text-transform:uppercase}
+  #JuneDated-{{ section.id }} .jdp__preorder{display:grid;grid-template-columns:auto 1fr;gap:12px;margin:18px 0 2px;padding:16px;border:1px dashed color-mix(in srgb,var(--accent) 72%,var(--ink));border-radius:14px;background:color-mix(in srgb,var(--accent) 11%,var(--bg));box-shadow:inset 0 1px 0 #ffffffa8}
+  #JuneDated-{{ section.id }} .jdp__preorder-pulse{width:11px;height:11px;margin-top:4px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 18%,transparent)}
+  #JuneDated-{{ section.id }} .jdp__preorder strong{display:block;font:800 15px/1.25 var(--jdp-heading-font);letter-spacing:-.02em}
+  #JuneDated-{{ section.id }} .jdp__preorder p{margin:5px 0 9px;color:var(--muted);font-size:12px;line-height:1.45}
+  #JuneDated-{{ section.id }} .jdp__preorder small{display:block;margin-top:4px;color:var(--ink);font-size:11px;line-height:1.4}
+  #JuneDated-{{ section.id }}.is-preorder .jdp__buy{box-shadow:0 38px 90px #0000001f,0 12px 28px #00000014,6px 7px 0 color-mix(in srgb,var(--ink) 17%,var(--bg)),0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
+  #JuneDated-{{ section.id }}.is-preorder .jdp__buy::before{background:var(--ink)}
+  #JuneDated-{{ section.id }}.is-preorder .jdp__atc{background:var(--ink);color:var(--bg);box-shadow:-2px 3px 0 var(--accent),0 13px 24px #00000022!important}
+  #JuneDated-{{ section.id }}.is-preorder .jdp__atc:hover{box-shadow:-2px 5px 0 var(--accent),0 17px 30px #0000002a!important}
+  #JuneDated-{{ section.id }}.is-preorder .jdp__mobile-bar a{background:var(--ink);color:var(--bg)}
+  #JuneDated-{{ section.id }} .jdp__compare{font-size:14px;color:var(--muted)}
+  #JuneDated-{{ section.id }} .jdp__options{padding:22px 0 0;margin:0;border:0;min-width:0}
+  #JuneDated-{{ section.id }} .jdp__options legend,#JuneDated-{{ section.id }} .jdp__name label{display:block;width:100%;padding:0;margin:0 0 11px;font-size:12px;font-weight:800;color:var(--ink)}
+  #JuneDated-{{ section.id }} .jdp__option-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  #MainContent[data-june-product-brand] #JuneDated-{{ section.id }} .jdp__option,#JuneDated-{{ section.id }} .jdp__option{display:flex;align-items:center;justify-content:space-between;gap:7px;min-height:58px;padding:12px 14px;border:1.5px solid var(--border);border-radius:9px;background:transparent;color:var(--ink);font-family:var(--jdp-action-font)!important;font-weight:var(--jdp-action-weight)!important;font-size:var(--jdp-action-size)!important;line-height:var(--jdp-action-leading)!important;letter-spacing:var(--jdp-action-tracking)!important;text-align:left;cursor:pointer}
+  #JuneDated-{{ section.id }} .jdp__option small{font-size:11px;white-space:nowrap}
+  #JuneDated-{{ section.id }} .jdp__option.is-active{border-color:var(--ink);background:var(--surface);box-shadow:inset 0 -3px 0 var(--accent)}
+  #JuneDated-{{ section.id }} .jdp__name{padding:20px 0 0}
+  #JuneDated-{{ section.id }} .jdp__name input{width:100%;min-height:48px;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+  #JuneDated-{{ section.id }} .jdp__name small{display:block;margin-top:7px;color:var(--muted);font-size:11px}
+  #JuneDated-{{ section.id }} .jdp__purchase{display:grid;grid-template-columns:86px minmax(0,1fr);gap:10px;margin-top:22px}
+  #JuneDated-{{ section.id }} .jdp__quantity{display:flex;flex-direction:column;justify-content:center;gap:3px;font-size:10px;font-weight:700}
+  #JuneDated-{{ section.id }} .jdp__quantity input{width:100%;height:39px;padding:5px 8px;border:1.5px solid var(--border);border-radius:7px;background:var(--bg);color:var(--ink);font:700 15px 'Poppins',sans-serif}
+  #MainContent[data-june-product-brand] #JuneDated-{{ section.id }} .jdp__atc,#JuneDated-{{ section.id }} .jdp__atc{display:flex;align-items:center;justify-content:space-between;min-height:58px;padding:7px 10px 7px 24px;border:1.5px solid var(--ink);border-radius:999px;background:var(--accent);color:var(--on-accent);box-shadow:-2px 3px 0 var(--ink);font-family:var(--jdp-action-font)!important;font-weight:var(--jdp-action-weight)!important;font-size:var(--jdp-action-size)!important;line-height:var(--jdp-action-leading)!important;letter-spacing:var(--jdp-action-tracking)!important;cursor:pointer}
+  #JuneDated-{{ section.id }} .jdp__atc:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+  #JuneDated-{{ section.id }} .jdp__atc-arrow{width:37px;height:37px;display:grid;place-items:center;flex:none;border-radius:50%;background:var(--ink);color:var(--bg)}
+  #JuneDated-{{ section.id }} .jdp__atc-arrow svg{width:20px;height:20px}
+  #JuneDated-{{ section.id }} .jdp__support{margin:15px 0;color:var(--muted);font-size:12px!important}
+  #JuneDated-{{ section.id }} .jdp__highlights{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:22px 0 0;padding:0;list-style:none}
+  #JuneDated-{{ section.id }} .jdp__highlights li{display:flex;gap:10px;min-width:0;padding:13px 11px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(135deg,var(--soft),var(--bg))}
+  #JuneDated-{{ section.id }} .jdp__highlights li>span{display:grid;place-items:center;flex:0 0 25px;width:25px;height:25px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:9px;font-weight:900}
+  #JuneDated-{{ section.id }} .jdp__highlights div{display:grid;gap:3px;min-width:0}
+  #JuneDated-{{ section.id }} .jdp__highlights strong{font-size:11px;line-height:1.25}
+  #JuneDated-{{ section.id }} .jdp__highlights small{color:var(--muted);font-size:9px;line-height:1.35}
+  #JuneDated-{{ section.id }} .jdp__links{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px}
+  #JuneDated-{{ section.id }} .jdp__links a{font-size:12px;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+  #JuneDated-{{ section.id }} :is(button,a,input):focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  #JuneDated-{{ section.id }} .jdp__mobile-bar{display:none}
+  @media(max-width:980px){#JuneDated-{{ section.id }} .jdp__layout{gap:24px;grid-template-columns:minmax(0,1fr) minmax(340px,1fr)}#JuneDated-{{ section.id }} .jdp__option-list{grid-template-columns:1fr}#JuneDated-{{ section.id }} .jdp__paper-note{display:none}}
+  @media(max-width:749px){#JuneDated-{{ section.id }}{font-size:var(--jdp-copy-mobile)}#JuneDated-{{ section.id }} .jdp__wrap{padding:17px 14px 130px}#JuneDated-{{ section.id }} .jdp__crumb{margin-bottom:13px}#JuneDated-{{ section.id }} .jdp__layout{display:block}#JuneDated-{{ section.id }} .jdp__stage{border-radius:16px;aspect-ratio:1/1.03}#JuneDated-{{ section.id }} .jdp__paper-mark{font-size:8px}#JuneDated-{{ section.id }} .jdp__buy{position:static;margin-top:18px;padding:22px 18px;border-radius:18px}#MainContent[data-june-product-brand] #JuneDated-{{ section.id }} .jdp__title,#JuneDated-{{ section.id }} .jdp__title{font-size:var(--jdp-heading-mobile)!important}#MainContent[data-june-product-brand] #JuneDated-{{ section.id }} :is(.jdp__intro,.jdp__support),#JuneDated-{{ section.id }} :is(.jdp__intro,.jdp__support){font-size:var(--jdp-copy-mobile)!important}#MainContent[data-june-product-brand] #JuneDated-{{ section.id }} :is(.jdp__option,.jdp__atc),#JuneDated-{{ section.id }} :is(.jdp__option,.jdp__atc){font-size:var(--jdp-action-mobile)!important}#JuneDated-{{ section.id }} .jdp__option-list{grid-template-columns:repeat(2,minmax(0,1fr))}#JuneDated-{{ section.id }} .jdp__option{display:block}#JuneDated-{{ section.id }} .jdp__option small{display:block;margin-top:3px}#JuneDated-{{ section.id }} .jdp__mobile-bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px max(14px,env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-right));border-top:1px solid var(--border);background:var(--bg);box-shadow:0 -5px 24px #00000010}#JuneDated-{{ section.id }} .jdp__mobile-bar span{font:900 18px 'Poppins',sans-serif}#JuneDated-{{ section.id }} .jdp__mobile-bar a{padding:11px 15px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap}}
+  @media(max-width:749px){#JuneDated-{{ section.id }} .jdp__highlights{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}#JuneDated-{{ section.id }} .jdp__highlights::-webkit-scrollbar{display:none}#JuneDated-{{ section.id }} .jdp__highlights li{flex:0 0 72%;scroll-snap-align:start}}
+  @media(max-width:370px){#JuneDated-{{ section.id }} .jdp__option-list{grid-template-columns:1fr}}
+  /* Approved storybook composition */
+  #JuneDated-{{ section.id }}{background:var(--bg);overflow-x:clip}
+  #JuneDated-{{ section.id }} .jdp__wrap{max-width:1680px;padding-top:22px;padding-bottom:clamp(74px,8vw,126px)}
+  #JuneDated-{{ section.id }} .jdp__layout{grid-template-columns:minmax(0,1.42fr) minmax(390px,.72fr);gap:clamp(24px,3vw,52px);align-items:center}
+  #JuneDated-{{ section.id }} .jdp__gallery{position:relative;padding:clamp(14px,2vw,28px);background:color-mix(in srgb,var(--accent) 8%,var(--bg));clip-path:polygon(1% 3%,98% 0,100% 96%,3% 100%,0 52%);isolation:isolate}
+  #JuneDated-{{ section.id }} .jdp__gallery::before{content:'';position:absolute;inset:3% 2% 4%;z-index:-2;background:radial-gradient(circle at 24% 22%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 30%),repeating-linear-gradient(92deg,transparent 0 26px,color-mix(in srgb,var(--ink) 3%,transparent) 27px 28px);opacity:.7}
+  #JuneDated-{{ section.id }} .jdp__stage{aspect-ratio:1.32/1;border:0;border-radius:0;background:transparent;box-shadow:none;overflow:visible}
+  #JuneDated-{{ section.id }} .jdp__stage::before{width:52%;height:66%;left:-5%;top:17%;opacity:1;transform:rotate(-5deg);clip-path:polygon(2% 8%,95% 0,100% 89%,12% 100%,0 61%)}
+  #JuneDated-{{ section.id }} .jdp__stage::after{width:42%;height:50%;right:-2%;bottom:1%;opacity:.13;background:var(--ink);transform:rotate(5deg);clip-path:polygon(8% 0,100% 9%,92% 100%,0 88%)}
+  #JuneDated-{{ section.id }} .jdp__slide{position:relative;z-index:1;display:grid;place-items:center}
+  #JuneDated-{{ section.id }} .jdp__image,#JuneDated-{{ section.id }} .jdp__media{width:78%;height:91%;margin:auto;object-fit:contain;transform:rotate(-4deg);filter:drop-shadow(0 28px 26px #0003)}
+  #JuneDated-{{ section.id }} .jdp__year{left:3%;top:4%;z-index:3;border:1px solid var(--ink);border-radius:0;background:var(--bg);transform:rotate(-3deg)}
+  #JuneDated-{{ section.id }} .jdp__paper-note{left:1%;right:auto;top:17%;z-index:3;padding:14px 16px;background:var(--bg);transform:rotate(-5deg);font-size:clamp(14px,1.35vw,21px);box-shadow:0 8px 18px #0002}
+  #JuneDated-{{ section.id }} .jdp__paper-mark{left:3%;bottom:3%;z-index:3;background:var(--bg);color:var(--ink);box-shadow:0 8px 18px #0002;transform:rotate(3deg)}
+  #JuneDated-{{ section.id }} .jdp__torn-note{position:absolute;right:1%;top:7%;z-index:3;max-width:190px;padding:20px 17px;background:var(--accent);color:var(--on-accent);clip-path:polygon(4% 0,98% 4%,94% 93%,3% 100%,0 41%);transform:rotate(5deg);font:800 clamp(14px,1.45vw,22px)/1.15 var(--jdp-heading-font);letter-spacing:-.03em;text-align:center}
+  #JuneDated-{{ section.id }} .jdp__leaf{position:absolute;z-index:2;width:56px;height:112px;border-radius:100% 0 100% 0;background:color-mix(in srgb,var(--ink) 72%,var(--accent));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--bg) 30%,transparent)}
+  #JuneDated-{{ section.id }} .jdp__leaf::after{content:'';position:absolute;left:48%;top:8%;width:1px;height:84%;background:color-mix(in srgb,var(--bg) 45%,transparent);transform:rotate(24deg)}
+  #JuneDated-{{ section.id }} .jdp__leaf--one{left:4%;bottom:18%;transform:rotate(-43deg)}
+  #JuneDated-{{ section.id }} .jdp__leaf--two{right:6%;bottom:9%;transform:rotate(32deg) scale(.82)}
+  #JuneDated-{{ section.id }} .jdp__flower{position:absolute;right:17%;bottom:2%;z-index:3;width:62px;height:62px;border-radius:50%;background:radial-gradient(circle,var(--ink) 0 8%,transparent 9%),conic-gradient(from 8deg,var(--accent) 0 12%,transparent 12% 20%,var(--accent) 20% 32%,transparent 32% 40%,var(--accent) 40% 52%,transparent 52% 60%,var(--accent) 60% 72%,transparent 72% 80%,var(--accent) 80% 92%,transparent 92%)}
+  #JuneDated-{{ section.id }} .jdp__thumbs{position:relative;z-index:5;justify-content:center;margin-top:-2px}
+  #JuneDated-{{ section.id }} .jdp__thumb{border-radius:2px;background:var(--bg);box-shadow:0 8px 18px #0001;transform:rotate(-2deg)}
+  #JuneDated-{{ section.id }} .jdp__thumb:nth-child(even){transform:rotate(2deg)}
+  #JuneDated-{{ section.id }} .jdp__buy{top:82px;padding:clamp(26px,3vw,42px);border:0;border-radius:18px;background:var(--bg);box-shadow:0 28px 80px #0000001a,0 0 0 1px color-mix(in srgb,var(--border) 80%,transparent);backdrop-filter:none;transform:rotate(.25deg)}
+  #JuneDated-{{ section.id }} .jdp__buy::before{content:'';position:absolute;left:22px;right:22px;top:-7px;height:14px;background:color-mix(in srgb,var(--accent) 62%,var(--bg));opacity:.8;transform:rotate(-1.5deg)}
+  #JuneDated-{{ section.id }} .jdp__eyebrow{padding:0;margin-bottom:12px;background:transparent;color:var(--accent)}
+  #JuneDated-{{ section.id }} .jdp__highlights{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;border-top:1px solid var(--border);padding-top:20px}
+  #JuneDated-{{ section.id }} .jdp__highlights li{display:grid;gap:7px;padding:0;border:0;border-radius:0;background:transparent;text-align:center}
+  #JuneDated-{{ section.id }} .jdp__highlights li>span{margin:auto;background:transparent;color:var(--accent);font-size:12px}
+  #JuneDated-{{ section.id }} .jdp__highlights strong{font-size:10px}
+  #JuneDated-{{ section.id }} .jdp__highlights small{display:none}
+  @media(max-width:980px){#JuneDated-{{ section.id }} .jdp__layout{grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr)}#JuneDated-{{ section.id }} .jdp__torn-note{display:none}}
+  @media(max-width:749px){#JuneDated-{{ section.id }} .jdp__wrap{padding-left:0;padding-right:0}#JuneDated-{{ section.id }} .jdp__crumb{padding:0 14px}#JuneDated-{{ section.id }} .jdp__gallery{padding:12px 10px 4px;clip-path:polygon(0 2%,100% 0,100% 97%,2% 100%)}#JuneDated-{{ section.id }} .jdp__stage{aspect-ratio:1.04/1}#JuneDated-{{ section.id }} .jdp__image,#JuneDated-{{ section.id }} .jdp__media{width:80%;height:89%}#JuneDated-{{ section.id }} .jdp__year{left:14px;top:12px}#JuneDated-{{ section.id }} .jdp__paper-note{display:block;left:10px;top:auto;bottom:16px;padding:10px 12px;font-size:13px}#JuneDated-{{ section.id }} .jdp__paper-mark{display:none}#JuneDated-{{ section.id }} .jdp__leaf{width:32px;height:66px}#JuneDated-{{ section.id }} .jdp__flower{width:42px;height:42px}#JuneDated-{{ section.id }} .jdp__thumbs{justify-content:flex-start}#JuneDated-{{ section.id }} .jdp__buy{margin:18px 14px 0;transform:none}#JuneDated-{{ section.id }} .jdp__highlights{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}#JuneDated-{{ section.id }} .jdp__highlights li{min-width:0}#JuneDated-{{ section.id }} .jdp__highlights strong{font-size:8px}}
+  #JuneDated-{{ section.id }}{background-color:var(--bg);background-image:radial-gradient(circle,color-mix(in srgb,var(--ink) 14%,transparent) .8px,transparent .9px),linear-gradient(180deg,color-mix(in srgb,var(--accent) 5%,var(--bg)) 0,var(--bg) 58%);background-size:18px 18px,100% 100%;background-position:0 0,0 0}
+  #JuneDated-{{ section.id }} .jdp__gallery{background-color:color-mix(in srgb,var(--bg) 96%,var(--surface));background-image:radial-gradient(circle,color-mix(in srgb,var(--accent) 28%,transparent) .9px,transparent 1px);background-size:17px 17px;box-shadow:0 34px 70px #00000017,0 8px 18px #0000000d,8px 9px 0 color-mix(in srgb,var(--accent) 13%,var(--bg));filter:drop-shadow(0 1px 0 color-mix(in srgb,var(--ink) 12%,transparent))}
+  #JuneDated-{{ section.id }} .jdp__gallery::after{content:'';position:absolute;inset:10px -7px -8px 12px;z-index:-3;background:color-mix(in srgb,var(--surface) 88%,var(--bg));clip-path:polygon(1% 3%,98% 0,100% 96%,3% 100%,0 52%);transform:rotate(.7deg);box-shadow:0 22px 42px #00000012}
+  #JuneDated-{{ section.id }} .jdp__image,#JuneDated-{{ section.id }} .jdp__media{filter:drop-shadow(0 35px 24px #0000002b) drop-shadow(0 8px 8px #00000016)}
+  #JuneDated-{{ section.id }} .jdp__year,#JuneDated-{{ section.id }} .jdp__paper-note,#JuneDated-{{ section.id }} .jdp__paper-mark{box-shadow:0 16px 28px #0000001c,0 2px 5px #00000014}
+  #JuneDated-{{ section.id }} .jdp__thumb{border-color:color-mix(in srgb,var(--ink) 22%,var(--border));box-shadow:0 10px 20px #00000018,0 2px 4px #00000014}
+  #JuneDated-{{ section.id }} .jdp__buy{position:sticky;background-color:color-mix(in srgb,var(--bg) 98%,var(--surface));background-image:radial-gradient(circle,color-mix(in srgb,var(--ink) 11%,transparent) .7px,transparent .8px);background-size:18px 18px;box-shadow:0 38px 90px #0000001f,0 12px 28px #00000014,6px 7px 0 color-mix(in srgb,var(--accent) 13%,var(--bg)),0 0 0 1px color-mix(in srgb,var(--ink) 12%,transparent)}
+  #JuneDated-{{ section.id }} .jdp__buy::after{content:'';position:absolute;inset:7px -8px -8px 8px;z-index:-1;border-radius:18px;background:color-mix(in srgb,var(--surface) 88%,var(--bg));box-shadow:0 18px 34px #00000010}
+  #JuneDated-{{ section.id }} .jdp__option,#JuneDated-{{ section.id }} .jdp__name input,#JuneDated-{{ section.id }} .jdp__quantity input{background:color-mix(in srgb,var(--bg) 94%,transparent);box-shadow:inset 0 1px 0 #ffffffa8,0 3px 8px #00000009}
+  #JuneDated-{{ section.id }} .jdp__option.is-active{box-shadow:inset 0 -4px 0 var(--accent),0 8px 16px #00000010}
+  #JuneDated-{{ section.id }} .jdp__atc{box-shadow:-2px 3px 0 var(--ink),0 13px 24px color-mix(in srgb,var(--accent) 25%,transparent)!important;transition:transform .2s ease,box-shadow .2s ease}
+  #JuneDated-{{ section.id }} .jdp__atc:hover{transform:translateY(-2px);box-shadow:-2px 5px 0 var(--ink),0 17px 30px color-mix(in srgb,var(--accent) 30%,transparent)!important}
+  @media(max-width:749px){#JuneDated-{{ section.id }}{overflow:hidden;background-size:16px 16px,100% 100%}#JuneDated-{{ section.id }} .jdp__gallery{overflow:hidden;box-shadow:0 22px 44px #00000016,0 5px 12px #0000000d,0 6px 0 color-mix(in srgb,var(--accent) 12%,var(--bg))}#JuneDated-{{ section.id }} .jdp__gallery::after{inset:8px 0 -6px 8px}#JuneDated-{{ section.id }} .jdp__buy{position:static;box-shadow:0 25px 55px #0000001b,0 8px 18px #00000011,0 6px 0 color-mix(in srgb,var(--accent) 12%,var(--bg)),0 0 0 1px color-mix(in srgb,var(--ink) 11%,transparent)}#JuneDated-{{ section.id }} .jdp__buy::after{inset:6px 0 -6px 6px}}
+  @media(prefers-reduced-motion:reduce){#JuneDated-{{ section.id }} .jdp__atc{transition:none}}
+</style>
+
+<script>
+(() => {
+  const root = document.getElementById('JuneDated-{{ section.id }}');
+  if (!root || root.dataset.bound === 'true') return;
+  root.dataset.bound = 'true';
+  const slides = [...root.querySelectorAll('[data-jdp-slide]')];
+  const thumbs = [...root.querySelectorAll('[data-jdp-thumb]')];
+  thumbs.forEach(button => button.addEventListener('click', () => {
+    const chosen = button.dataset.jdpThumb;
+    slides.forEach(slide => { slide.hidden = slide.dataset.jdpSlide !== chosen; });
+    thumbs.forEach(thumb => { const active = thumb === button; thumb.classList.toggle('is-active', active); thumb.setAttribute('aria-pressed', String(active)); });
+  }));
+  const id = root.querySelector('[data-jdp-variant-id]');
+  const price = root.querySelector('[data-jdp-price]');
+  const compare = root.querySelector('[data-jdp-compare]');
+  const mobilePrice = root.querySelector('[data-jdp-mobile-price]');
+  const nameWrap = root.querySelector('[data-jdp-name-wrap]');
+  const nameInput = nameWrap?.querySelector('input');
+  const atc = root.querySelector('[data-jdp-atc]');
+  const atcText = root.querySelector('[data-jdp-atc-text]');
+  root.querySelectorAll('[data-jdp-variant]').forEach(button => button.addEventListener('click', () => {
+    root.querySelectorAll('[data-jdp-variant]').forEach(option => { const active = option === button; option.classList.toggle('is-active', active); option.setAttribute('aria-pressed', String(active)); });
+    id.value = button.dataset.jdpVariant;
+    const selectedPrice = button.querySelector('small')?.textContent.trim() || button.dataset.jdpPrice;
+    const compareMarkup = new DOMParser().parseFromString(button.dataset.jdpCompare || '', 'text/html');
+    const selectedCompare = compareMarkup.body.textContent.trim();
+    price.textContent = selectedPrice;
+    mobilePrice.textContent = selectedPrice;
+    compare.textContent = selectedCompare;
+    compare.hidden = !selectedCompare;
+    const personalized = button.dataset.jdpName === 'true';
+    nameWrap.hidden = !personalized;
+    nameInput.disabled = !personalized;
+    nameInput.required = personalized;
+    if (!personalized) nameInput.value = '';
+    const available = button.dataset.jdpAvailable === 'true';
+    atc.disabled = !available;
+    atcText.textContent = available ? {% if is_preorder %}{{ section.settings.preorder_button_label | json }}{% else %}{{ section.settings.button_label | json }}{% endif %} : 'Currently unavailable';
+  }));
+})();
+</script>
+
+{% schema %}
+{
+  "name": "June · 2027 dated PDP",
+  "tag": "section",
+  "class": "june-dated-pdp-section",
+  "settings": [
+    {"type":"collection","id":"collection","label":"Breadcrumb collection"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"The 2027 Dated Edit"},
+    {"type":"textarea","id":"intro","label":"Short introduction","default":"A fresh year for the plans, moments and possibilities that feel like you."},
+    {"type":"text","id":"option_label","label":"Variant label","default":"Choose your planner"},
+    {"type":"text","id":"name_label","label":"Personalisation input label","default":"Name for your planner"},
+    {"type":"text","id":"name_placeholder","label":"Name input placeholder","default":"Enter your name"},
+    {"type":"text","id":"name_hint","label":"Name input help text","default":"Enter the name exactly as you want it."},
+    {"type":"text","id":"button_label","label":"Add to cart button","default":"Add to cart"},
+    {"type":"text","id":"supporting_line","label":"Supporting line"},
+    {"type":"text","id":"highlights_label","label":"Highlights accessibility label","default":"Planner highlights"},
+    {"type":"header","content":"Pre-order mode"},
+    {"type":"text","id":"preorder_tag","label":"Product tag that enables pre-order","default":"June-Preorder-2027","info":"The match is exact and case-sensitive."},
+    {"type":"text","id":"preorder_badge","label":"Pre-order badge","default":"PRE-ORDER · 2027"},
+    {"type":"text","id":"preorder_heading","label":"Pre-order heading","default":"Reserve yours from the first batch"},
+    {"type":"textarea","id":"preorder_message","label":"Pre-order message","default":"Order now to secure your preferred cover before dispatch begins."},
+    {"type":"text","id":"preorder_dispatch","label":"Expected dispatch","default":"Expected dispatch date will be confirmed before launch."},
+    {"type":"text","id":"preorder_delivery","label":"Delivery note","default":"Delivery follows dispatch and depends on your location."},
+    {"type":"text","id":"preorder_button_label","label":"Pre-order button","default":"Pre-order now"}
+  ],
+  "blocks": [
+    {
+      "type":"highlight","name":"Planner highlight","limit":4,
+      "settings":[
+        {"type":"text","id":"heading","label":"Heading"},
+        {"type":"text","id":"copy","label":"Supporting text"}
+      ]
+    },
+    {
+      "type":"typography","name":"Typography controls","limit":1,
+      "settings":[
+        {"type":"header","content":"Heading"},
+        {"type":"font_picker","id":"heading_font","label":"Font family","default":"poppins_n4"},
+        {"type":"range","id":"heading_weight","label":"Thickness","min":100,"max":900,"step":100,"default":800},
+        {"type":"range","id":"heading_size","label":"Desktop size","min":24,"max":80,"step":1,"unit":"px","default":54},
+        {"type":"range","id":"heading_mobile","label":"Mobile size","min":24,"max":56,"step":1,"unit":"px","default":34},
+        {"type":"range","id":"heading_tracking","label":"Letter spacing (hundredths em)","min":-10,"max":10,"step":1,"default":-2},
+        {"type":"range","id":"heading_leading","label":"Line spacing (%)","min":90,"max":160,"step":5,"default":105},
+        {"type":"header","content":"Supporting copy"},
+        {"type":"font_picker","id":"copy_font","label":"Font family","default":"poppins_n4"},
+        {"type":"range","id":"copy_weight","label":"Thickness","min":100,"max":900,"step":100,"default":400},
+        {"type":"range","id":"copy_size","label":"Desktop size","min":12,"max":24,"step":1,"unit":"px","default":15},
+        {"type":"range","id":"copy_mobile","label":"Mobile size","min":12,"max":22,"step":1,"unit":"px","default":14},
+        {"type":"range","id":"copy_tracking","label":"Letter spacing (hundredths em)","min":-6,"max":12,"step":1,"default":0},
+        {"type":"range","id":"copy_leading","label":"Line spacing (%)","min":100,"max":190,"step":5,"default":150},
+        {"type":"header","content":"Buttons and options"},
+        {"type":"font_picker","id":"action_font","label":"Font family","default":"poppins_n4"},
+        {"type":"range","id":"action_weight","label":"Thickness","min":100,"max":900,"step":100,"default":700},
+        {"type":"range","id":"action_size","label":"Desktop size","min":11,"max":22,"step":1,"unit":"px","default":14},
+        {"type":"range","id":"action_mobile","label":"Mobile size","min":11,"max":20,"step":1,"unit":"px","default":13},
+        {"type":"range","id":"action_tracking","label":"Letter spacing (hundredths em)","min":-6,"max":12,"step":1,"default":0},
+        {"type":"range","id":"action_leading","label":"Line spacing (%)","min":100,"max":170,"step":5,"default":120}
+      ]
+    }
+  ],
+  "presets":[{"name":"June · 2027 dated PDP","blocks":[{"type":"typography"}]}]
+}
+{% endschema %}
+

@@ -1,0 +1,12 @@
+{
+  "themeId": "187527266499",
+  "published": false,
+  "changedFiles": [
+    "templates/collection.photo-books.json",
+    "templates/page.photo-books.json"
+  ],
+  "sha256": "6D0214AB9D7E66861AE8C8DD71A6DB368F672045E9EBE837FC2663D1CAFF917D",
+  "faqCount": 6,
+  "mobileViewport": "393x852",
+  "rendered": true
+}

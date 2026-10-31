@@ -1,0 +1,671 @@
+{% if section.settings.use_master_palette == false %}
+{% style %}#shopify-section-{{ section.id }}{--june-bg:initial;--june-surface:initial;--june-ink:initial;--june-muted:initial;--june-accent:initial;--june-on-accent:initial;--june-border:initial;--june-dark:initial;--june-on-dark:initial;}{% endstyle %}
+{% endif %}
+{% liquid
+ assign typography = section.blocks | where: 'type', 'typography' | first
+ assign type = typography.settings
+ assign chapters = section.blocks | where: 'type', 'chapter'
+%}
+{% style %}
+#JuneChapters-{{ section.id }}{--jc-bg:var(--june-bg,{{ section.settings.background }});--jc-ink:var(--june-ink,{{ section.settings.ink }});--jc-accent:var(--june-accent,{{ section.settings.accent }});--jc-offset:{{ section.settings.offset }}px;}
+{% assign face = type.heading_font | default: section.settings.fallback_font %}{% assign weight = type.heading_weight | default: 900 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneChapters-{{ section.id }}{--jc-heading-font:{{ face.family }},{{ face.fallback_families }};--jc-heading-weight:{{ type.heading_weight | default: 900 }};--jc-heading-size:{{ type.heading_size | default: 62 }}px;--jc-heading-mobile:{{ type.heading_mobile | default: 42 }}px;--jc-heading-tracking:{{ type.heading_tracking | default: -2 | divided_by: 100.0 }}em;--jc-heading-leading:{{ type.heading_leading | default: 105 | divided_by: 100.0 }};}
+{% assign face = type.title_font | default: section.settings.fallback_font %}{% assign weight = type.title_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneChapters-{{ section.id }}{--jc-title-font:{{ face.family }},{{ face.fallback_families }};--jc-title-weight:{{ type.title_weight | default: 600 }};--jc-title-size:{{ type.title_size | default: 26 }}px;--jc-title-mobile:{{ type.title_mobile | default: 23 }}px;--jc-title-tracking:{{ type.title_tracking | default: -2 | divided_by: 100.0 }}em;--jc-title-leading:{{ type.title_leading | default: 120 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign weight = type.body_weight | default: 400 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneChapters-{{ section.id }}{--jc-body-font:{{ face.family }},{{ face.fallback_families }};--jc-body-weight:{{ type.body_weight | default: 400 }};--jc-body-size:{{ type.body_size | default: 18 }}px;--jc-body-mobile:{{ type.body_mobile | default: 16 }}px;--jc-body-tracking:{{ type.body_tracking | default: -1 | divided_by: 100.0 }}em;--jc-body-leading:{{ type.body_leading | default: 150 | divided_by: 100.0 }};}
+{% assign face = type.button_font | default: section.settings.fallback_font %}{% assign weight = type.button_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+#JuneChapters-{{ section.id }}{--jc-button-font:{{ face.family }},{{ face.fallback_families }};--jc-button-weight:{{ type.button_weight | default: 600 }};--jc-button-size:{{ type.button_size | default: 14 }}px;--jc-button-mobile:{{ type.button_mobile | default: 14 }}px;--jc-button-tracking:{{ type.button_tracking | default: -1 | divided_by: 100.0 }}em;--jc-button-leading:{{ type.button_leading | default: 130 | divided_by: 100.0 }};}
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign bold = face | font_modify: 'weight', '700' %}{{ bold | font_face: font_display: 'swap' }}
+{% endstyle %}
+
+{% if chapters.size > 0 %}
+<june-scroll-chapters class="jcs{% if settings.june_type_enabled != false and section.settings.use_master_typography != false %} june-type{% endif %}" id="JuneChapters-{{ section.id }}" data-scroll="{{ section.settings.scroll }}" data-motion="{{ section.settings.motion }}" data-editor="{{ request.design_mode }}" data-pace="{{ section.settings.pace }}" data-pace-mobile="{{ section.settings.pace_mobile }}" data-blank="{{ section.settings.blank_hold }}" data-blank-mobile="{{ section.settings.blank_mobile }}" aria-label="{{ section.settings.eyebrow | escape }}" style="--jcs-secondary:{{ section.settings.flower_secondary }};--jcs-product:{{ section.settings.product_size }};--jcs-mobile:{{ section.settings.product_mobile }}">
+ <div class="jcs__stage">
+ <a class="jcs__skip" href="#JuneChaptersEnd-{{ section.id }}">{{ section.settings.skip | escape }}</a>
+  <div class="jcs__flowers" aria-hidden="true">{% for n in (1..26) %}<svg viewBox="0 0 100 100"><g fill="currentColor"><ellipse cx="50" cy="26" rx="15" ry="24"/><ellipse cx="50" cy="26" rx="15" ry="24" transform="rotate(60 50 50)"/><ellipse cx="50" cy="26" rx="15" ry="24" transform="rotate(120 50 50)"/><ellipse cx="50" cy="26" rx="15" ry="24" transform="rotate(180 50 50)"/><ellipse cx="50" cy="26" rx="15" ry="24" transform="rotate(240 50 50)"/><ellipse cx="50" cy="26" rx="15" ry="24" transform="rotate(300 50 50)"/></g><circle cx="50" cy="50" r="12" fill="var(--jc-ink)"/></svg>{% endfor %}</div>
+  {% for block in chapters %}
+   {% liquid
+    case block.settings.effect
+     when 'petals'
+      assign asset = 'https://cdn.shopify.com/s/files/1/0177/5579/9606/files/june-chapter-wedding-cutout.png?v=1790664256'
+     when 'wipe'
+      assign asset = 'https://cdn.shopify.com/s/files/1/0177/5579/9606/files/june-chapter-rewritable-cutout.png?v=1790664263'
+     else
+      assign asset = 'https://cdn.shopify.com/s/files/1/0177/5579/9606/files/june-chapter-baby-cutout.png?v=1790664268'
+    endcase
+   %}
+   <article class="jcs__scene" data-scene data-block="{{ block.id }}" {{ block.shopify_attributes }} aria-labelledby="JuneChapterTitle-{{ section.id }}-{{ forloop.index0 }}">
+    <div class="jcs__product">{% if block.settings.cutout != blank %}{{ block.settings.cutout | image_url: width: 1200 | image_tag: widths: '400,600,900,1200', sizes: '(max-width: 900px) 75vw, 480px', alt: block.settings.alt, loading: 'lazy' }}{% else %}<img src="{{ asset }}" width="900" height="1100" alt="{{ block.settings.alt | escape }}" loading="lazy">{% endif %}</div>
+    <div class="jcs__copy"><h2 class="jcs__heading" id="JuneChapterTitle-{{ section.id }}-{{ forloop.index0 }}">{{ block.settings.heading | escape }} <span>{{ block.settings.heading_second | escape }}</span></h2><div class="jcs__body">{{ block.settings.body }}</div></div>
+   </article>
+  {% endfor %}
+  <div class="jcs__duster" aria-hidden="true"><svg viewBox="0 0 180 110"><path d="M12 61 137 39 169 65 46 94Z" fill="var(--jc-ink)"/><path d="M12 34 137 12 169 38 46 66Z" fill="var(--jc-accent)"/><path d="M12 34 46 66 46 87 12 57Z" fill="var(--jc-accent)"/><path d="M46 66 169 38 169 59 46 87Z" fill="var(--jc-accent)"/><path d="M46 66 169 38" stroke="var(--jc-ink)" stroke-opacity=".3"/><path d="M58 39 120 27" stroke="var(--jc-ink)" stroke-width="4" stroke-linecap="round" opacity=".35"/></svg></div>
+  <div class="jcs__footprints" aria-hidden="true">{% for n in (1..16) %}<svg viewBox="0 0 50 90"><path d="M20 78C7 77 7 65 13 54c5-10 0-15-2-23-3-10 4-18 14-17 13 1 17 13 12 23-6 13-5 18-4 27 1 9-3 16-13 14Z"/><ellipse cx="13" cy="8" rx="6" ry="8"/><ellipse cx="25" cy="6" rx="4.5" ry="6"/><ellipse cx="35" cy="9" rx="4" ry="5"/><ellipse cx="42" cy="16" rx="3.5" ry="4.5"/></svg>{% endfor %}</div>
+ </div>
+</june-scroll-chapters><div id="JuneChaptersEnd-{{ section.id }}" tabindex="-1"></div>
+{% endif %}
+{% stylesheet %}
+.jcs{display:block;position:relative;background:var(--jc-bg);color:var(--jc-ink);isolation:isolate}.jcs__stage{position:relative;max-width:1680px;margin:auto;overflow:hidden;background:var(--jc-bg)}.jcs__scene{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:48px 24px;text-align:center;min-height:600px}.jcs__product{height:330px;width:min(480px,80vw);flex:none}.jcs__product img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 12px 12px #241c1814)}.jcs__copy{max-width:780px}.jcs .jcs__heading{font-family:var(--jc-heading-font);font-weight:var(--jc-heading-weight);font-size:var(--jc-heading-size);letter-spacing:var(--jc-heading-tracking);line-height:var(--jc-heading-leading);margin:0 0 16px}.jcs__heading span{display:block}.jcs .jcs__body{font-family:var(--jc-body-font);font-weight:var(--jc-body-weight);font-size:var(--jc-body-size);letter-spacing:var(--jc-body-tracking);line-height:var(--jc-body-leading);max-width:540px;margin:auto}.jcs__body p{margin:0}.jcs__body strong{font-weight:700}.jcs__skip{position:absolute;right:16px;top:12px;z-index:10;min-height:44px;display:flex;align-items:center;border:1px solid currentColor;padding:12px 18px;border-radius:30px;background:var(--jc-bg);color:var(--jc-ink);font:var(--jc-button-weight) var(--jc-button-size)/var(--jc-button-leading) var(--jc-button-font);letter-spacing:var(--jc-button-tracking)}.jcs__skip:focus-visible{outline:3px solid var(--jc-ink);outline-offset:3px}.jcs__flowers,.jcs__duster,.jcs__footprints{display:none;position:absolute;inset:0;pointer-events:none}.jcs[data-pinned=true]{height:var(--jcs-runway)}.jcs[data-pinned=true] .jcs__stage{position:sticky;top:var(--jcs-top);height:var(--jcs-height)}.jcs[data-pinned=true] .jcs__scene{position:absolute;inset:0;min-height:0;padding:20px;gap:20px;opacity:0;visibility:hidden;will-change:transform,opacity;pointer-events:none}.jcs[data-pinned=true] .jcs__product{height:calc(var(--jcs-height)*var(--jcs-product)/100)}.jcs[data-pinned=true] .jcs__flowers,.jcs[data-pinned=true] .jcs__footprints{display:block;z-index:2}.jcs__flowers svg{position:absolute;left:50%;top:45%;width:70px;height:70px;opacity:0;color:var(--jc-accent);will-change:transform,opacity}.jcs__flowers svg:nth-child(3n){color:var(--jcs-secondary)}.jcs__flowers svg:nth-child(3n + 1){color:var(--jc-ink)}.jcs[data-pinned=true] .jcs__duster{display:block;inset:auto;left:0;top:0;width:150px;height:100px;z-index:4;opacity:0;will-change:transform}.jcs__duster svg{width:100%;height:100%;filter:drop-shadow(0 10px 7px #241c1820)}.jcs__footprints svg{position:absolute;width:42px;height:76px;fill:var(--jc-ink);opacity:0;will-change:opacity,transform}.jcs:not([data-pinned=true]) .jcs__scene{opacity:1!important;visibility:visible!important;transform:none!important;clip-path:none!important}.jcs:not([data-pinned=true]) .jcs__scene+.jcs__scene{border-top:1px solid color-mix(in srgb,var(--june-ink,#171717) 8.24%,transparent)}
+@media(max-width:900px){.jcs .jcs__heading{font-size:var(--jc-heading-mobile)}.jcs .jcs__body{font-size:var(--jc-body-mobile)}.jcs__scene{min-height:520px;padding:34px 20px}.jcs__product{height:260px}.jcs[data-pinned=true] .jcs__product{height:calc(var(--jcs-height)*var(--jcs-mobile)/100);width:80vw}.jcs[data-pinned=true] .jcs__scene{gap:18px}.jcs__copy{max-width:100%}.jcs .jcs__heading{margin-bottom:12px}.jcs__flowers svg{width:48px;height:48px}.jcs__footprints svg{width:30px;height:54px}.jcs[data-pinned=true] .jcs__duster{width:110px;height:75px}.jcs__skip{font-size:var(--jc-button-mobile)}}
+@media(prefers-reduced-motion:reduce){.jcs__flowers,.jcs__duster,.jcs__footprints{display:none!important}}
+{% endstylesheet %}
+{% javascript %}
+if(!customElements.get('june-scroll-chapters'))customElements.define('june-scroll-chapters',class extends HTMLElement{
+ connectedCallback(){this.controller?.abort();this.controller=new AbortController();const o={signal:this.controller.signal};this.stage=this.querySelector('.jcs__stage');this.scenes=[...this.querySelectorAll('[data-scene]')];this.flowers=[...this.querySelectorAll('.jcs__flowers svg')];this.feet=[...this.querySelectorAll('.jcs__footprints svg')];this.duster=this.querySelector('.jcs__duster');this.reduced=matchMedia('(prefers-reduced-motion: reduce)');this.onScroll=()=>{if(!this.frame)this.frame=requestAnimationFrame(()=>{this.frame=0;this.render()})};window.addEventListener('scroll',this.onScroll,{...o,passive:true});window.addEventListener('resize',()=>this.setup(),o);this.reduced.addEventListener('change',()=>this.setup(),o);this.querySelector('.jcs__skip').addEventListener('click',e=>{e.preventDefault();const end=document.getElementById(this.querySelector('.jcs__skip').hash.slice(1));const next=this.closest('[id^="shopify-section-"]')?.nextElementSibling;const target=next?.querySelector('h2')||end;if(!target)return;target.setAttribute('tabindex','-1');target.focus({preventScroll:true});window.scrollTo({top:window.scrollY+target.getBoundingClientRect().top-this.offset-16,behavior:'instant'});},o);this.addEventListener('shopify:block:select',e=>{const i=this.scenes.findIndex(s=>s.dataset.block===e.detail?.blockId);if(i>=0&&this.pinned){cancelAnimationFrame(this.selectionFrame);this.selectionFrame=requestAnimationFrame(()=>this.seekScene(i))}},o);this.setup()}
+ seekScene(index){const phase=[2,5,8][index];if(phase===undefined)return;const beat=this.durations.slice(0,phase).reduce((a,b)=>a+b,0)+this.durations[phase]*.6;window.scrollTo({top:window.scrollY+this.getBoundingClientRect().top-this.offset+beat*this.unit,behavior:'instant'});this.render()}
+ setup(){const mobile=innerWidth<=900;this.mobile=mobile;if(!mobile||this.viewportWidth!==innerWidth){this.viewportWidth=innerWidth;this.viewportHeight=innerHeight}const viewportHeight=this.viewportHeight;this.offset=Math.min(parseFloat(getComputedStyle(this).getPropertyValue('--jc-offset'))||0,mobile?64:90);this.height=Math.max(240,Math.min(viewportHeight-this.offset,mobile?600:Infinity));this.pinned=this.dataset.scroll==='true'&&this.dataset.motion==='true'&&!this.reduced.matches&&viewportHeight>=480;this.dataset.pinned=String(this.pinned);const pace=Math.max(10,Number(mobile?this.dataset.paceMobile:this.dataset.pace)||(mobile?19:32));this.unit=this.height*pace/100;const blank=Math.max(0,Math.min(mobile?12:20,Number(mobile?this.dataset.blankMobile:this.dataset.blank)||0))*viewportHeight/100/this.unit;this.durations=[mobile?Math.min(blank,.2):blank,1.1,2,.8,blank,2,1.3,1.5,2,.8];this.total=this.durations.reduce((a,b)=>a+b,0);this.distance=this.total*this.unit;this.style.setProperty('--jcs-top',this.offset+'px');this.style.setProperty('--jcs-height',this.height+'px');this.style.setProperty('--jcs-runway',(this.distance+this.height)+'px');if(!this.pinned){this.scenes.forEach(s=>{s.inert=false;s.removeAttribute('aria-hidden')});return}this.render()}
+ render(){if(!this.pinned)return;const rect=this.getBoundingClientRect();if(rect.top>innerHeight||rect.bottom<0)return;const clamp=v=>Math.max(0,Math.min(1,v)),ease=v=>v*v*(3-2*v);let time=Math.max(0,Math.min(this.total-.0001,(this.offset-rect.top)/this.unit)),phase=0;while(phase<this.durations.length-1&&time>this.durations[phase]){time-=this.durations[phase];phase++}const p=clamp(time/Math.max(.0001,this.durations[phase]));this.dataset.phase=['empty','flowers','wedding','wedding-exit','breathing-room','rewritable','duster','footsteps','baby','baby-exit'][phase];this.scenes.forEach(s=>{s.style.opacity='0';s.style.visibility='hidden';s.style.clipPath='none';s.inert=true;s.setAttribute('aria-hidden','true')});
+ const show=(i,a=1,y=0,scale=1)=>{const s=this.scenes[i];if(!s)return;s.style.opacity=a;s.style.visibility=a>0?'visible':'hidden';s.style.transform=`translateY(${y}px) scale(${scale})`;s.inert=a<.8;s.setAttribute('aria-hidden',String(a<.8));};
+ if(phase===2){const q=ease(clamp(p*4));show(0,q,(1-q)*75,.92+.08*q)}if(phase===3)show(0,1-ease(p),-p*this.height*.65,1-.08*p);
+ if(phase===5){const q=ease(clamp(p*4));show(1,q,(1-q)*65,.94+.06*q)}
+ if(phase===6){show(1);const passes=6,t=Math.min(5.999,p*passes),row=Math.floor(t),q=ease(t-row),right=row%2===0,x=right?q:1-q,top=100-(row+1)*100/passes,bottom=100-row*100/passes;this.scenes[1].style.clipPath=right?`polygon(0 0,100% 0,100% ${bottom}%,${x*100}% ${bottom}%,${x*100}% ${top}%,0 ${top}%)`:`polygon(0 0,100% 0,100% ${top}%,${x*100}% ${top}%,${x*100}% ${bottom}%,0 ${bottom}%)`;this.duster.style.transform=`translate(${x*this.stage.clientWidth-this.duster.offsetWidth/2}px,${(top+bottom)/200*this.height-this.duster.offsetHeight/2}px) rotate(${right?-12:12}deg)`}
+ this.duster.style.opacity=phase===6?String(Math.min(1,p*12,(1-p)*12)):'0';
+ if(phase===8){const q=ease(clamp(p*4));show(2,q,(1-q)*65,.94+.06*q)}if(phase===9){if(this.mobile)show(2,1,0);else show(2,1-ease(p),-p*this.height*.45);}
+ const burst=phase===1?p:phase===2?1+p:0;this.flowers.forEach((f,i)=>{const q=clamp((burst-(i%4)*.045)/.9),angle=i*2.399963,radius=(.2+q*.85)*Math.max(this.stage.clientWidth,this.height)*(.48+(i%3)*.15);f.style.opacity=burst>0&&burst<1.35?String(clamp(q*8)*(1-clamp((burst-.65)/.7))):'0';f.style.transform=`translate(-50%,-50%) translate(${Math.cos(angle)*radius}px,${Math.sin(angle)*radius*.72}px) rotate(${i*31+q*170}deg) scale(${.2+q*.95})`});
+ this.feet.forEach((f,i)=>{const q=phase===7?clamp((p-i*.04)*8):0;const x=-40+i*(this.stage.clientWidth+80)/15,y=this.height*(.62-i*.022)+(i%2?35:-20);f.style.opacity=String(q*(1-clamp((p-.85)/.15)));f.style.transform=`translate(${x}px,${y}px) rotate(58deg) scaleX(${i%2?-1:1}) scale(${.7+.3*q})`});}
+ disconnectedCallback(){this.controller?.abort();cancelAnimationFrame(this.selectionFrame);if(this.frame)cancelAnimationFrame(this.frame)}
+});
+{% endjavascript %}
+<!-- Mobile visual repair: 6 October 2026 -->
+<style>
+@media(max-width:749px){.jcs[data-pinned=true] .jcs__scene{justify-content:flex-start;padding-top:max(78px,calc(var(--jcs-height)*.12));gap:14px}.jcs .jcs__skip{right:12px;top:10px;padding:10px 14px}}
+</style>
+{% schema %}
+{
+  "name": "June · Other chapters",
+  "tag": "section",
+  "class": "june-chapters-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_master_typography",
+      "label": "Use approved master typography",
+      "default": true,
+      "info": "Homepage small text and prices use Theme settings > June typography. Turn off for section typography."
+    },
+    {
+      "type": "checkbox",
+      "id": "use_master_palette",
+      "label": "Use master palette",
+      "default": true,
+      "info": "Uses Theme settings > June master palette. Turn off to use this section’s individual colours."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Other chapters"
+    },
+    {
+      "type": "text",
+      "id": "skip",
+      "label": "Skip link",
+      "default": "Skip to shopping"
+    },
+    {
+      "type": "checkbox",
+      "id": "scroll",
+      "label": "Enable pinned scroll story",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "motion",
+      "label": "Enable decorative motion",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "offset",
+      "label": "Sticky header clearance",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 85
+    },
+    {
+      "type": "font_picker",
+      "id": "fallback_font",
+      "label": "Fallback font",
+      "default": "poppins_n4"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Story background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "ink",
+      "label": "Text",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Flowers and duster",
+      "default": "#F56A28"
+    },
+    {
+      "type": "color",
+      "id": "flower_secondary",
+      "label": "Secondary flower colour",
+      "default": "#DADADA"
+    },
+    {
+      "type": "range",
+      "id": "pace",
+      "label": "Desktop scroll pace",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "vh",
+      "default": 32,
+      "info": "Scroll distance per beat. Lower values make the story shorter."
+    },
+    {
+      "type": "range",
+      "id": "blank_hold",
+      "label": "Desktop blank pause",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 18,
+      "info": "Scroll distance for each blank interval; not elapsed time.",
+      "unit": "vh"
+    },
+    {
+      "type": "range",
+      "id": "product_size",
+      "label": "Product height on desktop",
+      "min": 25,
+      "max": 55,
+      "step": 1,
+      "unit": "%",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "product_mobile",
+      "label": "Product height on mobile",
+      "min": 25,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "pace_mobile",
+      "label": "Mobile scroll pace",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 19,
+      "unit": "vh"
+    },
+    {
+      "type": "range",
+      "id": "blank_mobile",
+      "label": "Mobile blank pause",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 10,
+      "unit": "vh",
+      "info": "Scroll distance for each blank interval; not elapsed time."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chapter",
+      "name": "Chapter",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "cutout",
+          "label": "Transparent product PNG",
+          "info": "Overrides the prepared catalog cutout. Use a transparent background."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Chapter name",
+          "default": "Wedding"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading first line",
+          "default": "For your next"
+        },
+        {
+          "type": "text",
+          "id": "heading_second",
+          "label": "Heading second line",
+          "default": "big yes."
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Supporting copy",
+          "default": "<p>Make room for every wedding detail.</p>"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Featured product"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Shopping collection"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_shop",
+          "label": "Show shopping button",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "shop",
+          "label": "Shopping label",
+          "default": "Explore wedding planners"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Optional status note"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Scene image override"
+        },
+        {
+          "type": "range",
+          "id": "image_number",
+          "label": "Product image number",
+          "min": 1,
+          "max": 40,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile scene override"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Image description"
+        },
+        {
+          "type": "select",
+          "id": "effect",
+          "label": "Scene effect",
+          "default": "petals",
+          "options": [
+            {
+              "value": "petals",
+              "label": "Petals opening"
+            },
+            {
+              "value": "wipe",
+              "label": "Write then wipe"
+            },
+            {
+              "value": "memories",
+              "label": "Footprints and photo"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "write_number",
+          "label": "Writing photo number",
+          "min": 1,
+          "max": 40,
+          "step": 1,
+          "default": 2
+        },
+        {
+          "type": "range",
+          "id": "wipe_number",
+          "label": "Erasing photo number",
+          "min": 1,
+          "max": 40,
+          "step": 1,
+          "default": 3
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Chapter background",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "decoration",
+          "label": "Petal or footprint colour",
+          "default": "#F56A28"
+        }
+      ]
+    },
+    {
+      "type": "typography",
+      "name": "Typography controls",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "font_picker",
+          "id": "heading_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "heading_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 900
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 62
+        },
+        {
+          "type": "range",
+          "id": "heading_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 38
+        },
+        {
+          "type": "range",
+          "id": "heading_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "heading_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 105
+        },
+        {
+          "type": "header",
+          "content": "Product title"
+        },
+        {
+          "type": "font_picker",
+          "id": "title_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "title_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 26
+        },
+        {
+          "type": "range",
+          "id": "title_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 23
+        },
+        {
+          "type": "range",
+          "id": "title_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "title_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 120
+        },
+        {
+          "type": "header",
+          "content": "Supporting copy"
+        },
+        {
+          "type": "font_picker",
+          "id": "body_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "body_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "body_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "body_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "header",
+          "content": "Actions and navigation"
+        },
+        {
+          "type": "font_picker",
+          "id": "button_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "button_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "button_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 130
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "June · Other chapters",
+      "blocks": [
+        {
+          "type": "chapter",
+          "settings": {
+            "label": "Wedding",
+            "heading": "For your next",
+            "heading_second": "big yes.",
+            "body": "<p>Make room for <strong>every wedding detail.</strong></p>",
+            "product": "wedding-planner-we-are-getting-married",
+            "collection": "wedding-planners",
+            "shop": "Explore wedding planners",
+            "image_number": 2,
+            "effect": "petals",
+            "background": "#FFFFFF",
+            "decoration": "#F56A28",
+            "alt": "We Are Getting Married wedding planner open to its illustrated introductory spread"
+          }
+        },
+        {
+          "type": "chapter",
+          "settings": {
+            "label": "Rewritable",
+            "heading": "Make room for",
+            "heading_second": "what’s next.",
+            "body": "<p>Write it. Wipe it. <strong>Begin again.</strong></p>",
+            "product": "you-got-this-daily-planner-re-writable-planner",
+            "collection": "re-writable-planners",
+            "shop": "Explore rewritable planners",
+            "image_number": 1,
+            "effect": "wipe",
+            "background": "#FFFFFF",
+            "decoration": "#F56A28",
+            "alt": "Rewritable planning board with marker and duster"
+          }
+        },
+        {
+          "type": "chapter",
+          "settings": {
+            "label": "Baby",
+            "heading": "Little firsts.",
+            "heading_second": "Kept forever.",
+            "body": "<p>A place for the moments <strong>you’ll treasure.</strong></p>",
+            "image": "shopify://shop_images/9_716e9fca-5ed5-4327-9c9e-cd94f56c02df.jpg",
+            "show_shop": false,
+            "note": "Baby record books are currently unavailable.",
+            "effect": "memories",
+            "background": "#FFFFFF",
+            "decoration": "#F56A28",
+            "alt": "A Mother’s Touch baby record book cover showing tiny feet held in a parent’s hands"
+          }
+        },
+        {
+          "type": "typography"
+        }
+      ],
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

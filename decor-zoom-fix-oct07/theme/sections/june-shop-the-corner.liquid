@@ -1,0 +1,754 @@
+{% if section.settings.use_master_palette == false %}
+{% style %}#shopify-section-{{ section.id }}{--june-bg:initial;--june-surface:initial;--june-ink:initial;--june-muted:initial;--june-accent:initial;--june-on-accent:initial;--june-border:initial;--june-dark:initial;--june-on-dark:initial;}{% endstyle %}
+{% endif %}
+{% liquid
+
+ assign typography = section.blocks | where: 'type', 'typography' | first
+
+ assign type = typography.settings
+
+ assign pieces = section.blocks | where: 'type', 'piece'
+
+ assign count = 0
+
+ for block in pieces
+
+  if block.settings.product != blank
+
+   assign count = count | plus: 1
+
+  endif
+
+ endfor
+
+%}
+
+{% style %}
+
+#JuneCorner-{{ section.id }}{--jcorner-bg:var(--june-bg,{{ section.settings.background }});--jcorner-ink:var(--june-ink,{{ section.settings.ink }});--jcorner-accent:var(--june-accent,{{ section.settings.accent }});--jcorner-duration:{{ 24000 | divided_by: section.settings.speed }}ms;}
+
+{% assign face = type.heading_font | default: section.settings.fallback_font %}{% assign weight = type.heading_weight | default: 900 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+
+#JuneCorner-{{ section.id }}{--jcorner-heading-font:{{ face.family }},{{ face.fallback_families }};--jcorner-heading-weight:{{ type.heading_weight | default: 900 }};--jcorner-heading-size:{{ type.heading_size | default: 44 }}px;--jcorner-heading-mobile:{{ type.heading_mobile | default: 34 }}px;--jcorner-heading-tracking:{{ type.heading_tracking | default: -2 | divided_by: 100.0 }}em;--jcorner-heading-leading:{{ type.heading_leading | default: 105 | divided_by: 100.0 }};}
+
+{% assign face = type.title_font | default: section.settings.fallback_font %}{% assign weight = type.title_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+
+#JuneCorner-{{ section.id }}{--jcorner-title-font:{{ face.family }},{{ face.fallback_families }};--jcorner-title-weight:{{ type.title_weight | default: 600 }};--jcorner-title-size:{{ type.title_size | default: 22 }}px;--jcorner-title-mobile:{{ type.title_mobile | default: 20 }}px;--jcorner-title-tracking:{{ type.title_tracking | default: -2 | divided_by: 100.0 }}em;--jcorner-title-leading:{{ type.title_leading | default: 120 | divided_by: 100.0 }};}
+
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign weight = type.body_weight | default: 400 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+
+#JuneCorner-{{ section.id }}{--jcorner-body-font:{{ face.family }},{{ face.fallback_families }};--jcorner-body-weight:{{ type.body_weight | default: 400 }};--jcorner-body-size:{{ type.body_size | default: 16 }}px;--jcorner-body-mobile:{{ type.body_mobile | default: 14 }}px;--jcorner-body-tracking:{{ type.body_tracking | default: -1 | divided_by: 100.0 }}em;--jcorner-body-leading:{{ type.body_leading | default: 150 | divided_by: 100.0 }};}
+
+{% assign face = type.button_font | default: section.settings.fallback_font %}{% assign weight = type.button_weight | default: 600 | append: '' %}{% assign variant = face | font_modify: 'weight', weight | default: face %}{{ variant | font_face: font_display: 'swap' }}
+
+#JuneCorner-{{ section.id }}{--jcorner-button-font:{{ face.family }},{{ face.fallback_families }};--jcorner-button-weight:{{ type.button_weight | default: 600 }};--jcorner-button-size:{{ type.button_size | default: 14 }}px;--jcorner-button-mobile:{{ type.button_mobile | default: 14 }}px;--jcorner-button-tracking:{{ type.button_tracking | default: -1 | divided_by: 100.0 }}em;--jcorner-button-leading:{{ type.button_leading | default: 130 | divided_by: 100.0 }};}
+
+{% assign face = type.body_font | default: section.settings.fallback_font %}{% assign bold = face | font_modify: 'weight', '700' %}{{ bold | font_face: font_display: 'swap' }}
+
+{% endstyle %}
+
+
+
+{% capture arrow %}<span class="jcorner__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{% endcapture %}
+
+{% if count > 0 %}
+
+<june-corner id="JuneCorner-{{ section.id }}" class="jcorner{% if settings.june_type_enabled != false and section.settings.use_master_typography != false %} june-type{% endif %}" data-motion="{{ section.settings.motion }}" aria-labelledby="JuneCornerHeading-{{ section.id }}">
+
+ <header class="jcorner__header"><p class="jcorner__eyebrow jcorner__button-type">{{ section.settings.eyebrow | escape }}</p><h2 class="jcorner__heading" id="JuneCornerHeading-{{ section.id }}">{{ section.settings.heading | escape }}<br>{{ section.settings.heading_second | escape }}</h2><div class="jcorner__body">{{ section.settings.body }}</div></header>
+
+ <div class="jcorner__visual">
+
+  <div class="jcorner__canvas">
+
+   {% if section.settings.scene != blank %}
+
+   <picture>{% if section.settings.mobile_scene != blank %}<source media="(max-width:1050px)" srcset="{{ section.settings.mobile_scene | image_url: width: 500 }} 500w, {{ section.settings.mobile_scene | image_url: width: 1000 }} 1000w" sizes="100vw">{% endif %}{{ section.settings.scene | image_url: width: 1800 | image_tag: widths: '500,750,1000,1400,1800', sizes: '(min-width: 1680px) 1075px, (min-width: 1051px) 64vw, 100vw', loading: 'lazy', alt: section.settings.scene_alt }}</picture>
+
+   <div class="jcorner__hotspots" role="group" aria-label="{{ section.settings.choose | escape }}">
+
+   {% assign number = 0 %}{% for block in pieces %}{% if block.settings.product != blank %}
+
+    <button type="button" class="jcorner__spot jcorner__button-type" data-select="{{ number }}" data-block="{{ block.id }}" aria-label="{{ block.settings.product.title | escape }}" aria-pressed="{% if number == 0 %}true{% else %}false{% endif %}" aria-controls="JuneCornerProduct-{{ section.id }}-{{ number }}" style="--spot-x:{{ block.settings.x }}%;--spot-y:{{ block.settings.y }}%;--spot-mobile-x:{{ block.settings.mobile_x }}%;--spot-mobile-y:{{ block.settings.mobile_y }}%" {{ block.shopify_attributes }}><span>{{ number | plus: 1 | prepend: '0' }}</span></button>
+
+    {% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+
+   </div>
+
+   {% else %}{{ 'lifestyle-1' | placeholder_svg_tag: 'jcorner__placeholder' }}{% endif %}
+
+   {% if section.settings.caption != blank %}<p class="jcorner__caption jcorner__body">{{ section.settings.caption | escape }}</p>{% endif %}
+
+  </div>
+
+ </div>
+
+{% if section.settings.scene_note != blank %}<p class="jcorner__scene-note jcorner__body">{{ section.settings.scene_note | escape }}</p>{% endif %}
+ <div class="jcorner__details" aria-live="polite" aria-atomic="true">
+
+ {% assign number = 0 %}{% for block in pieces %}{% assign product = block.settings.product %}{% if product != blank %}
+
+  {% assign image = block.settings.image | default: product.featured_image %}
+
+  <div class="jcorner__product" id="JuneCornerProduct-{{ section.id }}-{{ number }}" data-product="{{ number }}" {% unless number == 0 %}hidden{% endunless %}>
+
+   <p class="jcorner__count jcorner__button-type">{{ number | plus: 1 | prepend: '0' }} / {{ section.settings.in_corner | escape }}</p>
+
+   <div class="jcorner__item">{% if image != blank %}{% render 'june-photo-viewer', image: image, title: product.title, type_class: 'jcorner__body' %}{% endif %}<div><h3 class="jcorner__title">{{ block.settings.name | default: product.title | escape }}</h3><p class="jcorner__body jcorner__spec">{{ block.settings.specification | escape }}</p><p class="jcorner__price jcorner__body">{% if product.price_varies %}<span class="jmoney-prefix">{{ section.settings.from | escape }} </span>{% endif %}{% render 'june-price', amount: product.price %}</p><a class="jcorner__link jcorner__button-type" href="{{ product.url }}">{{ section.settings.detail | escape }}{{ arrow }}</a></div></div>
+
+   {% unless product.available %}<p class="jcorner__body">{{ section.settings.unavailable | escape }}</p>{% endunless %}
+
+  </div>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}
+
+ </div>
+
+ <footer class="jcorner__footer">
+
+  <div class="jcorner__nav" role="group" aria-label="{{ section.settings.choose | escape }}">{% assign number = 0 %}{% for block in pieces %}{% if block.settings.product != blank %}<button type="button" class="jcorner__step jcorner__button-type" data-select="{{ number }}" aria-label="{{ block.settings.product.title | escape }}" aria-pressed="{% if number == 0 %}true{% else %}false{% endif %}">{{ block.settings.short_label | default: block.settings.name | escape }}</button>{% assign number = number | plus: 1 %}{% endif %}{% endfor %}</div>
+
+  {% if section.settings.collection != blank %}<a class="jcorner__primary jcorner__button-type" href="{{ section.settings.collection.url }}">{{ section.settings.all | escape }}{{ arrow }}</a>{% endif %}
+
+  
+
+ </footer>
+
+ <noscript><style>#JuneCorner-{{ section.id }} .jcorner__product[hidden]{display:block!important}#JuneCorner-{{ section.id }} .jcorner__hotspots,#JuneCorner-{{ section.id }} .jcorner__nav{display:none}</style></noscript>
+
+</june-corner>
+
+{% elsif request.design_mode %}<p>{{ section.settings.setup | escape }}</p>{% endif %}
+
+
+
+{% stylesheet %}
+
+
+
+june-corner.jcorner{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(340px,1fr);grid-template-rows:auto 1fr auto;max-width:1680px;margin:auto;background:var(--jcorner-bg);color:var(--jcorner-ink);border-bottom:1px solid color-mix(in srgb,var(--june-ink,#171717) 13.33%,transparent)}
+
+.jcorner *{box-sizing:border-box}.jcorner [hidden]{display:none!important}.jcorner h2,.jcorner h3,.jcorner p{margin:0;color:inherit}.jcorner a{color:inherit;text-decoration:none}.jcorner button{cursor:pointer;color:inherit;appearance:none}.jcorner strong{font-weight:700}.jcorner button:focus-visible,.jcorner a:focus-visible{outline:3px solid var(--jcorner-ink);outline-offset:4px}
+
+.jcorner .jcorner__heading{font-family:var(--jcorner-heading-font);font-size:var(--jcorner-heading-size);font-weight:var(--jcorner-heading-weight);letter-spacing:var(--jcorner-heading-tracking);line-height:var(--jcorner-heading-leading)}
+
+.jcorner .jcorner__title{font-family:var(--jcorner-title-font);font-size:var(--jcorner-title-size);font-weight:var(--jcorner-title-weight);letter-spacing:var(--jcorner-title-tracking);line-height:var(--jcorner-title-leading)}
+
+.jcorner .jcorner__body{font-family:var(--jcorner-body-font);font-size:var(--jcorner-body-size);font-weight:var(--jcorner-body-weight);letter-spacing:var(--jcorner-body-tracking);line-height:var(--jcorner-body-leading)}
+
+.jcorner .jcorner__button-type{font-family:var(--jcorner-button-font);font-size:var(--jcorner-button-size);font-weight:var(--jcorner-button-weight);letter-spacing:var(--jcorner-button-tracking);line-height:var(--jcorner-button-leading)}
+
+
+
+.jcorner__header{grid-column:2;grid-row:1;padding:32px 32px 22px}.jcorner__eyebrow{text-transform:uppercase;font-size:calc(var(--jcorner-button-size)*.75)!important;letter-spacing:.12em!important}.jcorner .jcorner__heading{margin:16px 0 18px;overflow-wrap:break-word}
+
+.jcorner__visual{grid-column:1;grid-row:1/4;min-width:0;background:var(--june-surface,#F5F5F3);display:flex;align-items:center}.jcorner__canvas{position:relative;width:100%;isolation:isolate}.jcorner__canvas picture,.jcorner__canvas img{display:block;width:100%;height:auto}.jcorner__placeholder{display:block;width:100%;height:auto}
+
+.jcorner__spot{position:absolute;left:var(--spot-x);top:var(--spot-y);width:48px;height:48px;padding:5px;border:1px solid var(--june-border,#DADADA);border-radius:50%;background:color-mix(in srgb,var(--june-dark,#171717) 40%,transparent);color:var(--june-on-dark,#FFFFFF)!important;transform:translate(-50%,-50%);transition:background var(--jcorner-duration) ease,box-shadow var(--jcorner-duration) ease;box-shadow:0 2px 9px #17171733}.jcorner__spot span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:var(--june-dark,#171717)}.jcorner__spot[aria-pressed=true]{background:var(--jcorner-accent);border-color:var(--jcorner-accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--june-border,#DADADA) 46.67%,transparent),0 3px 10px #17171733}.jcorner__spot[aria-pressed=true] span{color:var(--jcorner-accent)}
+
+.jcorner__caption{position:absolute;bottom:0;left:0;right:0;padding:30px 28px 20px;background:linear-gradient(transparent,color-mix(in srgb,var(--june-dark,#171717) 60%,transparent));color:var(--june-on-dark,#FFFFFF)!important;pointer-events:none}
+
+.jcorner__details{grid-column:2;grid-row:2;padding:0 32px;align-self:center}.jcorner__product{border-top:1px solid color-mix(in srgb,var(--june-ink,#171717) 26.67%,transparent);padding-top:18px}.jcorner__count{text-transform:uppercase;font-size:calc(var(--jcorner-button-size)*.75)!important;letter-spacing:.09em!important;margin-bottom:18px!important}.jcorner__item{display:grid;grid-template-columns:88px 1fr;gap:18px;align-items:center}.jcorner__item>img{display:block;width:88px;height:112px;object-fit:contain;mix-blend-mode:multiply}.jcorner__price{margin-top:8px!important}.jcorner__arrow{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:50%;background:var(--june-dark,var(--june-dark,#171717));color:var(--june-on-dark,var(--jcorner-accent))}.jcorner__arrow svg{width:18px;height:18px}.jcorner .jcorner__link{display:inline-flex;align-items:center;gap:9px;min-height:44px;text-decoration:underline;text-underline-offset:5px;margin-top:8px}.jcorner__link .jcorner__arrow{width:22px;height:22px}.jcorner__link svg{width:14px;height:14px}
+
+.jcorner__footer{grid-column:2;grid-row:3;padding:22px 32px 28px}.jcorner__nav{display:flex;justify-content:center;gap:16px;border-top:1px solid color-mix(in srgb,var(--june-ink,#171717) 26.67%,transparent);padding-top:18px;margin-bottom:20px}.jcorner__step{width:44px;height:44px;border:1px solid var(--june-ink,#171717);border-radius:50%;background:none}.jcorner__step[aria-pressed=true]{background:var(--june-dark,#171717);color:var(--jcorner-accent)}.jcorner .jcorner__primary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:50px;padding:8px 9px 8px 22px;border:1px solid var(--june-ink,#171717);border-radius:999px;background:var(--jcorner-accent);color:var(--june-on-accent,var(--june-ink,#171717));box-shadow:-2px 1px 0 #171717;transition:transform var(--jcorner-duration) ease}.jcorner .jcorner__scene-note{font-size:calc(var(--jcorner-body-size)*.67);margin-top:12px;opacity:.65}
+
+@media(hover:hover){.jcorner[data-motion=true] .jcorner__primary:hover{transform:translateY(-2px)}.jcorner__spot:hover{background:var(--jcorner-accent)}}
+
+@media(max-width:1050px){june-corner.jcorner{display:flex;flex-direction:column}.jcorner__header{padding:28px 20px 22px}.jcorner .jcorner__heading{font-size:var(--jcorner-heading-mobile);margin:12px 0 16px}.jcorner .jcorner__title{font-size:var(--jcorner-title-mobile)}.jcorner .jcorner__body{font-size:var(--jcorner-body-mobile)}.jcorner .jcorner__button-type{font-size:var(--jcorner-button-mobile)}.jcorner__eyebrow{font-size:calc(var(--jcorner-button-mobile)*.75)!important}.jcorner__spot{left:var(--spot-mobile-x);top:var(--spot-mobile-y);width:44px;height:44px;padding:4px}.jcorner__caption{padding:22px 20px 14px;font-size:calc(var(--jcorner-body-mobile)*.9)!important}.jcorner__details{padding:20px 20px 0;align-self:stretch}.jcorner__product{padding:0;border:0}.jcorner__count{font-size:calc(var(--jcorner-button-mobile)*.75)!important;margin-bottom:12px!important}.jcorner__item{grid-template-columns:72px 1fr;gap:18px}.jcorner__item>img{width:72px;height:86px}.jcorner__footer{padding:18px 20px 22px}.jcorner__nav{padding-top:16px;margin-bottom:18px}.jcorner .jcorner__scene-note{font-size:calc(var(--jcorner-body-mobile)*.75)}}
+
+@media(prefers-reduced-motion:reduce){.jcorner *{transition:none!important;animation:none!important}.jcorner .jcorner__primary{transform:none!important}}.jcorner[data-motion=false] *{transition:none!important}
+
+
+
+
+.jcorner{scroll-margin-top:110px}.jcorner>.jcorner__scene-note{grid-column:1;grid-row:4;font-size:var(--jcorner-body-mobile);padding:8px 24px;opacity:1}.jcorner__item{grid-template-columns:130px 1fr!important}.jcorner__item june-photo-viewer{height:150px}.jcorner__spec{margin:8px 0}.jcorner .jcorner__link{display:inline-flex;min-height:50px;padding:8px 10px 8px 18px;background:var(--jcorner-accent);border:1px solid var(--june-ink,#171717);border-radius:999px;text-decoration:none;gap:12px;color:var(--june-on-accent,#171717)}.jcorner .jcorner__step{width:auto;min-width:75px;padding:8px 14px;border-radius:999px}.jcorner__footer>.jcorner__primary{background:transparent;box-shadow:none;border:0;text-decoration:underline;justify-content:center}.jcorner__nav{gap:8px}
+@media(max-width:1050px){.jcorner>.jcorner__scene-note{grid-row:auto;order:2;padding:8px 20px}.jcorner__details{order:3}.jcorner__footer{order:4}.jcorner__item{grid-template-columns:95px 1fr!important}.jcorner__item june-photo-viewer{height:125px}.jcorner__header{padding:22px 20px!important}.jcorner__details{padding:16px 20px!important}}
+
+@media(max-width:1050px){.jcorner__count{display:none}.jcorner__footer{padding:8px 20px 16px}.jcorner__nav{padding-top:8px;margin-bottom:8px}.jcorner>.jcorner__scene-note{margin-top:0}.jcorner__details{padding-block:12px!important}}
+@media(max-width:1050px){.jcorner>.jcorner__nav{order:2;margin:4px 20px 0;padding-top:8px;border-top:0}.jcorner>.jcorner__scene-note{order:5;padding-block:0 12px}.jcorner__details{order:3}.jcorner__footer{order:4;padding-block:0 4px}.jcorner__header{padding-block:16px!important}.jcorner__item>div{display:flex;flex-direction:column;align-items:flex-start}.jcorner__item .jcorner__spec{order:4;margin:8px 0 0}.jcorner__item .jcorner__title{order:0}.jcorner__item .jcorner__price{order:1}.jcorner__item .jcorner__link{order:2}.jcorner__item{align-items:start}}
+{% endstylesheet %}
+
+{% javascript %}
+
+
+
+if(!customElements.get('june-corner')){
+
+ customElements.define('june-corner',class extends HTMLElement{
+
+  connectedCallback(){this.layoutAbort?.abort();this.layoutAbort=new AbortController();const nav=this.querySelector('.jcorner__nav'),details=this.querySelector('.jcorner__details');this.navHome ||= document.createComment('navigation position');if(!this.navHome.parentNode)nav.before(this.navHome);const mobile=matchMedia('(max-width:1050px)');const arrange=()=>{if(mobile.matches)details.before(nav);else this.navHome.after(nav)};mobile.addEventListener('change',arrange,{signal:this.layoutAbort.signal});arrange();
+
+   this.controller?.abort();this.controller=new AbortController();const options={signal:this.controller.signal};
+
+   this.addEventListener('click',event=>{const b=event.target.closest('[data-select]');if(b&&this.contains(b))this.select(Number(b.dataset.select));},options);
+
+   this.addEventListener('keydown',event=>{const b=event.target.closest('[data-select]');if(!b)return;const group=[...b.parentElement.querySelectorAll('[data-select]')];let i=group.indexOf(b),n;if(event.key==='ArrowRight')n=(i+1)%group.length;if(event.key==='ArrowLeft')n=(i-1+group.length)%group.length;if(event.key==='Home')n=0;if(event.key==='End')n=group.length-1;if(n===undefined)return;event.preventDefault();this.select(Number(group[n].dataset.select));group[n].focus();},options);
+
+   this.addEventListener('shopify:block:select',event=>{const b=[...this.querySelectorAll('[data-block]')].find(b=>b.dataset.block===event.detail.blockId);if(b)this.select(Number(b.dataset.select));},options);
+
+  }
+
+  select(index){this.querySelectorAll('[data-select]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.select)===index)));this.querySelectorAll('[data-product]').forEach(p=>p.hidden=Number(p.dataset.product)!==index);}
+
+  disconnectedCallback(){this.controller?.abort();this.layoutAbort?.abort();}
+
+ });
+
+}
+
+
+
+{% endjavascript %}
+
+<!-- Mobile visual repair: 6 October 2026 -->
+<style>
+@media(max-width:749px){.jcorner .jcorner__hotspots{display:none}.jcorner .jcorner__item{grid-template-columns:1fr!important;gap:14px}.jcorner .jcorner__item june-photo-viewer{width:100%;height:240px}.jcorner .jcorner__item>div{width:100%}.jcorner .jcorner__item .jcorner__link{min-height:44px;margin-top:8px}.jcorner .jcorner__nav{gap:8px}.jcorner .jcorner__canvas{max-height:230px;overflow:hidden}}
+</style>
+<style>
+/* Keep the real product image beside its buying information on mobile. */
+@media(max-width:749px){
+.jcorner .jcorner__item{grid-template-columns:128px minmax(0,1fr)!important;gap:8px 14px;align-items:start}
+.jcorner .jcorner__item june-photo-viewer{grid-column:1;grid-row:1/span 2;width:128px;height:178px}
+.jcorner .jcorner__item>div{display:contents}.jcorner .jcorner__title{grid-column:2;grid-row:1;align-self:end;margin:0}
+.jcorner .jcorner__price{grid-column:2;grid-row:2;margin:0!important}.jcorner .jcorner__link{grid-column:1/-1;justify-content:space-between;margin-top:8px}
+.jcorner .jcorner__spec{grid-column:1/-1}.jcorner .jcorner__spec:empty{display:none}
+.jcorner .jcorner__footer{padding-top:0}.jcorner .jcorner__footer>.jcorner__primary{justify-content:flex-start;padding-left:0}
+}
+</style>
+
+<style>
+/* Compact mobile Décor card — isolated from shared theme styles. */
+@media(max-width:749px){
+june-corner.jcorner .jcorner__header{padding:14px 20px 12px!important}
+june-corner.jcorner .jcorner__heading{margin:6px 0 8px}
+june-corner.jcorner .jcorner__caption{display:none}
+june-corner.jcorner .jcorner__canvas{max-height:210px}
+june-corner.jcorner>.jcorner__nav{margin:0 16px;padding:10px 0 0;gap:6px;justify-content:stretch}
+june-corner.jcorner .jcorner__step{flex:1;min-width:0;min-height:44px;height:auto;padding:8px 6px}
+june-corner.jcorner .jcorner__details{padding:12px 16px 4px!important}
+june-corner.jcorner .jcorner__item{grid-template-columns:112px minmax(0,1fr)!important;grid-template-rows:auto auto auto;gap:6px 12px;align-items:start}
+june-corner.jcorner .jcorner__item june-photo-viewer{grid-column:1;grid-row:1 / 4;width:112px;height:156px}
+june-corner.jcorner .jcorner__item>div{display:contents}
+june-corner.jcorner .jcorner__title{grid-column:2;grid-row:1;align-self:start}
+june-corner.jcorner .jcorner__price{grid-column:2;grid-row:2;margin:0!important}
+june-corner.jcorner .jcorner__item .jcorner__link{grid-column:2;grid-row:3;align-self:start;min-height:44px;margin:0;padding:7px 8px 7px 12px;gap:6px;justify-content:space-between}
+june-corner.jcorner .jcorner__spec{grid-column:1/-1;grid-row:4;margin:0}
+june-corner.jcorner .jphoto__open{position:relative}
+june-corner.jcorner .jphoto__open>img{height:100%;width:100%;object-fit:contain}
+june-corner.jcorner .jphoto__open>span{position:absolute;bottom:4px;right:4px;width:44px;height:44px;min-height:44px;gap:0;padding:0;border:1px solid var(--jcorner-ink);border-radius:50%;background:var(--jcorner-bg);font-size:0!important}
+june-corner.jcorner .jphoto__open>span svg{width:18px;height:18px}
+june-corner.jcorner .jcorner__footer{padding:2px 16px 0}
+june-corner.jcorner .jcorner__footer>.jcorner__primary{min-height:44px;padding:6px 0;justify-content:space-between;margin:0}
+june-corner.jcorner>.jcorner__scene-note{padding:2px 16px 12px;margin:0;font-size:var(--jtype-utility-mobile,var(--jcorner-body-mobile));line-height:1.4}
+}
+</style>
+
+<style>
+@media(max-width:749px){
+/* Outrank shared typography for this icon-only mobile control. */
+june-corner.jcorner.jcorner.jcorner .jphoto__open>.jphoto__zoom-label{font-size:0!important;letter-spacing:0!important;gap:0!important;line-height:0!important;overflow:hidden;box-sizing:border-box;width:44px;height:44px;min-height:44px;right:4px;bottom:4px}
+june-corner.jcorner.jcorner.jcorner .jphoto__open>.jphoto__zoom-label svg{display:block;width:18px;height:18px;flex:none}
+}
+</style>
+{% schema %}
+{
+  "name": "June · Shop the corner",
+  "tag": "section",
+  "class": "june-corner-section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_master_typography",
+      "label": "Use approved master typography",
+      "default": true,
+      "info": "Homepage small text and prices use Theme settings > June typography. Turn off for section typography."
+    },
+    {
+      "type": "checkbox",
+      "id": "use_master_palette",
+      "label": "Use master palette",
+      "default": true,
+      "info": "Uses Theme settings > June master palette. Turn off to use this section’s individual colours."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Life beyond the pages / Home décor"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Small details."
+    },
+    {
+      "type": "text",
+      "id": "heading_second",
+      "label": "Heading second line",
+      "default": "A space that’s you."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "body",
+      "label": "Supporting copy",
+      "default": "Find the pieces that make a corner feel <strong>yours.</strong>"
+    },
+    {
+      "type": "image_picker",
+      "id": "scene",
+      "label": "Styled scene"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_scene",
+      "label": "Optional mobile scene"
+    },
+    {
+      "type": "text",
+      "id": "scene_alt",
+      "label": "Scene description",
+      "default": "A sunlit corner with a ceramic vase, gold bird figurine and carved picture frame"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Scene caption",
+      "default": "A little corner. A lot of you."
+    },
+    {
+      "type": "text",
+      "id": "scene_note",
+      "label": "Scene note",
+      "default": "Styled visual. See product photos for details."
+    },
+    {
+      "type": "text",
+      "id": "in_corner",
+      "label": "Product eyebrow",
+      "default": "In this corner"
+    },
+    {
+      "type": "text",
+      "id": "choose",
+      "label": "Navigation label",
+      "default": "Explore the pieces in this corner"
+    },
+    {
+      "type": "text",
+      "id": "detail",
+      "label": "Product link label",
+      "default": "Explore this detail"
+    },
+    {
+      "type": "text",
+      "id": "all",
+      "label": "Collection button",
+      "default": "Explore home décor"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Home décor collection"
+    },
+    {
+      "type": "text",
+      "id": "from",
+      "label": "Price prefix",
+      "default": "From"
+    },
+    {
+      "type": "text",
+      "id": "unavailable",
+      "label": "Unavailable label",
+      "default": "Currently unavailable"
+    },
+    {
+      "type": "text",
+      "id": "setup",
+      "label": "Setup message",
+      "default": "Choose a scene and add your featured pieces."
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "ink",
+      "label": "Text",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent and button fill",
+      "default": "#F56A28"
+    },
+    {
+      "type": "font_picker",
+      "id": "fallback_font",
+      "label": "Fallback font",
+      "default": "poppins_n4"
+    },
+    {
+      "type": "checkbox",
+      "id": "motion",
+      "label": "Enable button and selection motion",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Motion speed",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "default": 100,
+      "unit": "%"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "piece",
+      "name": "Corner piece",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Short display name"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product photo override"
+        },
+        {
+          "type": "paragraph",
+          "content": "Position the numbered point over this product. Coordinates are relative to the entire scene image. Keep the image uncropped."
+        },
+        {
+          "type": "range",
+          "id": "x",
+          "label": "Desktop horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "y",
+          "label": "Desktop vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 60
+        },
+        {
+          "type": "range",
+          "id": "mobile_x",
+          "label": "Mobile horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "mobile_y",
+          "label": "Mobile vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 60
+        },
+        {
+          "type": "text",
+          "id": "specification",
+          "label": "Verified product specification"
+        },
+        {
+          "type": "text",
+          "id": "short_label",
+          "label": "Short product type"
+        }
+      ]
+    },
+    {
+      "type": "typography",
+      "name": "Typography controls",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "font_picker",
+          "id": "heading_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "heading_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 900
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 44
+        },
+        {
+          "type": "range",
+          "id": "heading_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 34
+        },
+        {
+          "type": "range",
+          "id": "heading_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "heading_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 105
+        },
+        {
+          "type": "header",
+          "content": "Product title"
+        },
+        {
+          "type": "font_picker",
+          "id": "title_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "title_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 22
+        },
+        {
+          "type": "range",
+          "id": "title_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "title_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -2
+        },
+        {
+          "type": "range",
+          "id": "title_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 120
+        },
+        {
+          "type": "header",
+          "content": "Supporting copy"
+        },
+        {
+          "type": "font_picker",
+          "id": "body_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "body_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "body_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "body_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "header",
+          "content": "Actions and navigation"
+        },
+        {
+          "type": "font_picker",
+          "id": "button_font",
+          "label": "Font family",
+          "default": "poppins_n4"
+        },
+        {
+          "type": "range",
+          "id": "button_weight",
+          "label": "Thickness",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Desktop size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_mobile",
+          "label": "Mobile size",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_tracking",
+          "label": "Letter spacing",
+          "min": -6,
+          "max": 20,
+          "step": 1,
+          "unit": "%",
+          "default": -1
+        },
+        {
+          "type": "range",
+          "id": "button_leading",
+          "label": "Line height",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 130
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "June · Shop the corner",
+      "blocks": [
+        {
+          "type": "piece"
+        },
+        {
+          "type": "piece"
+        },
+        {
+          "type": "piece"
+        },
+        {
+          "type": "typography"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

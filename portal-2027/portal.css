@@ -1,0 +1,39 @@
+/* Portal announcement: scoped to this section; global palette is preserved. */
+.jn.jn--portal{position:relative;isolation:isolate;overflow:hidden;align-items:center;gap:40px;padding-block:max(48px,var(--jn-pad));background:radial-gradient(ellipse at 48% 50%,color-mix(in srgb,var(--portal-glow) 22%,transparent),transparent 55%),var(--jn-bg)}
+.jn--portal .jn__teaser{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:12px}
+.jn--portal .jn__heading{font-size:min(var(--jn-heading-size),3.4vw);line-height:var(--jn-heading-leading)}
+.jn--portal .jn__portal-scene{position:relative;min-width:0;height:420px;display:grid;place-items:center;isolation:isolate}
+.jn--portal .jn__doorway{position:absolute;width:66%;height:83%;bottom:9%;border-radius:48% 48% 3px 3px;border:2px solid color-mix(in srgb,var(--portal-glow) 65%,white);background:linear-gradient(160deg,color-mix(in srgb,var(--portal-glow) 70%,var(--jn-bg)),var(--jn-bg) 80%);box-shadow:0 0 24px var(--portal-glow),0 0 70px color-mix(in srgb,var(--portal-glow) 55%,transparent),inset 0 0 30px #ffffffaa;transform:perspective(900px) rotateY(-12deg)}
+.jn--portal .jn__door-light{position:absolute;inset:12px;border:1px solid #ffffffb8;border-radius:inherit;background:radial-gradient(ellipse at 50% 65%,#fff9,transparent 70%)}
+.jn--portal .jn__light-spill{position:absolute;width:110%;height:90px;bottom:-3%;background:radial-gradient(ellipse,var(--portal-glow),transparent 67%);opacity:.55;transform:rotate(-6deg);filter:blur(12px);z-index:-1}
+.jn--portal .jn__portal-year{position:relative;display:flex;flex-direction:column;align-items:center;transform:rotate(var(--portal-tilt));gap:20px;padding-top:35px}
+.jn--portal .jn__year{font-size:min(var(--jn-year-size),10vw);text-shadow:0 4px 30px color-mix(in srgb,var(--jn-bg) 85%,transparent)}
+.jn--portal .jn__badge{align-self:center;background:transparent;color:var(--jn-ink);border:1px solid color-mix(in srgb,var(--jn-ink) 30%,transparent);border-radius:999px;padding:8px 15px;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.jn--portal .jn__stars{position:absolute;inset:5%;pointer-events:none}
+.jn--portal .jn__stars i{position:absolute;left:calc(8% + mod(var(--i)*29,85)*1%);top:calc(5% + mod(var(--i)*17,80)*1%);width:4px;height:4px;background:var(--jn-ink);opacity:.4;border-radius:50%;box-shadow:0 0 10px var(--portal-glow)}
+.jn--portal .jn__stars i:nth-child(3n){width:12px;height:12px;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);border-radius:0}
+.jn--portal .jn__ticket{padding:0!important;background:none;border:0;border-radius:0;box-shadow:none}
+.jn--portal .jn__perforation{display:none}
+.jn--portal .jn__description{margin-bottom:22px}
+.jn--portal .jn__signup{font-size:min(var(--jn-signup-size),2.6vw)}
+.jn--portal .jn__email{background:color-mix(in srgb,var(--jn-bg) 80%,transparent)}
+.jn--portal .jn__note{font-size:max(12px,calc(var(--jn-body-size)*.8))}
+.jn--portal[data-portal-motion=true].is-revealed .jn__doorway{animation:jn-portal-light var(--portal-duration) ease-out both}
+.jn--portal[data-portal-motion=true].is-revealed .jn__portal-year{animation:jn-portal-arrive var(--portal-duration) cubic-bezier(.2,.7,.2,1) both}
+.jn--portal[data-portal-motion=true].is-revealed .jn__stars i{animation:jn-portal-dust calc(var(--portal-duration)*1.5) ease-out both;animation-delay:calc(var(--i)*.08s)}
+@keyframes jn-portal-light{from{opacity:.25;filter:brightness(.9)}to{opacity:1;filter:brightness(1)}}
+@keyframes jn-portal-arrive{from{opacity:0;transform:translateY(20px) rotate(var(--portal-tilt))}to{opacity:1;transform:translateY(0) rotate(var(--portal-tilt))}}
+@keyframes jn-portal-dust{from{opacity:0;transform:translateY(18px)}to{opacity:.4;transform:translateY(0)}}
+@media(max-width:900px){
+ .jn.jn--portal{padding:32px 24px 36px;display:block}
+ .jn--portal .jn__teaser{display:flex;flex-direction:column;gap:0;margin:0}
+ .jn--portal .jn__copy{text-align:center;max-width:540px}
+ .jn--portal .jn__heading{font-size:var(--jn-heading-mobile);margin:12px 0}
+ .jn--portal .jn__caption{font-size:var(--jn-body-mobile)}
+ .jn--portal .jn__portal-scene{width:100%;max-width:360px;height:310px;margin:12px auto 24px}
+ .jn--portal .jn__year{font-size:min(calc(var(--jn-year-mobile)*1.8),26vw)}
+ .jn--portal .jn__ticket{max-width:480px}
+ .jn--portal .jn__signup{font-size:var(--jn-signup-mobile)}
+ .jn--portal .jn__note{font-size:12px;line-height:1.6}
+}
+@media(prefers-reduced-motion:reduce){.jn.jn--portal *{animation:none!important;transition:none!important}}

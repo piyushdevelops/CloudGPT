@@ -1,0 +1,21 @@
+<section class="jod-collection">
+  <p>{{ section.settings.eyebrow }}</p>
+  <h1>{{ collection.title }}</h1>
+  <div class="jod-collection__copy">{{ collection.description }}</div>
+  <div class="jod-collection__grid">
+    {% for item in collection.products %}
+      <a href="{{ item.url }}">
+        {% if item.featured_image %}{{ item.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400, 650, 900', sizes: '(min-width: 750px) 50vw, 100vw' }}{% endif %}
+        <span><b>{{ item.title }}</b><small>From {{ item.price | money_without_trailing_zeros }}</small></span>
+      </a>
+    {% else %}
+      <a href="/pages/our-days"><span><b>Our Days</b><small>Thoughtful prompts, beautifully printed.</small></span></a>
+    {% endfor %}
+  </div>
+</section>
+{% stylesheet %}
+  .jod-collection{max-width:1680px;margin:auto;padding:clamp(48px,8vw,120px) clamp(20px,5vw,80px);color:#171717}.jod-collection>p{font-size:12px;font-weight:800;letter-spacing:.17em;text-transform:uppercase}.jod-collection h1{max-width:900px;margin:8px 0;font-size:clamp(48px,8vw,112px);font-weight:900;letter-spacing:-.06em;line-height:.9}.jod-collection__copy{max-width:700px;font-size:18px}.jod-collection__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:48px}.jod-collection__grid a{display:grid;min-height:360px;overflow:hidden;border:2px solid #171717;border-radius:30px;background:#f8f1e5;color:#171717;text-decoration:none;box-shadow:8px 8px 0 #171717}.jod-collection__grid img{width:100%;aspect-ratio:4/3;object-fit:cover}.jod-collection__grid span{display:flex;justify-content:space-between;gap:20px;padding:24px}.jod-collection__grid b{font-size:24px}.jod-collection__grid small{font-size:15px}@media(max-width:749px){.jod-collection__grid{grid-template-columns:1fr}.jod-collection__grid span{display:grid}.jod-collection__grid a{min-height:280px}}
+{% endstylesheet %}
+{% schema %}
+{"name":"June Our Days collection","settings":[{"type":"text","id":"eyebrow","label":"Eyebrow","default":"MEMORIES, MADE INTO BOOKS"}],"presets":[{"name":"June Our Days collection"}]}
+{% endschema %}

@@ -1,0 +1,482 @@
+[
+  {
+    "productName": "dated",
+    "handle": "create-your-magic-2027-dated-planner",
+    "viewportName": "phone-small",
+    "viewport": {
+      "width": 360,
+      "height": 640
+    },
+    "status": 200,
+    "initial": {
+      "status": "ready",
+      "scrollY": 0,
+      "stageRatio": 1,
+      "firstImageLoaded": true,
+      "stickyHidden": true,
+      "tabs": [
+        {
+          "text": "Description",
+          "left": 12,
+          "right": 124,
+          "width": 112
+        },
+        {
+          "text": "Specifications",
+          "left": 124,
+          "right": 236,
+          "width": 112
+        },
+        {
+          "text": "Delivery & returns",
+          "left": 236,
+          "right": 348,
+          "width": 112
+        }
+      ],
+      "noOverflow": true
+    },
+    "thumbJump": 0,
+    "specs": {
+      "selected": "true",
+      "rows": 3,
+      "text": "Product typeDated PlannersAvailable optionsCustomisationSKUTJS61800"
+    },
+    "stickyAfterPurchase": {
+      "hidden": false,
+      "dispatchInButton": true,
+      "dispatchVisible": true,
+      "label": "Pre-order"
+    },
+    "discovery": {
+      "inMain": true,
+      "afterDatedDetails": true,
+      "cardCount": 9,
+      "loadedImages": 5,
+      "imageCount": 9,
+      "firstCardWidth": 259.1875,
+      "noOverflow": true
+    },
+    "errors": []
+  },
+  {
+    "productName": "dated",
+    "handle": "create-your-magic-2027-dated-planner",
+    "viewportName": "phone",
+    "viewport": {
+      "width": 393,
+      "height": 852
+    },
+    "status": 200,
+    "initial": {
+      "status": "ready",
+      "scrollY": 0,
+      "stageRatio": 1,
+      "firstImageLoaded": true,
+      "stickyHidden": true,
+      "tabs": [
+        {
+          "text": "Description",
+          "left": 12,
+          "right": 135,
+          "width": 123
+        },
+        {
+          "text": "Specifications",
+          "left": 135,
+          "right": 258,
+          "width": 123
+        },
+        {
+          "text": "Delivery & returns",
+          "left": 258,
+          "right": 381,
+          "width": 123
+        }
+      ],
+      "noOverflow": true
+    },
+    "thumbJump": 0,
+    "specs": {
+      "selected": "true",
+      "rows": 3,
+      "text": "Product typeDated PlannersAvailable optionsCustomisationSKUTJS61800"
+    },
+    "stickyAfterPurchase": {
+      "hidden": false,
+      "dispatchInButton": true,
+      "dispatchVisible": true,
+      "label": "Pre-order"
+    },
+    "discovery": {
+      "inMain": true,
+      "afterDatedDetails": true,
+      "cardCount": 9,
+      "loadedImages": 4,
+      "imageCount": 9,
+      "firstCardWidth": 282.953125,
+      "noOverflow": true
+    },
+    "errors": []
+  },
+  {
+    "productName": "dated",
+    "handle": "create-your-magic-2027-dated-planner",
+    "viewportName": "phone-large",
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "status": 200,
+    "initial": {
+      "status": "ready",
+      "scrollY": 0,
+      "stageRatio": 1,
+      "firstImageLoaded": true,
+      "stickyHidden": true,
+      "tabs": [
+        {
+          "text": "Description",
+          "left": 12,
+          "right": 147.328125,
+          "width": 135.328125
+        },
+        {
+          "text": "Specifications",
+          "left": 147.328125,
+          "right": 282.65625,
+          "width": 135.328125
+        },
+        {
+          "text": "Delivery & returns",
+          "left": 282.65625,
+          "right": 417.984375,
+          "width": 135.328125
+        }
+      ],
+      "noOverflow": true
+    },
+    "thumbJump": 0,
+    "specs": {
+      "selected": "true",
+      "rows": 3,
+      "text": "Product typeDated PlannersAvailable optionsCustomisationSKUTJS61800"
+    },
+    "stickyAfterPurchase": {
+      "hidden": false,
+      "dispatchInButton": true,
+      "dispatchVisible": true,
+      "label": "Pre-order"
+    },
+    "discovery": {
+      "inMain": true,
+      "afterDatedDetails": true,
+      "cardCount": 9,
+      "loadedImages": 5,
+      "imageCount": 9,
+      "firstCardWidth": 285,
+      "noOverflow": true
+    },
+    "errors": []
+  },
+  {
+    "productName": "dated",
+    "handle": "create-your-magic-2027-dated-planner",
+    "viewportName": "desktop",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "status": 200,
+    "initial": {
+      "status": "ready",
+      "scrollY": 0,
+      "stageRatio": 1,
+      "firstImageLoaded": true,
+      "stickyHidden": true,
+      "tabs": [
+        {
+          "text": "Description",
+          "left": 130,
+          "right": 249.15625,
+          "width": 119.15625
+        },
+        {
+          "text": "Specifications",
+          "left": 257.15625,
+          "right": 396.84375,
+          "width": 139.6875
+        },
+        {
+          "text": "Delivery & returns",
+          "left": 404.84375,
+          "right": 572.765625,
+          "width": 167.921875
+        }
+      ],
+      "noOverflow": true
+    },
+    "thumbJump": 0,
+    "specs": {
+      "selected": "true",
+      "rows": 3,
+      "text": "Product typeDated PlannersAvailable optionsCustomisationSKUTJS61800"
+    },
+    "stickyAfterPurchase": {
+      "hidden": false,
+      "dispatchInButton": true,
+      "dispatchVisible": true,
+      "label": "Pre-order"
+    },
+    "discovery": {
+      "inMain": true,
+      "afterDatedDetails": true,
+      "cardCount": 9,
+      "loadedImages": 8,
+      "imageCount": 9,
+      "firstCardWidth": 334.5,
+      "noOverflow": true
+    },
+    "errors": []
+  },
+  {
+    "productName": "undated",
+    "handle": "undated-yearly-planner-sassy-girl",
+    "viewportName": "phone-small",
+    "viewport": {
+      "width": 360,
+      "height": 640
+    },
+    "status": 200,
+    "initial": {
+      "status": "ready",
+      "scrollY": 0,
+      "stageRatio": 1,
+      "firstImageLoaded": true,
+      "stickyHidden": true,
+      "tabs": [
+        {
+          "text": "Description",
+          "left": 12,
+          "right": 124,
+          "width": 112
+        },
+        {
+          "text": "Specifications",
+          "left": 124,
+          "right": 236,
+          "width": 112
+        },
+        {
+          "text": "Delivery & returns",
+          "left": 236,
+          "right": 348,
+          "width": 112
+        }
+      ],
+      "noOverflow": true
+    },
+    "thumbJump": 0,
+    "specs": {
+      "selected": "true",
+      "rows": 3,
+      "text": "Product typeUndated PlannersAvailable optionsStyleSKUTJS52569"
+    },
+    "stickyAfterPurchase": {
+      "hidden": false,
+      "dispatchInButton": true,
+      "dispatchVisible": false,
+      "label": "Add to bag"
+    },
+    "discovery": {
+      "inMain": true,
+      "afterDatedDetails": true,
+      "cardCount": 9,
+      "loadedImages": 4,
+      "imageCount": 9,
+      "firstCardWidth": 259.1875,
+      "noOverflow": true
+    },
+    "errors": []
+  },
+  {
+    "productName": "undated",
+    "handle": "undated-yearly-planner-sassy-girl",
+    "viewportName": "phone",
+    "viewport": {
+      "width": 393,
+      "height": 852
+    },
+    "status": 200,
+    "initial": {
+      "status": "ready",
+      "scrollY": 0,
+      "stageRatio": 1,
+      "firstImageLoaded": true,
+      "stickyHidden": true,
+      "tabs": [
+        {
+          "text": "Description",
+          "left": 12,
+          "right": 135,
+          "width": 123
+        },
+        {
+          "text": "Specifications",
+          "left": 135,
+          "right": 258,
+          "width": 123
+        },
+        {
+          "text": "Delivery & returns",
+          "left": 258,
+          "right": 381,
+          "width": 123
+        }
+      ],
+      "noOverflow": true
+    },
+    "thumbJump": 0,
+    "specs": {
+      "selected": "true",
+      "rows": 3,
+      "text": "Product typeUndated PlannersAvailable optionsStyleSKUTJS52569"
+    },
+    "stickyAfterPurchase": {
+      "hidden": false,
+      "dispatchInButton": true,
+      "dispatchVisible": false,
+      "label": "Add to bag"
+    },
+    "discovery": {
+      "inMain": true,
+      "afterDatedDetails": true,
+      "cardCount": 9,
+      "loadedImages": 5,
+      "imageCount": 9,
+      "firstCardWidth": 282.953125,
+      "noOverflow": true
+    },
+    "errors": []
+  },
+  {
+    "productName": "undated",
+    "handle": "undated-yearly-planner-sassy-girl",
+    "viewportName": "phone-large",
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "status": 200,
+    "initial": {
+      "status": "ready",
+      "scrollY": 0,
+      "stageRatio": 1,
+      "firstImageLoaded": true,
+      "stickyHidden": true,
+      "tabs": [
+        {
+          "text": "Description",
+          "left": 12,
+          "right": 147.328125,
+          "width": 135.328125
+        },
+        {
+          "text": "Specifications",
+          "left": 147.328125,
+          "right": 282.65625,
+          "width": 135.328125
+        },
+        {
+          "text": "Delivery & returns",
+          "left": 282.65625,
+          "right": 417.984375,
+          "width": 135.328125
+        }
+      ],
+      "noOverflow": true
+    },
+    "thumbJump": 0,
+    "specs": {
+      "selected": "true",
+      "rows": 3,
+      "text": "Product typeUndated PlannersAvailable optionsStyleSKUTJS52569"
+    },
+    "stickyAfterPurchase": {
+      "hidden": false,
+      "dispatchInButton": true,
+      "dispatchVisible": false,
+      "label": "Add to bag"
+    },
+    "discovery": {
+      "inMain": true,
+      "afterDatedDetails": true,
+      "cardCount": 9,
+      "loadedImages": 5,
+      "imageCount": 9,
+      "firstCardWidth": 285,
+      "noOverflow": true
+    },
+    "errors": []
+  },
+  {
+    "productName": "undated",
+    "handle": "undated-yearly-planner-sassy-girl",
+    "viewportName": "desktop",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "status": 200,
+    "initial": {
+      "status": "ready",
+      "scrollY": 0,
+      "stageRatio": 1,
+      "firstImageLoaded": true,
+      "stickyHidden": true,
+      "tabs": [
+        {
+          "text": "Description",
+          "left": 130,
+          "right": 249.15625,
+          "width": 119.15625
+        },
+        {
+          "text": "Specifications",
+          "left": 257.15625,
+          "right": 396.84375,
+          "width": 139.6875
+        },
+        {
+          "text": "Delivery & returns",
+          "left": 404.84375,
+          "right": 572.765625,
+          "width": 167.921875
+        }
+      ],
+      "noOverflow": true
+    },
+    "thumbJump": 0,
+    "specs": {
+      "selected": "true",
+      "rows": 3,
+      "text": "Product typeUndated PlannersAvailable optionsStyleSKUTJS52569"
+    },
+    "stickyAfterPurchase": {
+      "hidden": false,
+      "dispatchInButton": true,
+      "dispatchVisible": false,
+      "label": "Add to bag"
+    },
+    "discovery": {
+      "inMain": true,
+      "afterDatedDetails": true,
+      "cardCount": 9,
+      "loadedImages": 5,
+      "imageCount": 9,
+      "firstCardWidth": 334.5,
+      "noOverflow": true
+    },
+    "errors": []
+  }
+]

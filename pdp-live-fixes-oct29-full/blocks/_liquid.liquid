@@ -1,0 +1,171 @@
+{% liquid
+  assign effect = 'hdt-reveal="slide-in" timeline'
+  if section.id contains 'slideshow'
+    assign effect = 'reval'
+  endif   
+  if section.id contains 'footer'
+    assign effect = ''
+  endif   
+  
+%}
+<div {{ effect }} id="block-{{ block.id }}" class="hdt-text-warry hdt-rte {{ block.settings.text_color }}{% if block.settings.hidden_br_mobile %} hdt-br-hidden{% endif %}{% if block.settings.hidden_on_mobile %} hdt-hide-mobile{% endif %} hdt-text-{{ block.settings.text_size }}" {{ block.shopify_attributes }}>
+  {%- assign now_y = 'now' | date: '%Y' -%}
+  {{ block.settings.text | replace: "[year]", now_y }}
+</div>
+{%- if block.settings.text_size == "custom" -%}
+  {%- style -%}
+    #block-{{ block.id }} {
+      --text-custom-lg: {{ block.settings.font_size_text_lg }}px; --text-custom-md: {{ block.settings.font_size_text_md }}px; --text-custom-mb: {{ block.settings.font_size_text }}px; --text-fw: {{ block.settings.font_weight_text }}; --text-ls: {{ block.settings.letter_spacing_text }}px; 
+    }
+  {%- endstyle -%}
+{%- endif -%}
+{% schema %}
+{
+  "name": "Liquid",
+  "tag": null,
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+    },
+    {
+      "type": "checkbox",
+      "id": "hidden_br_mobile",
+      "label": "Hidden <br> on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hidden_on_mobile",
+      "label": "Hidden on mobile",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Size",
+      "options": [
+          {
+            "value": "xs",
+            "label": "Extra Small"
+          },
+          {
+            "value": "sm",
+            "label": "Small"
+          },
+          {
+            "value": "base",
+            "label": "Medium"
+          },
+          {
+            "value": "lg",
+            "label": "Large"
+          },
+          {
+            "value": "xl",
+            "label": "Extra Large"
+          },
+          {
+            "value": "2xl",
+            "label": "2 Extra Large"
+          },
+          {
+            "value": "4xl",
+            "label": "4 Extra Large"
+          },
+          {
+            "value": "custom",
+            "label": "Custom size inline"
+          }
+        ],
+      "default": "base"
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "options": [
+        {
+          "value": "hdt-s-text",
+          "label": "Default"
+        },
+        {
+          "value": "hdt-text-secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "hdt-text-body-tertiary",
+          "label": "Tertiary"
+        },
+        {
+          "value": "hdt-text-primary",
+          "label": "Accent"
+        }
+      ],
+      "label": "Text color",
+      "default": "hdt-s-text"
+    },
+    {
+      "type": "header",
+      "content": "Custom size options"
+    },
+    {
+      "type": "range",
+      "id": "font_size_text_lg",
+      "min": 10,
+      "max": 70,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "font_size_text_md",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Tablet font size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "font_size_text",
+      "min": 10,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile font size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "font_weight_text",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Font weight",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing_text",
+      "min": -10,
+      "max": 10,
+      "step": 0.2,
+      "label": "Letter spacing (in pixel)",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Liquid",
+      "settings": {
+        "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+      }
+    }
+  ]
+}
+{% endschema %}

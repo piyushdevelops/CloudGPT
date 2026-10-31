@@ -1,0 +1,391 @@
+{% doc %}
+  @prompt
+    A product card that includes the product image at the top, then the price and title below. Add a smooth holographic shimmer effect and a shadow.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-card-{{ ai_gen_id }} {
+    position: relative;
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    background: {{ block.settings.card_background }};
+    box-shadow: {{ block.settings.shadow_horizontal }}px {{ block.settings.shadow_vertical }}px {{ block.settings.shadow_blur }}px rgba(0, 0, 0, {{ block.settings.shadow_opacity }});
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ai-product-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: {{ block.settings.shadow_horizontal | times: 1.5 }}px {{ block.settings.shadow_vertical | times: 1.5 }}px {{ block.settings.shadow_blur | times: 1.5 }}px rgba(0, 0, 0, {{ block.settings.shadow_opacity | times: 1.2 }});
+  }
+
+  .ai-product-card-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: {{ block.settings.card_border_radius }}px {{ block.settings.card_border_radius }}px 0 0;
+  }
+
+  .ai-product-card-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ai-product-card-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-product-card-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  .ai-product-card-shimmer-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0) 20%,
+      rgba(255, 0, 255, 0.3) 40%,
+      rgba(0, 255, 255, 0.3) 50%,
+      rgba(255, 255, 0, 0.3) 60%,
+      rgba(255, 255, 255, 0) 80%,
+      transparent 100%
+    );
+    pointer-events: none;
+    opacity: {{ block.settings.shimmer_opacity }};
+  }
+
+  .ai-product-card-{{ ai_gen_id }}:hover .ai-product-card-shimmer-{{ ai_gen_id }} {
+    animation: ai-shimmer-{{ ai_gen_id }} {{ block.settings.shimmer_duration }}s ease-in-out infinite;
+  }
+
+  @keyframes ai-shimmer-{{ ai_gen_id }} {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+
+  .ai-product-card-content-{{ ai_gen_id }} {
+    padding: {{ block.settings.content_padding }}px;
+  }
+
+  .ai-product-card-price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_size }}px;
+    font-weight: {{ block.settings.price_weight }};
+    color: {{ block.settings.price_color }};
+    margin-bottom: 8px;
+  }
+
+  .ai-product-card-compare-price-{{ ai_gen_id }} {
+    text-decoration: line-through;
+    opacity: 0.6;
+    margin-left: 8px;
+    font-size: {{ block.settings.price_size | times: 0.85 }}px;
+  }
+
+  .ai-product-card-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: {{ block.settings.title_weight }};
+    color: {{ block.settings.title_color }};
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .ai-product-card-link-{{ ai_gen_id }} {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .ai-product-card-link-{{ ai_gen_id }}:hover {
+    color: inherit;
+  }
+
+  .ai-product-card-empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+{% endstyle %}
+
+<div class="ai-product-card-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.product %}
+    <a href="{{ block.settings.product.url }}" class="ai-product-card-link-{{ ai_gen_id }}">
+      <div class="ai-product-card-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.product.featured_image %}
+          <img
+            src="{{ block.settings.product.featured_image | image_url: width: 600 }}"
+            alt="{{ block.settings.product.featured_image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.product.featured_image.width }}"
+            height="{{ block.settings.product.featured_image.height }}"
+            class="ai-product-card-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-product-card-image-placeholder-{{ ai_gen_id }}">
+            {{ 'product-1' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+        <div class="ai-product-card-shimmer-{{ ai_gen_id }}"></div>
+      </div>
+
+      <div class="ai-product-card-content-{{ ai_gen_id }}">
+        <div class="ai-product-card-price-{{ ai_gen_id }}">
+          {{ block.settings.product.price | money }}
+          {% if block.settings.product.compare_at_price > block.settings.product.price %}
+            <span class="ai-product-card-compare-price-{{ ai_gen_id }}">
+              {{ block.settings.product.compare_at_price | money }}
+            </span>
+          {% endif %}
+        </div>
+        <h3 class="ai-product-card-title-{{ ai_gen_id }}">
+          {{ block.settings.product.title }}
+        </h3>
+      </div>
+    </a>
+  {% else %}
+    <div class="ai-product-card-image-wrapper-{{ ai_gen_id }}">
+      <div class="ai-product-card-image-placeholder-{{ ai_gen_id }}">
+        {{ 'product-1' | placeholder_svg_tag }}
+        <div class="ai-product-card-empty-state-{{ ai_gen_id }}">
+          Next, select a product
+        </div>
+      </div>
+      <div class="ai-product-card-shimmer-{{ ai_gen_id }}"></div>
+    </div>
+
+    <div class="ai-product-card-content-{{ ai_gen_id }}">
+      <div class="ai-product-card-price-{{ ai_gen_id }}">₹0.00</div>
+      <h3 class="ai-product-card-title-{{ ai_gen_id }}">Product title</h3>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Holographic product card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Content padding",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Shadow"
+    },
+    {
+      "type": "range",
+      "id": "shadow_horizontal",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Horizontal offset",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "shadow_vertical",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Vertical offset",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "shadow_blur",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Blur",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Opacity",
+      "default": 0.1
+    },
+    {
+      "type": "header",
+      "content": "Shimmer effect"
+    },
+    {
+      "type": "range",
+      "id": "shimmer_duration",
+      "min": 1,
+      "max": 5,
+      "step": 0.5,
+      "unit": "s",
+      "label": "Duration",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "shimmer_opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Opacity",
+      "default": 0.6
+    },
+    {
+      "type": "header",
+      "content": "Price"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Size",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "price_weight",
+      "label": "Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "header",
+      "content": "Title"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Size",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "400"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Holographic product card"
+    }
+  ]
+}
+{% endschema %}

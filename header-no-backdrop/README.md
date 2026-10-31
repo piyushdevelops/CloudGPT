@@ -1,0 +1,5 @@
+# Transparent header icons
+
+User requested removal of icon backdrops and transparent 2027 search artwork. Removed header control fills, border colours, shadows and backdrop blur for top/scrolled/hover states; retained focus outlines and tap targets. Restored dark/theme-text glyph colour for bare controls. Search image white backing removed; SVG glass base is transparent while the approved lilac landing accent remains. SVG retained to preserve animation (PNG would be static).
+
+Changed only sections/my-header.liquid and assets/june-search-year.svg on unpublished 187527266499. Both fresh targets compared immediately before mutation; both exact remote readbacks passed. Header-group, merchant settings, cart artwork, search behaviour, logo/scoop unchanged. SVG XML valid; header schema unchanged. Validator reports existing shared-header findings as before. Fresh HTTP preview verifies correct unpublished theme, cart rendering and no Liquid errors. Browser visual/device checks remain pending; no publishing.

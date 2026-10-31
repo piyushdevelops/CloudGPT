@@ -1,0 +1,73 @@
+import pathlib,json,re
+R=pathlib.Path(__file__).parent;P=R/'theme';p=P/'sections/june-other-chapters.liquid';old=p.read_text(encoding='utf-8')
+type_style=old[:old.index('{% capture arrow %}')]
+schema=json.loads(re.search(r'{% schema %}(.*?){% endschema %}',old,re.S).group(1))
+schema['settings']=[s for s in schema['settings'] if s.get('id') not in ['navigation','hint','pause','resume','height','duration','step']]
+for s in schema['settings']:
+ if s.get('id')=='background':s['label']='Story background';s['default']='#FAF7EF'
+ if s.get('id')=='accent':s['label']='Flowers and duster';s['default']='#F5A477'
+schema['settings'] += [{'type':'color','id':'flower_secondary','label':'Secondary flower colour','default':'#E7E1F0'},{'type':'range','id':'pace','label':'Scroll distance per story beat','min':30,'max':100,'step':5,'unit':'vh','default':55},{'type':'range','id':'blank_hold','label':'Blank pause after wedding','min':5,'max':30,'step':1,'default':13,'info':'Tenths of a story beat. Duration depends on scrolling speed.'},{'type':'range','id':'product_size','label':'Product height on desktop','min':25,'max':55,'step':1,'unit':'%','default':44},{'type':'range','id':'product_mobile','label':'Product height on mobile','min':25,'max':50,'step':1,'unit':'%','default':40}]
+for b in schema['blocks']:
+ if b['type']=='chapter':
+  b['settings'].insert(0,{'type':'image_picker','id':'cutout','label':'Transparent product PNG','info':'Overrides the prepared catalog cutout. Use a transparent background.'})
+for pre in schema.get('presets',[]):
+ pre['settings']={k:v for k,v in pre.get('settings',{}).items() if k in [s.get('id') for s in schema['settings']]}
+markup='''
+{% if chapters.size > 0 %}
+<june-scroll-chapters class="jcs" id="JuneChapters-{{ section.id }}" data-scroll="{{ section.settings.scroll }}" data-motion="{{ section.settings.motion }}" data-editor="{{ request.design_mode }}" data-pace="{{ section.settings.pace }}" data-blank="{{ section.settings.blank_hold }}" aria-label="{{ section.settings.eyebrow | escape }}" style="--jcs-secondary:{{ section.settings.flower_secondary }};--jcs-product:{{ section.settings.product_size }};--jcs-mobile:{{ section.settings.product_mobile }}">
+ <a class="jcs__skip" href="#JuneChaptersEnd-{{ section.id }}">{{ section.settings.skip | escape }}</a>
+ <div class="jcs__stage">
+  <div class="jcs__flowers" aria-hidden="true">{% for n in (1..26) %}<svg viewBox="0 0 100 100"><g fill="currentColor"><ellipse cx="50" cy="26" rx="15" ry="24"/><ellipse cx="50" cy="26" rx="15" ry="24" transform="rotate(60 50 50)"/><ellipse cx="50" cy="26" rx="15" ry="24" transform="rotate(120 50 50)"/><ellipse cx="50" cy="26" rx="15" ry="24" transform="rotate(180 50 50)"/><ellipse cx="50" cy="26" rx="15" ry="24" transform="rotate(240 50 50)"/><ellipse cx="50" cy="26" rx="15" ry="24" transform="rotate(300 50 50)"/></g><circle cx="50" cy="50" r="12" fill="var(--jc-ink)"/></svg>{% endfor %}</div>
+  {% for block in chapters %}
+   {% liquid
+    case block.settings.effect
+     when 'petals'
+      assign asset = 'june-chapter-wedding.png'
+     when 'wipe'
+      assign asset = 'june-chapter-rewritable.png'
+     else
+      assign asset = 'june-chapter-baby.png'
+    endcase
+   %}
+   <article class="jcs__scene" data-scene data-block="{{ block.id }}" {{ block.shopify_attributes }} aria-labelledby="JuneChapterTitle-{{ section.id }}-{{ forloop.index0 }}">
+    <div class="jcs__product">{% if block.settings.cutout != blank %}{{ block.settings.cutout | image_url: width: 1200 | image_tag: widths: '400,600,900,1200', sizes: '(max-width: 900px) 75vw, 480px', alt: block.settings.alt, loading: 'lazy' }}{% else %}<img src="{{ asset | asset_url }}" width="900" height="1100" alt="{{ block.settings.alt | escape }}" loading="lazy">{% endif %}</div>
+    <div class="jcs__copy"><h2 class="jcs__heading" id="JuneChapterTitle-{{ section.id }}-{{ forloop.index0 }}">{{ block.settings.heading | escape }} <span>{{ block.settings.heading_second | escape }}</span></h2><div class="jcs__body">{{ block.settings.body }}</div></div>
+   </article>
+  {% endfor %}
+  <div class="jcs__duster" aria-hidden="true"><svg viewBox="0 0 180 110"><path d="M12 61 137 39 169 65 46 94Z" fill="var(--jc-ink)"/><path d="M12 34 137 12 169 38 46 66Z" fill="var(--jc-accent)"/><path d="M12 34 46 66 46 87 12 57Z" fill="var(--jc-accent)"/><path d="M46 66 169 38 169 59 46 87Z" fill="var(--jc-accent)"/><path d="M46 66 169 38" stroke="var(--jc-ink)" stroke-opacity=".3"/><path d="M58 39 120 27" stroke="var(--jc-ink)" stroke-width="4" stroke-linecap="round" opacity=".35"/></svg></div>
+  <div class="jcs__footprints" aria-hidden="true">{% for n in (1..16) %}<svg viewBox="0 0 50 90"><path d="M20 78C7 77 7 65 13 54c5-10 0-15-2-23-3-10 4-18 14-17 13 1 17 13 12 23-6 13-5 18-4 27 1 9-3 16-13 14Z"/><ellipse cx="13" cy="8" rx="6" ry="8"/><ellipse cx="25" cy="6" rx="4.5" ry="6"/><ellipse cx="35" cy="9" rx="4" ry="5"/><ellipse cx="42" cy="16" rx="3.5" ry="4.5"/></svg>{% endfor %}</div>
+ </div>
+</june-scroll-chapters><div id="JuneChaptersEnd-{{ section.id }}" tabindex="-1"></div>
+{% endif %}
+{% stylesheet %}
+.jcs{position:relative;background:var(--jc-bg);color:var(--jc-ink);isolation:isolate}.jcs__stage{position:relative;max-width:1680px;margin:auto;overflow:hidden;background:var(--jc-bg)}.jcs__scene{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:48px 24px;text-align:center;min-height:600px}.jcs__product{height:330px;width:min(480px,80vw);flex:none}.jcs__product img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 12px 12px #241c1814)}.jcs__copy{max-width:780px}.jcs .jcs__heading{font-family:var(--jc-heading-font);font-weight:var(--jc-heading-weight);font-size:var(--jc-heading-size);letter-spacing:var(--jc-heading-tracking);line-height:var(--jc-heading-leading);margin:0 0 16px}.jcs__heading span{display:block}.jcs .jcs__body{font-family:var(--jc-body-font);font-weight:var(--jc-body-weight);font-size:var(--jc-body-size);letter-spacing:var(--jc-body-tracking);line-height:var(--jc-body-leading);max-width:540px;margin:auto}.jcs__body p{margin:0}.jcs__body strong{font-weight:700}.jcs__skip{position:absolute;left:-10000px;top:14px;z-index:10;padding:12px 18px;border-radius:30px;background:var(--jc-bg);color:var(--jc-ink);font:var(--jc-button-weight) var(--jc-button-size)/var(--jc-button-leading) var(--jc-button-font);letter-spacing:var(--jc-button-tracking)}.jcs__skip:focus{position:fixed;left:20px;top:100px;outline:2px solid var(--jc-ink)}.jcs__flowers,.jcs__duster,.jcs__footprints{display:none;position:absolute;inset:0;pointer-events:none}.jcs[data-pinned=true]{height:var(--jcs-runway)}.jcs[data-pinned=true] .jcs__stage{position:sticky;top:var(--jcs-top);height:var(--jcs-height)}.jcs[data-pinned=true] .jcs__scene{position:absolute;inset:0;min-height:0;padding:20px;gap:20px;opacity:0;visibility:hidden;will-change:transform,opacity;pointer-events:none}.jcs[data-pinned=true] .jcs__product{height:calc(var(--jcs-height)*var(--jcs-product)/100)}.jcs[data-pinned=true] .jcs__flowers,.jcs[data-pinned=true] .jcs__footprints{display:block;z-index:2}.jcs__flowers svg{position:absolute;left:50%;top:45%;width:70px;height:70px;opacity:0;color:var(--jc-accent);will-change:transform,opacity}.jcs__flowers svg:nth-child(3n){color:var(--jcs-secondary)}.jcs__flowers svg:nth-child(3n + 1){color:var(--jc-ink)}.jcs[data-pinned=true] .jcs__duster{display:block;inset:auto;left:0;top:0;width:150px;height:100px;z-index:4;opacity:0;will-change:transform}.jcs__duster svg{width:100%;height:100%;filter:drop-shadow(0 10px 7px #241c1820)}.jcs__footprints svg{position:absolute;width:42px;height:76px;fill:var(--jc-ink);opacity:0;will-change:opacity,transform}.jcs:not([data-pinned=true]) .jcs__scene{opacity:1!important;visibility:visible!important;transform:none!important;clip-path:none!important}.jcs:not([data-pinned=true]) .jcs__scene+.jcs__scene{border-top:1px solid #19181615}
+@media(max-width:900px){.jcs .jcs__heading{font-size:var(--jc-heading-mobile)}.jcs .jcs__body{font-size:var(--jc-body-mobile)}.jcs__scene{min-height:520px;padding:34px 20px}.jcs__product{height:260px}.jcs[data-pinned=true] .jcs__product{height:calc(var(--jcs-height)*var(--jcs-mobile)/100);width:80vw}.jcs[data-pinned=true] .jcs__scene{gap:18px}.jcs__copy{max-width:100%}.jcs .jcs__heading{margin-bottom:12px}.jcs__flowers svg{width:48px;height:48px}.jcs__footprints svg{width:30px;height:54px}.jcs[data-pinned=true] .jcs__duster{width:110px;height:75px}.jcs__skip{font-size:var(--jc-button-mobile)}}
+@media(prefers-reduced-motion:reduce){.jcs__flowers,.jcs__duster,.jcs__footprints{display:none!important}}
+{% endstylesheet %}
+{% javascript %}
+if(!customElements.get('june-scroll-chapters'))customElements.define('june-scroll-chapters',class extends HTMLElement{
+ connectedCallback(){this.controller?.abort();this.controller=new AbortController();const o={signal:this.controller.signal};this.stage=this.querySelector('.jcs__stage');this.scenes=[...this.querySelectorAll('[data-scene]')];this.flowers=[...this.querySelectorAll('.jcs__flowers svg')];this.feet=[...this.querySelectorAll('.jcs__footprints svg')];this.duster=this.querySelector('.jcs__duster');this.reduced=matchMedia('(prefers-reduced-motion: reduce)');this.onScroll=()=>{if(!this.frame)this.frame=requestAnimationFrame(()=>{this.frame=0;this.render()})};window.addEventListener('scroll',this.onScroll,{...o,passive:true});window.addEventListener('resize',()=>this.setup(),o);this.reduced.addEventListener('change',()=>this.setup(),o);this.querySelector('.jcs__skip').addEventListener('click',()=>requestAnimationFrame(()=>document.getElementById(this.querySelector('.jcs__skip').hash.slice(1))?.focus({preventScroll:true})),o);this.setup()}
+ setup(){const mobile=innerWidth<=900;this.offset=Math.min(parseFloat(getComputedStyle(this).getPropertyValue('--jc-offset'))||0,mobile?64:90);this.height=Math.max(240,innerHeight-this.offset);this.pinned=this.dataset.scroll==='true'&&this.dataset.motion==='true'&&!this.reduced.matches&&this.dataset.editor!=='true'&&innerHeight>=480;this.dataset.pinned=String(this.pinned);this.unit=this.height*(Number(this.dataset.pace)||55)/100;this.durations=[.7,1.1,2,.8,(Number(this.dataset.blank)||13)/10,2,1.3,1.5,2,.8];this.total=this.durations.reduce((a,b)=>a+b,0);this.distance=this.total*this.unit;this.style.setProperty('--jcs-top',this.offset+'px');this.style.setProperty('--jcs-height',this.height+'px');this.style.setProperty('--jcs-runway',(this.distance+this.height)+'px');if(!this.pinned){this.scenes.forEach(s=>{s.inert=false;s.removeAttribute('aria-hidden')});return}this.render()}
+ render(){if(!this.pinned)return;const rect=this.getBoundingClientRect();if(rect.top>innerHeight||rect.bottom<0)return;const clamp=v=>Math.max(0,Math.min(1,v)),ease=v=>v*v*(3-2*v);let time=Math.max(0,Math.min(this.total-.0001,(this.offset-rect.top)/this.unit)),phase=0;while(phase<this.durations.length-1&&time>this.durations[phase]){time-=this.durations[phase];phase++}const p=clamp(time/this.durations[phase]);this.dataset.phase=['empty','flowers','wedding','wedding-exit','breathing-room','rewritable','duster','footsteps','baby','baby-exit'][phase];this.scenes.forEach(s=>{s.style.opacity='0';s.style.visibility='hidden';s.style.clipPath='none';s.inert=true;s.setAttribute('aria-hidden','true')});
+ const show=(i,a=1,y=0,scale=1)=>{const s=this.scenes[i];if(!s)return;s.style.opacity=a;s.style.visibility=a>0?'visible':'hidden';s.style.transform=`translateY(${y}px) scale(${scale})`;s.inert=a<.8;s.setAttribute('aria-hidden',String(a<.8));};
+ if(phase===2){const q=ease(clamp(p*4));show(0,q,(1-q)*75,.92+.08*q)}if(phase===3)show(0,1-ease(p),-p*this.height*.65,1-.08*p);
+ if(phase===5){const q=ease(clamp(p*4));show(1,q,(1-q)*65,.94+.06*q)}
+ if(phase===6){show(1);const clean=clamp(p*1.1);this.scenes[1].style.clipPath=`inset(0 0 ${clean*100}% 0)`;const x=(Math.sin(p*Math.PI*6-Math.PI/2)+1)/2;this.duster.style.transform=`translate(${x*(this.stage.clientWidth-110)}px,${(1-clean)*this.height-45}px) rotate(${Math.cos(p*Math.PI*6)*18}deg)`}
+ this.duster.style.opacity=phase===6?String(Math.min(1,p*12,(1-p)*12)):'0';
+ if(phase===8){const q=ease(clamp(p*4));show(2,q,(1-q)*65,.94+.06*q)}if(phase===9)show(2,1-ease(p),-p*this.height*.45);
+ const burst=phase===1?p:phase===2?1+p:0;this.flowers.forEach((f,i)=>{const q=clamp((burst-(i%4)*.045)/.9),angle=i*2.399963,radius=(.2+q*.85)*Math.max(this.stage.clientWidth,this.height)*(.48+(i%3)*.15);f.style.opacity=burst>0&&burst<1.35?String(clamp(q*8)*(1-clamp((burst-.65)/.7))):'0';f.style.transform=`translate(-50%,-50%) translate(${Math.cos(angle)*radius}px,${Math.sin(angle)*radius*.72}px) rotate(${i*31+q*170}deg) scale(${.2+q*.95})`});
+ this.feet.forEach((f,i)=>{const q=phase===7?clamp((p-i*.04)*8):0;const x=-40+i*(this.stage.clientWidth+80)/15,y=this.height*(.62-i*.022)+(i%2?35:-20);f.style.opacity=String(q*(1-clamp((p-.85)/.15)));f.style.transform=`translate(${x}px,${y}px) rotate(58deg) scaleX(${i%2?-1:1}) scale(${.7+.3*q})`});}
+ disconnectedCallback(){this.controller?.abort();if(this.frame)cancelAnimationFrame(this.frame)}
+});
+{% endjavascript %}
+'''
+# Unused legacy height/duration values in the typography prelude are harmless but remove their declarations.
+type_style=re.sub(r'--jc-height:.*?;|--jc-duration:.*?;','',type_style)
+p.write_text(type_style+markup+'{% schema %}\n'+json.dumps(schema,ensure_ascii=False,indent=2)+'\n{% endschema %}\n',encoding='utf-8')
+p=P/'templates/index.json';j=json.loads(re.sub(r'^\s*/\*.*?\*/','',p.read_text(encoding='utf-8'),flags=re.S));s=j['sections']['june_other_chapters'];allowed={v.get('id') for v in schema['settings']};s['settings']={k:v for k,v in s['settings'].items() if k in allowed};s['settings'].update(background='#FAF7EF',ink='#191816',accent='#F5A477',flower_secondary='#E7E1F0',pace=55,blank_hold=13,product_size=44,product_mobile=40,scroll=True,motion=True)
+for key,body in [('wedding','<p>For the big day. And every little detail.</p>'),('rewritable','<p>Write it down. Wipe it clean. Begin again.</p>'),('baby','<p>Tiny moments. A lifetime of memories.</p>')]:
+ s['blocks'][key]['settings']['body']=body
+s['blocks']['wedding']['settings']['alt']='We Are Getting Married wedding planner cover';s['blocks']['rewritable']['settings']['alt']='You Got This rewritable planner board';s['blocks']['baby']['settings']['show_shop']=False
+p.write_text(json.dumps(j,ensure_ascii=False,indent=2),encoding='utf-8')
+(R/'sequence.js').write_text(re.search(r'{% javascript %}(.*?){% endjavascript %}',markup,re.S).group(1),encoding='utf-8')
+print('Scroll story built')

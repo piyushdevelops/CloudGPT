@@ -1,0 +1,1505 @@
+{% comment %}
+  TJS Champagne Pack Picker — Minimal Bold Conversion Version
+
+  Base SKU logic:
+  - Set of 2 = native quantity 1
+  - Set of 4 = native quantity 2
+  - Set of 6 = native quantity 3
+
+  This block does not call Shopify's Cart API.
+  It synchronises and optionally submits the existing native Ecomus
+  product form: product-form-{{ section.id }}{{ product.id }}
+{% endcomment %}
+
+{% liquid
+  assign cps_product = product
+  if cps_product == blank and section.settings.product != blank
+    assign cps_product = section.settings.product
+  endif
+
+  assign cps_variant = cps_product.selected_or_first_available_variant
+  assign cps_form_id = 'product-form-' | append: section.id | append: cps_product.id
+  assign cps_base_items = block.settings.base_items_per_pack
+%}
+
+{% if cps_product != blank and cps_variant != blank %}
+  <tjs-champagne-pack-block
+    id="TjsChampagnePack-{{ block.id }}"
+    class="tjs-cps"
+    data-form-id="{{ cps_form_id }}"
+    data-base-items="{{ cps_base_items }}"
+    data-default-pack="{{ block.settings.default_pack }}"
+    data-sync-quantity="{{ block.settings.sync_main_quantity }}"
+    data-pass-property="{{ block.settings.pass_bundle_property }}"
+    data-property-name="{{ block.settings.bundle_property_name | escape }}"
+    data-add-label="{{ block.settings.add_button_label | escape }}"
+    data-show-compare="{{ block.settings.show_compare_price }}"
+    data-show-savings="{{ block.settings.show_savings }}"
+    data-show-per-item="{{ block.settings.show_per_item_price }}"
+    data-money-format="{{ shop.money_format | escape }}"
+    data-currency="{{ cart.currency.iso_code | default: shop.currency | escape }}"
+    {{ block.shopify_attributes }}
+    style="
+      --cps-bg: {{ block.settings.background }};
+      --cps-card: {{ block.settings.card_background }};
+      --cps-selected: {{ block.settings.selected_background }};
+      --cps-text: {{ block.settings.text_color }};
+      --cps-muted: {{ block.settings.muted_color }};
+      --cps-border: {{ block.settings.border_color }};
+      --cps-accent: {{ block.settings.accent_color }};
+      --cps-soft: {{ block.settings.accent_soft }};
+      --cps-button: {{ block.settings.button_background }};
+      --cps-button-text: {{ block.settings.button_text }};
+      --cps-radius: {{ block.settings.card_radius }}px;
+      --cps-gap: {{ block.settings.card_gap }}px;
+      --cps-mobile-width: {{ block.settings.mobile_card_width }}%;
+    "
+  >
+    <script type="application/json" data-cps-variants>
+      [
+        {% for variant in cps_product.variants %}
+          {
+            "id": {{ variant.id | json }},
+            "available": {{ variant.available | json }},
+            "price": {{ variant.price | json }},
+            "compare_at_price": {{ variant.compare_at_price | default: 0 | json }},
+            "options": {{ variant.options | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    </script>
+
+    <header class="tjs-cps__head">
+      {% if block.settings.eyebrow != blank %}
+        <p class="tjs-cps__eyebrow">{{ block.settings.eyebrow | escape }}</p>
+      {% endif %}
+
+      {% if block.settings.heading != blank %}
+        <h3 class="tjs-cps__heading">{{ block.settings.heading | escape }}</h3>
+      {% endif %}
+
+      {% if block.settings.subheading != blank %}
+        <p class="tjs-cps__subheading">{{ block.settings.subheading | escape }}</p>
+      {% endif %}
+
+      <div class="tjs-cps__utility-row">
+        {% if block.settings.show_selected_summary %}
+          <span class="tjs-cps__summary">
+            <span>{{ block.settings.selected_summary_label | escape }}</span>
+            <strong data-cps-summary></strong>
+          </span>
+        {% endif %}
+
+        {% if block.settings.show_variant_context %}
+          <span class="tjs-cps__variant">
+            <span>{{ block.settings.variant_context_label | escape }}</span>
+            <strong data-cps-variant>{{ cps_variant.options | join: ' · ' | escape }}</strong>
+          </span>
+        {% endif %}
+      </div>
+    </header>
+
+    <div class="tjs-cps__grid" role="radiogroup" aria-label="Choose your Champagne Glass set">
+      {% for cps_index in (1..3) %}
+        {% liquid
+          case cps_index
+            when 1
+              assign cps_title = 'Set of 2'
+              assign cps_multiplier = 1
+            when 2
+              assign cps_title = 'Set of 4'
+              assign cps_multiplier = 2
+            else
+              assign cps_title = 'Set of 6'
+              assign cps_multiplier = 3
+          endcase
+
+          assign cps_image_key = 'pack_' | append: cps_index | append: '_image'
+          assign cps_badge_key = 'pack_' | append: cps_index | append: '_badge'
+          assign cps_badge_style_key = 'pack_' | append: cps_index | append: '_badge_style'
+          assign cps_discount_key = 'pack_' | append: cps_index | append: '_discount'
+
+          assign cps_image = block.settings[cps_image_key]
+          assign cps_badge = block.settings[cps_badge_key]
+          assign cps_badge_style = block.settings[cps_badge_style_key]
+          assign cps_discount = block.settings[cps_discount_key]
+
+          if cps_image == blank
+            assign cps_image = cps_product.featured_image
+          endif
+
+          assign cps_image_alt = cps_image.alt | default: cps_title
+          assign cps_total_items = cps_base_items | times: cps_multiplier
+          assign cps_full_total = cps_variant.price | times: cps_multiplier
+          assign cps_discount_factor = 100 | minus: cps_discount
+          assign cps_display_total = cps_full_total | times: cps_discount_factor | divided_by: 100
+
+          assign cps_compare_total = cps_variant.compare_at_price | times: cps_multiplier
+          if cps_compare_total <= cps_display_total and cps_discount > 0
+            assign cps_compare_total = cps_full_total
+          endif
+
+          assign cps_saving = cps_compare_total | minus: cps_display_total
+          assign cps_per_item = cps_display_total | divided_by: cps_total_items
+        %}
+
+        <button
+          type="button"
+          class="tjs-cps__option"
+          role="radio"
+          aria-checked="false"
+          data-cps-option
+          data-pack-key="{{ cps_index }}"
+          data-title="{{ cps_title }}"
+          data-multiplier="{{ cps_multiplier }}"
+          data-discount="{{ cps_discount }}"
+        >
+          {% if cps_badge != blank %}
+            <span class="tjs-cps__badge" data-style="{{ cps_badge_style }}">
+              {{ cps_badge | escape }}
+            </span>
+          {% endif %}
+
+          <span class="tjs-cps__media">
+            {% if cps_image != blank %}
+              {{ cps_image
+                | image_url: width: 720
+                | image_tag:
+                  class: 'tjs-cps__image',
+                  widths: '140,200,280,360,480,620,720',
+                  sizes: '(max-width: 749px) 74vw, 260px',
+                  loading: 'lazy',
+                  alt: cps_image_alt
+              }}
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'tjs-cps__placeholder' }}
+            {% endif %}
+
+            <span class="tjs-cps__check" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="m5 10 3.2 3.2L15 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </span>
+
+          <span class="tjs-cps__content">
+            <span class="tjs-cps__topline">{{ cps_total_items }} glasses • Qty {{ cps_multiplier }}</span>
+            <strong class="tjs-cps__title">{{ cps_title }}</strong>
+
+            <span class="tjs-cps__price">
+              <strong data-cps-price>{{ cps_display_total | money }}</strong>
+              <s
+                data-cps-compare
+                {% unless block.settings.show_compare_price and cps_compare_total > cps_display_total %}hidden{% endunless %}
+              >
+                {% if cps_compare_total > cps_display_total %}
+                  {{ cps_compare_total | money }}
+                {% endif %}
+              </s>
+            </span>
+
+            <span
+              class="tjs-cps__per-item"
+              data-cps-per-item
+              {% unless block.settings.show_per_item_price %}hidden{% endunless %}
+            >
+              {{ cps_per_item | money }} per glass
+            </span>
+
+            <span
+              class="tjs-cps__saving"
+              data-cps-saving
+              {% unless block.settings.show_savings and cps_saving > 0 %}hidden{% endunless %}
+            >
+              {% if cps_saving > 0 %}
+                Save {{ cps_saving | money_without_trailing_zeros }}
+              {% endif %}
+            </span>
+          </span>
+        </button>
+      {% endfor %}
+    </div>
+
+    <footer class="tjs-cps__footer">
+      {% if block.settings.show_add_button %}
+        <button
+          type="button"
+          class="tjs-cps__add"
+          data-cps-add
+          {% unless cps_variant.available %}disabled{% endunless %}
+        >
+          <span data-cps-add-label>
+            {% if cps_variant.available %}
+              {{ block.settings.add_button_label | escape }}
+            {% else %}
+              Sold out
+            {% endif %}
+          </span>
+          <span aria-hidden="true">→</span>
+        </button>
+      {% endif %}
+
+      {% if block.settings.note != blank %}
+        <p class="tjs-cps__note">{{ block.settings.note | escape }}</p>
+      {% endif %}
+    </footer>
+  </tjs-champagne-pack-block>
+{% elsif request.design_mode %}
+  <div class="tjs-cps tjs-cps--empty" {{ block.shopify_attributes }}>
+    This block requires a product.
+  </div>
+{% endif %}
+
+{% style %}
+  #TjsChampagnePack-{{ block.id }} {
+    width: 100%;
+    display: block;
+    margin-block: {{ block.settings.margin_top }}px {{ block.settings.margin_bottom }}px;
+    padding: {{ block.settings.block_padding }}px;
+    border: 1px solid var(--cps-border);
+    border-radius: calc(var(--cps-radius) + 6px);
+    background:
+      radial-gradient(circle at top right, color-mix(in srgb, var(--cps-soft) 52%, #fff), transparent 34%),
+      var(--cps-bg);
+    color: var(--cps-text);
+    box-shadow: 0 18px 44px rgba(24, 18, 15, .08);
+    font-family: var(--font-body-family, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  }
+
+  #TjsChampagnePack-{{ block.id }} *,
+  #TjsChampagnePack-{{ block.id }} *::before,
+  #TjsChampagnePack-{{ block.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__head {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__eyebrow {
+    margin: 0;
+    color: var(--cps-accent);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .16em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__heading {
+    margin: 0;
+    color: var(--cps-text);
+    font-family: var(--font-body-family, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+    font-size: {{ block.settings.heading_size }}px;
+    font-weight: 900;
+    line-height: .98;
+    letter-spacing: -.05em;
+    max-width: 18ch;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__subheading {
+    max-width: 48ch;
+    margin: 0;
+    color: var(--cps-muted);
+    font-size: 13px;
+    line-height: 1.55;
+    font-weight: 560;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__utility-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__variant,
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__summary {
+    width: fit-content;
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    border: 1px solid var(--cps-border);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--cps-muted);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 6px 14px rgba(24, 18, 15, .04);
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__variant strong,
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__summary strong {
+    color: var(--cps-text);
+    font-weight: 850;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: var(--cps-gap);
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__option {
+    position: relative;
+    min-width: 0;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    padding: 0;
+    border: 1.5px solid var(--cps-border);
+    border-radius: var(--cps-radius);
+    background: var(--cps-card);
+    color: var(--cps-text);
+    box-shadow: 0 10px 28px rgba(24, 18, 15, .05);
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background-color .22s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__option:hover {
+    border-color: color-mix(in srgb, var(--cps-accent) 35%, var(--cps-border));
+    box-shadow: 0 16px 36px rgba(24, 18, 15, .09);
+    transform: translateY(-3px);
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__option.is-selected {
+    border-color: var(--cps-accent);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--cps-selected) 82%, #fff), var(--cps-card));
+    box-shadow: 0 18px 42px color-mix(in srgb, var(--cps-accent) 18%, transparent);
+    transform: translateY(-5px);
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__badge {
+    position: absolute;
+    z-index: 4;
+    top: 10px;
+    left: 10px;
+    min-height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    border-radius: 999px;
+    color: #fff;
+    box-shadow: 0 10px 22px rgba(24, 18, 15, .14);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__badge[data-style="popular"] { background: #3e2f7d; }
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__badge[data-style="value"] { background: var(--cps-accent); }
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__badge[data-style="soft"] { background: #a98bc9; }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 24%, color-mix(in srgb, var(--cps-soft) 44%, #fff), transparent 36%),
+      linear-gradient(180deg, #fff8fb 0%, #fff 74%);
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__image,
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__placeholder {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__image {
+    object-fit: {{ block.settings.image_fit }};
+    object-position: center;
+    transition: transform .28s ease;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__option:hover .tjs-cps__image {
+    transform: scale(1.03);
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__placeholder {
+    padding: 20%;
+    color: var(--cps-muted);
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__check {
+    position: absolute;
+    z-index: 3;
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.82);
+    border-radius: 50%;
+    background: rgba(255,255,255,.94);
+    color: transparent;
+    box-shadow: 0 5px 15px rgba(24, 18, 15, .08);
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__option.is-selected .tjs-cps__check {
+    background: var(--cps-accent);
+    color: #fff;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__check svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__content {
+    min-width: 0;
+    display: grid;
+    align-content: start;
+    gap: 5px;
+    padding: 14px 14px 16px;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__topline {
+    color: var(--cps-muted);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__title {
+    color: var(--cps-text);
+    font-size: 26px;
+    font-weight: 900;
+    line-height: .95;
+    letter-spacing: -.05em;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 2px;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__price strong {
+    color: var(--cps-text);
+    font-size: 30px;
+    font-weight: 950;
+    line-height: .95;
+    letter-spacing: -.06em;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__price s {
+    color: var(--cps-muted);
+    font-size: 13px;
+    font-weight: 650;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__per-item {
+    color: var(--cps-muted);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__saving {
+    width: fit-content;
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--cps-accent) 12%, #fff);
+    color: var(--cps-accent);
+    border: 1px solid color-mix(in srgb, var(--cps-accent) 18%, var(--cps-border));
+    font-size: 11px;
+    font-weight: 860;
+    line-height: 1;
+  }
+
+  #TjsChampagnePack-{{ block.id }} [hidden] {
+    display: none !important;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__footer {
+    display: grid;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__add {
+    width: 100%;
+    min-height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 16px;
+    background: var(--cps-button);
+    color: var(--cps-button-text);
+    box-shadow: 0 16px 32px rgba(24, 18, 15, .14);
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__add:disabled {
+    cursor: not-allowed;
+    opacity: .42;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__add.is-loading {
+    pointer-events: none;
+    opacity: .68;
+  }
+
+  #TjsChampagnePack-{{ block.id }} .tjs-cps__note {
+    margin: 0;
+    color: var(--cps-muted);
+    font-size: 11px;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  .tjs-cps--empty {
+    margin-block: 12px;
+    padding: 13px;
+    border: 1px dashed #cbc3bd;
+    color: #746d67;
+    font-size: 11px;
+  }
+
+  @media (max-width: 989px) {
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__heading {
+      max-width: none;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__title {
+      font-size: 24px;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__price strong {
+      font-size: 27px;
+    }
+  }
+
+  @media (max-width: 749px) {
+    #TjsChampagnePack-{{ block.id }} {
+      padding: max(12px, {{ block.settings.block_padding }}px);
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__heading {
+      font-size: {{ block.settings.mobile_heading_size }}px;
+      line-height: .98;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__subheading {
+      font-size: 12px;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__utility-row {
+      gap: 6px;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__variant,
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__summary {
+      min-height: 31px;
+      padding: 0 10px;
+      font-size: 10px;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__grid {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      overflow-x: auto;
+      margin-right: calc(-1 * max(12px, {{ block.settings.block_padding }}px));
+      padding: 6px max(12px, {{ block.settings.block_padding }}px) 10px 1px;
+      scroll-padding-inline: 1px max(12px, {{ block.settings.block_padding }}px);
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__option {
+      min-width: var(--cps-mobile-width);
+      flex: 0 0 var(--cps-mobile-width);
+      scroll-snap-align: center;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__badge {
+      top: 8px;
+      left: 8px;
+      min-height: 24px;
+      padding: 0 9px;
+      font-size: 9px;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__check {
+      top: 10px;
+      right: 10px;
+      width: 26px;
+      height: 26px;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__content {
+      padding: 12px 12px 14px;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__topline {
+      font-size: 10px;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__title {
+      font-size: 23px;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__price strong {
+      font-size: 28px;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__price s {
+      font-size: 12px;
+    }
+
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__per-item,
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__note,
+    #TjsChampagnePack-{{ block.id }} .tjs-cps__saving {
+      font-size: 10px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #TjsChampagnePack-{{ block.id }} *,
+    #TjsChampagnePack-{{ block.id }} *::before,
+    #TjsChampagnePack-{{ block.id }} *::after {
+      transition-duration: .01ms !important;
+      animation-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (() => {
+    if (customElements.get('tjs-champagne-pack-block')) return;
+
+    class TJSChampagnePackBlock extends HTMLElement {
+      connectedCallback() {
+        if (this.dataset.ready === 'true') return;
+        this.dataset.ready = 'true';
+
+        this.formId = this.dataset.formId || '';
+        this.baseItems = Math.max(1, Number(this.dataset.baseItems || 2));
+        this.defaultPack = this.dataset.defaultPack || '2';
+        this.syncQuantity = this.dataset.syncQuantity === 'true';
+        this.passProperty = this.dataset.passProperty === 'true';
+        this.propertyName = this.dataset.propertyName || 'Bundle';
+        this.addLabelText = this.dataset.addLabel || 'Add selected set';
+        this.showCompare = this.dataset.showCompare === 'true';
+        this.showSavings = this.dataset.showSavings === 'true';
+        this.showPerItem = this.dataset.showPerItem === 'true';
+        this.moneyFormat = this.dataset.moneyFormat || '${{amount}}';
+        this.currency = this.dataset.currency || 'INR';
+        this.syncingQuantity = false;
+
+        try {
+          this.variants = JSON.parse(
+            this.querySelector('[data-cps-variants]')?.textContent || '[]'
+          );
+        } catch (error) {
+          this.variants = [];
+        }
+
+        this.options = [...this.querySelectorAll('[data-cps-option]')];
+        this.summary = this.querySelector('[data-cps-summary]');
+        this.variantNode = this.querySelector('[data-cps-variant]');
+        this.addButton = this.querySelector('[data-cps-add]');
+        this.addLabel = this.querySelector('[data-cps-add-label]');
+
+        this.selectedOption =
+          this.options.find(item => item.dataset.packKey === this.defaultPack) ||
+          this.options[0] ||
+          null;
+
+        this.currentVariant =
+          this.readVariant() ||
+          this.variants.find(item => item.available) ||
+          this.variants[0] ||
+          null;
+
+        this.options.forEach(option => {
+          option.addEventListener('click', () => this.selectOption(option, true));
+        });
+
+        this.addButton?.addEventListener('click', () => this.triggerNativeAdd());
+
+        this.boundChange = event => {
+          if (
+            event.target.matches('[name="id"]') ||
+            event.target.matches('select') ||
+            event.target.matches('input[type="radio"]')
+          ) {
+            window.setTimeout(() => this.syncVariant(), 30);
+          }
+
+          if (this.isQuantityInput(event.target) && !this.syncingQuantity) {
+            this.selectFromQuantity(event.target.value);
+          }
+        };
+
+        document.addEventListener('change', this.boundChange, true);
+        document.addEventListener('input', this.boundChange, true);
+
+        [
+          'variant:change',
+          'variant:changed',
+          'product:variant-change',
+          'hdt:variant:change',
+          'hdt:variant-changed'
+        ].forEach(eventName => {
+          document.addEventListener(eventName, event => {
+            const source =
+              event.detail?.variant ||
+              event.detail?.productVariant ||
+              event.detail;
+
+            const id = Number(source?.id || source?.variant_id || 0);
+            const match = this.variants.find(item => Number(item.id) === id);
+
+            if (match) this.setVariant(match);
+            else window.setTimeout(() => this.syncVariant(), 30);
+          });
+        });
+
+        this.syncTimer = window.setInterval(() => {
+          if (!document.documentElement.contains(this)) {
+            window.clearInterval(this.syncTimer);
+            return;
+          }
+
+          this.syncVariant();
+          this.syncForm();
+        }, 600);
+
+        this.selectOption(this.selectedOption, false);
+      }
+
+      disconnectedCallback() {
+        window.clearInterval(this.syncTimer);
+        document.removeEventListener('change', this.boundChange, true);
+        document.removeEventListener('input', this.boundChange, true);
+      }
+
+      get form() {
+        return document.getElementById(this.formId);
+      }
+
+      readVariant() {
+        const formIdInput = this.form?.querySelector('[name="id"]');
+        let id = Number(formIdInput?.value || 0);
+
+        if (!id) {
+          id = Number(new URL(window.location.href).searchParams.get('variant') || 0);
+        }
+
+        return this.variants.find(item => Number(item.id) === id) || null;
+      }
+
+      syncVariant() {
+        const variant = this.readVariant();
+        if (variant) this.setVariant(variant);
+      }
+
+      setVariant(variant) {
+        if (!variant || Number(variant.id) === Number(this.currentVariant?.id)) return;
+
+        this.currentVariant = variant;
+        this.render();
+        this.syncForm();
+      }
+
+      selectOption(option, scroll) {
+        if (!option) return;
+
+        this.selectedOption = option;
+
+        this.options.forEach(item => {
+          const active = item === option;
+          item.classList.toggle('is-selected', active);
+          item.setAttribute('aria-checked', active ? 'true' : 'false');
+        });
+
+        this.render();
+        this.syncForm();
+
+        if (scroll) {
+          option.scrollIntoView({
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+              ? 'auto'
+              : 'smooth',
+            block: 'nearest',
+            inline: 'center'
+          });
+        }
+      }
+
+      multiplier() {
+        return Math.max(1, Number(this.selectedOption?.dataset.multiplier || 1));
+      }
+
+      bundleTitle() {
+        return this.selectedOption?.dataset.title || `Set of ${this.baseItems * this.multiplier()}`;
+      }
+
+      render() {
+        if (!this.currentVariant) return;
+
+        this.options.forEach(option => {
+          const multiplier = Math.max(1, Number(option.dataset.multiplier || 1));
+          const discount = Math.max(0, Number(option.dataset.discount || 0));
+          const totalItems = this.baseItems * multiplier;
+          const fullTotal = Number(this.currentVariant.price || 0) * multiplier;
+          const displayTotal = Math.round(fullTotal * (100 - discount) / 100);
+
+          let compareTotal =
+            Number(this.currentVariant.compare_at_price || 0) * multiplier;
+
+          if (compareTotal <= displayTotal && discount > 0) {
+            compareTotal = fullTotal;
+          }
+
+          const saving = Math.max(0, compareTotal - displayTotal);
+          const perItem = totalItems
+            ? Math.round(displayTotal / totalItems)
+            : displayTotal;
+
+          const price = option.querySelector('[data-cps-price]');
+          const compare = option.querySelector('[data-cps-compare]');
+          const perItemNode = option.querySelector('[data-cps-per-item]');
+          const savingNode = option.querySelector('[data-cps-saving]');
+
+          if (price) price.textContent = this.money(displayTotal);
+
+          if (compare) {
+            const show = this.showCompare && compareTotal > displayTotal;
+            compare.hidden = !show;
+            compare.textContent = show ? this.money(compareTotal) : '';
+          }
+
+          if (perItemNode) {
+            perItemNode.hidden = !this.showPerItem;
+            perItemNode.textContent = `${this.money(perItem)} per glass`;
+          }
+
+          if (savingNode) {
+            const show = this.showSavings && saving > 0;
+            savingNode.hidden = !show;
+            savingNode.textContent = show ? `Save ${this.money(saving)}` : '';
+          }
+        });
+
+        if (this.summary) {
+          this.summary.textContent = `${this.bundleTitle()} · ${this.baseItems * this.multiplier()} glasses`;
+        }
+
+        if (this.variantNode) {
+          this.variantNode.textContent =
+            this.currentVariant.options?.filter(Boolean).join(' · ') ||
+            'Current selection';
+        }
+
+        this.updateAddState();
+      }
+
+      quantityInputs() {
+        const form = this.form;
+        const productInfo = this.closest('.hdt-product-info__list');
+        const inputs = [];
+
+        if (form) {
+          inputs.push(...form.querySelectorAll('[name="quantity"]'));
+        }
+
+        document.querySelectorAll('[name="quantity"][form]').forEach(input => {
+          if (input.getAttribute('form') === this.formId) inputs.push(input);
+        });
+
+        if (productInfo) {
+          inputs.push(...productInfo.querySelectorAll('[name="quantity"]'));
+        }
+
+        return [...new Set(inputs)];
+      }
+
+      isQuantityInput(element) {
+        return this.quantityInputs().includes(element);
+      }
+
+      selectFromQuantity(value) {
+        const quantity = Math.max(1, Number(value || 1));
+        const option = this.options.find(
+          item => Number(item.dataset.multiplier) === quantity
+        );
+
+        if (option && option !== this.selectedOption) {
+          this.selectOption(option, false);
+        }
+      }
+
+      syncForm() {
+        const form = this.form;
+
+        if (!form || !this.currentVariant) {
+          this.updateAddState();
+          return;
+        }
+
+        if (this.syncQuantity) {
+          this.syncingQuantity = true;
+          let inputs = this.quantityInputs();
+
+          if (!inputs.length) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'quantity';
+            form.appendChild(input);
+            inputs = [input];
+          }
+
+          inputs.forEach(input => {
+            const nextValue = String(this.multiplier());
+
+            if (input.value !== nextValue) {
+              input.value = nextValue;
+              input.dispatchEvent(new Event('input', { bubbles: true }));
+              input.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+          });
+
+          window.setTimeout(() => {
+            this.syncingQuantity = false;
+          }, 0);
+        }
+
+        if (this.passProperty) {
+          const name = `properties[${this.propertyName}]`;
+
+          let property = [...form.querySelectorAll('input[name^="properties["]')]
+            .find(input => input.name === name);
+
+          if (!property) {
+            property = document.createElement('input');
+            property.type = 'hidden';
+            property.name = name;
+            form.appendChild(property);
+          }
+
+          property.value = this.bundleTitle();
+        }
+
+        this.updateAddState();
+      }
+
+      updateAddState() {
+        if (!this.addButton) return;
+
+        const available = Boolean(this.currentVariant?.available);
+        this.addButton.disabled = !available || !this.form;
+
+        if (this.addLabel && !this.addButton.classList.contains('is-loading')) {
+          this.addLabel.textContent = available
+            ? this.addLabelText
+            : 'Sold out';
+        }
+      }
+
+      triggerNativeAdd() {
+        const form = this.form;
+        if (!form || !this.currentVariant?.available) return;
+
+        this.syncForm();
+
+        const buttons = [
+          ...form.querySelectorAll(
+            'button[type="submit"], [name="add"], [data-add-to-cart]'
+          )
+        ];
+
+        const nativeButton =
+          buttons.find(button => !button.disabled && button.offsetParent !== null) ||
+          buttons.find(button => !button.disabled);
+
+        this.addButton?.classList.add('is-loading');
+        if (this.addLabel) this.addLabel.textContent = 'Adding…';
+
+        if (nativeButton) {
+          nativeButton.click();
+        } else if (typeof form.requestSubmit === 'function') {
+          form.requestSubmit();
+        }
+
+        window.setTimeout(() => {
+          this.addButton?.classList.remove('is-loading');
+          if (this.addLabel) this.addLabel.textContent = this.addLabelText;
+        }, 1400);
+      }
+
+      money(cents) {
+        if (window.Shopify?.formatMoney) {
+          try {
+            return window.Shopify.formatMoney(Number(cents || 0), this.moneyFormat);
+          } catch (error) {}
+        }
+
+        return new Intl.NumberFormat('en-IN', {
+          style: 'currency',
+          currency: this.currency,
+          maximumFractionDigits: 0
+        }).format(Number(cents || 0) / 100);
+      }
+    }
+
+    customElements.define('tjs-champagne-pack-block', TJSChampagnePackBlock);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Champagne pack picker",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Choose your set"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Pick your perfect celebration set"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Minimal layout. Clear savings. Bigger value as you move up the sets."
+    },
+    {
+      "type": "range",
+      "id": "base_items_per_pack",
+      "label": "Glasses in the base SKU",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "select",
+      "id": "default_pack",
+      "label": "Selected by default",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "Set of 2"
+        },
+        {
+          "value": "2",
+          "label": "Set of 4"
+        },
+        {
+          "value": "3",
+          "label": "Set of 6"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "sync_main_quantity",
+      "label": "Synchronise native quantity",
+      "default": true,
+      "info": "Set of 4 writes quantity 2; Set of 6 writes quantity 3."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_button",
+      "label": "Show Add selected set button",
+      "default": false,
+      "info": "Uses the existing native Ecomus Buy button."
+    },
+    {
+      "type": "text",
+      "id": "add_button_label",
+      "label": "Add button label",
+      "default": "Add selected set"
+    },
+    {
+      "type": "checkbox",
+      "id": "pass_bundle_property",
+      "label": "Pass set name to cart",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "bundle_property_name",
+      "label": "Cart property label",
+      "default": "Bundle"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_context",
+      "label": "Show selected colour / variant",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "variant_context_label",
+      "label": "Variant context label",
+      "default": "Colour:"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compare_price",
+      "label": "Show MRP",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_savings",
+      "label": "Show savings",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_per_item_price",
+      "label": "Show price per glass",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_selected_summary",
+      "label": "Show selected-set summary",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "selected_summary_label",
+      "label": "Summary label",
+      "default": "Selected"
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Note",
+      "default": "Tip: match the displayed pricing here with your Shopify quantity discount setup."
+    },
+    {
+      "type": "image_picker",
+      "id": "pack_1_image",
+      "label": "Set of 2 image"
+    },
+    {
+      "type": "text",
+      "id": "pack_1_badge",
+      "label": "Set of 2 badge",
+      "default": "Starter"
+    },
+    {
+      "type": "select",
+      "id": "pack_1_badge_style",
+      "label": "Set of 2 badge style",
+      "default": "soft",
+      "options": [
+        {
+          "value": "popular",
+          "label": "Deep purple"
+        },
+        {
+          "value": "value",
+          "label": "Accent"
+        },
+        {
+          "value": "soft",
+          "label": "Soft purple"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "pack_1_discount",
+      "label": "Set of 2 displayed discount",
+      "min": 0,
+      "max": 40,
+      "step": 5,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "image_picker",
+      "id": "pack_2_image",
+      "label": "Set of 4 image"
+    },
+    {
+      "type": "text",
+      "id": "pack_2_badge",
+      "label": "Set of 4 badge",
+      "default": "Most popular"
+    },
+    {
+      "type": "select",
+      "id": "pack_2_badge_style",
+      "label": "Set of 4 badge style",
+      "default": "popular",
+      "options": [
+        {
+          "value": "popular",
+          "label": "Deep purple"
+        },
+        {
+          "value": "value",
+          "label": "Accent"
+        },
+        {
+          "value": "soft",
+          "label": "Soft purple"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "pack_2_discount",
+      "label": "Set of 4 displayed discount",
+      "min": 0,
+      "max": 40,
+      "step": 5,
+      "unit": "%",
+      "default": 10
+    },
+    {
+      "type": "image_picker",
+      "id": "pack_3_image",
+      "label": "Set of 6 image"
+    },
+    {
+      "type": "text",
+      "id": "pack_3_badge",
+      "label": "Set of 6 badge",
+      "default": "Best value"
+    },
+    {
+      "type": "select",
+      "id": "pack_3_badge_style",
+      "label": "Set of 6 badge style",
+      "default": "value",
+      "options": [
+        {
+          "value": "popular",
+          "label": "Deep purple"
+        },
+        {
+          "value": "value",
+          "label": "Accent"
+        },
+        {
+          "value": "soft",
+          "label": "Soft purple"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "pack_3_discount",
+      "label": "Set of 6 displayed discount",
+      "min": 0,
+      "max": 40,
+      "step": 5,
+      "unit": "%",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Desktop heading size",
+      "min": 20,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile heading size",
+      "min": 20,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "default": "contain",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Show full image"
+        },
+        {
+          "value": "cover",
+          "label": "Fill / crop"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_width",
+      "label": "Mobile card width",
+      "min": 68,
+      "max": 90,
+      "step": 2,
+      "unit": "%",
+      "default": 78
+    },
+    {
+      "type": "range",
+      "id": "block_padding",
+      "label": "Block padding",
+      "min": 10,
+      "max": 26,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card radius",
+      "min": 8,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Card gap",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Block background",
+      "default": "#FFFDFC"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "selected_background",
+      "label": "Selected background",
+      "default": "#FAF4FF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#171311"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted text",
+      "default": "#7B736E"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Borders",
+      "default": "#EAE1DC"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#8E4CC9"
+    },
+    {
+      "type": "color",
+      "id": "accent_soft",
+      "label": "Soft accent",
+      "default": "#F2E8FF"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#161312"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Champagne pack picker"
+    }
+  ]
+}
+{% endschema %}
